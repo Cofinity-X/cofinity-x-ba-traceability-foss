@@ -97,7 +97,11 @@ module.exports = {
       white: '#ffffff',
       dark: '#111111',
       gray: '#888888',
+      footerGrey: '#dfdfdf',
 
+      //
+      footerTextGrey: '#4D4D4D',
+      headerTextBlack: '#262124',
       // Alert colors
       error: '#D91E18',
       success: '#00AA55',
@@ -161,7 +165,7 @@ module.exports = {
       severityLifeThreatening: '#E5231D',
 
       semanticDataModelSerialPart: '#3db014',
-      semanticDataModelBatch: '#ffd21d'
+      semanticDataModelBatch: '#ffd21d',
     },
     screens: {
       sm: '640px',
