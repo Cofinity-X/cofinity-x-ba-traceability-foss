@@ -73,13 +73,17 @@
   border-radius: 15px;
   padding: 20px;
   gap: 20px;
-  box-shadow: 0px 15px 25px 0px #3333330d;
+  box-shadow: 0px 15px 25px 0px #3333330d, -10px -10px 15px 0px #ffffff1a, 0px 0px 25px 0px #33333308;
 }
 
 .user-menu-close {
   display: flex;
   flex-direction: row-reverse;
   padding: 5px;
+}
+
+.user-menu-close-icon {
+  @apply cursor-pointer;
 }
 
 .user-menu-items {
