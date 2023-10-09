@@ -21,7 +21,7 @@
 
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { getRoute, INVESTIGATION_BASE_ROUTE } from '@core/known-route';
+import { ALERT_BASE_ROUTE, getRoute, INVESTIGATION_BASE_ROUTE } from '@core/known-route';
 import { Notification, Notifications, NotificationStatusGroup } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { CloseNotificationModalComponent } from '@shared/modules/notification/modal/close/close-notification-modal.component';
@@ -41,9 +41,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly numberOfInvestigations$: Observable<View<number>>;
 
   public readonly investigations$: Observable<View<Notifications>>;
-
   public readonly investigationLink: string;
   public readonly investigationParams: Record<string, string>;
+
+  public readonly alerts$: Observable<View<Notifications>>;
+  public readonly alertsLink: string;
+  public readonly alertsParams: Record<string, string>;
 
   constructor(private readonly dashboardFacade: DashboardFacade, private readonly router: Router) {
     this.numberOfMyParts$ = this.dashboardFacade.numberOfMyParts$;
@@ -51,10 +54,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.numberOfInvestigations$ = this.dashboardFacade.numberOfInvestigations$;
 
     this.investigations$ = this.dashboardFacade.investigations$;
+    this.alerts$ = this.dashboardFacade.alerts$;
 
-    const { link, queryParams } = getRoute(INVESTIGATION_BASE_ROUTE, NotificationStatusGroup.RECEIVED);
-    this.investigationLink = link;
-    this.investigationParams = queryParams;
+    const investigationRoute = getRoute(INVESTIGATION_BASE_ROUTE, NotificationStatusGroup.RECEIVED);
+    this.investigationLink = investigationRoute.link;
+    this.investigationParams = investigationRoute.queryParams;
+
+    const alertsRoute = getRoute(ALERT_BASE_ROUTE, NotificationStatusGroup.RECEIVED);
+    this.alertsLink = alertsRoute.link;
+    this.alertsParams = alertsRoute.queryParams;
   }
 
   public ngOnInit(): void {

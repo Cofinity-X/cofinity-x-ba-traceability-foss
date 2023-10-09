@@ -28,18 +28,21 @@ import { Observable, Subscription } from 'rxjs';
 import { DashboardService } from '../core/dashboard.service';
 import { DashboardState } from '../core/dashboard.state';
 import { DashboardStats } from '../model/dashboard.model';
+import { AlertsService } from '@shared/service/alerts.service';
 
 @Injectable()
 export class DashboardFacade {
   private assetNumbersSubscription: Subscription;
   private investigationSubscription: Subscription;
+  private alertSubscription: Subscription;
 
   constructor(
     private readonly dashboardService: DashboardService,
     private readonly dashboardState: DashboardState,
     private readonly partsService: PartsService,
     private readonly investigationsService: InvestigationsService,
-  ) {}
+    private readonly alertsService: AlertsService,
+  ) { }
 
   public get numberOfMyParts$(): Observable<View<number>> {
     return this.dashboardState.numberOfMyParts$;
@@ -57,9 +60,14 @@ export class DashboardFacade {
     return this.dashboardState.investigations$;
   }
 
+  public get alerts$(): Observable<View<Notifications>> {
+    return this.dashboardState.alerts$;
+  }
+
   public setDashboardData(): void {
     this.setAssetNumbers();
     this.setInvestigations();
+    this.setAlerts();
   }
 
   private setAssetNumbers(): void {
@@ -92,6 +100,14 @@ export class DashboardFacade {
     this.investigationSubscription = this.investigationsService.getReceivedInvestigations(0, 5, null).subscribe({
       next: data => this.dashboardState.setInvestigation({ data }),
       error: (error: Error) => this.dashboardState.setInvestigation({ error }),
+    });
+  }
+
+  private setAlerts(): void {
+    this.alertSubscription?.unsubscribe();
+    this.alertSubscription = this.alertsService.getReceivedAlerts(0, 5, null).subscribe({
+      next: data => this.dashboardState.setAlerts({ data }),
+      error: (error: Error) => this.dashboardState.setAlerts({ error }),
     });
   }
 }
