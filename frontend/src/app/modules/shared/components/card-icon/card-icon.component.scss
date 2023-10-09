@@ -19,25 +19,37 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-.card--icon {
-  @apply text-white;
-}
-
 .card-container {
-  @apply flex flex-row gap-x-5 items-center;
+  @apply bg-white;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 264px;
+  height: 100px;
+  border-radius: 15px;
+  padding: 20px;
+  gap: 20px;
+  box-shadow: 0px 15px 25px 0px #3333330d, -10px -10px 15px 0px #ffffff1a, 0px 0px 25px 0px #33333308;
+  &:hover {
+    box-shadow: 0px 15px 25px 0px #33333326, -10px -10px 15px 0px #ffffff26, 0px 0px 25px 0px #3333331a;
+    &:active {
+      box-shadow: none;
+    }
+  }
 }
-
-.avatar-container {
-  @apply flex flex-col items-center justify-center;
+.card-content {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .avatar {
-  border-radius: 50%;
-  text-align: center;
-  @apply bg-primary;
+  @apply flex items-center justify-center;
+  width: 48px;
+  height: 48px;
 
-  &__label {
-    @apply flex flex-col items-center justify-center p-2;
+  &-container {
+    @apply flex flex-col items-center justify-center;
   }
 }
 
