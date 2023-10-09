@@ -24,7 +24,7 @@ SPDX-License-Identifier: Apache-2.0
   <div class="user-menu-content">
     <div (click)="this.expand($event)">
       <button class="user-menu-btn" data-testid="user-menu" id="user-menu" aria-haspopup="true">
-        <img class="user-menu-btn__icon" src="/assets/images/header_user_menu_icon.svg" />
+        <img class="user-menu-btn__icon" src="/assets/images/settingsIcon.svg" />
       </button>
     </div>
     <div
@@ -35,8 +35,8 @@ SPDX-License-Identifier: Apache-2.0
       aria-orientation="vertical"
       aria-labelledby="user-menu"
     >
-      <div class="user-menu-close" (click)="this.onClick()">
-        <img src="/assets/images/settingsIcon.svg" />
+      <div class="user-menu-close">
+        <img class="user-menu-close-icon" (click)="this.onClick()" src="/assets/images/user_menu_close_icon.svg" />
       </div>
       <section class="flex flex-row">
         <section class="flex flex-col">
