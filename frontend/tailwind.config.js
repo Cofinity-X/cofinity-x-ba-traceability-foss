@@ -23,23 +23,23 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        bold: ['Catena-X Bold', 'sans-serif'],
-        boldItalic: ['Catena-X BoldItalic', 'sans-serif'],
+        bold: ['Cofinity-X Bold', 'sans-serif'],
+        boldItalic: ['Cofinity-X BoldItalic', 'sans-serif'],
 
-        italic: ['Catena-X Italic', 'sans-serif'],
-        regular: ['Catena-X Regular', 'sans-serif'],
+        italic: ['Cofinity-X Italic', 'sans-serif'],
+        regular: ['Cofinity-X Regular', 'sans-serif'],
 
-        light: ['Catena-X Light', 'sans-serif'],
-        lightItalic: ['Catena-X LightItalic', 'sans-serif'],
+        light: ['Cofinity-X Light', 'sans-serif'],
+        lightItalic: ['Cofinity-X LightItalic', 'sans-serif'],
 
-        medium: ['Catena-X Medium', 'sans-serif'],
-        mediumItalic: ['Catena-X MediumItalic', 'sans-serif'],
+        medium: ['Cofinity-X Medium', 'sans-serif'],
+        mediumItalic: ['Cofinity-X MediumItalic', 'sans-serif'],
 
-        regular: ['Catena-X Regular', 'sans-serif'],
-        regularItalic: ['Catena-X Italic', 'sans-serif'],
+        regular: ['Cofinity-X Regular', 'sans-serif'],
+        regularItalic: ['Cofinity-X Italic', 'sans-serif'],
 
-        semiBold: ['Catena-X SemiBold', 'sans-serif'],
-        semiBoldItalic: ['Catena-X SemiBoldItalic', 'sans-serif'],
+        semiBold: ['Cofinity-X SemiBold', 'sans-serif'],
+        semiBoldItalic: ['Cofinity-X SemiBoldItalic', 'sans-serif'],
       },
       minHeight: {
         0: '0',
