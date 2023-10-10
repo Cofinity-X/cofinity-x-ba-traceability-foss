@@ -53,3 +53,9 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     version: 12.1.6
     condition: edc-postgresql.enabled
+  # KeyCloak Service
+  - name: keycloak
+    alias: keycloak
+    version: 0.0.1
+    repository: "file://charts/keycloak"
+    condition: install.keycloak
