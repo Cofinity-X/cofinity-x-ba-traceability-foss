@@ -24,7 +24,7 @@
 ###########
 install:
   edc:
-    vault: false
+    vault: true
     daps: false
     consumer: false
     provider: false
@@ -538,7 +538,7 @@ tractusx-connector:
 # ###########
 edc-vault:
   fullnameOverride: "edc-vault"
-  enabled: false
+  enabled: true
   injector:
     # enabled: false
     enabled: true
