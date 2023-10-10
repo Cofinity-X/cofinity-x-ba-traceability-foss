@@ -25,6 +25,9 @@ helm install $HELM_CHART_NAME \
     --set edc-postgresql.enabled=true \
     --namespace tracex --create-namespace .
 
+echo -e "${BLUE}Installing edc-vault helm chart${NC}"
+helm install $HELM_CHART_NAME --set install.edc.vault=true --namespace tracex --create-namespace .
+
 echo -e "${BLUE}Waiting for the deployments to be available${NC}"
 kubectl wait deployment -n tracex --for condition=Available --timeout=90s keycloak
 kubectl wait deployment -n tracex --for condition=Available --timeout=90s edc-postgresql
