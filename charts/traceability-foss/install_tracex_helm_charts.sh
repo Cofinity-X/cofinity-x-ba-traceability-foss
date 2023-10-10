@@ -12,18 +12,18 @@ helm dependency update
 if [ "$HELM_CHART" != "" ];
 then
     echo -e "${BLUE}Un-installing helm chart: $HELM_CHART_NAME ${NC}"
-    helm uninstall $HELM_CHART_NAME --namespace irs
+    helm uninstall $HELM_CHART_NAME --namespace tracex
 fi
 
 echo -e "${BLUE}Installing helm chart: $HELM_CHART_NAME ${NC}"
 helm install $HELM_CHART_NAME \
-      --set postgresql.enabled=true \
-      --set pgadmin4.enabled=true \
-      --set irs-helm.enabled=true \
-      --set tractusx-connector.enabled=true \
-      --set edc-postgresql.enabled=true \
-      --set install.keycloak=true \
-      --namespace tracex --create-namespace .
+    --set install.keycloak=true \
+    --set postgresql.enabled=true \
+    --set pgadmin4.enabled=true \
+    --set irs-helm.enabled=true \
+    --set tractusx-connector.enabled=true \
+    --set edc-postgresql.enabled=true \
+    --namespace tracex --create-namespace .
 
 echo -e "${BLUE}Waiting for the deployments to be available${NC}"
 kubectl wait deployment -n tracex --for condition=Available --timeout=90s keycloak
