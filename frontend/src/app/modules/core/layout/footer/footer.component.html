@@ -15,13 +15,13 @@
       ></ng-container>
     </div>
     <div class="footer--copyright">
-      <p>© Cofinity-X GmbH - All rights reserved.</p>
+      <p class="footer--text">© Cofinity-X GmbH - All rights reserved.</p>
     </div>
   </div>
 </footer>
 
 <ng-template let-type="value" let-role="role" let-origin="origin" #menuItem>
-  <a class="footer--item" *appHasRole="[role]" [routerLink]="['/' + type]" [class.selected]="type === activeMenu">
-    <p>{{ origin + '.' + type | i18n }}</p>
+  <a *appHasRole="[role]" [routerLink]="['/' + type]" [class.selected]="type === activeMenu">
+    <p class="footer--text">{{ origin + '.' + type | i18n }}</p>
   </a>
 </ng-template>

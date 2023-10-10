@@ -94,17 +94,17 @@
 }
 
 .user-menu-item {
-  @apply flex cursor-pointer text-pendingDark;
-  line-height: 20px;
+  @apply flex cursor-pointer text-textLink;
 }
 
 .user-menu-language {
   @apply flex items-center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .user-menu-language__items {
   @apply flex focus:outline-none;
+  line-height: 20px;
 }
 
 .user-menu-items__badge {
@@ -112,7 +112,7 @@
 }
 
 .user-menu-mat-divider {
-  border-color: #d2d2d2;
+  @apply border-inactiveShape;
 }
 
 .user-menu-logout {

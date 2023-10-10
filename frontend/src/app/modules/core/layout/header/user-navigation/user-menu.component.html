@@ -24,7 +24,7 @@ SPDX-License-Identifier: Apache-2.0
   <div class="user-menu-content">
     <div (click)="this.expand($event)">
       <button class="user-menu-btn" data-testid="user-menu" id="user-menu" aria-haspopup="true">
-        <img class="user-menu-btn__icon" src="/assets/images/settingsIcon.svg" />
+        <img class="user-menu-btn__icon" src="/assets/images/userMenuIcon.svg" />
       </button>
     </div>
     <div
@@ -38,25 +38,23 @@ SPDX-License-Identifier: Apache-2.0
       <div class="user-menu-close">
         <img class="user-menu-close-icon" (click)="this.onClick()" src="/assets/images/user_menu_close_icon.svg" />
       </div>
-      <section class="flex flex-row">
-        <section class="flex flex-col">
-          <p class="regular-text">{{ this.userDetails.name }}</p>
-          <p class="component-headline text-doveGray break-words">{{ this.userDetails.role }}</p>
-        </section>
+      <section class="flex flex-col">
+        <p class="label-large">{{ this.userDetails.name }}</p>
+        <p class="body-small">{{ this.userDetails.role }}</p>
       </section>
 
       <mat-divider class="user-menu-mat-divider"></mat-divider>
-      <p class="regular-text user-menu-item" role="menuitem" (click)="this.navigateToHome()">
+      <p class="label-large user-menu-item" role="menuitem" (click)="this.navigateToHome()">
         {{ 'layout.nav.faqs' | i18n }}
       </p>
 
-      <p class="regular-text user-menu-item" role="menuitem" (click)="this.openPortalPage()">
+      <p class="label-large user-menu-item" role="menuitem" (click)="this.openPortalPage()">
         {{ 'layout.nav.helpdesk' | i18n }}
       </p>
       <mat-divider class="user-menu-mat-divider"></mat-divider>
 
       <div class="user-menu-language">
-        <p class="regular-text user-menu-language__items">{{ 'layout.nav.language' | i18n }}</p>
+        <p class="body-large user-menu-language__items">{{ 'layout.nav.language' | i18n }}</p>
         <p class="user-menu-language__items">
           <app-language-selector></app-language-selector>
         </p>
@@ -68,7 +66,7 @@ SPDX-License-Identifier: Apache-2.0
         <div class="user-menu-logout">
           <img src="/assets/images/user_menu_logout_icon.svg" />
         </div>
-        <p class="regular-text user-menu-item" role="menuitem">
+        <p class="label-large user-menu-item" role="menuitem">
           {{ 'layout.nav.signOut' | i18n }}
         </p>
       </div>
