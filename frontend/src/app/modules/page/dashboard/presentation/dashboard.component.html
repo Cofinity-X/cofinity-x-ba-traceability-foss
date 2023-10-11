@@ -28,7 +28,7 @@ SPDX-License-Identifier: Apache-2.0
           main: numbersMainTmp;
           error: numbersErrorTmp;
           loading: numbersLoaderTmp;
-          customContext: { label: 'pageDashboard.totalOfMyParts.label', icon: 'my_parts_icon.svg' }
+          customContext: { label: 'pageDashboard.totalOfMyParts.label', icon: '/icons/my_parts_icon.svg' }
         "
       >
       </ng-container>
@@ -41,7 +41,7 @@ SPDX-License-Identifier: Apache-2.0
           main: numbersMainTmp;
           error: numbersErrorTmp;
           loading: numbersLoaderTmp;
-          customContext: { label: 'pageDashboard.totalOfOtherParts.label', icon: 'other_parts_icon.svg' }
+          customContext: { label: 'pageDashboard.totalOfOtherParts.label', icon: '/icons/other_parts_icon.svg' }
         "
       >
       </ng-container>
@@ -54,11 +54,15 @@ SPDX-License-Identifier: Apache-2.0
           main: numbersMainTmp;
           error: numbersErrorTmp;
           loading: numbersLoaderTmp;
-          customContext: { label: 'pageDashboard.totalInvestigations.label', icon: 'open_investigations_icon.svg' }
+          customContext: {
+            label: 'pageDashboard.totalInvestigations.label',
+            icon: '/icons/open_investigations_icon.svg'
+          }
         "
       >
       </ng-container>
     </section>
+
     <section class="dashboard--overview-infocard">
       <ng-container
         *viewContainer="
@@ -66,7 +70,10 @@ SPDX-License-Identifier: Apache-2.0
           main: numbersMainTmp;
           error: numbersErrorTmp;
           loading: numbersLoaderTmp;
-          customContext: { label: 'pageDashboard.totalInvestigations.label', icon: 'open_investigations_icon.svg' }
+          customContext: {
+            label: 'pageDashboard.totalInvestigations.label',
+            icon: '/icons/open_investigations_icon.svg'
+          }
         "
       >
       </ng-container>

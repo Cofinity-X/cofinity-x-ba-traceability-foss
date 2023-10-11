@@ -23,11 +23,13 @@
   &--container {
     display: flex;
     flex-direction: column;
-    padding: 0px 73px;
     gap: 40px;
   }
   &--overview {
     display: flex;
-    justify-content: space-between;
+    gap: 24px;
+    &-infocard {
+      @apply cursor-pointer;
+    }
   }
 }
