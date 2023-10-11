@@ -29,6 +29,7 @@ install:
     consumer: false
     provider: false
 
+  mid: true
   digitalTwin: false
   semanticHub: false
   keycloak: true
@@ -473,6 +474,10 @@ tractusx-connector:
   fullnameOverride: "tracex-consumer-edc"
   participant:
     id: "BPN"
+
+  # Do not install tractusX based PostgreSQL
+  install:
+    postgresql: false
 
   vault:
     hashicorp:
