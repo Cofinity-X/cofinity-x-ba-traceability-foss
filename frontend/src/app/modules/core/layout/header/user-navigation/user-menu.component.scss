@@ -20,7 +20,6 @@
  ********************************************************************************/
 
 .user-menu-container {
-  //@apply flex items-center md:ml-4;
   display: flex;
   flex-direction: column;
   width: 48px;
@@ -31,14 +30,11 @@
 }
 
 .user-menu-content {
-  //@apply relative;
-  //display: flex;
   position: relative;
   gap: 10px;
 }
 
 .user-menu-btn {
-  //@apply max-w-xs bg-tundora rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tundoraShadeNobel;
   border-radius: 100px;
   padding: 8px;
   display: flex;
@@ -49,7 +45,6 @@
 }
 
 .user-menu-btn__icon {
-  //@apply h-8 w-8 rounded-full bg-blueBayouxShadeWaikawaGray text-white p-1;
   width: 24px;
   height: 24px;
 }
