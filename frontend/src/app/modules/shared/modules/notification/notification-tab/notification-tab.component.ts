@@ -44,7 +44,6 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() menuActionsConfig: MenuActionConfig<Notification>[];
   @Input() optionalColumns: Array<'targetDate' | 'severity' | 'createdBy' | 'sendTo'> = [];
   @Input() sortableColumns: Record<string, boolean> = {};
-  @Input() noItemsDisplay: HTMLElement;
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
@@ -60,7 +59,7 @@ export class NotificationTabComponent implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     const defaultColumns: DisplayColumns<keyof Notification>[] = ['id', 'status', 'createdDate'];
-    const displayedColumns: DisplayColumns<keyof Notification>[] = [...defaultColumns, ...this.optionalColumns, 'menu'];
+    const displayedColumns: DisplayColumns<keyof Notification>[] = [...defaultColumns, ...this.optionalColumns];
     const sortableColumns: Record<string, boolean> = this.sortableColumns;
 
     this.tableConfig = {

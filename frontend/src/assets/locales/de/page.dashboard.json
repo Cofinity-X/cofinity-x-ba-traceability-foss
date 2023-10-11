@@ -8,6 +8,9 @@
     },
     "totalOfOtherParts": {
       "label": "Anzahl anderer Produkte"
+    },
+    "totalAlerts": {
+      "label": "Anzahl der Qualitätswarnungen"
     }
   }
 }

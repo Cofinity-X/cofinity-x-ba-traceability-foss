@@ -20,6 +20,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <div class="dashboard-grid">
+
   <section class="parts-section">
     <ng-container *viewContainer="
         this.numberOfMyParts$ | async;
@@ -52,14 +53,27 @@ SPDX-License-Identifier: Apache-2.0
       ">
     </ng-container>
   </section>
+
+  <section class="parts-section">
+    <ng-container *viewContainer="
+          this.numberOfAlerts$ | async;
+          main: numbersMainTmp;
+          error: numbersErrorTmp;
+          loading: numbersLoaderTmp;
+          customContext: { label: 'pageDashboard.totalAlerts.label', icon: 'alertDashBoard' }
+        ">
+    </ng-container>
+  </section>
+
   <section class="dashboard--section">
     <mat-card>
       <mat-card-header>
         <div class="inline-block w-full">
           <div class="flex justify-between items-center">
-            <h3 class="mb-4 flex items-center">
+            <h3 class="pl-2 mb-4 flex items-center">
               <img class="pr-2" src="/assets/images/icons/qualityInvestigations.svg" />
               {{ 'pageTitle.investigations' | i18n }}
+              <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
             </h3>
             <app-button [routerLink]="[investigationLink]" [queryParams]="investigationParams" [relativeTo]="null">
               <div class="flex justify-between items-center view-button">
@@ -79,14 +93,15 @@ SPDX-License-Identifier: Apache-2.0
     </mat-card>
   </section>
 
-  <section class="dashboard--section">
+  <section class="dashboard--section pb-5">
     <mat-card>
       <mat-card-header>
         <div class="inline-block w-full">
           <div class="flex justify-between items-center">
-            <h3 class="pl-1 mb-4 flex items-center">
+            <h3 class="pl-2 mb-4 flex items-center">
               <img class="pr-2" src="/assets/images/icons/alert.svg" />
               {{ 'pageTitle.alerts' | i18n }}
+              <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
             </h3>
             <app-button [routerLink]="[alertsLink]" [queryParams]="alertsParams" [relativeTo]="null">
               <div class="flex justify-between items-center view-button">
@@ -101,7 +116,13 @@ SPDX-License-Identifier: Apache-2.0
       <mat-card-content>
         <app-notifications-tab [notificationsView$]="alerts$" [translationContext]="'commonAlert'"
           [labelId]="'dashboard-alerts'" [hasPagination]="false" [optionalColumns]="[ 'severity', 'createdBy']"
-          [noItemsDisplay]="<div>no items</div>" (selected)="onNotificationSelected($event)"></app-notifications-tab>
+          (selected)="onNotificationSelected($event)">
+          <div content1>
+            <img src="/assets/images/icons/noAlert.svg" class="center py-5" />
+            <div class="noAlerts pb-3">{{ 'commonAlert.noAlerts' | i18n }}</div>
+            <div class="description pb-10">{{ 'commonAlert.noAlertsDescription' | i18n }}</div>
+          </div>
+        </app-notifications-tab>
       </mat-card-content>
     </mat-card>
   </section>

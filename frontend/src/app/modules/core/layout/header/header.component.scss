@@ -29,7 +29,7 @@
     align-items: center;
     height: 80px;
     gap: 90px;
-    padding: 0px 73px;
+    padding: 0px 136px;
   }
 
   &--menu-container {
@@ -57,6 +57,7 @@
     gap: 40px;
     align-items: center;
     height: 100%;
+
     &__item {
       height: 100%;
       gap: 14px;
@@ -65,20 +66,24 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+
       &--border-bottom,
       &--border-top {
         height: 3px;
         width: 100%;
         background: none;
       }
+
       &--text {
         @apply text-pendingDark;
 
         @extend .label-large;
       }
+
       &.selected &--border-bottom {
         background: linear-gradient(90deg, #fdb913 0%, #d31184 100%);
       }
+
       &:not(&.selected):hover &--border-bottom {
         animation: line 0.1s linear forwards;
         background: linear-gradient(90deg, #fdb913 0%, #d31184 100%);
@@ -97,6 +102,7 @@
     left: 50%;
     width: 0%;
   }
+
   to {
     left: 0%;
     width: 100%;
