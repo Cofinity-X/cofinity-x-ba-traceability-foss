@@ -23,6 +23,7 @@ helm install $HELM_CHART_NAME \
     --set irs-helm.enabled=true \
     --set tractusx-connector.enabled=true \
     --set edc-postgresql.enabled=true \
+    --set install.mid=true \
     --namespace tracex --create-namespace .
 
 echo -e "${BLUE}Installing edc-vault helm chart${NC}"
