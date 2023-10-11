@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly numberOfMyParts$: Observable<View<number>>;
   public readonly numberOfOtherParts$: Observable<View<number>>;
   public readonly numberOfInvestigations$: Observable<View<number>>;
+  public readonly numberOfAlerts$: Observable<View<number>>;
 
   public readonly investigations$: Observable<View<Notifications>>;
   public readonly investigationLink: string;
@@ -52,6 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.numberOfMyParts$ = this.dashboardFacade.numberOfMyParts$;
     this.numberOfOtherParts$ = this.dashboardFacade.numberOfOtherParts$;
     this.numberOfInvestigations$ = this.dashboardFacade.numberOfInvestigations$;
+    this.numberOfAlerts$ = this.dashboardFacade.numberOfAlerts$;
 
     this.investigations$ = this.dashboardFacade.investigations$;
     this.alerts$ = this.dashboardFacade.alerts$;

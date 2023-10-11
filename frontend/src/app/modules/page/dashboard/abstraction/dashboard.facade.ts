@@ -56,6 +56,10 @@ export class DashboardFacade {
     return this.dashboardState.numberOfInvestigations$;
   }
 
+  public get numberOfAlerts$(): Observable<View<number>> {
+    return this.dashboardState.numberOfAlerts$;
+  }
+
   public get investigations$(): Observable<View<Notifications>> {
     return this.dashboardState.investigations$;
   }
@@ -74,6 +78,7 @@ export class DashboardFacade {
     this.dashboardState.setNumberOfMyParts({ loader: true });
     this.dashboardState.setNumberOfOtherParts({ loader: true });
     this.dashboardState.setNumberOfInvestigations({ loader: true });
+    this.dashboardState.setNumberOfAlerts({ loader: true });
 
     this.assetNumbersSubscription?.unsubscribe();
     this.assetNumbersSubscription = this.dashboardService.getStats().subscribe({
@@ -81,11 +86,14 @@ export class DashboardFacade {
         this.dashboardState.setNumberOfMyParts({ data: dashboardStats.myItems });
         this.dashboardState.setNumberOfOtherParts({ data: dashboardStats.otherParts });
         this.dashboardState.setNumberOfInvestigations({ data: dashboardStats.investigations || 0 });
+        this.dashboardState.setNumberOfAlerts({ data: dashboardStats.alerts || 0 });
+
       },
       error: error => {
         this.dashboardState.setNumberOfMyParts({ error });
         this.dashboardState.setNumberOfOtherParts({ error });
         this.dashboardState.setNumberOfInvestigations({ error });
+        this.dashboardState.setNumberOfAlerts({ error });
       },
     });
   }

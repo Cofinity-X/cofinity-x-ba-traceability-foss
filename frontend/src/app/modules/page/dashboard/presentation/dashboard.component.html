@@ -101,20 +101,19 @@ SPDX-License-Identifier: Apache-2.0
       <mat-card-content>
         <app-notifications-tab [notificationsView$]="alerts$" [translationContext]="'commonAlert'"
           [labelId]="'dashboard-alerts'" [hasPagination]="false" [optionalColumns]="[ 'severity', 'createdBy']"
-          (selected)="onNotificationSelected($event)"></app-notifications-tab>
+          [noItemsDisplay]="<div>no items</div>" (selected)="onNotificationSelected($event)"></app-notifications-tab>
       </mat-card-content>
     </mat-card>
   </section>
-</div>
 
-<ng-template #numbersMainTmp let-numbers="view" let-context="customContext">
-  <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="numbers?.data"></app-card-icon>
-</ng-template>
+  <ng-template #numbersMainTmp let-numbers="view" let-context="customContext">
+    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="numbers?.data"></app-card-icon>
+  </ng-template>
 
-<ng-template #numbersErrorTmp let-context="customContext">
-  <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="0"></app-card-icon>
-</ng-template>
+  <ng-template #numbersErrorTmp let-context="customContext">
+    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="0"></app-card-icon>
+  </ng-template>
 
-<ng-template #numbersLoaderTmp let-context="customContext">
-  <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="''"></app-card-icon>
-</ng-template>
+  <ng-template #numbersLoaderTmp let-context="customContext">
+    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="''"></app-card-icon>
+  </ng-template>

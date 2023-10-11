@@ -31,6 +31,7 @@ export class DashboardState {
   private readonly _numberOfMyParts$: State<View<number>> = new State<View<number>>({ loader: true });
   private readonly _numberOfOtherParts$: State<View<number>> = new State<View<number>>({ loader: true });
   private readonly _numberOfInvestigations$: State<View<number>> = new State<View<number>>({ loader: true });
+  private readonly _numberOfAlerts$: State<View<number>> = new State<View<number>>({ loader: true });
 
   private readonly _investigations$: State<View<Notifications>> = new State<View<Notifications>>({ loader: true });
   private readonly _alerts$: State<View<Notifications>> = new State<View<Notifications>>({ loader: true });
@@ -65,6 +66,14 @@ export class DashboardState {
 
   public setInvestigation(investigations: View<Notifications>): void {
     this._investigations$.update(investigations);
+  }
+
+  public get numberOfAlerts$(): Observable<View<number>> {
+    return this._numberOfAlerts$.observable;
+  }
+
+  public setNumberOfAlerts(count: View<number>): void {
+    this._numberOfAlerts$.update(count);
   }
 
   public get alerts$(): Observable<View<Notifications>> {

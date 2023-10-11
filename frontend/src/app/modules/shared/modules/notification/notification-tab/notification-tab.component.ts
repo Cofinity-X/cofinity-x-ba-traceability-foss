@@ -44,10 +44,12 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() menuActionsConfig: MenuActionConfig<Notification>[];
   @Input() optionalColumns: Array<'targetDate' | 'severity' | 'createdBy' | 'sendTo'> = [];
   @Input() sortableColumns: Record<string, boolean> = {};
+  @Input() noItemsDisplay: HTMLElement;
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
 
+  @ViewChild('idTmp') idTemplate: TemplateRef<unknown>;
   @ViewChild('statusTmp') statusTemplate: TemplateRef<unknown>;
   @ViewChild('severityTmp') severityTemplate: TemplateRef<unknown>;
   @ViewChild('descriptionTmp') descriptionTemplate: TemplateRef<unknown>;
@@ -68,6 +70,7 @@ export class NotificationTabComponent implements AfterViewInit {
       hasPagination: this.hasPagination,
       menuActionsConfig: this.menuActionsConfig || [],
       cellRenderers: {
+        id: this.idTemplate,
         status: this.statusTemplate,
         severity: this.severityTemplate,
         description: this.descriptionTemplate,

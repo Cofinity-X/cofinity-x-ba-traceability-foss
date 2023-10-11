@@ -170,7 +170,7 @@ module.exports = {
       declinedDark: '#ff5330',
 
       closedLight: '#ffffff',
-      closedDark: '#4D4D4D',
+      closedDark: '#000000',
 
       canceledLight: '#ffffff',
       canceledDark: '#524FA1',
@@ -179,6 +179,7 @@ module.exports = {
       requestedDark: '#A6CE39',
 
       white: '#ffffff',
+      black: '#000000',
 
       qualityTypeOk: '#3db014',
       qualityTypeMinor: '#ffd74a',
