@@ -65,3 +65,10 @@ dependencies:
     version: 0.20.0
     repository: https://helm.releases.hashicorp.com
     condition: install.edc.vault
+  # MIW
+  # Copy MIW charts folder into the tracex
+  - name: managed-identity-wallet
+    alias: managed-identity-wallet
+    version: 0.1.0
+    repository: "file://charts/managed-identity-wallet"
+    condition: install.mid

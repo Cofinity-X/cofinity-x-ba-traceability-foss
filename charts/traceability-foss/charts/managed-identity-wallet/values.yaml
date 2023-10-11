@@ -1,0 +1,223 @@
+# /********************************************************************************
+# * Copyright (c) 2021,2023 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License, Version 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0.
+# *
+# * Unless required by applicable law or agreed to in writing, software
+# * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# * License for the specific language governing permissions and limitations
+# * under the License.
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+
+# -- The amount of replicas to run
+replicaCount: 1
+
+# -- String to partially override common.names.fullname template (will maintain the release name)
+nameOverride: ""
+# -- String to fully override common.names.fullname template
+fullnameOverride: ""
+
+image:
+  # -- Image repository
+  repository: tractusx/managed-identity-wallet
+  # -- PullPolicy
+  pullPolicy: Always
+  # -- Image tag (empty one will use "appVersion" value from chart definition)
+  tag: ""
+
+
+# --  Parameters for the application (will be stored as secrets - so, for passwords, ...)
+secrets: {}
+
+# -- envs Parameters for the application (will be provided as environment variables)
+envs: {}
+
+serviceAccount:
+  # --  Enable creation of ServiceAccount
+  create: true
+  # -- Annotations to add to the ServiceAccount
+  annotations: {}
+  # -- The name of the ServiceAccount to use.
+  name: ""
+
+service:
+  # -- Kubernetes Service type
+  type: ClusterIP
+  # -- Kubernetes Service port
+  port: 8080
+
+ingress:
+  # -- Enable ingress controller resource
+  enabled: false
+  # -- Ingress annotations
+  annotations: {}
+  # -- Ingress accepted hostnames
+  hosts: []
+  # -- Ingress TLS configuration
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+# -- PodSecurityContext
+podSecurityContext: {}
+
+securityContext:
+  # -- Enable privileged container
+  privileged: false
+  # -- Allow privilege escalation
+  allowPrivilegeEscalation: false
+  # -- User ID used to run the container
+  runAsUser: 11111
+  # -- Group ID used to run the container
+  runAsGroup: 11111
+  # -- Enable to run the container as a non-root user
+  runAsNonRoot: true
+
+resources:
+  requests:
+    # -- CPU resource requests
+    cpu: 250m
+    # -- Memory resource requests
+    memory: 500Mi
+  limits:
+    # -- CPU resource limits
+    cpu: 2
+    # -- Memory resource limits
+    memory: 1Gi
+
+# -- NodeSelector configuration
+nodeSelector:
+  "kubernetes.io/os": linux
+
+# -- Tolerations configuration
+tolerations: []
+
+# -- Affinity configuration
+affinity: {}
+
+# -- PodAnnotation configuration
+podAnnotations: {}
+
+## @section Managed Identity Wallet Primary Parameters
+##
+miw:
+  ## @param miw.host Host name
+  ## @param miw.logging.level Log level. Should be ether ERROR, WARN, INFO, DEBUG, or TRACE.
+  ##
+  # -- Host name
+  host: "{{ .Release.Name }}-managed-identity-wallet:8080"
+  # -- Runtime environment. Should be ether local, dev, int or prod
+  environment: "dev"
+  ssi:
+    # -- Enable to use HTTPS in DID Web Resolution
+    enforceHttpsInDidWebResolution: false
+    # -- Verifiable Credential expiry date. Format 'dd-MM-yyyy'. If empty it is set to 31-12-<current year>
+    vcExpiryDate: ""
+  authorityWallet:
+    # -- Authority Wallet Name
+    name: ""
+    # -- Authority Wallet BPNL
+    bpn: "BPNL000000000000"
+  logging:
+    # -- Log level. Should be ether ERROR, WARN, INFO, DEBUG, or TRACE.
+    level: "INFO"
+  database:
+    # -- Set to true to enable SSL connection to the database
+    useSSL: false
+    # -- Database port
+    port: 5432
+    # -- Database host
+    host: "tx-miw-postgresql"
+    # -- Database user
+    user: "miw"
+    # -- Database name
+    name: "miw_app"
+    # -- Existing secret name for the database password
+    secret: "tx-miw-postgresql"
+    # -- Existing secret key for the database password
+    secretPasswordKey: "password"
+    encryptionKey:
+      # -- Database encryption key for confidential data.  Ignored if `secret` is set. If empty a secret with 32 random alphanumeric chars is generated.
+      value: ""
+      # -- Existing secret for database encryption key
+      secret: ""
+      # -- Existing secret key for database encryption key
+      secretKey: ""
+  keycloak:
+    # -- Keycloak realm
+    realm: "miw_test"
+    # -- Keycloak client id
+    clientId: "miw_private_client"
+    # -- Keycloak URL
+    url: "http://keycloak"
+
+# For more information on how to configure the Keycloak chart see https://github.com/bitnami/charts/tree/main/bitnami/keycloak.
+keycloak:
+  # -- Enable to deploy Keycloak
+  enabled: true
+  extraEnvVars:
+    # - Extra environment variables. (default 'KEYCLOAK_HOSTNAME :{{ .Release.Name }}-keycloak')
+    - name: KEYCLOAK_HOSTNAME
+      value: "keycloak"
+  postgresql:
+    # -- Name of the PostgreSQL chart to deploy. Mandatory when the MIW deploys a PostgreSQL chart, too.
+    nameOverride: "keycloak-postgresql"
+    # -- Enable to deploy PostgreSQL
+    enabled: true
+    auth:
+      # -- Keycloak PostgreSQL user
+      username: "miw_keycloak"
+      # -- KeycloakPostgresql password to set (if empty one is generated)
+      password: ""
+      # -- Database name
+      database: "miw_keycloak"
+  auth:
+    # -- Keycloak admin user
+    adminUser: "admin"
+    # -- Keycloak admin password
+    adminPassword: ""
+  keycloakConfigCli:
+    # -- Enable to create the miw playground realm
+    enabled: true
+    # -- Existing configmap name for the realm configuration
+    existingConfigmap: keycloak-realm-config
+    # -- Number of retries before considering a Job as failed
+    backoffLimit: 2
+
+# For more information on how to configure the PostgreSQL chart see https://github.com/bitnami/charts/tree/main/bitnami/postgresql.
+miw-postgresql:
+  # -- Enable to deploy Postgresql
+  enabled: true
+  nameOverride: "tx-miw-postgresql"
+  fullnameOverride: "tx-miw-postgresql"
+  auth:
+    # -- Enable postgresql admin user
+    enablePostgresUser: false
+    # -- Postgresql user to create
+    username: "miw"
+    # -- Postgresql password to set (if empty one is generated)
+    password: "password"
+    # -- Postgresql database to create
+    database: "miw_app"
+  backup:
+    # -- Enable to create a backup cronjob
+    enabled: false
+    conjob:
+      # -- Backup schedule
+      schedule: "* */6 * * *"
+      storage:
+        # -- Name of an existing PVC to use
+        existingClaim: ""
+        # -- Set resource policy to "keep" to avoid removing PVCs during a helm delete operation
+        resourcePolicy: "keep"
+        # -- PVC Storage Request for the backup data volume
+        size: "8Gi"
