@@ -254,7 +254,7 @@
     border-radius: 50px !important;
   }
 
-  .mat-mdc-unelevated-button>.mdc-button__label {
+  .mat-mdc-unelevated-button > .mdc-button__label {
     @apply text-interactive;
   }
 
@@ -280,7 +280,7 @@
     @apply text-black;
   }
 
-  .mat-sort-header-sorted>.mat-sort-header-content {
+  .mat-sort-header-sorted > .mat-sort-header-content {
     @apply font-semiBold;
   }
 
