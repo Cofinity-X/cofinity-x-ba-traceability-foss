@@ -31,8 +31,13 @@ services:
     networks:
       - tracex-net
 
+<<<<<<< HEAD
   oidc-server-mock:
     image: ghcr.io/soluto/oidc-server-mock:0.8.5
+=======
+  mock-oidc:
+    image: ghcr.io/soluto/oidc-server-mock:latest
+>>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
     ports:
       - '4011:80'
     environment:
@@ -53,7 +58,11 @@ services:
             "AutomaticRedirectAfterSignOut": true
         }
       API_SCOPES_INLINE: |
+<<<<<<< HEAD
         - Name: service-acct-role
+=======
+        - Name: catena-scope
+>>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
       USERS_CONFIGURATION_INLINE: |
         [
           {
@@ -65,18 +74,30 @@ services:
       CLIENTS_CONFIGURATION_INLINE: |
         [
               {
+<<<<<<< HEAD
                 "ClientId": "catena-client-id",
                 "ClientSecrets": ["catena-client-secret"],
                 "Description": "Client for client credentials flow",
                 "AllowedGrantTypes": ["client_credentials"],
                 "AllowedScopes": ["openid", "profile", "email", "service-acct-role"],
+=======
+                "ClientId": "catena-client-1",
+                "ClientSecrets": ["password"],
+                "Description": "Client for client credentials flow",
+                "AllowedGrantTypes": ["client_credentials"],
+                "AllowedScopes": ["openid", "profile", "email", "catena-scope"],
+>>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
                 "ClientClaimsPrefix": "",
                 "IdentityTokenLifetime": 86400,
                 "AccessTokenLifetime": 86400,
                 "Claims": [
                   {
                     "Type": "resource_access",
+<<<<<<< HEAD
                     "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}, \"Cl17-CX-Part\": {\"roles\": [\"Admin\"]}}",
+=======
+                    "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}}",
+>>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
                     "ValueType": "json"
                   },
                   {
@@ -97,6 +118,7 @@ services:
       - postgres
     networks:
       - tracex-net
+<<<<<<< HEAD
 
   irs-server-mock:
     image: wiremock/wiremock:3.2.0
@@ -111,6 +133,8 @@ services:
       - 3002:8080
     volumes:
       - ./wiremock/edc:/home/wiremock
+=======
+>>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
 
 networks:
   tracex-net:

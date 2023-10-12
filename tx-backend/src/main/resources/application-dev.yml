@@ -18,6 +18,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 ################################################################################
+<<<<<<< HEAD
 server:
   port: 8082
 
@@ -63,3 +64,8 @@ irs:
     -
       policyId: "ID 3.2 Trace"
       ttl: "2023-09-30T23:59:59.99Z"
+=======
+management:
+  server:
+    port: 8082
+>>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
