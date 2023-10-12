@@ -136,6 +136,15 @@ services:
 =======
 >>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
 
+  # Ref: https://shahar-avigezer.github.io/blog/wiremock/
+  # todo: mock IRS API
+  irs-mock-server:
+    image: wiremock/wiremock:2.32.0
+    ports:
+      - 3001:8080
+    volumes:
+      - ./wiremock/wwe-server:/home/wiremock
+
 networks:
   tracex-net:
 
