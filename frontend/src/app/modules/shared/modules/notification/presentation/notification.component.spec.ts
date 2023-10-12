@@ -87,4 +87,34 @@ describe('NotificationsInboxComponent', () => {
       },
     );
   };
+
+  // it('should render received notifications', async () => {
+  //   const component = await renderNotificationsInbox();
+  //   component.detectChanges();
+  //   expect(await screen.findByText('Investigation No 1')).toBeInTheDocument();
+  // });
+
+  // it('should render received notifications with date and status', async () => {
+  //   await renderNotificationsInbox();
+
+  //   const descriptionEl = await screen.findByText('Investigation No 1');
+  //   const row = descriptionEl.closest('tr');
+
+  //   expect(within(row).getByText('commonInvestigation.status.RECEIVED')).toBeInTheDocument();
+  // });
+
+  // it('should be able to change notifications page', async () => {
+  //   await renderNotificationsInbox();
+
+  //   await screen.findByText('Investigation No 1');
+  //   fireEvent.click(screen.getByLabelText('pagination.nextPageLabel'));
+
+  //   expect(await screen.findByText('Investigation No 51')).toBeInTheDocument();
+  // });
+
+  // it('should render queued & requested notifications', async () => {
+  //   await renderNotificationsInbox();
+  //   fireEvent.click(screen.getByText('commonInvestigation.tabs.queuedAndRequested'));
+  //   expect(await screen.findByText('Investigation No 1')).toBeInTheDocument();
+  // });
 });
