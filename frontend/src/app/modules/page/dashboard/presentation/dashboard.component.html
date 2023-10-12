@@ -20,26 +20,25 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <div class="dashboard-grid">
-
   <section class="parts-section">
     <ng-container *viewContainer="
         this.numberOfMyParts$ | async;
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { label: 'pageDashboard.totalOfParts.label', icon: 'directions_car' }
+        customContext: { label: 'pageDashboard.totalOfMyParts.label', icon: 'my_parts_icon' }
       ">
     </ng-container>
   </section>
 
   <section class="parts-section">
     <ng-container *viewContainer="
-        this.numberOfOtherParts$ | async;
-        main: numbersMainTmp;
-        error: numbersErrorTmp;
-        loading: numbersLoaderTmp;
-        customContext: { label: 'pageDashboard.totalOfOtherParts.label', icon: 'directions_car' }
-      ">
+          this.numberOfOtherParts$ | async;
+          main: numbersMainTmp;
+          error: numbersErrorTmp;
+          loading: numbersLoaderTmp;
+          customContext: { label: 'pageDashboard.totalOfOtherParts.label', icon: 'other_parts_icon' }
+        ">
     </ng-container>
   </section>
 
@@ -49,12 +48,12 @@ SPDX-License-Identifier: Apache-2.0
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { label: 'pageDashboard.totalInvestigations.label', icon: 'find_in_page' }
+        customContext: { label: 'pageDashboard.totalInvestigations.label', icon: 'open_investigations_icon'}
       ">
     </ng-container>
   </section>
 
-  <section class="parts-section">
+  <section class="parts-section mb-4">
     <ng-container *viewContainer="
           this.numberOfAlerts$ | async;
           main: numbersMainTmp;
@@ -93,7 +92,7 @@ SPDX-License-Identifier: Apache-2.0
     </mat-card>
   </section>
 
-  <section class="dashboard--section pb-5">
+  <section class="dashboard--section">
     <mat-card>
       <mat-card-header>
         <div class="inline-block w-full">
