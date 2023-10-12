@@ -26,7 +26,10 @@ SPDX-License-Identifier: Apache-2.0
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { label: 'pageDashboard.totalOfMyParts.label', icon: 'my_parts_icon' }
+        customContext: { 
+          label: 'pageDashboard.totalOfMyParts.label', 
+          icon: 'my_parts_icon', 
+          link: 'parts'}
       ">
     </ng-container>
   </section>
@@ -37,7 +40,10 @@ SPDX-License-Identifier: Apache-2.0
           main: numbersMainTmp;
           error: numbersErrorTmp;
           loading: numbersLoaderTmp;
-          customContext: { label: 'pageDashboard.totalOfOtherParts.label', icon: 'other_parts_icon' }
+          customContext: { 
+            label: 'pageDashboard.totalOfOtherParts.label', 
+            icon: 'other_parts_icon', 
+            link: 'otherParts' }
         ">
     </ng-container>
   </section>
@@ -48,28 +54,34 @@ SPDX-License-Identifier: Apache-2.0
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { label: 'pageDashboard.totalInvestigations.label', icon: 'open_investigations_icon'}
+        customContext: { 
+          label: 'pageDashboard.totalInvestigations.label', 
+          icon: 'open_investigations_icon', 
+          link: 'investigations'}
       ">
     </ng-container>
   </section>
 
-  <section class="parts-section mb-4">
+  <section class="parts-section">
     <ng-container *viewContainer="
           this.numberOfAlerts$ | async;
           main: numbersMainTmp;
           error: numbersErrorTmp;
           loading: numbersLoaderTmp;
-          customContext: { label: 'pageDashboard.totalAlerts.label', icon: 'alertDashBoard' }
+          customContext: { 
+            label: 'pageDashboard.totalAlerts.label',
+            icon: 'alertDashBoard',
+            link: 'alerts' }
         ">
     </ng-container>
   </section>
 
-  <section class="dashboard--section">
+  <section class="dashboard--section mt-4">
     <mat-card>
       <mat-card-header>
         <div class="inline-block w-full">
           <div class="flex justify-between items-center">
-            <h3 class="pl-2 mb-4 flex items-center">
+            <h3 class="pl-2 mb-4 flex items-center tableHeader">
               <img class="pr-2" src="/assets/images/icons/qualityInvestigations.svg" />
               {{ 'pageTitle.investigations' | i18n }}
               <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
@@ -97,7 +109,7 @@ SPDX-License-Identifier: Apache-2.0
       <mat-card-header>
         <div class="inline-block w-full">
           <div class="flex justify-between items-center">
-            <h3 class="pl-2 mb-4 flex items-center">
+            <h3 class="pl-2 mb-4 flex items-center tableHeader">
               <img class="pr-2" src="/assets/images/icons/alert.svg" />
               {{ 'pageTitle.alerts' | i18n }}
               <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
@@ -127,13 +139,16 @@ SPDX-License-Identifier: Apache-2.0
   </section>
 
   <ng-template #numbersMainTmp let-numbers="view" let-context="customContext">
-    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="numbers?.data"></app-card-icon>
+    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [routerLink]="'/' + context.link"
+      [stats]="numbers?.data"></app-card-icon>
   </ng-template>
 
   <ng-template #numbersErrorTmp let-context="customContext">
-    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="0"></app-card-icon>
+    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [routerLink]="'/' + context.link"
+      [stats]="0"></app-card-icon>
   </ng-template>
 
   <ng-template #numbersLoaderTmp let-context="customContext">
-    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [stats]="''"></app-card-icon>
+    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [routerLink]="'/' + context.link"
+      [stats]="''"></app-card-icon>
   </ng-template>
