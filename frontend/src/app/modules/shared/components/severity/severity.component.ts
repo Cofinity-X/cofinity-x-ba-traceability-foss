@@ -33,10 +33,10 @@ export class SeverityComponent {
   public getIconBySeverity(severity: Severity): string {
     const basePath = './assets/images/icons/';
     const iconMap = new Map<Severity, string>([
-      [Severity.MINOR, 'minor'],
-      [Severity.MAJOR, 'major'],
-      [Severity.CRITICAL, 'critical'],
-      [Severity.LIFE_THREATENING, 'lifeThreatening'],
+      [Severity.MINOR, 'info'],
+      [Severity.MAJOR, 'warning'],
+      [Severity.CRITICAL, 'error_outline'],
+      [Severity.LIFE_THREATENING, 'error'],
     ]);
     return `${basePath}${iconMap.get(severity)}.svg` || '';
   }
