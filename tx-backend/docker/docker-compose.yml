@@ -29,10 +29,77 @@ services:
     expose:
       - "5432"
     networks:
-      net:
+      - tracex-net
+
+  mock-oidc:
+    image: ghcr.io/soluto/oidc-server-mock:latest
+    ports:
+      - '4011:80'
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      SERVER_OPTIONS_INLINE: |
+          {
+            "AccessTokenJwtType": "JWT",
+            "Discovery": {
+              "ShowKeySet": true
+            }
+          }
+      LOGIN_OPTIONS_INLINE: |
+        {
+            "AllowRememberLogin": false
+        }
+      LOGOUT_OPTIONS_INLINE: |
+        {
+            "AutomaticRedirectAfterSignOut": true
+        }
+      API_SCOPES_INLINE: |
+        - Name: catena-scope
+      USERS_CONFIGURATION_INLINE: |
+        [
+          {
+            "SubjectId": "subj_1",
+            "Username": "catena-client-1",
+            "Password": "password"
+          }
+        ]
+      CLIENTS_CONFIGURATION_INLINE: |
+        [
+              {
+                "ClientId": "catena-client-1",
+                "ClientSecrets": ["password"],
+                "Description": "Client for client credentials flow",
+                "AllowedGrantTypes": ["client_credentials"],
+                "AllowedScopes": ["openid", "profile", "email", "catena-scope"],
+                "ClientClaimsPrefix": "",
+                "IdentityTokenLifetime": 86400,
+                "AccessTokenLifetime": 86400,
+                "Claims": [
+                  {
+                    "Type": "resource_access",
+                    "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}}",
+                    "ValueType": "json"
+                  },
+                  {
+                    "Type": "bpn",
+                    "Value": "BPNL00000003CRHK",
+                    "ValueType": "string"
+                  }
+                ]
+              }
+        ]
+      ASPNET_SERVICES_OPTIONS_INLINE: |
+        {
+          "ForwardedHeadersOptions": {
+            "ForwardedHeaders" : "All"
+          }
+        }
+    depends_on:
+      - postgres
+    networks:
+      - tracex-net
 
 networks:
-  net:
+  tracex-net:
 
 volumes:
   postgres-data:

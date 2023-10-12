@@ -53,22 +53,3 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     version: 12.1.6
     condition: edc-postgresql.enabled
-  # KeyCloak Service
-  - name: keycloak
-    alias: keycloak
-    version: 0.0.1
-    repository: "file://charts/keycloak"
-    condition: install.keycloak
-  # HashiCorp Vault
-  - name: vault
-    alias: edc-vault
-    version: 0.20.0
-    repository: https://helm.releases.hashicorp.com
-    condition: install.edc.vault
-  # MIW
-  # Copy MIW charts folder into the tracex
-  - name: managed-identity-wallet
-    alias: managed-identity-wallet
-    version: 0.1.0
-    repository: "file://charts/managed-identity-wallet"
-    condition: install.mid
