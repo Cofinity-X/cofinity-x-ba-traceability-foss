@@ -42,8 +42,25 @@
   color: #A6A6A6;
 }
 
+.dashboard {
+  &--container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &--overview {
+    display: flex;
+    gap: 24px;
+
+    &-infocard {
+      @apply cursor-pointer;
+    }
+  }
+}
+
 .view-button {
-  @apply text-textLink
+  @apply text-textLink;
 }
 
 .dashboard--section {

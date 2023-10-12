@@ -42,6 +42,12 @@
   }
 
   &--logo-container {
+    @apply cursor-pointer;
+
+    &.selected {
+      @apply cursor-default;
+    }
+
     display: flex;
     height: 75px;
     padding-left: 10px;
@@ -78,6 +84,10 @@
         @apply text-pendingDark;
 
         @extend .label-large;
+      }
+
+      &.selected {
+        @apply cursor-default;
       }
 
       &.selected &--border-bottom {
