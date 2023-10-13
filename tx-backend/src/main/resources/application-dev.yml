@@ -52,3 +52,13 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${OAUTH2_JWK_SET_URI:https://default}
+
+
+irs:
+  policies:
+    -
+      policyId: "ID 3.0 Trace"
+      ttl: "2023-09-30T23:59:59.99Z"
+    -
+      policyId: "ID 3.2 Trace"
+      ttl: "2023-09-30T23:59:59.99Z"
