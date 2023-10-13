@@ -68,4 +68,38 @@ irs:
 management:
   server:
     port: 8082
+<<<<<<< HEAD
 >>>>>>> 60f07f32 (feature:DO-1264-added oidc mock in docker-compose and included local keycloak)
+=======
+
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            authorization-grant-type: client_credentials
+            client-id: ${OAUTH2_CLIENT_ID}
+            client-secret: ${OAUTH2_CLIENT_SECRET}
+            scope: get-irs-policies
+          OKTA:
+            client-id: ${OAUTH2_CLIENT_ID}
+            client-secret: ${OAUTH2_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: get-irs-policies
+        provider:
+          keycloak:
+            token-uri: ${OAUTH2_PROVIDER_TOKEN_URI}
+          OKTA:
+            token-uri: ${OAUTH2_PROVIDER_TOKEN_URI}
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${OAUTH2_JWK_SET_URI:https://default}
+>>>>>>> 39199ed6 (feature:DO-1264:mocked IRS Component using wiremock in docker-compose)
