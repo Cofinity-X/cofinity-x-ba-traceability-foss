@@ -23,7 +23,6 @@
 @tailwind base;
 
 .language-button {
-  //text-transform: uppercase !important;
   @extend .label-large;
   @apply text-pendingDark;
   display: flex;
