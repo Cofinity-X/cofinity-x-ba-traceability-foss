@@ -25,7 +25,6 @@
   },
   "layout": {
     "nav": {
-      "language": "Sprache",
       "faqs": "FAQs",
       "helpdesk": "Helpdesk",
       "signOut": "Abmelden"

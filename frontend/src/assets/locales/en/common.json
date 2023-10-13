@@ -15,24 +15,16 @@
   },
   "pageTitle": {
     "dashboard": "Dashboard",
-<<<<<<< HEAD
-    "parts": "My Parts",
-    "otherParts": "Other Parts",
-    "about": "About Cofinity-X",
-    "relations": "Part Relations",
-=======
     "parts": "My parts",
     "otherParts": "Other parts",
     "about": "About Cofinity-X",
     "relations": "Part relations",
->>>>>>> dev
     "admin": "Administration Catena-X",
     "investigations": "Quality investigations",
     "alerts": "Quality alerts"
   },
   "layout": {
     "nav": {
-      "language": "Language",
       "faqs": "FAQs",
       "helpdesk": "Helpdesk",
       "signOut": "Logout"
