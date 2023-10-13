@@ -154,6 +154,9 @@ module.exports = {
 
       // Status colors for notification badges
 
+      acceptedLight: '#ffffff',
+      acceptedDark: '#6BA13C80',
+
       createdLight: '#f2f3fb',
       createdDark: '#111111',
 
@@ -166,19 +169,23 @@ module.exports = {
       confirmedLight: '#e2f6c7',
       confirmedDark: '#5c8d46',
 
-      declinedLight: '#fee7e2',
-      declinedDark: '#ff5330',
+      declinedLight: '#FF000033',
+      declinedDark: '#B62100',
 
       closedLight: '#ffffff',
-      closedDark: '#4D4D4D',
+      closedDark: '#000000',
 
-      canceledLight: '#ffffff',
-      canceledDark: '#524FA1',
+      canceledLight: '#FFFFFF',
+      canceledDark: '#4D4D4D',
 
-      requestedLight: '#ffffff',
-      requestedDark: '#A6CE39',
+      requestedLight: '#FDB91366',
+      requestedDark: '#785707',
+
+      acknowledgedLight: '#A6CE3980',
+      acknowledgedDark: '#486D28',
 
       white: '#ffffff',
+      black: '#000000',
 
       qualityTypeOk: '#3db014',
       qualityTypeMinor: '#ffd74a',

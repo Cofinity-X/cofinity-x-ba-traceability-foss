@@ -57,6 +57,7 @@
     "goBack": "Zurück"
   },
   "table": {
+    "latestFive": "(Letzte 5)",
     "noResultFound": "KEINE ERGEBNISSE GEFUNDEN.",
     "tryAgain": "Bitte versuchen Sie es später noch einmal.",
     "selectPageSize": "Seite für segmentierte Elemente auswählen",
@@ -178,6 +179,8 @@
   },
   "commonInvestigation": {
     "viewAll": "Alle anzeigen",
+    "noInvestigations": "Keine aktuellen Qualitätsuntersuchungen",
+    "noInvestigationsDescription": "Wenn es Qualitätsuntersuchungen gibt, werden sie hier angezeigt.",
     "tabs": {
       "received": "Zugewiesene",
       "queuedAndRequested": "Erstellte und Angefragte"
@@ -190,6 +193,7 @@
       "CLOSED": "Abgeschlossen",
       "ACCEPTED": "Akzeptiert",
       "ACKNOWLEDGED": "Bestätigt",
+      "REQUESTED": "Angefordert",
       "DECLINED": "Abgelehnt"
     },
     "modal": {
@@ -219,6 +223,8 @@
   },
   "commonAlert": {
     "viewAll": "Alle anzeigen",
+    "noAlerts": "Keine aktuellen Qualitätswarnungen",
+    "noAlertsDescription": "Falls es Qualitätswarnungen gibt, werden sie hier angezeigt.",
     "tabs": {
       "received": "Zugewiesene",
       "queuedAndRequested": "Erstellte und Versendete"
@@ -230,6 +236,7 @@
       "CANCELED": "Abgebrochen",
       "CLOSED": "Abgeschlossen",
       "ACCEPTED": "Akzeptiert",
+      "REQUESTED": "Angefordert",
       "ACKNOWLEDGED": "Bestätigt",
       "DECLINED": "Abgelehnt"
     },
