@@ -53,7 +53,7 @@ services:
             "AutomaticRedirectAfterSignOut": true
         }
       API_SCOPES_INLINE: |
-        - Name: catena-scope
+        - Name: get-irs-policies
       USERS_CONFIGURATION_INLINE: |
         [
           {
@@ -69,7 +69,7 @@ services:
                 "ClientSecrets": ["password"],
                 "Description": "Client for client credentials flow",
                 "AllowedGrantTypes": ["client_credentials"],
-                "AllowedScopes": ["openid", "profile", "email", "catena-scope"],
+                "AllowedScopes": ["openid", "profile", "email", "get-irs-policies"],
                 "ClientClaimsPrefix": "",
                 "IdentityTokenLifetime": 86400,
                 "AccessTokenLifetime": 86400,
