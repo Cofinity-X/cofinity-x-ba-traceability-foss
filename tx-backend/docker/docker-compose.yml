@@ -31,8 +31,8 @@ services:
     networks:
       - tracex-net
 
-  mock-oidc:
-    image: ghcr.io/soluto/oidc-server-mock:latest
+  oidc-server-mock:
+    image: ghcr.io/soluto/oidc-server-mock:0.8.5
     ports:
       - '4011:80'
     environment:
@@ -65,8 +65,8 @@ services:
       CLIENTS_CONFIGURATION_INLINE: |
         [
               {
-                "ClientId": "catena-client-1",
-                "ClientSecrets": ["password"],
+                "ClientId": "catena-client-id",
+                "ClientSecrets": ["catena-client-secret"],
                 "Description": "Client for client credentials flow",
                 "AllowedGrantTypes": ["client_credentials"],
                 "AllowedScopes": ["openid", "profile", "email", "get-irs-policies"],
@@ -98,7 +98,7 @@ services:
     networks:
       - tracex-net
 
-  irs-mock-server:
+  irs-server-mock:
     image: wiremock/wiremock:3.2.0
     ports:
       - 3001:8080
