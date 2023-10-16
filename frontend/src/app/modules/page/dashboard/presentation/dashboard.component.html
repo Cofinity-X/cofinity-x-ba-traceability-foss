@@ -131,7 +131,7 @@ SPDX-License-Identifier: Apache-2.0
 
       <mat-card-content>
         <app-notifications-tab [notificationsView$]="alerts$" [translationContext]="'commonAlert'"
-          [labelId]="'dashboard-alerts'" [hasPagination]="false" [optionalColumns]="[ 'severity', 'sendTo']"
+          [labelId]="'dashboard-alerts'" [hasPagination]="false" [optionalColumns]="[ 'severity', 'createdBy']"
           (selected)="onNotificationSelected($event)">
           <div content1>
             <img src="/assets/images/icons/noAlert.svg" class="center py-5" />
