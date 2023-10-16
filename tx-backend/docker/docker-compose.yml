@@ -53,7 +53,7 @@ services:
             "AutomaticRedirectAfterSignOut": true
         }
       API_SCOPES_INLINE: |
-        - Name: get-irs-policies
+        - Name: service-acct-role
       USERS_CONFIGURATION_INLINE: |
         [
           {
@@ -69,20 +69,25 @@ services:
                 "ClientSecrets": ["catena-client-secret"],
                 "Description": "Client for client credentials flow",
                 "AllowedGrantTypes": ["client_credentials"],
-                "AllowedScopes": ["openid", "profile", "email", "get-irs-policies"],
+                "AllowedScopes": ["openid", "profile", "email", "service-acct-role"],
                 "ClientClaimsPrefix": "",
                 "IdentityTokenLifetime": 86400,
                 "AccessTokenLifetime": 86400,
                 "Claims": [
                   {
                     "Type": "resource_access",
-                    "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}}",
+                    "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}, \"Cl17-CX-Part\": {\"roles\": [\"ROLE_USER\"]}}",
                     "ValueType": "json"
                   },
                   {
                     "Type": "bpn",
                     "Value": "BPNL00000003CRHK",
                     "ValueType": "string"
+                  },
+                  {
+                      "Type": "roles",
+                      "Value": "[\"ROLE_USER\", \"ROLE_ADMIN\"]",
+                      "ValueType": "json"
                   }
                 ]
               }
