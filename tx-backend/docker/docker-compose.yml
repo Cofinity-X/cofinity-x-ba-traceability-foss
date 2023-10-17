@@ -76,18 +76,13 @@ services:
                 "Claims": [
                   {
                     "Type": "resource_access",
-                    "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}, \"Cl17-CX-Part\": {\"roles\": [\"ROLE_USER\"]}}",
+                    "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}, \"Cl17-CX-Part\": {\"roles\": [\"Admin\"]}}",
                     "ValueType": "json"
                   },
                   {
                     "Type": "bpn",
                     "Value": "BPNL00000003CRHK",
                     "ValueType": "string"
-                  },
-                  {
-                      "Type": "roles",
-                      "Value": "[\"ROLE_USER\", \"ROLE_ADMIN\"]",
-                      "ValueType": "json"
                   }
                 ]
               }
