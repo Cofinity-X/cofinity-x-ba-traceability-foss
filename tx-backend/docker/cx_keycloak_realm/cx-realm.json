@@ -5653,43 +5653,7 @@
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "bpn", "roles", "profile", "email" ],
-    "optionalClientScopes" : [ "address", "service-acct-role", "phone", "offline_access", "microprofile-jwt" ],
-    "authorizationSettings" : {
-      "allowRemoteResourceManagement" : true,
-      "policyEnforcementMode" : "ENFORCING",
-      "resources" : [ {
-        "name" : "Default Resource",
-        "type" : "urn:catena-client-id:resources:default",
-        "ownerManagedAccess" : false,
-        "attributes" : { },
-        "_id" : "72727055-ea5f-497a-be20-b383b375ee03",
-        "uris" : [ "/*" ]
-      } ],
-      "policies" : [ {
-        "id" : "2fd3bdd1-ee83-4fb1-87b9-42507bd222e3",
-        "name" : "Default Policy",
-        "description" : "A policy that grants access only for users within this realm",
-        "type" : "js",
-        "logic" : "POSITIVE",
-        "decisionStrategy" : "AFFIRMATIVE",
-        "config" : {
-          "code" : "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
-        }
-      }, {
-        "id" : "9c6da056-7cb2-4c58-81a2-1d711639e30e",
-        "name" : "Default Permission",
-        "description" : "A permission that applies to the default resource type",
-        "type" : "resource",
-        "logic" : "POSITIVE",
-        "decisionStrategy" : "UNANIMOUS",
-        "config" : {
-          "defaultResourceType" : "urn:catena-client-id:resources:default",
-          "applyPolicies" : "[\"Default Policy\"]"
-        }
-      } ],
-      "scopes" : [ ],
-      "decisionStrategy" : "UNANIMOUS"
-    }
+    "optionalClientScopes" : [ "address", "service-acct-role", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "6a9209c2-ec16-476b-9a9f-61474610b790",
     "clientId" : "https://catenax-dev-dismantler-s66pftcc.authentication.eu10.hana.ondemand.com",
