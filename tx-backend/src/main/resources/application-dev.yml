@@ -23,6 +23,8 @@ server:
 
 
 spring:
+  flyway:
+    locations: /db/migration,/db/local
   main:
     allow-bean-definition-overriding: true
   datasource:
