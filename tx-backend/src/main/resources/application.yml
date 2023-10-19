@@ -91,6 +91,8 @@ management:
     port: 8080
 
 spring:
+  flyway:
+    locations: /db/scripts/common
   main:
     allow-bean-definition-overriding: true
   datasource:
