@@ -267,6 +267,7 @@
     }
   },
   "bomLifecycleActivator": {
+    "selectLifeCycles": "Select 2 life cycle stages",
     "asBuilt": "As Built",
     "asPlanned": "As Planned"
   }

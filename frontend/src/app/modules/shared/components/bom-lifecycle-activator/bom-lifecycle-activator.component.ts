@@ -16,29 +16,35 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatChipInputEvent } from '@angular/material/chips';
 import {
     BomLifecycleConfig,
-    BomLifecycleSize
+    BomLifecycleSize,
+    BomLifecycleType
 } from "@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model";
-import {BomLifecycleSettingsService, UserSettingView} from "@shared/service/bom-lifecycle-settings.service";
-
+import { BomLifecycleSettingsService, UserSettingView } from "@shared/service/bom-lifecycle-settings.service";
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { FormControl, FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-bom-lifecycle-activator',
     templateUrl: './bom-lifecycle-activator.component.html',
-    styleUrls: ['./bom-lifecycle-activator.component.scss']
+    styleUrls: ['./bom-lifecycle-activator.component.scss'],
 })
-export class BomLifecycleActivatorComponent implements OnInit{
+export class BomLifecycleActivatorComponent implements OnInit {
 
     @Input() view: UserSettingView;
     public bomLifecycleConfig: BomLifecycleConfig;
+    public lifeCycleTypes: string[] = Object.keys(BomLifecycleType);
+    public lifeCycleCtrl = new FormControl('');
+    public selectedLifeCycles: string[] = [];
 
     constructor(public bomLifeCycleUserSetting: BomLifecycleSettingsService) {
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
         if (this.view) {
             this.bomLifecycleConfig = this.bomLifeCycleUserSetting.getUserSettings(this.view);
         } else {
@@ -48,13 +54,39 @@ export class BomLifecycleActivatorComponent implements OnInit{
 
     @Output() buttonClickEvent = new EventEmitter<BomLifecycleSize>();
 
+    toggleLifecycleType(type: string) {
+
+    }
+
+    selected(event: MatAutocompleteSelectedEvent): void {
+        this.selectedLifeCycles.push(event.option.viewValue);
+    }
+
+    selectLifeCycle(lifeCycle: string): void {
+        if (this.selectedLifeCycles.includes(lifeCycle) === true) {
+            var index = this.selectedLifeCycles.indexOf(lifeCycle);
+            this.selectedLifeCycles.splice(index, 1)
+        } else {
+            this.selectedLifeCycles.push(lifeCycle);
+        }
+    }
+
+    removeLifeCycle(lifeCycle: string): void {
+        const index = this.selectedLifeCycles.indexOf(lifeCycle);
+
+        if (index >= 0) {
+            this.selectedLifeCycles.splice(index, 1);
+            this.selectedLifeCycles = Array.from(this.selectedLifeCycles);
+        }
+    }
+
 
     toggleAsPlanned() {
         this.bomLifecycleConfig.asPlannedActive = !this.bomLifecycleConfig.asPlannedActive;
         this.emitBomLifecycleState();
     }
 
-    toggleAsBuilt() {
+    togglel() {
         // If the other button is also inactive, prevent this one from being deactivated
         this.bomLifecycleConfig.asBuiltActive = !this.bomLifecycleConfig.asBuiltActive;
         this.emitBomLifecycleState();

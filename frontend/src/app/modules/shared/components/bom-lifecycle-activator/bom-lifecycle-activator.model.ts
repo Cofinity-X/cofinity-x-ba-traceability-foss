@@ -26,3 +26,9 @@ export interface BomLifecycleConfig {
     asPlannedActive: boolean,
     asBuiltActive: boolean
 }
+
+export enum BomLifecycleType {
+    test = 'test',
+    test2 = 'test2',
+    test3 = 'test3',
+}
