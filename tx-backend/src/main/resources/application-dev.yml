@@ -23,6 +23,8 @@ server:
 
 
 spring:
+  flyway:
+    locations: /db/scripts/common,/db/scripts/local
   main:
     allow-bean-definition-overriding: true
   datasource:
