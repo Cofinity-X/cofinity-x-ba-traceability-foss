@@ -11,7 +11,11 @@ INSERT INTO public.assets_as_built_investigations(
 	investigation_id, asset_id)
 	VALUES (12348, 'urn:uuid:6ec3f1db-2798-454b-a73f-0d21a8966c77');
 
+INSERT INTO public.investigation(
+    id, bpn, close_reason, created, description, status, updated, side, accept_reason, decline_reason, error_message)
+    VALUES (12349, 'BPNL00000003CML1', '', '2023-10-17T13:48:54', 'Investigation No 001', 'SENT', '2023-10-17T13:48:54', 'SENDER', '', '', '');
 
-INSERT INTO public.investigation_notification(
-	id, contract_agreement_id, edc_url, notification_reference_id, receiver_bpn_number, sender_bpn_number, investigation_id, target_date, severity, sender_manufacturer_name, receiver_manufacturer_name, edc_notification_id, status, created, updated, message_id, is_initial)
-	VALUES (22324, '1212', 'http://edc.com', '122', 'BPN20000000OEM0B', 'BPNL00000003CML1', 12348, '2023-10-20T13:48:54', 'MINOR', 'OEM xxxxxxxxxxxxxxx B', 'OEM xxxxxxxxxxxxxxx A', '222', 'CREATED', '2023-10-17T13:48:54', '2023-10-17T13:48:54', 'm1', False);
+INSERT INTO public.assets_as_built_investigations(
+    investigation_id, asset_id)
+    VALUES (12349, 'urn:uuid:6ec3f1db-2798-454b-a73f-0d21a8966c77');
+
