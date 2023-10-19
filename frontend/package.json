@@ -57,7 +57,7 @@
     "i18next-browser-languagedetector": "7.0.1",
     "i18next-http-backend": "2.2.0",
     "keycloak-angular": "13.0.0",
-    "keycloak-js": "21.1.0-1",
+    "keycloak-js": "21.0.2",
     "lodash-es": "4.17.21",
     "postcss": "8.4.23",
     "rxjs": "7.8.0",
