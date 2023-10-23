@@ -31,68 +31,21 @@ services:
     networks:
       - tracex-net
 
-  oidc-server-mock:
-    image: ghcr.io/soluto/oidc-server-mock:0.8.5
-    ports:
-      - '4011:80'
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      SERVER_OPTIONS_INLINE: |
-          {
-            "AccessTokenJwtType": "JWT",
-            "Discovery": {
-              "ShowKeySet": true
-            }
-          }
-      LOGIN_OPTIONS_INLINE: |
-        {
-            "AllowRememberLogin": false
-        }
-      LOGOUT_OPTIONS_INLINE: |
-        {
-            "AutomaticRedirectAfterSignOut": true
-        }
-      API_SCOPES_INLINE: |
-        - Name: service-acct-role
-      USERS_CONFIGURATION_INLINE: |
-        [
-          {
-            "SubjectId": "subj_1",
-            "Username": "catena-client-1",
-            "Password": "password"
-          }
-        ]
-      CLIENTS_CONFIGURATION_INLINE: |
-        [
-              {
-                "ClientId": "catena-client-id",
-                "ClientSecrets": ["catena-client-secret"],
-                "Description": "Client for client credentials flow",
-                "AllowedGrantTypes": ["client_credentials"],
-                "AllowedScopes": ["openid", "profile", "email", "service-acct-role"],
-                "ClientClaimsPrefix": "",
-                "IdentityTokenLifetime": 86400,
-                "AccessTokenLifetime": 86400,
-                "Claims": [
-                  {
-                    "Type": "resource_access",
-                    "Value": "{\"Cl20-CX-IRS\": {\"roles\": [\"view_irs\", \"admin_irs\"]}, \"Cl17-CX-Part\": {\"roles\": [\"Admin\"]}}",
-                    "ValueType": "json"
-                  },
-                  {
-                    "Type": "bpn",
-                    "Value": "BPNL00000003CRHK",
-                    "ValueType": "string"
-                  }
-                ]
-              }
-        ]
-      ASPNET_SERVICES_OPTIONS_INLINE: |
-        {
-          "ForwardedHeadersOptions": {
-            "ForwardedHeaders" : "All"
-          }
-        }
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      DB_SCHEMA: public
+      KC_HOSTNAME: ${KC_HOSTNAME:-localhost}
+    command:
+      - start-dev
+      - --import-realm
+    volumes:
+      # Mount path can be customized according to the project folder structure
+      - ./cx_keycloak_realm/cx-realm.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - "4011:8080"
     depends_on:
       - postgres
     networks:
