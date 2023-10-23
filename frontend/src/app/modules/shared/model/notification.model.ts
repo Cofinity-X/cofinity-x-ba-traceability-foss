@@ -32,6 +32,7 @@ export enum NotificationStatus {
   CREATED = 'CREATED',
   DECLINED = 'DECLINED',
   RECEIVED = 'RECEIVED',
+  REQUESTED = 'REQUESTED',
   SENT = 'SENT',
 }
 
@@ -53,6 +54,11 @@ export interface NotificationReason {
 export interface NotificationUser {
   bpn?: string;
   name?: string;
+}
+
+export enum NotificationType {
+  INVESTIGATION = "Investigation",
+  ALERT = "Alert"
 }
 
 export interface NotificationResponse {
@@ -89,6 +95,8 @@ export interface Notification {
   targetDate?: CalendarDateModel;
   bpn?: string;
   errorMessage?: string;
+
+  notificationType?: NotificationType;
 }
 
 export type NotificationsResponse = PaginationResponse<NotificationResponse>;

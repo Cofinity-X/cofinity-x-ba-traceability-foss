@@ -27,6 +27,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Pagination } from '@core/model/pagination.model';
 import { RoleService } from '@core/user/role.service';
 import { MenuActionConfig, TableConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import {addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues} from '@shared/helper/table-helper';
 import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
 
 @Component({
@@ -81,7 +82,7 @@ export class TableComponent {
     this.pageIndex = page;
   }
 
-  @Input() set PartsPaginationData({page, pageSize, totalItems, content}: Pagination<unknown>) {
+  @Input() set PartsPaginationData({ page, pageSize, totalItems, content }: Pagination<unknown>) {
     let flatter = new FlattenObjectPipe();
     // modify the content of the partlist so that there are no subobjects
     let newContent = content.map(part => flatter.transform(part))
@@ -93,7 +94,6 @@ export class TableComponent {
   }
 
   @Input() set data(content: unknown[]) {
-
     this.dataSource.data = content;
     this.isDataLoading = false;
   }
@@ -135,20 +135,18 @@ export class TableComponent {
 
   private _tableConfig: TableConfig;
 
-  constructor(private readonly roleService: RoleService) {}
+  constructor(private readonly roleService: RoleService) { }
 
   public areAllRowsSelected(): boolean {
     return this.dataSource.data.every(data => this.isSelected(data));
   }
 
   public clearAllRows(): void {
-    this.selection.clear();
-    this.emitMultiSelect();
+    clearAllRows(this.selection, this.multiSelect);
   }
 
   public clearCurrentRows(): void {
-    this.removeSelectedValues(this.dataSource.data);
-    this.emitMultiSelect();
+    clearCurrentRows(this.selection, this.dataSource.data, this.multiSelect);
   }
 
   public toggleAllRows(): void {
@@ -195,14 +193,10 @@ export class TableComponent {
   }
 
   private addSelectedValues(newData: unknown[]): void {
-    const newValues = newData.filter(data => !this.isSelected(data));
-    this.selection.select(...newValues);
+    addSelectedValues(this.selection, newData);
   }
 
   private removeSelectedValues(itemsToRemove: unknown[]): void {
-    const shouldDelete = (row: unknown) => !!itemsToRemove.find(data => JSON.stringify(data) === JSON.stringify(row));
-    const rowsToDelete = this.selection.selected.filter(data => shouldDelete(data));
-
-    this.selection.deselect(...rowsToDelete);
+    removeSelectedValues(this.selection, itemsToRemove);
   }
 }

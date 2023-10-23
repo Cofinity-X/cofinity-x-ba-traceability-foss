@@ -53,10 +53,8 @@ export const investigationsHandlers = [
     const pagination = extractPagination(req);
 
     const currentStatus = [
-      NotificationStatus.CREATED,
-      NotificationStatus.SENT,
+      NotificationStatus.REQUESTED,
       NotificationStatus.ACKNOWLEDGED,
-      NotificationStatus.ACCEPTED,
       NotificationStatus.DECLINED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
@@ -72,9 +70,8 @@ export const investigationsHandlers = [
     const pagination = extractPagination(req);
 
     const currentStatus = [
-      NotificationStatus.RECEIVED,
+      NotificationStatus.REQUESTED,
       NotificationStatus.ACKNOWLEDGED,
-      NotificationStatus.ACCEPTED,
       NotificationStatus.DECLINED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
@@ -97,11 +94,8 @@ export const investigationsHandlers = [
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
       NotificationStatus.ACKNOWLEDGED,
-      NotificationStatus.ACCEPTED,
       NotificationStatus.DECLINED,
-
       NotificationStatus.ACKNOWLEDGED,
-      NotificationStatus.ACCEPTED,
       NotificationStatus.DECLINED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
@@ -146,7 +140,7 @@ export const investigationsTestHandlers = [
   rest.get(`*${environment.apiUrl}/investigations/received`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
-    const currentStatus = [NotificationStatus.RECEIVED, NotificationStatus.ACKNOWLEDGED];
+    const currentStatus = [NotificationStatus.REQUESTED, NotificationStatus.ACKNOWLEDGED];
     return res(
       ctx.status(200),
       ctx.json(applyPagination(testBuildMockInvestigations(currentStatus, 'RECEIVER'), pagination)),
@@ -161,7 +155,7 @@ export const investigationsTestHandlers = [
     const statusCollection = [
       NotificationStatus.CREATED,
       NotificationStatus.SENT,
-      NotificationStatus.RECEIVED,
+      NotificationStatus.REQUESTED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
       NotificationStatus.ACKNOWLEDGED,

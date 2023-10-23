@@ -27,15 +27,15 @@ import {
   NotificationResponse,
   Notifications,
   NotificationsResponse,
-  NotificationStatus,
+  NotificationStatus, NotificationType,
 } from '../model/notification.model';
 
 export class NotificationAssembler {
-  public static assembleNotifications(response: NotificationsResponse): Notifications {
-    return PaginationAssembler.assemblePagination(NotificationAssembler.assembleNotification, response);
+  public static assembleNotifications(response: NotificationsResponse, notificationType: NotificationType): Notifications {
+    return PaginationAssembler.assemblePagination(NotificationAssembler.assembleNotification, response, notificationType);
   }
 
-  public static assembleNotification(response: NotificationResponse): Notification {
+  public static assembleNotification(response: NotificationResponse, myNotificationType: NotificationType): Notification {
     const {
       id = null,
       assetIds = null,
@@ -52,7 +52,7 @@ export class NotificationAssembler {
       sendTo: _sendTo = '',
       sendToName: _sendToName = '',
       targetDate: _targetDate = '',
-      errorMessage: _errorMessage= '',
+      errorMessage: _errorMessage = '',
     } = response;
 
     const isFromSender = channel === 'SENDER';
@@ -60,9 +60,10 @@ export class NotificationAssembler {
     const severity = Object.values(Severity).find(element => element == _severity) ?? null;
     const createdDate = new CalendarDateModel(_createdDate);
     const targetDate = new CalendarDateModel(_targetDate);
-    const createdBy = { bpn: _createdBy, name: _createdByName };
+    const createdBy = { bpn: _createdBy, name: '' };
     const sendTo = { bpn: _sendTo, name: _sendToName };
     const errorMessage = _errorMessage || undefined;
+    const notificationType = myNotificationType || undefined;
 
     let assembled = {
       id,
@@ -77,8 +78,9 @@ export class NotificationAssembler {
       createdDate,
       targetDate,
       bpn,
+      notificationType
     };
 
-    return errorMessage ? {...assembled, errorMessage: errorMessage} : assembled;
+    return errorMessage ? { ...assembled, errorMessage: errorMessage } : assembled;
   }
 }

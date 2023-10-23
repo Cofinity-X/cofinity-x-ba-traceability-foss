@@ -3,9 +3,9 @@
   "routing": {
     "home": "Home",
     "dashboard": "Dashboard",
-    "parts": "Parts",
-    "otherParts": "Other parts",
-    "about": "About",
+    "parts": "My parts",
+    "otherParts": "Shared parts",
+    "about": "About Cofinity-X",
     "relations": "Relations",
     "admin": "Administration",
     "investigations": "Quality investigations",
@@ -15,19 +15,23 @@
   },
   "pageTitle": {
     "dashboard": "Dashboard",
-    "parts": "My Parts",
-    "otherParts": "Other Parts",
-    "about": "About Catena-X Open-Source Traceability",
-    "relations": "Part Relations",
+    "parts": "My parts",
+    "otherParts": "Other parts",
+    "about": "About Cofinity-X",
+    "relations": "Part relations",
     "admin": "Administration Catena-X",
-    "investigations": "Quality Investigations",
-    "alerts": "Quality Alerts"
+    "investigations": "Quality investigations",
+    "alerts": "Quality alerts"
   },
   "layout": {
     "nav": {
-      "openUserMenu": "Open user menu",
-      "signOut": "Sign out",
-      "goToPortal": "Go to CX Portal"
+      "faqs": "FAQs",
+      "helpdesk": "Helpdesk",
+      "signOut": "Logout"
+    },
+    "footer": {
+      "imprint": "Imprint",
+      "version": "Version updates"
     }
   },
   "actions": {
@@ -51,12 +55,14 @@
     "goBack": "Back"
   },
   "table": {
+    "latestFive": "(Latest 5)",
     "noResultFound": "NO RESULTS FOUND.",
     "tryAgain": "Please try again later.",
     "selectPageSize": "Select page of periodic elements",
     "menuDescription": "Action menu",
     "clearPage": "Clear page selections",
     "clearAll": "Clear all selections",
+    "filterTitle": "Filter",
     "adminColumn": {
       "startDate": "Start date",
       "registryLookupStatus": "Status",
@@ -93,7 +99,9 @@
       "catenaXSiteId": "SiteId",
       "psFunction": "Function",
       "functionValidFrom": "Function valid from",
-      "functionValidUntil": "Function valid until"
+      "functionValidUntil" : "Function valid until",
+      "activeAlerts" : "Active Quality alerts",
+      "activeInvestigations" : "Active Quality investigations"
     }
   },
   "dataLoading": {
@@ -175,6 +183,8 @@
   },
   "commonInvestigation": {
     "viewAll": "view all",
+    "noInvestigations": "No current quality investigations",
+    "noInvestigationsDescription": "If there are any quality investigations, they will be displayed here.",
     "tabs": {
       "received": "Received",
       "queuedAndRequested": "Queued & Requested"
@@ -185,6 +195,7 @@
       "CLOSED": "Closed",
       "CREATED": "Queued",
       "RECEIVED": "Received",
+      "REQUESTED": "Requested",
       "ACCEPTED": "Accepted",
       "ACKNOWLEDGED": "Acknowledged",
       "DECLINED": "Declined"
@@ -216,6 +227,8 @@
   },
   "commonAlert": {
     "viewAll": "view all",
+    "noAlerts": "No current quality alerts",
+    "noAlertsDescription": "If there are any quality alerts, they will be displayed here.",
     "tabs": {
       "received": "Received",
       "queuedAndRequested": "Queued & Sent"
@@ -228,6 +241,7 @@
       "RECEIVED": "Received",
       "ACCEPTED": "Accepted",
       "ACKNOWLEDGED": "Acknowledged",
+      "REQUESTED": "Requested",
       "DECLINED": "Declined"
     },
     "modal": {
@@ -258,5 +272,21 @@
   "bomLifecycleActivator": {
     "asBuilt": "As Built",
     "asPlanned": "As Planned"
+  },
+  "multiSelect": {
+    "filterLabel": "Filter",
+    "placeHolder": "All"
+  },
+  "parts": {
+    "input": {
+      "global-search": {
+        "placeholder": "Search by entering C-X ID, partInstanceId or partNumber / BPN",
+        "toastInfo": "By using global search on view level, the local filters on table level was removed."
+      }
+    }
+  },
+  "datepicker": {
+    "apply": "Filter",
+    "cancel": "Reset"
   }
 }

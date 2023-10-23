@@ -5,7 +5,7 @@
     "dashboard": "Dashboard",
     "parts": "Produkte",
     "otherParts": "Andere Produkte",
-    "about": "Über uns",
+    "about": "Über Cofinity-X",
     "relations": "Beziehungen",
     "admin": "Verwaltung",
     "investigations": "Qualitätsuntersuchung",
@@ -25,9 +25,13 @@
   },
   "layout": {
     "nav": {
-      "openUserMenu": "Benutzermenü öffnen",
-      "signOut": "Abmelden",
-      "goToPortal": "Öffne CX Portal"
+      "faqs": "FAQs",
+      "helpdesk": "Helpdesk",
+      "signOut": "Abmelden"
+    },
+    "footer": {
+      "imprint": "Impressum",
+      "version": "Version Updates"
     }
   },
   "actions": {
@@ -51,12 +55,14 @@
     "goBack": "Zurück"
   },
   "table": {
+    "latestFive": "(Letzte 5)",
     "noResultFound": "KEINE ERGEBNISSE GEFUNDEN.",
     "tryAgain": "Bitte versuchen Sie es später noch einmal.",
     "selectPageSize": "Seite für segmentierte Elemente auswählen",
     "menuDescription": "Aktionsmenü",
     "clearPage": "Markierungen auf dieser Seite aufheben",
     "clearAll": "Alle Markierungen aufheben",
+    "filterTitle" : "Filter",
     "adminColumn": {
       "startDate": "Startdatum",
       "registryLookupStatus": "Status",
@@ -94,7 +100,9 @@
       "catenaXSiteId": "Standort ID",
       "psFunction": "Funktion",
       "functionValidFrom": "Funktion gültig von",
-      "functionValidUntil": "Funktion gültig bis"
+      "functionValidUntil" : "Funktion gültig bis",
+      "activeAlerts" : "Aktive Qualitätswarnungen",
+      "activeInvestigations" : "Aktive Qualitätsuntersuchungen"
     }
   },
   "dataLoading": {
@@ -172,6 +180,8 @@
   },
   "commonInvestigation": {
     "viewAll": "Alle anzeigen",
+    "noInvestigations": "Keine aktuellen Qualitätsuntersuchungen",
+    "noInvestigationsDescription": "Wenn es Qualitätsuntersuchungen gibt, werden sie hier angezeigt.",
     "tabs": {
       "received": "Zugewiesene",
       "queuedAndRequested": "Erstellte und Angefragte"
@@ -184,6 +194,7 @@
       "CLOSED": "Abgeschlossen",
       "ACCEPTED": "Akzeptiert",
       "ACKNOWLEDGED": "Bestätigt",
+      "REQUESTED": "Angefordert",
       "DECLINED": "Abgelehnt"
     },
     "modal": {
@@ -213,6 +224,8 @@
   },
   "commonAlert": {
     "viewAll": "Alle anzeigen",
+    "noAlerts": "Keine aktuellen Qualitätswarnungen",
+    "noAlertsDescription": "Falls es Qualitätswarnungen gibt, werden sie hier angezeigt.",
     "tabs": {
       "received": "Zugewiesene",
       "queuedAndRequested": "Erstellte und Versendete"
@@ -224,6 +237,7 @@
       "CANCELED": "Abgebrochen",
       "CLOSED": "Abgeschlossen",
       "ACCEPTED": "Akzeptiert",
+      "REQUESTED": "Angefordert",
       "ACKNOWLEDGED": "Bestätigt",
       "DECLINED": "Abgelehnt"
     },
@@ -255,5 +269,21 @@
   "bomLifecycleActivator": {
     "asBuilt": "As Built",
     "asPlanned": "As Planned"
+  },
+  "multiSelect": {
+    "filterLabel": "Filter",
+    "placeholder": "Alle"
+  },
+  "parts": {
+    "input": {
+      "global-search": {
+        "placeholder": "Suche nach C-X ID, partInstanceId or partNumber / BPN",
+        "toastInfo": "Lokale Filterung auf Tabellenebene wurde zurückgesetzt."
+      }
+    }
+  },
+  "datepicker": {
+    "apply": "Filter",
+    "cancel": "Zurücksetzen"
   }
 }

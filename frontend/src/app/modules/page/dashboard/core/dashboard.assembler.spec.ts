@@ -33,6 +33,7 @@ describe('DashboardAssembler', () => {
         otherParts: 100,
         myItems: 200,
         investigations: undefined,
+        alerts: undefined,
       });
     });
   });

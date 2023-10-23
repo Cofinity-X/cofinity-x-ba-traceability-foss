@@ -206,12 +206,6 @@
     font-size: 24px;
   }
 
-  h3,
-  upper-case {
-    @apply uppercase font-semiBold sm:text-xl text-dark;
-    font-size: 24px;
-  }
-
   h4 {
     @apply font-semiBold sm:text-lg text-dark;
     font-size: 18px;
@@ -260,7 +254,7 @@
     border-radius: 50px !important;
   }
 
-  .mat-mdc-unelevated-button>.mdc-button__label {
+  .mat-mdc-unelevated-button > .mdc-button__label {
     @apply text-interactive;
   }
 
@@ -283,16 +277,17 @@
   }
 
   .mat-sort-header {
-    @apply text-gray;
+    @apply text-black;
   }
 
-  .mat-sort-header-sorted>.mat-sort-header-content {
+  .mat-sort-header-sorted > .mat-sort-header-content {
     @apply font-semiBold;
   }
 
-  .mat-mdc-form-field-infix {
+  // todo check if we can remove this
+/*  .mat-mdc-form-field-infix {
     padding-bottom: 0px !important;
-  }
+  }*/
 }
 
 .mdc-text-field__input::-webkit-calendar-picker-indicator {

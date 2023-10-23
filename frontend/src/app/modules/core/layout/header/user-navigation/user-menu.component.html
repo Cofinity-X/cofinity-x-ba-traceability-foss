@@ -24,8 +24,12 @@ SPDX-License-Identifier: Apache-2.0
   <div class="user-menu-content">
     <div (click)="this.expand($event)">
       <button class="user-menu-btn" data-testid="user-menu" id="user-menu" aria-haspopup="true">
-        <span class="sr-only">{{ 'layout.nav.openUserMenu' | i18n }}</span>
-        <app-avatar></app-avatar>
+        <img *ngIf="!this.isExpanded" class="user-menu-btn__icon" src="/assets/images/icons/user_menu_icon.svg" />
+        <img
+          *ngIf="this.isExpanded"
+          class="user-menu-btn__icon-close"
+          src="/assets/images/icons/user_menu_close_icon.svg"
+        />
       </button>
     </div>
     <div
@@ -36,57 +40,28 @@ SPDX-License-Identifier: Apache-2.0
       aria-orientation="vertical"
       aria-labelledby="user-menu"
     >
-      <section class="flex flex-row px-4 py-2">
-        <section class="flex flex-col p-1">
-          <p class="regular-text">{{ this.userDetails.name }}</p>
-          <p class="component-headline text-doveGray break-words">{{ this.userDetails.role }}</p>
-        </section>
+      <section class="flex flex-col">
+        <p class="label-large text-primary">{{ this.userDetails.name }}</p>
+        <p class="body-small">{{ this.userDetails.role }}</p>
       </section>
 
-      <mat-divider></mat-divider>
+      <mat-divider class="user-menu-mat-divider"></mat-divider>
 
-      <div *ngIf="portalUrl" (click)="openPortalPage()" class="user-menu-items">
-        <p class="regular-text user-menu-items__label" role="menuitem">
-          {{ 'layout.nav.goToPortal' | i18n }}
-        </p>
-        <app-button variant="icon" iconName="home"></app-button>
-      </div>
+      <p class="label-large user-menu-item" role="menuitem" (click)="this.navigateToFaqs()">
+        {{ 'layout.nav.faqs' | i18n }}
+      </p>
 
-      <ng-container
-        *ngTemplateOutlet="menuItem; context: { name: 'admin', icon: 'apps', role: 'admin', route: 'admin' }"
-      >
-      </ng-container>
+      <p class="label-large user-menu-item" role="menuitem" (click)="this.openPortalPage()">
+        {{ 'layout.nav.helpdesk' | i18n }}
+      </p>
 
-      <mat-divider></mat-divider>
+      <p class="label-large user-menu-item" role="menuitem">
+        {{ 'layout.nav.signOut' | i18n }}
+      </p>
 
-      <div class="user-menu-items" (click)="this.logOut()">
-        <p class="regular-text user-menu-items__label" role="menuitem">
-          {{ 'layout.nav.signOut' | i18n }}
-        </p>
-        <app-button variant="icon" iconName="arrow_forward_small"></app-button>
-      </div>
+      <mat-divider class="user-menu-mat-divider"></mat-divider>
 
-      <mat-divider></mat-divider>
-
-      <div class="user-menu-language">
-        <p class="user-menu-language__items">
-          <app-language-selector></app-language-selector>
-        </p>
-      </div>
+      <app-language-selector class="user-menu-language"></app-language-selector>
     </div>
   </div>
 </div>
-
-<ng-template #menuItem let-name="name" let-icon="icon" let-role="role" let-route="route">
-  <div
-    class="user-menu-items"
-    *appHasRole="[role ?? 'user']"
-    [routerLink]="['/' + route]"
-    [class.user-menu-items--selected]="route === activeItem"
-  >
-    <p class="regular-text user-menu-items__label" role="menuitem">
-      {{ 'routing.' + name | i18n }}
-    </p>
-    <app-button variant="icon" iconName="{{ icon || name }}"></app-button>
-  </div>
-</ng-template>
