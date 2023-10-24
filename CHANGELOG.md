@@ -10,6 +10,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 - Added Table columns settings in part tables to show/hide/reorder table columns
 - new endpoints supporting filtering feature for investigations and alers api/investigations api/alerts
+- support for date ranges BEFORE_LOCAL_DATE and AFTER_LOCAL_DATE providing both will cause filter result to return only relevant date ranges
 
 ### Changed
 - Updated user manual to reflect the table column settings feature
@@ -20,6 +21,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Shedlock version from 5.7.0 to 5.9.1
 - Swagger Annotation Version from 1.6.11 to 1.6.12
 - Testcontainer Postgresql Version from 1.19.0 to 1.19.1
+- distinctFilterValues endpoints now support startWith parameter that will cause result to contain only suggestions starting with given string
 
 ### Removed
 - Removed &filterOperator=AND from filtering requests
