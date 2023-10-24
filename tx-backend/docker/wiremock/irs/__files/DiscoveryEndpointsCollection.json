@@ -1,0 +1,25 @@
+{
+  "endpoints" : [
+    {
+      "type" : "oen",
+      "description" : "Service to discover BPN to a particular OEN",
+      "endpointAddress" : "http://localhost:3001/oen",
+      "documentation" : "http://.../swagger/index.html",
+      "resourceId" : "ec6f407b-4296-418c-9e4e-fb739fe72a67"
+    },
+    {
+      "type" : "bpid",
+      "description" : "Service to discover BPN to a particular Battery Pass ID",
+      "endpointAddress" : "http://localhost:3001/bpid",
+      "documentation" : "http://.../swagger/index.html",
+      "resourceId" : "08702529-3714-4c4f-b022-346b9b4fbbe2"
+    },
+    {
+      "type" : "bpn",
+      "description" : "Service to discover EDC to a particular BPN",
+      "endpointAddress" : "http://localhost:3001/bpn",
+      "documentation" : "http://.../swagger/index.html",
+      "resourceId" : "316417cd-0fb5-4daf-8dfa-8f68125923f1"
+    }
+  ]
+}
