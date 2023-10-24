@@ -51,7 +51,7 @@ services:
     networks:
       - tracex-net
 
-  irs-mock-server:
+  irs-server-mock:
     image: wiremock/wiremock:3.2.0
     ports:
       - 3001:8080

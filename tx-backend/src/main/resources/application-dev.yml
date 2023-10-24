@@ -21,9 +21,10 @@
 server:
   port: 8082
 
+
 spring:
   flyway:
-    locations: /db/scripts/common,/db/scripts/local
+    locations: /db/migration,/db/local
   main:
     allow-bean-definition-overriding: true
   datasource:
@@ -38,12 +39,12 @@ spring:
             authorization-grant-type: client_credentials
             client-id: ${OAUTH2_CLIENT_ID}
             client-secret: ${OAUTH2_CLIENT_SECRET}
-            scope: get-irs-policies
+            scope: service-acct-role
           OKTA:
             client-id: ${OAUTH2_CLIENT_ID}
             client-secret: ${OAUTH2_CLIENT_SECRET}
             authorization-grant-type: client_credentials
-            scope: get-irs-policies
+            scope: service-acct-role
         provider:
           keycloak:
             token-uri: ${OAUTH2_PROVIDER_TOKEN_URI}
@@ -52,6 +53,7 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${OAUTH2_JWK_SET_URI:https://default}
+
 
 irs:
   policies:
