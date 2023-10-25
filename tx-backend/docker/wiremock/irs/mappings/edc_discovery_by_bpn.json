@@ -8,6 +8,9 @@
     "headers" : {
       "Content-Type" : "application/json"
     },
-    "bodyFileName" : "edc_discovery_bpn_response.json"
+    "bodyFileName" : "edc_discovery_bpn_response.json",
+    "transformers" : [
+      "response-template"
+    ]
   }
 }
