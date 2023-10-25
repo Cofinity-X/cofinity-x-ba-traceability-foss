@@ -54,6 +54,20 @@ spring:
         jwt:
           jwk-set-uri: ${OAUTH2_JWK_SET_URI:https://default}
 
+resilience4j:
+  retry:
+    instances:
+      irs-get:
+        resultPredicate: 'org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.JobRunning'
+        maxAttempts: 3
+        waitDuration: 30s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+      registry:
+        maxAttempts: 3
+        waitDuration: 10s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 1
 
 irs:
   policies:

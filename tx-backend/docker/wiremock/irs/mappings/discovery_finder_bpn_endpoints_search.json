@@ -11,6 +11,6 @@
     "headers" : {
       "Content-Type" : "application/json"
     },
-    "bodyFileName" : "DiscoveryEndpointsCollection.json"
+    "bodyFileName" : "discovery_finder_bpn_endpoints_response.json"
   }
 }

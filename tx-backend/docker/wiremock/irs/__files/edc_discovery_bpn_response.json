@@ -1,0 +1,14 @@
+[
+  {
+    "bpn" : "BPNL00000003CAI1",
+    "connectorEndpoint" : [
+      "http://localhost:3001/BPNL00000003CAI1/dummy-connect"
+    ]
+  },
+  {
+    "bpn" : "BPNL000000032123",
+    "connectorEndpoint" : [
+      "http://localhost:3001/BPNL000000032123/dummy-connect"
+    ]
+  }
+]
