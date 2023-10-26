@@ -1,0 +1,16 @@
+{
+  "request" : {
+    "method" : "POST",
+    "urlPath" : "/api/v2/catalog/request"
+  },
+  "response" : {
+    "status" : 200,
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "bodyFileName" : "edc_catalog_req_response.json",
+    "transformers" : [
+      "response-template"
+    ]
+  }
+}
