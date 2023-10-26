@@ -19,24 +19,23 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import {AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {Pagination} from '@core/model/pagination.model';
-import {PartsFacade} from '@page/parts/core/parts.facade';
-import {MainAspectType} from '@page/parts/model/mainAspectType.enum';
-import {AssetAsBuiltFilter, AssetAsPlannedFilter, Part} from '@page/parts/model/parts.model';
-import {PartTableType, TableEventConfig, TableHeaderSort,} from '@shared/components/table/table.model';
-import {View} from '@shared/model/view.model';
-import {PartDetailsFacade} from '@shared/modules/part-details/core/partDetails.facade';
-import {StaticIdService} from '@shared/service/staticId.service';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {BomLifecycleSize} from "@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model";
-import {BomLifecycleSettingsService, UserSettingView} from "@shared/service/bom-lifecycle-settings.service";
-import {toAssetFilter, toGlobalSearchAssetFilter} from "@shared/helper/filter-helper";
-import {FormControl, FormGroup} from "@angular/forms";
-import {ToastService} from "@shared/components/toasts/toast.service";
-import {PartsTableComponent} from "@shared/components/parts-table/parts-table.component";
-import {resetMultiSelectionAutoCompleteComponent} from "@page/parts/core/parts.helper";
-
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Pagination } from '@core/model/pagination.model';
+import { PartsFacade } from '@page/parts/core/parts.facade';
+import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
+import { AssetAsBuiltFilter, AssetAsPlannedFilter, Part } from '@page/parts/model/parts.model';
+import { PartTableType, TableEventConfig, TableHeaderSort, } from '@shared/components/table/table.model';
+import { View } from '@shared/model/view.model';
+import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
+import { StaticIdService } from '@shared/service/staticId.service';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BomLifecycleSize } from "@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model";
+import { BomLifecycleSettingsService, UserSettingView } from "@shared/service/bom-lifecycle-settings.service";
+import { toAssetFilter, toGlobalSearchAssetFilter } from "@shared/helper/filter-helper";
+import { FormControl, FormGroup } from "@angular/forms";
+import { ToastService } from "@shared/components/toasts/toast.service";
+import { PartsTableComponent } from "@shared/components/parts-table/parts-table.component";
+import { resetMultiSelectionAutoCompleteComponent } from "@page/parts/core/parts.helper";
 
 @Component({
     selector: 'app-parts',
@@ -48,6 +47,10 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     public readonly titleId = this.staticIdService.generateId('PartsComponent.title');
     public readonly partsAsBuilt$: Observable<View<Pagination<Part>>>;
     public readonly partsAsPlanned$: Observable<View<Pagination<Part>>>;
+    public readonly partsAsDesigned$: Observable<View<Pagination<Part>>>;
+    public readonly partsAsOrdered$: Observable<View<Pagination<Part>>>;
+    public readonly partsAsSupported$: Observable<View<Pagination<Part>>>;
+    public readonly partsAsRecycled$: Observable<View<Pagination<Part>>>;
 
     public readonly isAlertOpen$ = new BehaviorSubject<boolean>(false);
 
@@ -57,6 +60,10 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public tableAsBuiltSortList: TableHeaderSort[];
     public tableAsPlannedSortList: TableHeaderSort[];
+    public tableAsDesignedSortList: TableHeaderSort[];
+    public tableAsSupportedSortList: TableHeaderSort[];
+    public tableAsOrderedSortList: TableHeaderSort[];
+    public tableAsRecycledSortList: TableHeaderSort[];
 
     public DEFAULT_PAGE_SIZE = 50;
     public ctrlKeyState = false;
@@ -95,6 +102,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.partsFacade.setPartsAsPlanned();
         this.searchFormGroup.addControl("partSearch", new FormControl([]));
         this.searchControl = this.searchFormGroup.get('partSearch') as unknown as FormControl;
+
+        console.log(this.bomLifecycleSize);
     }
 
     filterActivated(isAsBuilt: boolean, assetFilter: any): void {
@@ -140,7 +149,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.partDetailsFacade.selectedPart = $event as unknown as Part;
     }
 
-    public onAsBuiltTableConfigChange({page, pageSize, sorting}: TableEventConfig): void {
+    public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
         this.setTableSortingList(sorting, MainAspectType.AS_BUILT);
 
         let pageSizeValue = this.DEFAULT_PAGE_SIZE;
@@ -156,8 +165,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
-    public onAsPlannedTableConfigChange({page, pageSize, sorting}: TableEventConfig): void {
-
+    public onAsPlannedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
         let pageSizeValue = this.DEFAULT_PAGE_SIZE;
         if (pageSize !== 0) {
             pageSizeValue = pageSize;
@@ -168,7 +176,58 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
             this.partsFacade.setPartsAsPlanned(page, pageSizeValue, this.tableAsPlannedSortList);
         }
+    }
 
+    public onAsDesignedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+        let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+        if (pageSize !== 0) {
+            pageSizeValue = pageSize;
+        }
+
+        if (this.assetFilter) {
+            this.partsFacade.setPartsAsDesignged(0, pageSizeValue, this.tableAsDesignedSortList, toAssetFilter(this.assetFilter, true));
+        } else {
+            this.partsFacade.setPartsAsDesignged(page, pageSizeValue, this.tableAsDesignedSortList);
+        }
+    }
+
+    public onAsOrderedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+        let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+        if (pageSize !== 0) {
+            pageSizeValue = pageSize;
+        }
+
+        if (this.assetFilter) {
+            this.partsFacade.setPartsAsOrdered(0, pageSizeValue, this.tableAsOrderedSortList, toAssetFilter(this.assetFilter, true));
+        } else {
+            this.partsFacade.setPartsAsOrdered(page, pageSizeValue, this.tableAsOrderedSortList);
+        }
+    }
+
+    public onAsSupportedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+        let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+        if (pageSize !== 0) {
+            pageSizeValue = pageSize;
+        }
+
+        if (this.assetFilter) {
+            this.partsFacade.setPartsAsSupported(0, pageSizeValue, this.tableAsSupportedSortList, toAssetFilter(this.assetFilter, true));
+        } else {
+            this.partsFacade.setPartsAsSupported(page, pageSizeValue, this.tableAsSupportedSortList);
+        }
+    }
+
+    public onAsRecycledTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+        let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+        if (pageSize !== 0) {
+            pageSizeValue = pageSize;
+        }
+
+        if (this.assetFilter) {
+            this.partsFacade.setPartsAsRecycled(0, pageSizeValue, this.tableAsRecycledSortList, toAssetFilter(this.assetFilter, true));
+        } else {
+            this.partsFacade.setPartsAsRecycled(page, pageSizeValue, this.tableAsRecycledSortList);
+        }
     }
 
     public handleTableActivationEvent(bomLifecycleSize: BomLifecycleSize) {

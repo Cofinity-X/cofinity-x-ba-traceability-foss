@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
     BomLifecycleConfig,
     BomLifecycleSize
@@ -28,8 +28,12 @@ import {
 })
 export class BomLifecycleSettingsService {
     private readonly DEFAULT: BomLifecycleConfig = {
-        asBuiltActive: true,
-        asPlannedActive: true
+        asDesignedActive: false,
+        asBuiltActive: false,
+        asOrderedActive: false,
+        asPlannedActive: false,
+        asSupportedActive: false,
+        asRecycledActive: false
     }
 
     getUserSettings(userSettingView: UserSettingView): BomLifecycleConfig {
@@ -44,23 +48,32 @@ export class BomLifecycleSettingsService {
         let size: BomLifecycleSize;
         const userSettings: BomLifecycleConfig = this.getUserSettings(userSettingView);
 
-
-        if (userSettings.asPlannedActive && userSettings.asBuiltActive) {
-            size = {
-                asBuiltSize: 50,
-                asPlannedSize: 50
-            }
-        } else if (userSettings.asPlannedActive) {
-            size = {
-                asBuiltSize: 0,
-                asPlannedSize: 100
-            }
-        } else if (userSettings.asBuiltActive) {
-            size = {
-                asBuiltSize: 100,
-                asPlannedSize: 0
-            }
+        const { asDesignedActive, asPlannedActive, asOrderedActive, asBuiltActive, asSupportedActive, asRecycledActive } = userSettings;
+        size = {
+            asDesignedSize: asDesignedActive ? 50 : undefined,
+            asPlannedSize: asPlannedActive ? 50 : undefined,
+            asOrderedSize: asOrderedActive ? 50 : undefined,
+            asBuiltSize: asBuiltActive ? 50 : undefined,
+            asSupportedSize: asSupportedActive ? 50 : undefined,
+            asRecycledSize: asRecycledActive ? 50 : undefined,
         }
+
+        // if (userSettings.asPlannedActive && userSettings.asBuiltActive) {
+        //     size = {
+        //         asBuiltSize: 50,
+        //         asPlannedSize: 50
+        //     }
+        // } else if (userSettings.asPlannedActive) {
+        //     size = {
+        //         asBuiltSize: 0,
+        //         asPlannedSize: 100
+        //     }
+        // } else if (userSettings.asBuiltActive) {
+        //     size = {
+        //         asBuiltSize: 100,
+        //         asPlannedSize: 0
+        //     }
+        // }
         return size;
     }
 

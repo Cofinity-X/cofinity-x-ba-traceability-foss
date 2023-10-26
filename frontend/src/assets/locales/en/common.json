@@ -73,6 +73,7 @@
     },
     "column": {
       "id": "ID",
+      "!": "!",
       "idShort": "ID Short",
       "name": "Name",
       "manufacturer": "Manufacturer",
@@ -99,9 +100,9 @@
       "catenaXSiteId": "SiteId",
       "psFunction": "Function",
       "functionValidFrom": "Function valid from",
-      "functionValidUntil" : "Function valid until",
-      "activeAlerts" : "Active Quality alerts",
-      "activeInvestigations" : "Active Quality investigations"
+      "functionValidUntil": "Function valid until",
+      "activeAlerts": "Active Quality alerts",
+      "activeInvestigations": "Active Quality investigations"
     }
   },
   "dataLoading": {
@@ -270,7 +271,7 @@
     }
   },
   "bomLifecycleActivator": {
-    "selectLifeCycles": "Select 2 life cycle stages",
+    "selectLifeCycles": "Select 2 lifecycle stages",
     "asBuilt": "As Built",
     "asPlanned": "As Planned"
   },

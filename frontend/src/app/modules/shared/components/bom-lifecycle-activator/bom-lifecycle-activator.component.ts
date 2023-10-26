@@ -26,6 +26,7 @@ import {
 import { BomLifecycleSettingsService, UserSettingView } from "@shared/service/bom-lifecycle-settings.service";
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormControl, FormsModule } from '@angular/forms';
+import { MatOptionSelectionChange } from '@angular/material/core';
 
 @Component({
     selector: 'app-bom-lifecycle-activator',
@@ -35,8 +36,9 @@ import { FormControl, FormsModule } from '@angular/forms';
 export class BomLifecycleActivatorComponent implements OnInit {
 
     @Input() view: UserSettingView;
+    @Output() bomLifecycleConfigChanged = new EventEmitter<BomLifecycleConfig>();
     public bomLifecycleConfig: BomLifecycleConfig;
-    public lifeCycleTypes: string[] = Object.keys(BomLifecycleType);
+    public lifeCycleTypes: string[] = Object.values(BomLifecycleType);
     public lifeCycleCtrl = new FormControl('');
     public selectedLifeCycles: string[] = [];
 
@@ -54,12 +56,65 @@ export class BomLifecycleActivatorComponent implements OnInit {
 
     @Output() buttonClickEvent = new EventEmitter<BomLifecycleSize>();
 
-    toggleLifecycleType(type: string) {
+    selected(event: MatAutocompleteSelectedEvent): void {
+        const value = event.option.viewValue;
+        this.selectedLifeCycles.push(value);
 
+        this.updateLifecycleConfig(value, true);
     }
 
-    selected(event: MatAutocompleteSelectedEvent): void {
-        this.selectedLifeCycles.push(event.option.viewValue);
+    disableOption(value: string): boolean {
+        return this.selectedLifeCycles.includes(value) === false && this.selectedLifeCycles.length === 2;
+    }
+
+    updateLifecycleConfig(value: string, state: boolean) {
+        const index = Object.values(BomLifecycleType).indexOf(value as unknown as BomLifecycleType);
+
+        switch (index) {
+            case 0: {
+                this.bomLifecycleConfig.asDesignedActive = state;
+                break;
+            }
+            case 1: {
+                this.bomLifecycleConfig.asPlannedActive = state;
+                break;
+            }
+            case 2: {
+                this.bomLifecycleConfig.asOrderedActive = state;
+                break;
+            }
+            case 3: {
+                this.bomLifecycleConfig.asBuiltActive = state;
+                break;
+            }
+            case 4: {
+                this.bomLifecycleConfig.asSupportedActive = state;
+                break;
+            }
+            case 5: {
+                this.bomLifecycleConfig.asRecycledActive = state;
+                break;
+            }
+        }
+
+        this.bomLifeCycleUserSetting.setUserSettings({
+            asDesignedActive: this.bomLifecycleConfig.asDesignedActive,
+            asBuiltActive: this.bomLifecycleConfig.asBuiltActive,
+            asOrderedActive: this.bomLifecycleConfig.asOrderedActive,
+            asPlannedActive: this.bomLifecycleConfig.asPlannedActive,
+            asSupportedActive: this.bomLifecycleConfig.asSupportedActive,
+            asRecycledActive: this.bomLifecycleConfig.asRecycledActive
+        }, this.view);
+
+        this.buttonClickEvent.emit(this.bomLifeCycleUserSetting.getSize(this.view));
+    }
+
+    selectionChanged(values: string[]) {
+        this.disabledAllLifecycleStates();
+
+        for (let i = 0; i < values.length; i++) {
+            this.updateLifecycleConfig(values[i], true);
+        }
     }
 
     selectLifeCycle(lifeCycle: string): void {
@@ -69,6 +124,8 @@ export class BomLifecycleActivatorComponent implements OnInit {
         } else {
             this.selectedLifeCycles.push(lifeCycle);
         }
+
+        this.bomLifecycleConfigChanged.emit(this.bomLifecycleConfig);
     }
 
     removeLifeCycle(lifeCycle: string): void {
@@ -78,6 +135,41 @@ export class BomLifecycleActivatorComponent implements OnInit {
             this.selectedLifeCycles.splice(index, 1);
             this.selectedLifeCycles = Array.from(this.selectedLifeCycles);
         }
+
+        this.updateLifecycleConfig(lifeCycle, false);
+    }
+
+    toggleLifecycleType(value: string): void {
+        const index = Object.values(BomLifecycleType).indexOf(value as unknown as BomLifecycleType);
+
+        switch (index) {
+            case 0: {
+                this.bomLifecycleConfig.asDesignedActive = !this.bomLifecycleConfig.asDesignedActive;
+                break;
+            }
+            case 1: {
+                this.bomLifecycleConfig.asPlannedActive = !this.bomLifecycleConfig.asPlannedActive;
+                break;
+            }
+            case 2: {
+                this.bomLifecycleConfig.asOrderedActive = !this.bomLifecycleConfig.asOrderedActive;
+                break;
+            }
+            case 3: {
+                this.bomLifecycleConfig.asBuiltActive = !this.bomLifecycleConfig.asBuiltActive;
+                break;
+            }
+            case 4: {
+                this.bomLifecycleConfig.asSupportedActive = !this.bomLifecycleConfig.asSupportedActive;
+                break;
+            }
+            case 5: {
+                this.bomLifecycleConfig.asRecycledActive = !this.bomLifecycleConfig.asRecycledActive;
+                break;
+            }
+        }
+
+        this.emitBomLifecycleState();
     }
 
 
@@ -86,16 +178,26 @@ export class BomLifecycleActivatorComponent implements OnInit {
         this.emitBomLifecycleState();
     }
 
-    togglel() {
+    toggle() {
         // If the other button is also inactive, prevent this one from being deactivated
         this.bomLifecycleConfig.asBuiltActive = !this.bomLifecycleConfig.asBuiltActive;
         this.emitBomLifecycleState();
     }
 
+    disabledAllLifecycleStates() {
+        for (let i = 0; i < this.lifeCycleTypes.length; i++) {
+            this.updateLifecycleConfig(this.lifeCycleTypes[i], false);
+        }
+    }
+
     emitBomLifecycleState() {
         this.bomLifeCycleUserSetting.setUserSettings({
+            asDesignedActive: this.bomLifecycleConfig.asDesignedActive,
             asBuiltActive: this.bomLifecycleConfig.asBuiltActive,
-            asPlannedActive: this.bomLifecycleConfig.asPlannedActive
+            asOrderedActive: this.bomLifecycleConfig.asOrderedActive,
+            asPlannedActive: this.bomLifecycleConfig.asPlannedActive,
+            asSupportedActive: this.bomLifecycleConfig.asSupportedActive,
+            asRecycledActive: this.bomLifecycleConfig.asRecycledActive
         }, this.view);
         this.buttonClickEvent.emit(this.bomLifeCycleUserSetting.getSize(this.view));
     }

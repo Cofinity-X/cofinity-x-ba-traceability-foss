@@ -16,6 +16,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+@import '../../../../../theme/base.scss';
+@tailwind base;
+
 .button-container {
   display: flex;
   flex-direction: row;
@@ -25,14 +28,61 @@
   /* this will make each button take up 50% of the container's width */
 }
 
+.text {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+.mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
+  padding-top: 8px !important;
+}
+
 .chip {
   @apply bg-secondary !important;
+  align-items: center;
 }
 
 .mat-mdc-standard-chip {
   --mdc-chip-label-text-color: #fff;
 }
 
-.closeIcon {
-  color: #ffffff !important;
+.option {
+  @extend .body-large;
+  font-weight: 400;
+  line-height: 20px;
+  width: 227px;
+}
+
+.panel {
+  height: 256px;
+}
+
+.container {
+  width: 240px;
+  margin-right: 16px;
+}
+
+.mat-tooltip {
+  // to make possible place arrow pseudo element outside tooltip with absolute positioning
+  overflow: visible;
+  position: relative;
+
+  &.right {
+    border-left: 6px solid red;
+    margin-left: 5px;
+
+    &::before {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      background-color: red;
+      clip-path: polygon(50% 0, 0 50%, 50% 100%);
+      left: -12px;
+      width: 15px;
+      height: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 }

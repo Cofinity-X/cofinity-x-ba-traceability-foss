@@ -16,12 +16,18 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+@use '@angular/material' as mat;
+
 table {
   width: 100%;
+  height: 505px !important;
   @apply font-light;
 }
 
-
+.mat-table {
+  overflow-x: visible !important;
+  max-width: 100%;
+}
 
 .table--select-all {
   display: inline-flex;
@@ -30,7 +36,7 @@ table {
   &__menu {
     background: rgba(0, 0, 0, 0.04);
 
-    & > .table--select-all__dropdown:hover {
+    &>.table--select-all__dropdown:hover {
       background: none;
     }
   }
@@ -42,8 +48,6 @@ table {
   .filter-title {
     padding: 25px;
   }
-
-
 }
 
 .table--select-all__dropdown {
@@ -58,11 +62,6 @@ table {
 .mat-mdc-row .mat-mdc-cell {
   cursor: pointer;
 }
-
-.mat-mdc-row:hover {
-  outline: 1px solid currentColor;
-}
-
 
 .table--no-data {
   display: flex;
@@ -84,7 +83,32 @@ table {
   outline: unset;
 }
 
+.mdc-data-table__header-cell {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
+.mat-mdc-row:hover {
+  @apply bg-surfaceMedium !important;
+}
+
+.mdc-data-table__cell {
+  border: none !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: black !important;
+}
+
+.table-wrapper {
+  height: 505px;
+  width: 100%;
+}
+
 .table--cell {
+  white-space: nowrap;
   padding: 0 10px;
 }
 
@@ -138,6 +162,7 @@ table {
 
 tr.highlighted {
   @apply bg-warning bg-opacity-30;
+
   &:hover {
     @apply bg-warning bg-opacity-30;
   }
@@ -145,6 +170,7 @@ tr.highlighted {
 
 tr.error {
   @apply bg-danger bg-opacity-20;
+
   &:hover {
     @apply bg-danger bg-opacity-20;
   }
@@ -154,12 +180,15 @@ tr.error {
   0% {
     background-position: 0;
   }
+
   50% {
     background-position: -30%;
   }
+
   80% {
     background-position: -100%;
   }
+
   100% {
     background-position: -200%;
   }
@@ -201,21 +230,37 @@ tr.error {
 }
 
 .table-paginator-menu {
+  width: 100%;
   position: sticky;
-  bottom: 0;
+  bottom: 0px;
+  background-color: white;
+  /* You can adjust styles to fit your design */
   z-index: 1;
 }
 
 .table--header--row {
   white-space: nowrap;
+  @apply font-semiBold;
+  @apply text-black;
+  font-size: 16px;
 }
 
 .table--header {
   padding-bottom: 8px;
+  border-bottom: 1px solid #D2D2D2;
 }
 
 .table--header--sort--indicator {
   margin-left: 5px;
+}
+
+.hasQualityAlertsHeader {
+  @apply text-secondary;
+}
+
+.hasQualityAlerts {
+  width: 8px;
+  height: 8px;
 }
 
 .table--header--tooltip {
@@ -227,11 +272,9 @@ tr.error {
     padding: 15px;
     font-size: 14px;
     line-height: 20px;
-
   }
 
   .mdc-tooltip--multiline {
     white-space: pre-line;
   }
 }
-

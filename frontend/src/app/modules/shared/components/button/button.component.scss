@@ -1,5 +1,7 @@
 /********************************************************************************
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022, 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ * Copyright (c) 2022, 2023 ZF Friedrichshafen AG
+ * Copyright (c) 2022, 2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -16,30 +18,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+@import '../../../../../theme/base.scss';
+@tailwind base;
 
-export interface BomLifecycleSize {
-    asDesignedSize: number,
-    asPlannedSize: number,
-    asOrderedSize: number,
-    asBuiltSize: number,
-    asSupportedSize: number,
-    asRecycledSize: number,
+.button-width {
+  width: 100px !important;
+  min-width: unset !important;
 }
 
-export interface BomLifecycleConfig {
-    asDesignedActive: boolean,
-    asPlannedActive: boolean,
-    asOrderedActive: boolean,
-    asBuiltActive: boolean,
-    asSupportedActive: boolean,
-    asRecycledActive: boolean,
-}
-
-export enum BomLifecycleType {
-    AS_DESIGNED = 'AsDesigned',
-    AS_PLANNED = 'AsPlanned',
-    AS_ORDERED = 'AsOrdered',
-    AS_BUILT = 'AsBuilt',
-    AS_SUPPORTED = 'AsSupported/AsFlying/AsMaintainted/AsOperated',
-    AS_RECYCLED = 'AsRecycled'
+.mdc-button {
+  width: 163px !important;
+  height: 44px !important;
 }
