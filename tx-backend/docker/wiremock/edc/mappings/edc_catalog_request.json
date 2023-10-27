@@ -12,5 +12,18 @@
     "transformers" : [
       "response-template"
     ]
-  }
+  },
+  "serveEventListeners": [
+    {
+      "name": "webhook",
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.29:8082/api/internal/endpoint-data-reference",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{ \"id\": \"callback-id\",  \"endpoint\": \"http://localhost:8082/api/qualitynotifications/receive\", \"authKey\": \"auth-key\", \"authCode\": \"code.eyJleHAiOjE2OTg0MDUwODIyMTIxMSwiZGFkIjoiZGFkIiwiY2lkIjoiY29udHJhY3RBZ3JlZW1lbnRJZCJ9\"}"
+      }
+    }
+  ]
 }

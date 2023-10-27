@@ -1,14 +1,14 @@
 {
   "request" : {
     "method" : "GET",
-    "urlPath" : "/api/v2/contractnegotiations/id-value"
+    "urlPath" : "/api/v2/transferprocesses/transfer-id"
   },
   "response" : {
     "status" : 200,
     "headers" : {
       "Content-Type" : "application/json"
     },
-    "bodyFileName" : "edc_contract_negotiation_GET_response.json",
+    "bodyFileName" : "edc_transfer_process_GET_response.json",
     "transformers" : [
       "response-template"
     ]
