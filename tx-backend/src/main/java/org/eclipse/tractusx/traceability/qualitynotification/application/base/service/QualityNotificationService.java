@@ -19,6 +19,7 @@
 package org.eclipse.tractusx.traceability.qualitynotification.application.base.service;
 
 import org.eclipse.tractusx.traceability.common.model.PageResult;
+import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.alert.model.exception.StartQualityNotificationDomain;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
@@ -32,6 +33,8 @@ public interface QualityNotificationService {
     PageResult<QualityNotification> getCreated(Pageable pageable);
 
     PageResult<QualityNotification> getReceived(Pageable pageable);
+
+    PageResult<QualityNotification> getReceived(Pageable pageable, SearchCriteria searchCriteria);
 
     QualityNotification find(Long notificationId);
 
