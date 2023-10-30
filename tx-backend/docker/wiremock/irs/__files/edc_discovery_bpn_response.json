@@ -2,7 +2,7 @@
   {
     "bpn" : "{{jsonPath request.body '$.[0]'}}",
     "connectorEndpoint" : [
-      "http://localhost:3001/bpn/{{jsonPath request.body '$[0]'}}/dummy-connect"
+      "http://localhost:8082/api/qualitynotifications/receive"
     ]
   }
 ]
