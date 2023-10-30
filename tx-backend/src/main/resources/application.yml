@@ -92,7 +92,7 @@ management:
 
 spring:
   flyway:
-    locations: /db/scripts/common
+    locations: /db/migration
   main:
     allow-bean-definition-overriding: true
   datasource:
