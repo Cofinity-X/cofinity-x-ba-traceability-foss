@@ -48,7 +48,7 @@ SPDX-License-Identifier: Apache-2.0
           <as-split-area *ngIf="bomLifecycleSize.asBuiltSize > 0" data-testid="as-split-area-1-component--test-id"
             [size]="bomLifecycleSize.asBuiltSize" class="split-area partsTable">
             <div class="asBuilt-header-container">
-              <div class="lifecycle-header">{{"page.asBuiltParts" | i18n}}</div>
+              <div class="lifecycle-header pt-10">{{"page.asBuiltParts" | i18n}}</div>
               <div>
                 <app-button class="createAlertButton" [isDisabled]="true" [color]="'primary'" variant="flat">
                   <div class="flex justify-between items-center">
@@ -65,7 +65,7 @@ SPDX-License-Identifier: Apache-2.0
                 *viewContainer="partsAsBuilt$ | async; main: mainTmp; error: errorTmp; loading: loaderTmp"></ng-container>
               <ng-template #mainTmp let-parts="view">
                 <!-- asBuilt Parts Table-->
-                <app-parts-table class="parts-asBuilt-table partsTable"
+                <app-parts-table class="parts-table-wrapper partsTable"
                   [paginationData]="parts.data | formatPaginationSemanticDataModelToCamelCase" [labelId]="titleId"
                   [multiSelectActive]="true" [selectedPartsActionLabel]="'page.selectedParts.action'"
                   [deselectTrigger]="deselectPartTrigger$ | async" [addTrigger]="addPartTrigger$ | async"
@@ -80,7 +80,7 @@ SPDX-License-Identifier: Apache-2.0
           <as-split-area *ngIf="bomLifecycleSize.asPlannedSize > 0" data-testid="as-split-area-2-component--test-id"
             [size]="bomLifecycleSize.asPlannedSize" class="split-area">
             <div class="lifecycle-header">{{"page.asPlannedParts" | i18n}}</div>
-            <div class="parts-as-planned-table-wrapper">
+            <div class="parts-table-wrapper">
               <ng-container
                 *viewContainer="partsAsPlanned$ | async; main: myTmp; error: errorTmp; loading: loaderTmp"></ng-container>
               <ng-template #myTmp let-parts="view">

@@ -60,9 +60,13 @@
   height: 44px !important;
 }
 
-.createAlertButton .mat-mdc-button.mat-mdc-button-base {
-  .mdc-button {
-    width: 163px !important;
+.createAlertButton {
+  padding-right: 10px !important;
+
+  .mat-mdc-button.mat-mdc-button-base {
+    .mdc-button {
+      width: 163px !important;
+    }
   }
 
   border-radius: 100px !important;
@@ -75,6 +79,8 @@
   line-height: 20px;
   line-height: 24px;
   letter-spacing: 0.15px;
+
+  justify-self: flex-end;
 }
 
 .button-container .search-bar {
@@ -88,6 +94,11 @@
 .parts-as-built-table-wrapper {
   height: 505px;
   margin: 16px;
+}
+
+.parts-table-wrapper {
+  height: 505px;
+  margin: 0px 16px 16px 0px !important;
 }
 
 .split-area {
