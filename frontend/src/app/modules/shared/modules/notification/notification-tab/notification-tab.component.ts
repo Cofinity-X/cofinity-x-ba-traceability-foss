@@ -48,6 +48,7 @@ export class NotificationTabComponent implements AfterViewInit {
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
+  @Output() itemCount = new EventEmitter<number>();
 
   @ViewChild('idTmp') idTemplate: TemplateRef<unknown>;
   @ViewChild('statusTmp') statusTemplate: TemplateRef<unknown>;
@@ -80,6 +81,10 @@ export class NotificationTabComponent implements AfterViewInit {
       },
     };
 
+  }
+
+  public onItemCountChange(itemCount: number): void {
+    this.itemCount.emit(itemCount);
   }
 
   public selectNotification(notification: Record<string, unknown>): void {
