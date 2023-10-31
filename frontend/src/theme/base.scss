@@ -290,6 +290,21 @@
     max-width: 95px !important;
   }
 
+  .mdc-data-table__cell,
+  .mdc-data-table__header-cell {
+    padding: 0px 0px 0px 20px !important;
+  }
+
+  .mat-mdc-tab .mdc-tab__text-label,
+  .mat-mdc-tab-link .mdc-tab__text-label {
+    color: #4D4D4D;
+  }
+
+  table {
+    border-collapse: separate !important;
+    /* Don't collapse */
+  }
+
   .mat-mdc-tab-label-container {
     border-bottom: 1px solid #DFDFDF;
   }
@@ -301,6 +316,10 @@
     line-height: 16px;
     letter-spacing: 0.5px;
     text-align: center;
+  }
+
+  .mat-mdc-card-content {
+    padding: 0 20px;
   }
 }
 
