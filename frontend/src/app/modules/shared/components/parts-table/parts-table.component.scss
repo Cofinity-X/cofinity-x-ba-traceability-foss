@@ -102,6 +102,10 @@ table {
   background-color: black !important;
 }
 
+.checkbox {
+  padding: 0 5px 0 5px !important
+}
+
 .table-wrapper {
   height: 505px;
   width: 100%;
@@ -157,14 +161,6 @@ table {
     opacity: 0.45;
     pointer-events: none;
     background: none;
-  }
-}
-
-tr.highlighted {
-  @apply bg-warning bg-opacity-30;
-
-  &:hover {
-    @apply bg-warning bg-opacity-30;
   }
 }
 
@@ -229,7 +225,15 @@ tr.error {
   min-height: 0;
 }
 
+.tableBottom {
+  border-bottom: 1px solid #D2D2D2;
+}
+
 .table-paginator-menu {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13.2px;
+
   width: 100%;
   position: sticky;
   bottom: 0px;
@@ -256,11 +260,19 @@ tr.error {
 
 .hasQualityAlertsHeader {
   @apply text-secondary;
+  padding: 0 !important;
 }
 
-.hasQualityAlerts {
-  width: 8px;
+.ellipse {
   height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  @apply bg-primary;
+}
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+  padding: 0 12px 0 12px;
 }
 
 .table--header--tooltip {

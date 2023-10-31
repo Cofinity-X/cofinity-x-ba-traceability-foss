@@ -278,7 +278,7 @@
   "parts": {
     "input": {
       "global-search": {
-        "placeholder": "Suche nach C-X ID, partInstanceId or partNumber / BPN",
+        "placeholder": "Suche nach C-X ID, partInstanceId, partNumber, BPN",
         "toastInfo": "Lokale Filterung auf Tabellenebene wurde zurückgesetzt."
       }
     }

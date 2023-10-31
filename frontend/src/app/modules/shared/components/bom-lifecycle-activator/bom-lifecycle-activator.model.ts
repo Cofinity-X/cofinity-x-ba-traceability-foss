@@ -36,7 +36,7 @@ export interface BomLifecycleConfig {
 }
 
 export enum BomLifecycleType {
-    AS_DESIGNED = 'AsDesigned',
+    AS_DESIGNED = 'AsDesigned/AsDeveloped',
     AS_PLANNED = 'AsPlanned',
     AS_ORDERED = 'AsOrdered',
     AS_BUILT = 'AsBuilt',

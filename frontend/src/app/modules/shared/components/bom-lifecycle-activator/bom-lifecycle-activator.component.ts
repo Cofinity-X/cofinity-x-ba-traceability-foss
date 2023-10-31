@@ -38,9 +38,9 @@ export class BomLifecycleActivatorComponent implements OnInit {
     @Input() view: UserSettingView;
     @Output() bomLifecycleConfigChanged = new EventEmitter<BomLifecycleConfig>();
     public bomLifecycleConfig: BomLifecycleConfig;
-    public lifeCycleTypes: string[] = Object.values(BomLifecycleType);
-    public lifeCycleCtrl = new FormControl('');
-    public selectedLifeCycles: string[] = [];
+    public lifecycleTypes: string[] = Object.values(BomLifecycleType);
+    public lifecycleCtrl = new FormControl('');
+    public selectedLifecycles: string[] = [];
 
     constructor(public bomLifeCycleUserSetting: BomLifecycleSettingsService) {
 
@@ -49,6 +49,26 @@ export class BomLifecycleActivatorComponent implements OnInit {
     ngOnInit() {
         if (this.view) {
             this.bomLifecycleConfig = this.bomLifeCycleUserSetting.getUserSettings(this.view);
+
+            // update the selected items
+            if (this.bomLifecycleConfig.asDesignedActive) {
+                this.selectedLifecycles.push(BomLifecycleType.AS_DESIGNED);
+            }
+            if (this.bomLifecycleConfig.asBuiltActive) {
+                this.selectedLifecycles.push(BomLifecycleType.AS_BUILT);
+            }
+            if (this.bomLifecycleConfig.asOrderedActive) {
+                this.selectedLifecycles.push(BomLifecycleType.AS_ORDERED);
+            }
+            if (this.bomLifecycleConfig.asPlannedActive) {
+                this.selectedLifecycles.push(BomLifecycleType.AS_PLANNED);
+            }
+            if (this.bomLifecycleConfig.asSupportedActive) {
+                this.selectedLifecycles.push(BomLifecycleType.AS_SUPPORTED);
+            }
+            if (this.bomLifecycleConfig.asRecycledActive) {
+                this.selectedLifecycles.push(BomLifecycleType.AS_RECYCLED);
+            }
         } else {
             throw new DOMException("Unsupported view", "BomLifecycleActivatorComponent");
         }
@@ -58,13 +78,17 @@ export class BomLifecycleActivatorComponent implements OnInit {
 
     selected(event: MatAutocompleteSelectedEvent): void {
         const value = event.option.viewValue;
-        this.selectedLifeCycles.push(value);
+        this.selectedLifecycles.push(value);
 
         this.updateLifecycleConfig(value, true);
     }
 
+    isSelected(value: string): boolean {
+        return this.selectedLifecycles.includes(value);
+    }
+
     disableOption(value: string): boolean {
-        return this.selectedLifeCycles.includes(value) === false && this.selectedLifeCycles.length === 2;
+        return this.selectedLifecycles.includes(value) === false && this.selectedLifecycles.length === 2;
     }
 
     updateLifecycleConfig(value: string, state: boolean) {
@@ -118,22 +142,22 @@ export class BomLifecycleActivatorComponent implements OnInit {
     }
 
     selectLifeCycle(lifeCycle: string): void {
-        if (this.selectedLifeCycles.includes(lifeCycle) === true) {
-            var index = this.selectedLifeCycles.indexOf(lifeCycle);
-            this.selectedLifeCycles.splice(index, 1)
+        if (this.selectedLifecycles.includes(lifeCycle) === true) {
+            var index = this.selectedLifecycles.indexOf(lifeCycle);
+            this.selectedLifecycles.splice(index, 1)
         } else {
-            this.selectedLifeCycles.push(lifeCycle);
+            this.selectedLifecycles.push(lifeCycle);
         }
 
         this.bomLifecycleConfigChanged.emit(this.bomLifecycleConfig);
     }
 
     removeLifeCycle(lifeCycle: string): void {
-        const index = this.selectedLifeCycles.indexOf(lifeCycle);
+        const index = this.selectedLifecycles.indexOf(lifeCycle);
 
         if (index >= 0) {
-            this.selectedLifeCycles.splice(index, 1);
-            this.selectedLifeCycles = Array.from(this.selectedLifeCycles);
+            this.selectedLifecycles.splice(index, 1);
+            this.selectedLifecycles = Array.from(this.selectedLifecycles);
         }
 
         this.updateLifecycleConfig(lifeCycle, false);
@@ -185,8 +209,8 @@ export class BomLifecycleActivatorComponent implements OnInit {
     }
 
     disabledAllLifecycleStates() {
-        for (let i = 0; i < this.lifeCycleTypes.length; i++) {
-            this.updateLifecycleConfig(this.lifeCycleTypes[i], false);
+        for (let i = 0; i < this.lifecycleTypes.length; i++) {
+            this.updateLifecycleConfig(this.lifecycleTypes[i], false);
         }
     }
 

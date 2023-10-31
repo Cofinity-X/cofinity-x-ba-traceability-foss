@@ -63,8 +63,31 @@ export class InputComponent extends BaseInputComponent<string> {
 
     @ViewChild('inputElement') inputElement: ElementRef;
 
+    public placeholder: string;
+    public isFocused: boolean = false;
+
     constructor(@Inject(Injector) injector: Injector, staticIdService: StaticIdService) {
         super(injector, staticIdService);
+    }
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        this.placeholder = this.label;
+    }
+
+    shouldHideClearButton(): boolean {
+        return this.control?.value?.length === 0 && !this.isFocused;
+    }
+
+    onFocused() {
+        this.isFocused = true;
+        this.placeholder = "";
+    }
+
+    onBlur() {
+        this.isFocused = false;
+        this.placeholder = this.label;
     }
 
     @HostListener('keydown.enter', ['$event'])

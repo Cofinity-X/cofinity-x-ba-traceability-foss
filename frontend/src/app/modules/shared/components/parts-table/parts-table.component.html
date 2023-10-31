@@ -34,7 +34,7 @@ SPDX-License-Identifier: Apache-2.0
         </div>
     </ng-container>
 
-    <table #tableElement [dataSource]="dataSource" [attr.aria-labelledby]="labelId"
+    <table class="tableBottom" #tableElement [dataSource]="dataSource" [attr.aria-labelledby]="labelId"
         [class.loading-table]="isDataLoading" (matSortChange)="updateSortingOfData($event)" mat-table matSort
         multiTemplateDataRows data-testid="table-component--test-id">
         <!-- TODO: Make Header fixed to top when scrolling -->
@@ -84,10 +84,9 @@ SPDX-License-Identifier: Apache-2.0
 
         <ng-template #SelectColumn>
             <ng-container matColumnDef="select">
-                <th *matHeaderCellDef mat-header-cell>
+                <th *matHeaderCellDef mat-header-cell class="checkbox">
                     <div class="table--select-all" [class.table--select-all__menu]="isMenuOpen">
-                        <mat-checkbox class="checkmark" color="accent"
-                            [checked]="selection.hasValue() && areAllRowsSelected()"
+                        <mat-checkbox color="accent" [checked]="selection.hasValue() && areAllRowsSelected()"
                             [indeterminate]="selection.hasValue() && !areAllRowsSelected()"
                             (change)="$event ? toggleAllRows() : null" data-testid="select-all--test-id">
                         </mat-checkbox>
@@ -101,7 +100,7 @@ SPDX-License-Identifier: Apache-2.0
                         <button mat-menu-item (click)="clearAllRows()">{{ 'table.clearAll' | i18n }}</button>
                     </mat-menu> -->
                 </th>
-                <td *matCellDef="let row" mat-cell>
+                <td *matCellDef="let row" mat-cell class="checkbox">
                     <mat-checkbox color="accent" [checked]="isSelected(row)" (click)="$event.stopPropagation()"
                         (change)="toggleSelection(row)" data-testid="select-one--test-id">
                     </mat-checkbox>
@@ -146,10 +145,9 @@ SPDX-License-Identifier: Apache-2.0
                         </span>
                         <ng-container [ngSwitch]="column">
                             <ng-container *ngSwitchCase="'!'">
-                                <span class="hasQualityAlerts" *ngIf="element['activeAlerts'] === 0"
+                                <span class="hasQualityAlerts" *ngIf="element['activeAlerts'] > 0"
                                     class="table--notification--cell--content--icon">
-                                    <img width="25" height="25" ngSrc="/assets/images/icons/hasQualityAlertsIcon.svg"
-                                        class="center py-5" />
+                                    <div class="ellipse"></div>
                                 </span>
                             </ng-container>
                             <ng-container *ngSwitchCase="'activeAlerts'">

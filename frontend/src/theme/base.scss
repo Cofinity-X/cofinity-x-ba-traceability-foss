@@ -287,13 +287,96 @@
     color: unset;
   }
 
-  // todo check if we can remove this
-  /*  .mat-mdc-form-field-infix {
-    padding-bottom: 0px !important;
-  }*/
+  .mat-primary .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: var(--mdc-theme-secondary, #000000);
+  }
+
+  .mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full,
+  .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-full {
+    display: none;
+  }
+
+  .mat-pseudo-checkbox {
+    display: none !important;
+  }
+
+  .mdc-list-item__primary-text {
+    width: 227px;
+  }
+
+  .mat-pseudo-checkbox {
+    display: none;
+  }
 
   .mat-mdc-checkbox.mat-accent {
     --mdc-checkbox-selected-checkmark-color: #fff;
+    --mdc-checkbox-selected-focus-icon-color: #6BA13C;
+    --mdc-checkbox-selected-hover-icon-color: #6BA13C;
+    --mdc-checkbox-selected-icon-color: #6BA13C;
+    --mdc-checkbox-selected-pressed-icon-color: #6BA13C;
+  }
+
+  .mat-sort-header-disabled .mat-sort-header-container {
+    cursor: pointer !important;
+  }
+
+  .mat-mdc-form-field-has-icon-prefix .mat-mdc-text-field-wrapper {
+    padding-left: 0;
+    --mat-mdc-form-field-label-offset-x: 0px !important;
+  }
+
+  .mat-mdc-paginator-container {
+    justify-content: flex-start !important;
+  }
+
+  .mdc-text-field .mdc-text-field__input {
+    caret-color: var(--mdc-theme-primary, black);
+  }
+
+  .mdc-button {
+    height: 44px !important;
+  }
+
+  .mat-mdc-form-field .mat-mdc-floating-label.mdc-floating-label {
+    line-height: normal;
+    pointer-events: all;
+    padding-bottom: 15px;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    height: 20px !important;
+  }
+
+  .mdc-text-field--focused.mdc-text-field--outlined .mdc-notched-outline--notched .mdc-notched-outline__notch {
+    border-right: none !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start,
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end,
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap {
+    border-width: 1px !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  .mat-mdc-select-placeholder {
+    font-size: 20px !important;
+    line-height: 28px !important;
+    font-weight: 400 !important;
+  }
+
+  .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    height: 44px !important;
+    flex: auto;
+  }
+
+  * {
+    box-sizing: border-box
   }
 }
 

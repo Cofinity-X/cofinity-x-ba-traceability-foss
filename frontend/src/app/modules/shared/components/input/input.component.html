@@ -20,19 +20,18 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <div [class]="class">
-  <mat-form-field [style.fontSize]="'16'" appearance="outline" class="input matField">
-    <img matPrefix class="mr-5 " *ngIf="!matcher.isErrorState(control) && prefixIcon"
+  <mat-form-field color="accent" [style.fontSize]="'16'" appearance="outline"
+    class="input matField inputField custom-focused-input">
+    <img matPrefix class="ml-5" *ngIf="!matcher.isErrorState(control) && prefixIcon"
       src="/assets/images/icons/search_icon.svg" (click)="prefixIconClick.emit()" />
-    <!-- <mat-icon matPrefix *ngIf="!matcher.isErrorState(control) && prefixIcon" [color]="prefixIconColor"
-      [class.cursor-pointer]="prefixIconHover" [attr.data-testId]="htmlId + '-icon'" (click)="prefixIconClick.emit()"
-      matSuffix>{{ prefixIcon }}</mat-icon> -->
-    <mat-label>{{ label }}</mat-label>
-    <input #inputElement [formControl]="control" [attr.data-testId]="htmlId" [errorStateMatcher]="matcher" matInput />
+    <input [placeholder]="placeholder" (blur)="onBlur()" (focus)="onFocused()" #inputElement [formControl]="control"
+      [attr.data-testId]="htmlId" [errorStateMatcher]="matcher" matInput />
     <mat-icon *ngIf="matcher.isErrorState(control)" color="warn" matSuffix>error_outline</mat-icon>
     <mat-icon *ngIf="!matcher.isErrorState(control) && suffixIcon" [color]="suffixIconColor"
       [class.cursor-pointer]="suffixIconHover" [attr.data-testId]="htmlId + '-icon'" (click)="suffixIconClick.emit()"
       matSuffix>{{ suffixIcon }}</mat-icon>
-    <mat-icon *ngIf="!matcher.isErrorState(control) && displayClearButton" [color]="suffixIconColor"
+    <mat-icon [ngClass]="shouldHideClearButton() ? 'hideClearButton' : ''"
+      *ngIf="!matcher.isErrorState(control) && displayClearButton" [color]="suffixIconColor"
       [class.cursor-pointer]="suffixIconHover" [attr.data-testId]="htmlId + '-icon-clear'" (click)="clearIconClick()"
       matSuffix>clear</mat-icon>
 

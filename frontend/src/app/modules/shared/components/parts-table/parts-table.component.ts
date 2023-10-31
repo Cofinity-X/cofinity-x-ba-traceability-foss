@@ -389,6 +389,11 @@ export class PartsTableComponent implements OnInit {
         this.filterFormGroup.valueChanges.subscribe((formValues) => {
             this.filterActivated.emit(formValues);
         });
+
+    }
+
+    ngAfterViewInit() {
+        this.paginator._intl.itemsPerPageLabel = "Show";
     }
 
     private handleAsPlannedTableType(): void {

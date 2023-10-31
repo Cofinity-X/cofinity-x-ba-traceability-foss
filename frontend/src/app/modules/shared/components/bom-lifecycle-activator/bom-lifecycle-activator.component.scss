@@ -47,20 +47,48 @@
   --mdc-chip-label-text-color: #fff;
 }
 
+.options {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.placeholder .mat-mdc-select-placeholder {
+  font-size: 20px !important;
+  line-height: 28px !important;
+  font-weight: 400 !important;
+}
+
 .option {
+  display: flex;
+  justify-content: space-between;
+}
+
+.optionText {
   @extend .body-large;
   font-weight: 400;
   line-height: 20px;
-  width: 227px;
+
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  width: 167px !important;
 }
 
 .panel {
   height: 256px;
+  min-width: 227px !important;
 }
 
 .container {
   width: 240px;
   margin-right: 16px;
+}
+
+.checkmark {
+  width: 12px;
+  height: 9.4px;
+  margin-right: auto;
 }
 
 .mat-tooltip {

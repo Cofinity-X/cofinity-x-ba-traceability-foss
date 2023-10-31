@@ -56,10 +56,13 @@
   letter-spacing: 0.1px;
 }
 
+.mat-mdc-unelevated-button.mat-mdc-button-base {
+  height: 44px !important;
+}
+
 .createAlertButton .mat-mdc-button.mat-mdc-button-base {
   .mdc-button {
     width: 163px !important;
-    height: 44px !important;
   }
 
   border-radius: 100px !important;
@@ -79,7 +82,6 @@
   height: 44px !important;
   border-radius: 44px !important;
   border: 1px !important;
-  padding: 8px 16px 8px 16px !important;
   gap: 8px !important;
 }
 
@@ -93,7 +95,7 @@
 }
 
 .mat-mdc-card-header {
-  padding: 20px !important;
+  padding: 20px 20px 0 20px !important;
 }
 
 .mat-mdc-card-content {

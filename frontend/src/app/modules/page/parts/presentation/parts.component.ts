@@ -102,8 +102,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.partsFacade.setPartsAsPlanned();
         this.searchFormGroup.addControl("partSearch", new FormControl([]));
         this.searchControl = this.searchFormGroup.get('partSearch') as unknown as FormControl;
-
-        console.log(this.bomLifecycleSize);
     }
 
     filterActivated(isAsBuilt: boolean, assetFilter: any): void {
