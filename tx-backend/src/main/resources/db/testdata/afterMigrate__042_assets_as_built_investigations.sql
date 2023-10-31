@@ -3,9 +3,7 @@
 -- it is only intended for usage in local or test environments
 
 insert into assets_as_built_investigations
-    (investigation_id, asset_id)
+    (investigation_id   , asset_id)
 values
-    (${investigationId1}, ${assetAsBuiltId1}),
-    (${investigationId3}, ${assetAsBuiltId3});
-
-
+    (${investigationId1}, ${assetAsBuiltId01}),
+    (${investigationId3}, ${assetAsBuiltId03});
