@@ -178,41 +178,41 @@
   }
 
   h1 {
-    @apply font-medium uppercase text-dark;
+    @apply font-medium uppercase text-pendingDark;
     font-size: 56px;
   }
 
   h1,
   normal-case {
-    @apply font-medium text-dark;
+    @apply font-medium text-pendingDark;
     font-size: 56px;
     text-transform: none;
   }
 
   h2 {
-    @apply font-medium uppercase text-dark;
+    @apply font-medium uppercase text-pendingDark;
     font-size: 36px;
   }
 
   h2,
   normal-case {
-    @apply font-medium uppercase text-dark;
+    @apply font-medium uppercase text-pendingDark;
     font-size: 36px;
     text-transform: none;
   }
 
   h3 {
-    @apply font-semiBold sm:text-xl text-dark;
+    @apply font-semiBold sm:text-xl text-pendingDark;
     font-size: 24px;
   }
 
   h4 {
-    @apply font-semiBold sm:text-lg text-dark;
+    @apply font-semiBold sm:text-lg text-pendingDark;
     font-size: 18px;
   }
 
   h5 {
-    @apply font-semiBold sm:text-base text-dark;
+    @apply font-semiBold sm:text-base text-pendingDark;
     font-size: 16px;
   }
 
@@ -223,15 +223,15 @@
   }
 
   .large-text {
-    @apply font-light lg:text-base sm:text-sm text-dark;
+    @apply font-light lg:text-base sm:text-sm text-pendingDark;
   }
 
   .small-text {
-    @apply font-light lg:text-xs sm:text-tiny text-dark;
+    @apply font-light lg:text-xs sm:text-tiny text-pendingDark;
   }
 
   .component-headline {
-    @apply font-light lg:text-sm sm:text-xs text-dark;
+    @apply font-light lg:text-sm sm:text-xs text-pendingDark;
   }
 
   a {
@@ -259,7 +259,7 @@
   }
 
   .mat-mdc-form-field {
-    @apply font-light lg:text-base sm:text-sm text-dark ml-0 !important;
+    @apply font-light lg:text-base sm:text-sm text-pendingDark ml-0 !important;
   }
 
   .mat-paginator,
