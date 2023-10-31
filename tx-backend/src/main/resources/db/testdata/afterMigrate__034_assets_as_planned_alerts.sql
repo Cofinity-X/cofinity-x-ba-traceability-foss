@@ -3,9 +3,7 @@
 -- it is only intended for usage in local or test environments
 
 insert into assets_as_planned_alerts
-    (alert_id, asset_id)
+    (alert_id   , asset_id)
 values
-    (${alertId2}, ${assetAsPlannedId1}),
-    (${alertId4}, ${assetAsPlannedId3});
-
-
+    (${alertId2}, ${assetAsPlannedId1}), --
+    (${alertId4}, ${assetAsPlannedId3}); --

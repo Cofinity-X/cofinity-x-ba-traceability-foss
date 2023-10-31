@@ -3,10 +3,11 @@
 -- it is only intended for usage in local or test environments
 
 insert into assets_as_built_alerts
-    (alert_id, asset_id)
+    (alert_id   , asset_id)
 values
-    (${alertId1}, ${assetAsBuiltId1}),
-    (${alertId3}, ${assetAsBuiltId3});
+    (${alertId1}, ${assetAsBuiltId01}), -- sup1 send to owner
+    (${alertId3}, ${assetAsBuiltId03}); -- owner created to cust1
 
-
-
+update assets_as_built
+    set active_alert = true
+    where id in (${assetAsBuiltId01}, ${assetAsBuiltId03}); -- incoming and outgoing

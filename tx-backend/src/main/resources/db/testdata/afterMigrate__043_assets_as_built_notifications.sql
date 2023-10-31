@@ -3,9 +3,7 @@
 -- it is only intended for usage in local or test environments
 
 insert into assets_as_built_notifications
-    (notification_id, asset_id)
+    (notification_id                , asset_id)
 values
-    (${investigationNotificationId1}, ${assetAsBuiltId1}),
-    (${investigationNotificationId3}, ${assetAsBuiltId3});
-
-
+    (${investigationNotificationId1}, ${assetAsBuiltId01}),
+    (${investigationNotificationId3}, ${assetAsBuiltId03});
