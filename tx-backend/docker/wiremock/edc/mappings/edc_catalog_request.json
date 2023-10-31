@@ -18,7 +18,7 @@
       "name": "webhook",
       "parameters": {
         "method": "POST",
-        "url": "http://192.168.0.29:8082/api/internal/endpoint-data-reference",
+        "url": "http://host.docker.internal:8082/api/internal/endpoint-data-reference",
         "headers": {
           "Content-Type": "application/json"
         },
