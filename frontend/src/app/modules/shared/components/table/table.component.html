@@ -19,7 +19,7 @@ under the License.
 SPDX-License-Identifier: Apache-2.0
 -->
 
-<div [class.mat-elevation-z8]="!noShadow" class="table-wrapper tableScroll">
+<div [class.mat-elevation-z8]="!noShadow" class="table-wrapper" [ngClass]="enableScroll ? 'tableScroll' : ''">
   <ng-container *ngIf="tableHeader">
     <p class="large-text table--header">{{tableHeader | i18n }}</p>
   </ng-container>
@@ -107,7 +107,7 @@ SPDX-License-Identifier: Apache-2.0
     <ng-template #MenuColumn>
       <ng-container matColumnDef="menu">
         <th *matHeaderCellDef class="table--menu" mat-header-cell>
-          <img class="settingsIcon" src="/assets/images/icons/table_settings_icon.svg" alt="" />
+          <img class="settingsIcon" src="/assets/images/icons/table_settings_icon.svg" alt="*" />
         </th>
         <td *matCellDef="let row" class="table--menu table--cell" mat-cell
           [attr.colspan]="tableConfig.displayedColumns.length">
