@@ -28,7 +28,7 @@ import {
     Validators
 } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
-import { fireEvent, screen } from '@testing-library/angular';
+import { screen } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 import { InputComponent } from '@shared/components/input/input.component';
 
