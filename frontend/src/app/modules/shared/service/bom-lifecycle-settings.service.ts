@@ -49,14 +49,6 @@ export class BomLifecycleSettingsService {
         const userSettings: BomLifecycleConfig = this.getUserSettings(userSettingView);
 
         const { asDesignedActive, asPlannedActive, asOrderedActive, asBuiltActive, asSupportedActive, asRecycledActive } = userSettings;
-        size = {
-            asDesignedSize: asDesignedActive ? 50 : undefined,
-            asPlannedSize: asPlannedActive ? 50 : undefined,
-            asOrderedSize: asOrderedActive ? 50 : undefined,
-            asBuiltSize: asBuiltActive ? 50 : undefined,
-            asSupportedSize: asSupportedActive ? 50 : undefined,
-            asRecycledSize: asRecycledActive ? 50 : undefined,
-        }
 
         if (userSettings.asPlannedActive && userSettings.asBuiltActive) {
             size = {
