@@ -7,3 +7,7 @@ insert into assets_as_built_investigations
 values
     (${investigationId1}, ${assetAsBuiltId01}),
     (${investigationId3}, ${assetAsBuiltId03});
+
+update assets_as_built
+    set in_investigation = true
+    where id in (${assetAsPlannedId1}, ${assetAsPlannedId3}); -- incoming and outgoing
