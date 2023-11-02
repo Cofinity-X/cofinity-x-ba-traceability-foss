@@ -32,6 +32,7 @@ import { AssetAsBuiltFilter, AssetAsPlannedFilter } from "@page/parts/model/part
 import { TableHeaderSort } from "@shared/components/table/table.model";
 import { PartDetailsFacade } from "@shared/modules/part-details/core/partDetails.facade";
 import { toGlobalSearchAssetFilter } from "@shared/helper/filter-helper";
+import { MainAspectType } from '../model/mainAspectType.enum';
 
 describe('Parts', () => {
 
@@ -338,7 +339,6 @@ describe('Parts', () => {
         const partsFacadeAsPlannedSpy = spyOn(partsFacade, 'setPartsAsPlanned');
         componentInstance.searchControl.setValue(searchValue);
 
-
         // Act
         componentInstance.triggerPartSearch();
 
@@ -347,4 +347,57 @@ describe('Parts', () => {
         expect(partsFacadeSpy).toHaveBeenCalledWith();
     });
 
+    it('should set the item count of the AsBuilt lifecycle', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        componentInstance.setPartsCount(10, MainAspectType.AS_BUILT)
+        expect(componentInstance.asBuiltCount).toBe(10);
+    });
+
+    it('should set the item count of the AsPlanned lifecycle', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        componentInstance.setPartsCount(10, MainAspectType.AS_PLANNED)
+        expect(componentInstance.asPlannedCount).toBe(10);
+    });
+
+    it('should set the item count of the AsDesigned lifecycle', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        componentInstance.setPartsCount(10, MainAspectType.AS_DESIGNED)
+        expect(componentInstance.asDesignedCount).toBe(10);
+    });
+
+    it('should set the item count of the AsOrdered lifecycle', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        componentInstance.setPartsCount(10, MainAspectType.AS_ORDERED)
+        expect(componentInstance.asOrderedCount).toBe(10);
+    });
+
+    it('should set the item count of the AsSupported lifecycle', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        componentInstance.setPartsCount(10, MainAspectType.AS_SUPPORTED)
+        expect(componentInstance.asSupportedCount).toBe(10);
+    });
+
+    it('should set the item count of the AsRecycled lifecycle', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        componentInstance.setPartsCount(10, MainAspectType.AS_RECYCLED)
+        expect(componentInstance.asRecycledCount).toBe(10);
+    });
 });
