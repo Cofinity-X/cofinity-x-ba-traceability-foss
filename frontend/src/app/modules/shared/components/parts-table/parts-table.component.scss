@@ -18,20 +18,14 @@
  ********************************************************************************/
 @use '@angular/material' as mat;
 
-table {
-  width: 100%;
-  height: 505px !important;
-  @apply font-light;
-}
-
 .mat-table {
-  overflow-x: visible !important;
   max-width: 100%;
 }
 
 .table--select-all {
   display: inline-flex;
   align-items: center;
+
 
   &__menu {
     background: rgba(0, 0, 0, 0.04);
@@ -83,23 +77,23 @@ table {
   outline: unset;
 }
 
-.mdc-data-table__header-cell {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: rgba(0, 0, 0, 0.12);
-  width: 100%;
-}
-
 .mat-mdc-row:hover {
   @apply bg-surfaceMedium !important;
 }
 
-.mdc-data-table__cell {
-  border: none !important;
+.table--cell {
+  border: none;
+  white-space: nowrap;
+  padding: 0 10px;
 }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
   background-color: black !important;
+}
+
+.selectAllCheckbox {
+  background-color: white !important;
+  z-index: 1000 !important;
 }
 
 .checkbox {
@@ -109,11 +103,7 @@ table {
 .table-wrapper {
   height: 505px;
   width: 100%;
-}
 
-.table--cell {
-  white-space: nowrap;
-  padding: 0 10px;
 }
 
 .table--notification--cell {
@@ -225,10 +215,6 @@ tr.error {
   min-height: 0;
 }
 
-.tableBottom {
-  border-bottom: 1px solid #D2D2D2;
-}
-
 .table-paginator-menu {
   font-size: 12px;
   font-weight: 400;
@@ -242,6 +228,48 @@ tr.error {
   z-index: 1;
 }
 
+.custom-style-paginator-select {
+  .mat-mdc-select-panel-above .mdc-menu-surface.mat-mdc-select-panel {
+    width: 80px !important;
+  }
+}
+
+.table-paginator-menu button.mat-paginator-navigation,
+.table-paginator-menu select.mat-select {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  margin: 2px;
+  border-radius: 4px;
+}
+
+.hideText {
+  position: -webkit-sticky;
+  /* For Safari */
+  position: sticky;
+  top: 0;
+  /* Stick to the top */
+  background-color: #f0f0f0;
+}
+
+.panel {
+  .mat-mdc-select-panel-above .mdc-menu-surface.mat-mdc-select-panel {
+    min-width: 50px !important;
+    max-width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+.header {
+  position: -webkit-sticky;
+  /* For Safari */
+  position: sticky;
+  top: 150px;
+  /* Stick to the top */
+  background-color: #f0f0f0;
+  padding-top: 100px;
+}
+
 .table--header--row {
   white-space: nowrap;
   @apply font-semiBold;
@@ -251,7 +279,7 @@ tr.error {
 
 .table--header {
   padding-bottom: 8px;
-  border-bottom: 1px solid #D2D2D2;
+  border-bottom: 1px solid #D2D2D2 !important;
 }
 
 .table--header--sort--indicator {

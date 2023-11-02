@@ -325,8 +325,39 @@
     --mat-mdc-form-field-label-offset-x: 0px !important;
   }
 
+  .mat-mdc-select-arrow svg {
+    border-left: 15px solid transparent !important;
+    border-right: none !important;
+    border-top: 8px solid transparent !important;
+    border-image-source: url('/assets/images/icons/dropdown_arrow_icon.svg') !important;
+    border-image-repeat: stretch !important;
+    width: 0;
+    height: 0;
+  }
+
+  .mat-mdc-paginator-page-size-label {
+    @extend .body-xsmall;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 13.2px;
+    padding-right: 4px;
+  }
+
   .mat-mdc-paginator-container {
+    .mdc-menu-surface--open {
+      width: 80px !important;
+    }
+
     justify-content: flex-start !important;
+    border-top: 1px solid #D2D2D2;
+    border-bottom: none !important;
+    padding: 0 8px 12px 0 !important;
+  }
+
+  .mat-mdc-paginator-page-size-select {
+    margin: 0 4px;
+    // width: 38px !important;
+    height: 20px !important;
   }
 
   .mdc-text-field .mdc-text-field__input {
@@ -383,7 +414,7 @@
 
   .mdc-data-table__cell,
   .mdc-data-table__header-cell {
-    padding: 0px 0px 0px 20px !important;
+    padding: 0px 20px 0px 0px !important;
   }
 
   .mat-mdc-tab .mdc-tab__text-label,
@@ -407,6 +438,20 @@
     line-height: 16px;
     letter-spacing: 0.5px;
     text-align: center;
+  }
+
+  .split-area {
+    display: grid;
+  }
+
+  .mdc-data-table__header-row {
+    position: sticky !important;
+    z-index: 1 !important;
+  }
+
+  .mat-mdc-table .mat-mdc-header-cell {
+    background: white !important;
+    z-index: 1 !important;
   }
 
   .mat-mdc-card-content {

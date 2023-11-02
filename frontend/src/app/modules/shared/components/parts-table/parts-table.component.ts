@@ -28,6 +28,7 @@ import {
     QueryList,
     ViewChild,
     ViewChildren,
+    ViewEncapsulation,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -47,12 +48,11 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
 import { isDateFilter } from "@shared/helper/filter-helper";
-import { NgOptimizedImage } from '@angular/common'
 
 @Component({
     selector: 'app-parts-table',
     templateUrl: './parts-table.component.html',
-    styleUrls: ['parts-table.component.scss']
+    styleUrls: ['parts-table.component.scss'],
 })
 export class PartsTableComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
@@ -73,6 +73,8 @@ export class PartsTableComponent implements OnInit {
 
     @Input() tableType: PartTableType;
 
+    @Output() countChanged = new EventEmitter<number>();
+
     public tableConfig: TableConfig;
 
     filterKey = 'Filter';
@@ -83,6 +85,7 @@ export class PartsTableComponent implements OnInit {
         this.dataSource.data = content;
         this.isDataLoading = false;
         this.pageIndex = page;
+        this.countChanged.emit(totalItems);
     }
 
     @Input() set data(content: unknown[]) {

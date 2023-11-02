@@ -34,12 +34,42 @@
 }
 
 .partsTable {
-  height: 100%;
+  height: 100% !important;
 }
 
 .split-container-wrapper {
   height: 505px;
   padding-top: 20px;
+}
+
+.lifecycleSizeText {
+  @apply text-secondary;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.15px;
+}
+
+.asBuiltHeaderContainer {
+  position: -webkit-sticky;
+  /* For Safari */
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+.headerContainer {
+  @extend .asBuiltHeaderContainer;
+  padding-top: 20px !important;
+}
+
+.asBuild-header {
+  @extend .title-medium;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  padding-top: 22px;
 }
 
 .asBuilt-header-container {
@@ -69,18 +99,18 @@
     }
   }
 
+  left: 420px;
+  position: absolute;
+
   border-radius: 100px !important;
-  gap: 8px !important;
 }
 
 .lifecycle-header {
   @extend .title-medium;
   font-weight: 600;
-  line-height: 20px;
   line-height: 24px;
   letter-spacing: 0.15px;
-
-  justify-self: flex-end;
+  padding-top: 22px;
 }
 
 .button-container .search-bar {
@@ -91,18 +121,14 @@
   gap: 8px !important;
 }
 
-.parts-as-built-table-wrapper {
-  height: 505px;
-  margin: 16px;
-}
-
 .parts-table-wrapper {
-  height: 505px;
-  margin: 0px 16px 16px 0px !important;
+  @extend .partsTable;
+  overflow-y: auto !important;
+  height: 405px;
 }
 
 .split-area {
-  overflow-x: auto !important;
+  overflow-y: hidden !important;
 }
 
 .mat-mdc-card-header {
