@@ -92,9 +92,12 @@ export class InputComponent extends BaseInputComponent<string> {
 
     @HostListener('keydown.enter', ['$event'])
     onEnterKey(event: KeyboardEvent): void {
-        // Check if the Enter key was pressed
+        // Check if the Enter key was 
+
         if (event.key === 'Enter') {
-            // Trigger the suffixIconClick output event
+            console.log("enter");
+
+            // Trigger the suffixIconClick or prefixIconClick output event
             if (this.onEnterActive) {
                 if (this.suffixIcon) {
                     this.suffixIconClick.emit();

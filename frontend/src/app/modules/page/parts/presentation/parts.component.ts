@@ -139,7 +139,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     const searchValue = this.searchFormGroup.get('partSearch').value;
 
     if (searchValue && searchValue !== '') {
-      console.log(searchValue);
       this.partsFacade.setPartsAsPlanned(
         0,
         this.DEFAULT_PAGE_SIZE,
@@ -163,7 +162,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   private resetFilterAndShowToast() {
     let filterIsSet = resetMultiSelectionAutoCompleteComponent(this.partsTableComponents, false);
     if (filterIsSet) {
-      console.log('Filter is set');
       this.toastService.info('parts.input.global-search.toastInfo');
     }
   }

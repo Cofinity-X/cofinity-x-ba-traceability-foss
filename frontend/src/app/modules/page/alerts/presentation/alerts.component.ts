@@ -123,7 +123,7 @@ export class AlertsComponent {
   }
 
   public triggerSearch(): void {
-
+    // TODO: implement search
   }
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {

@@ -29,9 +29,9 @@ import {
 export class BomLifecycleSettingsService {
     private readonly DEFAULT: BomLifecycleConfig = {
         asDesignedActive: false,
-        asBuiltActive: false,
+        asBuiltActive: true,
         asOrderedActive: false,
-        asPlannedActive: false,
+        asPlannedActive: true,
         asSupportedActive: false,
         asRecycledActive: false
     }
