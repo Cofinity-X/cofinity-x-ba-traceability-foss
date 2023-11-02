@@ -23,7 +23,7 @@ SPDX-License-Identifier: Apache-2.0
   <mat-form-field color="accent" [style.fontSize]="'16'" appearance="outline"
     class="input matField inputField custom-focused-input">
     <img matPrefix class="ml-5" *ngIf="!matcher.isErrorState(control) && prefixIcon"
-      src="/assets/images/icons/search_icon.svg" (click)="prefixIconClick.emit()" />
+      src="/assets/images/icons/search_icon.svg" (click)="prefixIconClick.emit()" alt="" />
     <input [placeholder]="placeholder" (blur)="onBlur()" (focus)="onFocused()" #inputElement [formControl]="control"
       [attr.data-testId]="htmlId" [errorStateMatcher]="matcher" matInput />
     <mat-icon *ngIf="matcher.isErrorState(control)" color="warn" matSuffix>error_outline</mat-icon>

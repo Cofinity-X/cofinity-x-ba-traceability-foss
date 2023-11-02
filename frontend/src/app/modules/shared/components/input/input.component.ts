@@ -95,8 +95,6 @@ export class InputComponent extends BaseInputComponent<string> {
         // Check if the Enter key was 
 
         if (event.key === 'Enter') {
-            console.log("enter");
-
             // Trigger the suffixIconClick or prefixIconClick output event
             if (this.onEnterActive) {
                 if (this.suffixIcon) {

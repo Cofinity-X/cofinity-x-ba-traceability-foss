@@ -89,7 +89,7 @@ export class PartsFacade {
         });
     }
 
-    public setPartsAsDesignged(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsPlannedFilter?: AssetAsPlannedFilter, isOrSearch?: boolean): void {
+    public setPartsAsDesigned(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsPlannedFilter?: AssetAsPlannedFilter, isOrSearch?: boolean): void {
         this.partsAsDesignedSubscription?.unsubscribe();
         this.partsAsDesignedSubscription = this.partsService.getPartsAsDesigned(page, pageSize, sorting, assetAsPlannedFilter, isOrSearch).subscribe({
             next: data => (this.partsState.partsAsDesigned = { data }),

@@ -58,22 +58,34 @@ export class BomLifecycleSettingsService {
             asRecycledSize: asRecycledActive ? 50 : undefined,
         }
 
-        // if (userSettings.asPlannedActive && userSettings.asBuiltActive) {
-        //     size = {
-        //         asBuiltSize: 50,
-        //         asPlannedSize: 50
-        //     }
-        // } else if (userSettings.asPlannedActive) {
-        //     size = {
-        //         asBuiltSize: 0,
-        //         asPlannedSize: 100
-        //     }
-        // } else if (userSettings.asBuiltActive) {
-        //     size = {
-        //         asBuiltSize: 100,
-        //         asPlannedSize: 0
-        //     }
-        // }
+        if (userSettings.asPlannedActive && userSettings.asBuiltActive) {
+            size = {
+                asBuiltSize: 50,
+                asPlannedSize: 50,
+                asDesignedSize: 0,
+                asOrderedSize: 0,
+                asRecycledSize: 0,
+                asSupportedSize: 0,
+            }
+        } else if (userSettings.asPlannedActive) {
+            size = {
+                asDesignedSize: 0,
+                asBuiltSize: 0,
+                asOrderedSize: 0,
+                asRecycledSize: 0,
+                asSupportedSize: 0,
+                asPlannedSize: 100
+            }
+        } else if (userSettings.asBuiltActive) {
+            size = {
+                asBuiltSize: 100,
+                asDesignedSize: 0,
+                asOrderedSize: 0,
+                asRecycledSize: 0,
+                asSupportedSize: 0,
+                asPlannedSize: 0
+            }
+        }
         return size;
     }
 

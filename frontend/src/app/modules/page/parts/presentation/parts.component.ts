@@ -269,9 +269,9 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (this.assetFilter) {
-      this.partsFacade.setPartsAsDesignged(0, pageSizeValue, this.tableAsDesignedSortList, toAssetFilter(this.assetFilter, true));
+      this.partsFacade.setPartsAsDesigned(0, pageSizeValue, this.tableAsDesignedSortList, toAssetFilter(this.assetFilter, true));
     } else {
-      this.partsFacade.setPartsAsDesignged(page, pageSizeValue, this.tableAsDesignedSortList);
+      this.partsFacade.setPartsAsDesigned(page, pageSizeValue, this.tableAsDesignedSortList);
     }
   }
 
