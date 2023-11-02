@@ -45,6 +45,7 @@ describe('BomLifecycleActivatorComponent', () => {
         expect(componentInstance.bomLifecycleConfig.asSupportedActive).toBe(false);
         expect(componentInstance.bomLifecycleConfig.asRecycledActive).toBe(false);
 
+        componentInstance.selectionChanged(['AsPlanned', 'AsBuilt'])
     });
 
     it('should update the lifecycles when the selection has changed', async () => {
