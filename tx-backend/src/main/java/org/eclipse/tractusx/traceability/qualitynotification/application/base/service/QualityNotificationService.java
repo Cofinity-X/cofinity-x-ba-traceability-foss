@@ -32,6 +32,8 @@ public interface QualityNotificationService {
 
     PageResult<QualityNotification> getCreated(Pageable pageable);
 
+    PageResult<QualityNotification> getCreated(Pageable pageable, SearchCriteria searchCriteria);
+
     PageResult<QualityNotification> getReceived(Pageable pageable);
 
     PageResult<QualityNotification> getReceived(Pageable pageable, SearchCriteria searchCriteria);

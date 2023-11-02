@@ -40,6 +40,9 @@ import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.Q
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.repository.InvestigationSpecification;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
 import org.springframework.data.domain.Page;
@@ -122,10 +125,10 @@ public class AlertsRepositoryImpl implements AlertRepository {
 
     @Override
     public PageResult<QualityNotification> findAll(Pageable pageable, SearchCriteria searchCriteria) {
-       /* List<AlertSpecification> alertSpecifications = emptyIfNull(searchCriteria.getSearchCriteriaFilterList()).stream().map(AlertSpecification::new).toList();
-        Specification<AlertEntity> specification = AlertSpecification.toSpecification(alertSpecifications, searchCriteria.getSearchCriteriaOperator());
-        return new PageResult<>(jpaAlertRepository.findAll(specification, pageable), AlertEntity::toDomain);*/
-        return null;
+        List<AlertSpecification> alertSpecifications = emptyIfNull(searchCriteria.getSearchCriteriaFilterList()).stream().map(AlertSpecification::new).toList();
+        Specification<AlertNotificationEntity> specification = AlertSpecification.toSpecification(alertSpecifications, searchCriteria.getSearchCriteriaOperator());
+        Page<AlertEntity> alertEntityPage = notificationRepository.findAll(specification, pageable).map(alertNotificationEntity -> alertNotificationEntity.getAlert());
+        return new PageResult<>(alertEntityPage, AlertEntity::toDomain);
     }
 
     @Override

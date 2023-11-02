@@ -30,6 +30,7 @@ import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
 import org.eclipse.tractusx.traceability.common.repository.BaseSpecification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.QualityNotificationSpecificationUtil;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
 import org.glassfish.jersey.internal.guava.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,17 +38,17 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 
 
-public class AlertSpecification extends BaseSpecification<AlertEntity> implements Specification<AlertEntity> {
+public class AlertSpecification extends BaseSpecification<AlertNotificationEntity> implements Specification<AlertNotificationEntity> {
     public AlertSpecification(SearchCriteriaFilter criteria) {
         super(criteria);
     }
 
     @Override
-    public Predicate toPredicate(@NotNull Root<AlertEntity> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
+    public Predicate toPredicate(@NotNull Root<AlertNotificationEntity> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
         return createPredicate(getSearchCriteriaFilter(), root, builder);
     }
 
-    public static Specification<AlertEntity> toSpecification(final List<AlertSpecification> allSpecifications, SearchCriteriaOperator searchCriteriaOperator) {
+    public static Specification<AlertNotificationEntity> toSpecification(final List<AlertSpecification> allSpecifications, SearchCriteriaOperator searchCriteriaOperator) {
         var specifications = Lists.newArrayList(allSpecifications);
         if (specifications.isEmpty()) {
             return Specification.allOf();

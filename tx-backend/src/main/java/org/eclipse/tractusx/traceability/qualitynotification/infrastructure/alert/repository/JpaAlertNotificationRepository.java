@@ -20,10 +20,12 @@
 package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.repository;
 
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaAlertNotificationRepository extends JpaRepository<AlertNotificationEntity, String> {
+public interface JpaAlertNotificationRepository extends JpaRepository<AlertNotificationEntity, String>, JpaSpecificationExecutor<AlertNotificationEntity> {
 
 }

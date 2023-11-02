@@ -57,13 +57,20 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     }
 
     @Override
+    // TODO: Add test cases
+    public PageResult<QualityNotification> getCreated(Pageable pageable, SearchCriteria searchCriteria) {
+        return getQualityNotificationsPageResultBySide(pageable, QualityNotificationSide.SENDER, searchCriteria);
+    }
+
+    @Override
     public PageResult<QualityNotification> getReceived(Pageable pageable) {
         return getQualityNotificationsPageResult(pageable, QualityNotificationSide.RECEIVER);
     }
 
     @Override
+    // TODO: Add test cases
     public PageResult<QualityNotification> getReceived(Pageable pageable, SearchCriteria searchCriteria) {
-        return getQualityNotificationsPageResult(pageable, QualityNotificationSide.RECEIVER, searchCriteria);
+        return getQualityNotificationsPageResultBySide(pageable, QualityNotificationSide.RECEIVER, searchCriteria);
     }
 
     @Override
@@ -95,12 +102,12 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
         return new PageResult<>(alertDataPage);
     }
 
-    private PageResult<QualityNotification> getQualityNotificationsPageResult(Pageable pageable, QualityNotificationSide alertSide, SearchCriteria searchCriteria) {
-        List<QualityNotification> alertData = getQualityNotificationRepository().findAll(pageable, searchCriteria)
+    private PageResult<QualityNotification> getQualityNotificationsPageResultBySide(Pageable pageable, QualityNotificationSide notificationSide, SearchCriteria searchCriteria) {
+        List<QualityNotification> notificationList = getQualityNotificationRepository().findAll(pageable, searchCriteria)
                 .content();
-        alertData = alertData.stream().filter(qualityNotification -> qualityNotification.getNotificationSide().equals(alertSide)).collect(Collectors.toList());
-        Page<QualityNotification> alertDataPage = new PageImpl<>(alertData, pageable, getQualityNotificationRepository().countQualityNotificationEntitiesBySide(alertSide));
-        return new PageResult<>(alertDataPage);
+        notificationList = notificationList.stream().filter(qualityNotification -> qualityNotification.getNotificationSide().equals(notificationSide)).collect(Collectors.toList());
+        Page<QualityNotification> notificationPage = new PageImpl<>(notificationList, pageable, getQualityNotificationRepository().countQualityNotificationEntitiesBySide(notificationSide));
+        return new PageResult<>(notificationPage);
     }
 
     @Override
