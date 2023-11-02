@@ -32,24 +32,12 @@ public class QualityNotificationSpecificationUtil {
             ArrayList<? extends BaseSpecification<T>> specifications,
             SearchCriteriaOperator searchCriteriaOperator) {
 
-        List<? extends BaseSpecification<T>> sideSpecifications = specifications.stream()
-                .filter(QualityNotificationSpecificationUtil::isSidePredicate).toList();
-
-        List<? extends BaseSpecification<T>> bpnSpecifications = specifications.stream()
-                .filter(QualityNotificationSpecificationUtil::isBpnPredicate).toList();
-
-        // List<? extends BaseSpecification<T>> otherSpecifications = specifications.stream()
-        //        .filter(spec -> !isOwnerPredicate(spec) && !isSemanticDataModelPredicate(spec)).toList();
+        List<? extends BaseSpecification<T>> otherSpecifications = specifications.stream()
+                .filter(spec -> !isSidePredicate(spec)).toList();
 
         Specification<T> resultAnd = null;
         Specification<T> resultOr = null;
 
-        // Always add side specifications with AND
-        for (BaseSpecification<T> sideSpecification : sideSpecifications) {
-            resultAnd = Specification.where(resultAnd).and(sideSpecification);
-        }
-
-        /*
         if (searchCriteriaOperator.equals(SearchCriteriaOperator.AND)) {
             for (BaseSpecification<T> otherSpecification : otherSpecifications) {
                 resultAnd = Specification.where(resultAnd).and(otherSpecification);
@@ -58,14 +46,9 @@ public class QualityNotificationSpecificationUtil {
             for (BaseSpecification<T> otherSpecification : otherSpecifications) {
                 resultOr = Specification.where(resultOr).or(otherSpecification);
             }
-        }*/
+        }
 
         return Specification.where(resultAnd).and(resultOr);
-    }
-
-
-    private static boolean isBpnPredicate(BaseSpecification<?> baseSpecification) {
-        return "bpn".equals(baseSpecification.getSearchCriteriaFilter().getKey());
     }
 
     private static boolean isSidePredicate(BaseSpecification<?> baseSpecification) {

@@ -122,9 +122,10 @@ public class AlertsRepositoryImpl implements AlertRepository {
 
     @Override
     public PageResult<QualityNotification> findAll(Pageable pageable, SearchCriteria searchCriteria) {
-        List<AlertSpecification> alertSpecifications = emptyIfNull(searchCriteria.getSearchCriteriaFilterList()).stream().map(AlertSpecification::new).toList();
+       /* List<AlertSpecification> alertSpecifications = emptyIfNull(searchCriteria.getSearchCriteriaFilterList()).stream().map(AlertSpecification::new).toList();
         Specification<AlertEntity> specification = AlertSpecification.toSpecification(alertSpecifications, searchCriteria.getSearchCriteriaOperator());
-        return new PageResult<>(jpaAlertRepository.findAll(specification, pageable), AlertEntity::toDomain);
+        return new PageResult<>(jpaAlertRepository.findAll(specification, pageable), AlertEntity::toDomain);*/
+        return null;
     }
 
     @Override

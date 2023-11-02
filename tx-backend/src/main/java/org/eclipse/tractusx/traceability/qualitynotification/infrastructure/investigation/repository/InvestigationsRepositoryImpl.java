@@ -34,12 +34,15 @@ import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.Q
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.repository.AlertSpecification;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
@@ -49,6 +52,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -114,8 +119,12 @@ public class InvestigationsRepositoryImpl implements InvestigationRepository {
 
     @Override
     public PageResult<QualityNotification> findAll(Pageable pageable, SearchCriteria searchCriteria) {
-        return null;
+        List<InvestigationSpecification> investigationSpecifications = emptyIfNull(searchCriteria.getSearchCriteriaFilterList()).stream().map(InvestigationSpecification::new).toList();
+        Specification<InvestigationNotificationEntity> specification = InvestigationSpecification.toSpecification(investigationSpecifications, searchCriteria.getSearchCriteriaOperator());
+        Page<InvestigationEntity> investigationEntityPage = notificationRepository.findAll(specification, pageable).map(investigationNotificationEntity -> investigationNotificationEntity.getInvestigation());
+        return new PageResult<>(investigationEntityPage, InvestigationEntity::toDomain);
     }
+
 
     @Override
     public Optional<QualityNotification> findOptionalQualityNotificationById(QualityNotificationId investigationId) {

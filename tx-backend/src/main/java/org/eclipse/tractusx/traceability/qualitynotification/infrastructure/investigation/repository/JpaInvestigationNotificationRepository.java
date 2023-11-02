@@ -19,11 +19,13 @@
 
 package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.repository;
 
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaInvestigationNotificationRepository extends JpaRepository<InvestigationNotificationEntity, String> {
+public interface JpaInvestigationNotificationRepository extends JpaRepository<InvestigationNotificationEntity, String>, JpaSpecificationExecutor<InvestigationNotificationEntity> {
 
 }

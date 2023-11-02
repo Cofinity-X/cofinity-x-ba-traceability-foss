@@ -38,6 +38,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
@@ -95,14 +96,9 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     }
 
     private PageResult<QualityNotification> getQualityNotificationsPageResult(Pageable pageable, QualityNotificationSide alertSide, SearchCriteria searchCriteria) {
-        SearchCriteriaFilter sideFilter = SearchCriteriaFilter.builder()
-                                                    .key("side")
-                                                    .strategy(SearchStrategy.EQUAL)
-                                                    .value(alertSide.name())
-                                                    .build();
-        searchCriteria.getSearchCriteriaFilterList().add(sideFilter);
         List<QualityNotification> alertData = getQualityNotificationRepository().findAll(pageable, searchCriteria)
                 .content();
+        alertData = alertData.stream().filter(qualityNotification -> qualityNotification.getNotificationSide().equals(alertSide)).collect(Collectors.toList());
         Page<QualityNotification> alertDataPage = new PageImpl<>(alertData, pageable, getQualityNotificationRepository().countQualityNotificationEntitiesBySide(alertSide));
         return new PageResult<>(alertDataPage);
     }

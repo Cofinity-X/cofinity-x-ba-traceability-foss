@@ -40,8 +40,6 @@ public interface JpaAlertRepository extends JpaRepository<AlertEntity, Long>, Jp
 
     Page<AlertEntity> findAllBySideEquals(NotificationSideBaseEntity investigationSide, Pageable pageable);
 
-    Page<AlertEntity> findAllBySideEquals(NotificationSideBaseEntity investigationSide, Specification<AlertEntity> spec, Pageable pageable);
-
     long countAllByStatusEquals(NotificationStatusBaseEntity status);
 
     long countAllBySideEquals(NotificationSideBaseEntity alertSide);
