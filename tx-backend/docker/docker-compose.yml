@@ -64,6 +64,8 @@ services:
       - 3002:8080
     volumes:
       - ./wiremock/edc:/home/wiremock
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   tracex-net:
