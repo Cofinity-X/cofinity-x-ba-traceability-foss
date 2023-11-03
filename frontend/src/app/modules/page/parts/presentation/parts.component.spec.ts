@@ -184,6 +184,86 @@ describe('Parts', () => {
         expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], null);
     });
 
+    it('should call partsFacade.setPartsAsPlanned when filter is not set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const assetAsPlannedFilter: AssetAsPlannedFilter = {};
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsPlanned');
+
+        // Act
+        componentInstance.filterActivated(MainAspectType.AS_PLANNED, assetAsPlannedFilter);
+
+        // Assert
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], null);
+    });
+
+    it('should call partsFacade.setPartsAsDesigned when filter is not set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const assetFilter: AssetAsDesignedFilter = {};
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsDesigned');
+
+        // Act
+        componentInstance.filterActivated(MainAspectType.AS_DESIGNED, assetFilter);
+
+        // Assert
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], null);
+    });
+
+    it('should call partsFacade.setPartsAsOrdered when filter is not set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const assetFilter: AssetAsOrderedFilter = {};
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsOrdered');
+
+        // Act
+        componentInstance.filterActivated(MainAspectType.AS_ORDERED, assetFilter);
+
+        // Assert
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], null);
+    });
+
+    it('should call partsFacade.setPartsAsSupported when filter is not set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const assetFilter: AssetAsSupportedFilter = {};
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsSupported');
+
+        // Act
+        componentInstance.filterActivated(MainAspectType.AS_SUPPORTED, assetFilter);
+
+        // Assert
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], null);
+    });
+
+    it('should call partsFacade.setPartsAsRecycled when filter is not set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const assetFilter: AssetAsRecycledFilter = {};
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsRecycled');
+
+        // Act
+        componentInstance.filterActivated(MainAspectType.AS_RECYCLED, assetFilter);
+
+        // Assert
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], null);
+    });
+
     it('should call partsFacade.setPartsAsBuilt with the correct parameters', async () => {
         const { fixture } = await renderParts();
         const { componentInstance } = fixture;
@@ -199,6 +279,7 @@ describe('Parts', () => {
 
         // Act
         componentInstance['onAsBuiltTableConfigChange']({ page, pageSize, sorting }); // Access private method
+        expect(componentInstance['tableAsBuiltSortList']).toBeTruthy();
 
         // Assert
         expect(partsFacadeSpy).toHaveBeenCalledWith(page, pageSize, componentInstance['tableAsBuiltSortList']);
@@ -223,7 +304,6 @@ describe('Parts', () => {
         // Assert
         expect(partsFacadeSpy).toHaveBeenCalledWith(page, pageSize, componentInstance['tableAsBuiltSortList']);
     });
-
 
     it('should call partsFacade.setPartsAsPlanned with the correct parameters', async () => {
         const { fixture } = await renderParts();

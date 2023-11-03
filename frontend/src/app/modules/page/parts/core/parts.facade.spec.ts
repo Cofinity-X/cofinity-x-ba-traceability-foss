@@ -78,6 +78,42 @@ describe('Parts facade', () => {
             );
         });
 
+        it('should set partsAsBuiltSubscription if setPartsAsBuilt is called', async () => {
+            const filter = { id: '123' } as AssetAsBuiltFilter;
+            partsFacade.setPartsAsBuilt(0, 10, [], filter);
+            expect(partsFacade['partsAsBuiltSubscription']).toBeTruthy();
+        });
+
+        it('should set partsAsPlannedSubscription if setPartsAsPlanned is called', async () => {
+            const filter = { id: '123' } as AssetAsPlannedFilter;
+            partsFacade.setPartsAsPlanned(0, 10, [], filter);
+            expect(partsFacade['partsAsPlannedSubscription']).toBeTruthy();
+        });
+
+        it('should set partsAsDesignedSubscription if setPartsAsDesigned is called', async () => {
+            const filter = { id: '123' } as AssetAsDesignedFilter;
+            partsFacade.setPartsAsDesigned(0, 10, [], filter);
+            expect(partsFacade['partsAsDesignedSubscription']).toBeTruthy();
+        });
+
+        it('should set partsAsOrderedSubscription if setPartsAsOrdered is called', async () => {
+            const filter = { id: '123' } as AssetAsOrderedFilter;
+            partsFacade.setPartsAsOrdered(0, 10, [], filter);
+            expect(partsFacade['partsAsOrderedSubscription']).toBeTruthy();
+        });
+
+        it('should set partsAsSupportedSubscription if setPartsAsSupported is called', async () => {
+            const filter = { id: '123' } as AssetAsSupportedFilter;
+            partsFacade.setPartsAsSupported(0, 10, [], filter);
+            expect(partsFacade['partsAsSupportedSubscription']).toBeTruthy();
+        });
+
+        it('should set partsAsRecycledSubscription if setPartsAsRecycled is called', async () => {
+            const filter = { id: '123' } as AssetAsRecycledFilter;
+            partsFacade.setPartsAsRecycled(0, 10, [], filter);
+            expect(partsFacade['partsAsRecycledSubscription']).toBeTruthy();
+        });
+
         it('should set parts including filter if request is successful', async () => {
             const serviceSpy = spyOn(partsServiceMok, 'getPartsAsBuilt').and.returnValue(
                 of<Pagination<Part>>(PartsAssembler.assembleParts(mockAssets, MainAspectType.AS_BUILT)),
