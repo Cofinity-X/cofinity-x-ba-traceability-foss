@@ -19,36 +19,70 @@
 
 package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.repository;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.repository.AssetSpecificationUtil;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
+import org.eclipse.tractusx.traceability.common.model.SearchStrategy;
 import org.eclipse.tractusx.traceability.common.repository.BaseSpecification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.QualityNotificationSpecificationUtil;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
 import org.glassfish.jersey.internal.guava.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 
-public class AlertSpecification extends BaseSpecification<AlertNotificationEntity> implements Specification<AlertNotificationEntity> {
+public class AlertSpecification extends BaseSpecification<AlertEntity> implements Specification<AlertEntity> {
+
+    private static final List<String> ATTRIBUTES_IN_ALERT_ENTITY = List.of("description", "status", "createdDate");
     public AlertSpecification(SearchCriteriaFilter criteria) {
         super(criteria);
     }
 
     @Override
-    public Predicate toPredicate(@NotNull Root<AlertNotificationEntity> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
-        return createPredicate(getSearchCriteriaFilter(), root, builder);
+    public Predicate toPredicate(@NotNull Root<AlertEntity> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
+        return createPredicateBasedOnJoin(getSearchCriteriaFilter(), root, builder);
     }
 
-    public static Specification<AlertNotificationEntity> toSpecification(final List<AlertSpecification> allSpecifications, SearchCriteriaOperator searchCriteriaOperator) {
+    private Predicate createPredicateBasedOnJoin(SearchCriteriaFilter criteria, Root<?> root, CriteriaBuilder builder) {
+        Path predicatePath = null;
+        Join<AlertEntity, AlertNotificationEntity> investigationJoin = root.join("notifications");
+        if(ATTRIBUTES_IN_ALERT_ENTITY.contains(criteria.getKey())) {
+            predicatePath = root.get(criteria.getKey());
+        } else {
+            predicatePath = investigationJoin.get(criteria.getKey());
+        }
+        if (criteria.getStrategy().equals(SearchStrategy.EQUAL)) {
+            return builder.equal(
+                    predicatePath.as(String.class),
+                    criteria.getValue());
+        }
+        if (criteria.getStrategy().equals(SearchStrategy.STARTS_WITH)) {
+            return builder.like(
+                    predicatePath,
+                    criteria.getValue() + "%");
+        }
+        if (criteria.getStrategy().equals(SearchStrategy.AT_LOCAL_DATE)) {
+            final LocalDate localDate = LocalDate.parse(criteria.getValue());
+            Predicate startingFrom = builder.greaterThanOrEqualTo(predicatePath,
+                    LocalDateTime.of(localDate, LocalTime.MIN));
+            Predicate endingAt = builder.lessThanOrEqualTo(predicatePath,
+                    LocalDateTime.of(localDate, LocalTime.MAX));
+            return builder.and(startingFrom, endingAt);
+        }
+        return null;
+    }
+
+    public static Specification<AlertEntity> toSpecification(final List<AlertSpecification> allSpecifications, SearchCriteriaOperator searchCriteriaOperator) {
         var specifications = Lists.newArrayList(allSpecifications);
         if (specifications.isEmpty()) {
             return Specification.allOf();
