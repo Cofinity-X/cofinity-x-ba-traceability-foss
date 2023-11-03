@@ -57,8 +57,8 @@ SPDX-License-Identifier: Apache-2.0
                   [deselectTrigger]="deselectPartTrigger$ | async" [addTrigger]="addPartTrigger$ | async"
                   (selected)="onSelectItem($event)" (configChanged)="onAsBuiltTableConfigChange($event)"
                   (multiSelect)="currentSelectedItems$.next($event)" (clickSelectAction)="isAlertOpen$.next(true)"
-                  (filterActivated)="filterActivated(true, $event )" [multiSortList]="tableAsBuiltSortList"
-                  [tableType]="PartTableType.AS_BUILT_OWN"></app-parts-table>
+                  (filterActivated)="filterActivated(MainAspectType.AS_BUILT, $event )"
+                  [multiSortList]="tableAsBuiltSortList" [tableType]="PartTableType.AS_BUILT_OWN"></app-parts-table>
               </ng-template>
             </div>
           </as-split-area>
@@ -76,8 +76,8 @@ SPDX-License-Identifier: Apache-2.0
                   [deselectTrigger]="deselectPartTrigger$ | async" [addTrigger]="addPartTrigger$ | async"
                   (selected)="onSelectItem($event)" (configChanged)="onAsPlannedTableConfigChange($event)"
                   (multiSelect)="currentSelectedItems$.next($event)" (clickSelectAction)="isAlertOpen$.next(true)"
-                  (filterActivated)="filterActivated(false, $event)" [multiSortList]="tableAsPlannedSortList"
-                  [tableType]="PartTableType.AS_PLANNED_OWN"></app-parts-table>
+                  (filterActivated)="filterActivated(MainAspectType.AS_PLANNED, $event)"
+                  [multiSortList]="tableAsPlannedSortList" [tableType]="PartTableType.AS_PLANNED_OWN"></app-parts-table>
               </ng-template>
             </div>
           </as-split-area>
@@ -95,7 +95,8 @@ SPDX-License-Identifier: Apache-2.0
                   [deselectTrigger]="deselectPartTrigger$ | async" [addTrigger]="addPartTrigger$ | async"
                   (selected)="onSelectItem($event)" (configChanged)="onAsDesignedTableConfigChange($event)"
                   (multiSelect)="currentSelectedItems$.next($event)" (clickSelectAction)="isAlertOpen$.next(true)"
-                  (filterActivated)="filterActivated(false, $event)" [multiSortList]="tableAsDesignedSortList"
+                  (filterActivated)="filterActivated(MainAspectType.AS_DESIGNED, $event)"
+                  [multiSortList]="tableAsDesignedSortList"
                   [tableType]="PartTableType.AS_DESIGNED_OWN"></app-parts-table>
               </ng-template>
             </div>
@@ -114,8 +115,8 @@ SPDX-License-Identifier: Apache-2.0
                   [deselectTrigger]="deselectPartTrigger$ | async" [addTrigger]="addPartTrigger$ | async"
                   (selected)="onSelectItem($event)" (configChanged)="onAsOrderedTableConfigChange($event)"
                   (multiSelect)="currentSelectedItems$.next($event)" (clickSelectAction)="isAlertOpen$.next(true)"
-                  (filterActivated)="filterActivated(false, $event)" [multiSortList]="tableAsOrderedSortList"
-                  [tableType]="PartTableType.AS_ORDERED_OWN"></app-parts-table>
+                  (filterActivated)="filterActivated(MainAspectType.AS_ORDERED, $event)"
+                  [multiSortList]="tableAsOrderedSortList" [tableType]="PartTableType.AS_ORDERED_OWN"></app-parts-table>
               </ng-template>
             </div>
           </as-split-area>
@@ -133,7 +134,8 @@ SPDX-License-Identifier: Apache-2.0
                   [deselectTrigger]="deselectPartTrigger$ | async" [addTrigger]="addPartTrigger$ | async"
                   (selected)="onSelectItem($event)" (configChanged)="onAsSupportedTableConfigChange($event)"
                   (multiSelect)="currentSelectedItems$.next($event)" (clickSelectAction)="isAlertOpen$.next(true)"
-                  (filterActivated)="filterActivated(false, $event)" [multiSortList]="tableAsSupportedSortList"
+                  (filterActivated)="filterActivated(MainAspectType.AS_SUPPORTED, $event)"
+                  [multiSortList]="tableAsSupportedSortList"
                   [tableType]="PartTableType.AS_SUPPORTED_OWN"></app-parts-table>
               </ng-template>
             </div>
@@ -152,7 +154,8 @@ SPDX-License-Identifier: Apache-2.0
                   [deselectTrigger]="deselectPartTrigger$ | async" [addTrigger]="addPartTrigger$ | async"
                   (selected)="onSelectItem($event)" (configChanged)="onAsRecycledTableConfigChange($event)"
                   (multiSelect)="currentSelectedItems$.next($event)" (clickSelectAction)="isAlertOpen$.next(true)"
-                  (filterActivated)="filterActivated(false, $event)" [multiSortList]="tableAsRecycledSortList"
+                  (filterActivated)="filterActivated(MainAspectType.AS_RECYCLED, $event)"
+                  [multiSortList]="tableAsRecycledSortList"
                   [tableType]="PartTableType.AS_RECYCLED_OWN"></app-parts-table>
               </ng-template>
             </div>

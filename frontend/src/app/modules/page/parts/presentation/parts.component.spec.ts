@@ -28,7 +28,7 @@ import { SharedModule } from '@shared/shared.module';
 import { screen, waitFor } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 import { PartsModule } from '../parts.module';
-import { AssetAsBuiltFilter, AssetAsPlannedFilter } from "@page/parts/model/parts.model";
+import { AssetAsBuiltFilter, AssetAsDesignedFilter, AssetAsOrderedFilter, AssetAsPlannedFilter, AssetAsRecycledFilter, AssetAsSupportedFilter } from "@page/parts/model/parts.model";
 import { TableHeaderSort } from "@shared/components/table/table.model";
 import { PartDetailsFacade } from "@shared/modules/part-details/core/partDetails.facade";
 import { toGlobalSearchAssetFilter } from "@shared/helper/filter-helper";
@@ -76,7 +76,7 @@ describe('Parts', () => {
         const partsFacade = (componentInstance as any)['partsFacade'];
         const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsBuilt');
 
-        componentInstance.filterActivated(true, assetAsBuiltFilter);
+        componentInstance.filterActivated(MainAspectType.AS_BUILT, assetAsBuiltFilter);
 
 
         expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], assetAsBuiltFilter);
@@ -94,10 +94,78 @@ describe('Parts', () => {
         const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsPlanned');
 
 
-        componentInstance.filterActivated(false, assetAsPlannedFilter);
+        componentInstance.filterActivated(MainAspectType.AS_PLANNED, assetAsPlannedFilter);
 
 
         expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], assetAsPlannedFilter);
+    });
+
+    it('should call partsFacade.setPartsAsDesignedWithFilter when filter is set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+        // Arrange
+        const assetAsDesignedFilter: AssetAsDesignedFilter = {
+            id: "123"
+        };
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsDesigned');
+
+        componentInstance.filterActivated(MainAspectType.AS_DESIGNED, assetAsDesignedFilter);
+
+
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], assetAsDesignedFilter);
+    });
+
+    it('should call partsFacade.setPartsAsOrderedWithFilter when filter is set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+        // Arrange
+        const assetAsOrderedFilter: AssetAsOrderedFilter = {
+            id: "123"
+        };
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsOrdered');
+
+        componentInstance.filterActivated(MainAspectType.AS_ORDERED, assetAsOrderedFilter);
+
+
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], assetAsOrderedFilter);
+    });
+
+    it('should call partsFacade.setPartsAsSupportedWithFilter when filter is set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+        // Arrange
+        const assetAsSupportedFilter: AssetAsSupportedFilter = {
+            id: "123"
+        };
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsSupported');
+
+        componentInstance.filterActivated(MainAspectType.AS_SUPPORTED, assetAsSupportedFilter);
+
+
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], assetAsSupportedFilter);
+    });
+
+    it('should call partsFacade.setPartsAsRecycledWithFilter when filter is set', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+        // Arrange
+        const assetAsRecycledFilter: AssetAsRecycledFilter = {
+            id: "123"
+        };
+        const partsFacade = (componentInstance as any)['partsFacade'];
+        const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsRecycled');
+
+        componentInstance.filterActivated(MainAspectType.AS_RECYCLED, assetAsRecycledFilter);
+
+
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], assetAsRecycledFilter);
     });
 
     it('should call partsFacade.setPartsAsBuilt when filter is not set', async () => {
@@ -110,7 +178,7 @@ describe('Parts', () => {
         const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsBuilt');
 
         // Act
-        componentInstance.filterActivated(true, assetAsBuiltFilter);
+        componentInstance.filterActivated(MainAspectType.AS_BUILT, assetAsBuiltFilter);
 
         // Assert
         expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], null);

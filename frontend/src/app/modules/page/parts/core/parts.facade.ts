@@ -22,7 +22,7 @@
 import { Injectable } from '@angular/core';
 import { Pagination } from '@core/model/pagination.model';
 import { PartsState } from '@page/parts/core/parts.state';
-import { AssetAsBuiltFilter, AssetAsPlannedFilter, Part } from '@page/parts/model/parts.model';
+import { AssetAsBuiltFilter, AssetAsDesignedFilter, AssetAsOrderedFilter, AssetAsPlannedFilter, AssetAsRecycledFilter, AssetAsSupportedFilter, Part } from '@page/parts/model/parts.model';
 import { TableHeaderSort } from '@shared/components/table/table.model';
 import { View } from '@shared/model/view.model';
 import { PartsService } from '@shared/service/parts.service';
@@ -82,33 +82,33 @@ export class PartsFacade {
         });
     }
 
-    public setPartsAsOrdered(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsBuiltFilter?: AssetAsBuiltFilter, isOrSearch?: boolean): void {
+    public setPartsAsOrdered(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsOrderedFilter?: AssetAsOrderedFilter, isOrSearch?: boolean): void {
         this.partsAsOrderedSubscription?.unsubscribe();
-        this.partsAsOrderedSubscription = this.partsService.getPartsAsOrdered(page, pageSize, sorting, assetAsBuiltFilter, isOrSearch).subscribe({
+        this.partsAsOrderedSubscription = this.partsService.getPartsAsOrdered(page, pageSize, sorting, assetAsOrderedFilter, isOrSearch).subscribe({
             next: data => (this.partsState.partsAsOrdered = { data }),
             error: error => (this.partsState.partsAsOrdered = { error }),
         });
     }
 
-    public setPartsAsDesigned(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsPlannedFilter?: AssetAsPlannedFilter, isOrSearch?: boolean): void {
+    public setPartsAsDesigned(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsDesignedFilter?: AssetAsDesignedFilter, isOrSearch?: boolean): void {
         this.partsAsDesignedSubscription?.unsubscribe();
-        this.partsAsDesignedSubscription = this.partsService.getPartsAsDesigned(page, pageSize, sorting, assetAsPlannedFilter, isOrSearch).subscribe({
+        this.partsAsDesignedSubscription = this.partsService.getPartsAsDesigned(page, pageSize, sorting, assetAsDesignedFilter, isOrSearch).subscribe({
             next: data => (this.partsState.partsAsDesigned = { data }),
             error: error => (this.partsState.partsAsDesigned = { error }),
         });
     }
 
-    public setPartsAsSupported(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsBuiltFilter?: AssetAsBuiltFilter, isOrSearch?: boolean): void {
+    public setPartsAsSupported(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsSupportedFilter?: AssetAsSupportedFilter, isOrSearch?: boolean): void {
         this.partsAsSupportedSubscription?.unsubscribe();
-        this.partsAsSupportedSubscription = this.partsService.getPartsAsSupported(page, pageSize, sorting, assetAsBuiltFilter, isOrSearch).subscribe({
+        this.partsAsSupportedSubscription = this.partsService.getPartsAsSupported(page, pageSize, sorting, assetAsSupportedFilter, isOrSearch).subscribe({
             next: data => (this.partsState.partsAsSupported = { data }),
             error: error => (this.partsState.partsAsSupported = { error }),
         });
     }
 
-    public setPartsAsRecycled(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsPlannedFilter?: AssetAsPlannedFilter, isOrSearch?: boolean): void {
+    public setPartsAsRecycled(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsRecycledFilter?: AssetAsRecycledFilter, isOrSearch?: boolean): void {
         this.partsAsRecycledSubscription?.unsubscribe();
-        this.partsAsRecycledSubscription = this.partsService.getPartsAsRecycled(page, pageSize, sorting, assetAsPlannedFilter, isOrSearch).subscribe({
+        this.partsAsRecycledSubscription = this.partsService.getPartsAsRecycled(page, pageSize, sorting, assetAsRecycledFilter, isOrSearch).subscribe({
             next: data => (this.partsState.partsAsRecycled = { data }),
             error: error => (this.partsState.partsAsRecycled = { error }),
         });

@@ -59,20 +59,20 @@ export class PartsService {
         return this.getPagination('as-planned', MainAspectType.AS_PLANNED, page, pageSize, sorting, assetAsPlannedFilter, isOrSearch)
     }
 
-    public getPartsAsDesigned(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsPlannedFilter?: AssetAsDesignedFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
-        return this.getPagination('as-designed', MainAspectType.AS_DESIGNED, page, pageSize, sorting, assetAsPlannedFilter, isOrSearch)
+    public getPartsAsDesigned(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsDesignedFilter?: AssetAsDesignedFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
+        return this.getPagination('as-designed', MainAspectType.AS_DESIGNED, page, pageSize, sorting, assetAsDesignedFilter, isOrSearch)
     }
 
-    public getPartsAsSupported(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsPlannedFilter?: AssetAsSupportedFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
-        return this.getPagination('as-supported', MainAspectType.AS_SUPPORTED, page, pageSize, sorting, assetAsPlannedFilter, isOrSearch)
+    public getPartsAsSupported(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsSupportedFilter?: AssetAsSupportedFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
+        return this.getPagination('as-supported', MainAspectType.AS_SUPPORTED, page, pageSize, sorting, assetAsSupportedFilter, isOrSearch)
     }
 
-    public getPartsAsOrdered(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsPlannedFilter?: AssetAsOrderedFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
-        return this.getPagination('as-ordered', MainAspectType.AS_ORDERED, page, pageSize, sorting, assetAsPlannedFilter, isOrSearch)
+    public getPartsAsOrdered(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsOrderedFilter?: AssetAsOrderedFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
+        return this.getPagination('as-ordered', MainAspectType.AS_ORDERED, page, pageSize, sorting, assetAsOrderedFilter, isOrSearch)
     }
 
-    public getPartsAsRecycled(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsPlannedFilter?: AssetAsRecycledFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
-        return this.getPagination('as-recycled', MainAspectType.AS_RECYCLED, page, pageSize, sorting, assetAsPlannedFilter, isOrSearch)
+    public getPartsAsRecycled(page: number, pageSize: number, sorting: TableHeaderSort[], assetAsRecycledFilter?: AssetAsRecycledFilter, isOrSearch?: boolean): Observable<Pagination<Part>> {
+        return this.getPagination('as-recycled', MainAspectType.AS_RECYCLED, page, pageSize, sorting, assetAsRecycledFilter, isOrSearch)
     }
 
     public getPart(id: string): Observable<Part> {
