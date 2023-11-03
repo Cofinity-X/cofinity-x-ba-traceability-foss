@@ -228,21 +228,6 @@ tr.error {
   z-index: 1;
 }
 
-.custom-style-paginator-select {
-  .mat-mdc-select-panel-above .mdc-menu-surface.mat-mdc-select-panel {
-    width: 80px !important;
-  }
-}
-
-.table-paginator-menu button.mat-paginator-navigation,
-.table-paginator-menu select.mat-select {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  margin: 2px;
-  border-radius: 4px;
-}
-
 .hideText {
   position: -webkit-sticky;
   /* For Safari */

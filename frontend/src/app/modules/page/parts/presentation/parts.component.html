@@ -24,7 +24,7 @@ SPDX-License-Identifier: Apache-2.0
     <div class="inline-block w-full">
       <div class="flex justify-between items-center">
         <h3 class="flex items-center">
-          <img class="pr-2" src="/assets/images/icons/my_parts_icon_header.svg" alt="" />
+          <img class="pr-2" src="/assets/images/icons/my_parts_icon_header.svg" alt="My parts icon" />
           {{ 'pageTitle.parts' | i18n }}
         </h3>
       </div>
@@ -45,7 +45,7 @@ SPDX-License-Identifier: Apache-2.0
       <div class="split-container-wrapper">
         <as-split direction="horizontal" class="split-container">
 
-          <as-split-area *ngIf="bomLifecycleSize.asBuiltSize > 0" data-testid="as-split-area-1-component--test-id"
+          <as-split-area *ngIf="bomLifecycleSize?.asBuiltSize > 0" data-testid="as-split-area-1-component--test-id"
             [size]="bomLifecycleSize.asBuiltSize" class="split-area">
             <div class="asBuilt-header-container asBuiltHeaderContainer">
               <div class="pt-5 asBuilt-header-text-wrapper">
@@ -55,7 +55,7 @@ SPDX-License-Identifier: Apache-2.0
               <div>
                 <app-button class="createAlertButton" [isDisabled]="true" [color]="'primary'" variant="flat">
                   <div class="flex justify-between items-center">
-                    <img class="pr-2" src="/assets/images/icons/createAlert_icon.svg" alt="" />
+                    <img class="pr-2" src="/assets/images/icons/createAlert_icon.svg" alt="Create alert icon" />
                     <div class="buttonText">
                       {{ 'page.selectedParts.action' | i18n }}
                     </div>
@@ -81,7 +81,7 @@ SPDX-License-Identifier: Apache-2.0
             </div>
           </as-split-area>
 
-          <as-split-area *ngIf="bomLifecycleSize.asPlannedSize > 0" data-testid="as-split-area-2-component--test-id"
+          <as-split-area *ngIf="bomLifecycleSize?.asPlannedSize > 0" data-testid="as-split-area-2-component--test-id"
             [size]="bomLifecycleSize.asPlannedSize" class="split-area">
             <div class="headerContainer">
               <span class="lifecycle-header ">{{"page.asPlannedParts" | i18n}}</span>
@@ -106,7 +106,7 @@ SPDX-License-Identifier: Apache-2.0
             </div>
           </as-split-area>
 
-          <as-split-area *ngIf="bomLifecycleSize.asDesignedSize > 0" data-testid="as-split-area-2-component--test-id"
+          <as-split-area *ngIf="bomLifecycleSize?.asDesignedSize > 0" data-testid="as-split-area-2-component--test-id"
             [size]="bomLifecycleSize.asDesignedSize" class="split-area">
             <div class="headerContainer">
               <span class="lifecycle-header ">{{"page.asDesignedParts" | i18n}}</span>
@@ -130,7 +130,7 @@ SPDX-License-Identifier: Apache-2.0
             </div>
           </as-split-area>
 
-          <as-split-area *ngIf="bomLifecycleSize.asOrderedSize > 0" data-testid="as-split-area-2-component--test-id"
+          <as-split-area *ngIf="bomLifecycleSize?.asOrderedSize > 0" data-testid="as-split-area-2-component--test-id"
             [size]="bomLifecycleSize.asOrderedSize" class="split-area">
             <div class="headerContainer">
               <span class="lifecycle-header ">{{"page.asOrderedParts" | i18n}}</span>
@@ -154,7 +154,7 @@ SPDX-License-Identifier: Apache-2.0
             </div>
           </as-split-area>
 
-          <as-split-area *ngIf="bomLifecycleSize.asSupportedSize > 0" data-testid="as-split-area-2-component--test-id"
+          <as-split-area *ngIf="bomLifecycleSize?.asSupportedSize > 0" data-testid="as-split-area-2-component--test-id"
             [size]="bomLifecycleSize.asOrderedSize" class="split-area">
             <div class="headerContainer">
               <span class="lifecycle-header ">{{"page.asSupportedParts" | i18n}}</span>
@@ -178,7 +178,7 @@ SPDX-License-Identifier: Apache-2.0
             </div>
           </as-split-area>
 
-          <as-split-area *ngIf="bomLifecycleSize.asRecycledSize > 0" data-testid="as-split-area-2-component--test-id"
+          <as-split-area *ngIf="bomLifecycleSize?.asRecycledSize > 0" data-testid="as-split-area-2-component--test-id"
             [size]="bomLifecycleSize.asRecycledSize" class="split-area">
             <div class="headerContainer">
               <span class="lifecycle-header ">{{"page.asRecycledParts" | i18n}}</span>

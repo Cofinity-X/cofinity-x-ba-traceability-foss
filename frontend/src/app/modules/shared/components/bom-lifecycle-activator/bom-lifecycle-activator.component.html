@@ -52,7 +52,7 @@ SPDX-License-Identifier: Apache-2.0
         <mat-chip-row class="chip" *ngFor="let lifeCycle of selectedLifecycles" (removed)="removeLifeCycle(lifeCycle)">
             {{lifeCycle}}
             <button matChipRemove [attr.aria-label]="'remove ' + lifeCycle">
-                <img src="/assets/images/icons/closeChip.svg" class="center py-5 closeIcon" alt="" />
+                <img src="/assets/images/icons/closeChip.svg" class="center py-5 closeIcon" alt="X" />
             </button>
         </mat-chip-row>
     </mat-chip-set>
