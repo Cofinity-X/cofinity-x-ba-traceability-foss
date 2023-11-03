@@ -356,6 +356,10 @@
     padding-right: 4px;
   }
 
+  .mat-mdc-table .mat-mdc-header-cell {
+    border-color: #D2D2D2 !important;
+  }
+
   .mat-mdc-paginator-container {
     .mdc-menu-surface--open {
       width: 80px !important;

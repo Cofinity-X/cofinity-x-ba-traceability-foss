@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Pagination } from '@core/model/pagination.model';
 import { PartsFacade } from '@page/parts/core/parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
@@ -57,13 +57,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   public readonly addPartTrigger$ = new Subject<Part>();
   public readonly currentSelectedItems$ = new BehaviorSubject<Part[]>([]);
 
-  public asBuiltCount: number;
-  public asPlannedCount: number;
-  public asDesignedCount: number;
-  public asOrderedCount: number;
-  public asSupportedCount: number;
-  public asRecycledCount: number;
-
   public tableAsBuiltSortList: TableHeaderSort[];
   public tableAsPlannedSortList: TableHeaderSort[];
   public tableAsDesignedSortList: TableHeaderSort[];
@@ -81,7 +74,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
     private readonly partsFacade: PartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
@@ -316,36 +308,5 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public handleTableActivationEvent(bomLifecycleSize: BomLifecycleSize) {
     this.bomLifecycleSize = bomLifecycleSize;
-  }
-
-  // Set parts count for each table
-  public setPartsCount(count: number, partTable: MainAspectType): void {
-    switch (partTable) {
-      case MainAspectType.AS_BUILT:
-        this.asBuiltCount = count;
-        break;
-
-      case MainAspectType.AS_PLANNED:
-        this.asPlannedCount = count;
-        break;
-
-      case MainAspectType.AS_DESIGNED:
-        this.asDesignedCount = count;
-        break;
-
-      case MainAspectType.AS_ORDERED:
-        this.asOrderedCount = count;
-        break;
-
-      case MainAspectType.AS_SUPPORTED:
-        this.asSupportedCount = count;
-        break;
-
-      case MainAspectType.AS_RECYCLED:
-        this.asRecycledCount = count;
-        break;
-    }
-
-    this.changeDetectorRef.detectChanges();
   }
 }

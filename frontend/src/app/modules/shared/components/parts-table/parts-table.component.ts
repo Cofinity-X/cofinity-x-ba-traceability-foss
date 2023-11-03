@@ -64,6 +64,7 @@ export class PartsTableComponent implements OnInit {
     @Input() labelId: string;
     @Input() noShadow = false;
     @Input() showHover = true;
+    @Input() showAlertButton = false;
 
     @Input() selectedPartsInfoLabel: string;
     @Input() selectedPartsActionLabel: string;
@@ -72,8 +73,6 @@ export class PartsTableComponent implements OnInit {
     @Input() multiSortList: TableHeaderSort[];
 
     @Input() tableType: PartTableType;
-
-    @Output() countChanged = new EventEmitter<number>();
 
     public tableConfig: TableConfig;
 
@@ -85,7 +84,6 @@ export class PartsTableComponent implements OnInit {
         this.dataSource.data = content;
         this.isDataLoading = false;
         this.pageIndex = page;
-        this.countChanged.emit(totalItems);
     }
 
     @Input() set data(content: unknown[]) {

@@ -16,7 +16,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-@use '@angular/material' as mat;
+@import '../../../../../theme/base.scss';
+@tailwind base;
 
 .mat-table {
   max-width: 100%;
@@ -34,6 +35,37 @@
       background: none;
     }
   }
+}
+
+.buttonText {
+  @extend .label-large;
+  @apply text-white;
+
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+}
+
+.createAlertButton {
+  padding-right: 10px !important;
+
+  .mat-mdc-button.mat-mdc-button-base {
+    .mdc-button {
+      width: 163px !important;
+    }
+  }
+
+  border-radius: 100px !important;
+}
+
+.partsTable {
+  height: 100% !important;
+}
+
+.parts-table-wrapper {
+  @extend .partsTable;
+  overflow-y: auto !important;
+  height: 405px;
 }
 
 .multi-select-header-cell {
@@ -87,10 +119,6 @@
   padding: 0 10px;
 }
 
-.mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: black !important;
-}
-
 .selectAllCheckbox {
   background-color: white !important;
   z-index: 1000 !important;
@@ -100,9 +128,31 @@
   padding: 0 5px 0 5px !important
 }
 
+.lifecycle-size-text {
+  @apply text-secondary;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.15px;
+}
+
+.header-text {
+  @extend .title-medium;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  padding-top: 22px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .table-wrapper {
-  height: 505px;
+  height: 405px;
   width: 100%;
+  overflow: auto !important;
 
 }
 
@@ -117,11 +167,6 @@
 
 .table--notification--cell--content--icon {
   flex: 8;
-}
-
-
-.table--notification--icon {
-  color: #888888;
 }
 
 .table--selected__container {
@@ -200,51 +245,6 @@ tr.error {
   height: 0;
 }
 
-.expand-element {
-  overflow: hidden;
-  display: flex;
-  transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.expanded {
-  height: 48px;
-}
-
-.collapsed {
-  height: 0;
-  min-height: 0;
-}
-
-.table-paginator-menu {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 13.2px;
-
-  width: 100%;
-  position: sticky;
-  bottom: 0px;
-  background-color: white;
-  /* You can adjust styles to fit your design */
-  z-index: 1;
-}
-
-.hideText {
-  position: -webkit-sticky;
-  /* For Safari */
-  position: sticky;
-  top: 0;
-  /* Stick to the top */
-  background-color: #f0f0f0;
-}
-
-.panel {
-  .mat-mdc-select-panel-above .mdc-menu-surface.mat-mdc-select-panel {
-    min-width: 50px !important;
-    max-width: 50px !important;
-    height: 50px !important;
-  }
-}
-
 .header {
   position: -webkit-sticky;
   /* For Safari */
@@ -271,11 +271,6 @@ tr.error {
   margin-left: 5px;
 }
 
-.hasQualityAlertsHeader {
-  @apply text-secondary;
-  padding: 0 !important;
-}
-
 .ellipse {
   height: 8px;
   width: 8px;
@@ -286,6 +281,11 @@ tr.error {
 .mdc-data-table__cell,
 .mdc-data-table__header-cell {
   padding: 0 12px 0 12px;
+}
+
+.hasQualityAlertsHeader {
+  @apply text-secondary;
+  padding: 0 !important;
 }
 
 .table--header--tooltip {

@@ -33,12 +33,8 @@
   @apply border-inactiveShape;
 }
 
-.partsTable {
-  height: 100% !important;
-}
-
 .split-container-wrapper {
-  height: 505px;
+  height: 470;
   padding-top: 20px;
 }
 
@@ -119,13 +115,13 @@
 }
 
 .parts-table-wrapper {
-  @extend .partsTable;
+  height: 100% !important;
   overflow-y: auto !important;
-  height: 405px;
 }
 
 .split-area {
   overflow-y: hidden !important;
+  height: 405px;
 }
 
 .mat-mdc-card-header {
