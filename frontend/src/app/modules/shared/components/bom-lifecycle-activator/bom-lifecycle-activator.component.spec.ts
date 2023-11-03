@@ -111,4 +111,17 @@ describe('BomLifecycleActivatorComponent', () => {
 
         componentInstance.selectionChanged([BomLifecycleType.AS_PLANNED, BomLifecycleType.AS_BUILT]);
     });
+
+    it('should update the lifecycle state when updateLifecycleConfig is called', async () => {
+        const { fixture } = await renderBomLifecycleActivator(UserSettingView.PARTS);
+        const { componentInstance } = fixture;
+        componentInstance.selectedLifecycles = [];
+
+        expect(componentInstance.bomLifecycleConfig.asOrderedActive).toBe(false);
+
+        componentInstance.updateLifecycleConfig(BomLifecycleType.AS_ORDERED, true);
+
+        expect(componentInstance.bomLifecycleConfig.asOrderedActive).toBe(true);
+
+    });
 });

@@ -16,17 +16,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
     BomLifecycleConfig,
     BomLifecycleSize,
     BomLifecycleType
 } from "@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model";
 import { BomLifecycleSettingsService, UserSettingView } from "@shared/service/bom-lifecycle-settings.service";
-import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { FormControl, FormsModule } from '@angular/forms';
-import { MatOptionSelectionChange } from '@angular/material/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-bom-lifecycle-activator',
@@ -75,13 +72,6 @@ export class BomLifecycleActivatorComponent implements OnInit {
     }
 
     @Output() buttonClickEvent = new EventEmitter<BomLifecycleSize>();
-
-    selected(event: MatAutocompleteSelectedEvent): void {
-        const value = event.option.viewValue;
-        this.selectedLifecycles.push(value);
-
-        this.updateLifecycleConfig(value, true);
-    }
 
     isSelected(value: string): boolean {
         return this.selectedLifecycles.includes(value);
