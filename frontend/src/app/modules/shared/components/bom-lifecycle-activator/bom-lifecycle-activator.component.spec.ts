@@ -122,6 +122,6 @@ describe('BomLifecycleActivatorComponent', () => {
         componentInstance.updateLifecycleConfig(BomLifecycleType.AS_ORDERED, true);
 
         expect(componentInstance.bomLifecycleConfig.asOrderedActive).toBe(true);
-
+        componentInstance.selectionChanged([BomLifecycleType.AS_PLANNED, BomLifecycleType.AS_BUILT]);
     });
 });
