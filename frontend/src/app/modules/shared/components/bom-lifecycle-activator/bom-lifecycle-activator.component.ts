@@ -141,17 +141,6 @@ export class BomLifecycleActivatorComponent implements OnInit {
         }
     }
 
-    selectLifeCycle(lifeCycle: string): void {
-        if (this.selectedLifecycles.includes(lifeCycle) === true) {
-            var index = this.selectedLifecycles.indexOf(lifeCycle);
-            this.selectedLifecycles.splice(index, 1)
-        } else {
-            this.selectedLifecycles.push(lifeCycle);
-        }
-
-        this.bomLifecycleConfigChanged.emit(this.bomLifecycleConfig);
-    }
-
     removeLifeCycle(lifeCycle: string): void {
         const index = this.selectedLifecycles.indexOf(lifeCycle);
 
@@ -161,51 +150,6 @@ export class BomLifecycleActivatorComponent implements OnInit {
         }
 
         this.updateLifecycleConfig(lifeCycle, false);
-    }
-
-    toggleLifecycleType(value: string): void {
-        const index = Object.values(BomLifecycleType).indexOf(value as unknown as BomLifecycleType);
-
-        switch (index) {
-            case 0: {
-                this.bomLifecycleConfig.asDesignedActive = !this.bomLifecycleConfig.asDesignedActive;
-                break;
-            }
-            case 1: {
-                this.bomLifecycleConfig.asPlannedActive = !this.bomLifecycleConfig.asPlannedActive;
-                break;
-            }
-            case 2: {
-                this.bomLifecycleConfig.asOrderedActive = !this.bomLifecycleConfig.asOrderedActive;
-                break;
-            }
-            case 3: {
-                this.bomLifecycleConfig.asBuiltActive = !this.bomLifecycleConfig.asBuiltActive;
-                break;
-            }
-            case 4: {
-                this.bomLifecycleConfig.asSupportedActive = !this.bomLifecycleConfig.asSupportedActive;
-                break;
-            }
-            case 5: {
-                this.bomLifecycleConfig.asRecycledActive = !this.bomLifecycleConfig.asRecycledActive;
-                break;
-            }
-        }
-
-        this.emitBomLifecycleState();
-    }
-
-
-    toggleAsPlanned() {
-        this.bomLifecycleConfig.asPlannedActive = !this.bomLifecycleConfig.asPlannedActive;
-        this.emitBomLifecycleState();
-    }
-
-    toggle() {
-        // If the other button is also inactive, prevent this one from being deactivated
-        this.bomLifecycleConfig.asBuiltActive = !this.bomLifecycleConfig.asBuiltActive;
-        this.emitBomLifecycleState();
     }
 
     disabledAllLifecycleStates() {
