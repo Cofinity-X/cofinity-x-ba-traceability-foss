@@ -454,6 +454,121 @@ describe('Parts', () => {
         expect(partsFacadeSpy).toHaveBeenCalledWith(page, pageSize, componentInstance['tableAsBuiltSortList']);
     });
 
+    it('should reset AsBuilt part table when resetTableSortingList is called', async () => {
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const page = 1; // Set the page number
+        const pageSize = 10; // Set the page size
+        const sorting = ['id', 'asc'] as TableHeaderSort;
+
+        // Act
+        componentInstance['onAsBuiltTableConfigChange']({ page, pageSize, sorting }); // Access private method
+        expect(componentInstance['tableAsBuiltSortList'].length).not.toBe(0);
+
+        // Act
+        componentInstance['resetTableSortingList'](MainAspectType.AS_BUILT); // Access private method
+
+        // Assert
+        expect(componentInstance['tableAsBuiltSortList'].length).toBe(0);
+    });
+
+    it('should reset AsPlanned part table when resetTableSortingList is called', async () => {
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const page = 1; // Set the page number
+        const pageSize = 10; // Set the page size
+        const sorting = ['id', 'asc'] as TableHeaderSort;
+
+        // Act
+        componentInstance['onAsPlannedTableConfigChange']({ page, pageSize, sorting }); // Access private method
+        expect(componentInstance['tableAsPlannedSortList'].length).not.toBe(0);
+
+        // Act
+        componentInstance['resetTableSortingList'](MainAspectType.AS_PLANNED); // Access private method
+
+        // Assert
+        expect(componentInstance['tableAsPlannedSortList'].length).toBe(0);
+    });
+
+    it('should reset AsDesigned part table when resetTableSortingList is called', async () => {
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const page = 1; // Set the page number
+        const pageSize = 10; // Set the page size
+        const sorting = ['id', 'asc'] as TableHeaderSort;
+
+        // Act
+        componentInstance['onAsDesignedTableConfigChange']({ page, pageSize, sorting }); // Access private method
+        expect(componentInstance['tableAsDesignedSortList'].length).not.toBe(0);
+
+        // Act
+        componentInstance['resetTableSortingList'](MainAspectType.AS_DESIGNED); // Access private method
+
+        // Assert
+        expect(componentInstance['tableAsDesignedSortList'].length).toBe(0);
+    });
+
+    it('should reset AsOrdered part table when resetTableSortingList is called', async () => {
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const page = 1; // Set the page number
+        const pageSize = 10; // Set the page size
+        const sorting = ['id', 'asc'] as TableHeaderSort;
+
+        // Act
+        componentInstance['onAsOrderedTableConfigChange']({ page, pageSize, sorting }); // Access private method
+        expect(componentInstance['tableAsOrderedSortList'].length).not.toBe(0);
+
+        // Act
+        componentInstance['resetTableSortingList'](MainAspectType.AS_ORDERED); // Access private method
+
+        // Assert
+        expect(componentInstance['tableAsOrderedSortList'].length).toBe(0);
+    });
+
+    it('should reset AsSupported part table when resetTableSortingList is called', async () => {
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const page = 1; // Set the page number
+        const pageSize = 10; // Set the page size
+        const sorting = ['id', 'asc'] as TableHeaderSort;
+
+        // Act
+        componentInstance['onAsSupportedTableConfigChange']({ page, pageSize, sorting }); // Access private method
+        expect(componentInstance['tableAsSupportedSortList'].length).not.toBe(0);
+
+        // Act
+        componentInstance['resetTableSortingList'](MainAspectType.AS_SUPPORTED); // Access private method
+
+        // Assert
+        expect(componentInstance['tableAsSupportedSortList'].length).toBe(0);
+    });
+
+    it('should reset AsRecycled part table when resetTableSortingList is called', async () => {
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+
+        const page = 1;
+        const pageSize = 10;
+        const sorting = ['id', 'asc'] as TableHeaderSort;
+
+        // Act
+        componentInstance['onAsRecycledTableConfigChange']({ page, pageSize, sorting }); // Access private method
+        expect(componentInstance['tableAsRecycledSortList'].length).not.toBe(0);
+
+        // Act
+        componentInstance['resetTableSortingList'](MainAspectType.AS_RECYCLED); // Access private method
+
+        // Assert
+        expect(componentInstance['tableAsRecycledSortList'].length).toBe(0);
+    });
+
+
     it('should clear filters and call partsFacade methods with search value', async () => {
 
         const { fixture } = await renderParts();
@@ -494,4 +609,26 @@ describe('Parts', () => {
         expect(partsFacadeAsPlannedSpy).toHaveBeenCalledWith();
         expect(partsFacadeSpy).toHaveBeenCalledWith();
     });
+
+    it('should update the bomLifecycleSize when handleTableActivationEvent is called', async () => {
+
+        const { fixture } = await renderParts();
+        const { componentInstance } = fixture;
+        // Arrange
+        const bomLifecycleSize = {
+            asPlannedSize: 10,
+            asBuiltSize: 20,
+            asDesignedSize: 30,
+            asOrderedSize: 40,
+            asSupportedSize: 50,
+            asRecycledSize: 60
+        };
+
+        // Act
+        componentInstance.handleTableActivationEvent(bomLifecycleSize);
+
+        // Assert
+        expect(componentInstance.bomLifecycleSize).toEqual(bomLifecycleSize);
+    });
+
 });
