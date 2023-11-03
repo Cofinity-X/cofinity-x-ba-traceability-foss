@@ -32,27 +32,20 @@ public class QualityNotificationSpecificationUtil {
             ArrayList<? extends BaseSpecification<T>> specifications,
             SearchCriteriaOperator searchCriteriaOperator) {
 
-        List<? extends BaseSpecification<T>> otherSpecifications = specifications.stream()
-                .filter(spec -> !isSidePredicate(spec)).toList();
-
         Specification<T> resultAnd = null;
         Specification<T> resultOr = null;
 
         if (searchCriteriaOperator.equals(SearchCriteriaOperator.AND)) {
-            for (BaseSpecification<T> otherSpecification : otherSpecifications) {
+            for (BaseSpecification<T> otherSpecification : specifications) {
                 resultAnd = Specification.where(resultAnd).and(otherSpecification);
             }
         } else {
-            for (BaseSpecification<T> otherSpecification : otherSpecifications) {
+            for (BaseSpecification<T> otherSpecification : specifications) {
                 resultOr = Specification.where(resultOr).or(otherSpecification);
             }
         }
 
         return Specification.where(resultAnd).and(resultOr);
-    }
-
-    private static boolean isSidePredicate(BaseSpecification<?> baseSpecification) {
-        return "side".equals(baseSpecification.getSearchCriteriaFilter().getKey());
     }
 }
 

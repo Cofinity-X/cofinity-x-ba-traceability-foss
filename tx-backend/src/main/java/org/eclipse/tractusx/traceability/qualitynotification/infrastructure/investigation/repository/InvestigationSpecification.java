@@ -19,12 +19,10 @@
 
 package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.repository;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
+import org.eclipse.tractusx.traceability.common.model.SearchStrategy;
 import org.eclipse.tractusx.traceability.common.repository.BaseSpecification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.QualityNotificationSpecificationUtil;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
@@ -34,20 +32,54 @@ import org.glassfish.jersey.internal.guava.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 
-public class InvestigationSpecification extends BaseSpecification<InvestigationNotificationEntity> implements Specification<InvestigationNotificationEntity> {
+public class InvestigationSpecification extends BaseSpecification<InvestigationEntity> implements Specification<InvestigationEntity> {
+
+    private static final List<String> ATTRIBUTES_IN_INVESTIGATION_ENTITY = List.of("description", "status", "createdDate");
     public InvestigationSpecification(SearchCriteriaFilter criteria) {
         super(criteria);
     }
 
     @Override
-    public Predicate toPredicate(@NotNull Root<InvestigationNotificationEntity> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
-        return createPredicate(getSearchCriteriaFilter(), root, builder);
+    public Predicate toPredicate(@NotNull Root<InvestigationEntity> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
+        return createPredicateBasedOnJoin(getSearchCriteriaFilter(), root, builder);
     }
 
-    public static Specification<InvestigationNotificationEntity> toSpecification(final List<InvestigationSpecification> allSpecifications, SearchCriteriaOperator searchCriteriaOperator) {
+    private Predicate createPredicateBasedOnJoin(SearchCriteriaFilter criteria, Root<?> root, CriteriaBuilder builder) {
+        Path predicatePath = null;
+        Join<InvestigationEntity,InvestigationNotificationEntity> investigationJoin = root.join("notifications");
+        if(ATTRIBUTES_IN_INVESTIGATION_ENTITY.contains(criteria.getKey())) {
+            predicatePath = root.get(criteria.getKey());
+        } else {
+            predicatePath = investigationJoin.get(criteria.getKey());
+        }
+        if (criteria.getStrategy().equals(SearchStrategy.EQUAL)) {
+            return builder.equal(
+                    predicatePath.as(String.class),
+                    criteria.getValue());
+        }
+        if (criteria.getStrategy().equals(SearchStrategy.STARTS_WITH)) {
+            return builder.like(
+                    predicatePath,
+                    criteria.getValue() + "%");
+        }
+        if (criteria.getStrategy().equals(SearchStrategy.AT_LOCAL_DATE)) {
+            final LocalDate localDate = LocalDate.parse(criteria.getValue());
+            Predicate startingFrom = builder.greaterThanOrEqualTo(predicatePath,
+                    LocalDateTime.of(localDate, LocalTime.MIN));
+            Predicate endingAt = builder.lessThanOrEqualTo(predicatePath,
+                    LocalDateTime.of(localDate, LocalTime.MAX));
+            return builder.and(startingFrom, endingAt);
+        }
+        return null;
+    }
+
+    public static Specification<InvestigationEntity> toSpecification(final List<InvestigationSpecification> allSpecifications, SearchCriteriaOperator searchCriteriaOperator) {
         var specifications = Lists.newArrayList(allSpecifications);
         if (specifications.isEmpty()) {
             return Specification.allOf();

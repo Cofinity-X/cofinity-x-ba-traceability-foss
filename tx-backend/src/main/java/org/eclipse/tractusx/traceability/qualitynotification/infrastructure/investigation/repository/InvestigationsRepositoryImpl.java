@@ -120,8 +120,8 @@ public class InvestigationsRepositoryImpl implements InvestigationRepository {
     @Override
     public PageResult<QualityNotification> findAll(Pageable pageable, SearchCriteria searchCriteria) {
         List<InvestigationSpecification> investigationSpecifications = emptyIfNull(searchCriteria.getSearchCriteriaFilterList()).stream().map(InvestigationSpecification::new).toList();
-        Specification<InvestigationNotificationEntity> specification = InvestigationSpecification.toSpecification(investigationSpecifications, searchCriteria.getSearchCriteriaOperator());
-        Page<InvestigationEntity> investigationEntityPage = notificationRepository.findAll(specification, pageable).map(investigationNotificationEntity -> investigationNotificationEntity.getInvestigation());
+        Specification<InvestigationEntity> specification = InvestigationSpecification.toSpecification(investigationSpecifications, searchCriteria.getSearchCriteriaOperator());
+        Page<InvestigationEntity> investigationEntityPage = jpaInvestigationRepository.findAll(specification, pageable);
         return new PageResult<>(investigationEntityPage, InvestigationEntity::toDomain);
     }
 
