@@ -36,6 +36,7 @@ export class PartsFacade {
     private partsAsOrderedSubscription: Subscription;
     private partsAsSupportedSubscription: Subscription;
     private partsAsRecycledSubscription: Subscription;
+
     private readonly unsubscribeTrigger = new Subject<void>();
 
     constructor(private readonly partsService: PartsService, private readonly partsState: PartsState) {
@@ -116,6 +117,10 @@ export class PartsFacade {
     public unsubscribeParts(): void {
         this.partsAsBuiltSubscription?.unsubscribe();
         this.partsAsPlannedSubscription?.unsubscribe();
+        this.partsAsOrderedSubscription?.unsubscribe();
+        this.partsAsDesignedSubscription?.unsubscribe();
+        this.partsAsSupportedSubscription?.unsubscribe();
+        this.partsAsRecycledSubscription?.unsubscribe();
         this.unsubscribeTrigger.next();
     }
 }

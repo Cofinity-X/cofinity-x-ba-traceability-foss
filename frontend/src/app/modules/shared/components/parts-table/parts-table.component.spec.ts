@@ -162,6 +162,106 @@ describe('PartsTableComponent', () => {
         ]);
     });
 
+    it('should init the correct columns for asDesigned own', async () => {
+        const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_DESIGNED_OWN);
+        const { componentInstance } = fixture;
+
+        componentInstance.ngOnInit();
+
+        expect(componentInstance.displayedColumns).toEqual([
+            'Filter',
+            'filterId',
+            'filterIdShort',
+            'filterName',
+            'filterManufacturer',
+            'filterManufacturerPartId',
+            'filterClassification',
+            'filterSemanticDataModel',
+            'filterSemanticModelId',
+            'filterValidityPeriodFrom',
+            'filterValidityPeriodTo',
+            'filterPsFunction',
+            'filterCatenaXSiteId',
+            'filterFunctionValidFrom',
+            'filterFunctionValidUntil',
+        ]);
+    });
+
+    it('should init the correct columns for asOrdered own', async () => {
+        const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_ORDERED_OWN);
+        const { componentInstance } = fixture;
+
+        componentInstance.ngOnInit();
+
+        expect(componentInstance.displayedColumns).toEqual([
+            'Filter',
+            'filterId',
+            'filterIdShort',
+            'filterName',
+            'filterManufacturer',
+            'filterManufacturerPartId',
+            'filterClassification',
+            'filterSemanticDataModel',
+            'filterSemanticModelId',
+            'filterValidityPeriodFrom',
+            'filterValidityPeriodTo',
+            'filterPsFunction',
+            'filterCatenaXSiteId',
+            'filterFunctionValidFrom',
+            'filterFunctionValidUntil',
+        ]);
+    });
+
+    it('should init the correct columns for asSupported own', async () => {
+        const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_SUPPORTED_OWN);
+        const { componentInstance } = fixture;
+
+        componentInstance.ngOnInit();
+
+        expect(componentInstance.displayedColumns).toEqual([
+            'Filter',
+            'filterId',
+            'filterIdShort',
+            'filterName',
+            'filterManufacturer',
+            'filterManufacturerPartId',
+            'filterClassification',
+            'filterSemanticDataModel',
+            'filterSemanticModelId',
+            'filterValidityPeriodFrom',
+            'filterValidityPeriodTo',
+            'filterPsFunction',
+            'filterCatenaXSiteId',
+            'filterFunctionValidFrom',
+            'filterFunctionValidUntil',
+        ]);
+    });
+
+    it('should init the correct columns for asRecycled own', async () => {
+        const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_RECYCLED_OWN);
+        const { componentInstance } = fixture;
+
+        componentInstance.ngOnInit();
+
+        expect(componentInstance.displayedColumns).toEqual([
+            'Filter',
+            'filterId',
+            'filterIdShort',
+            'filterName',
+            'filterManufacturer',
+            'filterManufacturerPartId',
+            'filterClassification',
+            'filterSemanticDataModel',
+            'filterSemanticModelId',
+            'filterValidityPeriodFrom',
+            'filterValidityPeriodTo',
+            'filterPsFunction',
+            'filterCatenaXSiteId',
+            'filterFunctionValidFrom',
+            'filterFunctionValidUntil',
+        ]);
+    });
+
     it('should update sorting data and emit configChanged event', async () => {
 
         const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_PLANNED_OWN);
