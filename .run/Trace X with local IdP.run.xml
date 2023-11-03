@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Trace X with local IdP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="dev, testdata" />
+    <option name="ACTIVE_PROFILES" value="dev" />
     <envs>
       <env name="ALLOWED_CORS_ORIGIN_FIRST" value="http://localhost:8080" />
       <env name="ALLOWED_CORS_ORIGIN_SECOND" value="http://localhost:4200" />
