@@ -5,7 +5,12 @@
 insert into assets_as_built_parents
     (asset_as_built_id  , id                 , id_short)
 values
-    (${assetAsBuiltId01}, ${assetAsBuiltId03}, '--'), -- Xenon Left-Headlights isParentOf Osram Left-AX400
-    (${assetAsBuiltId01}, ${assetAsBuiltId05}, '--'), -- Xenon Left-Headlights isParentOf Xenon Vision Left-D3R
-    (${assetAsBuiltId02}, ${assetAsBuiltId04}, '--'), -- Xenon Right-Headlights isParentOf Osram Right-AX400
-    (${assetAsBuiltId02}, ${assetAsBuiltId06}, '--'); -- Xenon Right-Headlights isParentOf Xenon Vision Right-D3R
+    -- owner is parent of customer
+    (${assetAsBuiltId01}, ${assetAsBuiltId07}, '--'), -- Xenon Left-Headlights isParentOf BMW Z1
+    (${assetAsBuiltId02}, ${assetAsBuiltId07}, '--'), -- Xenon Right-Headlights isParentOf BMW Z1
+
+    -- supplier is parent of owner
+    (${assetAsBuiltId03}, ${assetAsBuiltId01}, '--'), -- Osram Left-AX400 isParentOf Xenon Left-Headlights
+    (${assetAsBuiltId05}, ${assetAsBuiltId01}, '--'), -- Osram Left-AX400 isParentOf Xenon Left-Headlights
+    (${assetAsBuiltId04}, ${assetAsBuiltId02}, '--'), -- Osram Right-AX400 isParentOf Xenon Right-Headlights
+    (${assetAsBuiltId06}, ${assetAsBuiltId02}, '--'); -- Osram Right-AX400 isParentOf Xenon Right-Headlights
