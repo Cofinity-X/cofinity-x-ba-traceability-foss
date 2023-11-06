@@ -12,6 +12,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed table-settings reset bug
 - Changed datepicker in FE to date range picker
 
+- Fixed name of veracode backend job
 ### Removed
 
 ## [9.0.0-rc1 - 03.11.2023]
