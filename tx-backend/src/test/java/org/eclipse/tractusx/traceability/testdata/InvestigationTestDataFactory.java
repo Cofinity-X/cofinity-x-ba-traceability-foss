@@ -19,7 +19,7 @@
 
 package org.eclipse.tractusx.traceability.testdata;
 
-import org.eclipse.tractusx.traceability.common.model.BPN;
+import org.eclipse.tractusx.traceability.common.model.*;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationAffectedPart;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
@@ -169,5 +169,19 @@ public class InvestigationTestDataFactory {
                 .assetIds(assetIds)
                 .notifications(notifications)
                 .build();
+    }
+
+    public static SearchCriteria createSearchCriteria() {
+        SearchCriteriaFilter searchCriteriaFilter = SearchCriteriaFilter.builder()
+                                                    .key("sendToName")
+                                                    .strategy(SearchStrategy.EQUAL)
+                                                    .value("receiverManufacturerName")
+                                                    .build();
+        SearchCriteria searchCriteria = SearchCriteria.builder()
+                                        .searchCriteriaFilterList(List.of(searchCriteriaFilter))
+                                        .searchCriteriaOperator(SearchCriteriaOperator.AND)
+                                        .build();
+
+        return searchCriteria;
     }
 }

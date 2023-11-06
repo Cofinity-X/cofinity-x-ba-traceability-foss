@@ -20,12 +20,8 @@ package org.eclipse.tractusx.traceability.qualitynotification.domain.base.servic
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.service.AssetAsBuiltServiceImpl;
-import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
-import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.repository.AssetAsBuildSpecification;
 import org.eclipse.tractusx.traceability.common.model.PageResult;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
-import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
-import org.eclipse.tractusx.traceability.common.model.SearchStrategy;
 import org.eclipse.tractusx.traceability.qualitynotification.application.base.service.QualityNotificationService;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
@@ -35,12 +31,9 @@ import org.eclipse.tractusx.traceability.qualitynotification.domain.repository.Q
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @Slf4j
 public abstract class AbstractQualityNotificationService implements QualityNotificationService {
