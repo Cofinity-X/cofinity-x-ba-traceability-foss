@@ -114,13 +114,13 @@
     "Minor": "Minor",
     "Major": "Major",
     "Critical": "Critical",
-    "LifeThreatening": "Life-Threatening"
+    "LifeThreatening": "Life threatening"
   },
   "severity": {
     "MINOR": "Minor",
     "MAJOR": "Major",
     "CRITICAL": "Critical",
-    "LIFE-THREATENING": "Life-Threatening"
+    "LIFE-THREATENING": "Life threatening"
   },
   "input": {
     "minMaxLengthHint": "{{current}} Characters. (Min. {{min}} and max. {{max}} characters)",
@@ -273,7 +273,8 @@
   "bomLifecycleActivator": {
     "selectLifeCycles": "Select 2 lifecycle stages",
     "asBuilt": "As Built",
-    "asPlanned": "As Planned"
+    "asPlanned": "As Planned",
+    "unImplemented": "Coming soon"
   },
   "multiSelect": {
     "filterLabel": "Filter",

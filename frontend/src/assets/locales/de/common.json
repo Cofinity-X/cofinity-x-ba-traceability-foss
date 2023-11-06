@@ -268,8 +268,10 @@
     }
   },
   "bomLifecycleActivator": {
+    "selectLifeCycles": "Wählen Sie 2 Lebenszyklusphasen",
     "asBuilt": "As Built",
-    "asPlanned": "As Planned"
+    "asPlanned": "As Planned",
+    "unImplemented": "Demnächst verfügbar"
   },
   "multiSelect": {
     "filterLabel": "Filter",

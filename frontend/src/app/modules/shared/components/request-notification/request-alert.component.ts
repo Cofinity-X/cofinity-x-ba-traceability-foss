@@ -36,6 +36,7 @@ import { AlertsService } from '@shared/service/alerts.service';
 
 @Component({
   selector: 'app-request-alert',
+  styleUrls: ['./request-notification.base.scss'],
   templateUrl: './request-notification.base.html',
 })
 export class RequestAlertComponent extends RequestNotificationBase {

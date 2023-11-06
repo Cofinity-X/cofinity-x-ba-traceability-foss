@@ -245,6 +245,12 @@
     justify-content: space-between !important;
   }
 
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: var(--mdc-dialog-container-shape, var(--mdc-shape-medium, 15px)) !important;
+    padding: 20px !important;
+    width: 804px !important;
+  }
+
   .mat-mdc-icon-button {
     @apply focus:outline-none;
   }

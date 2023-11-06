@@ -1,7 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022, 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
- * Copyright (c) 2022, 2023 ZF Friedrichshafen AG
- * Copyright (c) 2022, 2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,34 +19,18 @@
 @import '../../../../../theme/base.scss';
 @tailwind base;
 
-.severity {
-  &__container {
-    display: flex;
-    align-items: center;
-    color: currentColor;
-  }
-
-  &__MINOR {
-    @apply text-severityMinor;
-  }
-
-  &__MAJOR {
-    @apply text-severityMajor;
-  }
-
-  &__CRITICAL {
-    @apply text-severityCritical;
-  }
-
-  &__LIFE-THREATENING {
-    @apply text-severityCritical;
-  }
+.header {
+  @extend .headline-medium;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 35.2px;
+  color: #333333;
 }
 
-.text {
-  @extend .body-large;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
-  @apply text-pendingDark;
+.selected-parts {
+  @extend .body-medium-emphasis;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25.2px;
+  color: #49454F;
 }
