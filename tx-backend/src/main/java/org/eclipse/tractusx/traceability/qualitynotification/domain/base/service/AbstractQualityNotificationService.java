@@ -50,7 +50,6 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     }
 
     @Override
-    // TODO: Add test cases
     public PageResult<QualityNotification> getCreated(Pageable pageable, SearchCriteria searchCriteria) {
         return getQualityNotificationsPageResultBySide(pageable, QualityNotificationSide.SENDER, searchCriteria);
     }
@@ -61,7 +60,6 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     }
 
     @Override
-    // TODO: Add test cases
     public PageResult<QualityNotification> getReceived(Pageable pageable, SearchCriteria searchCriteria) {
         return getQualityNotificationsPageResultBySide(pageable, QualityNotificationSide.RECEIVER, searchCriteria);
     }
