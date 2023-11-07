@@ -36,14 +36,14 @@ services:
     ports:
       - 4001:8080
     volumes:
-      - ./wiremock/irs:/home/wiremock
+      - ./wiremock-receiver/irs:/home/wiremock
 
   edc-server-mock:
     image: wiremock/wiremock:3.2.0
     ports:
       - 4002:8080
     volumes:
-      - ./wiremock/edc:/home/wiremock
+      - ./wiremock-receiver/edc:/home/wiremock
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
