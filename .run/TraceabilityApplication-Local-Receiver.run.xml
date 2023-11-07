@@ -1,0 +1,31 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TraceabilityApplication-Local-Receiver" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="17" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <envs>
+      <env name="ALLOWED_CORS_ORIGIN_FIRST" value="http://localhost:4201" />
+      <env name="ALLOWED_CORS_ORIGIN_SECOND" value="http://localhost:4200" />
+      <env name="DISCOVERY_FINDER_URL_WITH_PATH" value="http://localhost:4001/administration/connectors/discovery/search" />
+      <env name="EDC_API_KEY" value="api-key" />
+      <env name="EDC_DATA_ENDPOINT_URL" value="http://localhost:4002/api" />
+      <env name="EDC_PROVIDER_URL" value="http://localhost:4002/" />
+      <env name="IRS_URL" value="http://localhost:4001/" />
+      <env name="JWT_RESOURCE_CLIENT" value="Cl17-CX-Part" />
+      <env name="OAUTH2_CLIENT_ID" value="catena-client-id" />
+      <env name="OAUTH2_CLIENT_SECRET" value="r8jiU6MM5wCuaVL54mCLI6OeaWWRqzL4" />
+      <env name="OAUTH2_JWK_SET_URI" value="http://localhost:4011/realms/CX-Central/protocol/openid-connect/certs" />
+      <env name="OAUTH2_PROVIDER_TOKEN_URI" value="http://localhost:4011/realms/CX-Central/protocol/openid-connect/token" />
+      <env name="SPRING_DATASOURCE_PASSWORD" value="docker" />
+      <env name="SPRING_DATASOURCE_URL" value="jdbc:postgresql://localhost:5433/trace" />
+      <env name="SPRING_DATASOURCE_USERNAME" value="postgres" />
+      <env name="SPRING_PROFILES_ACTIVE" value="dev-receiver" />
+      <env name="TRACEABILITY_BPN" value="BPNL000SUPPLIER2" />
+      <env name="TRACEABILITY_URL" value="http://localhost:9092/" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="org.eclipse.tractusx.traceability.TraceabilityApplication" />
+    <module name="tx-backend" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

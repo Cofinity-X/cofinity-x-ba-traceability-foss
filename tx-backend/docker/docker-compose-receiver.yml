@@ -48,44 +48,44 @@ services:
       - "host.docker.internal:host-gateway"
 
   tracex-frontend-receiver:
-    image: tracex-frontend:ver3
+    image: tracex-frontend-receiver:ver2
     ports:
       - 4201:8080
     environment:
       CATENAX_PORTAL_KEYCLOAK_URL: http://localhost:4011
-      CATENAX_PORTAL_API_URL: http://localhost:8082/api
+      CATENAX_PORTAL_API_URL: http://localhost:9092/api
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
       - tracex-receiver-net
 
-  tracex-backend-receiver:
-    image: tracex-backend:ver1
-    ports:
-      - 9092:8080
-    environment:
-      ALLOWED_CORS_ORIGIN_FIRST: http://localhost:4201
-      ALLOWED_CORS_ORIGIN_SECOND: http://localhost:4200
-      DISCOVERY_FINDER_URL_WITH_PATH: http://localhost:4001/administration/connectors/discovery/search
-      EDC_API_KEY: api-key
-      EDC_DATA_ENDPOINT_URL: http://localhost:4002/api
-      EDC_PROVIDER_URL: http://localhost:4002/
-      IRS_URL: http://localhost:4001/
-      JWT_RESOURCE_CLIENT: Cl17-CX-Part
-      OAUTH2_CLIENT_ID: catena-client-id
-      OAUTH2_CLIENT_SECRET: r8jiU6MM5wCuaVL54mCLI6OeaWWRqzL4
-      OAUTH2_JWK_SET_URI: http://localhost:4011/realms/CX-Central/protocol/openid-connect/certs
-      OAUTH2_PROVIDER_TOKEN_URI: http://localhost:4011/realms/CX-Central/protocol/openid-connect/token
-      SPRING_DATASOURCE_PASSWORD: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-receiver:5432/trace
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_PROFILES_ACTIVE: dev,testdata
-      TRACEABILITY_BPN: BPNL000000000002
-      TRACEABILITY_URL: http://localhost:9092/
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    networks:
-      - tracex-receiver-net
+#  tracex-backend-receiver:
+#    image: tracex-backend:ver1
+#    ports:
+#      - 9092:8080
+#    environment:
+#      ALLOWED_CORS_ORIGIN_FIRST: http://localhost:4201
+#      ALLOWED_CORS_ORIGIN_SECOND: http://localhost:4200
+#      DISCOVERY_FINDER_URL_WITH_PATH: http://localhost:4001/administration/connectors/discovery/search
+#      EDC_API_KEY: api-key
+#      EDC_DATA_ENDPOINT_URL: http://localhost:4002/api
+#      EDC_PROVIDER_URL: http://localhost:4002/
+#      IRS_URL: http://localhost:4001/
+#      JWT_RESOURCE_CLIENT: Cl17-CX-Part
+#      OAUTH2_CLIENT_ID: catena-client-id
+#      OAUTH2_CLIENT_SECRET: r8jiU6MM5wCuaVL54mCLI6OeaWWRqzL4
+#      OAUTH2_JWK_SET_URI: http://localhost:4011/realms/CX-Central/protocol/openid-connect/certs
+#      OAUTH2_PROVIDER_TOKEN_URI: http://localhost:4011/realms/CX-Central/protocol/openid-connect/token
+#      SPRING_DATASOURCE_PASSWORD: docker
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-receiver:5432/trace
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_PROFILES_ACTIVE: dev,testdata
+#      TRACEABILITY_BPN: BPNL000000000002
+#      TRACEABILITY_URL: http://localhost:9092/
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+#    networks:
+#      - tracex-receiver-net
 
 networks:
   tracex-receiver-net:
