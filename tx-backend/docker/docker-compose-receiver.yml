@@ -48,7 +48,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   tracex-frontend-receiver:
-    image: tracex-frontend-receiver:ver2
+    image: tracex-frontend-stable:ver1
     ports:
       - 4201:8080
     environment:

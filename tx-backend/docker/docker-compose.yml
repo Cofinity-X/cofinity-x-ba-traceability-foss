@@ -65,6 +65,18 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  tracex-frontend-sender:
+    image: tracex-frontend-stable:ver1
+    ports:
+      - 4200:8080
+    environment:
+      CATENAX_PORTAL_KEYCLOAK_URL: http://localhost:4011
+      CATENAX_PORTAL_API_URL: http://localhost:8082/api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - tracex-net
+
 networks:
   tracex-net:
 
