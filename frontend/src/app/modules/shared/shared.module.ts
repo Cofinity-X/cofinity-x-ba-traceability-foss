@@ -88,6 +88,7 @@ import { ViewSelectorComponent } from "@shared/components/view-selector/view-sel
 import {
   CountryFlagGeneratorComponent
 } from "@shared/components/country-flag-generator/country-flag-generator.component";
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import {
     TabAsPanelDirective,
     SidenavWrapperComponent,
     TextareaComponent,
+    ConfirmationDialogComponent,
     ErrorMessagePipe,
     RequestInvestigationComponent,
     RequestAlertComponent,
@@ -156,6 +158,7 @@ import {
     LanguageSelectorComponent,
     CardIconComponent,
     CardListComponent,
+    ConfirmationDialogComponent,
     ToKeyValuePipe,
     SelectComponent,
     DataLoadingErrorComponent,

@@ -1,0 +1,49 @@
+@import '../../../../../theme/base.scss';
+@tailwind base;
+
+.container {
+  width: 455px;
+  padding: 10px 10px 10px 10px;
+}
+
+.header {
+  @extend .headline-medium;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 35.2px;
+  color: #333333;
+
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 9px;
+}
+
+.message-text {
+  @extend .body-large;
+  font-weight: 400;
+  line-height: 28px;
+  padding-bottom: 30px;
+}
+
+.button-text {
+  @extend .label-large;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  padding: 0 5px 0 5px;
+}
+
+.cancel-button-text {
+  @extend .button-text;
+  @apply text-white;
+}
+
+.confirm-button-text {
+  @extend .button-text;
+  @apply text-secondary;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+}

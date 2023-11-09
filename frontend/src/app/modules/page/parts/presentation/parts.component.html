@@ -38,6 +38,7 @@ SPDX-License-Identifier: Apache-2.0
         (prefixIconClick)="triggerPartSearch()"
         [onEnterActive]="true"
         [prefixIcon]="'search'"
+        [isSearchBar]="true"
         formControlName="partSearch"
         [parentFormGroup]="searchFormGroup"
         [parentControlName]="'partSearch'"
@@ -225,16 +226,6 @@ SPDX-License-Identifier: Apache-2.0
       </div>
 
       <app-part-detail></app-part-detail>
-
-      <!-- <app-sidenav-wrapper [isOpen]="isAlertOpen$ | async"
-        (sidenavAction)="isAlertOpen$.next($event)">
-        <app-request-alert *ngIf="isAlertOpen$ | async"
-          [selectedItems]="currentSelectedItems$ | async"
-          (deselectPart)="deselectPartTrigger$.next([$event])"
-          (restorePart)="addPartTrigger$.next($event)"
-          (clearSelected)="deselectPartTrigger$.next(currentSelectedItems$.value)"
-          (submitted)="isAlertOpen$.next(false)"></app-request-alert>
-      </app-sidenav-wrapper> -->
 
       <ng-template #errorTmp
         let-parts="view">

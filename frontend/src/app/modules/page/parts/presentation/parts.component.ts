@@ -119,8 +119,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(RequestAlertComponent, {
-      data: {},
+    this.dialog.open(RequestAlertComponent, {
+      data: { selectedItems: this.currentSelectedItems$.value, showHeadline: true },
     });
   }
 

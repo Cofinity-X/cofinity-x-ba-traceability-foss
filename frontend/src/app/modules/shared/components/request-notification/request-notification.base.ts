@@ -21,11 +21,13 @@
 
 import { EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Part } from '@page/parts/model/parts.model';
 import { DateTimeString } from '@shared/components/dateTime/dateTime.component';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { Severity } from '@shared/model/severity.model';
 import { BehaviorSubject } from 'rxjs';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 export type RequestContext = 'requestInvestigations' | 'requestAlert';
 
@@ -56,7 +58,9 @@ export abstract class RequestNotificationBase {
 
   public removedItemsHistory: Part[] = [];
 
-  protected constructor(private readonly toastService: ToastService) { }
+  protected constructor(private readonly toastService: ToastService,
+    public dialog: MatDialog,
+  ) { }
 
   protected abstract submit(): void;
 
@@ -97,14 +101,22 @@ export abstract class RequestNotificationBase {
           link,
         },
       ],
-
-
     );
   }
 
   public cancelAction(part: Part): void {
-    this.removedItemsHistory.unshift(part);
-    this.deselectPart.emit(part);
+    this.dialog.open(ConfirmationDialogComponent, {
+      autoFocus: false,
+      data: {
+        title: 'parts.confirmationDialog.deletePartTitle',
+        message: 'parts.confirmationDialog.deletePartMessage',
+        confirmButtonLabel: 'parts.confirmationDialog.deletePartButton',
+        confirmAction: () => {
+          this.deselectPart.emit(part);
+          this.selectedItems.splice(this.selectedItems.indexOf(part), 1);
+        }
+      }
+    });
   }
 
   public restoreLastItem(): void {
