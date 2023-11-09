@@ -27,7 +27,6 @@ SPDX-License-Identifier: Apache-2.0
     <mat-select-trigger>
       <ng-container *ngTemplateOutlet="renderWithRenderer; context: { value: control.value }"></ng-container>
     </mat-select-trigger>
-
     <mat-option *ngFor="let option of options"
       [value]="option.value || option.label">
       <ng-container *ngTemplateOutlet="renderWithRenderer; context: { value: option.label }"></ng-container>

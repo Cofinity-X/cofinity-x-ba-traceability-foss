@@ -58,6 +58,8 @@ export class RequestAlertComponent extends RequestNotificationBase {
 
     this.selectedItems = data.selectedItems;
     this.showHeadline = data.showHeadline;
+    this.formGroup.markAsUntouched();
+    this.formGroup.reset();
   }
 
   public readonly formGroup = new FormGroup({

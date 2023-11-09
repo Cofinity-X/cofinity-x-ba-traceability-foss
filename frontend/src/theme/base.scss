@@ -415,10 +415,30 @@
     border-right: none !important;
   }
 
+  .mdc-text-field--invalid {
+    @extend .body-large-emphasis;
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .mat-mdc-form-field.mat-accent .mdc-text-field--invalid .mdc-text-field__input {
+    caret-color: var(--mdc-theme-error, #b62100);
+    @extend .body-large-emphasis;
+    font-size: 20px;
+    line-height: 28px;
+    color: #b62100 !important;
+  }
+
   .mat-mdc-form-field.mat-accent .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
   .mat-mdc-form-field.mat-accent .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
   .mat-mdc-form-field.mat-accent .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
     border-width: 2px !important;
+  }
+
+  .mat-mdc-form-field.mat-accent .mdc-text-field--focused .mdc-text-field__input {
+    @extend .body-large-emphasis;
+    font-size: 20px;
+    line-height: 28px;
   }
 
   .mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
