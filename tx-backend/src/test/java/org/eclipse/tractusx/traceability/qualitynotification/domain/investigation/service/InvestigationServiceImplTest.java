@@ -92,7 +92,7 @@ class InvestigationServiceImplTest {
     }
 
     @Test
-    void testFindCreateddInvestigationsWithSearchCriteria() {
+    void testFindCreatedInvestigationsWithSearchCriteria() {
         // given
         when(investigationsRepositoryMock.findAll(any(Pageable.class), any(SearchCriteria.class))).thenReturn(new PageResult<>(
                 List.of(
