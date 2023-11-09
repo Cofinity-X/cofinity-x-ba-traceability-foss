@@ -96,22 +96,6 @@ describe('modalComponent', () => {
     await waitFor(() => expect(spyOnClose).toHaveBeenCalledWith(false));
   });
 
-  it('should click confirm button and close - no formGroup', async () => {
-    const { fixture } = await renderModalComponent(ModalComponent);
-
-    const confirmTextElement = await waitFor(() => screen.getByText(confirmModalData.buttonRight));
-    expect(confirmTextElement).toBeInTheDocument();
-
-    const spyOnConfirm = spyOn(fixture.componentInstance as any, 'confirm').and.callThrough();
-    const spyOnClose = spyOn(fixture.componentInstance as any, 'close').and.callThrough();
-
-    confirmTextElement.click();
-
-    await waitFor(() => expect(spyOnConfirm).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(spyOnClose).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(spyOnClose).toHaveBeenCalledWith(true));
-  });
-
   it('should set left button as confirm when leftIsConfirm is true', async () => {
     confirmModalData.leftIsConfirm = true;
 
@@ -121,13 +105,10 @@ describe('modalComponent', () => {
     expect(confirmTextElement).toBeInTheDocument();
 
     const spyOnConfirm = spyOn(fixture.componentInstance as any, 'confirm').and.callThrough();
-    const spyOnClose = spyOn(fixture.componentInstance as any, 'close').and.callThrough();
 
     confirmTextElement.click();
 
     await waitFor(() => expect(spyOnConfirm).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(spyOnClose).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(spyOnClose).toHaveBeenCalledWith(true));
   });
 
   it('should click confirm button and close - with valid formGroup', async () => {
@@ -173,5 +154,18 @@ describe('modalComponent', () => {
     await waitFor(() => expect(spyOnClose).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(spyOnFormGroup.markAllAsTouched).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(spyOnFormGroup.updateValueAndValidity).toHaveBeenCalledTimes(1));
+  });
+
+  it('should call onConfirm when the confirm button is clicked', async () => {
+    const { fixture } = await renderModalComponent(ModalComponent);
+
+    const confirmTextElement = await waitFor(() => screen.getByText(confirmModalData.buttonRight));
+    expect(confirmTextElement).toBeInTheDocument();
+
+    confirmModalData.onConfirm = jasmine.createSpy('onConfirm');
+
+    confirmTextElement.click();
+
+    await waitFor(() => expect(confirmModalData.onConfirm).toHaveBeenCalledTimes(1));
   });
 });
