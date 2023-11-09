@@ -55,16 +55,13 @@ export class RequestAlertComponent extends RequestNotificationBase {
 
   constructor(toastService: ToastService, private readonly alertsService: AlertsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
     super(toastService, dialog);
-
     this.selectedItems = data.selectedItems;
     this.showHeadline = data.showHeadline;
-    this.formGroup.markAsUntouched();
-    this.formGroup.reset();
   }
 
   public readonly formGroup = new FormGroup({
     description: new FormControl('', [Validators.required, Validators.maxLength(1000), Validators.minLength(15)]),
-    severity: new FormControl(Severity.MINOR, [Validators.required]),
+    severity: new FormControl(null, [Validators.required]),
     bpn: new FormControl(null, [Validators.required, BaseInputHelper.getCustomPatternValidator(bpnRegex, 'bpn')]),
   });
 
