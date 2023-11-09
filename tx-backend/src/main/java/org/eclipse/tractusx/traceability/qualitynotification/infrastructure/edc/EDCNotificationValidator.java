@@ -23,8 +23,8 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.eclipse.tractusx.traceability.common.model.BPN;
 import org.eclipse.tractusx.traceability.common.properties.TraceabilityProperties;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.EDCNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.investigation.model.exception.InvestigationReceiverBpnMismatchException;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.EDCNotification;
 import org.springframework.stereotype.Component;
 
 /**

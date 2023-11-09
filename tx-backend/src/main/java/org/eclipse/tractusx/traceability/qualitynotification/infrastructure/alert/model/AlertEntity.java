@@ -19,13 +19,7 @@
 
 package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,11 +27,7 @@ import lombok.experimental.SuperBuilder;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.model.AssetAsPlannedEntity;
 import org.eclipse.tractusx.traceability.common.model.BPN;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.*;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;

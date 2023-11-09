@@ -50,13 +50,9 @@ public class InvestigationSpecification extends BaseSpecification<InvestigationE
     }
 
     private Predicate createPredicateBasedOnJoin(SearchCriteriaFilter criteria, Root<?> root, CriteriaBuilder builder) {
-        Path predicatePath = null;
         Join<InvestigationEntity,InvestigationNotificationEntity> investigationJoin = root.join("notifications");
-        if(ATTRIBUTES_IN_INVESTIGATION_ENTITY.contains(criteria.getKey())) {
-            predicatePath = root.get(criteria.getKey());
-        } else {
-            predicatePath = investigationJoin.get(criteria.getKey());
-        }
+        Path predicatePath = (ATTRIBUTES_IN_INVESTIGATION_ENTITY.contains(criteria.getKey())) ?
+                root.get(criteria.getKey()):investigationJoin.get(criteria.getKey());
         if (criteria.getStrategy().equals(SearchStrategy.EQUAL)) {
             return builder.equal(
                     predicatePath.as(String.class),

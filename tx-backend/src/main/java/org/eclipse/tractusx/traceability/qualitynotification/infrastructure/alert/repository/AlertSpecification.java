@@ -20,8 +20,6 @@
 package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.repository;
 
 import jakarta.persistence.criteria.*;
-import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.repository.AssetSpecificationUtil;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
 import org.eclipse.tractusx.traceability.common.model.SearchStrategy;
@@ -29,8 +27,6 @@ import org.eclipse.tractusx.traceability.common.repository.BaseSpecification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.QualityNotificationSpecificationUtil;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
 import org.glassfish.jersey.internal.guava.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
@@ -54,13 +50,9 @@ public class AlertSpecification extends BaseSpecification<AlertEntity> implement
     }
 
     private Predicate createPredicateBasedOnJoin(SearchCriteriaFilter criteria, Root<?> root, CriteriaBuilder builder) {
-        Path predicatePath = null;
         Join<AlertEntity, AlertNotificationEntity> investigationJoin = root.join("notifications");
-        if(ATTRIBUTES_IN_ALERT_ENTITY.contains(criteria.getKey())) {
-            predicatePath = root.get(criteria.getKey());
-        } else {
-            predicatePath = investigationJoin.get(criteria.getKey());
-        }
+        Path predicatePath = (ATTRIBUTES_IN_ALERT_ENTITY.contains(criteria.getKey())) ?
+                            root.get(criteria.getKey()):investigationJoin.get(criteria.getKey());
         if (criteria.getStrategy().equals(SearchStrategy.EQUAL)) {
             return builder.equal(
                     predicatePath.as(String.class),

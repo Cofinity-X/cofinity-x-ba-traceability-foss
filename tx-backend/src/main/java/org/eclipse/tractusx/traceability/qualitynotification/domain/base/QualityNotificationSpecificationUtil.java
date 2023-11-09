@@ -23,13 +23,12 @@ import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
 import org.eclipse.tractusx.traceability.common.repository.BaseSpecification;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class QualityNotificationSpecificationUtil {
 
     public static <T> Specification<T> combineSpecifications(
-            ArrayList<? extends BaseSpecification<T>> specifications,
+            List<? extends BaseSpecification<T>> specifications,
             SearchCriteriaOperator searchCriteriaOperator) {
 
         Specification<T> resultAnd = null;

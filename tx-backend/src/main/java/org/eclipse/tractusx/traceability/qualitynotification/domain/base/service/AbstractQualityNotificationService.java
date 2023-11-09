@@ -33,7 +33,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public abstract class AbstractQualityNotificationService implements QualityNotificationService {
@@ -94,9 +93,12 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     }
 
     private PageResult<QualityNotification> getQualityNotificationsPageResultBySide(Pageable pageable, QualityNotificationSide notificationSide, SearchCriteria searchCriteria) {
-        List<QualityNotification> notificationList = getQualityNotificationRepository().findAll(pageable, searchCriteria)
-                .content();
-        notificationList = notificationList.stream().filter(qualityNotification -> qualityNotification.getNotificationSide().equals(notificationSide)).collect(Collectors.toList());
+        List<QualityNotification> notificationList = getQualityNotificationRepository()
+                                                    .findAll(pageable, searchCriteria)
+                                                    .content()
+                                                    .stream()
+                                                    .filter(qualityNotification -> qualityNotification.getNotificationSide().equals(notificationSide))
+                                                    .toList();
         Page<QualityNotification> notificationPage = new PageImpl<>(notificationList, pageable, getQualityNotificationRepository().countQualityNotificationEntitiesBySide(notificationSide));
         return new PageResult<>(notificationPage);
     }

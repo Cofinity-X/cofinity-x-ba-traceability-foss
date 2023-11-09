@@ -28,14 +28,7 @@ import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.repositor
 import org.eclipse.tractusx.traceability.common.model.PageResult;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.InvestigationRepository;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationAffectedPart;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.repository.AlertSpecification;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.*;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
@@ -46,11 +39,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
