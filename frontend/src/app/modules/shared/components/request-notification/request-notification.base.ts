@@ -27,7 +27,7 @@ import { DateTimeString } from '@shared/components/dateTime/dateTime.component';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { Severity } from '@shared/model/severity.model';
 import { BehaviorSubject } from 'rxjs';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ModalComponent } from '@shared/modules/modal/component/modal.component';
 
 export type RequestContext = 'requestInvestigations' | 'requestAlert';
 
@@ -105,13 +105,16 @@ export abstract class RequestNotificationBase {
   }
 
   public cancelAction(part: Part): void {
-    this.dialog.open(ConfirmationDialogComponent, {
+    this.dialog.open(ModalComponent, {
       autoFocus: false,
       data: {
         title: 'parts.confirmationDialog.deletePartTitle',
         message: 'parts.confirmationDialog.deletePartMessage',
-        confirmButtonLabel: 'parts.confirmationDialog.deletePartButton',
-        confirmAction: () => {
+        buttonLeft: 'parts.confirmationDialog.deletePartButton',
+        buttonRight: 'confirmationDialog.cancel',
+        primaryButtonColour: 'primary',
+        leftIsConfirm: true,
+        onConfirm: (isConfirmed: boolean) => {
           this.deselectPart.emit(part);
           this.selectedItems.splice(this.selectedItems.indexOf(part), 1);
         }

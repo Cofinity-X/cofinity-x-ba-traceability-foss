@@ -35,6 +35,13 @@
 
 }
 
+.message-text {
+  @extend .body-large;
+  font-weight: 400;
+  line-height: 28px;
+  padding-bottom: 30px;
+}
+
 .selected-parts {
   @extend .body-medium-emphasis;
   font-weight: 500;

@@ -32,6 +32,7 @@ describe('modalComponent', () => {
 
   const confirmModalDataDefault = {
     title: 'Modal title',
+    message: 'Modal message',
     buttonLeft: 'Cancel text',
     buttonRight: 'Confirm text',
     formGroup: undefined,
@@ -58,6 +59,9 @@ describe('modalComponent', () => {
 
     const cancelText = await waitFor(() => screen.getByText(confirmModalData.buttonLeft));
     expect(cancelText).toBeInTheDocument();
+
+    const messageText = await waitFor(() => screen.getByText(confirmModalData.message));
+    expect(messageText).toBeInTheDocument();
 
     const confirmText = await waitFor(() => screen.getByText(confirmModalData.buttonRight));
     expect(confirmText).toBeInTheDocument();

@@ -34,7 +34,7 @@ import { ToastService } from '@shared/components/toasts/toast.service';
 import { NotificationStatusGroup } from '@shared/model/notification.model';
 import { Severity } from '@shared/model/severity.model';
 import { AlertsService } from '@shared/service/alerts.service';
-import { RequestAlertComponentData } from './request-alert.componenet.model';
+import { RequestComponentData } from './request.componenet.model';
 
 @Component({
   selector: 'app-request-alert',
@@ -53,7 +53,7 @@ export class RequestAlertComponent extends RequestNotificationBase {
 
   public readonly context: RequestContext = 'requestAlert';
 
-  constructor(toastService: ToastService, private readonly alertsService: AlertsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestAlertComponentData) {
+  constructor(toastService: ToastService, private readonly alertsService: AlertsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
     super(toastService, dialog);
 
     this.selectedItems = data.selectedItems;
