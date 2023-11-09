@@ -30,10 +30,12 @@ public interface QualityNotificationService {
 
     QualityNotificationId start(StartQualityNotificationDomain startQualityAlertDomain);
 
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
     PageResult<QualityNotification> getCreated(Pageable pageable);
 
     PageResult<QualityNotification> getCreated(Pageable pageable, SearchCriteria searchCriteria);
 
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
     PageResult<QualityNotification> getReceived(Pageable pageable);
 
     PageResult<QualityNotification> getReceived(Pageable pageable, SearchCriteria searchCriteria);
