@@ -34,8 +34,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -815,5 +819,233 @@ class ReadAlertsControllerIT extends IntegrationTestSpecification {
                 .body("sendTo", Matchers.is(receiverBPN))
                 .body("sendToName", Matchers.is(receiverName))
                 .body("createdDate", isIso8601DateTime());
+    }
+
+    @Test
+    void givenSortByCreatedDateFilterBySendToProvided_whenGetAlerts_thenReturnAlertsProperlySortedFilteredBySendTo() throws JoseException {
+        // given
+        String sortString = "createdDate,desc";
+        String filterString = "sendTo,EQUAL,BPNL000000000001";
+        Instant now = Instant.now();
+        String testBpn = bpnSupport.testBpn();
+
+        AlertEntity firstInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .side(NotificationSideBaseEntity.SENDER)
+                .description("1")
+                .createdDate(now.minusSeconds(10L))
+                .build();
+        AlertEntity secondInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("2")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(now.plusSeconds(21L))
+                .build();
+        AlertEntity thirdInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("3")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(now)
+                .build();
+        AlertEntity fourthInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("4")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(now.plusSeconds(20L))
+                .build();
+        AlertEntity fifthInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("5")
+                .side(NotificationSideBaseEntity.RECEIVER)
+                .createdDate(now.plusSeconds(40L))
+                .build();
+
+
+        alertNotificationsSupport.storedAlertNotifications(
+                AlertNotificationEntity
+                        .builder()
+                        .id("1")
+                        .alert(firstInvestigation)
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000001")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("2")
+                        .alert(secondInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000001")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("3")
+                        .alert(thirdInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000002")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("4")
+                        .alert(fourthInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000003")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("5")
+                        .alert(fifthInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000004")
+                        .build()
+        );
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .param("page", "0")
+                .param("size", "10")
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/alerts/created?page=0&size=10&sort=$sortString&filter=$filterString&filterOperator=AND"
+                        .replace("$sortString", sortString)
+                        .replace("$filterString", filterString))
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(2))
+                .body("totalItems", Matchers.is(2));
+    }
+
+    @Test
+    void givenSortByCreatedDateFilterByCreatedDateProvided_whenGetAlerts_thenReturnAlertsProperlySortedFilteredByCreatedDate() throws JoseException {
+        // given
+        String sortString = "createdDate,desc";
+        String filterString = "createdDate,AT_LOCAL_DATE,2023-11-09";
+        String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
+        String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
+        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
+        Instant createdDateInNov = LocalDateTime.parse(createdDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                            .atZone(ZoneId.of("Europe/Berlin"))
+                            .toInstant();
+        Instant createdDateInDec = LocalDateTime.parse(createdDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                                .atZone(ZoneId.of("Europe/Berlin"))
+                                .toInstant();
+        String testBpn = bpnSupport.testBpn();
+
+        AlertEntity firstInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .side(NotificationSideBaseEntity.SENDER)
+                .description("1")
+                .createdDate(createdDateInNov)
+                .build();
+        AlertEntity secondInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("2")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(createdDateInNov)
+                .build();
+        AlertEntity thirdInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("3")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(createdDateInNov)
+                .build();
+        AlertEntity fourthInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("4")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(createdDateInDec)
+                .build();
+        AlertEntity fifthInvestigation = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("5")
+                .side(NotificationSideBaseEntity.RECEIVER)
+                .createdDate(createdDateInDec)
+                .build();
+
+
+        alertNotificationsSupport.storedAlertNotifications(
+                AlertNotificationEntity
+                        .builder()
+                        .id("1")
+                        .alert(firstInvestigation)
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000001")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("2")
+                        .alert(secondInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000001")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("3")
+                        .alert(thirdInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000002")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("4")
+                        .alert(fourthInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000003")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("5")
+                        .alert(fifthInvestigation)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000004")
+                        .build()
+        );
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .param("page", "0")
+                .param("size", "10")
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/alerts/created?page=0&size=10&sort=$sortString&filter=$filterString&filterOperator=AND"
+                        .replace("$sortString", sortString)
+                        .replace("$filterString", filterString))
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(3))
+                .body("totalItems", Matchers.is(3));
     }
 }
