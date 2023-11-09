@@ -26,7 +26,9 @@ import qualitynotification.base.request.UpdateQualityNotificationRequest;
 
 import java.util.Set;
 
-import static org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus.*;
+import static org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus.ACCEPTED;
+import static org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus.ACKNOWLEDGED;
+import static org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus.DECLINED;
 
 public class UpdateQualityNotificationValidator {
 

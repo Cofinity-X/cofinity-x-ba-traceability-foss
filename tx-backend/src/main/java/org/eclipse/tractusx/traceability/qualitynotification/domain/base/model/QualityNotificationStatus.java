@@ -22,7 +22,11 @@ package org.eclipse.tractusx.traceability.qualitynotification.domain.base.model;
 import qualitynotification.base.request.QualityNotificationStatusRequest;
 import qualitynotification.base.request.UpdateQualityNotificationStatusRequest;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptySet;
