@@ -32,6 +32,8 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash-es';
 import { RequestComponentData } from './request.componenet.model';
+import { Severity } from '@shared/model/severity.model';
+import { By } from '@angular/platform-browser';
 
 describe('requestInvestigationComponent', () => {
   let deselectPartMock: jasmine.Spy<jasmine.Func>;
@@ -152,8 +154,8 @@ describe('requestInvestigationComponent', () => {
     });
 
     it('should submit parts', async () => {
-      await renderRequestAlertComponent();
-      await shouldSubmitParts('requestAlert', true);
+      const { fixture } = await renderRequestAlertComponent();
+      await shouldSubmitParts('requestAlert', fixture, true);
     });
   });
 
@@ -186,10 +188,18 @@ describe('requestInvestigationComponent', () => {
     expect(submitElement).toBeInTheDocument();
   };
 
-  const shouldSubmitParts = async (context: RequestContext, shouldFillBpn = false) => {
+  const shouldSubmitParts = async (context: RequestContext, fixture, shouldFillBpn = false) => {
     const testText = 'This is for a testing purpose.';
     const textArea = (await waitFor(() => screen.getByTestId('BaseInputElement-1'))) as HTMLTextAreaElement;
     fireEvent.input(textArea, { target: { value: testText } });
+
+    const severitySelect = fixture.debugElement.query(By.css('mat-select')).nativeElement;
+    severitySelect.click();  // Open the dropdown
+    fixture.detectChanges(); // Update the view
+
+    const option = fixture.debugElement.query(By.css('mat-option')).nativeElement;
+    option.click();  // Select the option
+    fixture.detectChanges(); // Update the view
 
     if (shouldFillBpn) {
       const bpnInput = (await waitFor(() => screen.getByTestId('BaseInputElement-3'))) as HTMLTextAreaElement;
