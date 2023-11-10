@@ -16,6 +16,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+@import '../../../../../theme/base.scss';
+@tailwind base;
 
 .detail--header {
   display: flex;
@@ -29,6 +31,10 @@
   @media (max-width: 1024px) {
     grid-template-columns: 100%;
   }
+}
+
+.detail-content {
+  @apply col-span-12 lg:col-span-3;
 }
 
 .detail--wrapper__supplier {
