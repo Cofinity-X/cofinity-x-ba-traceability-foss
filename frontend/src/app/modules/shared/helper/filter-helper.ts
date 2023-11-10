@@ -97,12 +97,13 @@ export function toAssetFilter(formValues: any, isAsBuilt: boolean): AssetAsPlann
     if (formValues[key] !== null && formValues[key] !== undefined) {
       if ('activeAlerts' === key) {
         transformedFilter['qualityAlertIdsInStatusActive'] = formValues[key];
+        continue;
       }
       if ('activeInvestigations' === key) {
         transformedFilter['qualityInvestigationIdsInStatusActive'] = formValues[key];
-      } else {
-        transformedFilter[key] = formValues[key];
+        continue;
       }
+      transformedFilter[key] = formValues[key];
 
     }
   }
