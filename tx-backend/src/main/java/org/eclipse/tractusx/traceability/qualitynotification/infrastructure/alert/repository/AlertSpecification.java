@@ -50,9 +50,9 @@ public class AlertSpecification extends BaseSpecification<AlertEntity> implement
     }
 
     private Predicate createPredicateBasedOnJoin(SearchCriteriaFilter criteria, Root<?> root, CriteriaBuilder builder) {
-        Join<AlertEntity, AlertNotificationEntity> investigationJoin = root.join("notifications");
-        Path predicatePath = (ATTRIBUTES_IN_ALERT_ENTITY.contains(criteria.getKey())) ?
-                            root.get(criteria.getKey()):investigationJoin.get(criteria.getKey());
+        Join<AlertEntity, AlertNotificationEntity> alertJoin = root.join("notifications");
+        Path predicatePath = ATTRIBUTES_IN_ALERT_ENTITY.contains(criteria.getKey()) ?
+                            root.get(criteria.getKey()):alertJoin.get(criteria.getKey());
         if (criteria.getStrategy().equals(SearchStrategy.EQUAL)) {
             return builder.equal(
                     predicatePath.as(String.class),
