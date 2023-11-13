@@ -181,5 +181,3 @@ digitalTwinRegistryClient:
   discoveryFinderUrl: ${DISCOVERY_FINDER_URL_WITH_PATH}
   descriptorEndpoint: "" # required if type is "central", must contain the placeholder {aasIdentifier}
   shellLookupEndpoint: "" # required if type is "central", must contain the placeholder {assetIds}
-
-
