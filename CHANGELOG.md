@@ -13,6 +13,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added NOTIFICATION_COUNT_EQUAL filter strategy for Assets as built Specifications
 - Added new supported filter for notifications assetId that allows filtering alerts and investigations by assetId
 - Added autocompletion and local filter selection on parts table
+- Fixed bug in argo workflow which allows to successfully upload testdata
 
 ### Changed
 - Fixed table-settings reset bug
@@ -25,7 +26,6 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adapted memory / cpu requests and limits in default values helm file
 - Fixed textarea field for dialog.
 - Removed duplicated cancel buttons from investigation and alerts workflows
--
 - Migrate to not deprecated methods in HTTP security
 - Bump actions/setup-node@ from v3 to v4
 - Bump helm/chart-releaser-action from v1.5.0 to v1.6.0
@@ -36,6 +36,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Bump commons-io version 2.13.0 to 2.15.0
 - Update IRS-helm version from 6.8.0 to 6.9.1
 - Update EDC from 0.5.0 to 0.5.3
+- Added owner param to distinctFilterValues endpoints
 
 ### Removed
 
