@@ -25,7 +25,8 @@ import {
   DisplayColumns,
   MenuActionConfig,
   TableConfig,
-  TableEventConfig, TableHeaderSort,
+  TableEventConfig,
+  TableHeaderSort,
 } from '@shared/components/table/table.model';
 import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
@@ -46,6 +47,7 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() sortableColumns: Record<string, boolean> = {};
   @Input() multiSortList: TableHeaderSort[] = [];
   @Input() enableScroll: boolean = true;
+  @Input() filter = false;
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
@@ -81,7 +83,6 @@ export class NotificationTabComponent implements AfterViewInit {
         sendTo: this.userTemplate,
       },
     };
-
   }
 
   public onItemCountChange(itemCount: number): void {
@@ -95,7 +96,4 @@ export class NotificationTabComponent implements AfterViewInit {
   public onTableConfigChange(tableEventConfig: TableEventConfig): void {
     this.tableConfigChanged.emit(tableEventConfig);
   }
-
-
-
 }

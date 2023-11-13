@@ -34,12 +34,17 @@ import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['table.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class TableComponent {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('tableElement', { read: ElementRef }) tableElementRef: ElementRef<HTMLElement>;
+
+  @Input()
+  filterConfig: any[];
+  @Input()
+  filter = false;
 
   @Input()
   set tableConfig(tableConfig: TableConfig) {
@@ -86,7 +91,7 @@ export class TableComponent {
   @Input() set PartsPaginationData({ page, pageSize, totalItems, content }: Pagination<unknown>) {
     let flatter = new FlattenObjectPipe();
     // modify the content of the partlist so that there are no subobjects
-    let newContent = content.map(part => flatter.transform(part))
+    let newContent = content.map(part => flatter.transform(part));
     this.totalItems = totalItems;
     this.pageSize = pageSize;
     this.dataSource.data = newContent;
@@ -136,7 +141,7 @@ export class TableComponent {
 
   private _tableConfig: TableConfig;
 
-  constructor(private readonly roleService: RoleService) { }
+  constructor(private readonly roleService: RoleService) {}
 
   public areAllRowsSelected(): boolean {
     return this.dataSource.data.every(data => this.isSelected(data));

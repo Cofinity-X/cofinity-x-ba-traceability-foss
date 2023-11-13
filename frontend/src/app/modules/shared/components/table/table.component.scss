@@ -32,7 +32,6 @@ table {
   padding-left: 13px;
 }
 
-
 .table--select-all {
   display: inline-flex;
   align-items: center;
@@ -40,7 +39,7 @@ table {
   &__menu {
     background: rgba(0, 0, 0, 0.04);
 
-    &>.table--select-all__dropdown:hover {
+    & > .table--select-all__dropdown:hover {
       background: none;
     }
   }
@@ -84,13 +83,21 @@ table {
 }
 
 .table--header {
-  border-bottom: 1px solid #D2D2D2 !important;
+  border-bottom: 1px solid #d2d2d2 !important;
 }
 
 .table--cell {
   padding: 2px 12px 2px 12px;
   border: none !important;
   max-width: 332px;
+}
+.table--header--cell {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+.table--header--cell--content {
+  margin-right: 10px;
 }
 
 .mat-mdc-table .mdc-data-table__row {
@@ -215,7 +222,6 @@ table {
     padding: 15px;
     font-size: 14px;
     line-height: 20px;
-
   }
 
   .mdc-tooltip--multiline {
