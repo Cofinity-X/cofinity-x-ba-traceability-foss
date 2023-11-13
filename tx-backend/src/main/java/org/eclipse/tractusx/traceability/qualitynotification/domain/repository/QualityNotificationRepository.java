@@ -34,23 +34,21 @@ import java.util.Optional;
 
 public interface QualityNotificationRepository {
 
-    PageResult<QualityNotification> findQualityNotificationsBySide(QualityNotificationSide investigationSide, Pageable pageable);
+    PageResult<QualityNotification> findQualityNotificationsBySide(QualityNotificationSide notificationSide, Pageable pageable);
 
     PageResult<QualityNotification> findAll(Pageable pageable, SearchCriteria searchCriteria);
 
-    Optional<QualityNotification> findOptionalQualityNotificationById(QualityNotificationId investigationId);
+    Optional<QualityNotification> findOptionalQualityNotificationById(QualityNotificationId notificationId);
 
     Optional<QualityNotification> findByEdcNotificationId(String edcNotificationId);
 
     long countQualityNotificationEntitiesByStatus(QualityNotificationStatus qualityNotificationStatus);
 
-    long countQualityNotificationEntitiesBySide(QualityNotificationSide investigationSide);
+    long countQualityNotificationEntitiesBySide(QualityNotificationSide notificationSide);
 
-    QualityNotificationId saveQualityNotificationEntity(QualityNotification investigation);
+    QualityNotificationId saveQualityNotificationEntity(QualityNotification notification);
 
-    QualityNotificationId updateQualityNotificationEntity(QualityNotification investigation);
+    QualityNotificationId updateQualityNotificationEntity(QualityNotification notification);
 
     void updateQualityNotificationMessageEntity(QualityNotificationMessage notification);
-
-
 }

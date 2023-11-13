@@ -550,4 +550,3 @@ public class AlertController {
         alertService.update(alertId, from(cleanUpdateAlertRequest.getStatus()), cleanUpdateAlertRequest.getReason());
     }
 }
-

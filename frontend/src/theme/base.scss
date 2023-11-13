@@ -22,7 +22,6 @@
 /*--------------------------------------------------------*/
 /*  BASE CSS
 /*--------------------------------------------------------*/
-
 @layer base {
   .display-large {
     @apply font-semiBold m-0 p-0;
@@ -178,41 +177,41 @@
   }
 
   h1 {
-    @apply font-medium uppercase text-dark;
+    @apply font-medium uppercase text-pendingDark;
     font-size: 56px;
   }
 
   h1,
   normal-case {
-    @apply font-medium text-dark;
+    @apply font-medium text-pendingDark;
     font-size: 56px;
     text-transform: none;
   }
 
   h2 {
-    @apply font-medium uppercase text-dark;
+    @apply font-medium uppercase text-pendingDark;
     font-size: 36px;
   }
 
   h2,
   normal-case {
-    @apply font-medium uppercase text-dark;
+    @apply font-medium uppercase text-pendingDark;
     font-size: 36px;
     text-transform: none;
   }
 
   h3 {
-    @apply font-semiBold sm:text-xl text-dark;
+    @apply font-semiBold sm:text-xl text-pendingDark;
     font-size: 24px;
   }
 
   h4 {
-    @apply font-semiBold sm:text-lg text-dark;
+    @apply font-semiBold sm:text-lg text-pendingDark;
     font-size: 18px;
   }
 
   h5 {
-    @apply font-semiBold sm:text-base text-dark;
+    @apply font-semiBold sm:text-base text-pendingDark;
     font-size: 16px;
   }
 
@@ -223,15 +222,15 @@
   }
 
   .large-text {
-    @apply font-light lg:text-base sm:text-sm text-dark;
+    @apply font-light lg:text-base sm:text-sm text-pendingDark;
   }
 
   .small-text {
-    @apply font-light lg:text-xs sm:text-tiny text-dark;
+    @apply font-light lg:text-xs sm:text-tiny text-pendingDark;
   }
 
   .component-headline {
-    @apply font-light lg:text-sm sm:text-xs text-dark;
+    @apply font-light lg:text-sm sm:text-xs text-pendingDark;
   }
 
   a {
@@ -246,6 +245,11 @@
     justify-content: space-between !important;
   }
 
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: var(--mdc-dialog-container-shape, var(--mdc-shape-medium, 15px)) !important;
+    padding: 20px !important;
+  }
+
   .mat-mdc-icon-button {
     @apply focus:outline-none;
   }
@@ -254,17 +258,43 @@
     border-radius: 50px !important;
   }
 
-  .mat-mdc-unelevated-button > .mdc-button__label {
+  .mat-mdc-unelevated-button>.mdc-button__label {
     @apply text-interactive;
   }
 
+  .mat-mdc-table-sticky {
+    z-index: 0 !important;
+  }
+
+  .mat-mdc-select-value-text {
+    color: #808080;
+  }
+
+  .mat-mdc-unelevated-button[disabled][disabled] {
+    --mdc-filled-button-disabled-container-color: #D2D2D2 !important;
+    --mdc-filled-button-container-color: #D2D2D2 !important;
+  }
+
   .mat-mdc-form-field {
-    @apply font-light lg:text-base sm:text-sm text-dark ml-0 !important;
+    @apply font-light lg:text-base sm:text-sm text-pendingDark ml-0 !important;
+    display: flex !important;
   }
 
   .mat-paginator,
   mat-chip {
     @apply font-light;
+  }
+
+  .mat-mdc-standard-chip {
+    --mdc-chip-label-text-color: #fff;
+  }
+
+  .mat-mdc-chip {
+    @apply bg-secondary !important;
+  }
+
+  .mat-mdc-chip:hover {
+    box-shadow: 0px 7px 5px 0px #33333326, -10px -7px 5px 0px #ffffff26, 0px 0px 5px 0px #3333331a;
   }
 
   .mat-mdc-form-field-hint {
@@ -280,14 +310,223 @@
     @apply text-black;
   }
 
-  .mat-sort-header-sorted > .mat-sort-header-content {
+  .mat-sort-header-sorted>.mat-sort-header-content {
     @apply font-semiBold;
   }
 
-  // todo check if we can remove this
-/*  .mat-mdc-form-field-infix {
-    padding-bottom: 0px !important;
-  }*/
+  .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: unset;
+  }
+
+  .mat-primary .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: var(--mdc-theme-secondary, #000000);
+  }
+
+  .mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full,
+  .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-full {
+    display: none;
+  }
+
+  .mat-pseudo-checkbox {
+    display: none !important;
+  }
+
+  .mdc-list-item__primary-text {
+    width: 227px;
+  }
+
+  .mat-pseudo-checkbox {
+    display: none;
+  }
+
+  .mat-mdc-checkbox.mat-accent {
+    --mdc-checkbox-selected-checkmark-color: #fff;
+    --mdc-checkbox-selected-focus-icon-color: #6BA13C;
+    --mdc-checkbox-selected-hover-icon-color: #6BA13C;
+    --mdc-checkbox-selected-icon-color: #6BA13C;
+    --mdc-checkbox-selected-pressed-icon-color: #6BA13C;
+  }
+
+  .mat-sort-header-disabled .mat-sort-header-container {
+    cursor: pointer !important;
+  }
+
+  .mat-mdc-form-field-has-icon-prefix .mat-mdc-text-field-wrapper {
+    padding-left: 0;
+    --mat-mdc-form-field-label-offset-x: 0px !important;
+  }
+
+  .mat-mdc-select-arrow svg {
+    border-left: 15px solid transparent !important;
+    border-right: none !important;
+    border-top: 8px solid transparent !important;
+    border-image-source: url('/assets/images/icons/dropdown_arrow_icon.svg') !important;
+    border-image-repeat: stretch !important;
+    width: 0;
+    height: 0;
+  }
+
+  .mat-mdc-paginator-page-size-label {
+    @extend .body-xsmall;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 13.2px;
+    padding-right: 4px;
+  }
+
+  .mat-mdc-table .mat-mdc-header-cell {
+    border-color: #D2D2D2 !important;
+  }
+
+  .mat-mdc-paginator-container {
+    .mdc-menu-surface--open {
+      width: 80px !important;
+    }
+
+    justify-content: flex-start !important;
+    border-top: 1px solid #D2D2D2;
+    border-bottom: none !important;
+    padding: 0 8px 12px 0 !important;
+  }
+
+  .mat-mdc-paginator-page-size-select {
+    margin: 0 4px;
+    // width: 38px !important;
+    height: 20px !important;
+  }
+
+  .mdc-text-field .mdc-text-field__input {
+    caret-color: var(--mdc-theme-primary, black);
+  }
+
+  .mdc-button {
+    height: 44px !important;
+  }
+
+  .mdc-text-field--outlined {
+    height: 56px !important;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    height: 20px !important;
+  }
+
+  .mdc-text-field--focused.mdc-text-field--outlined .mdc-notched-outline--notched .mdc-notched-outline__notch {
+    border-right: none !important;
+  }
+
+  .mdc-text-field--invalid {
+    @extend .body-large-emphasis;
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .mat-mdc-form-field.mat-accent .mdc-text-field--invalid .mdc-text-field__input {
+    caret-color: var(--mdc-theme-error, #b62100);
+    @extend .body-large-emphasis;
+    font-size: 20px;
+    line-height: 28px;
+    color: #b62100 !important;
+  }
+
+  .mat-mdc-form-field.mat-accent .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+  .mat-mdc-form-field.mat-accent .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+  .mat-mdc-form-field.mat-accent .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-width: 2px !important;
+  }
+
+  .mat-mdc-form-field.mat-accent .mdc-text-field--focused .mdc-text-field__input {
+    @extend .body-large-emphasis;
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
+    border-right: none;
+    border-left: none;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start,
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end,
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap {
+    border-width: 1px !important;
+    color: #4d4d4d !important;
+    border-color: #4d4d4d !important;
+  }
+
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end,
+  .mat-form-field-outline-gap {
+    border-width: 2px !important;
+  }
+
+  .mat-mdc-outlined-button {
+    border-radius: 100px !important;
+    border-width: 2px !important;
+    border-color: #4D4D4D !important;
+  }
+
+  .mat-mdc-select-placeholder {
+    font-size: 20px !important;
+    line-height: 28px !important;
+    font-weight: 400 !important;
+  }
+
+  .mdc-tab-indicator .mdc-tab-indicator__content--underline {
+    border-top-width: 3px !important;
+    border-radius: 100px 100px 0px 0px !important;
+    max-width: 95px !important;
+  }
+
+  .mdc-data-table__cell,
+  .mdc-data-table__header-cell {
+    padding: 0px 20px 0px 0px !important;
+  }
+
+  .mat-mdc-tab .mdc-tab__text-label,
+  .mat-mdc-tab-link .mdc-tab__text-label {
+    color: #4D4D4D;
+  }
+
+  table {
+    /* Don't collapse header divider*/
+    border-collapse: separate !important;
+  }
+
+  .mat-mdc-tab-label-container {
+    border-bottom: 1px solid #DFDFDF;
+  }
+
+  .mdc-tab__text-label {
+    @extend .label-medium;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  .split-area {
+    display: grid;
+  }
+
+  .mdc-data-table__header-row {
+    position: sticky !important;
+    z-index: 1 !important;
+  }
+
+  .mat-mdc-table .mat-mdc-header-cell {
+    background: white !important;
+    z-index: 1 !important;
+  }
+
+  .mat-mdc-card-content {
+    padding: 0 20px;
+  }
+
+  .mat-mdc-card-header {
+    padding: 20px 20px 0;
+  }
 }
 
 .mdc-text-field__input::-webkit-calendar-picker-indicator {

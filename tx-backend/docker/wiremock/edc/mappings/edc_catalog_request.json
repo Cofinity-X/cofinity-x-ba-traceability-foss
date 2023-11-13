@@ -13,14 +13,14 @@
       "response-template"
     ]
   },
-  "serveEventListeners": [
+  "serveEventListeners" : [
     {
-      "name": "webhook",
-      "parameters": {
-        "method": "POST",
-        "url": "http://host.docker.internal:8082/api/internal/endpoint-data-reference",
-        "headers": {
-          "Content-Type": "application/json"
+      "name" : "webhook",
+      "parameters" : {
+        "method" : "POST",
+        "url" : "http://host.docker.internal:8082/api/internal/endpoint-data-reference",
+        "headers" : {
+          "Content-Type" : "application/json"
         },
         "body": "{ \"id\": \"callback-id\",  \"endpoint\": \"http://localhost:3002/api/qualitynotifications/update\", \"authKey\": \"auth-key\", \"authCode\": \"code.eyJleHAiOjE2OTg0MDUwODIyMTIxMSwiZGFkIjoiZGFkIiwiY2lkIjoiY29udHJhY3RBZ3JlZW1lbnRJZCJ9\"}"
       }
