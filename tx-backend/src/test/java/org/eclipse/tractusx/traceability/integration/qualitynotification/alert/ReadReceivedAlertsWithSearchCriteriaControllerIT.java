@@ -65,7 +65,6 @@ class ReadReceivedAlertsWithSearchCriteriaControllerIT extends IntegrationTestSp
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.sendTo", Matchers.hasItems("BPNL000000000004"));
-        ;
     }
 
     @Test
@@ -117,8 +116,6 @@ class ReadReceivedAlertsWithSearchCriteriaControllerIT extends IntegrationTestSp
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.sendToName", Matchers.hasItems("OEM4"));
-        ;
-        ;
     }
 
     @Test
@@ -145,8 +142,6 @@ class ReadReceivedAlertsWithSearchCriteriaControllerIT extends IntegrationTestSp
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.status", Matchers.hasItems("CANCELED"));
-        ;
-        ;
     }
 
     @Test
@@ -173,8 +168,6 @@ class ReadReceivedAlertsWithSearchCriteriaControllerIT extends IntegrationTestSp
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.severity", Matchers.hasItems("MINOR"));
-        ;
-        ;
     }
 
     @Test
@@ -201,8 +194,6 @@ class ReadReceivedAlertsWithSearchCriteriaControllerIT extends IntegrationTestSp
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.createdBy", Matchers.hasItems("BPNL00000000000A"));
-        ;
-        ;
     }
 
     @Test
@@ -229,8 +220,6 @@ class ReadReceivedAlertsWithSearchCriteriaControllerIT extends IntegrationTestSp
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.description", Matchers.hasItems("Fifth Alert on Asset5"));
-        ;
-        ;
     }
 
     @Test

@@ -64,7 +64,6 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .body("content", Matchers.hasSize(2))
                 .body("totalItems", Matchers.is(2))
                 .body("content.sendTo", Matchers.hasItems("BPNL000000000001"));
-        ;
     }
 
     @Test
@@ -116,8 +115,6 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.sendToName", Matchers.hasItems("OEM2"));
-        ;
-        ;
     }
 
     @Test
@@ -144,8 +141,6 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .body("content", Matchers.hasSize(2))
                 .body("totalItems", Matchers.is(2))
                 .body("content.status", Matchers.hasItems("ACCEPTED"));
-        ;
-        ;
     }
 
     @Test
@@ -172,8 +167,6 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.severity", Matchers.hasItems("LIFE-THREATENING"));
-        ;
-        ;
     }
 
     @Test
@@ -200,8 +193,6 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .body("content", Matchers.hasSize(4))
                 .body("totalItems", Matchers.is(4))
                 .body("content.createdBy", Matchers.hasItems("BPNL00000000000A"));
-        ;
-        ;
     }
 
     @Test
@@ -228,8 +219,6 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .body("content", Matchers.hasSize(1))
                 .body("totalItems", Matchers.is(1))
                 .body("content.description", Matchers.hasItems("First Investigation on Asset1"));
-        ;
-        ;
     }
 
     @Test
@@ -278,7 +267,6 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/investigations/created?page=0&size=10&filter=$filterString1&filter=$filterString2&filterOperator=OR"
-
                         .replace("$filterString1", filterString1)
                         .replace("$filterString2", filterString2))
                 .then()
