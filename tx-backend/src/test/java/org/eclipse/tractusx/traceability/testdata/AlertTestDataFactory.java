@@ -53,8 +53,8 @@ public class AlertTestDataFactory {
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
-                .side(NotificationSideBaseEntity.SENDER)
                 .description("First Alert on Asset1")
+                .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(createdDateInNov)
                 .build();
         AlertEntity secondAlert = AlertEntity.builder()
@@ -112,9 +112,9 @@ public class AlertTestDataFactory {
                         .build(),
                 AlertNotificationEntity
                         .builder()
-                        .status(NotificationStatusBaseEntity.SENT)
                         .id("2")
                         .alert(alertEntities[1])
+                        .status(NotificationStatusBaseEntity.SENT)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
@@ -123,9 +123,9 @@ public class AlertTestDataFactory {
                         .build(),
                 AlertNotificationEntity
                         .builder()
-                        .status(NotificationStatusBaseEntity.ACCEPTED)
                         .id("3")
                         .alert(alertEntities[2])
+                        .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
                         .createdBy("BPNL00000000000A")
@@ -134,9 +134,9 @@ public class AlertTestDataFactory {
                         .build(),
                 AlertNotificationEntity
                         .builder()
-                        .status(NotificationStatusBaseEntity.ACCEPTED)
                         .id("4")
                         .alert(alertEntities[3])
+                        .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
                         .createdBy("BPNL00000000000A")
@@ -145,9 +145,9 @@ public class AlertTestDataFactory {
                         .build(),
                 AlertNotificationEntity
                         .builder()
-                        .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                         .id("5")
                         .alert(alertEntities[4])
+                        .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
                         .createdBy("BPNL00000000000A")
