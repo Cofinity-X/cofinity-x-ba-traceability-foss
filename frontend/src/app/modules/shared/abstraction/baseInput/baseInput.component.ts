@@ -79,9 +79,13 @@ export class BaseInputComponent<T> implements ControlValueAccessor, OnInit {
     this.onTouch = fn;
   }
 
+  public clear(): void {
+    this.control.setValue('');
+  }
+
   public onChange = (value: T | null): T | null => value;
 
-  public onTouch = (): void => {};
+  public onTouch = (): void => { };
 
   public ngOnDestroy(): void {
     this.destroy.next();

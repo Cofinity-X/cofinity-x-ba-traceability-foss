@@ -28,40 +28,90 @@ import {
     Injector,
     Input,
     Output,
-    ViewChild
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
-import {BaseInputComponent} from '@shared/abstraction/baseInput/baseInput.component';
-import {StaticIdService} from '@shared/service/staticId.service';
-import {ThemePalette} from '@angular/material/core';
-import {FormGroup} from "@angular/forms";
+import { BaseInputComponent } from '@shared/abstraction/baseInput/baseInput.component';
+import { StaticIdService } from '@shared/service/staticId.service';
+import { ThemePalette } from '@angular/material/core';
+import { FormGroup } from "@angular/forms";
 
 @Component({
     selector: 'app-input',
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class InputComponent extends BaseInputComponent<string> {
+    @Input() class: string;
+    @Input() fieldClass: string;
+
+    @Input() prefixIcon: string;
+    @Input() prefixIconColor: ThemePalette;
+    @Input() prefixIconHover: boolean = false;
+
     @Input() suffixIcon: string;
     @Input() suffixIconColor: ThemePalette;
     @Input() suffixIconHover: boolean = false;
+    @Input() isSearchBar: boolean = false;
+
     @Input() onEnterActive: boolean = false;
     @Input() displayClearButton: boolean = false;
     @Input() parentFormGroup: FormGroup;
     @Input() parentControlName: string;
+
+    @Output() prefixIconClick = new EventEmitter<void>();
     @Output() suffixIconClick = new EventEmitter<void>();
+
     @ViewChild('inputElement') inputElement: ElementRef;
+
+    public placeholder: string;
+    public isFocused: boolean = false;
 
     constructor(@Inject(Injector) injector: Injector, staticIdService: StaticIdService) {
         super(injector, staticIdService);
     }
 
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        if (this.isSearchBar) {
+            this.placeholder = this.label;
+        }
+    }
+
+    shouldHideClearButton(): boolean {
+        return this.control?.value?.length === 0 && !this.isFocused;
+    }
+
+    onFocused() {
+        if (this.isSearchBar) {
+            this.isFocused = true;
+            this.placeholder = "";
+        }
+    }
+
+    onBlur() {
+        if (this.isSearchBar) {
+            this.isFocused = false;
+            this.placeholder = this.label;
+        }
+    }
+
     @HostListener('keydown.enter', ['$event'])
     onEnterKey(event: KeyboardEvent): void {
-        // Check if the Enter key was pressed
+        // Check if the Enter key was 
+
         if (event.key === 'Enter') {
-            // Trigger the suffixIconClick output event
+            // Trigger the suffixIconClick or prefixIconClick output event
             if (this.onEnterActive) {
-                this.suffixIconClick.emit();
+                if (this.suffixIcon) {
+                    this.suffixIconClick.emit();
+                }
+
+                if (this.prefixIcon) {
+                    this.prefixIconClick.emit();
+                }
             }
         }
     }
@@ -69,7 +119,15 @@ export class InputComponent extends BaseInputComponent<string> {
     clearIconClick(): void {
         if (this.parentControlName && this.parentFormGroup) {
             this.parentFormGroup.get(this.parentControlName).setValue("");
-            this.suffixIconClick.emit();
+
+            if (this.suffixIcon) {
+                this.suffixIconClick.emit();
+            }
+
+            if (this.prefixIcon) {
+                this.prefixIconClick.emit();
+            }
         }
+
     }
 }
