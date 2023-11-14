@@ -46,6 +46,7 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
 import { isDateFilter } from '@shared/helper/filter-helper';
+import i18next from 'i18next';
 
 @Component({
   selector: 'app-parts-table',
@@ -424,7 +425,7 @@ export class PartsTableComponent implements OnInit {
 
   public getTooltip(column: string) {
     return column === '!'
-      ? 'Open alerts/investigations'
+      ? i18next.t('parts.openInvestigations')
       : 'First click: sort in ascending order ↑ Second click: sort in descending order ↓ Third click:  reset sorting';
   }
 
