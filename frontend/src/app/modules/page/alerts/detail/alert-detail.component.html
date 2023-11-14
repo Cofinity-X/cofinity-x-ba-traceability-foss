@@ -26,11 +26,13 @@ SPDX-License-Identifier: Apache-2.0
           alt="Alerts icon" />
         {{ 'pageTitle.alerts' | i18n }}
       </h3>
-      <h3 class="mb-4 pl-2 flex items-center header-description">
+      <h3 class="mb-4 pl-2 flex items-center">
         <img class="pr-2"
           src="/assets/images/icons/chevron_left.svg"
           alt="<" />
-        {{ selectedAlert?.description }}
+        <span class="header-description">
+          {{ selectedAlert?.description }}
+        </span>
       </h3>
     </div>
     <img class="close-button"
@@ -47,7 +49,7 @@ SPDX-License-Identifier: Apache-2.0
   <div class="detail--wrapper">
     <div class="section-details">
       <div>
-        <div>
+        <div class="pb-1">
           <h4>{{ 'pageAlert.info' | i18n }}</h4>
         </div>
       </div>
@@ -57,13 +59,13 @@ SPDX-License-Identifier: Apache-2.0
       </div>
     </div>
 
-    <div class="section-status">
+    <div>
       <div>
-        <div>
+        <div class="pb-1">
           <h4>{{ 'pageAlert.reason' | i18n }}</h4>
         </div>
       </div>
-      <div>
+      <div class="section-status-content">
         <ng-container
           *viewContainer="selected$ | async; main: reasonInfoTmp; error: errorTmp; loading: loaderTmp"></ng-container>
       </div>
@@ -111,9 +113,9 @@ SPDX-License-Identifier: Apache-2.0
     <!-- *ngIf="helperService.showCancelButton(selectedAlert)" -->
     <app-button class="action-button"
       (click)="notificationCommonModalComponent?.show('cancel')"
-      [color]="'primary'"
-      [variant]="'stroked'">
-      <div class="flex justify-between items-center no-button-text">
+      [variant]="'flat'"
+      [color]="'accent'">
+      <div class="flex justify-between items-center button-text">
         {{ 'actions.cancel' | i18n }}
       </div>
     </app-button>
@@ -121,9 +123,9 @@ SPDX-License-Identifier: Apache-2.0
     <app-button *ngIf="helperService.showCloseButton(selectedAlert)"
       class="action-button"
       (click)="notificationCommonModalComponent?.show('close')"
-      [variant]="'stroked'"
-      [color]="'primary'">
-      <div class="flex justify-between items-center no-button-text">
+      [variant]="'flat'"
+      [color]="'accent'">
+      <div class="flex justify-between items-center button-text">
         {{ 'actions.close' | i18n }}
       </div>
     </app-button>
@@ -131,19 +133,19 @@ SPDX-License-Identifier: Apache-2.0
     <app-button *ngIf="helperService.showDeclineButton(selectedAlert)"
       class="action-button"
       (click)="notificationCommonModalComponent?.show('decline')"
-      [color]="'primary'"
-      [variant]="'stroked'">
-      <div class="flex justify-between items-center no-button-text">
+      [variant]="'flat'"
+      [color]="'accent'">
+      <div class="flex justify-between items-center button-text">
         {{ 'actions.decline' | i18n }}
       </div>
     </app-button>
 
-    <!-- *ngIf="helperService.showApproveButton(selectedAlert)" -->
-    <app-button (click)="notificationCommonModalComponent?.show('approve')"
+    <app-button *ngIf="helperService.showApproveButton(selectedAlert)"
+      (click)="notificationCommonModalComponent?.show('approve')"
       class="action-button"
       [variant]="'flat'"
       [color]="'primary'">
-      <div class="flex justify-between items-center yes-button-text">
+      <div class="flex justify-between items-center button-text">
         {{ 'actions.approve' | i18n }}
       </div>
     </app-button>
@@ -153,7 +155,7 @@ SPDX-License-Identifier: Apache-2.0
       (click)="notificationCommonModalComponent?.show('accept')"
       [variant]="'flat'"
       [color]="'primary'">
-      <div class="flex justify-between items-center yes-button-text">
+      <div class="flex justify-between items-center button-text">
         {{ 'actions.accept' | i18n }}
       </div>
     </app-button>
@@ -163,7 +165,7 @@ SPDX-License-Identifier: Apache-2.0
       (click)="notificationCommonModalComponent?.show('acknowledge')"
       [variant]="'flat'"
       [color]="'primary'">
-      <div class="flex justify-between items-center yes-button-text">
+      <div class="flex justify-between items-center button-text">
         {{ 'actions.acknowledge' | i18n }}
       </div>
     </app-button>

@@ -551,6 +551,11 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #4D4D4D;
   }
+
+  // Dialogs
+  .mdc-dialog .mdc-dialog__content {
+    padding: 20px 0px 20px 0px !important;
+  }
 }
 
 .mdc-text-field__input::-webkit-calendar-picker-indicator {
