@@ -15,6 +15,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added new supported filter for notifications assetId that allows filtering alerts and investigations by assetId
 - Added autocompletion and local filter selection on parts table
 - Fixed bug in argo workflow which allows to successfully upload testdata
+- No logging option for cypress
 
 ### Changed
 - Fixed table-settings reset bug
