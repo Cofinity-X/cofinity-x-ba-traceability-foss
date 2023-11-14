@@ -143,11 +143,26 @@ describe('TableComponent', () => {
     const nameElement = screen.getByText('Name Sort');
     nameElement.click();
 
-    expect(configChange).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'asc'] });
+    expect(configChange).toHaveBeenCalledWith({
+      page: 0,
+      pageSize: 10,
+      sorting: ['name', 'asc'],
+      filtering: Object({ filterMethod: 'AND' }),
+    });
     nameElement.click();
-    expect(configChange).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'desc'] });
+    expect(configChange).toHaveBeenCalledWith({
+      page: 0,
+      pageSize: 10,
+      sorting: ['name', 'desc'],
+      filtering: Object({ filterMethod: 'AND' }),
+    });
     nameElement.click();
-    expect(configChange).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: ['name', 'desc'] });
+    expect(configChange).toHaveBeenCalledWith({
+      page: 0,
+      pageSize: 10,
+      sorting: ['name', 'desc'],
+      filtering: Object({ filterMethod: 'AND' }),
+    });
   });
 
   it('should select one item', async () => {

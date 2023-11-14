@@ -219,7 +219,7 @@ Third click:  reset sorting"
                 }}
               </div>
               <div
-                *ngIf="tableConfig.filterConfig.length > 0"
+                *ngIf="tableConfig.filterConfig && tableConfig.filterConfig.length > 0"
                 (click)="$event.stopPropagation()"
                 class="table--header--cell--filter"
                 [matMenuTriggerFor]="selectMenu"
