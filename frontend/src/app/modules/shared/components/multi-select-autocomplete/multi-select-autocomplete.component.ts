@@ -90,7 +90,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   selectAllChecked = false;
   displayString = '';
   selectedCheckboxOptions: Array<any> = [];
-  filterActive: string;
+  filterActive = '';
   maxDate: Date;
 
   constructor(
@@ -128,7 +128,9 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   toggleSelectAll = function (val: any): void {
     if (val.checked) {
-      this.options.forEach(option => (option.checked = true));
+      this.options.forEach(option => {
+        option.checked = true;
+      });
       this.filteredOptions.forEach(option => {
         if (!this.selectedValue.includes(option[this.value])) {
           this.selectedValue = this.selectedValue.concat([option[this.value]]);
@@ -139,7 +141,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       const filteredValues = this.getFilteredOptionsValues();
       this.selectedValue = this.selectedValue.filter(item => !filteredValues.includes(item));
     }
-    this.formControl.patchValue(this.selectedValue);
+
+    this.formControl.setValue();
     this.selectionChange.emit(this.selectedValue);
   };
 
@@ -150,7 +153,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.selectAllChecked = true;
     }
   }
-  upddateFormControl;
+
   someSelected(): boolean {
     return this.options.filter(option => option.checked).length > 0 && !this.selectAllChecked;
   }

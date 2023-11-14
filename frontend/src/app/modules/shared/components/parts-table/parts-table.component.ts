@@ -388,7 +388,16 @@ export class PartsTableComponent implements OnInit {
   }
 
   public triggerFilterAdding(): void {
-    this.filterActivated.emit(this.filterFormGroup.value);
+    const filterValues: any = { ...this.filterFormGroup.value };
+    const selectedSemanticDataModelOptions: string[] = [];
+    for (const option of this.semanticDataModelOptions) {
+      if (option.checked) {
+        selectedSemanticDataModelOptions.push(option.value);
+      }
+    }
+    filterValues['semanticDataModel'] = selectedSemanticDataModelOptions;
+    console.log(filterValues);
+    this.filterActivated.emit(filterValues);
   }
 
   private handleAsPlannedTableType(): void {

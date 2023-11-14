@@ -23,6 +23,7 @@ import {
   getFilterOperatorValue,
 } from '@page/parts/model/parts.model';
 import { HttpParams } from '@angular/common/http';
+import { TableFilter } from '@shared/components/table/table.model';
 
 export const FILTER_KEYS = [
   'manufacturingDate',
@@ -56,6 +57,32 @@ export function enrichFilterAndGetUpdatedParams(filter: AssetAsBuiltFilter, para
         params = params.append('filter', `${key},${operator},${filterValues}`);
       }
     }
+  }
+  return params;
+}
+
+export function addFilteringParams(filtering: TableFilter, params: HttpParams): HttpParams {
+  const filterKeys = Object.keys(filtering);
+  if (filterKeys.length > 1) {
+    for (const index in filterKeys) {
+      const key = filterKeys[index];
+      if (key !== 'filterMethod') {
+        if (Array.isArray(filtering[key])) {
+          for (let value of filtering[key]) {
+            params = params.append(
+              'filter',
+              `${key},${getFilterOperatorValue(value.filterOperator)},${value.filterValue}`,
+            );
+          }
+        } else {
+          params = params.append(
+            'filter',
+            `${key},${getFilterOperatorValue(filtering[key].filterOperator)},${filtering[key].filterValue}`,
+          );
+        }
+      }
+    }
+    params = params.append('filterOperator', `${filtering['filterMethod']}`);
   }
   return params;
 }

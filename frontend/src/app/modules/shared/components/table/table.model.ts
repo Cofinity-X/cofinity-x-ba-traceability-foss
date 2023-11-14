@@ -21,6 +21,7 @@
 
 import { TemplateRef } from '@angular/core';
 import { Role } from '@core/user/role.model';
+import { FilterOperator } from '@page/parts/model/parts.model';
 
 export type TableHeaderSort = [string, 'asc' | 'desc'];
 
@@ -79,11 +80,22 @@ export interface MenuActionConfig<T> {
   condition?: (data: T) => boolean;
 }
 
+export interface FilterInfo {
+  filterValue: string;
+  filterOperator: FilterOperator;
+}
+
+export enum FilterMethod {
+  AND = 'AND',
+  OR = 'OR',
+}
+
 export interface TableFilter {
-  createdDate?: string;
-  description?: string;
-  status?: string[];
-  severity?: string[];
-  createdBy?: string;
-  sendTo?: string;
+  filterMethod: FilterMethod;
+  createdDate?: FilterInfo;
+  description?: FilterInfo;
+  status?: FilterInfo[];
+  severity?: FilterInfo[];
+  createdBy?: FilterInfo;
+  sendTo?: FilterInfo;
 }

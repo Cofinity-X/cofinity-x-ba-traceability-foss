@@ -27,12 +27,15 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Pagination } from '@core/model/pagination.model';
 import { RoleService } from '@core/user/role.service';
+import { FilterOperator } from '@page/parts/model/parts.model';
 import {
   MenuActionConfig,
   TableConfig,
   TableEventConfig,
   TableFilter,
+  FilterMethod,
   TableHeaderSort,
+  FilterInfo,
 } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
@@ -144,7 +147,7 @@ export class TableComponent {
 
   private pageSize: number;
   private sorting: TableHeaderSort;
-  private filtering: TableFilter = {};
+  private filtering: TableFilter = { filterMethod: FilterMethod.AND };
 
   private _tableConfig: TableConfig;
 
@@ -153,7 +156,9 @@ export class TableComponent {
   constructor(private readonly roleService: RoleService) {}
 
   ngOnInit() {
-    this.setupFilterFormGroup();
+    if (this.tableConfig.filterConfig) {
+      this.setupFilterFormGroup();
+    }
   }
 
   setupFilterFormGroup(): void {
@@ -213,22 +218,36 @@ export class TableComponent {
     }
   }
 
-  public triggerFilterAdding(filterName: string): void {
-    console.log(filterName);
+  public triggerFilterAdding(filterName: string, isDate: boolean): void {
+    //Should the filtering be reset every time? Else remove the following line:
+    this.filtering = { filterMethod: FilterMethod.AND };
+    let filterAdded: FilterInfo | FilterInfo[];
     const filterSettings = this.tableConfig.filterConfig.filter(filter => filter.filterKey === filterName)[0];
 
-    if (filterSettings.option.length > 0) {
-      const filterOptions: string[] = [];
+    if (filterSettings.option.length > 0 && !isDate) {
+      this.filtering.filterMethod = FilterMethod.OR;
+      const filterOptions: FilterInfo[] = [];
       filterSettings.option.forEach(option => {
         if (option.checked) {
-          filterOptions.push(option.value);
+          filterOptions.push({
+            filterValue: option.value,
+            filterOperator: FilterOperator.EQUAL,
+          });
         }
       });
-      this.filtering[filterName] = filterOptions;
+      filterAdded = filterOptions;
+    } else if (isDate) {
+      filterAdded = {
+        filterValue: this.filterFormGroup.get(filterName).value,
+        filterOperator: FilterOperator.AT_LOCAL_DATE,
+      };
     } else {
-      this.filtering[filterName] = this.filterFormGroup.get(filterName).value;
+      filterAdded = {
+        filterValue: this.filterFormGroup.get(filterName).value,
+        filterOperator: FilterOperator.STARTS_WITH,
+      };
     }
-    console.log(this.filtering);
+    this.filtering[filterName] = filterAdded;
     this.configChanged.emit({ page: 0, pageSize: this.pageSize, sorting: this.sorting, filtering: this.filtering });
   }
 

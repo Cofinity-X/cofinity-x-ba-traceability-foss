@@ -26,7 +26,13 @@ import { AlertHelperService } from '@page/alerts/core/alert-helper.service';
 import { AlertsFacade } from '@page/alerts/core/alerts.facade';
 import { NotificationMenuActionsAssembler } from '@shared/assembler/notificationMenuActions.assembler';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort, TableFilter } from '@shared/components/table/table.model';
+import {
+  MenuActionConfig,
+  TableEventConfig,
+  TableHeaderSort,
+  TableFilter,
+  FilterMethod,
+} from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
@@ -51,32 +57,33 @@ export class AlertsComponent {
 
   public alertReceivedSortList: TableHeaderSort[] = [];
   public alertQueuedAndRequestedSortList: TableHeaderSort[] = [];
-  public filterReceived: TableFilter;
-  public filterQueuedAndRequested: TableFilter;
+  public filterReceived: TableFilter = { filterMethod: FilterMethod.AND };
+  public filterQueuedAndRequested: TableFilter = { filterMethod: FilterMethod.AND };
 
   optionTextSearch = [];
   severityOptions = [
     {
       display: 'Minor',
-      value: Severity.MINOR,
+      value: 0,
       checked: false,
     },
     {
       display: 'Major',
-      value: Severity.MAJOR,
+      value: 1,
       checked: false,
     },
     {
       display: 'Critical',
-      value: Severity.CRITICAL,
+      value: 2,
       checked: false,
     },
     {
       display: 'Life-Threatening',
-      value: Severity.LIFE_THREATENING,
+      value: 3,
       checked: false,
     },
   ];
+  //Approved and Requested only exist in the frontend
   statusOptions = [
     {
       display: 'Accepted',
@@ -86,11 +93,6 @@ export class AlertsComponent {
     {
       display: 'Acknowledged',
       value: NotificationStatus.ACKNOWLEDGED,
-      checked: false,
-    },
-    {
-      display: 'Approved',
-      value: NotificationStatus.APPROVED,
       checked: false,
     },
     {
@@ -116,11 +118,6 @@ export class AlertsComponent {
     {
       display: 'Received',
       value: NotificationStatus.RECEIVED,
-      checked: false,
-    },
-    {
-      display: 'Requested',
-      value: NotificationStatus.REQUESTED,
       checked: false,
     },
     {
@@ -174,11 +171,17 @@ export class AlertsComponent {
   public ngOnInit(): void {
     this.paramSubscription = this.route.queryParams.subscribe(params => {
       this.pagination.page = params?.pageNumber;
-      this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList);
+      this.alertsFacade.setReceivedAlerts(
+        this.pagination.page,
+        this.pagination.pageSize,
+        this.alertReceivedSortList,
+        this.filterReceived,
+      );
       this.alertsFacade.setQueuedAndRequestedAlerts(
         this.pagination.page,
         this.pagination.pageSize,
         this.alertQueuedAndRequestedSortList,
+        this.filterQueuedAndRequested,
       );
     });
 
@@ -205,19 +208,25 @@ export class AlertsComponent {
     if (pagination.filtering) {
       this.filterReceived = pagination.filtering;
     }
-    this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList);
+    this.alertsFacade.setReceivedAlerts(
+      this.pagination.page,
+      this.pagination.pageSize,
+      this.alertReceivedSortList,
+      this.filterReceived,
+    );
   }
 
   public onQueuedAndRequestedTableConfigChange(pagination: TableEventConfig) {
     this.pagination = pagination;
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.QUEUED_AND_REQUESTED);
     if (pagination.filtering) {
-      this.filterReceived = pagination.filtering;
+      this.filterQueuedAndRequested = pagination.filtering;
     }
     this.alertsFacade.setQueuedAndRequestedAlerts(
       this.pagination.page,
       this.pagination.pageSize,
       this.alertQueuedAndRequestedSortList,
+      this.filterQueuedAndRequested,
     );
   }
 

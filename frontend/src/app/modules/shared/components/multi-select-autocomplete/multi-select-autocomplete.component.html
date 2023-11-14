@@ -36,7 +36,7 @@ SPDX-License-Identifier: Apache-2.0
     class="filter-input__textarea-button"
     (click)="this.triggerFilter.emit(); setFilterActive()"
   >
-    <div class="body-large">{{ this.theSearchElement }}</div>
+    <div class="body-large">{{ this.filterActive === '' ? theSearchElement : filterActive }}</div>
     <img
       *ngIf="filterActive === theSearchElement"
       src="\assets\images\icons\filerActiveIcon.svg"

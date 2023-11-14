@@ -240,7 +240,7 @@ Third click:  reset sorting"
                         [multiple]="isMultipleSearch(filter)"
                         [textSearch]="filter.isTextSearch"
                         [isDate]="filter.isDate"
-                        (triggerFilter)="triggerFilterAdding(filter.filterKey)"
+                        (triggerFilter)="triggerFilterAdding(filter.filterKey, filter.isDate)"
                         ngDefaultControl
                         [formControl]="filterFormGroup.controls[filter.filterKey]"
                       ></app-multiselect>
