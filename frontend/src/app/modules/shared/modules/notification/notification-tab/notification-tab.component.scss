@@ -39,7 +39,7 @@
   @apply border-0 uppercase inline-flex items-center px-3 py-0.5 rounded-full font-semibold text-xs w-fit;
 
   &--RECEIVED {
-    @apply bg-receivedLight text-white before:bg-white;
+    @apply bg-receivedLight text-receivedDark before:bg-white;
   }
 
   &--CANCELED {
@@ -61,7 +61,7 @@
   }
 
   &--ACCEPTED {
-    @apply bg-acceptedDark text-black;
+    @apply bg-acceptedDark text-acceptedLight;
   }
 
   &--REQUESTED {
@@ -74,5 +74,11 @@
 
   &--DECLINED {
     @apply bg-declinedLight text-declinedDark;
+  }
+
+  &--QUEUED {
+    border: solid 1px;
+    border-color: #F58220;
+    @apply bg-queuedLight text-queuedDark;
   }
 }

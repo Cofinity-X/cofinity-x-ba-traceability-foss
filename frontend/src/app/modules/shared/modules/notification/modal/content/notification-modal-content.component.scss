@@ -1,0 +1,18 @@
+.section-details {
+  padding-right: 20px;
+}
+
+.section-status {
+  height: 225px;
+  overflow-y: auto;
+}
+
+.detail--wrapper {
+  width: 995px;
+  display: grid;
+  grid-template-columns: 35% 65%;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 100%;
+  }
+}
