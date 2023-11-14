@@ -21,14 +21,22 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Pagination } from '@core/model/pagination.model';
 import { RoleService } from '@core/user/role.service';
-import { MenuActionConfig, TableConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import {
+  MenuActionConfig,
+  TableConfig,
+  TableEventConfig,
+  TableFilter,
+  TableHeaderSort,
+} from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
+import { event } from 'cypress/types/jquery';
 
 @Component({
   selector: 'app-table',
@@ -41,8 +49,6 @@ export class TableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('tableElement', { read: ElementRef }) tableElementRef: ElementRef<HTMLElement>;
 
-  @Input()
-  filterConfig: any[];
   @Input()
   filter = false;
 
@@ -138,10 +144,27 @@ export class TableComponent {
 
   private pageSize: number;
   private sorting: TableHeaderSort;
+  private filtering: TableFilter = {};
 
   private _tableConfig: TableConfig;
 
+  filterFormGroup = new FormGroup({});
+
   constructor(private readonly roleService: RoleService) {}
+
+  ngOnInit() {
+    this.setupFilterFormGroup();
+  }
+
+  setupFilterFormGroup(): void {
+    if (this.tableConfig.filterConfig.length > 0) {
+      this.tableConfig.filterConfig.forEach(filter => {
+        this.filterFormGroup.addControl(filter.filterKey, new FormControl([]));
+      });
+    } else {
+      return;
+    }
+  }
 
   public areAllRowsSelected(): boolean {
     return this.dataSource.data.every(data => this.isSelected(data));
@@ -166,7 +189,7 @@ export class TableComponent {
   public onPaginationChange({ pageIndex, pageSize }: PageEvent): void {
     this.pageIndex = pageIndex;
     this.isDataLoading = true;
-    this.configChanged.emit({ page: pageIndex, pageSize: pageSize, sorting: this.sorting });
+    this.configChanged.emit({ page: pageIndex, pageSize: pageSize, sorting: this.sorting, filtering: this.filtering });
   }
 
   public updateSortingOfData({ active, direction }: Sort): void {
@@ -174,7 +197,7 @@ export class TableComponent {
     this.emitMultiSelect();
     this.sorting = !direction ? null : ([active, direction] as TableHeaderSort);
     this.isDataLoading = true;
-    this.configChanged.emit({ page: 0, pageSize: this.pageSize, sorting: this.sorting });
+    this.configChanged.emit({ page: 0, pageSize: this.pageSize, sorting: this.sorting, filtering: this.filtering });
   }
 
   public toggleSelection(row: unknown): void {
@@ -190,6 +213,28 @@ export class TableComponent {
     }
   }
 
+  public triggerFilterAdding(filterName: string): void {
+    console.log(filterName);
+    const filterSettings = this.tableConfig.filterConfig.filter(filter => filter.filterKey === filterName)[0];
+
+    if (filterSettings.option.length > 0) {
+      const filterOptions: string[] = [];
+      filterSettings.option.forEach(option => {
+        if (option.checked) {
+          filterOptions.push(option.value);
+        }
+      });
+      this.filtering[filterName] = filterOptions;
+    } else {
+      this.filtering[filterName] = this.filterFormGroup.get(filterName).value;
+    }
+    console.log(this.filtering);
+    this.configChanged.emit({ page: 0, pageSize: this.pageSize, sorting: this.sorting, filtering: this.filtering });
+  }
+
+  public isMultipleSearch(filter: any): boolean {
+    return !(filter.isDate || filter.isTextSearch);
+  }
   private emitMultiSelect(): void {
     this.multiSelect.emit(this.selection.selected);
   }

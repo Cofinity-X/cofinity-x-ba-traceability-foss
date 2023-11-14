@@ -26,12 +26,14 @@ import { AlertHelperService } from '@page/alerts/core/alert-helper.service';
 import { AlertsFacade } from '@page/alerts/core/alerts.facade';
 import { NotificationMenuActionsAssembler } from '@shared/assembler/notificationMenuActions.assembler';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { MenuActionConfig, TableEventConfig, TableHeaderSort, TableFilter } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
 import { Subscription } from 'rxjs';
+import { Severity } from '@shared/model/severity.model';
+import { NotificationStatus } from '@shared/model/notification.model';
 
 @Component({
   selector: 'app-alerts',
@@ -49,6 +51,101 @@ export class AlertsComponent {
 
   public alertReceivedSortList: TableHeaderSort[] = [];
   public alertQueuedAndRequestedSortList: TableHeaderSort[] = [];
+  public filterReceived: TableFilter;
+  public filterQueuedAndRequested: TableFilter;
+
+  optionTextSearch = [];
+  severityOptions = [
+    {
+      display: 'Minor',
+      value: Severity.MINOR,
+      checked: false,
+    },
+    {
+      display: 'Major',
+      value: Severity.MAJOR,
+      checked: false,
+    },
+    {
+      display: 'Critical',
+      value: Severity.CRITICAL,
+      checked: false,
+    },
+    {
+      display: 'Life-Threatening',
+      value: Severity.LIFE_THREATENING,
+      checked: false,
+    },
+  ];
+  statusOptions = [
+    {
+      display: 'Accepted',
+      value: NotificationStatus.ACCEPTED,
+      checked: false,
+    },
+    {
+      display: 'Acknowledged',
+      value: NotificationStatus.ACKNOWLEDGED,
+      checked: false,
+    },
+    {
+      display: 'Approved',
+      value: NotificationStatus.APPROVED,
+      checked: false,
+    },
+    {
+      display: 'Canceled',
+      value: NotificationStatus.CANCELED,
+      checked: false,
+    },
+    {
+      display: 'Closed',
+      value: NotificationStatus.CLOSED,
+      checked: false,
+    },
+    {
+      display: 'Created',
+      value: NotificationStatus.CREATED,
+      checked: false,
+    },
+    {
+      display: 'Declined',
+      value: NotificationStatus.DECLINED,
+      checked: false,
+    },
+    {
+      display: 'Received',
+      value: NotificationStatus.RECEIVED,
+      checked: false,
+    },
+    {
+      display: 'Requested',
+      value: NotificationStatus.REQUESTED,
+      checked: false,
+    },
+    {
+      display: 'Sent',
+      value: NotificationStatus.SENT,
+      checked: false,
+    },
+  ];
+
+  public readonly alertsReceivedFilterConfiguration: any[] = [
+    { filterKey: 'createdDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
+    { filterKey: 'description', isTextSearch: true, option: this.optionTextSearch },
+    { filterKey: 'status', isTextSearch: false, option: this.statusOptions },
+    { filterKey: 'severity', isTextSearch: false, option: this.severityOptions },
+    { filterKey: 'createdBy', isTextSearch: true, option: this.optionTextSearch },
+  ];
+
+  public readonly alertsQueuedAndRequestedFilterConfiguration: any[] = [
+    { filterKey: 'createdDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
+    { filterKey: 'description', isTextSearch: true, option: this.optionTextSearch },
+    { filterKey: 'status', isTextSearch: false, option: this.statusOptions },
+    { filterKey: 'severity', isTextSearch: false, option: this.severityOptions },
+    { filterKey: 'sendTo', isTextSearch: true, option: this.optionTextSearch },
+  ];
+
   private ctrlKeyState: boolean = false;
 
   private paramSubscription: Subscription;
@@ -61,15 +158,15 @@ export class AlertsComponent {
     private readonly alertDetailFacade: AlertDetailFacade,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly cd: ChangeDetectorRef
+    private readonly cd: ChangeDetectorRef,
   ) {
     this.alertsReceived$ = this.alertsFacade.alertsReceived$;
     this.alertsQueuedAndRequested$ = this.alertsFacade.alertsQueuedAndRequested$;
 
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', event => {
       this.ctrlKeyState = event.ctrlKey;
     });
-    window.addEventListener('keyup', (event) => {
+    window.addEventListener('keyup', event => {
       this.ctrlKeyState = event.ctrlKey;
     });
   }
@@ -78,7 +175,11 @@ export class AlertsComponent {
     this.paramSubscription = this.route.queryParams.subscribe(params => {
       this.pagination.page = params?.pageNumber;
       this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList);
-      this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList);
+      this.alertsFacade.setQueuedAndRequestedAlerts(
+        this.pagination.page,
+        this.pagination.pageSize,
+        this.alertQueuedAndRequestedSortList,
+      );
     });
 
     this.searchFormGroup.addControl('alertSearch', new FormControl([]));
@@ -88,7 +189,7 @@ export class AlertsComponent {
   public ngAfterViewInit(): void {
     this.menuActionsConfig = NotificationMenuActionsAssembler.getMenuActions(
       this.helperService,
-      this.notificationCommonModalComponent
+      this.notificationCommonModalComponent,
     );
     this.cd.detectChanges();
   }
@@ -101,20 +202,30 @@ export class AlertsComponent {
   public onReceivedTableConfigChange(pagination: TableEventConfig) {
     this.pagination = pagination;
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.RECEIVED);
+    if (pagination.filtering) {
+      this.filterReceived = pagination.filtering;
+    }
     this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList);
   }
 
   public onQueuedAndRequestedTableConfigChange(pagination: TableEventConfig) {
     this.pagination = pagination;
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.QUEUED_AND_REQUESTED);
-    this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList);
+    if (pagination.filtering) {
+      this.filterReceived = pagination.filtering;
+    }
+    this.alertsFacade.setQueuedAndRequestedAlerts(
+      this.pagination.page,
+      this.pagination.pageSize,
+      this.alertQueuedAndRequestedSortList,
+    );
   }
 
   public openDetailPage(notification: Notification): void {
     this.alertDetailFacade.selected = { data: notification };
     const { link } = getRoute(ALERT_BASE_ROUTE);
     const tabIndex = this.route.snapshot.queryParamMap.get('tabIndex');
-    const tabInformation: NotificationTabInformation = { tabIndex: tabIndex, pageNumber: this.pagination.page }
+    const tabInformation: NotificationTabInformation = { tabIndex: tabIndex, pageNumber: this.pagination.page };
     this.router.navigate([`/${link}/${notification.id}`], { queryParams: tabInformation });
   }
 
@@ -127,8 +238,10 @@ export class AlertsComponent {
   }
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {
-    const tableSortList = notificationTable === NotificationStatusGroup.RECEIVED ?
-      this.alertReceivedSortList : this.alertQueuedAndRequestedSortList;
+    const tableSortList =
+      notificationTable === NotificationStatusGroup.RECEIVED
+        ? this.alertReceivedSortList
+        : this.alertQueuedAndRequestedSortList;
     TableSortingUtil.setTableSortingList(sorting, tableSortList, this.ctrlKeyState);
   }
 

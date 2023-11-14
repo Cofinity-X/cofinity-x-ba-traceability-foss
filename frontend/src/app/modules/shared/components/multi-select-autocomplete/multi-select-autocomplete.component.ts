@@ -127,7 +127,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   toggleSelectAll = function (val: any): void {
-    console.log('all selected');
     if (val.checked) {
       this.options.forEach(option => (option.checked = true));
       this.filteredOptions.forEach(option => {
@@ -151,7 +150,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.selectAllChecked = true;
     }
   }
-
+  upddateFormControl;
   someSelected(): boolean {
     return this.options.filter(option => option.checked).length > 0 && !this.selectAllChecked;
   }

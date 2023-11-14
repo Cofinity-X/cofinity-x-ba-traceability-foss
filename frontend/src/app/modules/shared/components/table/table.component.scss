@@ -94,10 +94,33 @@ table {
 .table--header--cell {
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 100%;
 }
-.table--header--cell--content {
-  margin-right: 10px;
+
+.table--header--row .mat-sort-header-content {
+  width: 100%;
+}
+
+.table--header--cell--filter {
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  &--icon {
+    width: 12px;
+  }
+}
+
+.menu-input-field {
+  border-radius: 10px;
+  box-shadow: 0px 15px 25px 0px #3333330d, -10px -10px 15px 0px #ffffff1a, 0px 0px 25px 0px #33333308;
+}
+.menu-input-field .mat-mdc-menu-content {
+  padding: 0;
+}
+
+.mdc-menu-surface {
+  border-radius: 10px !important;
 }
 
 .mat-mdc-table .mdc-data-table__row {

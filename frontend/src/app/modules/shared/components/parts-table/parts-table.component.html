@@ -83,27 +83,7 @@ SPDX-License-Identifier: Apache-2.0
     </ng-container>
 
     <tr mat-footer-row *matFooterRowDef="['paginator']; sticky: true"></tr>
-    <!--
-    <ng-container *ngIf="!multiSelectActive">
-      <tr class="filter-row" mat-header-row *matHeaderRowDef="displayedColumns" [hidden]="displayedFilter"></tr>
 
-      <ng-container matColumnDef="{{ filter.headerKey }}" *ngFor="let filter of filterConfiguration">
-        <th class="multi-select-header-cell" mat-header-cell *matHeaderCellDef>
-          <app-multiselect
-            *ngIf="filter.headerKey !== filterKey"
-            [placeholder]="'All'"
-            [options]="filter.option"
-            [multiple]="isMultipleSearch(filter)"
-            [textSearch]="filter.isTextSearch"
-            [isDate]="filter.isDate"
-            ngDefaultControl
-            [formControl]="filterFormGroup.controls[filter.filterKey]"
-          ></app-multiselect>
-          <span class="filter-title" *ngIf="filter.headerKey === 'Filter'">{{ 'table.filterTitle' | i18n }}</span>
-        </th>
-      </ng-container>
-    </ng-container>
-  -->
     <tr
       *matRowDef="let row; columns: tableConfig.displayedColumns"
       [class.loading]="isDataLoading"
@@ -212,7 +192,7 @@ SPDX-License-Identifier: Apache-2.0
                       [multiple]="isMultipleSearch(filter)"
                       [textSearch]="filter.isTextSearch"
                       [isDate]="filter.isDate"
-                      (triggerFilter)="triggerFilterAdding(filter.filterKey)"
+                      (triggerFilter)="triggerFilterAdding()"
                       ngDefaultControl
                       [formControl]="filterFormGroup.controls[filter.filterKey]"
                     ></app-multiselect>

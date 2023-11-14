@@ -380,23 +380,14 @@ export class PartsTableComponent implements OnInit {
     this.handleAsOrderedTableType();
     this.handleAsRecycledTableType();
     this.handleAsSupportedTableType();
-    //this.filterFormGroup.valueChanges.subscribe(formValues => {
-    //  this.filterActivated.emit(formValues);
-    //});
   }
 
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Show';
   }
 
-  public triggerFilterAdding(formControlName: string): void {
+  public triggerFilterAdding(): void {
     this.filterActivated.emit(this.filterFormGroup.value);
-    /**   console.log(
-      'triggered by pressing enter in the filter: ' +
-        formControlName +
-        ' with the value: ' +
-        this.filterFormGroup.controls[formControlName].value,
-    ); */
   }
 
   private handleAsPlannedTableType(): void {

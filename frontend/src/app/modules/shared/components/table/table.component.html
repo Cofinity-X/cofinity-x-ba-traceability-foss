@@ -218,18 +218,38 @@ Third click:  reset sorting"
                 {{ tableConfig?.header?.[column] | i18n
                 }}
               </div>
-              <div *ngIf="filter" (click)="$event.stopPropagation()">
-                <mat-icon
-                  [matMenuTriggerFor]="selectMenu"
-                  (menuOpened)="isMenuOpen = true"
-                  (menuClosed)="isMenuOpen = false"
-                  class="table--select-all__dropdown"
-                >
-                  keyboard_arrow_down
-                </mat-icon>
+              <div
+                *ngIf="tableConfig.filterConfig.length > 0"
+                (click)="$event.stopPropagation()"
+                class="table--header--cell--filter"
+                [matMenuTriggerFor]="selectMenu"
+                (menuOpened)="isMenuOpen = true"
+                (menuClosed)="isMenuOpen = false"
+              >
+                <img
+                  src="\assets\images\icons\filterAltIcon.svg"
+                  alt="filterIcon"
+                  class="table--header--cell--filter--icon"
+                />
+                <mat-menu #selectMenu="matMenu" xPosition="before" class="menu-input-field">
+                  <ng-container *ngFor="let filter of tableConfig.filterConfig">
+                    <div (click)="$event.stopPropagation()" *ngIf="filter.filterKey === column">
+                      <app-multiselect
+                        *ngIf="filter.filterKey === column"
+                        [options]="filter.option"
+                        [multiple]="isMultipleSearch(filter)"
+                        [textSearch]="filter.isTextSearch"
+                        [isDate]="filter.isDate"
+                        (triggerFilter)="triggerFilterAdding(filter.filterKey)"
+                        ngDefaultControl
+                        [formControl]="filterFormGroup.controls[filter.filterKey]"
+                      ></app-multiselect>
+                    </div>
+                  </ng-container>
+                </mat-menu>
               </div>
             </div>
-            <mat-menu #selectMenu="matMenu" xPosition="before" class="ml-10"> </mat-menu>
+
             <ng-container *ngIf="multiSortList && multiSortList.length > 1">
               <ng-container *ngFor="let item of multiSortList; let i = index">
                 <!-- Replace 'columnToMatch' with the specific column name you want to match -->

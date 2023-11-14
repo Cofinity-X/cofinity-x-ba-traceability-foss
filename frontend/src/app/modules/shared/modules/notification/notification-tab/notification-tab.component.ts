@@ -47,7 +47,7 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() sortableColumns: Record<string, boolean> = {};
   @Input() multiSortList: TableHeaderSort[] = [];
   @Input() enableScroll: boolean = true;
-  @Input() filter = false;
+  @Input() filterConfig: any[] = [];
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
@@ -66,10 +66,11 @@ export class NotificationTabComponent implements AfterViewInit {
     const defaultColumns: DisplayColumns<keyof Notification>[] = ['createdDate', 'description', 'status'];
     const displayedColumns: DisplayColumns<keyof Notification>[] = [...defaultColumns, ...this.optionalColumns, 'menu'];
     const sortableColumns: Record<string, boolean> = this.sortableColumns;
-
+    const filterConfig: any[] = this.filterConfig;
     this.tableConfig = {
       displayedColumns,
       sortableColumns,
+      filterConfig,
       header: CreateHeaderFromColumns(displayedColumns, 'table.column'),
       hasPagination: this.hasPagination,
       menuActionsConfig: this.menuActionsConfig || [],

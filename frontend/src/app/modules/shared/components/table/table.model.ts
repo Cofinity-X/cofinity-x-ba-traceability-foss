@@ -28,6 +28,7 @@ export interface TableConfig<Columns extends string = string> {
   displayedColumns: DisplayColumns<Columns>[];
   columnRoles?: Record<Columns, Role>;
   sortableColumns?: Record<Columns, boolean>;
+  filterConfig?: any[];
   header?: Record<Columns, string>;
   hasPagination?: boolean;
   cellRenderers?: Partial<Record<Columns, TemplateRef<unknown>>>;
@@ -52,8 +53,7 @@ export enum PartTableType {
   AS_SUPPORTED_SUPPLIER,
   AS_SUPPORTED_CUSTOMER,
   AS_RECYCLED_SUPPLIER,
-  AS_RECYCLED_CUSTOMER
-
+  AS_RECYCLED_CUSTOMER,
 }
 
 export type DisplayColumns<T> = 'select' | 'menu' | T;
@@ -69,6 +69,7 @@ export interface TablePaginationEventConfig {
 
 export interface TableEventConfig extends TablePaginationEventConfig {
   sorting: TableHeaderSort;
+  filtering?: TableFilter;
 }
 
 export interface MenuActionConfig<T> {
@@ -76,4 +77,13 @@ export interface MenuActionConfig<T> {
   icon: string;
   action: (data: T) => void;
   condition?: (data: T) => boolean;
+}
+
+export interface TableFilter {
+  createdDate?: string;
+  description?: string;
+  status?: string[];
+  severity?: string[];
+  createdBy?: string;
+  sendTo?: string;
 }
