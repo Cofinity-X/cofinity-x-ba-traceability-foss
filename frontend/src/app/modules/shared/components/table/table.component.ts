@@ -36,6 +36,7 @@ import {
   FilterMethod,
   TableHeaderSort,
   FilterInfo,
+  SortingOptions,
 } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
@@ -144,6 +145,7 @@ export class TableComponent {
   public isDataLoading: boolean;
   public selectedRow: Record<string, unknown>;
   public isMenuOpen: boolean;
+  public sortingEvent: Record<string, SortingOptions> = {};
 
   private pageSize: number;
   private sorting: TableHeaderSort;
@@ -159,6 +161,14 @@ export class TableComponent {
     if (this.tableConfig.filterConfig) {
       this.setupFilterFormGroup();
     }
+    if (this.tableConfig.sortableColumns) {
+      this.setupSortingEvent();
+    }
+  }
+
+  setupSortingEvent(): void {
+    const sortingNames = Object.keys(this.tableConfig.sortableColumns);
+    sortingNames.forEach(sortName => (this.sortingEvent[sortName] = SortingOptions.NONE));
   }
 
   setupFilterFormGroup(): void {
@@ -254,6 +264,20 @@ export class TableComponent {
   public isMultipleSearch(filter: any): boolean {
     return !(filter.isDate || filter.isTextSearch);
   }
+
+  public sortingEventTrigger(column: string): void {
+    if (!this.sortingEvent[column]) {
+      return;
+    }
+    if (this.sortingEvent[column] === SortingOptions.NONE) {
+      this.sortingEvent[column] = SortingOptions.ASC;
+    } else if (this.sortingEvent[column] === SortingOptions.ASC) {
+      this.sortingEvent[column] = SortingOptions.DSC;
+    } else {
+      this.sortingEvent[column] = SortingOptions.NONE;
+    }
+  }
+
   private emitMultiSelect(): void {
     this.multiSelect.emit(this.selection.selected);
   }

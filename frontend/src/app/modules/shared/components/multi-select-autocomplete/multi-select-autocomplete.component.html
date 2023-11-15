@@ -17,9 +17,9 @@ under the License.
 SPDX-License-Identifier: Apache-2.0
 -->
 <div class="filter-input">
-  <mat-label class="label-medium">{{ filterName }}</mat-label>
+  <mat-label class="label-medium">{{ 'multiSelect.' + filterName | i18n }}</mat-label>
   <mat-form-field appearance="outline" color="accent" [floatLabel]="'auto'" *ngIf="!isDate && !multiple">
-    <mat-label>Search...</mat-label>
+    <mat-label>{{ 'multiSelect.inputLabelText' | i18n }}</mat-label>
     <input
       #searchInput
       [formControl]="formControl"
@@ -53,7 +53,7 @@ SPDX-License-Identifier: Apache-2.0
         (change)="toggleSelectAll($event)"
         [checked]="selectAllChecked"
         [indeterminate]="someSelected()"
-        >All</mat-checkbox
+        >{{ 'multiSelect.selectAll' | i18n }}</mat-checkbox
       >
     </div>
     <div *ngFor="let option of options">
@@ -62,13 +62,13 @@ SPDX-License-Identifier: Apache-2.0
         class="body-large"
         [(ngModel)]="option.checked"
         (ngModelChange)="toggleSelectOne($event)"
-        >{{ option[display] }}</mat-checkbox
+        >{{ option[display] | i18n }}</mat-checkbox
       >
     </div>
   </div>
 
   <mat-form-field color="accent" appearance="outline" [floatLabel]="'auto'" *ngIf="isDate">
-    <mat-label>DD / MM / YYYY</mat-label>
+    <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
     <input
       [value]="theSearchElement"
       matInput
@@ -79,11 +79,11 @@ SPDX-License-Identifier: Apache-2.0
       (keydown.enter)="this.triggerFilter.emit()"
     />
     <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-    <mat-datepicker disabled="false" #datepicker color="primary">
+    <mat-datepicker disabled="false" #datepicker color="primary" class="Test">
       <mat-datepicker-actions>
         <button
           class="filter-input__datepicker-buttons-reset"
-          (click)="filterItem(''); clickClear(); this.triggerFilter.emit()"
+          (click)="clickClear(); this.triggerFilter.emit()"
           mat-button
           matDatepickerCancel
         >

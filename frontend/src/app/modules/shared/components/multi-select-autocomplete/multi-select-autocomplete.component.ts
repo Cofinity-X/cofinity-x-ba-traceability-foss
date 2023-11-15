@@ -84,7 +84,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   selectionChange: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('selectElem', { static: true }) selectElem: MatSelect;
-  filterName: String = 'Filter';
+  filterName: String = 'filterLabel';
   filteredOptions: Array<any> = [];
   selectedValue: Array<any> = [];
   selectAllChecked = false;
@@ -105,9 +105,9 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
   ngOnInit(): void {
     if (this.isDate) {
-      this.filterName = 'Filter by date';
+      this.filterName = 'filterLabelDate';
     } else if (this.multiple) {
-      this.filterName = 'Choose';
+      this.filterName = 'filterLabelSelect';
     }
   }
 
@@ -164,22 +164,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   emptyFunction(): void {}
 
-  filterItem(value: any): void {
-    if (this.textSearch) {
-      return;
-    } else {
-      this.filteredOptions = this.options.filter(
-        item => item[this.display].toLowerCase().indexOf(value.toLowerCase()) > -1,
-      );
-      this.selectAllChecked = true;
-      this.filteredOptions.forEach(item => {
-        if (!this.selectedValue.includes(item[this.value])) {
-          this.selectAllChecked = false;
-        }
-      });
-    }
-  }
-
   hideOption(option: any): boolean {
     return !(this.filteredOptions.indexOf(option) > -1);
   }
@@ -213,62 +197,5 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     }
     this.theSearchElement = null;
     this.selectedValue = [];
-  }
-
-  onDisplayString(): string {
-    this.displayString = '';
-    if (this.textSearch) {
-      this.displayString = this.theSearchElement || 'All';
-      return this.displayString;
-    }
-
-    if (this.selectedValue?.length) {
-      let displayOption = [];
-      if (this.multiple) {
-        this.handleMultipleSelectDisplay(displayOption);
-      } else {
-        this.handleSingleSelectDisplay(displayOption);
-      }
-    }
-    return this.displayString;
-  }
-
-  private handleMultipleSelectDisplay(displayOption: any) {
-    const options = displayOption;
-    // Multi select display
-    for (let i = 0; i < this.labelCount; i++) {
-      options[i] = this.options.filter(option => option.value === this.selectedValue[i])[0];
-    }
-    if (options.length) {
-      for (let i = 0; i < options.length; i++) {
-        this.displayString += options[i][this.display] + ',';
-      }
-      this.displayString = this.displayString.slice(0, -1);
-      if (this.selectedValue.length === this.options.length) {
-        this.displayString = 'All';
-      } else if (this.selectedValue.length > 1) {
-        this.displayString += ` (+${this.selectedValue.length - this.labelCount} others)`;
-      }
-    }
-  }
-
-  private handleSingleSelectDisplay(displayOption: any) {
-    let options = displayOption;
-    options = this.options.filter(option => option[this.value] === this.selectedValue);
-    if (options.length) {
-      this.displayString = options[0][this.display];
-    }
-  }
-
-  onSelectionChange(val: any) {
-    const filteredValues = this.getFilteredOptionsValues();
-    if (this.multiple) {
-      const selectedCount = this.selectedValue.filter(item => filteredValues.includes(item)).length;
-      this.selectAllChecked = selectedCount === this.filteredOptions.length;
-    }
-    this.selectedValue = val.value;
-    this.formControl.patchValue(val.value);
-    this.selectionChange.emit(this.selectedValue);
-    this.theSearchElement = val.value;
   }
 }

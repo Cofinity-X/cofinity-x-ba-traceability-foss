@@ -40,6 +40,7 @@
   &__textarea-button {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 8px 12px;
   }
   &__option-list {
@@ -116,4 +117,7 @@
 }
 .mat-calendar-body-label[colspan='7'] {
   display: none;
+}
+.mdc-button__label > span {
+  @extend .body-small-emphasis;
 }

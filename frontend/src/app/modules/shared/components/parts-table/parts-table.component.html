@@ -84,23 +84,6 @@ SPDX-License-Identifier: Apache-2.0
 
     <tr mat-footer-row *matFooterRowDef="['paginator']; sticky: true"></tr>
 
-    <ng-container *ngIf="multiSelectActive">
-      <ng-container matColumnDef="{{ filter.headerKey }}" *ngFor="let filter of filterConfiguration">
-        <th class="multi-select-header-cell" mat-header-cell *matHeaderCellDef>
-          <app-multiselect
-            *ngIf="filter.headerKey !== filterKey"
-            [placeholder]="'All'"
-            [options]="filter.option"
-            [multiple]="isMultipleSearch(filter)"
-            [textSearch]="filter.isTextSearch"
-            [isDate]="filter.isDate"
-            ngDefaultControl
-            [formControl]="filterFormGroup.controls[filter.filterKey]"
-          ></app-multiselect>
-          <span class="filter-title" *ngIf="filter.headerKey === 'Filter'">{{ 'table.filterTitle' | i18n }}</span>
-        </th>
-      </ng-container>
-    </ng-container>
     <tr
       *matRowDef="let row; columns: tableConfig.displayedColumns"
       [class.loading]="isDataLoading"
@@ -179,12 +162,27 @@ SPDX-License-Identifier: Apache-2.0
           [disabled]="!tableConfig.sortableColumns?.[column]"
           mat-header-cell
           [ngClass]="{ hasQualityAlertsHeader: column === '!' }"
+          (click)="sortingEventTrigger(column)"
         >
           <ng-container *ngIf="tableConfig?.header?.[column]; else pureColumn">
             <div class="table--header--cell">
               <div class="table--header--cell--content">
                 {{
                         tableConfig?.header?.[column] | i18n }}
+                <div class="table--header--cell--content--sort">
+                  <img
+                    *ngIf="sortingEvent[column] === 'ASC'"
+                    src="/assets/images/icons/sortingArrowDown.svg"
+                    alt="sorting arrow"
+                    class="table--header--cell--content--sort--asc"
+                  />
+                  <img
+                    *ngIf="sortingEvent[column] === 'DSC'"
+                    src="/assets/images/icons/sortingArrowDown.svg"
+                    alt="sorting arrow"
+                    class="table--header--cell--content--sort--dsc"
+                  />
+                </div>
               </div>
               <div
                 *ngIf="column !== '!'"

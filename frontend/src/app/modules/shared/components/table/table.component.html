@@ -211,12 +211,27 @@ Third click:  reset sorting"
           [disabled]="!tableConfig.sortableColumns?.[column]"
           mat-header-cell
           class="table--header"
+          (click)="sortingEventTrigger(column)"
         >
           <ng-container *ngIf="tableConfig?.header?.[column]; else pureColumn"
             ><div class="table--header--cell">
               <div class="table--header--cell--content">
                 {{ tableConfig?.header?.[column] | i18n
                 }}
+                <div class="table--header--cell--content--sort">
+                  <img
+                    *ngIf="sortingEvent[column] === 'ASC'"
+                    src="/assets/images/icons/sortingArrowDown.svg"
+                    alt="sorting arrow"
+                    class="table--header--cell--content--sort--asc"
+                  />
+                  <img
+                    *ngIf="sortingEvent[column] === 'DSC'"
+                    src="/assets/images/icons/sortingArrowDown.svg"
+                    alt="sorting arrow"
+                    class="table--header--cell--content--sort--dsc"
+                  />
+                </div>
               </div>
               <div
                 *ngIf="tableConfig.filterConfig && tableConfig.filterConfig.length > 0"

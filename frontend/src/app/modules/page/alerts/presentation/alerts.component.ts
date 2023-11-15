@@ -63,22 +63,22 @@ export class AlertsComponent {
   optionTextSearch = [];
   severityOptions = [
     {
-      display: 'Minor',
+      display: 'severity.' + Severity.MINOR,
       value: 0,
       checked: false,
     },
     {
-      display: 'Major',
+      display: 'severity.' + Severity.MAJOR,
       value: 1,
       checked: false,
     },
     {
-      display: 'Critical',
+      display: 'severity.' + Severity.CRITICAL,
       value: 2,
       checked: false,
     },
     {
-      display: 'Life-Threatening',
+      display: 'severity.' + Severity.LIFE_THREATENING,
       value: 3,
       checked: false,
     },
@@ -86,42 +86,42 @@ export class AlertsComponent {
   //Approved and Requested only exist in the frontend
   statusOptions = [
     {
-      display: 'Accepted',
+      display: 'commonAlert.status.' + NotificationStatus.ACCEPTED,
       value: NotificationStatus.ACCEPTED,
       checked: false,
     },
     {
-      display: 'Acknowledged',
+      display: 'commonAlert.status.' + NotificationStatus.ACKNOWLEDGED,
       value: NotificationStatus.ACKNOWLEDGED,
       checked: false,
     },
     {
-      display: 'Canceled',
+      display: 'commonAlert.status.' + NotificationStatus.CANCELED,
       value: NotificationStatus.CANCELED,
       checked: false,
     },
     {
-      display: 'Closed',
+      display: 'commonAlert.status.' + NotificationStatus.CLOSED,
       value: NotificationStatus.CLOSED,
       checked: false,
     },
     {
-      display: 'Created',
+      display: 'commonAlert.status.' + NotificationStatus.CREATED,
       value: NotificationStatus.CREATED,
       checked: false,
     },
     {
-      display: 'Declined',
+      display: 'commonAlert.status.' + NotificationStatus.DECLINED,
       value: NotificationStatus.DECLINED,
       checked: false,
     },
     {
-      display: 'Received',
+      display: 'commonAlert.status.' + NotificationStatus.RECEIVED,
       value: NotificationStatus.RECEIVED,
       checked: false,
     },
     {
-      display: 'Sent',
+      display: 'commonAlert.status.' + NotificationStatus.SENT,
       value: NotificationStatus.SENT,
       checked: false,
     },

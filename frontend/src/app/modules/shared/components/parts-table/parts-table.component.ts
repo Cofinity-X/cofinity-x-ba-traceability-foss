@@ -40,6 +40,7 @@ import { MultiSelectAutocompleteComponent } from '@shared/components/multi-selec
 import {
   CreateHeaderFromColumns,
   PartTableType,
+  SortingOptions,
   TableConfig,
   TableEventConfig,
   TableHeaderSort,
@@ -128,6 +129,8 @@ export class PartsTableComponent implements OnInit {
 
   public filterConfiguration: any[];
   public displayedColumns: string[];
+
+  public sortingEvent: Record<string, SortingOptions> = {};
 
   filterFormGroup = new FormGroup({});
 
@@ -381,10 +384,18 @@ export class PartsTableComponent implements OnInit {
     this.handleAsOrderedTableType();
     this.handleAsRecycledTableType();
     this.handleAsSupportedTableType();
+    if (this.tableConfig.sortableColumns) {
+      this.setupSortingEvent();
+    }
   }
 
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Show';
+  }
+
+  private setupSortingEvent(): void {
+    const sortingNames = Object.keys(this.tableConfig.sortableColumns);
+    sortingNames.forEach(sortName => (this.sortingEvent[sortName] = SortingOptions.NONE));
   }
 
   public triggerFilterAdding(): void {
@@ -396,7 +407,6 @@ export class PartsTableComponent implements OnInit {
       }
     }
     filterValues['semanticDataModel'] = selectedSemanticDataModelOptions;
-    console.log(filterValues);
     this.filterActivated.emit(filterValues);
   }
 
@@ -623,27 +633,27 @@ export class PartsTableComponent implements OnInit {
   optionTextSearch = [];
   semanticDataModelOptions = [
     {
-      display: 'Batch',
+      display: 'semanticDataModels.' + SemanticDataModel.BATCH,
       value: SemanticDataModel.BATCH,
       checked: false,
     },
     {
-      display: 'JustInSequence',
+      display: 'semanticDataModels.' + SemanticDataModel.JUSTINSEQUENCE,
       value: SemanticDataModel.JUSTINSEQUENCE,
       checked: false,
     },
     {
-      display: 'SerialPart',
+      display: 'semanticDataModels.' + SemanticDataModel.SERIALPART,
       value: SemanticDataModel.SERIALPART,
       checked: false,
     },
     {
-      display: 'Unknown',
+      display: 'semanticDataModels.' + SemanticDataModel.UNKNOWN,
       value: SemanticDataModel.UNKNOWN,
       checked: false,
     },
     {
-      display: 'PartAsPlanned',
+      display: 'semanticDataModels.' + SemanticDataModel.PARTASPLANNED,
       value: SemanticDataModel.PARTASPLANNED,
       checked: false,
     },
@@ -743,8 +753,8 @@ export class PartsTableComponent implements OnInit {
     semanticModelId: new FormControl([]),
     validityPeriodFrom: new FormControl([]),
     validityPeriodTo: new FormControl([]),
-    function: new FormControl([]),
-    catenaxSiteId: new FormControl([]),
+    psFunction: new FormControl([]),
+    catenaXSiteId: new FormControl([]),
     functionValidFrom: new FormControl([]),
     functionValidUntil: new FormControl([]),
   };
@@ -974,8 +984,8 @@ export class PartsTableComponent implements OnInit {
       isDate: true,
       option: this.optionTextSearch,
     },
-    { filterKey: 'function', headerKey: 'filterPsFunction', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'catenaxSiteId', headerKey: 'filterCatenaXSiteId', isTextSearch: true, option: this.optionTextSearch },
+    { filterKey: 'psFunction', headerKey: 'filterPsFunction', isTextSearch: true, option: this.optionTextSearch },
+    { filterKey: 'catenaXSiteId', headerKey: 'filterCatenaXSiteId', isTextSearch: true, option: this.optionTextSearch },
     {
       filterKey: 'functionValidFrom',
       headerKey: 'filterFunctionValidFrom',
@@ -1051,6 +1061,19 @@ export class PartsTableComponent implements OnInit {
 
   public isSelected(row: unknown): boolean {
     return !!this.selection.selected.find(data => JSON.stringify(data) === JSON.stringify(row));
+  }
+
+  public sortingEventTrigger(column: string): void {
+    if (!this.sortingEvent[column]) {
+      return;
+    }
+    if (this.sortingEvent[column] === SortingOptions.NONE) {
+      this.sortingEvent[column] = SortingOptions.ASC;
+    } else if (this.sortingEvent[column] === SortingOptions.ASC) {
+      this.sortingEvent[column] = SortingOptions.DSC;
+    } else {
+      this.sortingEvent[column] = SortingOptions.NONE;
+    }
   }
 
   private addSelectedValues(newData: unknown[]): void {

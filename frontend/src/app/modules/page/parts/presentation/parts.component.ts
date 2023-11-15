@@ -121,8 +121,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     | AssetAsPlannedFilter
     | AssetAsDesignedFilter
     | AssetAsRecycledFilter
-    | AssetAsSupportedFilter
-    | AssetAsRecycledFilter;
+    | AssetAsSupportedFilter;
 
   public ngOnInit(): void {
     this.partsFacade.setPartsAsBuilt();

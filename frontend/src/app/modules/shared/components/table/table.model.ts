@@ -99,3 +99,9 @@ export interface TableFilter {
   createdBy?: FilterInfo;
   sendTo?: FilterInfo;
 }
+
+export enum SortingOptions {
+  NONE = 'NONE',
+  ASC = 'ASC',
+  DSC = 'DSC',
+}
