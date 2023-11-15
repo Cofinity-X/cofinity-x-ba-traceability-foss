@@ -35,8 +35,7 @@ SPDX-License-Identifier: Apache-2.0
         </span>
       </h3>
     </div>
-    <img class="close-button"
-      (click)="navigateBackToAlerts()"
+    <img (click)="navigateBackToAlerts()"
       src="/assets/images/icons/closeDialog_icon.svg"
       alt="X" />
   </div>
@@ -110,8 +109,8 @@ SPDX-License-Identifier: Apache-2.0
   </div>
 
   <div class="buttons-container">
-    <!-- *ngIf="helperService.showCancelButton(selectedAlert)" -->
-    <app-button class="action-button"
+    <app-button *ngIf="helperService.showCancelButton(selectedAlert)"
+      class="action-button"
       (click)="notificationCommonModalComponent?.show('cancel')"
       [variant]="'flat'"
       [color]="'accent'">
