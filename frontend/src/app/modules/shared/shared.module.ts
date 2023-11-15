@@ -34,6 +34,7 @@ import { NotificationUserComponent } from '@shared/components/notification-user/
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { SeveritySelectComponent } from '@shared/components/severity-select/severity-select.component';
 import { SeverityComponent } from '@shared/components/severity/severity.component';
+import { TableSettingsComponent } from '@shared/components/table-settings/table-settings.component';
 import { TextWithIconComponent } from '@shared/components/text-with-icon/text-with-icon.component';
 import {
   NotificationModalContentComponent
@@ -97,6 +98,7 @@ import {
     ButtonComponent,
     TextWithIconComponent,
     TableComponent,
+    TableSettingsComponent,
     TooltipDirective,
     RoleDirective,
     I18nPipe,

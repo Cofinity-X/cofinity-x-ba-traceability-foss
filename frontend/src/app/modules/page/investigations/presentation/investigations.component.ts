@@ -33,6 +33,7 @@ import { Notification, NotificationStatusGroup } from '@shared/model/notificatio
 import { TranslationContext } from '@shared/model/translation-context.model';
 import { Subscription } from 'rxjs';
 import { InvestigationsFacade } from '../core/investigations.facade';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-investigations',
@@ -41,6 +42,8 @@ import { InvestigationsFacade } from '../core/investigations.facade';
 export class InvestigationsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;
 
+  public searchFormGroup = new FormGroup({});
+  public searchControl: FormControl;
   public readonly investigationsReceived$;
   public readonly investigationsQueuedAndRequested$;
 
@@ -52,7 +55,7 @@ export class InvestigationsComponent {
 
   private paramSubscription: Subscription;
 
-  private pagination: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'createdDate', 'desc' ] };
+  private pagination: TableEventConfig = { page: 0, pageSize: 50, sorting: ['createdDate', 'desc'] };
 
   constructor(
     public readonly helperService: InvestigationHelperService,
@@ -80,6 +83,10 @@ export class InvestigationsComponent {
       this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList);
       this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList);
     });
+
+    const searchControlName = 'investigationSearch';
+    this.searchFormGroup.addControl(searchControlName, new FormControl([]));
+    this.searchControl = this.searchFormGroup.get(searchControlName) as unknown as FormControl;
   }
 
   public ngAfterViewInit(): void {
@@ -109,11 +116,15 @@ export class InvestigationsComponent {
     const { link } = getRoute(INVESTIGATION_BASE_ROUTE);
     const tabIndex = this.route.snapshot.queryParamMap.get('tabIndex');
     const tabInformation: NotificationTabInformation = { tabIndex: tabIndex, pageNumber: this.pagination.page };
-    this.router.navigate([ `/${ link }/${ notification.id }` ], { queryParams: tabInformation });
+    this.router.navigate([`/${link}/${notification.id}`], { queryParams: tabInformation });
   }
 
   public handleConfirmActionCompletedEvent() {
     this.ngOnInit();
+  }
+
+  public triggerSearch(): void {
+    // TODO: implement search
   }
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {

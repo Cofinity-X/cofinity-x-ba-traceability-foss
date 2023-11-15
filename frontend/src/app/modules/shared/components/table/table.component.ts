@@ -21,12 +21,14 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Pagination } from '@core/model/pagination.model';
 import { RoleService } from '@core/user/role.service';
-import { MenuActionConfig, TableConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { TableSettingsService } from '@core/user/table-settings.service';
+import { MenuActionConfig, PartTableType, TableConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
 
@@ -67,6 +69,7 @@ export class TableComponent {
   @Input() labelId: string;
   @Input() noShadow = false;
   @Input() showHover = true;
+  @Input() tableType: PartTableType;
 
   @Input() selectedPartsInfoLabel: string;
   @Input() selectedPartsActionLabel: string;
@@ -136,7 +139,7 @@ export class TableComponent {
 
   private _tableConfig: TableConfig;
 
-  constructor(private readonly roleService: RoleService) { }
+  constructor(private readonly roleService: RoleService, private readonly tableSettingsService: TableSettingsService, private dialog: MatDialog) { }
 
   public areAllRowsSelected(): boolean {
     return this.dataSource.data.every(data => this.isSelected(data));
@@ -199,5 +202,17 @@ export class TableComponent {
 
   private removeSelectedValues(itemsToRemove: unknown[]): void {
     removeSelectedValues(this.selection, itemsToRemove);
+  }
+
+  openDialog(): void {
+    // const config = new MatDialogConfig();
+    // config.data = {
+    //   title: "table.tableSettings.title",
+    //   panelClass: "custom",
+    //   tableType: this.tableType,
+    //   defaultColumns: this.tableViewConfig.displayedColumnsForTable,
+    //   defaultFilterColumns: this.tableViewConfig.displayedColumns
+    // };
+    // this.dialog.open(TableSettingsComponent, config)
   }
 }

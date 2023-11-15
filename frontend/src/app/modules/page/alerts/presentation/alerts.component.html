@@ -48,8 +48,7 @@ SPDX-License-Identifier: Apache-2.0
     <app-notification-common-modal (confirmActionCompleted)="handleConfirmActionCompletedEvent()"
       [helperService]="helperService"
       [translationContext]="TranslationContext.COMMONALERT"></app-notification-common-modal>
-    <app-notification class="tableScroll"
-      [queuedAndRequestedNotifications$]="alertsQueuedAndRequested$"
+    <app-notification [queuedAndRequestedNotifications$]="alertsQueuedAndRequested$"
       [receivedNotifications$]="alertsReceived$"
       [translationContext]="TranslationContext.COMMONALERT"
       [receivedOptionalColumns]="['severity', 'createdBy']"
