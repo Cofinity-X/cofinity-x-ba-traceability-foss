@@ -59,6 +59,7 @@ SPDX-License-Identifier: Apache-2.0
     ></tr>
 
     <tr
+      class="table--body--row"
       *matRowDef="let row; columns: tableConfig.displayedColumns"
       [class.loading]="isDataLoading"
       [class.hover]="showHover"
@@ -147,7 +148,7 @@ SPDX-License-Identifier: Apache-2.0
         </th>
         <td
           *matCellDef="let row"
-          class="table--menu table--cell"
+          class="table--menu table--body--cell"
           mat-cell
           [attr.colspan]="tableConfig.displayedColumns.length"
         >
@@ -277,7 +278,7 @@ Third click:  reset sorting"
           </ng-container>
         </th>
 
-        <td *matCellDef="let element" mat-cell class="table--cell" data-testid="table-component--cell-data">
+        <td *matCellDef="let element" mat-cell class="table--body--cell" data-testid="table-component--cell-data">
           <ng-container
             [ngTemplateOutlet]="tableConfig?.cellRenderers?.[column] ? tableConfig?.cellRenderers?.[column] : autoFormat"
             [ngTemplateOutletContext]="{ value: element[column], row: element }"

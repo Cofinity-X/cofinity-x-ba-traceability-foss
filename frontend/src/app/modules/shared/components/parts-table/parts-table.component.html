@@ -85,6 +85,7 @@ SPDX-License-Identifier: Apache-2.0
     <tr mat-footer-row *matFooterRowDef="['paginator']; sticky: true"></tr>
 
     <tr
+      class="table--body--row"
       *matRowDef="let row; columns: tableConfig.displayedColumns"
       [class.loading]="isDataLoading"
       [class.no-hover]="!showHover"
@@ -151,7 +152,7 @@ SPDX-License-Identifier: Apache-2.0
     <ng-template #NormalColumn let-column>
       <ng-container matColumnDef="{{ column }}">
         <th
-          class="table--header--row"
+          class="table--header"
           *matHeaderCellDef
           [matTooltip]="getTooltip(column)"
           matTooltipClass="table--header--tooltip"
@@ -169,7 +170,7 @@ SPDX-License-Identifier: Apache-2.0
               <div class="table--header--cell--content">
                 {{
                         tableConfig?.header?.[column] | i18n }}
-                <div class="table--header--cell--content--sort">
+                <div class="table--header--cell--content--sort" *ngIf="column !== '!'">
                   <img
                     *ngIf="sortingEvent[column] === 'ASC'"
                     src="/assets/images/icons/sortingArrowDown.svg"

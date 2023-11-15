@@ -274,3 +274,11 @@ table {
     white-space: pre-line;
   }
 }
+.table--header--row .mdc-data-table__header-cell {
+  padding: 0 12px 0 12px !important;
+}
+
+.table--body--row .mdc-data-table__cell {
+  padding: 0 12px 0 12px !important;
+  border-bottom-style: none !important;
+}
