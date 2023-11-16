@@ -1,10 +1,10 @@
-import { getInputFromChildNodes, renderComponent } from '@tests/test-render.utils';
+import { renderComponent } from '@tests/test-render.utils';
 import { SharedModule } from '@shared/shared.module';
 import { MultiSelectAutocompleteComponent } from '@shared/components/multi-select-autocomplete/multi-select-autocomplete.component';
 import { SemanticDataModel } from '@page/parts/model/parts.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
-import { fireEvent, screen, waitFor } from '@testing-library/angular';
+import { screen } from '@testing-library/angular';
 
 describe('MultiSelectAutocompleteComponent', () => {
   const renderMultiSelectAutoCompleteComponent = (isDate = false, multiple = false, filterActive = '') => {
@@ -81,12 +81,6 @@ describe('MultiSelectAutocompleteComponent', () => {
 
     const selectTextElement = screen.getByTestId('multi-select-autocomplete--date-search-form');
     expect(selectTextElement).toBeInTheDocument();
-  });
-
-  it('should initialize with empty selectedValue when no input selectedOptions', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent();
-    const { componentInstance } = fixture;
-    expect(componentInstance.selectedValue).toEqual([]);
   });
 
   it('should clear values when clickClear is called', async () => {

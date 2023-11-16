@@ -39,8 +39,6 @@ import {
   SortingOptions,
 } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
-import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
-import { event } from 'cypress/types/jquery';
 
 @Component({
   selector: 'app-table',
@@ -98,17 +96,6 @@ export class TableComponent {
     this.pageIndex = page;
   }
 
-  @Input() set PartsPaginationData({ page, pageSize, totalItems, content }: Pagination<unknown>) {
-    let flatter = new FlattenObjectPipe();
-    // modify the content of the partlist so that there are no subobjects
-    let newContent = content.map(part => flatter.transform(part));
-    this.totalItems = totalItems;
-    this.pageSize = pageSize;
-    this.dataSource.data = newContent;
-    this.isDataLoading = false;
-    this.pageIndex = page;
-  }
-
   @Input() set data(content: unknown[]) {
     this.dataSource.data = content;
     this.isDataLoading = false;
@@ -158,7 +145,7 @@ export class TableComponent {
   constructor(private readonly roleService: RoleService) {}
 
   ngOnInit() {
-    if (this.tableConfig.filterConfig) {
+    if (this.tableConfig.filterConfig?.length > 0) {
       this.setupFilterFormGroup();
     }
     if (this.tableConfig.sortableColumns) {
@@ -172,13 +159,9 @@ export class TableComponent {
   }
 
   setupFilterFormGroup(): void {
-    if (this.tableConfig.filterConfig.length > 0) {
-      this.tableConfig.filterConfig.forEach(filter => {
-        this.filterFormGroup.addControl(filter.filterKey, new FormControl([]));
-      });
-    } else {
-      return;
-    }
+    this.tableConfig.filterConfig.forEach(filter => {
+      this.filterFormGroup.addControl(filter.filterKey, new FormControl([]));
+    });
   }
 
   public areAllRowsSelected(): boolean {

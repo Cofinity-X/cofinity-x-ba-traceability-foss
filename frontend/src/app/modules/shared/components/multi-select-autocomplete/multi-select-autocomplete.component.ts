@@ -59,8 +59,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   panelWidth = 'auto';
 
   @Input()
-  selectedOptions: any;
-  @Input()
   multiple = true;
   @Input()
   textSearch = true;
@@ -111,16 +109,9 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     }
   }
 
-  shouldHideTextSearchOptionField(): boolean {
-    return !this.textSearch || (this.textSearch && (this.theSearchElement === null || this.theSearchElement === ''));
-  }
-
   ngOnChanges(): void {
     this.filteredOptions = this.options;
-    if (this.selectedOptions) {
-      this.selectedValue = this.selectedOptions;
-      this.formControl.patchValue(this.selectedValue);
-    } else if (this.formControl?.value) {
+    if (this.formControl?.value) {
       this.selectedValue = this.formControl.value;
       this.formControl.patchValue(this.selectedValue);
     }

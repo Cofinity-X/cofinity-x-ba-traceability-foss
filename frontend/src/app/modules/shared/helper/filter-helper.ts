@@ -63,26 +63,35 @@ export function enrichFilterAndGetUpdatedParams(filter: AssetAsBuiltFilter, para
 
 export function addFilteringParams(filtering: TableFilter, params: HttpParams): HttpParams {
   const filterKeys = Object.keys(filtering);
+  let filterApplied = false;
   if (filterKeys.length > 1) {
     for (const index in filterKeys) {
       const key = filterKeys[index];
       if (key !== 'filterMethod') {
         if (Array.isArray(filtering[key])) {
-          for (let value of filtering[key]) {
-            params = params.append(
-              'filter',
-              `${key},${getFilterOperatorValue(value.filterOperator)},${value.filterValue}`,
-            );
+          if (filtering[key].length > 0) {
+            filterApplied = true;
+            for (let value of filtering[key]) {
+              params = params.append(
+                'filter',
+                `${key},${getFilterOperatorValue(value.filterOperator)},${value.filterValue}`,
+              );
+            }
           }
         } else {
-          params = params.append(
-            'filter',
-            `${key},${getFilterOperatorValue(filtering[key].filterOperator)},${filtering[key].filterValue}`,
-          );
+          if (filtering[key].filterValue !== '') {
+            filterApplied = true;
+            params = params.append(
+              'filter',
+              `${key},${getFilterOperatorValue(filtering[key].filterOperator)},${filtering[key].filterValue}`,
+            );
+          }
         }
       }
     }
-    params = params.append('filterOperator', `${filtering['filterMethod']}`);
+    if (filterApplied) {
+      params = params.append('filterOperator', `${filtering['filterMethod']}`);
+    }
   }
   return params;
 }

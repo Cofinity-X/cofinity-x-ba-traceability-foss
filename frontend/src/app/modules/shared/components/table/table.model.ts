@@ -29,11 +29,24 @@ export interface TableConfig<Columns extends string = string> {
   displayedColumns: DisplayColumns<Columns>[];
   columnRoles?: Record<Columns, Role>;
   sortableColumns?: Record<Columns, boolean>;
-  filterConfig?: any[];
+  filterConfig?: FilterConfig[];
   header?: Record<Columns, string>;
   hasPagination?: boolean;
   cellRenderers?: Partial<Record<Columns, TemplateRef<unknown>>>;
   menuActionsConfig?: MenuActionConfig<unknown>[];
+}
+
+export interface FilterConfig {
+  filterKey: string;
+  isTextSearch: boolean;
+  isDate: boolean;
+  option: Option[];
+}
+
+export interface Option {
+  display: string;
+  value: any;
+  checked: boolean;
 }
 
 export enum PartTableType {

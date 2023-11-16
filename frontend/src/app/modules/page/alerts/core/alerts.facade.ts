@@ -19,7 +19,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlertsState } from '@page/alerts/core/alerts.state';
-import { TableFilter, TableHeaderSort } from '@shared/components/table/table.model';
+import { FilterMethod, TableFilter, TableHeaderSort } from '@shared/components/table/table.model';
 import { Notification, Notifications, NotificationStatus } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { AlertsService } from '@shared/service/alerts.service';
@@ -44,7 +44,12 @@ export class AlertsFacade {
     return this.alertsService.getAlert(id);
   }
 
-  public setReceivedAlerts(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], filtering: TableFilter): void {
+  public setReceivedAlerts(
+    page = 0,
+    pageSize = 50,
+    sorting: TableHeaderSort[] = [],
+    filtering: TableFilter = { filterMethod: FilterMethod.AND },
+  ): void {
     this.alertReceivedSubscription?.unsubscribe();
     this.alertReceivedSubscription = this.alertsService
       .getReceivedAlerts(page, pageSize, sorting, filtering)
@@ -58,7 +63,7 @@ export class AlertsFacade {
     page = 0,
     pageSize = 50,
     sorting: TableHeaderSort[] = [],
-    filtering: TableFilter,
+    filtering: TableFilter = { filterMethod: FilterMethod.AND },
   ): void {
     this.alertQueuedAndRequestedSubscription?.unsubscribe();
     this.alertQueuedAndRequestedSubscription = this.alertsService
