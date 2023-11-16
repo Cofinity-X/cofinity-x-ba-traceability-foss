@@ -1,19 +1,39 @@
-import { renderComponent } from '@tests/test-render.utils';
+import { getInputFromChildNodes, renderComponent } from '@tests/test-render.utils';
 import { SharedModule } from '@shared/shared.module';
 import { MultiSelectAutocompleteComponent } from '@shared/components/multi-select-autocomplete/multi-select-autocomplete.component';
 import { SemanticDataModel } from '@page/parts/model/parts.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
-/**
+import { fireEvent, screen, waitFor } from '@testing-library/angular';
+
 describe('MultiSelectAutocompleteComponent', () => {
-  const renderMultiSelectAutoCompleteComponent = (multiple = true) => {
+  const renderMultiSelectAutoCompleteComponent = (isDate = false, multiple = false, filterActive = '') => {
     const placeholder = 'test';
-    const options = [SemanticDataModel.PARTASPLANNED, SemanticDataModel.BATCH];
+    let options: Array<any>;
+    let textSearch = true;
+    if (isDate) {
+      multiple = false;
+      textSearch = false;
+    } else if (multiple) {
+      textSearch = false;
+    }
+    options = [
+      {
+        display: 'semanticDataModels.' + SemanticDataModel.PARTASPLANNED,
+        value: SemanticDataModel.PARTASPLANNED,
+        checked: false,
+      },
+      {
+        display: 'semanticDataModels.' + SemanticDataModel.BATCH,
+        value: SemanticDataModel.BATCH,
+        checked: false,
+      },
+    ];
 
     return renderComponent(MultiSelectAutocompleteComponent, {
       imports: [SharedModule],
       providers: [DatePipe],
-      componentProperties: { placeholder: placeholder, options: options, multiple },
+      componentProperties: { placeholder: placeholder, options: options, multiple, textSearch, isDate, filterActive },
     });
   };
 
@@ -23,24 +43,50 @@ describe('MultiSelectAutocompleteComponent', () => {
     expect(componentInstance).toBeTruthy();
   });
 
+  it('should create the textComponent when it gets a textSearch but not render the button', async () => {
+    await renderMultiSelectAutoCompleteComponent(false, false);
+
+    const selectTextElement = screen.getByTestId('multi-select-autocomplete--text-search-input');
+    expect(selectTextElement).toBeInTheDocument();
+    try {
+      screen.getByTestId('multi-select-autocomplete--text-search-button');
+    } catch (error) {
+      expect(error).toBeTruthy();
+    }
+    //    const selectItemElements = screen.getAllByTestId('select-one--test-id');
+    //    expect(selectItemElements.length).toBe(tableSize);
+  });
+
+  it('should create the textComponent when it gets a textSearch', async () => {
+    await renderMultiSelectAutoCompleteComponent(false, false, 'Test');
+
+    const selectTextElement = screen.getByTestId('multi-select-autocomplete--text-search-input');
+    expect(selectTextElement).toBeInTheDocument();
+
+    const selectButtonElement = screen.getByTestId('multi-select-autocomplete--text-search-button');
+    expect(selectButtonElement).toBeInTheDocument();
+  });
+
+  it('should create options selection with the give options and an select all option.', async () => {
+    await renderMultiSelectAutoCompleteComponent(false, true);
+
+    const selectTextElement = screen.getByTestId('multi-select-autocomplete--multi-option-search-selct-all');
+    expect(selectTextElement).toBeInTheDocument();
+
+    const selectItemElements = screen.getAllByTestId('multi-select-autocomplete--multi-option-search-selct-one');
+    expect(selectItemElements.length).toBe(2);
+  });
+  it('should create the date selection.', async () => {
+    await renderMultiSelectAutoCompleteComponent(true);
+
+    const selectTextElement = screen.getByTestId('multi-select-autocomplete--date-search-form');
+    expect(selectTextElement).toBeInTheDocument();
+  });
+
   it('should initialize with empty selectedValue when no input selectedOptions', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent();
     const { componentInstance } = fixture;
     expect(componentInstance.selectedValue).toEqual([]);
-  });
-
-  it('should emit selectionChange event when options are selected', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent();
-    const { componentInstance } = fixture;
-
-    const selectedOptions = [SemanticDataModel.BATCH];
-    componentInstance.selectedOptions = selectedOptions;
-    fixture.detectChanges();
-
-    const spy = spyOn(componentInstance.selectionChange, 'emit');
-    componentInstance.onSelectionChange({ value: selectedOptions });
-
-    expect(spy).toHaveBeenCalledWith(selectedOptions);
   });
 
   it('should clear values when clickClear is called', async () => {
@@ -59,126 +105,113 @@ describe('MultiSelectAutocompleteComponent', () => {
     expect(componentInstance.selectedValue).toEqual([]);
   });
 
-  it('should return correct display string when textSearch is true', async () => {
+  it('should select all options when val is true for toggleAll', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent();
     const { componentInstance } = fixture;
-
-    componentInstance.textSearch = true;
-    componentInstance.theSearchElement = 'TestValue';
-
-    const result = componentInstance.onDisplayString();
-
-    expect(result).toBe('TestValue');
-  });
-
-  it('should return correct display string when textSearch is false and multiple is true', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent();
-    const { componentInstance } = fixture;
-
-    componentInstance.textSearch = false;
-    componentInstance.selectedValue = ['value1', 'value2', 'value3']; // Replace with your test values
-    componentInstance.labelCount = 2; // Replace with the number of labels you expect
 
     componentInstance.options = [
-      { value: 'value1', display: 'Display1' },
-      { value: 'value2', display: 'Display2' },
-      { value: 'value3', display: 'Display3' },
+      { value: 'value1', display: 'Display1', checked: false },
+      { value: 'value2', display: 'Display2', checked: false },
+      { value: 'value3', display: 'Display3', checked: false },
     ];
 
-    const result = componentInstance.onDisplayString();
-
-    expect(result).toBe('All');
-  });
-
-  it('should return correct display string when textSearch is false and multiple is false', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent(false);
-    const { componentInstance } = fixture;
-    componentInstance.textSearch = false;
-    componentInstance.selectedValue = ['value1']; // Replace with your test value
-
-    componentInstance.options = [
-      { value: 'value1', display: 'Display1' },
-      { value: 'value2', display: 'Display2' },
-      { value: 'value3', display: 'Display3' },
-    ];
-
-    const result = componentInstance.onDisplayString();
-
-    expect(result).toBe('');
-  });
-
-  it('should filter options based on value when textSearch is false', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent();
-    const { componentInstance } = fixture;
-
-    componentInstance.textSearch = false;
-    componentInstance.options = [
-      { value: 'value1', display: 'Display1' },
-      { value: 'value2', display: 'Display2' },
-      { value: 'value3', display: 'Display3' },
-    ];
-
-    componentInstance.filterItem('Display1'); // Filter based on 'Display1'
-
-    expect(componentInstance.filteredOptions.length).toBe(1);
-    expect(componentInstance.filteredOptions[0].value).toBe('value1');
-  });
-
-  it('should not filter options when textSearch is true', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent();
-    const { componentInstance } = fixture;
-
-    componentInstance.textSearch = true;
-    componentInstance.options = [
-      { value: 'value1', display: 'Display1' },
-      { value: 'value2', display: 'Display2' },
-      { value: 'value3', display: 'Display3' },
-    ];
-
-    componentInstance.filterItem('Display1');
-
-    expect(componentInstance.filteredOptions.length).toBe(2);
-  });
-
-  it('should select all filtered options when val is true', async () => {
-
-        const {fixture} = await renderMultiSelectAutoCompleteComponent();
-        const {componentInstance} = fixture;
-
-        componentInstance.filteredOptions = [
-            {value: 'value1', display: 'Display1'},
-            {value: 'value2', display: 'Display2'},
-            {value: 'value3', display: 'Display3'},
-        ];
-
-        componentInstance.selectedValue = ['value1'];
-
-        const val = {checked: true};
-
-        componentInstance.toggleSelectAll(val);
-
-        expect(componentInstance.selectedValue).toEqual(['value1', 'value2', 'value3']);
-    });
-
-  it('should deselect options that are not in filteredOptions when val is false', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent();
-    const { componentInstance } = fixture;
-
-    componentInstance.filteredOptions = [
-      { value: 'value1', display: 'Display1' },
-      { value: 'value2', display: 'Display2' },
-      { value: 'value3', display: 'Display3' },
-    ];
-
-    componentInstance.selectedValue = ['value1', 'value2'];
-    const val = { checked: false };
+    const val = { checked: true };
     componentInstance.toggleSelectAll(val);
 
-    expect(componentInstance.selectedValue).toEqual([]);
+    expect(componentInstance.options).toEqual([
+      { value: 'value1', display: 'Display1', checked: true },
+      { value: 'value2', display: 'Display2', checked: true },
+      { value: 'value3', display: 'Display3', checked: true },
+    ]);
+  });
+
+  it('should deselect all options when val is false for toggleAll', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent();
+    const { componentInstance } = fixture;
+
+    componentInstance.options = [
+      { value: 'value1', display: 'Display1', checked: true },
+      { value: 'value2', display: 'Display2', checked: true },
+      { value: 'value3', display: 'Display3', checked: true },
+    ];
+
+    const val = { checked: false };
+
+    componentInstance.toggleSelectAll(val);
+
+    expect(componentInstance.options).toEqual([
+      { value: 'value1', display: 'Display1', checked: false },
+      { value: 'value2', display: 'Display2', checked: false },
+      { value: 'value3', display: 'Display3', checked: false },
+    ]);
+  });
+
+  it('should turn the selectAllChecked marker on if all options where manualy selected', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent();
+    const { componentInstance } = fixture;
+
+    componentInstance.options = [
+      { value: 'value1', display: 'Display1', checked: true },
+      { value: 'value2', display: 'Display2', checked: true },
+      { value: 'value3', display: 'Display3', checked: true },
+    ];
+    const val = { checked: true };
+
+    componentInstance.toggleSelectOne(val);
+
+    expect(componentInstance.selectAllChecked).toEqual(true);
+  });
+
+  it('should turn the selectAllChecked marker off if one option was manualy deselected after all where selected', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent();
+    const { componentInstance } = fixture;
+
+    componentInstance.options = [
+      { value: 'value1', display: 'Display1', checked: true },
+      { value: 'value2', display: 'Display2', checked: true },
+      { value: 'value3', display: 'Display3', checked: false },
+    ];
+    componentInstance.selectAllChecked = true;
+
+    const val = { checked: false };
+
+    componentInstance.toggleSelectOne(val);
+
+    expect(componentInstance.selectAllChecked).toEqual(false);
+  });
+
+  it('someSelected should return true only if not all are selected and at least one option is true ', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent();
+    const { componentInstance } = fixture;
+
+    componentInstance.options = [
+      { value: 'value1', display: 'Display1', checked: true },
+      { value: 'value2', display: 'Display2', checked: false },
+      { value: 'value3', display: 'Display3', checked: false },
+    ];
+
+    expect(componentInstance.someSelected()).toEqual(true);
+    componentInstance.options = [
+      { value: 'value1', display: 'Display1', checked: true },
+      { value: 'value2', display: 'Display2', checked: true },
+      { value: 'value3', display: 'Display3', checked: true },
+    ];
+    componentInstance.selectAllChecked = true;
+
+    expect(componentInstance.someSelected()).toEqual(false);
+  });
+
+  it('should set the filterActive the theSearchElement that was typed in', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent();
+    const { componentInstance } = fixture;
+    componentInstance.theSearchElement = 'Search value';
+    componentInstance.setFilterActive();
+
+    expect(componentInstance.filterActive).toEqual('Search value');
   });
 
   it('should emit data correctly when changeEvent of Datepicker is triggered', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent(false);
+    const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
     const inputValue = new Date('2023-10-12'); // Replace with your desired date
@@ -197,5 +230,5 @@ describe('MultiSelectAutocompleteComponent', () => {
     expect(componentInstance.formControl.value).toBe('2023-10-12'); // Replace with your actual form control variable
     expect(componentInstance.selectedValue).toBe('2023-10-12');
     expect(componentInstance.theSearchElement).toBe('2023-10-12');
-  }); 
-});*/
+  });
+});

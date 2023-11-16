@@ -27,16 +27,18 @@ SPDX-License-Identifier: Apache-2.0
       class="filter-input__textarea-input"
       (keydown.enter)="this.triggerFilter.emit(); setFilterActive()"
       [(ngModel)]="theSearchElement"
+      data-testid="multi-select-autocomplete--text-search-input"
     />
   </mat-form-field>
 
   <button
-    *ngIf="!isDate && !multiple && this.theSearchElement !== ''"
+    *ngIf="!isDate && !multiple && (this.filterActive !== '' || this.theSearchElement !== '')"
     type="button"
     class="filter-input__textarea-button"
     (click)="this.triggerFilter.emit(); setFilterActive()"
+    data-testid="multi-select-autocomplete--text-search-button"
   >
-    <div class="body-large">{{ this.filterActive === '' ? theSearchElement : filterActive }}</div>
+    <div class="body-large">{{ this.filterActive === '' ? this.theSearchElement : this.filterActive }}</div>
     <img
       *ngIf="filterActive === theSearchElement"
       src="\assets\images\icons\filerActiveIcon.svg"
@@ -53,6 +55,7 @@ SPDX-License-Identifier: Apache-2.0
         (change)="toggleSelectAll($event)"
         [checked]="selectAllChecked"
         [indeterminate]="someSelected()"
+        data-testid="multi-select-autocomplete--multi-option-search-selct-all"
         >{{ 'multiSelect.selectAll' | i18n }}</mat-checkbox
       >
     </div>
@@ -61,13 +64,20 @@ SPDX-License-Identifier: Apache-2.0
         color="accent"
         class="body-large"
         [(ngModel)]="option.checked"
-        (ngModelChange)="toggleSelectOne($event)"
+        (change)="toggleSelectOne($event)"
+        data-testid="multi-select-autocomplete--multi-option-search-selct-one"
         >{{ option[display] | i18n }}</mat-checkbox
       >
     </div>
   </div>
 
-  <mat-form-field color="accent" appearance="outline" [floatLabel]="'auto'" *ngIf="isDate">
+  <mat-form-field
+    color="accent"
+    appearance="outline"
+    [floatLabel]="'auto'"
+    *ngIf="isDate"
+    data-testid="multi-select-autocomplete--date-search-form"
+  >
     <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
     <input
       [value]="theSearchElement"

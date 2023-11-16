@@ -59,7 +59,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   panelWidth = 'auto';
 
   @Input()
-  selectedOptions;
+  selectedOptions: any;
   @Input()
   multiple = true;
   @Input()
@@ -131,25 +131,15 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.options.forEach(option => {
         option.checked = true;
       });
-      this.filteredOptions.forEach(option => {
-        if (!this.selectedValue.includes(option[this.value])) {
-          this.selectedValue = this.selectedValue.concat([option[this.value]]);
-        }
-      });
     } else {
       this.options.forEach(option => (option.checked = false));
-      const filteredValues = this.getFilteredOptionsValues();
-      this.selectedValue = this.selectedValue.filter(item => !filteredValues.includes(item));
     }
-
-    this.formControl.setValue();
-    this.selectionChange.emit(this.selectedValue);
   };
 
   toggleSelectOne(val: any): void {
-    if (!val && this.selectAllChecked) {
+    if (!val.checked && this.selectAllChecked) {
       this.selectAllChecked = false;
-    } else if (val && !this.selectAllChecked && this.options.filter(option => !option.checked).length === 0) {
+    } else if (val.checked && !this.selectAllChecked && this.options.filter(option => !option.checked).length === 0) {
       this.selectAllChecked = true;
     }
   }
@@ -160,26 +150,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   setFilterActive(): void {
     this.filterActive = this.theSearchElement;
-  }
-
-  emptyFunction(): void {}
-
-  hideOption(option: any): boolean {
-    return !(this.filteredOptions.indexOf(option) > -1);
-  }
-
-  // Returns plain strings array of filtered values
-  getFilteredOptionsValues(): any[] {
-    const filteredValues = [];
-    this.filteredOptions.forEach(option => {
-      filteredValues.push(option.value);
-    });
-    return filteredValues;
-  }
-
-  changeSearchTextOption(): void {
-    this.formControl.patchValue(this.theSearchElement);
-    this.selectedValue = this.theSearchElement as unknown as [];
   }
 
   dateSelectionEvent(event: MatDatepickerInputEvent<Date>) {
