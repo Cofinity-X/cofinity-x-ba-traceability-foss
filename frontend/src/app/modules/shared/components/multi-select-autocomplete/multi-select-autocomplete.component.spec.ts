@@ -11,11 +11,15 @@ describe('MultiSelectAutocompleteComponent', () => {
     const placeholder = 'test';
     let options: Array<any>;
     let textSearch = true;
+    let searched = false;
     if (isDate) {
       multiple = false;
       textSearch = false;
     } else if (multiple) {
       textSearch = false;
+    }
+    if (filterActive !== '') {
+      searched = true;
     }
     options = [
       {
@@ -33,7 +37,15 @@ describe('MultiSelectAutocompleteComponent', () => {
     return renderComponent(MultiSelectAutocompleteComponent, {
       imports: [SharedModule],
       providers: [DatePipe],
-      componentProperties: { placeholder: placeholder, options: options, multiple, textSearch, isDate, filterActive },
+      componentProperties: {
+        placeholder: placeholder,
+        options: options,
+        multiple,
+        textSearch,
+        isDate,
+        filterActive,
+        searched,
+      },
     });
   };
 

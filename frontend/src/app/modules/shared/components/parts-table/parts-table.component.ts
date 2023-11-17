@@ -556,6 +556,7 @@ export class PartsTableComponent implements OnInit {
 
   public triggerFilterAdding(): void {
     const filterValues: any = { ...this.filterFormGroup.value };
+    console.log(this.filterFormGroup.value);
     const selectedSemanticDataModelOptions: string[] = [];
     for (const option of this.semanticDataModelOptions) {
       if (option.checked) {
