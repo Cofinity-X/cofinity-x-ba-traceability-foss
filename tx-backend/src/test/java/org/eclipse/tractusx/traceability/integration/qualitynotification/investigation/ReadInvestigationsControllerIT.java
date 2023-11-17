@@ -29,6 +29,7 @@ import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.inve
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
+import org.eclipse.tractusx.traceability.testdata.InvestigationTestDataFactory;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
@@ -926,5 +927,57 @@ class ReadInvestigationsControllerIT extends IntegrationTestSpecification {
                 .body("sendTo", Matchers.is(receiverBPN))
                 .body("sendToName", Matchers.is(receiverName))
                 .body("createdDate", isIso8601DateTime());
+    }
+
+    @Test
+    void givenSortBySendToProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
+        // given
+        String sortString = "sendTo,desc";
+        String testBpn = bpnSupport.testBpn();
+
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .param("page", "0")
+                .param("size", "10")
+                .param("sort", sortString)
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/investigations/created")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(4))
+                .body("totalItems", Matchers.is(4))
+                .body("content.sendTo", Matchers.containsInRelativeOrder("BPNL000000000003", "BPNL000000000002", "BPNL000000000001", "BPNL000000000001"));
+    }
+
+    @Test
+    void givenSortByTargetDateProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
+        // given
+        String sortString = "targetDate,asc";
+        String testBpn = bpnSupport.testBpn();
+
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .param("page", "0")
+                .param("size", "10")
+                .param("sort", sortString)
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/investigations/created")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(4))
+                .body("totalItems", Matchers.is(4))
+                .body("content.sendToName", Matchers.containsInRelativeOrder("OEM1", "OEM2", "OEM1", "OEM3"));
     }
 }

@@ -21,7 +21,13 @@ package org.eclipse.tractusx.traceability.integration.qualitynotification.alert;
 
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
+import org.eclipse.tractusx.traceability.integration.common.support.AlertNotificationsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.BpnSupport;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
+import org.eclipse.tractusx.traceability.testdata.AlertTestDataFactory;
+import org.eclipse.tractusx.traceability.testdata.InvestigationTestDataFactory;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
@@ -31,6 +37,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import qualitynotification.base.request.UpdateQualityNotificationStatusRequest;
 
+import java.time.Instant;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
@@ -42,6 +49,12 @@ class ReceiverAlertsControllerIT extends IntegrationTestSpecification {
 
     @Autowired
     AlertsSupport alertsSupport;
+
+    @Autowired
+    AlertNotificationsSupport alertNotificationsSupport;
+
+    @Autowired
+    BpnSupport bpnSupport;
 
     @Test
     void ShouldAcknowledgeReceivedAlert() throws JoseException {
@@ -249,4 +262,56 @@ class ReceiverAlertsControllerIT extends IntegrationTestSpecification {
         );
     }
 
+    @Test
+    void givenSortBySendToProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
+        // given
+        String sortString = "sendTo,desc";
+        String testBpn = bpnSupport.testBpn();
+
+        AlertNotificationEntity[] alertNotificationEntities = AlertTestDataFactory.createAlertNotificationEntitiesTestData(testBpn);
+        alertNotificationsSupport.storedAlertNotifications(alertNotificationEntities);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .param("page", "0")
+                .param("size", "10")
+                .param("sort", sortString)
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/alerts/created")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(4))
+                .body("totalItems", Matchers.is(4))
+                .body("content.sendTo", Matchers.containsInRelativeOrder("BPNL000000000003", "BPNL000000000002", "BPNL000000000001", "BPNL000000000001"));
+    }
+
+    @Test
+    void givenSortByTargetDateProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
+        // given
+        String sortString = "targetDate,asc";
+        Instant now = Instant.now();
+        String testBpn = bpnSupport.testBpn();
+
+        AlertNotificationEntity[] alertNotificationEntities = AlertTestDataFactory.createAlertNotificationEntitiesTestData(testBpn);
+        alertNotificationsSupport.storedAlertNotifications(alertNotificationEntities);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .param("page", "0")
+                .param("size", "10")
+                .param("sort", sortString)
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/alerts/created")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(4))
+                .body("totalItems", Matchers.is(4))
+                .body("content.sendToName", Matchers.containsInRelativeOrder("OEM1", "OEM2", "OEM1", "OEM3"));
+    }
 }

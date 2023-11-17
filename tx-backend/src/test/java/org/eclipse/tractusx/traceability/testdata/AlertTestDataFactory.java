@@ -95,6 +95,15 @@ public class AlertTestDataFactory {
     }
 
     public static AlertNotificationEntity[] createAlertNotificationEntitiesTestData(String senderBpn) {
+        String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
+        String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
+        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
+        Instant targetDateInNov = LocalDateTime.parse(targetDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                .atZone(ZoneId.of("Europe/Berlin"))
+                .toInstant();
+        Instant targetDateInDec = LocalDateTime.parse(targetDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                .atZone(ZoneId.of("Europe/Berlin"))
+                .toInstant();
 
         AlertEntity[] alertEntities = createAlertEntitiesTestData(senderBpn);
 
@@ -107,6 +116,7 @@ public class AlertTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInNov)
                         .sendToName("OEM1")
                         .severity(QualityNotificationSeverity.MAJOR)
                         .build(),
@@ -118,6 +128,7 @@ public class AlertTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInDec)
                         .sendToName("OEM1")
                         .severity(QualityNotificationSeverity.MAJOR)
                         .build(),
@@ -129,6 +140,7 @@ public class AlertTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
                         .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInNov)
                         .sendToName("OEM2")
                         .severity(QualityNotificationSeverity.LIFE_THREATENING)
                         .build(),
@@ -140,6 +152,7 @@ public class AlertTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
                         .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInDec)
                         .sendToName("OEM3")
                         .severity(QualityNotificationSeverity.MINOR)
                         .build(),
@@ -151,6 +164,7 @@ public class AlertTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
                         .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInNov)
                         .sendToName("OEM4")
                         .severity(QualityNotificationSeverity.MINOR)
                         .build()
