@@ -9,6 +9,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 - DEPENDENCIES_FRONTEND, SECURITY.md, NOTICE.md, LICENSE file to frontend docker image
 - Added a step-by-step guide to register a server in pgAdmin in the database dump README
+- Documentation about technical users
+
 ### Changed
 - Fixed helm repository path for backend & frontend (wrong prefix)
 
