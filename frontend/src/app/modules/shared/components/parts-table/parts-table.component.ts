@@ -153,9 +153,21 @@ export class PartsTableComponent implements OnInit {
     filter: { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
     id: { filterKey: 'id', headerKey: 'filterId', isTextSearch: true, option: this.optionTextSearch },
     idShort: { filterKey: 'idShort', headerKey: 'filterIdShort', isTextSearch: true, option: this.optionTextSearch },
-    name: { filterKey: 'name', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch }, // nameAtManufacturer
+    name: { filterKey: 'name', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch },
+    nameAtManufacturer: {
+      filterKey: 'nameAtManufacturer',
+      headerKey: 'filterName',
+      isTextSearch: true,
+      option: this.optionTextSearch,
+    },
     manufacturer: {
       filterKey: 'manufacturer',
+      headerKey: 'filterManufacturer',
+      isTextSearch: true,
+      option: this.optionTextSearch,
+    },
+    manufacturerName: {
+      filterKey: 'manufacturerName',
       headerKey: 'filterManufacturer',
       isTextSearch: true,
       option: this.optionTextSearch,
@@ -873,8 +885,8 @@ export class PartsTableComponent implements OnInit {
   private readonly assetAsPlannedCustomerFilterConfiguration: any[] = [
     this.filterKeyOptions.filter,
     this.filterKeyOptions.semanticDataModel,
-    this.filterKeyOptions.name,
-    this.filterKeyOptions.manufacturer,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
     this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.semanticModelId,
   ];
@@ -882,8 +894,8 @@ export class PartsTableComponent implements OnInit {
   private readonly assetAsPlannedSupplierFilterConfiguration: any[] = [
     this.filterKeyOptions.filter,
     this.filterKeyOptions.semanticDataModel,
-    this.filterKeyOptions.name,
-    this.filterKeyOptions.manufacturer,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
     this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.semanticModelId,
   ];
@@ -891,9 +903,9 @@ export class PartsTableComponent implements OnInit {
   private readonly assetAsBuiltCustomerFilterConfiguration: any[] = [
     this.filterKeyOptions.filter,
     this.filterKeyOptions.semanticDataModel,
-    this.filterKeyOptions.name,
-    this.filterKeyOptions.manufacturer,
-    this.filterKeyOptions.partId,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
+    this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.semanticModelId,
     this.filterKeyOptions.manufacturingDate,
     this.filterKeyOptions.activeAlerts,
@@ -903,9 +915,9 @@ export class PartsTableComponent implements OnInit {
   private readonly assetAsBuiltSupplierFilterConfiguration: any[] = [
     this.filterKeyOptions.filter,
     this.filterKeyOptions.semanticDataModel,
-    this.filterKeyOptions.name,
-    this.filterKeyOptions.manufacturer,
-    this.filterKeyOptions.partId,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
+    this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.semanticModelId,
     this.filterKeyOptions.manufacturingDate,
     this.filterKeyOptions.activeAlerts,
