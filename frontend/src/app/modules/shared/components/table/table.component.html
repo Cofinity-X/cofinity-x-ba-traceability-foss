@@ -147,7 +147,8 @@ SPDX-License-Identifier: Apache-2.0
           mat-header-cell>
           <img class="settingsIcon"
             src="/assets/images/icons/table_settings_icon.svg"
-            alt="*" />
+            alt="*"
+            (click)="openDialog()" />
         </th>
         <td *matCellDef="let row"
           class="table--menu table--cell"

@@ -25,7 +25,8 @@ SPDX-License-Identifier: Apache-2.0
   let-notifications="view">
   {{onItemCountChange(notifications.data.totalItems)}}
   <div *ngIf="notifications.data.totalItems > 0; else displayMessage">
-    <app-table [enableScroll]="enableScroll"
+    <app-table [tableType]="tableType"
+      [enableScroll]="enableScroll"
       [paginationData]="notifications.data"
       [tableConfig]="tableConfig"
       [noShadow]="true"
@@ -37,7 +38,7 @@ SPDX-License-Identifier: Apache-2.0
     </app-table>
   </div>
   <ng-template #displayMessage>
-    <ng-content select="[content1]"></ng-content>
+    <ng-content select="[emptyContent]"></ng-content>
   </ng-template>
 </ng-template>
 

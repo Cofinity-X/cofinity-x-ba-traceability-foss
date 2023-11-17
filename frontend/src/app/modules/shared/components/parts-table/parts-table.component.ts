@@ -519,6 +519,7 @@ export class PartsTableComponent implements OnInit {
     private setupTableConfigurations(displayedColumnsForTable: string[], displayedColumns: string[], sortableColumns: Record<string, boolean>, filterConfiguration: any[], filterFormGroup: any): any {
         const headerKey = 'table.column';
         this.tableConfig = {
+            ...this.tableConfig,
             displayedColumns: displayedColumnsForTable,
             header: CreateHeaderFromColumns(displayedColumnsForTable, headerKey),
             sortableColumns: sortableColumns,

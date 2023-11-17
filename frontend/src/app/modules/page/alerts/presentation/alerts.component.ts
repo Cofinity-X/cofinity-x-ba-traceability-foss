@@ -26,7 +26,7 @@ import { AlertHelperService } from '@page/alerts/core/alert-helper.service';
 import { AlertsFacade } from '@page/alerts/core/alerts.facade';
 import { NotificationMenuActionsAssembler } from '@shared/assembler/notificationMenuActions.assembler';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { MenuActionConfig, PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
@@ -54,6 +54,8 @@ export class AlertsComponent {
   private paramSubscription: Subscription;
 
   private pagination: TableEventConfig = { page: 0, pageSize: 50, sorting: ['createdDate', 'desc'] };
+
+  protected readonly PartTableType = PartTableType;
 
   constructor(
     public readonly helperService: AlertHelperService,

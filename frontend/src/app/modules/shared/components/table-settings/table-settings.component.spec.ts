@@ -62,7 +62,7 @@ describe('TableSettingsComponent', () => {
         {
           provide: MatDialogRef,
           useValue: {
-            close: () => {},
+            close: () => { },
           },
         },
         {
@@ -131,15 +131,6 @@ describe('TableSettingsComponent', () => {
         filterColumnsForTable: ['filterColumn1'],
       },
     });
-  });
-
-  it('should handle sort list item correctly', () => {
-    component.dialogColumns = ['column1', 'column2', 'column3'];
-    component.selectedColumn = 'column3';
-
-    component.handleSortListItem('up');
-
-    expect(component.dialogColumns).toEqual(['column1', 'column3', 'column2']);
   });
 
   it('should reset columns', () => {

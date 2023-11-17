@@ -28,10 +28,13 @@ table {
   width: 100%;
 }
 
+.table-wrapper {
+  scrollbar-width: thin;
+}
+
 .settingsIcon {
   padding-left: 13px;
 }
-
 
 .table--select-all {
   display: inline-flex;

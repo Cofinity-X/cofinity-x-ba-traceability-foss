@@ -28,9 +28,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Pagination } from '@core/model/pagination.model';
 import { RoleService } from '@core/user/role.service';
 import { TableSettingsService } from '@core/user/table-settings.service';
-import { MenuActionConfig, PartTableType, TableConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { CreateHeaderFromColumns, MenuActionConfig, PartTableType, TableConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 import { FlattenObjectPipe } from '@shared/pipes/flatten-object.pipe';
+import { TableViewConfig } from '../parts-table/table-view-config.model';
+import { TableSettingsComponent } from '../table-settings/table-settings.component';
 
 @Component({
   selector: 'app-table',
@@ -134,12 +136,34 @@ export class TableComponent {
   public selectedRow: Record<string, unknown>;
   public isMenuOpen: boolean;
 
+  public filterConfiguration: any[];
+  public displayedColumns: string[];
+  public defaultColumns: string[];
+
   private pageSize: number;
   private sorting: TableHeaderSort;
 
   private _tableConfig: TableConfig;
+  private tableViewConfig: TableViewConfig;
 
   constructor(private readonly roleService: RoleService, private readonly tableSettingsService: TableSettingsService, private dialog: MatDialog) { }
+
+  ngOnInit() {
+    this.initializeTableViewSettings()
+
+    // this.filterFormGroup.valueChanges.subscribe((formValues) => {
+    //   this.filterActivated.emit(formValues);
+    // });
+
+    this.tableSettingsService.getEvent().subscribe(() => {
+      this.setupTableViewSettings();
+    })
+    this.setupTableViewSettings();
+
+    // this.filterFormGroup.valueChanges.subscribe((formValues) => {
+    //   this.filterActivated.emit(formValues);
+    // });
+  }
 
   public areAllRowsSelected(): boolean {
     return this.dataSource.data.every(data => this.isSelected(data));
@@ -188,6 +212,77 @@ export class TableComponent {
     }
   }
 
+  private setupTableViewSettings() {
+    const tableSettingsList = this.tableSettingsService.getStoredTableSettings();
+    // check if there are table settings list
+    if (tableSettingsList) {
+      // if yes, check if there is a table-setting for this table type
+      if (tableSettingsList[this.tableType]) {
+        // if yes, get the effective displayedcolumns from the settings and set the tableconfig after it.
+        this.setupTableConfigurations(tableSettingsList[this.tableType].columnsForTable, tableSettingsList[this.tableType].filterColumnsForTable, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
+      } else {
+        // if no, create new a table setting for this.tabletype and put it into the list. Additionally, intitialize default table configuration
+        tableSettingsList[this.tableType] = {
+          columnsForDialog: this.tableViewConfig.displayedColumnsForTable,
+          columnSettingsOptions: this.getDefaultColumnVisibilityMap(),
+          columnsForTable: this.tableViewConfig.displayedColumnsForTable,
+          filterColumnsForTable: this.tableViewConfig.displayedColumns
+        };
+        this.tableSettingsService.storeTableSettings(this.tableType, tableSettingsList);
+        this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
+      }
+    } else {
+      // if no, create new list and a settings entry for this.tabletype with default values and set correspondingly the tableconfig
+      const newTableSettingsList = {
+        [this.tableType]: {
+          columnsForDialog: this.tableViewConfig.displayedColumnsForTable,
+          columnSettingsOptions: this.getDefaultColumnVisibilityMap(),
+          columnsForTable: this.tableViewConfig.displayedColumnsForTable,
+          filterColumnsForTable: this.tableViewConfig.displayedColumns
+        }
+      }
+      this.tableSettingsService.storeTableSettings(this.tableType, newTableSettingsList);
+      this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
+    }
+  }
+
+  private setupTableConfigurations(displayedColumnsForTable: string[], displayedColumns: string[], sortableColumns: Record<string, boolean>, filterConfiguration: any[], filterFormGroup: any): any {
+    const headerKey = 'table.column';
+    this.tableConfig = {
+      ...this.tableConfig,
+      displayedColumns: displayedColumnsForTable,
+      header: CreateHeaderFromColumns(displayedColumnsForTable, headerKey),
+      sortableColumns: sortableColumns,
+    };
+    this.filterConfiguration = filterConfiguration;
+    this.displayedColumns = displayedColumns;
+    // for (const controlName in filterFormGroup) {
+    //   if (filterFormGroup.hasOwnProperty(controlName)) {
+    //     this.filterFormGroup.addControl(controlName, filterFormGroup[controlName]);
+    //   }
+    // }
+  }
+
+  private getDefaultColumnVisibilityMap(): Map<string, boolean> {
+    const initialColumnMap = new Map<string, boolean>();
+    for (const column of this.tableViewConfig.displayedColumnsForTable) {
+      initialColumnMap.set(column, true);
+    }
+    return initialColumnMap;
+  }
+
+  private initializeTableViewSettings(): void {
+    if (this.tableConfig) {
+      this.tableViewConfig = {
+        displayedColumns: this.tableConfig.displayedColumns,
+        displayedColumnsForTable: this.tableConfig.displayedColumns,
+        filterConfiguration: undefined,
+        filterFormGroup: undefined,
+        sortableColumns: this.tableConfig.sortableColumns,
+      }
+    }
+  }
+
   private emitMultiSelect(): void {
     this.multiSelect.emit(this.selection.selected);
   }
@@ -205,14 +300,15 @@ export class TableComponent {
   }
 
   openDialog(): void {
-    // const config = new MatDialogConfig();
-    // config.data = {
-    //   title: "table.tableSettings.title",
-    //   panelClass: "custom",
-    //   tableType: this.tableType,
-    //   defaultColumns: this.tableViewConfig.displayedColumnsForTable,
-    //   defaultFilterColumns: this.tableViewConfig.displayedColumns
-    // };
-    // this.dialog.open(TableSettingsComponent, config)
+    const config = new MatDialogConfig();
+    config.autoFocus = false;
+    config.data = {
+      title: "table.tableSettings.title",
+      panelClass: "custom",
+      tableType: this.tableType,
+      defaultColumns: this.tableViewConfig.displayedColumnsForTable,
+      defaultFilterColumns: this.tableViewConfig.displayedColumns
+    };
+    this.dialog.open(TableSettingsComponent, config)
   }
 }

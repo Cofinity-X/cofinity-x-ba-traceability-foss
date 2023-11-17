@@ -21,7 +21,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { MenuActionConfig, PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { StaticIdService } from '@shared/service/staticId.service';
@@ -43,6 +43,7 @@ export class NotificationComponent {
   @Input() queuedAndRequestedSortableColumns: Record<string, boolean> = {};
   @Input() receivedMultiSortList: TableHeaderSort[] = [];
   @Input() queuedAndRequestedMultiSortList: TableHeaderSort[] = [];
+  @Input() tablesType: PartTableType[];
 
   @Output() onReceivedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() onQueuedAndRequestedTableConfigChanged = new EventEmitter<TableEventConfig>();
@@ -55,6 +56,8 @@ export class NotificationComponent {
 
   public itemCount: number = 0;
   public itemCountString: string;
+
+  protected readonly PartTableType = PartTableType;
 
   constructor(
     private readonly router: Router,

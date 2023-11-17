@@ -45,7 +45,7 @@ SPDX-License-Identifier: Apache-2.0
     </div>
 </ng-container>
 
-<div class="table-wrapper">
+<div class="table-wrapper scroller">
     <table #tableElement
         [dataSource]="dataSource"
         [attr.aria-labelledby]="labelId"
@@ -111,12 +111,6 @@ SPDX-License-Identifier: Apache-2.0
             mat-row
             data-testid="table-component--body-row"></tr>
 
-        <ng-container *ngIf="!!tableConfig.menuActionsConfig">
-            <tr *matRowDef="let row; columns: ['expandMenuActions']"
-                class="expand-row no-hover table--menu__mobile"
-                mat-row></tr>
-        </ng-container>
-
         <tr *matNoDataRow
             class="mat-row no-hover"
             data-testid="table-component--body-row">
@@ -148,18 +142,15 @@ SPDX-License-Identifier: Apache-2.0
             <ng-container matColumnDef="menu">
                 <th *matHeaderCellDef
                     mat-header-cell>
-                    <img class="settings-icon"
+                    <img class="settings-icon table-menu"
                         src="/assets/images/icons/table_settings_icon.svg"
                         alt="*"
-                        width="20px"
-                        height="20px"
                         (click)="openDialog()" />
                 </th>
                 <td *matCellDef="let row"
-                    class="table--menu table--cell"
-                    mat-cell
-                    [attr.colspan]="tableConfig?.displayedColumns.length">
-                    <div class="table--menu__desktop">
+                    class="table-menu table--cell"
+                    mat-cell>
+                    <div class="table--menu__desktop table-menu ">
                     </div>
                 </td>
             </ng-container>

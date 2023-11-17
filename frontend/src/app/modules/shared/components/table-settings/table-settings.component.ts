@@ -17,16 +17,22 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TableViewSettings } from '@core/user/table-settings.model';
 import { TableSettingsService } from '@core/user/table-settings.service';
 import { PartTableType } from '@shared/components/table/table.model';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-table-settings',
   templateUrl: 'table-settings.component.html',
   styleUrls: ['table-settings.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TableSettingsComponent {
 
@@ -48,6 +54,7 @@ export class TableSettingsComponent {
 
   isCustomerTable: boolean;
 
+  dragActive = false;
 
   constructor(public dialogRef: MatDialogRef<TableSettingsComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public readonly tableSettingsService: TableSettingsService) {
     // Layout
@@ -67,6 +74,9 @@ export class TableSettingsComponent {
 
     this.selectAllSelected = this.dialogColumns.length === this.tableColumns.length;
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.save();
+    });
   }
 
   save() {
@@ -79,7 +89,7 @@ export class TableSettingsComponent {
       if (this.columnOptions.get(column)) {
         newTableColumns.push(column);
         // ignore select column in customertable
-        if (column === 'select' && !this.isCustomerTable) {
+        if ((column === 'select') && !this.isCustomerTable) {
           newTableFilterColumns.push('Filter');
         } else {
           newTableFilterColumns.push('filter' + column.charAt(0).toUpperCase() + column.slice(1))
@@ -103,7 +113,6 @@ export class TableSettingsComponent {
 
     // trigger action that table will refresh
     this.tableSettingsService.emitChangeEvent();
-    this.dialogRef.close();
   }
 
   handleCheckBoxChange(item: string, isChecked: boolean) {
@@ -119,23 +128,8 @@ export class TableSettingsComponent {
     }
   }
 
-
-  handleSortListItem(direction: string) {
-    if (!this.selectedColumn) {
-      return;
-    }
-
-    let oldPosition = this.dialogColumns.indexOf(this.selectedColumn);
-    // in non customer table we have the select Column as first and why
-    let upperLimit = this.isCustomerTable ? 0 : 1
-    let step = direction === 'up' ? -1 : 1;
-    console.log(oldPosition, upperLimit, step)
-    if ((oldPosition == upperLimit && direction === 'up') || (oldPosition === this.dialogColumns.length - 1 && direction === 'down')) {
-      return;
-    }
-    let temp = this.dialogColumns[oldPosition + step];
-    this.dialogColumns[oldPosition + step] = this.selectedColumn;
-    this.dialogColumns[oldPosition] = temp;
+  dragging(state: boolean) {
+    this.dragActive = state;
   }
 
   selectAll(isChecked: boolean) {
@@ -149,7 +143,20 @@ export class TableSettingsComponent {
   }
 
   resetColumns() {
-    this.dialogColumns = [...this.defaultColumns.filter(value => value !== 'menu')];
+    this.dialogColumns = [...this.defaultColumns];
     this.selectAll(true);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 }

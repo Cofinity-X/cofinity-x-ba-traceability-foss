@@ -89,7 +89,7 @@ import { ViewSelectorComponent } from "@shared/components/view-selector/view-sel
 import {
   CountryFlagGeneratorComponent
 } from "@shared/components/country-flag-generator/country-flag-generator.component";
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     ToastContainerComponent,
@@ -140,7 +140,7 @@ import {
     MultiSelectAutocompleteComponent,
     CountryFlagGeneratorComponent
   ],
-  imports: [TemplateModule, RouterModule, I18NextModule],
+  imports: [TemplateModule, RouterModule, I18NextModule, DragDropModule],
   exports: [
     ToastContainerComponent,
     ToastMessageComponent,

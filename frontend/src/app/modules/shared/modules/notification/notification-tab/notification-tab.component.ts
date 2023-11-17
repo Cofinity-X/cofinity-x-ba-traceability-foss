@@ -24,6 +24,7 @@ import {
   CreateHeaderFromColumns,
   DisplayColumns,
   MenuActionConfig,
+  PartTableType,
   TableConfig,
   TableEventConfig, TableHeaderSort,
 } from '@shared/components/table/table.model';
@@ -46,6 +47,7 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() sortableColumns: Record<string, boolean> = {};
   @Input() multiSortList: TableHeaderSort[] = [];
   @Input() enableScroll: boolean = true;
+  @Input() tableType: PartTableType;
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
@@ -59,6 +61,8 @@ export class NotificationTabComponent implements AfterViewInit {
   @ViewChild('userTmp') userTemplate: TemplateRef<unknown>;
 
   public tableConfig: TableConfig<keyof Notification>;
+
+  protected readonly PartTableType = PartTableType;
 
   public ngAfterViewInit(): void {
     const defaultColumns: DisplayColumns<keyof Notification>[] = ['createdDate', 'description', 'status'];

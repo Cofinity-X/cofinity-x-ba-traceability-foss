@@ -53,6 +53,7 @@ SPDX-License-Identifier: Apache-2.0
     <app-notification [queuedAndRequestedNotifications$]="investigationsQueuedAndRequested$"
       [receivedNotifications$]="investigationsReceived$"
       [translationContext]="TranslationContext.COMMONINVESTIGATION"
+      [tablesType]="[PartTableType.INVESTIGATIONS_RECEIVED, PartTableType.INVESTIGATIONS_SENT]"
       [receivedOptionalColumns]="['targetDate', 'severity', 'createdBy']"
       [receivedSortableColumns]="{description: true, status: true, createdDate: true, severity: true, createdBy: true, targetDate: true}"
       [queuedAndRequestedOptionalColumns]="['targetDate', 'severity', 'sendTo']"

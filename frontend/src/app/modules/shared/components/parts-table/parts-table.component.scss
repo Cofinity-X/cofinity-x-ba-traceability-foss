@@ -27,6 +27,10 @@
   padding-left: 13px;
 }
 
+.table-menu {
+  width: 40px;
+}
+
 .table--select-all {
   display: inline-flex;
   align-items: center;
@@ -157,7 +161,7 @@
   height: 405px;
   width: 100%;
   overflow: auto !important;
-
+  scrollbar-width: thin;
 }
 
 .table--notification--cell {

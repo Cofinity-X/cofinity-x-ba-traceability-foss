@@ -26,7 +26,7 @@ import { InvestigationDetailFacade } from '@page/investigations/core/investigati
 import { InvestigationHelperService } from '@page/investigations/core/investigation-helper.service';
 import { NotificationMenuActionsAssembler } from '@shared/assembler/notificationMenuActions.assembler';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { MenuActionConfig, PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
@@ -57,6 +57,8 @@ export class InvestigationsComponent {
 
   private pagination: TableEventConfig = { page: 0, pageSize: 50, sorting: ['createdDate', 'desc'] };
 
+  protected readonly PartTableType = PartTableType;
+
   constructor(
     public readonly helperService: InvestigationHelperService,
     public readonly investigationsFacade: InvestigationsFacade,
@@ -74,7 +76,6 @@ export class InvestigationsComponent {
     window.addEventListener('keyup', (event) => {
       this.ctrlKeyState = event.ctrlKey;
     });
-
   }
 
   public ngOnInit(): void {
