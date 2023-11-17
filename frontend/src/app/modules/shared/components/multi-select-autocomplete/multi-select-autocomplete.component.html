@@ -26,13 +26,12 @@ SPDX-License-Identifier: Apache-2.0
       matInput
       class="filter-input__textarea-input"
       (keydown.enter)="this.triggerFilter.emit(); setFilterActive()"
-      [(ngModel)]="theSearchElement"
       data-testid="multi-select-autocomplete--text-search-input"
     />
   </mat-form-field>
 
   <button
-    *ngIf="!isDate && !multiple && (this.filterActive !== '' || this.theSearchElement !== '')"
+    *ngIf="!isDate && !multiple && searched && (this.filterActive !== '' || this.theSearchElement !== '')"
     type="button"
     class="filter-input__textarea-button"
     (click)="this.triggerFilter.emit(); setFilterActive()"

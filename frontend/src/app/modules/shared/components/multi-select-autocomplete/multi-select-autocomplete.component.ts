@@ -35,6 +35,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { MatSelect } from '@angular/material/select';
+import { pairwise, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-multiselect',
@@ -59,7 +60,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   panelWidth = 'auto';
 
   @Input()
-  multiple = true;
+  multiple = false;
   @Input()
   textSearch = true;
   @Input()
@@ -90,6 +91,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   selectedCheckboxOptions: Array<any> = [];
   filterActive = '';
   maxDate: Date;
+  searched = false;
 
   constructor(
     public datePipe: DatePipe,
@@ -102,6 +104,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this._adapter.setLocale(locale);
   }
   ngOnInit(): void {
+    this.formControl.valueChanges.pipe(startWith(0), pairwise()).subscribe(([prev, next]: [any, any]) => {
+      this.theSearchElement = next;
+      this.searched = true;
+    });
     if (this.isDate) {
       this.filterName = 'filterLabelDate';
     } else if (this.multiple) {
@@ -110,6 +116,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
+    this.theSearchElement = this.formControl.value;
     this.filteredOptions = this.options;
     if (this.formControl?.value) {
       this.selectedValue = this.formControl.value;
