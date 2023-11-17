@@ -153,24 +153,19 @@ export class PartsTableComponent implements OnInit {
     filter: { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
     id: { filterKey: 'id', headerKey: 'filterId', isTextSearch: true, option: this.optionTextSearch },
     idShort: { filterKey: 'idShort', headerKey: 'filterIdShort', isTextSearch: true, option: this.optionTextSearch },
-    name: { filterKey: 'name', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch },
     nameAtManufacturer: {
       filterKey: 'nameAtManufacturer',
       headerKey: 'filterName',
       isTextSearch: true,
       option: this.optionTextSearch,
-    },
-    manufacturer: {
-      filterKey: 'manufacturer',
-      headerKey: 'filterManufacturer',
-      isTextSearch: true,
-      option: this.optionTextSearch,
+      column: 'name',
     },
     manufacturerName: {
       filterKey: 'manufacturerName',
       headerKey: 'filterManufacturer',
       isTextSearch: true,
       option: this.optionTextSearch,
+      column: 'manufacturer',
     },
     partId: { filterKey: 'partId', headerKey: 'filterPartId', isTextSearch: true, option: this.optionTextSearch }, // Part number / Batch Number / JIS Number
     manufacturerPartId: {
@@ -214,6 +209,7 @@ export class PartsTableComponent implements OnInit {
       headerKey: 'filterManufacturingDate',
       isTextSearch: false,
       isDate: true,
+      maxDate: new Date(),
       option: this.optionTextSearch,
     },
     manufacturingCountry: {
@@ -223,16 +219,18 @@ export class PartsTableComponent implements OnInit {
       option: this.optionTextSearch,
     },
     activeAlerts: {
-      filterKey: 'activeAlerts',
+      filterKey: 'qualityAlertsInStatusActive',
       headerKey: 'filterActiveAlerts',
       isTextSearch: true,
       option: this.optionTextSearch,
+      column: 'activeAlerts',
     },
     activeInvestigations: {
-      filterKey: 'activeInvestigations',
+      filterKey: 'qualityInvestigationsInStatusActive',
       headerKey: 'filterActiveInvestigations',
       isTextSearch: true,
       option: this.optionTextSearch,
+      column: 'activeInvestigations',
     },
     validityPeriodFrom: {
       filterKey: 'validityPeriodFrom',
@@ -240,6 +238,7 @@ export class PartsTableComponent implements OnInit {
       isTextSearch: false,
       isDate: true,
       option: this.optionTextSearch,
+      maxDate: new Date(),
     },
     validityPeriodTo: {
       filterKey: 'validityPeriodTo',
@@ -247,12 +246,14 @@ export class PartsTableComponent implements OnInit {
       isTextSearch: false,
       isDate: true,
       option: this.optionTextSearch,
+      maxDate: null,
     },
-    psFunction: {
-      filterKey: 'psFunction',
+    function: {
+      filterKey: 'function',
       headerKey: 'filterPsFunction',
       isTextSearch: true,
       option: this.optionTextSearch,
+      column: 'psFunction',
     },
     catenaXSiteId: {
       filterKey: 'catenaXSiteId',
@@ -266,6 +267,7 @@ export class PartsTableComponent implements OnInit {
       isTextSearch: false,
       isDate: true,
       option: this.optionTextSearch,
+      maxDate: new Date(),
     },
     functionValidUntil: {
       filterKey: 'functionValidUntil',
@@ -273,6 +275,7 @@ export class PartsTableComponent implements OnInit {
       isTextSearch: false,
       isDate: true,
       option: this.optionTextSearch,
+      maxDate: null,
     },
   };
 
@@ -790,8 +793,8 @@ export class PartsTableComponent implements OnInit {
     this.filterKeyOptions.filter,
     this.filterKeyOptions.id,
     this.filterKeyOptions.idShort,
-    this.filterKeyOptions.name,
-    this.filterKeyOptions.manufacturer,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
     this.filterKeyOptions.partId,
     this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.customerPartId,
@@ -808,8 +811,8 @@ export class PartsTableComponent implements OnInit {
   assetAsBuiltFilterFormGroup = {
     id: new FormControl([]),
     idShort: new FormControl([]),
-    name: new FormControl([]),
-    manufacturer: new FormControl([]),
+    nameAtManufacturer: new FormControl([]),
+    manufacturerName: new FormControl([]),
     partId: new FormControl([]),
     manufacturerPartId: new FormControl([]),
     customerPartId: new FormControl([]),
@@ -819,22 +822,22 @@ export class PartsTableComponent implements OnInit {
     semanticDataModel: new FormControl([]),
     manufacturingDate: new FormControl([]),
     manufacturingCountry: new FormControl([]),
-    activeAlerts: new FormControl([]),
-    activeInvestigations: new FormControl([]),
+    qualityAlertsInStatusActive: new FormControl([]),
+    qualityInvestigationsInStatusActive: new FormControl([]),
   };
 
   assetAsPlannedFilterFormGroup = {
     id: new FormControl([]),
     idShort: new FormControl([]),
-    name: new FormControl([]),
-    manufacturer: new FormControl([]),
+    nameAtManufacturer: new FormControl([]),
+    manufacturerName: new FormControl([]),
     manufacturerPartId: new FormControl([]),
     classification: new FormControl([]),
     semanticDataModel: new FormControl([]),
     semanticModelId: new FormControl([]),
     validityPeriodFrom: new FormControl([]),
     validityPeriodTo: new FormControl([]),
-    psFunction: new FormControl([]),
+    function: new FormControl([]),
     catenaXSiteId: new FormControl([]),
     functionValidFrom: new FormControl([]),
     functionValidUntil: new FormControl([]),
@@ -866,8 +869,8 @@ export class PartsTableComponent implements OnInit {
     manufacturerPartId: new FormControl([]),
     semanticModelId: new FormControl([]),
     manufacturingDate: new FormControl([]),
-    activeAlerts: new FormControl([]),
-    activeInvestigations: new FormControl([]),
+    qualityAlertsInStatusActive: new FormControl([]),
+    qualityInvestigationsInStatusActive: new FormControl([]),
   };
 
   assetAsBuiltCustomerFilterFormGroup = {
@@ -878,8 +881,8 @@ export class PartsTableComponent implements OnInit {
     manufacturerPartId: new FormControl([]),
     semanticModelId: new FormControl([]),
     manufacturingDate: new FormControl([]),
-    activeAlerts: new FormControl([]),
-    activeInvestigations: new FormControl([]),
+    qualityAlertsInStatusActive: new FormControl([]),
+    qualityInvestigationsInStatusActive: new FormControl([]),
   };
 
   private readonly assetAsPlannedCustomerFilterConfiguration: any[] = [
@@ -928,15 +931,15 @@ export class PartsTableComponent implements OnInit {
     this.filterKeyOptions.filter,
     this.filterKeyOptions.id,
     this.filterKeyOptions.idShort,
-    this.filterKeyOptions.name,
-    this.filterKeyOptions.manufacturer,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
     this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.classification,
     this.filterKeyOptions.semanticDataModel,
     this.filterKeyOptions.semanticModelId,
     this.filterKeyOptions.validityPeriodFrom,
     this.filterKeyOptions.validityPeriodTo,
-    this.filterKeyOptions.psFunction,
+    this.filterKeyOptions.function,
     this.filterKeyOptions.catenaXSiteId,
     this.filterKeyOptions.functionValidFrom,
     this.filterKeyOptions.functionValidUntil,
