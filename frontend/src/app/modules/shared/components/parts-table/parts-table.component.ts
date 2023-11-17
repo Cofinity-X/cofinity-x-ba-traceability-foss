@@ -788,6 +788,7 @@ export class PartsTableComponent implements OnInit {
 
     openDialog(): void {
         const config = new MatDialogConfig();
+        config.autoFocus = false;
         config.data = {
             title: "table.tableSettings.title",
             panelClass: "custom",

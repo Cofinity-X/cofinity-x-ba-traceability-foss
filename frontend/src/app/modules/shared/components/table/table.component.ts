@@ -54,14 +54,29 @@ export class TableComponent {
     const { menuActionsConfig: menuActions, displayedColumns: dc, columnRoles, hasPagination = true } = tableConfig;
     const displayedColumns = dc.filter(column => this.roleService.hasAccess(columnRoles?.[column] ?? 'user'));
 
+    const cellRenderers = this._tableConfig?.cellRenderers ?? tableConfig.cellRenderers;
+
+    const viewDetailsLabel = 'actions.viewDetails';
+
     const viewDetailsMenuAction: MenuActionConfig<unknown> = {
-      label: 'actions.viewDetails',
+      label: viewDetailsLabel,
       icon: 'remove_red_eye',
       action: (data: Record<string, unknown>) => this.selected.emit(data),
     };
 
-    const menuActionsConfig = menuActions ? [viewDetailsMenuAction, ...menuActions] : null;
-    this._tableConfig = { ...tableConfig, displayedColumns, hasPagination, menuActionsConfig };
+    let menuActionsConfig: MenuActionConfig<unknown>[] = null;
+
+    if (menuActions) {
+      if (!menuActions.some((action) => {
+        return action.label === viewDetailsLabel
+      })) {
+        menuActionsConfig = menuActions ? [viewDetailsMenuAction, ...menuActions] : null;
+      } else {
+        menuActionsConfig = menuActions;
+      }
+    }
+
+    this._tableConfig = { ...tableConfig, cellRenderers, displayedColumns, hasPagination, menuActionsConfig };
   }
 
   get tableConfig(): TableConfig {
@@ -159,10 +174,6 @@ export class TableComponent {
       this.setupTableViewSettings();
     })
     this.setupTableViewSettings();
-
-    // this.filterFormGroup.valueChanges.subscribe((formValues) => {
-    //   this.filterActivated.emit(formValues);
-    // });
   }
 
   public areAllRowsSelected(): boolean {
@@ -248,8 +259,9 @@ export class TableComponent {
 
   private setupTableConfigurations(displayedColumnsForTable: string[], displayedColumns: string[], sortableColumns: Record<string, boolean>, filterConfiguration: any[], filterFormGroup: any): any {
     const headerKey = 'table.column';
+
     this.tableConfig = {
-      ...this.tableConfig,
+      menuActionsConfig: this.tableConfig.menuActionsConfig,
       displayedColumns: displayedColumnsForTable,
       header: CreateHeaderFromColumns(displayedColumnsForTable, headerKey),
       sortableColumns: sortableColumns,
