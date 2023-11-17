@@ -145,10 +145,10 @@ export class TableComponent {
   constructor(private readonly roleService: RoleService) {}
 
   ngOnInit() {
-    if (this.tableConfig.filterConfig?.length > 0) {
+    if (this.tableConfig?.filterConfig?.length > 0) {
       this.setupFilterFormGroup();
     }
-    if (this.tableConfig.sortableColumns) {
+    if (this.tableConfig?.sortableColumns) {
       this.setupSortingEvent();
     }
   }
