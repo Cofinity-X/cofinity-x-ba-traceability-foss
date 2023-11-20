@@ -255,14 +255,14 @@ export class TableComponent {
       return;
     }
     if (this.sortingEvent[column] === SortingOptions.NONE) {
+      this.setupSortingEvent();
       this.sortingEvent[column] = SortingOptions.ASC;
     } else if (this.sortingEvent[column] === SortingOptions.ASC) {
       this.sortingEvent[column] = SortingOptions.DSC;
     } else {
-      this.sortingEvent[column] = SortingOptions.NONE;
+      this.sortingEvent[column] = SortingOptions.ASC;
     }
   }
-
   private emitMultiSelect(): void {
     this.multiSelect.emit(this.selection.selected);
   }
