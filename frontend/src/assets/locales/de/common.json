@@ -98,7 +98,7 @@
       "sendTo": "Gesendet an",
       "severity": "Gefahrenstufe",
       "semanticDataModel": "Semantisches Datenmodell",
-      "catenaXSiteId": "Standort ID",
+      "catenaxSiteId": "Standort ID",
       "psFunction": "Funktion",
       "functionValidFrom": "Funktion gültig von",
       "functionValidUntil": "Funktion gültig bis",
@@ -281,7 +281,7 @@
     "filterLabelDate": "Nach Datum filtern",
     "filterLabelSelect": "Wähle",
     "inputLabelText": "Suchen...",
-    "inputLabelDate": "TT/MM/JJJJ"
+    "inputLabelDate": "TT.MM.JJJJ"
   },
   "parts": {
     "input": {

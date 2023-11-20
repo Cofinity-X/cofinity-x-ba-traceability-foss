@@ -61,7 +61,7 @@ export class PartsAssembler {
 
     const validityPeriodFrom = (partResponse.detailAspectModels[0].data as AsPlannedAspectModel)?.validityPeriodFrom;
     const validityPeriodTo = (partResponse.detailAspectModels[0].data as AsPlannedAspectModel)?.validityPeriodTo;
-    const catenaXSiteId = (partResponse.detailAspectModels[1]?.data as PartSiteInformationAsPlanned)?.catenaXSiteId;
+    const catenaxSiteId = (partResponse.detailAspectModels[1]?.data as PartSiteInformationAsPlanned)?.catenaxSiteId;
     const psFunction = (partResponse.detailAspectModels[1]?.data as PartSiteInformationAsPlanned)?.function;
     const functionValidFrom = (partResponse.detailAspectModels[1]?.data as PartSiteInformationAsPlanned)
       ?.functionValidFrom;
@@ -100,7 +100,7 @@ export class PartsAssembler {
       validityPeriodFrom: validityPeriodFrom,
       validityPeriodTo: validityPeriodTo,
       //partSiteInformationAsPlanned
-      catenaXSiteId: catenaXSiteId,
+      catenaxSiteId: catenaxSiteId,
       psFunction: psFunction,
       functionValidFrom: functionValidFrom,
       functionValidUntil: functionValidUntil,
@@ -186,8 +186,8 @@ export class PartsAssembler {
       }
       // if no customer data is available then return partSiteInformation
       if (!viewData.data?.nameAtCustomer && !viewData.data?.customerPartId && viewData.data?.functionValidFrom) {
-        const { catenaXSiteId, psFunction, functionValidFrom, functionValidUntil } = viewData.data;
-        return { data: { catenaXSiteId, psFunction, functionValidFrom, functionValidUntil } as Part };
+        const { catenaxSiteId, psFunction, functionValidFrom, functionValidUntil } = viewData.data;
+        return { data: { catenaxSiteId, psFunction, functionValidFrom, functionValidUntil } as Part };
       }
 
       const { nameAtCustomer, customerPartId } = viewData.data;
@@ -206,7 +206,7 @@ export class PartsAssembler {
       ['semanticModelId', 'semanticModelId'],
       ['manufacturer', 'manufacturerName'],
       ['manufacturerPartId', 'manufacturerPartId'],
-      ['partId', 'partId'],
+      ['partId', 'manufacturerPartId'],
       ['nameAtManufacturer', 'nameAtManufacturer'],
       ['businessPartner', 'businessPartner'],
       ['name', 'nameAtManufacturer'],
@@ -220,7 +220,7 @@ export class PartsAssembler {
       ['manufacturingCountry', 'manufacturingCountry'],
       ['validityPeriodFrom', 'validityPeriodFrom'],
       ['validityPeriodTo', 'validityPeriodTo'],
-      ['catenaXSiteId', 'catenaXSiteId'],
+      ['catenaxSiteId', 'catenaxSiteId'],
       ['psFunction', 'function'],
       ['functionValidFrom', 'functionValidFrom'],
       ['functionValidUntil', 'functionValidUntil'],

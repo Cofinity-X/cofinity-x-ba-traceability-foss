@@ -167,7 +167,13 @@ export class PartsTableComponent implements OnInit {
       option: this.optionTextSearch,
       column: 'manufacturer',
     },
-    partId: { filterKey: 'partId', headerKey: 'filterPartId', isTextSearch: true, option: this.optionTextSearch }, // Part number / Batch Number / JIS Number
+    partId: {
+      filterKey: 'manufacturerPartId',
+      headerKey: 'filterPartId',
+      isTextSearch: true,
+      option: this.optionTextSearch,
+      column: 'partId',
+    }, // Part number / Batch Number / JIS Number
     manufacturerPartId: {
       filterKey: 'manufacturerPartId',
       headerKey: 'filterManufacturerPartId',
@@ -255,8 +261,8 @@ export class PartsTableComponent implements OnInit {
       option: this.optionTextSearch,
       column: 'psFunction',
     },
-    catenaXSiteId: {
-      filterKey: 'catenaXSiteId',
+    catenaxSiteId: {
+      filterKey: 'catenaxSiteId',
       headerKey: 'filterCatenaXSiteId',
       isTextSearch: true,
       option: this.optionTextSearch,
@@ -307,7 +313,6 @@ export class PartsTableComponent implements OnInit {
     'filterName', // nameAtManufacturer
     'filterManufacturer',
     'filterPartId', // Part number / Batch Number / JIS Number
-    'filterManufacturerPartId',
     'filterCustomerPartId', // --> semanticModel.customerPartId
     'filterClassification',
     'filterNameAtCustomer', // --> semanticModel.nameAtCustomer
@@ -345,7 +350,6 @@ export class PartsTableComponent implements OnInit {
     'name',
     'manufacturer',
     'partId',
-    'manufacturerPartId',
     'customerPartId',
     'classification',
     'nameAtCustomer',
@@ -370,7 +374,7 @@ export class PartsTableComponent implements OnInit {
     'validityPeriodFrom',
     'validityPeriodTo',
     'psFunction',
-    'catenaXSiteId',
+    'catenaxSiteId',
     'functionValidFrom',
     'functionValidUntil',
   ];
@@ -405,7 +409,7 @@ export class PartsTableComponent implements OnInit {
     validityPeriodFrom: true,
     validityPeriodTo: true,
     psFunction: true,
-    catenaXSiteId: true,
+    catenaxSiteId: true,
     functionValidFrom: true,
     functionValidUntil: true,
   };
@@ -796,7 +800,6 @@ export class PartsTableComponent implements OnInit {
     this.filterKeyOptions.nameAtManufacturer,
     this.filterKeyOptions.manufacturerName,
     this.filterKeyOptions.partId,
-    this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.customerPartId,
     this.filterKeyOptions.classification,
     this.filterKeyOptions.nameAtCustomer,
@@ -813,7 +816,6 @@ export class PartsTableComponent implements OnInit {
     idShort: new FormControl([]),
     nameAtManufacturer: new FormControl([]),
     manufacturerName: new FormControl([]),
-    partId: new FormControl([]),
     manufacturerPartId: new FormControl([]),
     customerPartId: new FormControl([]),
     classification: new FormControl([]),
@@ -838,7 +840,7 @@ export class PartsTableComponent implements OnInit {
     validityPeriodFrom: new FormControl([]),
     validityPeriodTo: new FormControl([]),
     function: new FormControl([]),
-    catenaXSiteId: new FormControl([]),
+    catenaxSiteId: new FormControl([]),
     functionValidFrom: new FormControl([]),
     functionValidUntil: new FormControl([]),
   };
@@ -940,7 +942,7 @@ export class PartsTableComponent implements OnInit {
     this.filterKeyOptions.validityPeriodFrom,
     this.filterKeyOptions.validityPeriodTo,
     this.filterKeyOptions.function,
-    this.filterKeyOptions.catenaXSiteId,
+    this.filterKeyOptions.catenaxSiteId,
     this.filterKeyOptions.functionValidFrom,
     this.filterKeyOptions.functionValidUntil,
   ];

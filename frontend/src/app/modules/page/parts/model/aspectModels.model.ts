@@ -17,9 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 // should be mapped into
-export type SemanticModel = {
-
-}
+export type SemanticModel = {};
 
 export type AsBuiltAspectModel = {
   partId: string;
@@ -27,26 +25,23 @@ export type AsBuiltAspectModel = {
   nameAtCustomer: string;
   manufacturingDate: string;
   manufacturingCountry: string;
-}
+};
 
 export type AsPlannedAspectModel = {
   validityPeriodFrom: string;
   validityPeriodTo: string;
-}
+};
 
 export type PartSiteInformationAsPlanned = {
-  function: string,
-  catenaXSiteId: string
-  functionValidFrom: string,
-  functionValidUntil: string
-}
+  function: string;
+  catenaxSiteId: string;
+  functionValidFrom: string;
+  functionValidUntil: string;
+};
 
 export type TractionBatteryCode = {
-  uuid4: string,
-  productType: string,
-  tractionBatteryCode: string,
-  subComponents: TractionBatteryCode[]
-}
-
-
-
+  uuid4: string;
+  productType: string;
+  tractionBatteryCode: string;
+  subComponents: TractionBatteryCode[];
+};
