@@ -143,6 +143,12 @@ jobs:
           severity: "CRITICAL,HIGH"
           timeout: "10m0s"
 
+      - name: Archive trivy results
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivy-results.sarif
+          path: trivy-results1.sarif
+
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         if: always()
