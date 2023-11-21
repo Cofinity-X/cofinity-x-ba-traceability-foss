@@ -663,6 +663,12 @@ export class PartsTableComponent implements OnInit {
           sortableColumns: this.sortableColumnsAsPlannedCustomer
         }
         break;
+
+      // TODO add other table view configurations when they are implemented
+      case PartTableType.AS_ORDERED_OWN:
+      case PartTableType.AS_SUPPORTED_OWN:
+      case PartTableType.AS_RECYCLED_OWN:
+      case PartTableType.AS_DESIGNED_OWN:
       case PartTableType.AS_PLANNED_OWN:
         this.tableViewConfig = {
           displayedColumns: this.displayedColumnsAsPlanned,

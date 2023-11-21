@@ -56,8 +56,7 @@ export class NotificationComponent {
   public readonly receivedTabLabelId = this.staticIdService.generateId('Notification.receivedTab');
   public readonly queuedAndRequestedTabLabelId = this.staticIdService.generateId('Notification.queuedAndRequestedTab');
 
-  public itemCount: number = 0;
-  public itemCountString: string;
+  public itemCount: number[] = [];
 
   protected readonly PartTableType = PartTableType;
 
@@ -71,8 +70,7 @@ export class NotificationComponent {
     void this.router.navigate([], { queryParams: { tabIndex }, replaceUrl: true });
   }
 
-  public onItemCountChanged(itemCount: number): void {
-    this.itemCount = itemCount;
-    this.itemCountString = `(${itemCount})`;
+  public onItemCountChanged(itemCount: number, tabIndex: number): void {
+    this.itemCount[tabIndex] = itemCount;
   }
 }

@@ -74,9 +74,10 @@ export class TableSettingsComponent {
 
     this.selectAllSelected = this.dialogColumns.length === this.tableColumns.length;
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.save();
-    });
+    if (dialogRef?.afterClosed)
+      dialogRef.afterClosed().subscribe(result => {
+        this.save();
+      });
   }
 
   save() {

@@ -77,7 +77,7 @@ export enum PartTableType {
 export type DisplayColumns<T> = 'select' | 'menu' | T;
 
 export const CreateHeaderFromColumns = (columns: string[], headerKey: string): Record<string, string> => {
-  return columns.reduce((header, column) => ({ ...header, [column]: `${headerKey}.${column}` }), {});
+  return columns?.reduce((header, column) => ({ ...header, [column]: `${headerKey}.${column}` }), {});
 };
 
 export interface TablePaginationEventConfig {

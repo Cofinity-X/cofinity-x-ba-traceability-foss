@@ -39,6 +39,7 @@ import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues
 import { TableViewConfig } from '../parts-table/table-view-config.model';
 import { TableSettingsComponent } from '../table-settings/table-settings.component';
 import { FilterOperator } from '@page/parts/model/parts.model';
+import { forEach } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-table',
@@ -79,7 +80,7 @@ export class TableComponent {
       if (!menuActions.some((action) => {
         return action.label === viewDetailsLabel
       })) {
-        menuActionsConfig = menuActions ? [viewDetailsMenuAction, ...menuActions] : null;
+        menuActionsConfig = [viewDetailsMenuAction, ...menuActions]
       } else {
         menuActionsConfig = menuActions;
       }
@@ -162,12 +163,10 @@ export class TableComponent {
   private _tableConfig: TableConfig;
   private tableViewConfig: TableViewConfig;
 
-
-
   constructor(private readonly roleService: RoleService, private readonly tableSettingsService: TableSettingsService, private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.initializeTableViewSettings()
+    this.initializeTableViewSettings();
 
     if (this.tableConfig?.filterConfig?.length > 0) {
       this.setupFilterFormGroup();
@@ -176,16 +175,11 @@ export class TableComponent {
       this.setupSortingEvent();
     }
 
-    // this.filterFormGroup.valueChanges.subscribe((formValues) => {
-    //   this.filterActivated.emit(formValues);
-    // });
-
     this.tableSettingsService.getEvent().subscribe(() => {
       this.setupTableViewSettings();
     })
     this.setupTableViewSettings();
   }
-
 
   setupSortingEvent(): void {
     const sortingNames = Object.keys(this.tableConfig.sortableColumns);
@@ -246,6 +240,11 @@ export class TableComponent {
   }
 
   private setupTableViewSettings() {
+    if (!this.tableType) {
+      this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
+      return;
+    }
+
     const tableSettingsList = this.tableSettingsService.getStoredTableSettings();
     // check if there are table settings list
     if (tableSettingsList) {
@@ -283,11 +282,13 @@ export class TableComponent {
     const headerKey = 'table.column';
 
     this.tableConfig = {
+      filterConfig: this.tableConfig.filterConfig,
       menuActionsConfig: this.tableConfig.menuActionsConfig,
       displayedColumns: displayedColumnsForTable,
       header: CreateHeaderFromColumns(displayedColumnsForTable, headerKey),
       sortableColumns: sortableColumns,
     };
+
     this.filterConfiguration = filterConfiguration;
     this.displayedColumns = displayedColumns;
     for (const controlName in filterFormGroup) {
@@ -310,7 +311,7 @@ export class TableComponent {
       this.tableViewConfig = {
         displayedColumns: this.tableConfig.displayedColumns,
         displayedColumnsForTable: this.tableConfig.displayedColumns,
-        filterConfiguration: undefined,
+        filterConfiguration: this.tableConfig.filterConfig,
         filterFormGroup: undefined,
         sortableColumns: this.tableConfig.sortableColumns,
       }
