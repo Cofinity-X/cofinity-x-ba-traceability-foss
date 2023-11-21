@@ -44,6 +44,8 @@ export class NotificationComponent {
   @Input() receivedMultiSortList: TableHeaderSort[] = [];
   @Input() queuedAndRequestedMultiSortList: TableHeaderSort[] = [];
   @Input() tablesType: PartTableType[];
+  @Input() receivedFilterConfig: any[] = [];
+  @Input() queuedAndRequestedFilterConfig: any[] = [];
 
   @Output() onReceivedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() onQueuedAndRequestedTableConfigChanged = new EventEmitter<TableEventConfig>();

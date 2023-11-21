@@ -26,8 +26,7 @@ SPDX-License-Identifier: Apache-2.0
   mat-align-tabs="start">
   <mat-tab>
     <ng-template mat-tab-label>
-      <div [id]="receivedTabLabelId">{{ translationContext + '.tabs.received' |
-        i18n }} {{itemCountString}}</div>
+      <div [id]="receivedTabLabelId">{{ translationContext + '.tabs.received' | i18n }} {{ itemCountString }}</div>
     </ng-template>
     <app-notifications-tab *ngIf="menuActionsConfig"
       [tableType]="tablesType[0]"
@@ -38,6 +37,7 @@ SPDX-License-Identifier: Apache-2.0
       [optionalColumns]="receivedOptionalColumns"
       [sortableColumns]="receivedSortableColumns"
       [multiSortList]="receivedMultiSortList"
+      [filterConfig]="receivedFilterConfig"
       (tableConfigChanged)="onReceivedTableConfigChanged.emit($event)"
       (itemCount)="onItemCountChanged($event)"
       (selected)="selected.emit($event)"></app-notifications-tab>
@@ -45,8 +45,9 @@ SPDX-License-Identifier: Apache-2.0
 
   <mat-tab>
     <ng-template mat-tab-label>
-      <div [id]="queuedAndRequestedTabLabelId">{{ translationContext +
-        '.tabs.queuedAndRequested' | i18n }} {{itemCountString}}</div>
+      <div [id]="queuedAndRequestedTabLabelId">
+        {{ translationContext + '.tabs.queuedAndRequested' | i18n }} {{ itemCountString }}
+      </div>
     </ng-template>
     <app-notifications-tab class="headerLine"
       *ngIf="menuActionsConfig"
@@ -58,6 +59,7 @@ SPDX-License-Identifier: Apache-2.0
       [optionalColumns]="queuedAndRequestedOptionalColumns"
       [sortableColumns]="queuedAndRequestedSortableColumns"
       [multiSortList]="queuedAndRequestedMultiSortList"
+      [filterConfig]="queuedAndRequestedFilterConfig"
       (tableConfigChanged)="onQueuedAndRequestedTableConfigChanged.emit($event)"
       (selected)="selected.emit($event)"></app-notifications-tab>
   </mat-tab>

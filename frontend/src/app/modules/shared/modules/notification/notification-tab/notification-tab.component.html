@@ -23,7 +23,7 @@ SPDX-License-Identifier: Apache-2.0
 </ng-container>
 <ng-template #mainTmp
   let-notifications="view">
-  {{onItemCountChange(notifications.data.totalItems)}}
+  {{ onItemCountChange(notifications.data.totalItems) }}
   <div *ngIf="notifications.data.totalItems > 0; else displayMessage">
     <app-table [tableType]="tableType"
       [enableScroll]="enableScroll"
@@ -76,8 +76,9 @@ SPDX-License-Identifier: Apache-2.0
 
 <ng-template #targetDateTmp
   let-text="value">
-  <p class="notification--table__cell body-small">{{ text | formatDate : { dateStyle: 'short', timeStyle: 'short'
-    } }}</p>
+  <p class="notification--table__cell body-small">
+    {{ text | formatDate : { dateStyle: 'short', timeStyle: 'short' } }}
+  </p>
 </ng-template>
 
 <ng-template #userTmp
