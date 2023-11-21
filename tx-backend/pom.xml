@@ -56,6 +56,12 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>irs-registry-client</artifactId>
             <version>${irs-client-lib.version}</version>
         </dependency>
+        <!-- manual update to avoid GHSA-58qw-p7qm-5rvh -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-xml</artifactId>
+            <version>11.0.18</version>
+        </dependency>
 
         <!-- tx-application modules -->
         <dependency>
@@ -171,6 +177,12 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- manual update to avoid CVE-2023-41080 in version 10.1.12 -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>10.1.16</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
