@@ -47,6 +47,14 @@ describe('FormatPartlistSemanticDataModelToCamelCasePipe', () => {
       option: SemanticDataModel.PARTASPLANNED,
       expected: 'PartAsPlanned',
     },
+    {
+      option: SemanticDataModel.JUSTINSEQUENCE,
+      expected: 'JustInSequence',
+    },
+    {
+      option: SemanticDataModel.UNKNOWN,
+      expected: 'Unknown',
+    },
   ].forEach(object => {
     it(`should transform semanticDataModel from ${object.option} to ${object.expected}`, function () {
       let partList = [
