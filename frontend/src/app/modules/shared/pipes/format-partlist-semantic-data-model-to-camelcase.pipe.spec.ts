@@ -29,9 +29,11 @@ describe('FormatPartlistSemanticDataModelToCamelCasePipe', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FormatPartlistSemanticDataModelToCamelCasePipe],
+      providers: [
+        FormatPartlistSemanticDataModelToCamelCasePipe
+      ]
     });
-    formatPartlistSemanticDataModelToCamelCasePipe = TestBed.inject(FormatPartlistSemanticDataModelToCamelCasePipe);
+    formatPartlistSemanticDataModelToCamelCasePipe = TestBed.inject(FormatPartlistSemanticDataModelToCamelCasePipe)
   });
 
   [
@@ -56,25 +58,25 @@ describe('FormatPartlistSemanticDataModelToCamelCasePipe', () => {
       expected: 'Unknown',
     },
   ].forEach(object => {
-    it(`should transform semanticDataModel from ${object.option} to ${object.expected}`, function () {
-      let partList = [
-        PartsAssembler.assemblePart(MOCK_part_1, MainAspectType.AS_BUILT),
-        PartsAssembler.assemblePart(MOCK_part_2, MainAspectType.AS_BUILT),
-      ];
+
+    it(`should transform semanticDataModel from ${object.option} to ${object.expected}`, function()  {
+      let partList = [PartsAssembler.assemblePart(MOCK_part_1, MainAspectType.AS_BUILT), PartsAssembler.assemblePart(MOCK_part_2, MainAspectType.AS_BUILT)];
 
       partList.forEach(part => {
-        part.semanticDataModel = object.option;
-      });
+        part.semanticDataModel = object.option
+      })
 
       partList.map(part => {
-        expect(part.semanticDataModel).toEqual(object.option);
-      });
+        expect(part.semanticDataModel).toEqual(object.option)
+      })
 
-      let transformedPartData = formatPartlistSemanticDataModelToCamelCasePipe.transform(partList);
+
+      let transformedPartData = formatPartlistSemanticDataModelToCamelCasePipe.transform(partList)
 
       transformedPartData.map(part => {
-        expect(part.semanticDataModelInCamelCase).toEqual(object.expected);
-      });
-    });
-  });
-});
+        expect(part.semanticDataModel).toEqual(object.expected);
+      })
+
+    })
+  })
+})
