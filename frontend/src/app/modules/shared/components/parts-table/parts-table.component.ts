@@ -712,29 +712,29 @@ export class PartsTableComponent implements OnInit {
   }
 
   public readonly assetAsBuiltFilterConfiguration: any[] = [
-    { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'id', headerKey: 'filterId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'idShort', headerKey: 'filterIdShort', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'nameAtManufacturer', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch }, // nameAtManufacturer
-    { filterKey: 'manufacturerName', headerKey: 'filterManufacturer', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerPartId', headerKey: 'filterPartId', isTextSearch: true, option: this.optionTextSearch }, // Part number / Batch Number / JIS Number
-    { filterKey: 'manufacturerPartId', headerKey: 'filterManufacturerPartId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'customerPartId', headerKey: 'filterCustomerPartId', isTextSearch: true, option: this.optionTextSearch }, // --> semanticModel.customerPartId
-    { filterKey: 'classification', headerKey: 'filterClassification', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'nameAtCustomer', headerKey: 'filterNameAtCustomer', isTextSearch: true, option: this.optionTextSearch }, // --> semanticModel.nameAtCustomer
-    { filterKey: 'semanticModelId', headerKey: 'filterSemanticModelId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticDataModel', headerKey: 'filterSemanticDataModel', isTextSearch: false, option: this.semanticDataModelOptions },
-    { filterKey: 'manufacturingDate', headerKey: 'filterManufacturingDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturingCountry', headerKey: 'filterManufacturingCountry', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'activeAlerts', headerKey: 'filterActiveAlerts', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'activeInvestigations', headerKey: 'filterActiveInvestigations', isTextSearch: true, option: this.optionTextSearch },
+    this.filterKeyOptions.filter,
+    this.filterKeyOptions.id,
+    this.filterKeyOptions.idShort,
+    this.filterKeyOptions.name,
+    this.filterKeyOptions.manufacturer,
+    this.filterKeyOptions.partId,
+    this.filterKeyOptions.manufacturerPartId,
+    this.filterKeyOptions.customerPartId,
+    this.filterKeyOptions.classification,
+    this.filterKeyOptions.nameAtCustomer,
+    this.filterKeyOptions.semanticModelId,
+    this.filterKeyOptions.semanticDataModel,
+    this.filterKeyOptions.manufacturingDate,
+    this.filterKeyOptions.manufacturingCountry,
+    this.filterKeyOptions.activeAlerts,
+    this.filterKeyOptions.activeInvestigations,
   ];
 
   assetAsBuiltFilterFormGroup = {
     id: new FormControl([]),
     idShort: new FormControl([]),
-    nameAtManufacturer: new FormControl([]),
-    manufacturerName: new FormControl([]),
+    name: new FormControl([]),
+    manufacturer: new FormControl([]),
     partId: new FormControl([]),
     manufacturerPartId: new FormControl([]),
     customerPartId: new FormControl([]),
@@ -751,20 +751,19 @@ export class PartsTableComponent implements OnInit {
   assetAsPlannedFilterFormGroup = {
     id: new FormControl([]),
     idShort: new FormControl([]),
-    nameAtManufacturer: new FormControl([]),
-    manufacturerName: new FormControl([]),
+    name: new FormControl([]),
+    manufacturer: new FormControl([]),
     manufacturerPartId: new FormControl([]),
     classification: new FormControl([]),
     semanticDataModel: new FormControl([]),
     semanticModelId: new FormControl([]),
     validityPeriodFrom: new FormControl([]),
     validityPeriodTo: new FormControl([]),
-    function: new FormControl([]),
-    catenaxSiteId: new FormControl([]),
+    psFunction: new FormControl([]),
+    catenaXSiteId: new FormControl([]),
     functionValidFrom: new FormControl([]),
-    functionValidUntil: new FormControl([])
+    functionValidUntil: new FormControl([]),
   };
-
 
   assetAsPlannedSupplierFilterFormGroup = {
     select: new FormControl([]),
@@ -772,7 +771,7 @@ export class PartsTableComponent implements OnInit {
     nameAtManufacturer: new FormControl([]),
     manufacturerName: new FormControl([]),
     manufacturerPartId: new FormControl([]),
-    semanticModelId: new FormControl([])
+    semanticModelId: new FormControl([]),
   };
 
   assetAsPlannedCustomerFilterFormGroup = {
@@ -781,9 +780,8 @@ export class PartsTableComponent implements OnInit {
     nameAtManufacturer: new FormControl([]),
     manufacturerName: new FormControl([]),
     semanticModelId: new FormControl([]),
-    manufacturerPartId: new FormControl([])
+    manufacturerPartId: new FormControl([]),
   };
-
 
   assetAsBuiltSupplierFilterFormGroup = {
     select: new FormControl([]),
@@ -810,66 +808,63 @@ export class PartsTableComponent implements OnInit {
   };
 
   private readonly assetAsPlannedCustomerFilterConfiguration: any[] = [
-    { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticDataModel', headerKey: 'filterSemanticDataModel', isTextSearch: false, option: this.semanticDataModelOptions },
-    { filterKey: 'nameAtManufacturer', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerName', headerKey: 'filterManufacturer', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerPartId', headerKey: 'filterManufacturerPartId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticModelId', headerKey: 'filterSemanticModelId', isTextSearch: true, option: this.optionTextSearch }
+    this.filterKeyOptions.filter,
+    this.filterKeyOptions.semanticDataModel,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
+    this.filterKeyOptions.manufacturerPartId,
+    this.filterKeyOptions.semanticModelId,
   ];
 
   private readonly assetAsPlannedSupplierFilterConfiguration: any[] = [
-    { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticDataModel', headerKey: 'filterSemanticDataModel', isTextSearch: false, option: this.semanticDataModelOptions },
-    { filterKey: 'nameAtManufacturer', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerName', headerKey: 'filterManufacturer', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerPartId', headerKey: 'filterManufacturerPartId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticModelId', headerKey: 'filterSemanticModelId', isTextSearch: true, option: this.optionTextSearch }
+    this.filterKeyOptions.filter,
+    this.filterKeyOptions.semanticDataModel,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
+    this.filterKeyOptions.manufacturerPartId,
+    this.filterKeyOptions.semanticModelId,
   ];
-
 
   private readonly assetAsBuiltCustomerFilterConfiguration: any[] = [
-    { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticDataModel', headerKey: 'filterSemanticDataModel', isTextSearch: false, option: this.semanticDataModelOptions },
-    { filterKey: 'nameAtManufacturer', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerName', headerKey: 'filterManufacturer', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerPartId', headerKey: 'filterPartId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticModelId', headerKey: 'filterSemanticModelId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturingDate', headerKey: 'filterManufacturingDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'activeAlerts', headerKey: 'filterActiveAlerts', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'activeInvestigations', headerKey: 'filterActiveInvestigations', isTextSearch: true, option: this.optionTextSearch },
+    this.filterKeyOptions.filter,
+    this.filterKeyOptions.semanticDataModel,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
+    this.filterKeyOptions.manufacturerPartId,
+    this.filterKeyOptions.semanticModelId,
+    this.filterKeyOptions.manufacturingDate,
+    this.filterKeyOptions.activeAlerts,
+    this.filterKeyOptions.activeInvestigations,
   ];
-
 
   private readonly assetAsBuiltSupplierFilterConfiguration: any[] = [
-    { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticDataModel', headerKey: 'filterSemanticDataModel', isTextSearch: false, option: this.semanticDataModelOptions },
-    { filterKey: 'nameAtManufacturer', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerName', headerKey: 'filterManufacturer', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerPartId', headerKey: 'filterPartId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticModelId', headerKey: 'filterSemanticModelId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturingDate', headerKey: 'filterManufacturingDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'activeAlerts', headerKey: 'filterActiveAlerts', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'activeInvestigations', headerKey: 'filterActiveInvestigations', isTextSearch: true, option: this.optionTextSearch },
+    this.filterKeyOptions.filter,
+    this.filterKeyOptions.semanticDataModel,
+    this.filterKeyOptions.nameAtManufacturer,
+    this.filterKeyOptions.manufacturerName,
+    this.filterKeyOptions.manufacturerPartId,
+    this.filterKeyOptions.semanticModelId,
+    this.filterKeyOptions.manufacturingDate,
+    this.filterKeyOptions.activeAlerts,
+    this.filterKeyOptions.activeInvestigations,
   ];
 
-
   private readonly assetAsPlannedFilterConfiguration: any[] = [
-    { filterKey: 'Filter', headerKey: 'Filter', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'id', headerKey: 'filterId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'idShort', headerKey: 'filterIdShort', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'nameAtManufacturer', headerKey: 'filterName', isTextSearch: true, option: this.optionTextSearch }, // nameAtManufacturer
-    { filterKey: 'manufacturerName', headerKey: 'filterManufacturer', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'manufacturerPartId', headerKey: 'filterManufacturerPartId', isTextSearch: true, option: this.optionTextSearch }, // Part number / Batch Number / JIS Number
-    { filterKey: 'classification', headerKey: 'filterClassification', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'semanticDataModel', headerKey: 'filterSemanticDataModel', isTextSearch: false, option: this.semanticDataModelOptions },
-    { filterKey: 'semanticModelId', headerKey: 'filterSemanticModelId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'validityPeriodFrom', headerKey: 'filterValidityPeriodFrom', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'validityPeriodTo', headerKey: 'filterValidityPeriodTo', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'function', headerKey: 'filterPsFunction', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'catenaxSiteId', headerKey: 'filterCatenaXSiteId', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'functionValidFrom', headerKey: 'filterFunctionValidFrom', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'functionValidUntil', headerKey: 'filterFunctionValidUntil', isTextSearch: false, isDate: true, option: this.optionTextSearch }
+    this.filterKeyOptions.filter,
+    this.filterKeyOptions.id,
+    this.filterKeyOptions.idShort,
+    this.filterKeyOptions.name,
+    this.filterKeyOptions.manufacturer,
+    this.filterKeyOptions.manufacturerPartId,
+    this.filterKeyOptions.classification,
+    this.filterKeyOptions.semanticDataModel,
+    this.filterKeyOptions.semanticModelId,
+    this.filterKeyOptions.validityPeriodFrom,
+    this.filterKeyOptions.validityPeriodTo,
+    this.filterKeyOptions.psFunction,
+    this.filterKeyOptions.catenaXSiteId,
+    this.filterKeyOptions.functionValidFrom,
+    this.filterKeyOptions.functionValidUntil,
   ];
 
   openDialog(): void {
