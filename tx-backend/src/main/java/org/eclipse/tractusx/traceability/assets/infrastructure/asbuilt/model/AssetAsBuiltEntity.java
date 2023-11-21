@@ -42,6 +42,7 @@ import org.eclipse.tractusx.traceability.assets.infrastructure.base.model.AssetB
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.model.SemanticDataModelEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
+import org.hibernate.annotations.Formula;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -84,6 +85,14 @@ public class AssetAsBuiltEntity extends AssetBaseEntity {
 
     @ManyToMany(mappedBy = "assets")
     private List<AlertEntity> alerts = new ArrayList<>();
+
+    // TODO: Need to capture the Active alerts count
+    @Formula("(SELECT COUNT(alert.alert_id) FROM assets_as_built_alerts alert WHERE alert.asset_id = id)")
+    private Integer noOfActiveAlerts;
+
+    // TODO: Need to capture the Active investigations count
+    @Formula("(SELECT COUNT(investigation.investigation_id) FROM assets_as_built_investigations investigation WHERE investigation.asset_id = id)")
+    private Integer noOfActiveInvestigations;
 
     public static AssetAsBuiltEntity from(AssetBase asset) {
         ManufacturingInfo manufacturingInfo = ManufacturingInfo.from(asset.getDetailAspectModels());
