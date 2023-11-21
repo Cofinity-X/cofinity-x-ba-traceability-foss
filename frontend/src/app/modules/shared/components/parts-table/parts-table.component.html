@@ -55,9 +55,8 @@ SPDX-License-Identifier: Apache-2.0
     matSort
     multiTemplateDataRows
     data-testid="table-component--test-id">
-
-    <tr class="header"
-      *matHeaderRowDef="tableConfig.displayedColumns sticky: true"
+    <tr class="parts--table--header"
+      *matHeaderRowDef="tableConfig.displayedColumns; sticky: true"
       mat-header-row
       data-testid="table-component--head-row"
       class="table--header--row"></tr>
@@ -96,35 +95,6 @@ SPDX-License-Identifier: Apache-2.0
         class="expand-row no-hover table--menu__mobile"
         mat-row></tr>
     </ng-container>
-
-    <ng-container *ngIf="multiSelectActive">
-      <ng-container matColumnDef="{{ filter.headerKey }}"
-        *ngFor="let filter of filterConfiguration">
-        <th class="multi-select-header-cell"
-          mat-header-cell
-          *matHeaderCellDef>
-          <app-multiselect *ngIf="filter.headerKey!==filterKey"
-            [placeholder]="'All'"
-            [options]="filter.option"
-            [multiple]='isMultipleSearch(filter)'
-            [textSearch]='filter.isTextSearch'
-            [isDate]='filter.isDate'
-            ngDefaultControl
-            [formControl]="filterFormGroup.controls[filter.filterKey]"></app-multiselect>
-          <span class="filter-title"
-            *ngIf="filter.headerKey==='Filter'">{{ 'table.filterTitle' |
-            i18n
-            }}</span>
-        </th>
-      </ng-container>
-    </ng-container>
-    <tr *matRowDef="let row; columns: tableConfig.displayedColumns"
-      [class.loading]="isDataLoading"
-      [class.no-hover]="!showHover"
-      [ngClass]="{'highlighted': row?.activeInvestigation || row?.activeAlert, 'error': row?.errorMessage }"
-      (click)="selectElement(row)"
-      mat-row
-      data-testid="table-component--body-row"></tr>
 
     <tr *matNoDataRow
       class="mat-row no-hover"
