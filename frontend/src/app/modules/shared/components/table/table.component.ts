@@ -133,7 +133,6 @@ export class TableComponent {
   public isDataLoading: boolean;
   public selectedRow: Record<string, unknown>;
   public isMenuOpen: boolean;
-  public sortingEvent: Record<string, SortingOptions> = {};
 
   private pageSize: number;
   private sorting: TableHeaderSort;
@@ -149,14 +148,6 @@ export class TableComponent {
     if (this.tableConfig?.filterConfig?.length > 0) {
       this.setupFilterFormGroup();
     }
-    if (this.tableConfig?.sortableColumns) {
-      this.setupSortingEvent();
-    }
-  }
-
-  setupSortingEvent(): void {
-    const sortingNames = Object.keys(this.tableConfig.sortableColumns);
-    sortingNames.forEach(sortName => (this.sortingEvent[sortName] = SortingOptions.NONE));
   }
 
   setupFilterFormGroup(): void {
@@ -250,19 +241,6 @@ export class TableComponent {
     return !(filter.isDate || filter.isTextSearch);
   }
 
-  public sortingEventTrigger(column: string): void {
-    if (!this.sortingEvent[column]) {
-      return;
-    }
-    if (this.sortingEvent[column] === SortingOptions.NONE) {
-      this.setupSortingEvent();
-      this.sortingEvent[column] = SortingOptions.ASC;
-    } else if (this.sortingEvent[column] === SortingOptions.ASC) {
-      this.sortingEvent[column] = SortingOptions.DSC;
-    } else {
-      this.sortingEvent[column] = SortingOptions.ASC;
-    }
-  }
   private emitMultiSelect(): void {
     this.multiSelect.emit(this.selection.selected);
   }

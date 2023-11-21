@@ -289,8 +289,6 @@ export class PartsTableComponent implements OnInit {
   public filterConfiguration: any[];
   public displayedColumns: string[];
 
-  public sortingEvent: Record<string, SortingOptions> = {};
-
   filterFormGroup = new FormGroup({});
 
   public isDateElement(key: string) {
@@ -543,18 +541,10 @@ export class PartsTableComponent implements OnInit {
     this.handleAsOrderedTableType();
     this.handleAsRecycledTableType();
     this.handleAsSupportedTableType();
-    if (this.tableConfig.sortableColumns) {
-      this.setupSortingEvent();
-    }
   }
 
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Show';
-  }
-
-  private setupSortingEvent(): void {
-    const sortingNames = Object.keys(this.tableConfig.sortableColumns);
-    sortingNames.forEach(sortName => (this.sortingEvent[sortName] = SortingOptions.NONE));
   }
 
   public triggerFilterAdding(): void {
@@ -1004,20 +994,6 @@ export class PartsTableComponent implements OnInit {
 
   public isSelected(row: unknown): boolean {
     return !!this.selection.selected.find(data => JSON.stringify(data) === JSON.stringify(row));
-  }
-
-  public sortingEventTrigger(column: string): void {
-    if (!this.sortingEvent[column]) {
-      return;
-    }
-    if (this.sortingEvent[column] === SortingOptions.NONE) {
-      this.setupSortingEvent();
-      this.sortingEvent[column] = SortingOptions.ASC;
-    } else if (this.sortingEvent[column] === SortingOptions.ASC) {
-      this.sortingEvent[column] = SortingOptions.DSC;
-    } else {
-      this.sortingEvent[column] = SortingOptions.ASC;
-    }
   }
 
   private addSelectedValues(newData: unknown[]): void {

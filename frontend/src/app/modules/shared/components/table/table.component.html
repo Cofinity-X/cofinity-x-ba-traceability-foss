@@ -204,9 +204,7 @@ SPDX-License-Identifier: Apache-2.0
       <ng-container matColumnDef="{{ column }}">
         <th
           *matHeaderCellDef
-          matTooltip="First click: sort in ascending order ↑
-Second click: sort in descending order ↓
-Third click:  reset sorting"
+          matTooltip="{{ 'table.sortTooltip' | i18n }}"
           matTooltipClass="table--header--tooltip"
           matTooltipPosition="above"
           [class.mdc-tooltip--multiline]="true"
@@ -215,7 +213,6 @@ Third click:  reset sorting"
           [disabled]="!tableConfig?.sortableColumns?.[column]"
           mat-header-cell
           class="table--header"
-          (click)="sortingEventTrigger(column)"
         >
           <ng-container *ngIf="tableConfig?.header?.[column]; else pureColumn"
             ><div class="table--header--cell">
@@ -224,17 +221,47 @@ Third click:  reset sorting"
                 }}
                 <div class="table--header--cell--content--sort">
                   <img
-                    *ngIf="sortingEvent[column] === 'ASC'"
+                    *ngIf="
+                      multiSortList &&
+                      multiSortList.length === 1 &&
+                      multiSortList[0][0] === column &&
+                      multiSortList[0][1] === 'asc'
+                    "
                     src="/assets/images/icons/sortingArrowDown.svg"
                     alt="sorting arrow"
                     class="table--header--cell--content--sort--asc"
                   />
                   <img
-                    *ngIf="sortingEvent[column] === 'DSC'"
+                    *ngIf="
+                      multiSortList &&
+                      multiSortList.length === 1 &&
+                      multiSortList[0][0] === column &&
+                      multiSortList[0][1] === 'desc'
+                    "
                     src="/assets/images/icons/sortingArrowDown.svg"
                     alt="sorting arrow"
                     class="table--header--cell--content--sort--dsc"
                   />
+                  <ng-container *ngIf="multiSortList && multiSortList.length > 1">
+                    <ng-container *ngFor="let item of multiSortList; let i = index">
+                      <!-- Display the array entry when it matches the column name -->
+                      <div *ngIf="item[0] === column" class="table--header--cell--content--sort--indicator">
+                        {{ i + 1 + '.' }}
+                      </div>
+                      <img
+                        *ngIf="item[0] === column && item[1] === 'asc'"
+                        src="/assets/images/icons/sortingArrowDown.svg"
+                        alt="sorting arrow"
+                        class="table--header--cell--content--sort--asc"
+                      />
+                      <img
+                        *ngIf="item[0] === column && item[1] === 'desc'"
+                        src="/assets/images/icons/sortingArrowDown.svg"
+                        alt="sorting arrow"
+                        class="table--header--cell--content--sort--dsc"
+                      />
+                    </ng-container>
+                  </ng-container>
                 </div>
               </div>
               <div
@@ -268,16 +295,6 @@ Third click:  reset sorting"
                 </mat-menu>
               </div>
             </div>
-
-            <ng-container *ngIf="multiSortList && multiSortList.length > 1">
-              <ng-container *ngFor="let item of multiSortList; let i = index">
-                <!-- Replace 'columnToMatch' with the specific column name you want to match -->
-                <div class="table--header--sort--indicator" *ngIf="item[0] === column">
-                  <!-- Display the array entry when it matches the column name -->
-                  {{ i + 1 + '.' }}{{ item[1] === 'asc' ? '↑' : item[1] === 'desc' ? '↓' : '' }}
-                </div>
-              </ng-container>
-            </ng-container>
           </ng-container>
         </th>
 

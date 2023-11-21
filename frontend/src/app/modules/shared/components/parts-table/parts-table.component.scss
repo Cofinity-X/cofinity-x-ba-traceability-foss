@@ -289,6 +289,11 @@ tr.error {
     align-items: center;
     &--sort {
       width: 24px;
+      height: 24px;
+      margin-right: 24px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       &--asc {
         width: 10px;
         transform: rotate(180deg);
@@ -297,6 +302,11 @@ tr.error {
       &--dsc {
         width: 10px;
         margin: 9.5px 7px;
+      }
+      &--indicator {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
       }
     }
   }
@@ -360,6 +370,7 @@ tr.error {
 }
 
 .table--header--tooltip {
+  white-space: pre-line;
   .mdc-tooltip__surface {
     background-color: rgb(48, 48, 48);
     @apply font-medium;
