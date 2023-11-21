@@ -355,6 +355,7 @@ export class PartsTableComponent implements OnInit {
     'manufacturingCountry',
     'activeAlerts',
     'activeInvestigations',
+    'menu'
   ];
 
   private readonly displayedColumnsAsPlannedForTable: string[] = [
@@ -620,12 +621,7 @@ export class PartsTableComponent implements OnInit {
         this.setupTableConfigurations(tableSettingsList[this.tableType].columnsForTable, tableSettingsList[this.tableType].filterColumnsForTable, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
       } else {
         // if no, create new a table setting for this.tabletype and put it into the list. Additionally, intitialize default table configuration
-        tableSettingsList[this.tableType] = {
-          columnsForDialog: this.tableViewConfig.displayedColumnsForTable,
-          columnSettingsOptions: this.getDefaultColumnVisibilityMap(),
-          columnsForTable: this.tableViewConfig.displayedColumnsForTable,
-          filterColumnsForTable: this.tableViewConfig.displayedColumns
-        };
+        tableSettingsList[this.tableType] = this.getSettingsList();
         this.tableSettingsService.storeTableSettings(this.tableType, tableSettingsList);
         this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
       }
@@ -641,6 +637,15 @@ export class PartsTableComponent implements OnInit {
       }
       this.tableSettingsService.storeTableSettings(this.tableType, newTableSettingsList);
       this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
+    }
+  }
+
+  private getSettingsList(): any {
+    return {
+      columnsForDialog: this.tableViewConfig.displayedColumnsForTable,
+      columnSettingsOptions: this.getDefaultColumnVisibilityMap(),
+      columnsForTable: this.tableViewConfig.displayedColumnsForTable,
+      filterColumnsForTable: this.tableViewConfig.displayedColumns
     }
   }
 

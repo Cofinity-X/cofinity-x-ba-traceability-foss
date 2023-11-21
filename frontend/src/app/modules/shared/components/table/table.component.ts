@@ -60,7 +60,7 @@ export class TableComponent {
       return;
     }
 
-    const { menuActionsConfig: menuActions, displayedColumns: dc, columnRoles, hasPagination = true } = tableConfig;
+    const { menuActionsConfig: menuActions, displayedColumns: dc, columnRoles, hasPagination } = tableConfig;
     const displayedColumns = dc.filter(column => this.roleService.hasAccess(columnRoles?.[column] ?? 'user'));
 
     const cellRenderers = this._tableConfig?.cellRenderers ?? tableConfig.cellRenderers;
@@ -260,14 +260,19 @@ export class TableComponent {
     } else {
       // if no, create new list and a settings entry for this.tabletype with default values and set correspondingly the tableconfig
       const newTableSettingsList = {
-        [this.tableType]: this.createSettingsList()
+        [this.tableType]: {
+          columnsForDialog: this.tableViewConfig.displayedColumnsForTable,
+          columnSettingsOptions: this.getDefaultColumnVisibilityMap(),
+          columnsForTable: this.tableViewConfig.displayedColumnsForTable,
+          filterColumnsForTable: this.tableViewConfig.displayedColumns
+        }
       }
       this.tableSettingsService.storeTableSettings(this.tableType, newTableSettingsList);
       this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
     }
   }
 
-  private createSettingsList(): { columnsForDialog: string[], columnSettingsOptions: Map<string, boolean>, columnsForTable: string[], filterColumnsForTable: string[] } {
+  private createSettingsList(): any {
     return {
       columnsForDialog: this.tableViewConfig.displayedColumnsForTable,
       columnSettingsOptions: this.getDefaultColumnVisibilityMap(),
@@ -280,6 +285,7 @@ export class TableComponent {
     const headerKey = 'table.column';
 
     this.tableConfig = {
+      hasPagination: this.tableConfig.hasPagination,
       filterConfig: this.tableConfig.filterConfig,
       menuActionsConfig: this.tableConfig.menuActionsConfig,
       displayedColumns: displayedColumnsForTable,
