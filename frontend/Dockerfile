@@ -69,4 +69,4 @@ USER root
 RUN chown nginx:nginx /etc/nginx/nginx.conf
 RUN chown nginx:nginx /etc/nginx/security-headers.conf
 
-USER 101
+USER 10100
