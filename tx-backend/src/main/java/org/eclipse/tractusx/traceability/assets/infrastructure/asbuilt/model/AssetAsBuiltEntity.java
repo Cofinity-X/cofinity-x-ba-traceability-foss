@@ -86,12 +86,12 @@ public class AssetAsBuiltEntity extends AssetBaseEntity {
     @ManyToMany(mappedBy = "assets")
     private List<AlertEntity> alerts = new ArrayList<>();
 
-    // TODO: Need to capture the Active alerts count
-    @Formula("(SELECT COUNT(alert.alert_id) FROM assets_as_built_alerts alert WHERE alert.asset_id = id)")
+    @Formula("(SELECT COUNT(a.alert_id) FROM assets_as_built_alerts a INNER JOIN alert b ON a.alert_id=b.id " +
+            "WHERE a.asset_id = id and b.status NOT IN ('CANCELED','CLOSED'))")
     private Integer noOfActiveAlerts;
 
-    // TODO: Need to capture the Active investigations count
-    @Formula("(SELECT COUNT(investigation.investigation_id) FROM assets_as_built_investigations investigation WHERE investigation.asset_id = id)")
+    @Formula("(SELECT COUNT(a.investigation_id) FROM assets_as_built_investigations a INNER JOIN investigation b ON a.investigation_id=b.id " +
+            "WHERE a.asset_id = id and b.status NOT IN ('CANCELED','CLOSED'))")
     private Integer noOfActiveInvestigations;
 
     public static AssetAsBuiltEntity from(AssetBase asset) {
