@@ -559,7 +559,7 @@ export class PartsTableComponent implements OnInit {
     this.filterActivated.emit(filterValues);
   }
 
-  constructor(private readonly tableSettingsService: TableSettingsService, private dialog: MatDialog) { }
+  constructor(private readonly tableViewSettingsService: TableSettingsService, private dialog: MatDialog) { }
 
   public defaultColumns: string[];
 
@@ -568,11 +568,7 @@ export class PartsTableComponent implements OnInit {
   ngOnInit() {
     this.initializeTableViewSettings()
 
-    // this.filterFormGroup.valueChanges.subscribe((formValues) => {
-    //   this.filterActivated.emit(formValues);
-    // });
-
-    this.tableSettingsService.getEvent().subscribe(() => {
+    this.tableViewSettingsService.getEvent().subscribe(() => {
       this.setupTableViewSettings();
     })
     this.setupTableViewSettings();
@@ -612,17 +608,17 @@ export class PartsTableComponent implements OnInit {
   }
 
   private setupTableViewSettings() {
-    const tableSettingsList = this.tableSettingsService.getStoredTableSettings();
+    const settingsList = this.tableViewSettingsService.getStoredTableSettings();
     // check if there are table settings list
-    if (tableSettingsList) {
+    if (settingsList) {
       // if yes, check if there is a table-setting for this table type
-      if (tableSettingsList[this.tableType]) {
+      if (settingsList[this.tableType]) {
         // if yes, get the effective displayedcolumns from the settings and set the tableconfig after it.
-        this.setupTableConfigurations(tableSettingsList[this.tableType].columnsForTable, tableSettingsList[this.tableType].filterColumnsForTable, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
+        this.setupTableConfigurations(settingsList[this.tableType].columnsForTable, settingsList[this.tableType].filterColumnsForTable, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
       } else {
         // if no, create new a table setting for this.tabletype and put it into the list. Additionally, intitialize default table configuration
-        tableSettingsList[this.tableType] = this.getSettingsList();
-        this.tableSettingsService.storeTableSettings(this.tableType, tableSettingsList);
+        settingsList[this.tableType] = this.getSettingsList();
+        this.tableViewSettingsService.storeTableSettings(this.tableType, settingsList);
         this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
       }
     } else {
@@ -635,7 +631,7 @@ export class PartsTableComponent implements OnInit {
           filterColumnsForTable: this.tableViewConfig.displayedColumns
         }
       }
-      this.tableSettingsService.storeTableSettings(this.tableType, newTableSettingsList);
+      this.tableViewSettingsService.storeTableSettings(this.tableType, newTableSettingsList);
       this.setupTableConfigurations(this.tableViewConfig.displayedColumnsForTable, this.tableViewConfig.displayedColumns, this.tableViewConfig.sortableColumns, this.tableViewConfig.filterConfiguration, this.tableViewConfig.filterFormGroup);
     }
   }
