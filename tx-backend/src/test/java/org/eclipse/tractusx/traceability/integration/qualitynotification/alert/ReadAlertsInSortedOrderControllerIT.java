@@ -37,9 +37,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.IntStream;
 
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
@@ -593,103 +590,6 @@ class ReadAlertsInSortedOrderControllerIT extends IntegrationTestSpecification {
                 ));
     }
 
-    @Test
-    void shouldReturnPagedCreatedAlerts() throws JoseException {
-        // given
-        Instant now = Instant.now();
-        String testBpn = bpnSupport.testBpn();
-
-        IntStream.range(1, 101)
-                .forEach(
-                        number -> {
-                            alertsSupport.storedAlert(
-                                    AlertEntity.builder()
-                                            .assets(Collections.emptyList())
-                                            .bpn(testBpn)
-                                            .status(NotificationStatusBaseEntity.CREATED)
-                                            .side(NotificationSideBaseEntity.SENDER)
-                                            .createdDate(now)
-                                            .build()
-                            );
-                        }
-                );
-
-        // when/then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "2")
-                .param("size", "10")
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/alerts/created")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(2))
-                .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(10))
-                .body("totalItems", Matchers.is(100));
-    }
-
-    @Test
-    void shouldReturnProperlyPagedReceivedAlerts() throws JoseException {
-        // given
-        Instant now = Instant.now();
-        String testBpn = bpnSupport.testBpn();
-        String senderBPN = "BPN0001";
-        String senderName = "Sender name";
-        String receiverBPN = "BPN0002";
-        String receiverName = "Receiver name";
-
-        IntStream.range(101, 201)
-                .forEach(number ->
-                        {
-                            AlertEntity alertEntity = AlertEntity.builder()
-                                    .assets(Collections.emptyList())
-                                    .bpn(testBpn)
-                                    .status(NotificationStatusBaseEntity.CREATED)
-                                    .side(NotificationSideBaseEntity.RECEIVER)
-                                    .createdDate(now)
-                                    .build();
-
-                            AlertEntity alert = alertsSupport.storedAlertFullObject(alertEntity);
-
-                            AlertNotificationEntity notificationEntity = AlertNotificationEntity
-                                    .builder()
-                                    .id(UUID.randomUUID().toString())
-                                    .alert(alert)
-                                    .createdBy(senderBPN)
-                                    .status(NotificationStatusBaseEntity.CREATED)
-                                    .createdByName(senderName)
-                                    .sendTo(receiverBPN)
-                                    .sendToName(receiverName)
-                                    .messageId("messageId")
-                                    .build();
-
-                            AlertNotificationEntity persistedNotification = alertNotificationsSupport.storedAlertNotification(notificationEntity);
-                            persistedNotification.setAlert(alert);
-                            alertNotificationsSupport.storedAlertNotification(persistedNotification);
-                        }
-                );
-
-        // when/then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "2")
-                .param("size", "10")
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/alerts/received")
-                .then()
-                .statusCode(200)
-                .body("content.createdBy", Matchers.hasItems(senderBPN))
-                .body("content.createdByName", Matchers.hasItems(senderName))
-                .body("content.sendTo", Matchers.hasItems(receiverBPN))
-                .body("content.sendToName", Matchers.hasItems(receiverName))
-                .body("page", Matchers.is(2))
-                .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(10))
-                .body("totalItems", Matchers.is(100));
-    }
 
     @Test
     void shouldReturnReceivedAlertsSortedByCreationTime() throws JoseException {

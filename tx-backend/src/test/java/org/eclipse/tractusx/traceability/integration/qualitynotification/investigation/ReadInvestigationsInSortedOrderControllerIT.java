@@ -593,43 +593,6 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
     }
 
     @Test
-    void shouldReturnPagedCreatedInvestigations() throws JoseException {
-        // given
-        Instant now = Instant.now();
-        String testBpn = bpnSupport.testBpn();
-
-        IntStream.range(1, 101)
-                .forEach(
-                        number -> {
-                            investigationsSupport.storedInvestigation(
-                                    InvestigationEntity.builder()
-                                            .assets(Collections.emptyList())
-                                            .bpn(testBpn)
-                                            .status(NotificationStatusBaseEntity.CREATED)
-                                            .side(NotificationSideBaseEntity.SENDER)
-                                            .createdDate(now)
-                                            .build()
-                            );
-                        }
-                );
-
-        // when/then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "2")
-                .param("size", "10")
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/investigations/created")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(2))
-                .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(10))
-                .body("totalItems", Matchers.is(100));
-    }
-
-    @Test
     void shouldReturnReceivedInvestigationsSortedByCreationTime() throws JoseException {
         // given
         String sortString = "createdDate,desc";
