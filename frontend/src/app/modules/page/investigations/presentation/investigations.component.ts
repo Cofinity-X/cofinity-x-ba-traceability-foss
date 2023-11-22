@@ -52,7 +52,7 @@ export class InvestigationsComponent {
 
   private paramSubscription: Subscription;
 
-  private pagination: TableEventConfig = { page: 0, pageSize: 60, sorting: [ 'createdDate', 'desc' ] };
+  private pagination: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'createdDate', 'desc' ] };
 
   constructor(
     public readonly helperService: InvestigationHelperService,
