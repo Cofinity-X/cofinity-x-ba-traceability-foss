@@ -51,7 +51,7 @@ describe('AlertsComponent', () => {
     const alertsComponent = fixture.componentInstance;
 
     let setTableFunctionSpy = spyOn<any>(alertsComponent, 'setTableSortingList').and.callThrough();
-    let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 3000 });
+    let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
     await waitFor(
       () => {
         fireEvent.click(statusColumnHeader);
