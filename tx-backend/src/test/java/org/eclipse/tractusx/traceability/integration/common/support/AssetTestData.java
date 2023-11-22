@@ -43,6 +43,16 @@ public class AssetTestData {
 
     List<AssetBase> readAndConvertAssetsForTests() {
         try {
+            InputStream file = AssetTestData.class.getResourceAsStream("/data/irs_assets_v4.json");
+            JobDetailResponse response = mapper.readValue(file, JobDetailResponse.class);
+            return  response.convertAssets();
+        } catch (IOException e) {
+            return Collections.emptyList();
+        }
+    }
+
+    List<AssetBase> readAndConvertMultipleAssetsAsBuiltForTests() {
+        try {
             // Asset 1
             InputStream file = AssetTestData.class.getResourceAsStream("/data/irs_assets_v4.json");
             JobDetailResponse response = mapper.readValue(file, JobDetailResponse.class);

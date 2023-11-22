@@ -68,7 +68,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends Integrati
     @Test
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveDesc_thenReturnAssetsWithActiveAlertsCountInDesc() throws JoseException {
         // Given
-        assetsSupport.defaultAssetsStored();
+        assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null);
         alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null);
@@ -106,7 +106,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends Integrati
     @Test
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveAsc_thenReturnAssetsWithActiveAlertsCountInAsc() throws JoseException {
         // Given
-        assetsSupport.defaultAssetsStored();
+        assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null);
         alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null);
@@ -142,7 +142,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends Integrati
     @Test
     void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveDesc_thenReturnAssetsWithActiveInvestigationsCountInDesc() throws JoseException {
         // Given
-        assetsSupport.defaultAssetsStored();
+        assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         investigationsSupport.storeInvestigationWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null);
         investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null);
@@ -179,7 +179,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends Integrati
     @Test
     void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveAsc_thenReturnAssetsWithActiveInvestigationsCountInAsc() throws JoseException {
         // Given
-        assetsSupport.defaultAssetsStored();
+        assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         investigationsSupport.storeInvestigationWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null);
         investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null);
