@@ -71,6 +71,12 @@
       "shellDescriptorsFetchDelta": "Abruf-Delta",
       "endDate": "Enddatum"
     },
+    "tableSettings": {
+      "title": "Einstellungen der Spalte",
+      "selectAll": "Alle",
+      "refreshTooltip": "Zurücksetzen der individuellen Einstellung der Tabellenspalten auf die Standardeinstellung",
+      "saveAction": "Speichern"
+    },
     "column": {
       "id": "ID",
       "!": "!",
@@ -78,11 +84,11 @@
       "name": "Name",
       "manufacturer": "Hersteller",
       "partId": "Produktnummer",
-      "manufacturerPartId": "Hersteller produktnummer",
-      "customerPartId": "Kunden produktnummer",
+      "manufacturerPartId": "Hersteller Produktnummer",
+      "customerPartId": "Kunden Produktnummer",
       "classification": "Klassifizierung",
-      "nameAtCustomer": "Kunden produktname",
-      "nameAtManufacturer": "Hersteller produktname",
+      "nameAtCustomer": "Kunden Produktname",
+      "nameAtManufacturer": "Hersteller Produktname",
       "semanticModelId": "Semantische Modellnummer",
       "qualityType": "Qualitätsstufe",
       "manufacturingDate": "Produktionsdatum",
