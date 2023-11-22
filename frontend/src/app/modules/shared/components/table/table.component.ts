@@ -36,7 +36,6 @@ import {
   FilterMethod,
   TableHeaderSort,
   FilterInfo,
-  SortingOptions,
 } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 

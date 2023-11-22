@@ -204,7 +204,7 @@ SPDX-License-Identifier: Apache-2.0
       <ng-container matColumnDef="{{ column }}">
         <th
           *matHeaderCellDef
-          matTooltip="{{ 'table.sortTooltip' | i18n }}"
+          matTooltip="{{ tableConfig?.sortableColumns?.[column] ? ('table.sortTooltip' | i18n) : '' }}"
           matTooltipClass="table--header--tooltip"
           matTooltipPosition="above"
           [class.mdc-tooltip--multiline]="true"
