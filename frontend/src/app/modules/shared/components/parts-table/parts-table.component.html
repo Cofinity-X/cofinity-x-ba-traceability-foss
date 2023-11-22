@@ -155,7 +155,7 @@ SPDX-License-Identifier: Apache-2.0
         <th
           class="table--header"
           *matHeaderCellDef
-          matTooltip="{{ 'table.sortTooltip' | i18n }}"
+          matTooltip="{{ getTooltip(column) }}"
           matTooltipClass="table--header--tooltip"
           matTooltipPosition="above"
           [class.mdc-tooltip--multiline]="true"
@@ -171,7 +171,7 @@ SPDX-License-Identifier: Apache-2.0
               <div class="table--header--cell--content">
                 {{
                         tableConfig?.header?.[column] | i18n }}
-                <div class="table--header--cell--content--sort">
+                <div class="table--header--cell--content--sort" *ngIf="column !== '!'">
                   <img
                     *ngIf="
                       multiSortList &&

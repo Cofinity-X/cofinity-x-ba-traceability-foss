@@ -167,7 +167,6 @@ export class PartsTableComponent implements OnInit {
       option: this.optionTextSearch,
       column: 'manufacturer',
     },
-    partId: { filterKey: 'partId', headerKey: 'filterPartId', isTextSearch: true, option: this.optionTextSearch }, // Part number / Batch Number / JIS Number
     manufacturerPartId: {
       filterKey: 'manufacturerPartId',
       headerKey: 'filterManufacturerPartId',
@@ -342,7 +341,6 @@ export class PartsTableComponent implements OnInit {
     'idShort',
     'name',
     'manufacturer',
-    'partId',
     'manufacturerPartId',
     'customerPartId',
     'classification',
@@ -378,7 +376,6 @@ export class PartsTableComponent implements OnInit {
     idShort: true,
     name: true,
     manufacturer: true,
-    partId: true,
     manufacturerPartId: true,
     customerPartId: true,
     classification: true,
@@ -455,7 +452,7 @@ export class PartsTableComponent implements OnInit {
     'semanticDataModel',
     'name',
     'manufacturer',
-    'partId',
+    'manufacturerPartId',
     'semanticModelId',
     'manufacturingDate',
     'activeAlerts',
@@ -466,7 +463,7 @@ export class PartsTableComponent implements OnInit {
     semanticDataModel: true,
     name: true,
     manufacturer: true,
-    partId: true,
+    manufacturerPartId: true,
     semanticModelId: true,
     manufacturingDate: true,
     activeAlerts: true,
@@ -496,7 +493,7 @@ export class PartsTableComponent implements OnInit {
     'semanticDataModel',
     'name',
     'manufacturer',
-    'partId',
+    'manufacturerPartId',
     'semanticModelId',
     'manufacturingDate',
     'activeAlerts',
@@ -507,7 +504,7 @@ export class PartsTableComponent implements OnInit {
     semanticDataModel: true,
     name: true,
     manufacturer: true,
-    partId: true,
+    manufacturerPartId: true,
     semanticModelId: true,
     manufacturingDate: true,
     activeAlerts: true,
@@ -592,9 +589,7 @@ export class PartsTableComponent implements OnInit {
   }
 
   public getTooltip(column: string) {
-    return column === '!'
-      ? i18next.t('parts.openInvestigations')
-      : 'First click: sort in ascending order ↑ Second click: sort in descending order ↓ Third click:  reset sorting';
+    return column === '!' ? i18next.t('parts.openInvestigations') : i18next.t('table.sortTooltip');
   }
 
   private setupTableConfigurations(
@@ -785,7 +780,6 @@ export class PartsTableComponent implements OnInit {
     this.filterKeyOptions.idShort,
     this.filterKeyOptions.nameAtManufacturer,
     this.filterKeyOptions.manufacturerName,
-    this.filterKeyOptions.partId,
     this.filterKeyOptions.manufacturerPartId,
     this.filterKeyOptions.customerPartId,
     this.filterKeyOptions.classification,
@@ -803,7 +797,6 @@ export class PartsTableComponent implements OnInit {
     idShort: new FormControl([]),
     nameAtManufacturer: new FormControl([]),
     manufacturerName: new FormControl([]),
-    partId: new FormControl([]),
     manufacturerPartId: new FormControl([]),
     customerPartId: new FormControl([]),
     classification: new FormControl([]),
