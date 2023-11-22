@@ -251,10 +251,14 @@ public class InvestigationTestDataFactory {
     }
 
     public static InvestigationNotificationEntity[] createInvestigationNotificationEntitiesTestData(String senderBpn) {
-        String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
+        String targetDateInNovString1 = "12:00 PM, Sun 11/9/2025";
+        String targetDateInNovString2 = "12:00 PM, Mon 11/10/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
-        Instant targetDateInNov = LocalDateTime.parse(targetDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+        Instant targetDateInNov1 = LocalDateTime.parse(targetDateInNovString1, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                .atZone(ZoneId.of("Europe/Berlin"))
+                .toInstant();
+        Instant targetDateInNov2 = LocalDateTime.parse(targetDateInNovString2, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
         Instant targetDateInDec = LocalDateTime.parse(targetDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
@@ -272,7 +276,7 @@ public class InvestigationTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
-                        .targetDate(targetDateInNov)
+                        .targetDate(targetDateInNov1)
                         .sendToName("OEM1")
                         .severity(QualityNotificationSeverity.MAJOR)
                         .build(),
@@ -296,7 +300,7 @@ public class InvestigationTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
                         .createdBy("BPNL00000000000A")
-                        .targetDate(targetDateInNov)
+                        .targetDate(targetDateInNov2)
                         .sendToName("OEM2")
                         .severity(QualityNotificationSeverity.LIFE_THREATENING)
                         .build(),
@@ -320,7 +324,7 @@ public class InvestigationTestDataFactory {
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
                         .createdBy("BPNL00000000000A")
-                        .targetDate(targetDateInNov)
+                        .targetDate(targetDateInNov1)
                         .sendToName("OEM4")
                         .severity(QualityNotificationSeverity.MINOR)
                         .build()
