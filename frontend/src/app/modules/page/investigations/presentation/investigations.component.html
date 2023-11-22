@@ -63,6 +63,14 @@ SPDX-License-Identifier: Apache-2.0
       (onReceivedTableConfigChanged)="onReceivedTableConfigChanged($event)"
       (onQueuedAndRequestedTableConfigChanged)="onQueuedAndRequestedTableConfigChanged($event)"
       (selected)="openDetailPage($event)"
-      [menuActionsConfig]="menuActionsConfig"></app-notification>
+      [menuActionsConfig]="menuActionsConfig">
+      <div emptyContent>
+        <img src="/assets/images/icons/noQualityInvestigations.svg"
+          class="center py-5"
+          alt="No quality investigations icon" />
+        <div class="no-investigations pb-3">{{ 'commonInvestigation.noInvestigations' | i18n }}</div>
+        <div class="description pb-10">{{ 'commonInvestigation.noInvestigationsDescription' | i18n }}</div>
+      </div>
+    </app-notification>
   </mat-card-content>
 </mat-card>

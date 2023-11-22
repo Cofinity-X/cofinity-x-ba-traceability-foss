@@ -50,7 +50,6 @@ SPDX-License-Identifier: Apache-2.0
       [translationContext]="TranslationContext.COMMONALERT">
     </app-notification-common-modal>
     <app-notification [queuedAndRequestedNotifications$]="alertsQueuedAndRequested$"
-      class="tableScroll"
       [receivedNotifications$]="alertsReceived$"
       [tablesType]="[PartTableType.ALERTS_RECEIVED, PartTableType.ALERTS_SENT]"
       [translationContext]="TranslationContext.COMMONALERT"
@@ -77,6 +76,14 @@ SPDX-License-Identifier: Apache-2.0
       (onReceivedTableConfigChanged)="onReceivedTableConfigChange($event)"
       (onQueuedAndRequestedTableConfigChanged)="onQueuedAndRequestedTableConfigChange($event)"
       (selected)="openDetailPage($event)"
-      [menuActionsConfig]="menuActionsConfig"></app-notification>
+      [menuActionsConfig]="menuActionsConfig">
+      <div emptyContent>
+        <img src="/assets/images/icons/noAlert.svg"
+          class="center py-5"
+          alt="No alert" />
+        <div class="noAlerts pb-3">{{ 'commonAlert.noAlerts' | i18n }}</div>
+        <div class="description pb-10">{{ 'commonAlert.noAlertsDescription' | i18n }}</div>
+      </div>
+    </app-notification>
   </mat-card-content>
 </mat-card>

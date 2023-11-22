@@ -45,6 +45,7 @@ import { NotificationStatus } from '@shared/model/notification.model';
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
+  styleUrls: ['./alerts.component.scss'],
 })
 export class AlertsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;

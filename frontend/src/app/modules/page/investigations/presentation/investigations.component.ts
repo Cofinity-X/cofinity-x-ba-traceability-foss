@@ -38,6 +38,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-investigations',
   templateUrl: './investigations.component.html',
+  styleUrls: ['./investigations.component.scss'],
 })
 export class InvestigationsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;

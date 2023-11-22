@@ -26,25 +26,27 @@ SPDX-License-Identifier: Apache-2.0
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { 
-          label: 'pageDashboard.totalOfMyParts.label', 
-          icon: 'my_parts_icon', 
-          link: 'parts'}
+        customContext: {
+          label: 'pageDashboard.totalOfMyParts.label',
+          icon: 'my_parts_icon',
+          link: 'parts'
+        }
       ">
     </ng-container>
   </section>
 
   <section class="parts-section">
     <ng-container *viewContainer="
-          this.numberOfOtherParts$ | async;
-          main: numbersMainTmp;
-          error: numbersErrorTmp;
-          loading: numbersLoaderTmp;
-          customContext: { 
-            label: 'pageDashboard.totalOfOtherParts.label', 
-            icon: 'other_parts_icon', 
-            link: 'otherParts' }
-        ">
+        this.numberOfOtherParts$ | async;
+        main: numbersMainTmp;
+        error: numbersErrorTmp;
+        loading: numbersLoaderTmp;
+        customContext: {
+          label: 'pageDashboard.totalOfOtherParts.label',
+          icon: 'other_parts_icon',
+          link: 'otherParts'
+        }
+      ">
     </ng-container>
   </section>
 
@@ -54,25 +56,27 @@ SPDX-License-Identifier: Apache-2.0
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { 
-          label: 'pageDashboard.totalInvestigations.label', 
-          icon: 'content_paste_search', 
-          link: 'investigations'}
+        customContext: {
+          label: 'pageDashboard.totalInvestigations.label',
+          icon: 'content_paste_search',
+          link: 'investigations'
+        }
       ">
     </ng-container>
   </section>
 
   <section class="parts-section">
     <ng-container *viewContainer="
-          this.numberOfAlerts$ | async;
-          main: numbersMainTmp;
-          error: numbersErrorTmp;
-          loading: numbersLoaderTmp;
-          customContext: { 
-            label: 'pageDashboard.totalAlerts.label',
-            icon: 'alertDashBoard',
-            link: 'alerts' }
-        ">
+        this.numberOfAlerts$ | async;
+        main: numbersMainTmp;
+        error: numbersErrorTmp;
+        loading: numbersLoaderTmp;
+        customContext: {
+          label: 'pageDashboard.totalAlerts.label',
+          icon: 'alertDashBoard',
+          link: 'alerts'
+        }
+      ">
     </ng-container>
   </section>
 
