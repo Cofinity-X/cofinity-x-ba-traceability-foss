@@ -15,6 +15,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed helm repository path for backend & frontend (wrong prefix)
 - Updated user manual
 - Autocomplete endpoints changed owner String type param to Owner for input validation and sql injection prevention
+- Fixed several bugs in local filtering of the parts table
 
 ### Removed
 - apk upgrade in docker image built as requested by TRG 4.02
