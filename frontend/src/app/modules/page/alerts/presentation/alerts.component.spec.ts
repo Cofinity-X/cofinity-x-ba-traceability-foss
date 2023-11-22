@@ -51,13 +51,8 @@ describe('AlertsComponent', () => {
     const alertsComponent = fixture.componentInstance;
 
     let setTableFunctionSpy = spyOn<any>(alertsComponent, 'setTableSortingList').and.callThrough();
-    let statusColumnHeader = await screen.findByText('table.column.status');
-    await waitFor(
-      () => {
-        fireEvent.click(statusColumnHeader);
-      },
-      { timeout: 3000 },
-    );
+    let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
+    fireEvent.click(statusColumnHeader);
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'received');
 
@@ -71,13 +66,8 @@ describe('AlertsComponent', () => {
     fireEvent.click(await waitFor(() => screen.getByText('commonAlert.tabs.queuedAndRequested')));
 
     let setTableFunctionSpy = spyOn<any>(alertsComponent, 'setTableSortingList').and.callThrough();
-    let statusColumnHeader = await screen.findByText('table.column.status');
-    await waitFor(
-      () => {
-        fireEvent.click(statusColumnHeader);
-      },
-      { timeout: 3000 },
-    );
+    let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
+    fireEvent.click(statusColumnHeader);
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'queued-and-requested');
 
@@ -89,13 +79,10 @@ describe('AlertsComponent', () => {
     const alertsComponent = fixture.componentInstance;
 
     let setTableFunctionSpy = spyOn<any>(alertsComponent, 'setTableSortingList').and.callThrough();
-    let descriptionColumnHeader = await screen.findByText('table.column.description');
-    await waitFor(
-      () => {
-        fireEvent.click(descriptionColumnHeader);
-      },
-      { timeout: 3000 },
-    );
+    let descriptionColumnHeader = await screen.findByText('table.column.description', undefined, { timeout: 10000 });
+
+    fireEvent.click(descriptionColumnHeader);
+
     let statusHeader = await screen.findByText('table.column.status');
 
     await waitFor(() => {

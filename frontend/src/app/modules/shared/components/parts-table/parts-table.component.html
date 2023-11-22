@@ -188,48 +188,29 @@ SPDX-License-Identifier: Apache-2.0
           <ng-container *ngIf="tableConfig?.header?.[column]; else pureColumn">
             <div class="table--header--cell">
               <div class="table--header--cell--content">
-                {{
+                <div>
+                  {{
                         tableConfig?.header?.[column] | i18n }}
+                </div>
                 <div class="table--header--cell--content--sort" *ngIf="column !== '!'">
-                  <img
-                    *ngIf="
-                      multiSortList &&
-                      multiSortList.length === 1 &&
-                      multiSortList[0][0] === column &&
-                      multiSortList[0][1] === 'asc'
-                    "
-                    src="/assets/images/icons/sortingArrowDown.svg"
-                    alt="sorting arrow"
-                    class="table--header--cell--content--sort--asc"
-                  />
-                  <img
-                    *ngIf="
-                      multiSortList &&
-                      multiSortList.length === 1 &&
-                      multiSortList[0][0] === column &&
-                      multiSortList[0][1] === 'desc'
-                    "
-                    src="/assets/images/icons/sortingArrowDown.svg"
-                    alt="sorting arrow"
-                    class="table--header--cell--content--sort--dsc"
-                  />
-                  <ng-container *ngIf="multiSortList && multiSortList.length > 1">
+                  <ng-container *ngIf="multiSortList && multiSortList.length > 0">
                     <ng-container *ngFor="let item of multiSortList; let i = index">
                       <!-- Display the array entry when it matches the column name -->
-                      <div *ngIf="item[0] === column" class="table--header--cell--content--sort--indicator">
+                      <div
+                        *ngIf="item[0] === column && multiSortList.length > 1"
+                        class="table--header--cell--content--sort--indicator"
+                      >
                         {{ i + 1 + '.' }}
                       </div>
                       <img
-                        *ngIf="item[0] === column && item[1] === 'asc'"
+                        *ngIf="item[0] === column"
                         src="/assets/images/icons/sortingArrowDown.svg"
                         alt="sorting arrow"
-                        class="table--header--cell--content--sort--asc"
-                      />
-                      <img
-                        *ngIf="item[0] === column && item[1] === 'desc'"
-                        src="/assets/images/icons/sortingArrowDown.svg"
-                        alt="sorting arrow"
-                        class="table--header--cell--content--sort--dsc"
+                        [ngClass]="
+                          item[1] === 'asc'
+                            ? 'table--header--cell--content--sort--asc'
+                            : 'table--header--cell--content--sort--dsc'
+                        "
                       />
                     </ng-container>
                   </ng-container>

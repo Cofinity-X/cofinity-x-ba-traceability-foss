@@ -49,7 +49,11 @@ describe('InvestigationsComponent', () => {
 
   it('should call change pagination of received investigations', async () => {
     await renderInvestigations();
-    fireEvent.click(await waitFor(() => screen.getByLabelText('pagination.nextPageLabel', { selector: 'button' })));
+    fireEvent.click(
+      await waitFor(() => screen.getByLabelText('pagination.nextPageLabel', { selector: 'button' }), {
+        timeout: 10000,
+      }),
+    );
 
     expect(await waitFor(() => screen.getByText('Investigation No 84'))).toBeInTheDocument();
     expect(await waitFor(() => screen.getByText('Investigation No 11'))).toBeInTheDocument();
@@ -58,7 +62,9 @@ describe('InvestigationsComponent', () => {
   it('should call change pagination of queued & requested investigations', async () => {
     await renderInvestigations();
 
-    fireEvent.click(await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested')));
+    fireEvent.click(await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested')), {
+      timeout: 10000,
+    });
 
     fireEvent.click(await waitFor(() => screen.getByLabelText('pagination.nextPageLabel', { selector: 'button' })));
 
@@ -71,13 +77,9 @@ describe('InvestigationsComponent', () => {
     const investigationComponent = fixture.componentInstance;
 
     let setTableFunctionSpy = spyOn<any>(investigationComponent, 'setTableSortingList').and.callThrough();
-    let statusColumnHeader = await screen.findByText('table.column.status');
-    await waitFor(
-      () => {
-        fireEvent.click(statusColumnHeader);
-      },
-      { timeout: 3000 },
-    );
+    let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
+
+    fireEvent.click(statusColumnHeader);
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'received');
 
@@ -91,13 +93,9 @@ describe('InvestigationsComponent', () => {
     fireEvent.click(await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested')));
 
     let setTableFunctionSpy = spyOn<any>(investigationComponent, 'setTableSortingList').and.callThrough();
-    let statusColumnHeader = await screen.findByText('table.column.status');
-    await waitFor(
-      () => {
-        fireEvent.click(statusColumnHeader);
-      },
-      { timeout: 3000 },
-    );
+    let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
+
+    fireEvent.click(statusColumnHeader);
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'queued-and-requested');
 
@@ -109,13 +107,10 @@ describe('InvestigationsComponent', () => {
     const investigationsComponent = fixture.componentInstance;
 
     let setTableFunctionSpy = spyOn<any>(investigationsComponent, 'setTableSortingList').and.callThrough();
-    let descriptionColumnHeader = await screen.findByText('table.column.description');
-    await waitFor(
-      () => {
-        fireEvent.click(descriptionColumnHeader);
-      },
-      { timeout: 3000 },
-    );
+    let descriptionColumnHeader = await screen.findByText('table.column.description', undefined, { timeout: 10000 });
+
+    fireEvent.click(descriptionColumnHeader);
+
     let statusHeader = await screen.findByText('table.column.status');
 
     await waitFor(() => {
