@@ -61,7 +61,8 @@ SPDX-License-Identifier: Apache-2.0
 
 <ng-template #severityTmp
   let-severity="value">
-  <app-severity [severity]="severity"></app-severity>
+  <app-severity [alternativeTextStyle]="true"
+    [severity]="severity"></app-severity>
 </ng-template>
 
 <ng-template #idTmp

@@ -54,7 +54,7 @@ SPDX-License-Identifier: Apache-2.0
           (cdkDropListDropped)="drop($event)">
           <ng-container class="dialog--columns--columns--list"
             *ngFor="let item of dialogColumns; let index=index">
-            <div *ngIf="item !== 'select' && item !== 'menu'"
+            <div *ngIf="item !== 'select' && item !== 'menu' && item !== 'settings'"
               [ngClass]="dragActive ? 'dialog--item--container_static' : 'dialog--item--container'"
               (cdkDragStarted)="dragging(true)"
               (cdkDragEnded)="dragging(false)"

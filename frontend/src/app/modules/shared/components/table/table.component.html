@@ -96,6 +96,10 @@ SPDX-License-Identifier: Apache-2.0
         <ng-container *ngTemplateOutlet="MenuColumn"></ng-container>
       </ng-container>
 
+      <ng-container *ngSwitchCase="'settings'">
+        <ng-container *ngTemplateOutlet="SettingsColumn"></ng-container>
+      </ng-container>
+
       <ng-container *ngSwitchDefault>
         <ng-container *ngTemplateOutlet="NormalColumn; context: { $implicit: column }"></ng-container>
       </ng-container>
@@ -139,15 +143,31 @@ SPDX-License-Identifier: Apache-2.0
       </ng-container>
     </ng-template>
 
+    <ng-template #SettingsColumn>
+      <ng-container matColumnDef="settings">
+        <th *matHeaderCellDef
+          class="table--menu"
+          mat-header-cell>
+          <img class="settings-icon"
+            src="/assets/images/icons/table_settings_icon.svg"
+            alt="*"
+            (click)="openDialog()" />
+        </th>
+        <td *matCellDef="let row"
+          class="table--menu table--body--cell"
+          mat-cell
+          [attr.colspan]="tableConfig?.displayedColumns.length">
+          <div class="table--menu__desktop">
+          </div>
+        </td>
+      </ng-container>
+    </ng-template>
+
     <ng-template #MenuColumn>
       <ng-container matColumnDef="menu">
         <th *matHeaderCellDef
           class="table--menu"
           mat-header-cell>
-          <img class="settingsIcon"
-            src="/assets/images/icons/table_settings_icon.svg"
-            alt="*"
-            (click)="openDialog()" />
         </th>
         <td *matCellDef="let row"
           class="table--menu table--body--cell"

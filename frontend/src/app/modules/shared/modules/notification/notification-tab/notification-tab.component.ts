@@ -68,7 +68,7 @@ export class NotificationTabComponent implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     const defaultColumns: DisplayColumns<keyof Notification>[] = ['createdDate', 'description', 'status'];
-    const displayedColumns: DisplayColumns<keyof Notification>[] = [...defaultColumns, ...this.optionalColumns, 'menu'];
+    const displayedColumns: DisplayColumns<keyof Notification>[] = [...defaultColumns, ...this.optionalColumns, 'menu', 'settings'];
     const sortableColumns: Record<string, boolean> = this.sortableColumns;
     const filterConfig: any[] = this.filterConfig;
     this.tableConfig = {

@@ -74,7 +74,7 @@ export enum PartTableType {
   INVESTIGATIONS_SENT = 'INVESTIGATIONS_SENT',
 }
 
-export type DisplayColumns<T> = 'select' | 'menu' | T;
+export type DisplayColumns<T> = 'select' | 'menu' | 'settings' | T;
 
 export const CreateHeaderFromColumns = (columns: string[], headerKey: string): Record<string, string> => {
   return columns?.reduce((header, column) => ({ ...header, [column]: `${headerKey}.${column}` }), {});

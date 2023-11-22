@@ -374,6 +374,7 @@ export class PartsTableComponent implements OnInit {
     'catenaXSiteId',
     'functionValidFrom',
     'functionValidUntil',
+    'menu'
   ];
 
   private readonly sortableColumnsAsBuilt: Record<string, boolean> = {
