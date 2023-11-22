@@ -25,13 +25,10 @@ import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecificatio
 import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.InvestigationsSupport;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -41,8 +38,6 @@ import java.util.stream.Stream;
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.*;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends IntegrationTestSpecification {
