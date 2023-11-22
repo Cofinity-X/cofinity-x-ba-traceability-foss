@@ -19,11 +19,7 @@ under the License.
 SPDX-License-Identifier: Apache-2.0
 -->
 
-<div
-  [class.mat-elevation-z8]="!noShadow"
-  class="notification-table-wrapper"
-  [ngClass]="enableScroll ? 'tableScroll' : ''"
->
+<div [class.mat-elevation-z8]="!noShadow" class="table-wrapper" [ngClass]="enableScroll ? 'tableScroll' : ''">
   <ng-container *ngIf="tableHeader">
     <p class="large-text table--header">{{ tableHeader | i18n }}</p>
   </ng-container>
@@ -63,6 +59,26 @@ SPDX-License-Identifier: Apache-2.0
       class="table--header--row"
     ></tr>
 
+    <ng-container matColumnDef="paginator">
+      <td mat-footer-cell *matFooterCellDef [attr.colspan]="100">
+        <mat-paginator
+          class="table-paginator-menu"
+          [length]="totalItems"
+          [pageIndex]="pageIndex"
+          [pageSizeOptions]="[50, 100, 200]"
+          [attr.aria-label]="'table.selectPageSize' | i18n"
+          [attr.data-testId]="'table.selectPageSize' | i18n"
+          (page)="onPaginationChange($event)"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </td>
+    </ng-container>
+
+    <div *ngIf="tableConfig?.hasPagination">
+      <tr mat-footer-row *matFooterRowDef="['paginator']; sticky: true"></tr>
+    </div>
+
     <tr
       class="table--body--row"
       *matRowDef="let row; columns: tableConfig?.displayedColumns"
@@ -100,6 +116,10 @@ SPDX-License-Identifier: Apache-2.0
 
       <ng-container *ngSwitchCase="'menu'">
         <ng-container *ngTemplateOutlet="MenuColumn"></ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'settings'">
+        <ng-container *ngTemplateOutlet="SettingsColumn"></ng-container>
       </ng-container>
 
       <ng-container *ngSwitchDefault>
@@ -144,11 +164,28 @@ SPDX-License-Identifier: Apache-2.0
       </ng-container>
     </ng-template>
 
+    <ng-template #SettingsColumn>
+      <ng-container matColumnDef="settings">
+        <th *matHeaderCellDef class="table--menu" mat-header-cell>
+          <img
+            class="settings-icon"
+            src="/assets/images/icons/table_settings_icon.svg"
+            alt="*"
+            (click)="openDialog()"
+          />
+        </th>
+        <td
+          *matCellDef="let row"
+          mat-cell
+          class="empty-cell"
+          [attr.colspan]="tableConfig?.displayedColumns.length"
+        ></td>
+      </ng-container>
+    </ng-template>
+
     <ng-template #MenuColumn>
       <ng-container matColumnDef="menu">
-        <th *matHeaderCellDef class="table--menu" mat-header-cell>
-          <img class="settingsIcon" src="/assets/images/icons/table_settings_icon.svg" alt="*" />
-        </th>
+        <th *matHeaderCellDef class="table--menu menu-spacer" mat-header-cell></th>
         <td
           *matCellDef="let row"
           class="table--menu table--body--cell"
@@ -309,8 +346,7 @@ SPDX-License-Identifier: Apache-2.0
     </ng-template>
   </table>
 
-  <mat-paginator
-    class="table-paginator-menu"
+  <!-- <mat-paginator class="table-paginator-menu"
     *ngIf="tableConfig?.hasPagination"
     [length]="totalItems"
     [pageIndex]="pageIndex"
@@ -318,9 +354,8 @@ SPDX-License-Identifier: Apache-2.0
     [attr.aria-label]="'table.selectPageSize' | i18n"
     [attr.data-testId]="'table.selectPageSize' | i18n"
     (page)="onPaginationChange($event)"
-    showFirstLastButtons
-  >
-  </mat-paginator>
+    showFirstLastButtons>
+  </mat-paginator> -->
 </div>
 
 <ng-template #pureColumn>
