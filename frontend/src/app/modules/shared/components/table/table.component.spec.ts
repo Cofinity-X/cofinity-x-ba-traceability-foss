@@ -53,7 +53,7 @@ describe('TableComponent', () => {
         componentProperties: {
           data,
           tableConfig,
-          selected,
+          selected
         },
       },
     );
