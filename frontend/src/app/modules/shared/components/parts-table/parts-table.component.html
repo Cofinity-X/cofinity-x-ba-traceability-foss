@@ -110,10 +110,10 @@ SPDX-License-Identifier: Apache-2.0
           <mat-icon color="primary" class="table--no-data__icon">build</mat-icon>
           <br />
           <h3>{{ 'table.noResultFound' | i18n }}</h3>
-          <p>{{ 'table.tryAgain' | i18n }}</p>
         </div>
       </td>
     </tr>
+
     <ng-container *ngFor="let column of tableConfig?.displayedColumns" [ngSwitch]="column">
       <ng-container *ngSwitchCase="'select'">
         <ng-container *ngTemplateOutlet="SelectColumn"></ng-container>
