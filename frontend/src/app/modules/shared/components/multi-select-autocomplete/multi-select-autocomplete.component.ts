@@ -241,10 +241,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
 
-  isUnsupportedAutoCompleteField(fieldName: string) {
-    return fieldName === 'activeAlerts' || fieldName === 'activeInvestigations';
-  }
-
   hideOption(option: any): boolean {
     if(!this.searchElement.length) {
       return true;
