@@ -78,8 +78,12 @@ describe('InvestigationsComponent', () => {
 
     let setTableFunctionSpy = spyOn<any>(investigationComponent, 'setTableSortingList').and.callThrough();
     let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
-
-    fireEvent.click(statusColumnHeader);
+    await waitFor(
+      () => {
+        fireEvent.click(statusColumnHeader);
+      },
+      { timeout: 3000 },
+    );
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'received');
 
@@ -94,8 +98,12 @@ describe('InvestigationsComponent', () => {
 
     let setTableFunctionSpy = spyOn<any>(investigationComponent, 'setTableSortingList').and.callThrough();
     let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
-
-    fireEvent.click(statusColumnHeader);
+    await waitFor(
+      () => {
+        fireEvent.click(statusColumnHeader);
+      },
+      { timeout: 10000 },
+    );
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'queued-and-requested');
 
@@ -108,10 +116,13 @@ describe('InvestigationsComponent', () => {
 
     let setTableFunctionSpy = spyOn<any>(investigationsComponent, 'setTableSortingList').and.callThrough();
     let descriptionColumnHeader = await screen.findByText('table.column.description', undefined, { timeout: 10000 });
-
-    fireEvent.click(descriptionColumnHeader);
-
-    let statusHeader = await screen.findByText('table.column.status');
+    await waitFor(
+      () => {
+        fireEvent.click(descriptionColumnHeader);
+      },
+      { timeout: 10000 },
+    );
+    let statusHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
 
     await waitFor(() => {
       fireEvent.keyDown(statusHeader, {

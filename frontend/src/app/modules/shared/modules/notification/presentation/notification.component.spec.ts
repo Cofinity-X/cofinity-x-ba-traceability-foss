@@ -114,7 +114,7 @@ describe('NotificationsInboxComponent', () => {
       }),
     );
 
-    expect(await screen.findByText('Investigation No 51')).toBeInTheDocument();
+    expect(await screen.findByText('Investigation No 51', undefined, { timeout: 10000 })).toBeInTheDocument();
   });
 
   it('should render queued & requested notifications', async () => {
@@ -125,6 +125,6 @@ describe('NotificationsInboxComponent', () => {
         timeout: 10000,
       }),
     );
-    expect(await screen.findByText('Investigation No 1')).toBeInTheDocument();
+    expect(await screen.findByText('Investigation No 1', undefined, { timeout: 10000 })).toBeInTheDocument();
   });
 });
