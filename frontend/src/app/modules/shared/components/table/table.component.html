@@ -56,6 +56,27 @@ SPDX-License-Identifier: Apache-2.0
       data-testid="table-component--head-row"
       class="table--header--row"></tr>
 
+    <ng-container matColumnDef="paginator">
+      <td mat-footer-cell
+        *matFooterCellDef
+        [attr.colspan]="100">
+        <mat-paginator class="table-paginator-menu"
+          [length]="totalItems"
+          [pageIndex]="pageIndex"
+          [pageSizeOptions]="[50, 100, 200]"
+          [attr.aria-label]="'table.selectPageSize' | i18n"
+          [attr.data-testId]="'table.selectPageSize' | i18n"
+          (page)="onPaginationChange($event)"
+          showFirstLastButtons>
+        </mat-paginator>
+      </td>
+    </ng-container>
+
+    <div *ngIf="tableConfig?.hasPagination">
+      <tr mat-footer-row
+        *matFooterRowDef="['paginator']; sticky: true"></tr>
+    </div>
+
     <tr class="table--body--row"
       *matRowDef="let row; columns: tableConfig?.displayedColumns"
       [class.loading]="isDataLoading"
@@ -154,11 +175,9 @@ SPDX-License-Identifier: Apache-2.0
             (click)="openDialog()" />
         </th>
         <td *matCellDef="let row"
-          class="table--menu table--body--cell"
           mat-cell
+          class="empty-cell"
           [attr.colspan]="tableConfig?.displayedColumns.length">
-          <div class="table--menu__desktop">
-          </div>
         </td>
       </ng-container>
     </ng-template>
@@ -166,7 +185,7 @@ SPDX-License-Identifier: Apache-2.0
     <ng-template #MenuColumn>
       <ng-container matColumnDef="menu">
         <th *matHeaderCellDef
-          class="table--menu"
+          class="table--menu menu-spacer"
           mat-header-cell>
         </th>
         <td *matCellDef="let row"
@@ -303,7 +322,7 @@ Third click:  reset sorting"
     </ng-template>
   </table>
 
-  <mat-paginator class="table-paginator-menu"
+  <!-- <mat-paginator class="table-paginator-menu"
     *ngIf="tableConfig?.hasPagination"
     [length]="totalItems"
     [pageIndex]="pageIndex"
@@ -312,7 +331,7 @@ Third click:  reset sorting"
     [attr.data-testId]="'table.selectPageSize' | i18n"
     (page)="onPaginationChange($event)"
     showFirstLastButtons>
-  </mat-paginator>
+  </mat-paginator> -->
 </div>
 
 <ng-template #pureColumn>

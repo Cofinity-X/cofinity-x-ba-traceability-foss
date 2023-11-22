@@ -26,6 +26,7 @@ SPDX-License-Identifier: Apache-2.0
   {{ onItemCountChange(notifications.data.totalItems) }}
   <div *ngIf="notifications.data.totalItems > 0; else displayMessage">
     <app-table [tableType]="tableType"
+      class="notifications-tab"
       [enableScroll]="enableScroll"
       [paginationData]="notifications.data"
       [tableConfig]="tableConfig"

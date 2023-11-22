@@ -30,7 +30,7 @@ table {
 
 .table-wrapper {
   scrollbar-width: thin;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .settings-icon {
@@ -261,6 +261,15 @@ table {
 
 .table--header {
   padding-bottom: 8px;
+}
+
+.menu-spacer {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.empty-cell {
+  display: none;
 }
 
 .tableScroll {
