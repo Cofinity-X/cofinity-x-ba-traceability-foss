@@ -31,6 +31,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 - Fixed helm repository path for backend & frontend (wrong prefix)
+- Filter configuration for tables to be resuable and easy to adapt
 - Refactored dashboard response
 - Updated user manual
 - Autocomplete endpoints changed owner String type param to Owner for input validation and sql injection prevention
