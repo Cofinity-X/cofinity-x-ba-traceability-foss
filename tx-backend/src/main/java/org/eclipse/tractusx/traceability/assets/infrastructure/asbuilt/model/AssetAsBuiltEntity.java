@@ -87,11 +87,11 @@ public class AssetAsBuiltEntity extends AssetBaseEntity {
     private List<AlertEntity> alerts = new ArrayList<>();
 
     @Formula("(SELECT COUNT(a.alert_id) FROM assets_as_built_alerts a INNER JOIN alert b ON a.alert_id=b.id " +
-            "WHERE a.asset_id = id and b.status NOT IN ('CANCELED','CLOSED'))")
+            "WHERE a.asset_id = id and b.status IN ('CREATED', 'SENT', 'RECEIVED', 'ACKNOWLEDGED', 'ACCEPTED', 'DECLINED'))")
     private Integer noOfActiveAlerts;
 
     @Formula("(SELECT COUNT(a.investigation_id) FROM assets_as_built_investigations a INNER JOIN investigation b ON a.investigation_id=b.id " +
-            "WHERE a.asset_id = id and b.status NOT IN ('CANCELED','CLOSED'))")
+            "WHERE a.asset_id = id and b.status IN ('CREATED', 'SENT', 'RECEIVED', 'ACKNOWLEDGED', 'ACCEPTED', 'DECLINED'))")
     private Integer noOfActiveInvestigations;
 
     public static AssetAsBuiltEntity from(AssetBase asset) {
