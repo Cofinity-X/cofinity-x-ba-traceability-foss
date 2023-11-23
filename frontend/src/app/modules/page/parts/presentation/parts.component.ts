@@ -29,6 +29,7 @@ import {
   AssetAsPlannedFilter,
   AssetAsRecycledFilter,
   AssetAsSupportedFilter,
+  AssetAsOrderedFilter,
   Part,
 } from '@page/parts/model/parts.model';
 import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
@@ -71,6 +72,13 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   public tableAsSupportedSortList: TableHeaderSort[];
   public tableAsOrderedSortList: TableHeaderSort[];
   public tableAsRecycledSortList: TableHeaderSort[];
+
+  public assetAsBuiltFilter: AssetAsBuiltFilter;
+  public assetAsPlannedFilter: AssetAsPlannedFilter;
+  public assetAsDesignedFilter: AssetAsDesignedFilter;
+  public assetAsRecycledFilter: AssetAsRecycledFilter;
+  public assetAsSupportedFilter: AssetAsSupportedFilter;
+  public assetAsOrderedFilter: AssetAsOrderedFilter;
 
   public DEFAULT_PAGE_SIZE = 50;
   public ctrlKeyState = false;
@@ -116,13 +124,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   public searchFormGroup = new FormGroup({});
   public searchControl: FormControl;
 
-  assetFilter:
-    | AssetAsBuiltFilter
-    | AssetAsPlannedFilter
-    | AssetAsDesignedFilter
-    | AssetAsRecycledFilter
-    | AssetAsSupportedFilter;
-
   public ngOnInit(): void {
     this.partsFacade.setPartsAsBuilt();
     this.partsFacade.setPartsAsPlanned();
@@ -137,60 +138,64 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   filterActivated(type: MainAspectType, assetFilter: any): void {
-    this.assetFilter = assetFilter;
-
     switch (type) {
       case MainAspectType.AS_BUILT: {
+        this.assetAsBuiltFilter = assetFilter;
         this.partsFacade.setPartsAsBuilt(
           0,
           this.DEFAULT_PAGE_SIZE,
           this.tableAsBuiltSortList,
-          toAssetFilter(this.assetFilter, true),
+          toAssetFilter(this.assetAsBuiltFilter, true),
         );
         break;
       }
       case MainAspectType.AS_PLANNED: {
+        this.assetAsPlannedFilter = assetFilter;
         this.partsFacade.setPartsAsPlanned(
           0,
           this.DEFAULT_PAGE_SIZE,
           this.tableAsPlannedSortList,
-          toAssetFilter(this.assetFilter, false),
+          toAssetFilter(this.assetAsPlannedFilter, false),
         );
         break;
       }
       case MainAspectType.AS_DESIGNED: {
+        this.assetAsDesignedFilter = assetFilter;
         this.partsFacade.setPartsAsDesigned(
           0,
           this.DEFAULT_PAGE_SIZE,
           this.tableAsDesignedSortList,
-          toAssetFilter(this.assetFilter, true),
+          toAssetFilter(this.assetAsDesignedFilter, true),
         );
         break;
       }
       case MainAspectType.AS_ORDERED: {
+        this.assetAsOrderedFilter = assetFilter;
         this.partsFacade.setPartsAsOrdered(
           0,
           this.DEFAULT_PAGE_SIZE,
           this.tableAsOrderedSortList,
-          toAssetFilter(this.assetFilter, true),
+          toAssetFilter(this.assetAsOrderedFilter, true),
         );
         break;
       }
       case MainAspectType.AS_SUPPORTED: {
+        this.assetAsSupportedFilter = assetFilter;
         this.partsFacade.setPartsAsSupported(
           0,
           this.DEFAULT_PAGE_SIZE,
           this.tableAsSupportedSortList,
-          toAssetFilter(this.assetFilter, true),
+          toAssetFilter(this.assetAsSupportedFilter, true),
         );
         break;
       }
       case MainAspectType.AS_RECYCLED: {
+        this.assetAsRecycledFilter = assetFilter;
         this.partsFacade.setPartsAsRecycled(
           0,
           this.DEFAULT_PAGE_SIZE,
           this.tableAsRecycledSortList,
-          toAssetFilter(this.assetFilter, true),
+          toAssetFilter(this.assetAsRecycledFilter, true),
         );
         break;
       }
@@ -250,12 +255,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetFilter) {
+    if (this.assetAsBuiltFilter) {
       this.partsFacade.setPartsAsBuilt(
         0,
         pageSizeValue,
         this.tableAsBuiltSortList,
-        toAssetFilter(this.assetFilter, true),
+        toAssetFilter(this.assetAsBuiltFilter, true),
       );
     } else {
       this.partsFacade.setPartsAsBuilt(page, pageSizeValue, this.tableAsBuiltSortList);
@@ -269,12 +274,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetFilter) {
+    if (this.assetAsPlannedFilter) {
       this.partsFacade.setPartsAsPlanned(
         0,
         pageSizeValue,
         this.tableAsPlannedSortList,
-        toAssetFilter(this.assetFilter, true),
+        toAssetFilter(this.assetAsPlannedFilter, true),
       );
     } else {
       this.partsFacade.setPartsAsPlanned(page, pageSizeValue, this.tableAsPlannedSortList);
@@ -433,12 +438,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetFilter) {
+    if (this.assetAsDesignedFilter) {
       this.partsFacade.setPartsAsDesigned(
         0,
         pageSizeValue,
         this.tableAsDesignedSortList,
-        toAssetFilter(this.assetFilter, true),
+        toAssetFilter(this.assetAsDesignedFilter, true),
       );
     } else {
       this.partsFacade.setPartsAsDesigned(page, pageSizeValue, this.tableAsDesignedSortList);
@@ -453,12 +458,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetFilter) {
+    if (this.assetAsOrderedFilter) {
       this.partsFacade.setPartsAsOrdered(
         0,
         pageSizeValue,
         this.tableAsOrderedSortList,
-        toAssetFilter(this.assetFilter, true),
+        toAssetFilter(this.assetAsOrderedFilter, true),
       );
     } else {
       this.partsFacade.setPartsAsOrdered(page, pageSizeValue, this.tableAsOrderedSortList);
@@ -473,12 +478,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetFilter) {
+    if (this.assetAsSupportedFilter) {
       this.partsFacade.setPartsAsSupported(
         0,
         pageSizeValue,
         this.tableAsSupportedSortList,
-        toAssetFilter(this.assetFilter, true),
+        toAssetFilter(this.assetAsSupportedFilter, true),
       );
     } else {
       this.partsFacade.setPartsAsSupported(page, pageSizeValue, this.tableAsSupportedSortList);
@@ -493,12 +498,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetFilter) {
+    if (this.assetAsRecycledFilter) {
       this.partsFacade.setPartsAsRecycled(
         0,
         pageSizeValue,
         this.tableAsRecycledSortList,
-        toAssetFilter(this.assetFilter, true),
+        toAssetFilter(this.assetAsRecycledFilter, true),
       );
     } else {
       this.partsFacade.setPartsAsRecycled(page, pageSizeValue, this.tableAsRecycledSortList);

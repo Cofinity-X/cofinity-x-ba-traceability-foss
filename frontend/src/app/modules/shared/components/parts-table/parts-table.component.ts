@@ -306,7 +306,6 @@ export class PartsTableComponent implements OnInit {
     'filterIdShort',
     'filterName', // nameAtManufacturer
     'filterManufacturer',
-    'filterPartId', // Part number / Batch Number / JIS Number
     'filterManufacturerPartId',
     'filterCustomerPartId', // --> semanticModel.customerPartId
     'filterClassification',
@@ -433,7 +432,7 @@ export class PartsTableComponent implements OnInit {
     'filterSemanticDataModel',
     'filterName',
     'filterManufacturer',
-    'filterPartId',
+    'filterManufacturerPartId',
     'filterSemanticModelId',
     'filterManufacturingDate',
     'filterActiveAlerts',
@@ -445,7 +444,7 @@ export class PartsTableComponent implements OnInit {
     'filterSemanticDataModel',
     'filterName',
     'filterManufacturer',
-    'filterPartId',
+    'filterManufacturerPartId',
     'filterSemanticModelId',
     'filterManufacturingDate',
     'filterActiveAlerts',

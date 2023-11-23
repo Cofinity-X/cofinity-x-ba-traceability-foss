@@ -117,7 +117,6 @@ describe('PartsTableComponent', () => {
       'filterIdShort',
       'filterName', // nameAtManufacturer
       'filterManufacturer',
-      'filterPartId', // Part number / Batch Number / JIS Number
       'filterManufacturerPartId',
       'filterCustomerPartId', // --> semanticModel.customerPartId
       'filterClassification',

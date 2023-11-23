@@ -17,7 +17,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-
 import { Component, Input, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Pagination } from '@core/model/pagination.model';
 import { OtherPartsFacade } from '@page/other-parts/core/other-parts.facade';
@@ -31,7 +30,6 @@ import { View } from '@shared/model/view.model';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { StaticIdService } from '@shared/service/staticId.service';
 import { Observable } from 'rxjs';
-
 
 @Component({
   selector: 'app-customer-parts',
@@ -58,12 +56,10 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
   ) {
-
-
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', event => {
       this.ctrlKeyState = event.ctrlKey;
     });
-    window.addEventListener('keyup', (event) => {
+    window.addEventListener('keyup', event => {
       this.ctrlKeyState = event.ctrlKey;
     });
   }
@@ -92,9 +88,19 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
 
   filterActivated(isAsBuilt: boolean, assetFilter: any): void {
     if (isAsBuilt) {
-      this.otherPartsFacade.setCustomerPartsAsBuilt(0, 50, [], toAssetFilter(assetFilter, true));
+      this.otherPartsFacade.setCustomerPartsAsBuilt(
+        0,
+        50,
+        this.tableCustomerAsBuiltSortList,
+        toAssetFilter(assetFilter, true),
+      );
     } else {
-      this.otherPartsFacade.setCustomerPartsAsPlanned(0, 50, [], toAssetFilter(assetFilter, false));
+      this.otherPartsFacade.setCustomerPartsAsPlanned(
+        0,
+        50,
+        this.tableCustomerAsPlannedSortList,
+        toAssetFilter(assetFilter, false),
+      );
     }
   }
 
@@ -117,7 +123,8 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
   }
 
   private setTableSortingList(sorting: TableHeaderSort, partTable: MainAspectType): void {
-    const tableSortList = partTable === MainAspectType.AS_BUILT ? this.tableCustomerAsBuiltSortList : this.tableCustomerAsPlannedSortList;
+    const tableSortList =
+      partTable === MainAspectType.AS_BUILT ? this.tableCustomerAsBuiltSortList : this.tableCustomerAsPlannedSortList;
     TableSortingUtil.setTableSortingList(sorting, tableSortList, this.ctrlKeyState);
   }
 
