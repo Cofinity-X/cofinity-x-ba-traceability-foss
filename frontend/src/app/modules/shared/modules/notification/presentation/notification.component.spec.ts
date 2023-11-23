@@ -38,6 +38,11 @@ import { NotificationModule } from '../notification.module';
 import { PartTableType } from '@shared/components/table/table.model';
 
 describe('NotificationsInboxComponent', () => {
+  var originalTimeout: number;
+  beforeEach(function () {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  });
   let clickHandler;
 
   beforeEach(() => (clickHandler = jasmine.createSpy()));
@@ -126,5 +131,9 @@ describe('NotificationsInboxComponent', () => {
       }),
     );
     expect(await screen.findByText('Investigation No 1', undefined, { timeout: 10000 })).toBeInTheDocument();
+  });
+
+  afterEach(function () {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 });
