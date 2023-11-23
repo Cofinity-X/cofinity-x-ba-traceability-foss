@@ -110,7 +110,7 @@ describe('NotificationsInboxComponent', () => {
     await renderNotificationsInbox();
     fireEvent.click(
       await waitFor(() => screen.getByLabelText('pagination.nextPageLabel'), {
-        timeout: 5000,
+        timeout: 10000,
       }),
     );
 

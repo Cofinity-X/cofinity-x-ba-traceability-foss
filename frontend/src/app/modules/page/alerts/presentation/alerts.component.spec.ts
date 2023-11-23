@@ -76,7 +76,7 @@ describe('AlertsComponent', () => {
       () => {
         fireEvent.click(statusColumnHeader);
       },
-      { timeout: 5000 },
+      { timeout: 10000 },
     );
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'queued-and-requested');

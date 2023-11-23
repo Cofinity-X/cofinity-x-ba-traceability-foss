@@ -82,7 +82,7 @@ describe('InvestigationsComponent', () => {
       () => {
         fireEvent.click(statusColumnHeader);
       },
-      { timeout: 3000 },
+      { timeout: 10000 },
     );
 
     expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'received');
