@@ -58,7 +58,7 @@ import static org.eclipse.tractusx.traceability.common.date.DateUtil.toInstant;
 @SuperBuilder
 @Table(name = "assets_as_built")
 public class AssetAsBuiltEntity extends AssetBaseEntity {
-
+    private static final String ACTIVE_STATUSES = "'CREATED', 'SENT', 'RECEIVED', 'ACKNOWLEDGED', 'ACCEPTED', 'DECLINED'";
     private Instant manufacturingDate;
     private String manufacturingCountry;
     private String manufacturerId;
@@ -87,11 +87,11 @@ public class AssetAsBuiltEntity extends AssetBaseEntity {
     private List<AlertEntity> alerts = new ArrayList<>();
 
     @Formula("(SELECT COUNT(*) FROM assets_as_built_alerts a INNER JOIN alert b ON a.alert_id=b.id " +
-            "WHERE a.asset_id = id and b.status IN ('CREATED', 'SENT', 'RECEIVED', 'ACKNOWLEDGED', 'ACCEPTED', 'DECLINED'))")
+            "WHERE a.asset_id = id AND b.status IN (" + ACTIVE_STATUSES + "))")
     private Integer noOfActiveAlerts;
 
     @Formula("(SELECT COUNT(*) FROM assets_as_built_investigations a INNER JOIN investigation b ON a.investigation_id=b.id " +
-            "WHERE a.asset_id = id and b.status IN ('CREATED', 'SENT', 'RECEIVED', 'ACKNOWLEDGED', 'ACCEPTED', 'DECLINED'))")
+            "WHERE a.asset_id = id AND b.status IN (" + ACTIVE_STATUSES + "))")
     private Integer noOfActiveInvestigations;
 
     public static AssetAsBuiltEntity from(AssetBase asset) {
