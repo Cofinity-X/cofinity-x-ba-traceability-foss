@@ -548,7 +548,7 @@ export class PartsTableComponent implements OnInit {
     this.filterActivated.emit(filterValues);
   }
 
-  constructor(private readonly tableViewSettingsService: TableSettingsService, private dialog: MatDialog) { }
+  constructor(private readonly tableViewSettingsService: TableSettingsService, private dialog: MatDialog) {}
 
   public defaultColumns: string[];
 
