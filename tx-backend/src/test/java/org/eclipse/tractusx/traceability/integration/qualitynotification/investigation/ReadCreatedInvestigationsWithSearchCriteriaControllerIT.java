@@ -30,6 +30,10 @@ import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 
@@ -71,7 +75,10 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
     @Test
     void givenFilterByCreatedDateProvided_whenGetInvestigations_thenReturnCreatedInvestigationsFilteredByCreatedDate() throws JoseException {
         // given
-        String filterString = "createdDate,AT_LOCAL_DATE,2023-11-09";
+        Date myDate = Date.from(Instant.now());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = formatter.format(myDate);
+        String filterString = "createdDate,AT_LOCAL_DATE," + formattedDate;
         String testBpn = bpnSupport.testBpn();
 
         InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
@@ -90,8 +97,8 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .statusCode(200)
                 .body("page", Matchers.is(0))
                 .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(3))
-                .body("totalItems", Matchers.is(3));
+                .body("content", Matchers.hasSize(4))
+                .body("totalItems", Matchers.is(4));
     }
 
     @Test
@@ -145,8 +152,8 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
                 .statusCode(200)
                 .body("page", Matchers.is(0))
                 .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(2))
-                .body("totalItems", Matchers.is(2))
+                .body("content", Matchers.hasSize(1))
+                .body("totalItems", Matchers.is(1))
                 .body("content.status", Matchers.hasItems("ACCEPTED"));
         ;
         ;

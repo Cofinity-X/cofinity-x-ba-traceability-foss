@@ -83,7 +83,6 @@ public class AlertTestDataFactory {
     }
 
     public static AlertNotificationEntity[] createSenderMajorityAlertNotificationEntitiesTestData(String senderBpn) {
-        Instant now = Instant.now();
         String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";

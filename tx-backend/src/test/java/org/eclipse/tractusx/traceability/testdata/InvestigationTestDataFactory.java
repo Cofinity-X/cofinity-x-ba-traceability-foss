@@ -195,15 +195,7 @@ public class InvestigationTestDataFactory {
     }
 
     private static InvestigationEntity[] createSenderMajorityInvestigationEntitiesTestData(String senderBpn) {
-        String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
-        String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
-        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
-        Instant createdDateInNov = LocalDateTime.parse(createdDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
-        Instant createdDateInDec = LocalDateTime.parse(createdDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
+        Instant now = Instant.now();
 
         InvestigationEntity firstInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
@@ -211,7 +203,7 @@ public class InvestigationTestDataFactory {
                 .status(NotificationStatusBaseEntity.CREATED)
                 .description("First Investigation on Asset1")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.minusSeconds(10L))
                 .build();
         InvestigationEntity secondInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
@@ -219,7 +211,7 @@ public class InvestigationTestDataFactory {
                 .status(NotificationStatusBaseEntity.SENT)
                 .description("Second Investigation on Asset2")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.plusSeconds(21L))
                 .build();
         InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
@@ -227,15 +219,15 @@ public class InvestigationTestDataFactory {
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Third Investigation on Asset3")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInNov)
+                .createdDate(now)
                 .build();
         InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
-                .status(NotificationStatusBaseEntity.ACCEPTED)
+                .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                 .description("Fourth Investigation on Asset4")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(20L))
                 .build();
         InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
@@ -243,7 +235,7 @@ public class InvestigationTestDataFactory {
                 .status(NotificationStatusBaseEntity.CANCELED)
                 .description("Fifth Investigation on Asset5")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(40L))
                 .build();
 
         InvestigationEntity[] InvestigationEntities = {firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
@@ -290,7 +282,7 @@ public class InvestigationTestDataFactory {
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(QualityNotificationSeverity.CRITICAL)
                         .build(),
                 InvestigationNotificationEntity
                         .builder()
@@ -334,31 +326,23 @@ public class InvestigationTestDataFactory {
     }
 
     private static InvestigationEntity[] createReceiverMajorityInvestigationEntitiesTestData(String senderBpn) {
-        String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
-        String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
-        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
-        Instant createdDateInNov = LocalDateTime.parse(createdDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
-        Instant createdDateInDec = LocalDateTime.parse(createdDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
+        Instant now = Instant.now();
 
         InvestigationEntity firstInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
+                .status(NotificationStatusBaseEntity.RECEIVED)
                 .description("First Investigation on Asset1")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.minusSeconds(10L))
                 .build();
         InvestigationEntity secondInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
-                .status(NotificationStatusBaseEntity.RECEIVED)
+                .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                 .description("Second Investigation on Asset2")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.plusSeconds(21L))
                 .build();
         InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
@@ -366,15 +350,15 @@ public class InvestigationTestDataFactory {
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Third Investigation on Asset3")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInNov)
+                .createdDate(now)
                 .build();
         InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
-                .status(NotificationStatusBaseEntity.ACCEPTED)
+                .status(NotificationStatusBaseEntity.CLOSED)
                 .description("Fourth Investigation on Asset4")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(20L))
                 .build();
         InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
@@ -382,7 +366,7 @@ public class InvestigationTestDataFactory {
                 .status(NotificationStatusBaseEntity.CANCELED)
                 .description("Fifth Investigation on Asset5")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(40L))
                 .build();
 
         InvestigationEntity[] InvestigationEntities = {firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
@@ -429,7 +413,7 @@ public class InvestigationTestDataFactory {
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(QualityNotificationSeverity.CRITICAL)
                         .build(),
                 InvestigationNotificationEntity
                         .builder()
