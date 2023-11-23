@@ -101,6 +101,8 @@ spec:
               name: nginx-lib
             - mountPath: /var/log/nginx
               name: nginx-log
+            - mountPath: /usr/share/nginx
+              name: nginx-share
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -121,4 +123,6 @@ spec:
         - name: nginx-lib
           emptyDir: {}
         - name: nginx-log
+          emptyDir: {}
+        - name: nginx-share
           emptyDir: {}
