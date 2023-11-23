@@ -75,7 +75,7 @@ securityContext:
   capabilities:
     drop:
       - ALL
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false  # Variables are written to the HTML files on startup, so this is not possible.
 
 service:
   type: ClusterIP

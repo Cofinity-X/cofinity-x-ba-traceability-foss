@@ -92,17 +92,6 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-            - mountPath: /etc/nginx
-              name: nginx-etc
-            - mountPath: /var/cache/nginx
-              name: nginx-cache
-            - mountPath: /var/lib/nginx
-              name: nginx-lib
-            - mountPath: /var/log/nginx
-              name: nginx-log
-            - mountPath: /usr/share/nginx
-              name: nginx-share
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -115,14 +104,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        - name: nginx-etc
-          emptyDir: {}
-        - name: nginx-cache
-          emptyDir: {}
-        - name: nginx-lib
-          emptyDir: {}
-        - name: nginx-log
-          emptyDir: {}
-        - name: nginx-share
-          emptyDir: {}
