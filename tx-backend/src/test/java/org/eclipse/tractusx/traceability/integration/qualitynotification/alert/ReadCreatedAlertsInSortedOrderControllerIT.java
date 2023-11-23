@@ -17,19 +17,19 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package org.eclipse.tractusx.traceability.integration.qualitynotification.investigation;
+package org.eclipse.tractusx.traceability.integration.qualitynotification.alert;
 
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
+import org.eclipse.tractusx.traceability.integration.common.support.AlertNotificationsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.BpnSupport;
-import org.eclipse.tractusx.traceability.integration.common.support.InvestigationNotificationsSupport;
-import org.eclipse.tractusx.traceability.integration.common.support.InvestigationsSupport;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSeverity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
-import org.eclipse.tractusx.traceability.testdata.InvestigationTestDataFactory;
+import org.eclipse.tractusx.traceability.testdata.AlertTestDataFactory;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
@@ -37,30 +37,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.IntStream;
 
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
-import static org.eclipse.tractusx.traceability.integration.common.support.ISO8601DateTimeMatcher.isIso8601DateTime;
 
-class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecification {
+class ReadCreatedAlertsInSortedOrderControllerIT extends IntegrationTestSpecification {
+
+    @Autowired
+    AlertsSupport alertsSupport;
+
+    @Autowired
+    AlertNotificationsSupport alertNotificationsSupport;
 
     @Autowired
     BpnSupport bpnSupport;
-    @Autowired
-    InvestigationNotificationsSupport investigationNotificationsSupport;
-    @Autowired
-    InvestigationsSupport investigationsSupport;
 
     @Test
-    void givenInvestigations_whenGetInvestigations_thenReturnSortedByCreationTime() throws JoseException {
+    void givenAlerts_whenGetAlerts_thenReturnSortedByCreationTime() throws JoseException {
         // given
         Instant now = Instant.now();
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
+        AlertEntity firstAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -68,7 +66,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .description("1")
                 .createdDate(now.minusSeconds(10L))
                 .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
+        AlertEntity secondAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -76,7 +74,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(21L))
                 .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
+        AlertEntity thirdAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -84,7 +82,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now)
                 .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
+        AlertEntity fourthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -92,7 +90,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(20L))
                 .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
+        AlertEntity fifthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -101,142 +99,40 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .createdDate(now.plusSeconds(40L))
                 .build();
 
-        investigationNotificationsSupport.storedNotifications(
-                InvestigationNotificationEntity
+        alertNotificationsSupport.storedAlertNotifications(
+                AlertNotificationEntity
                         .builder()
                         .id("1")
-                        .investigation(firstInvestigation)
+                        .alert(firstAlert)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("2")
-                        .investigation(secondInvestigation)
+                        .alert(secondAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("3")
-                        .investigation(thirdInvestigation)
+                        .alert(thirdAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("4")
-                        .investigation(fourthInvestigation)
+                        .alert(fourthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("5")
-                        .investigation(fifthInvestigation)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build()
-        );
-
-        // then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "0")
-                .param("size", "10")
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/investigations/created")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(0))
-                .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(4))
-                .body("totalItems", Matchers.is(4));
-    }
-
-    @Test
-    void givenSortByCreatedDateProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
-        // given
-        String sortString = "createdDate,desc";
-        Instant now = Instant.now();
-        String testBpn = bpnSupport.testBpn();
-
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
-                .side(NotificationSideBaseEntity.SENDER)
-                .description("1")
-                .createdDate(now.minusSeconds(10L))
-                .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
-                .description("2")
-                .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(now.plusSeconds(21L))
-                .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
-                .description("3")
-                .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(now)
-                .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
-                .description("4")
-                .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(now.plusSeconds(20L))
-                .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
-                .description("5")
-                .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(now.plusSeconds(40L))
-                .build();
-
-        investigationNotificationsSupport.storedNotifications(
-                InvestigationNotificationEntity
-                        .builder()
-                        .id("1")
-                        .investigation(firstInvestigation)
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .id("2")
-                        .investigation(secondInvestigation)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .id("3")
-                        .investigation(thirdInvestigation)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .id("4")
-                        .investigation(fourthInvestigation)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .id("5")
-                        .investigation(fifthInvestigation)
+                        .alert(fifthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build()
         );
@@ -248,7 +144,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .param("size", "10")
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/investigations/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
+                .get("/api/alerts/created")
                 .then()
                 .statusCode(200)
                 .body("page", Matchers.is(0))
@@ -257,23 +153,22 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .body("totalItems", Matchers.is(4));
     }
 
-
     @Test
-    void givenSortByDescriptionProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
+    void givenSortByCreatedDateProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
         // given
-        String sortString = "description,desc";
+        String sortString = "createdDate,desc";
         Instant now = Instant.now();
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
+        AlertEntity firstAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.SENT)
+                .status(NotificationStatusBaseEntity.CREATED)
                 .side(NotificationSideBaseEntity.SENDER)
                 .description("1")
                 .createdDate(now.minusSeconds(10L))
                 .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
+        AlertEntity secondAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -281,15 +176,15 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(21L))
                 .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
+        AlertEntity thirdAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.CLOSED)
+                .status(NotificationStatusBaseEntity.CREATED)
                 .description("3")
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now)
                 .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
+        AlertEntity fourthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -297,50 +192,50 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(20L))
                 .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
+        AlertEntity fifthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
+                .status(NotificationStatusBaseEntity.CREATED)
                 .description("5")
-                .side(NotificationSideBaseEntity.SENDER)
+                .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(40L))
                 .build();
 
 
-        investigationNotificationsSupport.storedNotifications(
-                InvestigationNotificationEntity
+        alertNotificationsSupport.storedAlertNotifications(
+                AlertNotificationEntity
                         .builder()
                         .id("1")
-                        .investigation(firstInvestigation)
+                        .alert(firstAlert)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("2")
-                        .investigation(secondInvestigation)
+                        .alert(secondAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("3")
-                        .investigation(thirdInvestigation)
+                        .alert(thirdAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("4")
-                        .investigation(fourthInvestigation)
+                        .alert(fourthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("5")
-                        .investigation(fifthInvestigation)
+                        .alert(fifthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build()
         );
@@ -351,7 +246,109 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .param("size", "10")
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/investigations/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
+                .get("/api/alerts/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(4))
+                .body("totalItems", Matchers.is(4));
+    }
+
+    @Test
+    void givenSortByDescriptionProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
+        // given
+        String sortString = "description,desc";
+        Instant now = Instant.now();
+        String testBpn = bpnSupport.testBpn();
+
+        AlertEntity firstAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.SENT)
+                .side(NotificationSideBaseEntity.SENDER)
+                .description("1")
+                .createdDate(now.minusSeconds(10L))
+                .build();
+        AlertEntity secondAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("2")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(now.plusSeconds(21L))
+                .build();
+        AlertEntity thirdAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CLOSED)
+                .description("3")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(now)
+                .build();
+        AlertEntity fourthAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("4")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(now.plusSeconds(20L))
+                .build();
+        AlertEntity fifthAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(testBpn)
+                .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
+                .description("5")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(now.plusSeconds(40L))
+                .build();
+
+
+        alertNotificationsSupport.storedAlertNotifications(
+                AlertNotificationEntity
+                        .builder()
+                        .id("1")
+                        .alert(firstAlert)
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("2")
+                        .alert(secondAlert)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("3")
+                        .alert(thirdAlert)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("4")
+                        .alert(fourthAlert)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .id("5")
+                        .alert(fifthAlert)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .build()
+        );
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .param("page", "0")
+                .param("size", "10")
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/alerts/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
                 .then()
                 .statusCode(200)
                 .body("page", Matchers.is(0))
@@ -362,13 +359,13 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
     }
 
     @Test
-    void givenSortByStatusProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
+    void givenSortByStatusProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
         // given
         String sortString = "status,asc";
         Instant now = Instant.now();
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
+        AlertEntity firstAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.SENT)
@@ -376,7 +373,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .description("1")
                 .createdDate(now.minusSeconds(10L))
                 .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
+        AlertEntity secondAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -384,7 +381,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(21L))
                 .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
+        AlertEntity thirdAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CLOSED)
@@ -392,7 +389,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now)
                 .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
+        AlertEntity fourthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -400,7 +397,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(20L))
                 .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
+        AlertEntity fifthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(testBpn)
                 .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
@@ -410,40 +407,40 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .build();
 
 
-        investigationNotificationsSupport.storedNotifications(
-                InvestigationNotificationEntity
+        alertNotificationsSupport.storedAlertNotifications(
+                AlertNotificationEntity
                         .builder()
                         .id("1")
-                        .investigation(firstInvestigation)
+                        .alert(firstAlert)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("2")
-                        .investigation(secondInvestigation)
+                        .alert(secondAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("3")
-                        .investigation(thirdInvestigation)
+                        .alert(thirdAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("4")
-                        .investigation(fourthInvestigation)
+                        .alert(fourthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("5")
-                        .investigation(fifthInvestigation)
+                        .alert(fifthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build()
         );
@@ -454,7 +451,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .param("size", "10")
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/investigations/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
+                .get("/api/alerts/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
                 .then()
                 .statusCode(200)
                 .body("page", Matchers.is(0))
@@ -465,93 +462,93 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
     }
 
     @Test
-    void givenSortBySeverityProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
+    void givenSortBySeverityProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
         // given
         String sortString = "severity,asc";
         Instant now = Instant.now();
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
-                                                                    .assets(Collections.emptyList())
-                                                                    .bpn(testBpn)
-                                                                    .status(NotificationStatusBaseEntity.SENT)
-                                                                    .side(NotificationSideBaseEntity.SENDER)
-                                                                    .description("1")
-                                                                    .createdDate(now.minusSeconds(10L))
-                                                                    .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
-                                                                     .assets(Collections.emptyList())
-                                                                     .bpn(testBpn)
-                                                                     .status(NotificationStatusBaseEntity.CREATED)
-                                                                     .description("2")
-                                                                     .side(NotificationSideBaseEntity.SENDER)
-                                                                     .createdDate(now.plusSeconds(21L))
-                                                                     .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
-                                                                    .assets(Collections.emptyList())
-                                                                    .bpn(testBpn)
-                                                                    .status(NotificationStatusBaseEntity.CLOSED)
-                                                                    .description("3")
-                                                                    .side(NotificationSideBaseEntity.SENDER)
-                                                                    .createdDate(now)
-                                                                    .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
-                                                                     .assets(Collections.emptyList())
-                                                                     .bpn(testBpn)
-                                                                     .status(NotificationStatusBaseEntity.CREATED)
-                                                                     .description("4")
-                                                                     .side(NotificationSideBaseEntity.SENDER)
-                                                                     .createdDate(now.plusSeconds(20L))
-                                                                     .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
-                                                                    .assets(Collections.emptyList())
-                                                                    .bpn(testBpn)
-                                                                    .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
-                                                                    .description("5")
-                                                                    .side(NotificationSideBaseEntity.SENDER)
-                                                                    .createdDate(now.plusSeconds(40L))
-                                                                    .build();
+        AlertEntity firstAlert = AlertEntity.builder()
+                                            .assets(Collections.emptyList())
+                                            .bpn(testBpn)
+                                            .status(NotificationStatusBaseEntity.SENT)
+                                            .side(NotificationSideBaseEntity.SENDER)
+                                            .description("1")
+                                            .createdDate(now.minusSeconds(10L))
+                                            .build();
+        AlertEntity secondAlert = AlertEntity.builder()
+                                             .assets(Collections.emptyList())
+                                             .bpn(testBpn)
+                                             .status(NotificationStatusBaseEntity.CREATED)
+                                             .description("2")
+                                             .side(NotificationSideBaseEntity.SENDER)
+                                             .createdDate(now.plusSeconds(21L))
+                                             .build();
+        AlertEntity thirdAlert = AlertEntity.builder()
+                                            .assets(Collections.emptyList())
+                                            .bpn(testBpn)
+                                            .status(NotificationStatusBaseEntity.CLOSED)
+                                            .description("3")
+                                            .side(NotificationSideBaseEntity.SENDER)
+                                            .createdDate(now)
+                                            .build();
+        AlertEntity fourthAlert = AlertEntity.builder()
+                                             .assets(Collections.emptyList())
+                                             .bpn(testBpn)
+                                             .status(NotificationStatusBaseEntity.CREATED)
+                                             .description("4")
+                                             .side(NotificationSideBaseEntity.SENDER)
+                                             .createdDate(now.plusSeconds(20L))
+                                             .build();
+        AlertEntity fifthAlert = AlertEntity.builder()
+                                            .assets(Collections.emptyList())
+                                            .bpn(testBpn)
+                                            .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
+                                            .description("5")
+                                            .side(NotificationSideBaseEntity.SENDER)
+                                            .createdDate(now.plusSeconds(40L))
+                                            .build();
 
 
-        investigationNotificationsSupport.storedNotifications(
-                InvestigationNotificationEntity
+        alertNotificationsSupport.storedAlertNotifications(
+                AlertNotificationEntity
                         .builder()
                         .id("1")
-                        .investigation(firstInvestigation)
+                        .alert(firstAlert)
                         .severity(QualityNotificationSeverity.CRITICAL)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .severity(QualityNotificationSeverity.MAJOR)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("2")
-                        .investigation(secondInvestigation)
+                        .alert(secondAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .severity(QualityNotificationSeverity.LIFE_THREATENING)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("3")
-                        .investigation(thirdInvestigation)
+                        .alert(thirdAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .severity(QualityNotificationSeverity.MINOR)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("4")
-                        .investigation(fourthInvestigation)
+                        .alert(fourthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build(),
-                InvestigationNotificationEntity
+                AlertNotificationEntity
                         .builder()
                         .severity(QualityNotificationSeverity.CRITICAL)
                         .status(NotificationStatusBaseEntity.CREATED)
                         .id("5")
-                        .investigation(fifthInvestigation)
+                        .alert(fifthAlert)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .build()
         );
@@ -562,7 +559,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .param("size", "10")
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/investigations/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
+                .get("/api/alerts/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
                 .then()
                 .statusCode(200)
                 .body("page", Matchers.is(0))
@@ -584,7 +581,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .param("size", "10")
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/investigations/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
+                .get("/api/alerts/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))
                 .then()
                 .statusCode(400)
                 .body("message", Matchers.is(
@@ -593,117 +590,13 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
     }
 
     @Test
-    void shouldReturnReceivedInvestigationsSortedByCreationTime() throws JoseException {
-        // given
-        String sortString = "createdDate,desc";
-        Instant now = Instant.now();
-        String testBpn = bpnSupport.testBpn();
-
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.RECEIVED)
-                .side(NotificationSideBaseEntity.RECEIVER)
-                .description("1")
-                .createdDate(now.minusSeconds(5L))
-                .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.RECEIVED)
-                .description("2")
-                .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(now.plusSeconds(2L))
-                .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.RECEIVED)
-                .description("3")
-                .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(now)
-                .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.RECEIVED)
-                .description("4")
-                .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(now.plusSeconds(20L))
-                .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
-                .assets(Collections.emptyList())
-                .bpn(testBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
-                .description("5")
-                .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(now.plusSeconds(40L))
-                .build();
-
-        investigationNotificationsSupport.storedNotifications(
-                InvestigationNotificationEntity
-                        .builder()
-                        .id("1")
-                        .investigation(firstInvestigation)
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .id("2")
-                        .investigation(secondInvestigation)
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .id("3")
-                        .investigation(thirdInvestigation)
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .id("4")
-                        .investigation(fourthInvestigation)
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build(),
-                InvestigationNotificationEntity
-                        .builder()
-                        .id("5")
-                        .investigation(fifthInvestigation)
-                        .status(NotificationStatusBaseEntity.CREATED)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
-                        .build()
-        );
-
-        // then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "0")
-                .param("size", "10")
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/investigations/received?sort=$sortString".replace("$sortString", sortString))
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(0))
-                .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(4))
-                .body("totalItems", Matchers.is(4))
-                .body("content.description", Matchers.containsInRelativeOrder("4", "2", "3", "1"))
-                .body("content.createdDate", Matchers.hasItems(isIso8601DateTime()));
-    }
-
-    @Test
-    void givenSortBySendToProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
+    void givenSortBySendToProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
         // given
         String sortString = "sendTo,desc";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
-        investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
+        AlertNotificationEntity[] alertNotificationEntities = AlertTestDataFactory.createSenderMajorityAlertNotificationEntitiesTestData(testBpn);
+        alertNotificationsSupport.storedAlertNotifications(alertNotificationEntities);
 
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
@@ -712,7 +605,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .param("sort", sortString)
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/investigations/created")
+                .get("/api/alerts/created")
                 .then()
                 .statusCode(200)
                 .body("page", Matchers.is(0))
@@ -723,13 +616,14 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
     }
 
     @Test
-    void givenSortByTargetDateProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
+    void givenSortByTargetDateProvided_whenGetAlerts_thenReturnAlertsProperlySorted() throws JoseException {
         // given
         String sortString = "targetDate,asc";
+        Instant now = Instant.now();
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
-        investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
+        AlertNotificationEntity[] alertNotificationEntities = AlertTestDataFactory.createSenderMajorityAlertNotificationEntitiesTestData(testBpn);
+        alertNotificationsSupport.storedAlertNotifications(alertNotificationEntities);
 
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
@@ -738,7 +632,7 @@ class ReadInvestigationsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .param("sort", sortString)
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/investigations/created")
+                .get("/api/alerts/created")
                 .then()
                 .statusCode(200)
                 .body("page", Matchers.is(0))

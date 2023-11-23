@@ -38,7 +38,7 @@ import java.util.Locale;
 
 public class AlertTestDataFactory {
 
-    public static AlertEntity[] createAlertEntitiesTestData(String senderBpn) {
+    public static AlertEntity[] createSenderMajorityAlertEntitiesTestData(String senderBpn) {
         String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
         String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -94,7 +94,7 @@ public class AlertTestDataFactory {
         return alertEntities;
     }
 
-    public static AlertNotificationEntity[] createAlertNotificationEntitiesTestData(String senderBpn) {
+    public static AlertNotificationEntity[] createSenderMajorityAlertNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -105,7 +105,142 @@ public class AlertTestDataFactory {
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
 
-        AlertEntity[] alertEntities = createAlertEntitiesTestData(senderBpn);
+        AlertEntity[] alertEntities = createSenderMajorityAlertEntitiesTestData(senderBpn);
+
+        AlertNotificationEntity[] alertNotificationEntities = {
+                AlertNotificationEntity
+                        .builder()
+                        .id("1")
+                        .alert(alertEntities[0])
+                        .status(NotificationStatusBaseEntity.CREATED)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000001")
+                        .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInNov)
+                        .sendToName("OEM1")
+                        .severity(QualityNotificationSeverity.MAJOR)
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .id("2")
+                        .alert(alertEntities[1])
+                        .status(NotificationStatusBaseEntity.SENT)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000001")
+                        .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInDec)
+                        .sendToName("OEM1")
+                        .severity(QualityNotificationSeverity.MAJOR)
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .id("3")
+                        .alert(alertEntities[2])
+                        .status(NotificationStatusBaseEntity.ACCEPTED)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000002")
+                        .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInNov)
+                        .sendToName("OEM2")
+                        .severity(QualityNotificationSeverity.LIFE_THREATENING)
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .id("4")
+                        .alert(alertEntities[3])
+                        .status(NotificationStatusBaseEntity.ACCEPTED)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000003")
+                        .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInDec)
+                        .sendToName("OEM3")
+                        .severity(QualityNotificationSeverity.MINOR)
+                        .build(),
+                AlertNotificationEntity
+                        .builder()
+                        .id("5")
+                        .alert(alertEntities[4])
+                        .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
+                        .sendTo("BPNL000000000004")
+                        .createdBy("BPNL00000000000A")
+                        .targetDate(targetDateInNov)
+                        .sendToName("OEM4")
+                        .severity(QualityNotificationSeverity.MINOR)
+                        .build()
+        };
+
+        return alertNotificationEntities;
+    }
+
+    public static AlertEntity[] createReceiverMajorityAlertEntitiesTestData(String senderBpn) {
+        String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
+        String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
+        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
+        Instant createdDateInNov = LocalDateTime.parse(createdDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                .atZone(ZoneId.of("Europe/Berlin"))
+                .toInstant();
+        Instant createdDateInDec = LocalDateTime.parse(createdDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                .atZone(ZoneId.of("Europe/Berlin"))
+                .toInstant();
+
+        AlertEntity firstAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(senderBpn)
+                .status(NotificationStatusBaseEntity.CREATED)
+                .description("First Alert on Asset1")
+                .side(NotificationSideBaseEntity.RECEIVER)
+                .createdDate(createdDateInNov)
+                .build();
+        AlertEntity secondAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(senderBpn)
+                .status(NotificationStatusBaseEntity.RECEIVED)
+                .description("Second Alert on Asset2")
+                .side(NotificationSideBaseEntity.RECEIVER)
+                .createdDate(createdDateInNov)
+                .build();
+        AlertEntity thirdAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(senderBpn)
+                .status(NotificationStatusBaseEntity.ACCEPTED)
+                .description("Third Alert on Asset3")
+                .side(NotificationSideBaseEntity.RECEIVER)
+                .createdDate(createdDateInNov)
+                .build();
+        AlertEntity fourthAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(senderBpn)
+                .status(NotificationStatusBaseEntity.ACCEPTED)
+                .description("Fourth Alert on Asset4")
+                .side(NotificationSideBaseEntity.RECEIVER)
+                .createdDate(createdDateInDec)
+                .build();
+        AlertEntity fifthAlert = AlertEntity.builder()
+                .assets(Collections.emptyList())
+                .bpn(senderBpn)
+                .status(NotificationStatusBaseEntity.CANCELED)
+                .description("Fifth Alert on Asset5")
+                .side(NotificationSideBaseEntity.SENDER)
+                .createdDate(createdDateInDec)
+                .build();
+
+        AlertEntity[] alertEntities = {firstAlert, secondAlert, thirdAlert, fourthAlert, fifthAlert};
+        return alertEntities;
+    }
+
+    public static AlertNotificationEntity[] createReceiverMajorityAlertNotificationEntitiesTestData(String senderBpn) {
+        String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
+        String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
+        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
+        Instant targetDateInNov = LocalDateTime.parse(targetDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                .atZone(ZoneId.of("Europe/Berlin"))
+                .toInstant();
+        Instant targetDateInDec = LocalDateTime.parse(targetDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
+                .atZone(ZoneId.of("Europe/Berlin"))
+                .toInstant();
+
+        AlertEntity[] alertEntities = createReceiverMajorityAlertEntitiesTestData(senderBpn);
 
         AlertNotificationEntity[] alertNotificationEntities = {
                 AlertNotificationEntity

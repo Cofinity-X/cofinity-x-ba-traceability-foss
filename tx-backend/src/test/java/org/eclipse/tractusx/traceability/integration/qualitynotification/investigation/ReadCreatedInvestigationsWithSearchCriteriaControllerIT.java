@@ -46,7 +46,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString = "sendTo,EQUAL,BPNL000000000001";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -74,7 +74,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString = "createdDate,AT_LOCAL_DATE,2023-11-09";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -100,7 +100,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString = "sendToName,EQUAL,OEM2";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -129,7 +129,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString = "status,EQUAL,ACCEPTED";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -158,7 +158,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString = "severity,EQUAL,3";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -187,7 +187,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString = "createdBy,EQUAL,BPNL00000000000A";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -216,7 +216,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString = "description,STARTS_WITH,First";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -246,7 +246,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString2 = "sendTo,EQUAL,BPNL000000000001";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
@@ -276,7 +276,7 @@ class ReadCreatedInvestigationsWithSearchCriteriaControllerIT extends Integratio
         String filterString2 = "sendTo,EQUAL,BPNL000000000001";
         String testBpn = bpnSupport.testBpn();
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createInvestigationNotificationEntitiesTestData(testBpn);
+        InvestigationNotificationEntity[] investigationNotificationEntities = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(testBpn);
         investigationNotificationsSupport.storedNotifications(investigationNotificationEntities);
 
         given()
