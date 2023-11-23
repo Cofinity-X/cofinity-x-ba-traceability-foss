@@ -19,35 +19,23 @@
 
 package org.eclipse.tractusx.traceability.testdata;
 
-import org.eclipse.tractusx.traceability.common.model.*;
-import org.eclipse.tractusx.traceability.integration.common.support.BpnSupport;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.*;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSeverity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 public class AlertTestDataFactory {
 
-    public static AlertEntity[] createSenderMajorityAlertEntitiesTestData(String senderBpn) {
-        String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
-        String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
-        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
-        Instant createdDateInNov = LocalDateTime.parse(createdDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
-        Instant createdDateInDec = LocalDateTime.parse(createdDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
+    private static AlertEntity[] createSenderMajorityAlertEntitiesTestData(String senderBpn) {
+        Instant now = Instant.now();
 
         AlertEntity firstAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -55,7 +43,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.CREATED)
                 .description("First Alert on Asset1")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.minusSeconds(10L))
                 .build();
         AlertEntity secondAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -63,7 +51,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.SENT)
                 .description("Second Alert on Asset2")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.plusSeconds(21L))
                 .build();
         AlertEntity thirdAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -71,7 +59,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Third Alert on Asset3")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInNov)
+                .createdDate(now)
                 .build();
         AlertEntity fourthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -79,7 +67,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Fourth Alert on Asset4")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(20L))
                 .build();
         AlertEntity fifthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -87,7 +75,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.CANCELED)
                 .description("Fifth Alert on Asset5")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(40L))
                 .build();
 
         AlertEntity[] alertEntities = {firstAlert, secondAlert, thirdAlert, fourthAlert, fifthAlert};
@@ -95,6 +83,7 @@ public class AlertTestDataFactory {
     }
 
     public static AlertNotificationEntity[] createSenderMajorityAlertNotificationEntitiesTestData(String senderBpn) {
+        Instant now = Instant.now();
         String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -130,7 +119,7 @@ public class AlertTestDataFactory {
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(QualityNotificationSeverity.CRITICAL)
                         .build(),
                 AlertNotificationEntity
                         .builder()
@@ -173,24 +162,16 @@ public class AlertTestDataFactory {
         return alertNotificationEntities;
     }
 
-    public static AlertEntity[] createReceiverMajorityAlertEntitiesTestData(String senderBpn) {
-        String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
-        String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
-        String dateFormatter = "hh:mm a, EEE M/d/uuuu";
-        Instant createdDateInNov = LocalDateTime.parse(createdDateInNovString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
-        Instant createdDateInDec = LocalDateTime.parse(createdDateInDecString, DateTimeFormatter.ofPattern(dateFormatter, Locale.US))
-                .atZone(ZoneId.of("Europe/Berlin"))
-                .toInstant();
+    private static AlertEntity[] createReceiverMajorityAlertEntitiesTestData(String senderBpn) {
+        Instant now = Instant.now();
 
         AlertEntity firstAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
-                .status(NotificationStatusBaseEntity.CREATED)
+                .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                 .description("First Alert on Asset1")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.minusSeconds(10L))
                 .build();
         AlertEntity secondAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -198,7 +179,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.RECEIVED)
                 .description("Second Alert on Asset2")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInNov)
+                .createdDate(now.plusSeconds(21L))
                 .build();
         AlertEntity thirdAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -206,7 +187,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Third Alert on Asset3")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInNov)
+                .createdDate(now)
                 .build();
         AlertEntity fourthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -214,7 +195,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Fourth Alert on Asset4")
                 .side(NotificationSideBaseEntity.RECEIVER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(20L))
                 .build();
         AlertEntity fifthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
@@ -222,7 +203,7 @@ public class AlertTestDataFactory {
                 .status(NotificationStatusBaseEntity.CANCELED)
                 .description("Fifth Alert on Asset5")
                 .side(NotificationSideBaseEntity.SENDER)
-                .createdDate(createdDateInDec)
+                .createdDate(now.plusSeconds(40L))
                 .build();
 
         AlertEntity[] alertEntities = {firstAlert, secondAlert, thirdAlert, fourthAlert, fifthAlert};
@@ -265,7 +246,7 @@ public class AlertTestDataFactory {
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(QualityNotificationSeverity.CRITICAL)
                         .build(),
                 AlertNotificationEntity
                         .builder()

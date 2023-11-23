@@ -578,6 +578,7 @@ class ReadCreatedInvestigationsInSortedOrderControllerIT extends IntegrationTest
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .param("page", "0")
                 .param("size", "10")
+                .param("size", "10")
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/investigations/created?page=0&size=10&sort=$sortString".replace("$sortString", sortString))

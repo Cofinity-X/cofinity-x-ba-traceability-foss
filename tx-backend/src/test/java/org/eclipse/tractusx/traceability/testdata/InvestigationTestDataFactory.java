@@ -194,7 +194,7 @@ public class InvestigationTestDataFactory {
         return searchCriteria;
     }
 
-    public static InvestigationEntity[] createSenderMajorityInvestigationEntitiesTestData(String senderBpn) {
+    private static InvestigationEntity[] createSenderMajorityInvestigationEntitiesTestData(String senderBpn) {
         String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
         String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -333,7 +333,7 @@ public class InvestigationTestDataFactory {
         return investigationNotificationEntities;
     }
 
-    public static InvestigationEntity[] createReceiverMajorityInvestigationEntitiesTestData(String senderBpn) {
+    private static InvestigationEntity[] createReceiverMajorityInvestigationEntitiesTestData(String senderBpn) {
         String createdDateInNovString = "12:00 PM, Thu 11/9/2023";
         String createdDateInDecString = "12:00 PM, Sat 12/9/2023";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
