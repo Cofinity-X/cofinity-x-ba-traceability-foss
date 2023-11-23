@@ -35,12 +35,11 @@ import {
   FilterMethod,
 } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
+import { FilterCongigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
 import { Subscription } from 'rxjs';
-import { Severity } from '@shared/model/severity.model';
-import { NotificationStatus } from '@shared/model/notification.model';
 
 @Component({
   selector: 'app-alerts',
@@ -49,7 +48,6 @@ import { NotificationStatus } from '@shared/model/notification.model';
 })
 export class AlertsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;
-
   public searchFormGroup = new FormGroup({});
   public searchControl: FormControl;
   public readonly alertsReceived$;
@@ -61,88 +59,21 @@ export class AlertsComponent {
   public alertQueuedAndRequestedSortList: TableHeaderSort[] = [];
   public filterReceived: TableFilter = { filterMethod: FilterMethod.AND };
   public filterQueuedAndRequested: TableFilter = { filterMethod: FilterMethod.AND };
-
-  optionTextSearch = [];
-  severityOptions = [
-    {
-      display: 'severity.' + Severity.MINOR,
-      value: 0,
-      checked: false,
-    },
-    {
-      display: 'severity.' + Severity.MAJOR,
-      value: 1,
-      checked: false,
-    },
-    {
-      display: 'severity.' + Severity.CRITICAL,
-      value: 2,
-      checked: false,
-    },
-    {
-      display: 'severity.' + Severity.LIFE_THREATENING,
-      value: 3,
-      checked: false,
-    },
-  ];
-  //Approved and Requested only exist in the frontend
-  statusOptions = [
-    {
-      display: 'commonAlert.status.' + NotificationStatus.ACCEPTED,
-      value: NotificationStatus.ACCEPTED,
-      checked: false,
-    },
-    {
-      display: 'commonAlert.status.' + NotificationStatus.ACKNOWLEDGED,
-      value: NotificationStatus.ACKNOWLEDGED,
-      checked: false,
-    },
-    {
-      display: 'commonAlert.status.' + NotificationStatus.CANCELED,
-      value: NotificationStatus.CANCELED,
-      checked: false,
-    },
-    {
-      display: 'commonAlert.status.' + NotificationStatus.CLOSED,
-      value: NotificationStatus.CLOSED,
-      checked: false,
-    },
-    {
-      display: 'commonAlert.status.' + NotificationStatus.CREATED,
-      value: NotificationStatus.CREATED,
-      checked: false,
-    },
-    {
-      display: 'commonAlert.status.' + NotificationStatus.DECLINED,
-      value: NotificationStatus.DECLINED,
-      checked: false,
-    },
-    {
-      display: 'commonAlert.status.' + NotificationStatus.RECEIVED,
-      value: NotificationStatus.RECEIVED,
-      checked: false,
-    },
-    {
-      display: 'commonAlert.status.' + NotificationStatus.SENT,
-      value: NotificationStatus.SENT,
-      checked: false,
-    },
-  ];
-
+  public readonly filterConfigOptions = new FilterCongigOptions();
   public readonly alertsReceivedFilterConfiguration: any[] = [
-    { filterKey: 'createdDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'description', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'status', isTextSearch: false, option: this.statusOptions },
-    { filterKey: 'severity', isTextSearch: false, option: this.severityOptions },
-    { filterKey: 'createdBy', isTextSearch: true, option: this.optionTextSearch },
+    this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
+    this.filterConfigOptions.filterKeyOptionsNotifications.description,
+    this.filterConfigOptions.filterKeyOptionsNotifications.status('commonAlert'),
+    this.filterConfigOptions.filterKeyOptionsNotifications.severity,
+    this.filterConfigOptions.filterKeyOptionsNotifications.createdBy,
   ];
 
   public readonly alertsQueuedAndRequestedFilterConfiguration: any[] = [
-    { filterKey: 'createdDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
-    { filterKey: 'description', isTextSearch: true, option: this.optionTextSearch },
-    { filterKey: 'status', isTextSearch: false, option: this.statusOptions },
-    { filterKey: 'severity', isTextSearch: false, option: this.severityOptions },
-    { filterKey: 'sendTo', isTextSearch: true, option: this.optionTextSearch },
+    this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
+    this.filterConfigOptions.filterKeyOptionsNotifications.description,
+    this.filterConfigOptions.filterKeyOptionsNotifications.status('commonAlert'),
+    this.filterConfigOptions.filterKeyOptionsNotifications.severity,
+    this.filterConfigOptions.filterKeyOptionsNotifications.sendTo,
   ];
 
   private ctrlKeyState: boolean = false;
