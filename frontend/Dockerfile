@@ -39,6 +39,8 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=10s \
 
 USER root
 
+RUN apk add shadow && usermod -u 10100 -o nginx && groupmod -g 10100 -o nginx
+
 RUN rm /usr/share/nginx/html/index.html && rm /etc/nginx/conf.d/default.conf
 
 # Copy project files from ‘builder’ stage copy over the artifacts in dist folder to default nginx public folder
