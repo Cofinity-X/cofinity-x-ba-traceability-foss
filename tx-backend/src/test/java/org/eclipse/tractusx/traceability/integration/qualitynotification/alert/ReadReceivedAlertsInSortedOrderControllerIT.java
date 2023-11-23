@@ -22,7 +22,6 @@ package org.eclipse.tractusx.traceability.integration.qualitynotification.alert;
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.AlertNotificationsSupport;
-import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.BpnSupport;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
 import org.eclipse.tractusx.traceability.testdata.AlertTestDataFactory;
@@ -35,9 +34,6 @@ import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 
 class ReadReceivedAlertsInSortedOrderControllerIT extends IntegrationTestSpecification {
-
-    @Autowired
-    AlertsSupport alertsSupport;
 
     @Autowired
     AlertNotificationsSupport alertNotificationsSupport;
