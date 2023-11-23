@@ -23,9 +23,11 @@ SPDX-License-Identifier: Apache-2.0
 </ng-container>
 <ng-template #mainTmp
   let-notifications="view">
-  {{onItemCountChange(notifications.data.totalItems)}}
-  <div *ngIf="notifications.data.totalItems > 0; else displayMessage">
-    <app-table [enableScroll]="enableScroll"
+  {{ onItemCountChange(notifications.data.totalItems) }}
+  <div *ngIf="notifications.data.totalItems > 0 || filteredContent; else displayMessage">
+    <app-table [tableType]="tableType"
+      class="notifications-tab"
+      [enableScroll]="enableScroll"
       [paginationData]="notifications.data"
       [tableConfig]="tableConfig"
       [noShadow]="true"
@@ -33,11 +35,12 @@ SPDX-License-Identifier: Apache-2.0
       [showHover]="false"
       [multiSortList]="multiSortList"
       (selected)="selectNotification($event)"
-      (configChanged)="onTableConfigChange($event)">
+      (configChanged)="onTableConfigChange($event)"
+      (filterChange)="onFilterChange()">
     </app-table>
   </div>
   <ng-template #displayMessage>
-    <ng-content select="[content1]"></ng-content>
+    <ng-content select="[emptyContent]"></ng-content>
   </ng-template>
 </ng-template>
 
@@ -60,7 +63,8 @@ SPDX-License-Identifier: Apache-2.0
 
 <ng-template #severityTmp
   let-severity="value">
-  <app-severity [severity]="severity"></app-severity>
+  <app-severity [alternativeTextStyle]="true"
+    [severity]="severity"></app-severity>
 </ng-template>
 
 <ng-template #idTmp
@@ -75,8 +79,9 @@ SPDX-License-Identifier: Apache-2.0
 
 <ng-template #targetDateTmp
   let-text="value">
-  <p class="notification--table__cell body-small">{{ text | formatDate : { dateStyle: 'short', timeStyle: 'short'
-    } }}</p>
+  <p class="notification--table__cell body-small">
+    {{ text | formatDate : { dateStyle: 'short', timeStyle: 'short' } }}
+  </p>
 </ng-template>
 
 <ng-template #userTmp

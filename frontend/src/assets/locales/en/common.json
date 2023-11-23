@@ -63,6 +63,7 @@
     "clearPage": "Clear page selections",
     "clearAll": "Clear all selections",
     "filterTitle": "Filter",
+    "sortTooltip": "First click: sort in ascending order ↑\nSecond click: sort in descending order ↓\nCtrl + click on another column: adding that column to the sorting list.\nEach following sorting column will decide over the order, if in the higher order item multiple items have the same value.",
     "adminColumn": {
       "startDate": "Start date",
       "registryLookupStatus": "Status",
@@ -70,6 +71,12 @@
       "failedShellDescriptorsFetchCount": "Failed fetches",
       "shellDescriptorsFetchDelta": "Fetch Delta",
       "endDate": "End date"
+    },
+    "tableSettings": {
+      "title": "Column settings",
+      "selectAll": "All",
+      "refreshTooltip": "Reset individual table column settings to default",
+      "saveAction": "Save"
     },
     "column": {
       "id": "ID",
@@ -237,7 +244,7 @@
       "queuedAndRequested": "Queued & Sent"
     },
     "status": {
-      "SENT": "Sent",
+      "SENT": "Requested",
       "CANCELED": "Cancelled",
       "CLOSED": "Closed",
       "CREATED": "Queued",
@@ -280,7 +287,12 @@
   },
   "multiSelect": {
     "filterLabel": "Filter",
-    "placeHolder": "All"
+    "placeHolder": "All",
+    "selectAll": "All",
+    "filterLabelDate": "Filter by date",
+    "filterLabelSelect": "Choose",
+    "inputLabelText": "Search...",
+    "inputLabelDate": "DD/MM/YYYY"
   },
   "parts": {
     "input": {
@@ -299,6 +311,13 @@
   "datepicker": {
     "apply": "Filter",
     "cancel": "Reset"
+  },
+  "semanticDataModels": {
+    "BATCH": "Batch",
+    "JUSTINSEQUENCE": "JustInSequence",
+    "SERIALPART": "SerialPart",
+    "UNKNOWN": "Unknown",
+    "PARTASPLANNED": "PartAsPlanned"
   },
   "confirmationDialog": {
     "cancel": "Cancel"

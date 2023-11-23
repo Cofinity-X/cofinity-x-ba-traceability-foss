@@ -86,6 +86,8 @@ public class OwnPageable {
             case "createdBy" -> "notifications.createdBy";
             case "targetDate" -> "notifications.targetDate";
             case "sendTo" -> "notifications.sendTo";
+            case "qualityAlertsInStatusActive" -> "noOfActiveAlerts";
+            case "qualityInvestigationsInStatusActive" -> "noOfActiveInvestigations";
             default -> column;
         };
     }

@@ -47,20 +47,43 @@ SPDX-License-Identifier: Apache-2.0
   <mat-card-content>
     <app-notification-common-modal (confirmActionCompleted)="handleConfirmActionCompletedEvent()"
       [helperService]="helperService"
-      [translationContext]="TranslationContext.COMMONALERT"></app-notification-common-modal>
-    <app-notification class="tableScroll"
-      [queuedAndRequestedNotifications$]="alertsQueuedAndRequested$"
+      [translationContext]="TranslationContext.COMMONALERT">
+    </app-notification-common-modal>
+    <app-notification [queuedAndRequestedNotifications$]="alertsQueuedAndRequested$"
       [receivedNotifications$]="alertsReceived$"
+      [tablesType]="[PartTableType.ALERTS_RECEIVED, PartTableType.ALERTS_SENT]"
       [translationContext]="TranslationContext.COMMONALERT"
       [receivedOptionalColumns]="['severity', 'createdBy']"
       [receivedMultiSortList]="alertReceivedSortList"
-      [receivedSortableColumns]="{description: true, status: true, createdDate: true, severity: true, createdBy: true}"
+      [receivedSortableColumns]="{
+        description: true,
+        status: true,
+        createdDate: true,
+        severity: true,
+        createdBy: true
+      }"
+      [receivedFilterConfig]="alertsReceivedFilterConfiguration"
       [queuedAndRequestedOptionalColumns]="['severity', 'sendTo']"
-      [queuedAndRequestedSortableColumns]="{description: true, status: true, createdDate: true, severity: true, sendTo: true}"
+      [queuedAndRequestedSortableColumns]="{
+        description: true,
+        status: true,
+        createdDate: true,
+        severity: true,
+        sendTo: true
+      }"
       [queuedAndRequestedMultiSortList]="alertQueuedAndRequestedSortList"
+      [queuedAndRequestedFilterConfig]="alertsQueuedAndRequestedFilterConfiguration"
       (onReceivedTableConfigChanged)="onReceivedTableConfigChange($event)"
       (onQueuedAndRequestedTableConfigChanged)="onQueuedAndRequestedTableConfigChange($event)"
       (selected)="openDetailPage($event)"
-      [menuActionsConfig]="menuActionsConfig"></app-notification>
+      [menuActionsConfig]="menuActionsConfig">
+      <div emptyContent>
+        <img src="/assets/images/icons/noAlert.svg"
+          class="center py-5"
+          alt="No alert" />
+        <div class="noAlerts pb-3">{{ 'commonAlert.noAlerts' | i18n }}</div>
+        <div class="description pb-10">{{ 'commonAlert.noAlertsDescription' | i18n }}</div>
+      </div>
+    </app-notification>
   </mat-card-content>
 </mat-card>
