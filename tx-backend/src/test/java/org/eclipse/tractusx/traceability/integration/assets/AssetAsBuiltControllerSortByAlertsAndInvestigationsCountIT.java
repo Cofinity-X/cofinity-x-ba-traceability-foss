@@ -27,24 +27,20 @@ import org.eclipse.tractusx.traceability.integration.common.support.AssetsSuppor
 import org.eclipse.tractusx.traceability.integration.common.support.InvestigationsSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.*;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends IntegrationTestSpecification {
+class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends IntegrationTestSpecification {
 
     @Autowired
     AssetsSupport assetsSupport;
-
 
     @Autowired
     JpaAssetAsBuiltRepository jpaAssetAsBuiltRepository;
@@ -55,20 +51,14 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends Integrati
     @Autowired
     InvestigationsSupport investigationsSupport;
 
-
-    private static Stream<Arguments> requests() {
-        return Stream.of(
-                arguments(Map.of("qualityType", "NOT_EXISTING_QUALITY_TYPE"), "Failed to deserialize request body."),
-                arguments(Map.of("qualityType", "'CRITICAL'"), "Failed to deserialize request body."),
-                arguments(Map.of("qualityType", ""), "Failed to deserialize request body."),
-                arguments(Map.of("qualityType", " "), "Failed to deserialize request body.")
-        );
+    @BeforeEach
+    void before() {
+        assetsSupport.defaultMultipleAssetsAsBuiltStored();
     }
 
     @Test
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveDesc_thenReturnAssetsWithActiveAlertsCountInDesc() throws JoseException {
         // Given
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null);
         alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null);
@@ -106,7 +96,6 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCount extends Integrati
     @Test
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveAsc_thenReturnAssetsWithActiveAlertsCountInAsc() throws JoseException {
         // Given
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null);
         alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null);
