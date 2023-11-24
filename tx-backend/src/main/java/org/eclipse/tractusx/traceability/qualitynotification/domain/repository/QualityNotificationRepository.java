@@ -22,6 +22,7 @@
 package org.eclipse.tractusx.traceability.qualitynotification.domain.repository;
 
 import org.eclipse.tractusx.traceability.common.model.PageResult;
+import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
@@ -33,21 +34,21 @@ import java.util.Optional;
 
 public interface QualityNotificationRepository {
 
-    PageResult<QualityNotification> findQualityNotificationsBySide(QualityNotificationSide investigationSide, Pageable pageable);
+    PageResult<QualityNotification> findQualityNotificationsBySide(QualityNotificationSide notificationSide, Pageable pageable);
 
-    Optional<QualityNotification> findOptionalQualityNotificationById(QualityNotificationId investigationId);
+    PageResult<QualityNotification> findAll(Pageable pageable, SearchCriteria searchCriteria);
+
+    Optional<QualityNotification> findOptionalQualityNotificationById(QualityNotificationId notificationId);
 
     Optional<QualityNotification> findByEdcNotificationId(String edcNotificationId);
 
     long countQualityNotificationEntitiesByStatus(QualityNotificationStatus qualityNotificationStatus);
 
-    long countQualityNotificationEntitiesBySide(QualityNotificationSide investigationSide);
+    long countQualityNotificationEntitiesBySide(QualityNotificationSide notificationSide);
 
-    QualityNotificationId saveQualityNotificationEntity(QualityNotification investigation);
+    QualityNotificationId saveQualityNotificationEntity(QualityNotification notification);
 
-    QualityNotificationId updateQualityNotificationEntity(QualityNotification investigation);
+    QualityNotificationId updateQualityNotificationEntity(QualityNotification notification);
 
     void updateQualityNotificationMessageEntity(QualityNotificationMessage notification);
-
-
 }

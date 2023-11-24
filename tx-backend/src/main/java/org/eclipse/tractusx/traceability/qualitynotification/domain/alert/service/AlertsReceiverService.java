@@ -25,13 +25,13 @@ import org.eclipse.tractusx.traceability.assets.domain.asbuilt.service.AssetAsBu
 import org.eclipse.tractusx.traceability.common.mapper.NotificationMessageMapper;
 import org.eclipse.tractusx.traceability.common.mapper.QualityNotificationMapper;
 import org.eclipse.tractusx.traceability.common.model.BPN;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.EDCNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.alert.model.exception.AlertNotFoundException;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.AlertRepository;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.investigation.model.exception.InvestigationIllegalUpdate;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.EDCNotification;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -44,13 +44,14 @@ public class AlertsReceiverService {
     private final AssetAsBuiltServiceImpl assetService;
     private final QualityNotificationMapper qualityNotificationMapper;
 
-    public void handleNotificationReceive(EDCNotification edcNotification) {
-        BPN investigationCreatorBPN = BPN.of(edcNotification.getSenderBPN());
-        QualityNotificationMessage notification = notificationMapper.toNotification(edcNotification);
-        QualityNotification investigation = qualityNotificationMapper.toQualityNotification(investigationCreatorBPN, edcNotification.getInformation(), notification);
-        QualityNotificationId investigationId = alertRepository.saveQualityNotificationEntity(investigation);
-        assetService.setAssetsAlertStatus(investigation);
-        log.info("Stored received edcNotification in alert with id {}", investigationId);
+    public void handleNotificationReceive(final EDCNotification edcNotification) {
+        final BPN qualityAlertCreatorBPN = BPN.of(edcNotification.getSenderBPN());
+        final QualityNotificationMessage notification = notificationMapper.toNotification(edcNotification);
+        final QualityNotification qualityAlert = qualityNotificationMapper.toQualityNotification(qualityAlertCreatorBPN,
+                edcNotification.getInformation(), notification);
+        final QualityNotificationId qualityAlertId = alertRepository.saveQualityNotificationEntity(qualityAlert);
+        assetService.setAssetsAlertStatus(qualityAlert);
+        log.info("Stored received edcNotification in alert with id {}", qualityAlertId);
     }
 
     public void handleNotificationUpdate(EDCNotification edcNotification) {

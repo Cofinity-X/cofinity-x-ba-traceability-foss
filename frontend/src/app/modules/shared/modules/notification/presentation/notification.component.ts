@@ -21,7 +21,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { MenuActionConfig, PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { StaticIdService } from '@shared/service/staticId.service';
@@ -43,6 +43,9 @@ export class NotificationComponent {
   @Input() queuedAndRequestedSortableColumns: Record<string, boolean> = {};
   @Input() receivedMultiSortList: TableHeaderSort[] = [];
   @Input() queuedAndRequestedMultiSortList: TableHeaderSort[] = [];
+  @Input() tablesType: PartTableType[];
+  @Input() receivedFilterConfig: any[] = [];
+  @Input() queuedAndRequestedFilterConfig: any[] = [];
 
   @Output() onReceivedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() onQueuedAndRequestedTableConfigChanged = new EventEmitter<TableEventConfig>();
@@ -53,13 +56,21 @@ export class NotificationComponent {
   public readonly receivedTabLabelId = this.staticIdService.generateId('Notification.receivedTab');
   public readonly queuedAndRequestedTabLabelId = this.staticIdService.generateId('Notification.queuedAndRequestedTab');
 
+  public itemCount: number[] = [];
+
+  protected readonly PartTableType = PartTableType;
+
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly staticIdService: StaticIdService,
-  ) {}
+  ) { }
 
   public onTabChange(tabIndex: number): void {
     void this.router.navigate([], { queryParams: { tabIndex }, replaceUrl: true });
+  }
+
+  public onItemCountChanged(itemCount: number, tabIndex: number): void {
+    this.itemCount[tabIndex] = itemCount;
   }
 }

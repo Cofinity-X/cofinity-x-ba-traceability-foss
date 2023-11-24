@@ -16,12 +16,20 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-table {
-  width: 100%;
-  @apply font-light;
+@import '../../../../../theme/base.scss';
+@tailwind base;
+
+.mat-table {
+  max-width: 100%;
 }
 
+.settings-icon {
+  padding-left: 13px;
+}
 
+.table-menu {
+  width: 40px;
+}
 
 .table--select-all {
   display: inline-flex;
@@ -30,10 +38,41 @@ table {
   &__menu {
     background: rgba(0, 0, 0, 0.04);
 
-    & > .table--select-all__dropdown:hover {
+    &>.table--select-all__dropdown:hover {
       background: none;
     }
   }
+}
+
+.buttonText {
+  @extend .label-large;
+  @apply text-white;
+
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+}
+
+.createAlertButton {
+  padding-right: 10px !important;
+
+  .mat-mdc-button.mat-mdc-button-base {
+    .mdc-button {
+      width: 163px !important;
+    }
+  }
+
+  border-radius: 100px !important;
+}
+
+.partsTable {
+  height: 100% !important;
+}
+
+.parts-table-wrapper {
+  @extend .partsTable;
+  overflow-y: auto !important;
+  height: 405px;
 }
 
 .multi-select-header-cell {
@@ -42,8 +81,6 @@ table {
   .filter-title {
     padding: 25px;
   }
-
-
 }
 
 .table--select-all__dropdown {
@@ -59,11 +96,6 @@ table {
   cursor: pointer;
 }
 
-.mat-mdc-row:hover {
-  outline: 1px solid currentColor;
-}
-
-
 .table--no-data {
   display: flex;
   flex-direction: column;
@@ -72,7 +104,7 @@ table {
   justify-content: center;
 
   &__icon {
-    transform: scale(2);
+    transform: scale(1);
   }
 }
 
@@ -84,8 +116,52 @@ table {
   outline: unset;
 }
 
+.mat-mdc-row:hover {
+  @apply bg-surfaceMedium !important;
+}
+
 .table--cell {
+  border: none;
+  white-space: nowrap;
   padding: 0 10px;
+}
+
+.selectAllCheckbox {
+  background-color: white !important;
+  z-index: 1000 !important;
+}
+
+.checkbox {
+  padding: 0 5px 0 5px !important;
+  padding-right: 0 !important;
+}
+
+.lifecycle-size-text {
+  @apply text-secondary;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.15px;
+}
+
+.header-text {
+  @extend .title-medium;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  padding-top: 22px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-wrapper {
+  height: 405px;
+  width: 100%;
+  overflow: auto !important;
+  scrollbar-width: thin;
 }
 
 .table--notification--cell {
@@ -99,11 +175,6 @@ table {
 
 .table--notification--cell--content--icon {
   flex: 8;
-}
-
-
-.table--notification--icon {
-  color: #888888;
 }
 
 .table--selected__container {
@@ -136,15 +207,9 @@ table {
   }
 }
 
-tr.highlighted {
-  @apply bg-warning bg-opacity-30;
-  &:hover {
-    @apply bg-warning bg-opacity-30;
-  }
-}
-
 tr.error {
   @apply bg-danger bg-opacity-20;
+
   &:hover {
     @apply bg-danger bg-opacity-20;
   }
@@ -154,12 +219,15 @@ tr.error {
   0% {
     background-position: 0;
   }
+
   50% {
     background-position: -30%;
   }
+
   80% {
     background-position: -100%;
   }
+
   100% {
     background-position: -200%;
   }
@@ -181,44 +249,148 @@ tr.error {
   }
 }
 
+.menu-input-field {
+  border-radius: 10px;
+  box-shadow: 0px 15px 25px 0px #3333330d, -10px -10px 15px 0px #ffffff1a, 0px 0px 25px 0px #33333308;
+}
+
+.menu-input-field .mat-mdc-menu-content {
+  padding: 0;
+}
+
+.mdc-menu-surface {
+  border-radius: 10px !important;
+}
+
 .expand-row {
   height: 0;
 }
 
-.expand-element {
-  overflow: hidden;
-  display: flex;
-  transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.expanded {
-  height: 48px;
-}
-
-.collapsed {
-  height: 0;
-  min-height: 0;
-}
-
-.table-paginator-menu {
+.parts--table--header {
+  position: -webkit-sticky;
+  /* For Safari */
   position: sticky;
-  bottom: 0;
-  z-index: 1;
+  top: 150px;
+  /* Stick to the top */
+  background-color: #f0f0f0;
+  padding-top: 100px;
 }
 
 .table--header--row {
   white-space: nowrap;
+  @apply font-semiBold;
+  @apply text-black;
+  font-size: 16px;
+  width: 100%;
+}
+
+.table--header--row .mat-sort-header-content {
+  width: 100%;
+}
+
+.table--header--row .mat-sort-header-arrow {
+  display: none;
+}
+
+.table--header--cell {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  &--content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &--sort {
+      width: 24px;
+      height: 24px;
+      margin-right: 24px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &--asc {
+        width: 10px;
+        transform: rotate(180deg);
+        margin: 9.5px 7px;
+      }
+
+      &--dsc {
+        width: 10px;
+        margin: 9.5px 7px;
+      }
+
+      &--indicator {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.table--header--row__menu {
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  &--dropdown {
+    width: 12px;
+  }
 }
 
 .table--header {
   padding-bottom: 8px;
+  border-bottom: 1px solid #d2d2d2 !important;
+}
+
+.table--header--id {
+  min-width: 300px;
 }
 
 .table--header--sort--indicator {
   margin-left: 5px;
 }
 
+.select .table--header--row .mdc-data-table__header-cell:first-child {
+  padding: 0 !important;
+}
+
+.select .table--body--row .mdc-data-table__cell:first-child {
+  padding: 0 !important;
+  border-bottom-style: none !important;
+}
+
+.table--header--row .mdc-data-table__header-cell {
+  padding: 0 12px 0 12px !important;
+}
+
+.table--body--row .mdc-data-table__cell {
+  padding: 0 12px 0 12px !important;
+  border-bottom-style: none !important;
+}
+
+.hasQualityAlertsHeader {
+  @apply text-secondary;
+  padding: 0 !important;
+}
+
+.checkbox+.mdc-data-table__header-cell,
+.checkbox+.mdc-data-table__cell {
+  @apply text-secondary;
+  padding: 0 !important;
+}
+
+.alert-text {
+  @apply text-secondary;
+  @apply font-semiBold;
+}
+
 .table--header--tooltip {
+  white-space: pre-line;
+
   .mdc-tooltip__surface {
     background-color: rgb(48, 48, 48);
     @apply font-medium;
@@ -227,11 +399,9 @@ tr.error {
     padding: 15px;
     font-size: 14px;
     line-height: 20px;
-
   }
 
   .mdc-tooltip--multiline {
     white-space: pre-line;
   }
 }
-

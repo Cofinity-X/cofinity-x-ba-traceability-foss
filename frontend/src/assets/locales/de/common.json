@@ -62,7 +62,8 @@
     "menuDescription": "Aktionsmenü",
     "clearPage": "Markierungen auf dieser Seite aufheben",
     "clearAll": "Alle Markierungen aufheben",
-    "filterTitle" : "Filter",
+    "filterTitle": "Filter",
+    "sortTooltip": "Erster Klick: In aufsteigender Reihenfolge sortieren ↑\nZweiter Klick: In absteigender Reihenfolge sortieren ↓\nStrg + Klick auf eine andere Spalte: Fügt diese Spalte zur Sortierliste hinzu.\nJede folgende Sortierspalte entscheidet über die Reihenfolge, wenn im höhergeordneten Element, mehrere Elemente den gleichen Wert haben.",
     "adminColumn": {
       "startDate": "Startdatum",
       "registryLookupStatus": "Status",
@@ -71,17 +72,24 @@
       "shellDescriptorsFetchDelta": "Abruf-Delta",
       "endDate": "Enddatum"
     },
+    "tableSettings": {
+      "title": "Einstellungen der Spalte",
+      "selectAll": "Alle",
+      "refreshTooltip": "Zurücksetzen der individuellen Einstellung der Tabellenspalten auf die Standardeinstellung",
+      "saveAction": "Speichern"
+    },
     "column": {
       "id": "ID",
+      "!": "!",
       "idShort": "Kurz-ID",
       "name": "Name",
       "manufacturer": "Hersteller",
       "partId": "Produktnummer",
-      "manufacturerPartId": "Hersteller produktnummer",
-      "customerPartId": "Kunden produktnummer",
+      "manufacturerPartId": "Hersteller Produktnummer",
+      "customerPartId": "Kunden Produktnummer",
       "classification": "Klassifizierung",
-      "nameAtCustomer": "Kunden produktname",
-      "nameAtManufacturer": "Hersteller produktname",
+      "nameAtCustomer": "Kunden Produktname",
+      "nameAtManufacturer": "Hersteller Produktname",
       "semanticModelId": "Semantische Modellnummer",
       "qualityType": "Qualitätsstufe",
       "manufacturingDate": "Produktionsdatum",
@@ -100,9 +108,9 @@
       "catenaXSiteId": "Standort ID",
       "psFunction": "Funktion",
       "functionValidFrom": "Funktion gültig von",
-      "functionValidUntil" : "Funktion gültig bis",
-      "activeAlerts" : "Aktive Qualitätswarnungen",
-      "activeInvestigations" : "Aktive Qualitätsuntersuchungen"
+      "functionValidUntil": "Funktion gültig bis",
+      "activeAlerts": "Aktive Qualitätswarnungen",
+      "activeInvestigations": "Aktive Qualitätsuntersuchungen"
     }
   },
   "dataLoading": {
@@ -159,13 +167,14 @@
   "requestNotification": {
     "partDescription": "Sie haben folgende Produkte ausgewählt:",
     "targetDateDescription": "Bitte geben Sie das Datum an, bis wann Sie eine Antwort erwarten.",
-    "bpnLabel": "BPN",
+    "bpnLabel": "Empfänger BPN",
     "bpnDescription": "Bitte geben Sie die Empfänger BPN an.",
     "restoreItem": "Zuletzt gelöschtes Produkt wiederherstellen?",
     "textAreaLabel": "Beschreibung",
     "targetDateLabel": "Rückmeldedatum",
-    "cancel": "ABBRUCH",
-    "submit": "ZUR WARTESCHLANGE HINZUFÜGEN",
+    "cancel": "Abbruch",
+    "submit": "Zur warteschlange hinzufügen",
+    "submitTooltip": "Sie müssen zunächst alle mit einem * gekennzeichneten Felder ausfüllen",
     "severity": "Gefahrenstufe",
     "severityDescription": "Wählen Sie die Gefahrenstufe für das vorliegende Problem"
   },
@@ -198,16 +207,16 @@
       "DECLINED": "Abgelehnt"
     },
     "modal": {
-      "acceptTitle": "Annehmen der Untersuchung",
+      "acceptTitle": "Untersuchung akzeptieren",
       "acceptReasonHint": "Geben Sie den Grund für die Annahme dieser Untersuchung ein.",
-      "acknowledgeTitle": "Bestätigung der Untersuchung",
-      "approvalTitle": "Genehmigung der Untersuchung",
-      "closeTitle": "Schließen der Untersuchung",
-      "closeReasonHint": "Geben Sie den Grund für das Schließen ein.",
-      "cancellationTitle": "Abbruch der Untersuchung",
-      "cancellationHint": "Geben Sie die ID der Untersuchung ein, um Ihre Abbruchanfrage zu bestätigen.",
-      "declineTitle": "Ablehnung der Untersuchung",
-      "declineReasonHint": "Geben Sie den Grund für die Ablehnung dieser Untersuchung ein.",
+      "acknowledgeTitle": "Untersuchung bestätigen",
+      "approvalTitle": "Untersuchung genehmigen",
+      "closeTitle": "Untersuchung schließen",
+      "closeReasonHint": "Geben Sie den Grund für den Abschluss dieser Untersuchung ein",
+      "cancellationTitle": "Untersuchung abbrechen",
+      "cancellationHint": "Geben Sie die ID der Untersuchung ein, um Ihre Abbruchanfrage zu bestätigen",
+      "declineTitle": "Untersuchung ablehnen",
+      "declineReasonHint": "Geben Sie den Grund für die Ablehnung dieser Untersuchung ein",
       "successfullyAccepted": "Untersuchung wurde erfolgreich angenommen.",
       "successfullyAcknowledged": "Untersuchung wurde erfolgreich bestätigt",
       "successfullyApproved": "Untersuchung wurde erfolgreich genehmigt.",
@@ -247,7 +256,7 @@
       "acknowledgeTitle": "Bestätigung der Qualitätswarnung",
       "approvalTitle": "Genehmigung der Qualitätswarnung",
       "closeTitle": "Schließen der Qualitätswarnung",
-      "closeReasonHint": "Geben Sie den Grund für das Schließen ein.",
+      "closeReasonHint": "Geben Sie den Grund für die Schließung dieser Ausschreibung ein",
       "cancellationTitle": "Abbruch der Qualitätswarnung",
       "cancellationHint": "Geben Sie die ID der Qualitätswarnung ein, um Ihre Abbruchanfrage zu bestätigen.",
       "declineTitle": "Ablehnung der Qualitätswarnung",
@@ -267,23 +276,46 @@
     }
   },
   "bomLifecycleActivator": {
+    "selectLifeCycles": "Wählen Sie 2 Lebenszyklusphasen",
     "asBuilt": "As Built",
-    "asPlanned": "As Planned"
+    "asPlanned": "As Planned",
+    "unImplemented": "Demnächst verfügbar"
   },
   "multiSelect": {
     "filterLabel": "Filter",
-    "placeholder": "Alle"
+    "placeholder": "Alle",
+    "selectAll": "Alle",
+    "filterLabelDate": "Nach Datum filtern",
+    "filterLabelSelect": "Wähle",
+    "inputLabelText": "Suchen...",
+    "inputLabelDate": "TT/MM/JJJJ"
   },
   "parts": {
     "input": {
       "global-search": {
-        "placeholder": "Suche nach C-X ID, partInstanceId or partNumber / BPN",
+        "placeholder": "Suche nach C-X ID, partInstanceId, partNumber, BPN",
         "toastInfo": "Lokale Filterung auf Tabellenebene wurde zurückgesetzt."
       }
+    },
+    "openInvestigations": "Offene Ausschreibungen/Ermittlungen",
+    "confirmationDialog": {
+      "deletePartTitle": "Part löschen?",
+      "deletePartMessage": "Wenn Sie diesen Part löschen, wird er vollständig aus der aktuellen Auswahl der Ausschreibung entfernt.",
+      "deletePartButton": "Löschen"
     }
   },
   "datepicker": {
     "apply": "Filter",
     "cancel": "Zurücksetzen"
+  },
+  "semanticDataModels": {
+    "BATCH": "Batch",
+    "JUSTINSEQUENCE": "JustInSequence",
+    "SERIALPART": "SerialPart",
+    "UNKNOWN": "Unknown",
+    "PARTASPLANNED": "PartAsPlanned"
+  },
+  "confirmationDialog": {
+    "cancel": "Abbrechen"
   }
 }

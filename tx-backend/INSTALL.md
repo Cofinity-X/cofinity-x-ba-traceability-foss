@@ -26,7 +26,7 @@ $ cd cofinity-x-ba-traceability-foss/tx-backend
   * `SPRING_PROFILES_ACTIVE` - with profile to be picked when starting the service. One of `[dev|int]`.
   * `EDC_PROVIDER_URL` - with url for the EDC provider
   * `TRACEABILITY_URL` - with url for the backend
-* Start the service by invoking following command in project root directory `./gradlew bootRun`
+* ~~Start the service by invoking following command in project root directory `./gradlew bootRun`~~
 
 ## OAuth2 configuration
 Product Traceability FOSS Backend relies on properly configured OAuth2 instance. In order to work, it must be configured with proper realm, clients and roles.
@@ -61,7 +61,9 @@ spring:
     flyway:
         clean-on-validation-error: false
 ```
-Database scripts are executed with Flyway. Put the scripts at [migration](src/main/resources/db/migration)
+Database scripts are executed with Flyway. Put the scripts at [migration](src/main/resources/db/migration).
+
+Testdata are created by activating profile 'testdata', scripts are located at [testdata](src/main/resources/db/testdata).
 
 * `postgresql.secret.initUserDbSql` - database initialization script, contains username and password for databases used by the service.
 Please note that the final script should be encoded using Base64 encoding and then added to a secret. Sample command:
@@ -104,7 +106,11 @@ Then provide your configuration as the values.yaml of that chart.
 Create a new application in ArgoCD and point it to your repository / Helm chart folder.
 
 ## API sample endpoints
-* Swagger UI: `http://localhost:8080/api/swagger-ui/index.html`
-* API docs: `http://localhost:8080/api/v3/api-docs`
-* Application health liveness endpoint: `http://localhost:8081/actuator/health/liveness`
-* Application health readiness endpoint: `http://localhost:8081/actuator/health/readiness`
+
+[Insomnia Collection](collection) contains various insomnia collections for working with trace-X on local environment.
+
+
+* Swagger UI: `http://localhost:8082/api/swagger-ui/index.html`
+* API docs: `http://localhost:8082/api/v3/api-docs`
+* Application health liveness endpoint: `http://localhost:8080/actuator/health/liveness`
+* Application health readiness endpoint: `http://localhost:8080/actuator/health/readiness`

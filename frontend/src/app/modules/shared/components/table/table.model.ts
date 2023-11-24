@@ -21,6 +21,7 @@
 
 import { TemplateRef } from '@angular/core';
 import { Role } from '@core/user/role.model';
+import { FilterOperator } from '@page/parts/model/parts.model';
 
 export type TableHeaderSort = [string, 'asc' | 'desc'];
 
@@ -28,20 +29,55 @@ export interface TableConfig<Columns extends string = string> {
   displayedColumns: DisplayColumns<Columns>[];
   columnRoles?: Record<Columns, Role>;
   sortableColumns?: Record<Columns, boolean>;
+  filterConfig?: FilterConfig[];
   header?: Record<Columns, string>;
   hasPagination?: boolean;
   cellRenderers?: Partial<Record<Columns, TemplateRef<unknown>>>;
   menuActionsConfig?: MenuActionConfig<unknown>[];
 }
 
-export enum PartTableType {
-  AS_BUILT_OWN, AS_PLANNED_OWN, AS_BUILT_SUPPLIER, AS_BUILT_CUSTOMER, AS_PLANNED_SUPPLIER, AS_PLANNED_CUSTOMER
+export interface FilterConfig {
+  filterKey: string;
+  isTextSearch: boolean;
+  isDate: boolean;
+  option: Option[];
 }
 
-export type DisplayColumns<T> = 'select' | 'menu' | T;
+export interface Option {
+  display: string;
+  value: any;
+  checked: boolean;
+}
+
+export enum PartTableType {
+  AS_BUILT_OWN = 'AS_BUILT_OWN',
+  AS_PLANNED_OWN = 'AS_PLANNED_OWN',
+  AS_BUILT_SUPPLIER = 'AS_BUILT_SUPPLIER',
+  AS_BUILT_CUSTOMER = 'AS_BUILT_CUSTOMER',
+  AS_PLANNED_SUPPLIER = 'AS_PLANNED_SUPPLIER',
+  AS_PLANNED_CUSTOMER = 'AS_PLANNED_CUSTOMER',
+  AS_DESIGNED_OWN = 'AS_DESIGNED_OWN',
+  AS_ORDERED_OWN = 'AS_ORDERED_OWN',
+  AS_SUPPORTED_OWN = 'AS_SUPPORTED_OWN',
+  AS_RECYCLED_OWN = 'AS_RECYCLED_OWN',
+  AS_DESIGNED_SUPPLIER = 'AS_DESIGNED_SUPPLIER',
+  AS_DESIGNED_CUSTOMER = 'AS_DESIGNED_CUSTOMER',
+  AS_ORDERED_SUPPLIER = 'AS_ORDERED_SUPPLIER',
+  AS_ORDERED_CUSTOMER = 'AS_ORDERED_CUSTOMER',
+  AS_SUPPORTED_SUPPLIER = 'AS_SUPPORTED_SUPPLIER',
+  AS_SUPPORTED_CUSTOMER = 'AS_SUPPORTED_CUSTOMER',
+  AS_RECYCLED_SUPPLIER = 'AS_RECYCLED_SUPPLIER',
+  AS_RECYCLED_CUSTOMER = 'AS_RECYCLED_CUSTOMER',
+  ALERTS_RECEIVED = 'ALERTS_RECEIVED',
+  ALERTS_SENT = 'ALERTS_SENT',
+  INVESTIGATIONS_RECEIVED = 'INVESTIGATIONS_RECEIVED',
+  INVESTIGATIONS_SENT = 'INVESTIGATIONS_SENT',
+}
+
+export type DisplayColumns<T> = 'select' | 'menu' | 'settings' | T;
 
 export const CreateHeaderFromColumns = (columns: string[], headerKey: string): Record<string, string> => {
-  return columns.reduce((header, column) => ({ ...header, [column]: `${headerKey}.${column}` }), {});
+  return columns?.reduce((header, column) => ({ ...header, [column]: `${headerKey}.${column}` }), {});
 };
 
 export interface TablePaginationEventConfig {
@@ -51,6 +87,7 @@ export interface TablePaginationEventConfig {
 
 export interface TableEventConfig extends TablePaginationEventConfig {
   sorting: TableHeaderSort;
+  filtering?: TableFilter;
 }
 
 export interface MenuActionConfig<T> {
@@ -58,4 +95,30 @@ export interface MenuActionConfig<T> {
   icon: string;
   action: (data: T) => void;
   condition?: (data: T) => boolean;
+}
+
+export interface FilterInfo {
+  filterValue: string;
+  filterOperator: FilterOperator;
+}
+
+export enum FilterMethod {
+  AND = 'AND',
+  OR = 'OR',
+}
+
+export interface TableFilter {
+  filterMethod: FilterMethod;
+  createdDate?: FilterInfo;
+  description?: FilterInfo;
+  status?: FilterInfo[];
+  severity?: FilterInfo[];
+  createdBy?: FilterInfo;
+  sendTo?: FilterInfo;
+}
+
+export enum SortingOptions {
+  NONE = 'NONE',
+  ASC = 'ASC',
+  DSC = 'DSC',
 }

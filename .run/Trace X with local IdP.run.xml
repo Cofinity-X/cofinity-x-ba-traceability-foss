@@ -2,13 +2,13 @@
   <configuration default="false" name="Trace X with local IdP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev" />
     <envs>
-      <env name="ALLOWED_CORS_ORIGIN_FIRST" value="http://localhost:8080" />
+      <env name="ALLOWED_CORS_ORIGIN_FIRST" value="http://localhost:8082" />
       <env name="ALLOWED_CORS_ORIGIN_SECOND" value="http://localhost:4200" />
       <env name="DISCOVERY_FINDER_URL_WITH_PATH" value="http://localhost:3001/administration/connectors/discovery/search" />
       <env name="EDC_API_KEY" value="password" />
+      <env name="EDC_CALLBACK_URL_EDC_CLIENT" value="http://localhost:8082/" />
       <env name="EDC_DATA_ENDPOINT_URL" value="http://localhost:3002/api" />
       <env name="EDC_PROVIDER_URL" value="http://localhost:3002/" />
-      <env name="EDC_CALLBACK_URL_EDC_CLIENT" value="http://localhost:8082/" />
       <env name="IRS_POLICIES_0_POLICYID" value="ID 3.2 Trace" />
       <env name="IRS_POLICIES_0_TTL" value="2023-09-30T23:59:59.99Z" />
       <env name="IRS_URL" value="http://localhost:3001/" />
@@ -23,7 +23,7 @@
       <env name="SPRING_DATASOURCE_URL" value="jdbc:postgresql://localhost:5432/trace" />
       <env name="SPRING_DATASOURCE_USERNAME" value="postgres" />
       <env name="TRACEABILITY_BPN" value="BPNL000000000001" />
-      <env name="TRACEABILITY_URL" value="http://localhost:8080/" />
+      <env name="TRACEABILITY_URL" value="http://localhost:8082/" />
     </envs>
     <module name="tx-backend" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="org.eclipse.tractusx.traceability.TraceabilityApplication" />
