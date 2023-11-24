@@ -170,7 +170,7 @@ SPDX-License-Identifier: Apache-2.0
 
   <ng-template #semanticModelIdTmp
     let-row="row">
-    <app-button class="pl-2"
+    <app-button class="pl-2 alert-copy-button"
       (click)="copyToClipboard(row.semanticModelId)"
       [attr.data-testId]="'copy-button--' + row.id">
       <div class="flex justify-around items-center">

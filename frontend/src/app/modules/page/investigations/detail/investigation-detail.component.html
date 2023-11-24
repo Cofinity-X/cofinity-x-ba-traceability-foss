@@ -25,8 +25,8 @@ SPDX-License-Identifier: Apache-2.0
         class="pl-2 mb-4 flex items-center header-link">
         <img class="pr-2"
           src="/assets/images/icons/quality_investigation_link.svg"
-          alt="Alerts icon" />
-        {{ 'pageTitle.alerts' | i18n }}
+          alt="Investigation icon" />
+        {{ 'pageTitle.investigations' | i18n }}
       </h3>
       <h3 class="mb-4 pl-2 flex items-center">
         <img class="pr-2"
@@ -172,7 +172,7 @@ SPDX-License-Identifier: Apache-2.0
 
   <ng-template #semanticModelIdTmp
     let-row="row">
-    <app-button class="pl-2 copy-button"
+    <app-button class="pl-2 investigation-copy-button"
       (click)="copyToClipboard(row.semanticModelId)"
       [attr.data-testId]="'copy-button--' + row.id">
       <div class="flex justify-around items-center">

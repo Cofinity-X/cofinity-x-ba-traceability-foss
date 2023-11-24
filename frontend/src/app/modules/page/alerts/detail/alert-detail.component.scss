@@ -67,6 +67,7 @@
   height: 14px;
   font-size: 14px;
   margin-left: 0.5rem;
+  padding-right: 20px;
 }
 
 .detail--table_wrapper--notification {
@@ -113,4 +114,9 @@
   display: flex;
   justify-content: flex-end;
   padding: 0 20px 20px 20px;
+}
+
+.alert-copy-button {
+  overflow: hidden;
+  white-space: nowrap;
 }
