@@ -26,7 +26,7 @@
 
 .header-description {
   @extend h3;
-  max-width: 600px;
+  max-width: 900px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -62,8 +62,11 @@
   }
 }
 
-.detail-content {
-  @apply col-span-12 lg:col-span-3;
+.alert--semantic-model-id__icon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  margin-left: 0.5rem;
 }
 
 .detail--table_wrapper--notification {
@@ -76,13 +79,6 @@
 
 .detail--table_wrapper--content {
   padding: 10px;
-}
-
-.alert--semantic-model-id__icon {
-  width: 14px;
-  height: 14px;
-  font-size: 14px;
-  margin-left: 0.5rem;
 }
 
 .section-details {
