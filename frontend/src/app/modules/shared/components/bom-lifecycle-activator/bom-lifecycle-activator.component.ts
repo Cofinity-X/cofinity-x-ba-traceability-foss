@@ -141,8 +141,8 @@ export class BomLifecycleActivatorComponent implements OnInit {
             this.updateLifecycleConfig(values[i], true);
         }
 
+        // sort the selection based on when an item was added
         const newItem = values.filter(item => !this.currentSelectedLifeCycles.includes(item));
-
         this.currentSelectedLifeCycles.push(...newItem);
         this.selectedLifecycles = [...this.currentSelectedLifeCycles];
 
@@ -156,7 +156,6 @@ export class BomLifecycleActivatorComponent implements OnInit {
             this.selectedLifecycles = Array.from(this.selectedLifecycles);
 
             this.currentSelectedLifeCycles = [...this.selectedLifecycles];
-
         }
 
         this.updateLifecycleConfig(lifeCycle, false);
