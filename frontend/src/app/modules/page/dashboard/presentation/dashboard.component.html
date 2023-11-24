@@ -26,25 +26,27 @@ SPDX-License-Identifier: Apache-2.0
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { 
-          label: 'pageDashboard.totalOfMyParts.label', 
-          icon: 'my_parts_icon', 
-          link: 'parts'}
+        customContext: {
+          label: 'pageDashboard.totalOfMyParts.label',
+          icon: 'my_parts_icon',
+          link: 'parts'
+        }
       ">
     </ng-container>
   </section>
 
   <section class="parts-section">
     <ng-container *viewContainer="
-          this.numberOfOtherParts$ | async;
-          main: numbersMainTmp;
-          error: numbersErrorTmp;
-          loading: numbersLoaderTmp;
-          customContext: { 
-            label: 'pageDashboard.totalOfOtherParts.label', 
-            icon: 'other_parts_icon', 
-            link: 'otherParts' }
-        ">
+        this.numberOfOtherParts$ | async;
+        main: numbersMainTmp;
+        error: numbersErrorTmp;
+        loading: numbersLoaderTmp;
+        customContext: {
+          label: 'pageDashboard.totalOfOtherParts.label',
+          icon: 'other_parts_icon',
+          link: 'otherParts'
+        }
+      ">
     </ng-container>
   </section>
 
@@ -54,25 +56,27 @@ SPDX-License-Identifier: Apache-2.0
         main: numbersMainTmp;
         error: numbersErrorTmp;
         loading: numbersLoaderTmp;
-        customContext: { 
-          label: 'pageDashboard.totalInvestigations.label', 
-          icon: 'content_paste_search', 
-          link: 'investigations'}
+        customContext: {
+          label: 'pageDashboard.totalInvestigations.label',
+          icon: 'content_paste_search',
+          link: 'investigations'
+        }
       ">
     </ng-container>
   </section>
 
   <section class="parts-section">
     <ng-container *viewContainer="
-          this.numberOfAlerts$ | async;
-          main: numbersMainTmp;
-          error: numbersErrorTmp;
-          loading: numbersLoaderTmp;
-          customContext: { 
-            label: 'pageDashboard.totalAlerts.label',
-            icon: 'alertDashBoard',
-            link: 'alerts' }
-        ">
+        this.numberOfAlerts$ | async;
+        main: numbersMainTmp;
+        error: numbersErrorTmp;
+        loading: numbersLoaderTmp;
+        customContext: {
+          label: 'pageDashboard.totalAlerts.label',
+          icon: 'alertDashBoard',
+          link: 'alerts'
+        }
+      ">
     </ng-container>
   </section>
 
@@ -82,11 +86,15 @@ SPDX-License-Identifier: Apache-2.0
         <div class="inline-block w-full">
           <div class="flex justify-between items-center">
             <h3 class="pl-2 mb-4 flex items-center tableHeader">
-              <img class="pr-2" src="/assets/images/icons/content_paste_search_small.svg" alt="Investigations icon" />
+              <img class="pr-2"
+                src="/assets/images/icons/content_paste_search_small.svg"
+                alt="Investigations icon" />
               {{ 'pageTitle.investigations' | i18n }}
               <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
             </h3>
-            <app-button [routerLink]="[investigationLink]" [queryParams]="investigationParams" [relativeTo]="null">
+            <app-button [routerLink]="[investigationLink]"
+              [queryParams]="investigationParams"
+              [relativeTo]="null">
               <div class="flex justify-between items-center view-button">
                 <mat-icon class="mr-2">remove_red_eye</mat-icon>
                 {{ 'commonInvestigation.viewAll' | i18n }}
@@ -96,11 +104,18 @@ SPDX-License-Identifier: Apache-2.0
         </div>
       </mat-card-header>
       <mat-card-content>
-        <app-notifications-tab [enableScroll]="false" [notificationsView$]="investigations$"
-          [translationContext]="'commonInvestigation'" [labelId]="'dashboard-investigations'" [hasPagination]="false"
-          [optionalColumns]="['targetDate', 'severity', 'createdBy']" (selected)="onNotificationSelected($event, true)">
-          <div content1>
-            <img src="/assets/images/icons/noQualityInvestigations.svg" class="center py-5"
+        <app-notifications-tab [tableType]="PartTableType.INVESTIGATIONS_RECEIVED"
+          [enableScroll]="false"
+          [notificationsView$]="investigations$"
+          class="notications-tab"
+          [translationContext]="'commonInvestigation'"
+          [labelId]="'dashboard-investigations'"
+          [hasPagination]="false"
+          [optionalColumns]="['targetDate', 'severity', 'createdBy']"
+          (selected)="onNotificationSelected($event, true)">
+          <div emptyContent>
+            <img src="/assets/images/icons/noQualityInvestigations.svg"
+              class="center py-5"
               alt="No quality investigations icon" />
             <div class="noAlerts pb-3">{{ 'commonInvestigation.noInvestigations' | i18n }}</div>
             <div class="description pb-10">{{ 'commonInvestigation.noInvestigationsDescription' | i18n }}</div>
@@ -116,11 +131,15 @@ SPDX-License-Identifier: Apache-2.0
         <div class="inline-block w-full">
           <div class="flex justify-between items-center">
             <h3 class="pl-2 mb-4 flex items-center tableHeader">
-              <img class="pr-2" src="/assets/images/icons/alert.svg" alt="Alert icon" />
+              <img class="pr-2"
+                src="/assets/images/icons/alert.svg"
+                alt="Alert icon" />
               {{ 'pageTitle.alerts' | i18n }}
               <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
             </h3>
-            <app-button [routerLink]="[alertsLink]" [queryParams]="alertsParams" [relativeTo]="null">
+            <app-button [routerLink]="[alertsLink]"
+              [queryParams]="alertsParams"
+              [relativeTo]="null">
               <div class="flex justify-between items-center view-button">
                 <mat-icon class="mr-2">remove_red_eye</mat-icon>
                 {{ 'commonAlert.viewAll' | i18n }}
@@ -131,11 +150,18 @@ SPDX-License-Identifier: Apache-2.0
       </mat-card-header>
 
       <mat-card-content>
-        <app-notifications-tab [enableScroll]="false" [notificationsView$]="alerts$"
-          [translationContext]="'commonAlert'" [labelId]="'dashboard-alerts'" [hasPagination]="false"
-          [optionalColumns]="[ 'severity', 'createdBy']" (selected)="onNotificationSelected($event, false)">
-          <div content1>
-            <img src="/assets/images/icons/noAlert.svg" class="center py-5" alt="No alert" />
+        <app-notifications-tab [enableScroll]="false"
+          [notificationsView$]="alerts$"
+          [tableType]="PartTableType.ALERTS_RECEIVED"
+          [translationContext]="'commonAlert'"
+          [labelId]="'dashboard-alerts'"
+          [hasPagination]="false"
+          [optionalColumns]="[ 'severity', 'createdBy']"
+          (selected)="onNotificationSelected($event, false)">
+          <div emptyContent>
+            <img src="/assets/images/icons/noAlert.svg"
+              class="center py-5"
+              alt="No alert" />
             <div class="noAlerts pb-3">{{ 'commonAlert.noAlerts' | i18n }}</div>
             <div class="description pb-10">{{ 'commonAlert.noAlertsDescription' | i18n }}</div>
           </div>
@@ -144,17 +170,27 @@ SPDX-License-Identifier: Apache-2.0
     </mat-card>
   </section>
 
-  <ng-template #numbersMainTmp let-numbers="view" let-context="customContext">
-    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [routerLink]="'/' + context.link"
+  <ng-template #numbersMainTmp
+    let-numbers="view"
+    let-context="customContext">
+    <app-card-icon [label]="context.label | i18n"
+      [icon]="context.icon"
+      [routerLink]="'/' + context.link"
       [stats]="numbers?.data"></app-card-icon>
   </ng-template>
 
-  <ng-template #numbersErrorTmp let-context="customContext">
-    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [routerLink]="'/' + context.link"
+  <ng-template #numbersErrorTmp
+    let-context="customContext">
+    <app-card-icon [label]="context.label | i18n"
+      [icon]="context.icon"
+      [routerLink]="'/' + context.link"
       [stats]="0"></app-card-icon>
   </ng-template>
 
-  <ng-template #numbersLoaderTmp let-context="customContext">
-    <app-card-icon [label]="context.label | i18n" [icon]="context.icon" [routerLink]="'/' + context.link"
+  <ng-template #numbersLoaderTmp
+    let-context="customContext">
+    <app-card-icon [label]="context.label | i18n"
+      [icon]="context.icon"
+      [routerLink]="'/' + context.link"
       [stats]="''"></app-card-icon>
   </ng-template>

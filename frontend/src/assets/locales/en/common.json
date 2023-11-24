@@ -16,7 +16,7 @@
   "pageTitle": {
     "dashboard": "Dashboard",
     "parts": "My parts",
-    "otherParts": "Other parts",
+    "otherParts": "Shared parts",
     "about": "About Cofinity-X",
     "relations": "Part relations",
     "admin": "Administration Catena-X",
@@ -63,6 +63,7 @@
     "clearPage": "Clear page selections",
     "clearAll": "Clear all selections",
     "filterTitle": "Filter",
+    "sortTooltip": "First click: sort in ascending order ↑\nSecond click: sort in descending order ↓\nCtrl + click on another column: adding that column to the sorting list.\nEach following sorting column will decide over the order, if in the higher order item multiple items have the same value.",
     "adminColumn": {
       "startDate": "Start date",
       "registryLookupStatus": "Status",
@@ -70,6 +71,12 @@
       "failedShellDescriptorsFetchCount": "Failed fetches",
       "shellDescriptorsFetchDelta": "Fetch Delta",
       "endDate": "End date"
+    },
+    "tableSettings": {
+      "title": "Column settings",
+      "selectAll": "All",
+      "refreshTooltip": "Reset individual table column settings to default",
+      "saveAction": "Save"
     },
     "column": {
       "id": "ID",
@@ -237,7 +244,7 @@
       "queuedAndRequested": "Queued & Sent"
     },
     "status": {
-      "SENT": "Sent",
+      "SENT": "Requested",
       "CANCELED": "Cancelled",
       "CLOSED": "Closed",
       "CREATED": "Queued",
