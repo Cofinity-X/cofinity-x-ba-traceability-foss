@@ -29,7 +29,7 @@ import {
 import { View } from '@shared/model/view.model';
 import { SharedModule } from '@shared/shared.module';
 import { TemplateModule } from '@shared/template.module';
-import { fireEvent, screen, within, waitFor } from '@testing-library/angular';
+import { screen } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -39,16 +39,9 @@ import { PartTableType } from '@shared/components/table/table.model';
 
 describe('NotificationsInboxComponent', () => {
   let clickHandler;
-  var originalTimeout: number;
-
-  afterEach(function () {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-  });
 
   beforeEach(() => {
     clickHandler = jasmine.createSpy();
-    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   });
 
   const mapNotificationResponse = (data: NotificationResponse): Notification => {
@@ -107,30 +100,4 @@ describe('NotificationsInboxComponent', () => {
     expect(await screen.getByText('commonInvestigation.tabs.received')).toBeInTheDocument();
     expect(await screen.getByText('commonInvestigation.tabs.queuedAndRequested')).toBeInTheDocument();
   });
-
-  // it('should render received notifications with date and status', async () => {
-  //   await renderNotificationsInbox();
-  //   const descriptionEl = await screen.findByText('Investigation No 1', undefined, { timeout: 10000 });
-  //   const row = descriptionEl.closest('tr');
-
-  //   expect(within(row).getByText('commonInvestigation.status.RECEIVED')).toBeInTheDocument();
-  // });
-
-  // it('should be able to change notifications page', async () => {
-  //   await renderNotificationsInbox();
-  //   fireEvent.click(await waitFor(() => screen.getByLabelText('pagination.nextPageLabel')));
-
-  //   expect(await screen.findByText('51 – 100 of 101 ')).toBeInTheDocument();
-  // });
-
-  // it('should render queued & requested notifications', async () => {
-  //   await renderNotificationsInbox();
-
-  //   fireEvent.click(
-  //     await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested'), {
-  //       timeout: 10000,
-  //     }),
-  //   );
-  //   expect(await screen.findByText('Investigation No 1', undefined, { timeout: 10000 })).toBeInTheDocument();
-  // });
 });

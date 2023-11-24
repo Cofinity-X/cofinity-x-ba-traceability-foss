@@ -28,16 +28,6 @@ import { fireEvent, screen, waitFor } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 
 describe('InvestigationsComponent', () => {
-  var originalTimeout: number;
-  beforeEach(function () {
-    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-  });
-
-  afterEach(function () {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-  });
-
   const renderInvestigations = async () => {
     return await renderComponent(InvestigationsComponent, {
       imports: [InvestigationsModule],
@@ -56,69 +46,6 @@ describe('InvestigationsComponent', () => {
   //   fireEvent.click(await waitFor(() => screen.getByTestId('table-menu-button--actions.viewDetails')));
   //   const tabInformation: NotificationTabInformation = { tabIndex: null, pageNumber: undefined}
   //   expect(spy).toHaveBeenCalledWith(['/investigations/id-84'], { queryParams: tabInformation } );
-  // });
-
-  // it('should call change pagination of received investigations', async () => {
-  //   await renderInvestigations();
-  //   fireEvent.click(
-  //     await waitFor(() => screen.getByLabelText('pagination.nextPageLabel', { selector: 'button' }), {
-  //       timeout: 10000,
-  //     }),
-  //   );
-
-  //   expect(await waitFor(() => screen.getByText('Investigation No 84'))).toBeInTheDocument();
-  //   expect(await waitFor(() => screen.getByText('Investigation No 11'))).toBeInTheDocument();
-  // });
-
-  // it('should call change pagination of queued & requested investigations', async () => {
-  //   await renderInvestigations();
-
-  //   fireEvent.click(await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested')), {
-  //     timeout: 10000,
-  //   });
-
-  //   fireEvent.click(await waitFor(() => screen.getByLabelText('pagination.nextPageLabel', { selector: 'button' })));
-
-  //   expect(await waitFor(() => screen.getByText('Investigation No 84'))).toBeInTheDocument();
-  //   expect(await waitFor(() => screen.getByText('Investigation No 11'))).toBeInTheDocument();
-  // });
-
-  // it('should sort received investigations after column status', async () => {
-  //   const { fixture } = await renderInvestigations();
-  //   const investigationComponent = fixture.componentInstance;
-
-  //   let setTableFunctionSpy = spyOn<any>(investigationComponent, 'setTableSortingList').and.callThrough();
-  //   let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
-  //   await waitFor(
-  //     () => {
-  //       fireEvent.click(statusColumnHeader);
-  //     },
-  //     { timeout: 10000 },
-  //   );
-
-  //   expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'received');
-
-  //   expect(investigationComponent['investigationReceivedSortList']).toEqual([['status', 'asc']]);
-  // });
-
-  // it('should sort queued and requested investigations after column status', async () => {
-  //   const { fixture } = await renderInvestigations();
-  //   const investigationComponent = fixture.componentInstance;
-
-  //   fireEvent.click(await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested')));
-
-  //   let setTableFunctionSpy = spyOn<any>(investigationComponent, 'setTableSortingList').and.callThrough();
-  //   let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
-  //   await waitFor(
-  //     () => {
-  //       fireEvent.click(statusColumnHeader);
-  //     },
-  //     { timeout: 10000 },
-  //   );
-
-  //   expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'queued-and-requested');
-
-  //   expect(investigationComponent['investigationQueuedAndRequestedSortList']).toEqual([['status', 'asc']]);
   // });
 
   it('should render the component', async () => {

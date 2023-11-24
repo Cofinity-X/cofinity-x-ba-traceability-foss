@@ -47,44 +47,6 @@ describe('AlertsComponent', () => {
   //   expect(spy).toHaveBeenCalledWith(['/alerts/id-84'], { queryParams: tabInformation });
   // });
 
-  // it('should sort received alerts after column status', async () => {
-  //   const { fixture } = await renderAlerts();
-  //   const alertsComponent = fixture.componentInstance;
-
-  //   let setTableFunctionSpy = spyOn<any>(alertsComponent, 'setTableSortingList').and.callThrough();
-  //   let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
-  //   await waitFor(
-  //     () => {
-  //       fireEvent.click(statusColumnHeader);
-  //     },
-  //     { timeout: 10000 },
-  //   );
-
-  //   expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'received');
-
-  //   expect(alertsComponent['alertReceivedSortList']).toEqual([['status', 'asc']]);
-  // });
-
-  // it('should sort queued and requested alerts after column status', async () => {
-  //   const { fixture } = await renderAlerts();
-  //   const alertsComponent = fixture.componentInstance;
-
-  //   fireEvent.click(await waitFor(() => screen.getByText('commonAlert.tabs.queuedAndRequested')));
-
-  //   let setTableFunctionSpy = spyOn<any>(alertsComponent, 'setTableSortingList').and.callThrough();
-  //   let statusColumnHeader = await screen.findByText('table.column.status', undefined, { timeout: 10000 });
-  //   await waitFor(
-  //     () => {
-  //       fireEvent.click(statusColumnHeader);
-  //     },
-  //     { timeout: 10000 },
-  //   );
-
-  //   expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], 'queued-and-requested');
-
-  //   expect(alertsComponent['alertQueuedAndRequestedSortList']).toEqual([['status', 'asc']]);
-  // });
-
   it('should render the component', async () => {
     await renderAlerts();
     const alertsHeader = screen.getByText('pageTitle.alerts');
