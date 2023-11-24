@@ -182,16 +182,6 @@ SPDX-License-Identifier: Apache-2.0
     </app-button>
   </ng-template>
 
-  <ng-template #mainNotificationPartsTmp
-    let-view="view">
-    <app-table [data]="view.data"
-      [labelId]="notificationPartsTableId"
-      [tableConfig]="notificationPartsTableConfig"
-      [showHover]="false"
-      [noShadow]="true"
-      (configChanged)="onNotificationPartsSort($event)"></app-table>
-  </ng-template>
-
   <ng-template #mainSupplierPartsTmp
     let-view="view">
     <app-table [data]="view.data"
@@ -208,14 +198,19 @@ SPDX-License-Identifier: Apache-2.0
       selectedPartsActionLabel="pageInvestigation.selectPartsAction"></app-table>
   </ng-template>
 
+  <ng-template #mainNotificationPartsTmp
+    let-view="view">
+    <app-table [data]="view.data"
+      [labelId]="notificationPartsTableId"
+      [tableConfig]="notificationPartsTableConfig"
+      [showHover]="false"
+      [noShadow]="true"
+      (configChanged)="onNotificationPartsSort($event)"></app-table>
+  </ng-template>
+
   <ng-template #mainInfoTmp
     let-view="view">
     <app-notification-overview [notification]="view.data"></app-notification-overview>
-  </ng-template>
-
-  <ng-template #reasonInfoTmp
-    let-view="view">
-    <app-notification-reason [notification]="view.data"></app-notification-reason>
   </ng-template>
 
   <ng-template #errorTmp
@@ -223,6 +218,12 @@ SPDX-License-Identifier: Apache-2.0
     <h1>{{ 'dataLoading.error' | i18n }}</h1>
     <p>{{ view.error | json }}</p>
   </ng-template>
+
+  <ng-template #reasonInfoTmp
+    let-view="view">
+    <app-notification-reason [notification]="view.data"></app-notification-reason>
+  </ng-template>
+
 
   <ng-template #loaderTmp
     let-view="view">
