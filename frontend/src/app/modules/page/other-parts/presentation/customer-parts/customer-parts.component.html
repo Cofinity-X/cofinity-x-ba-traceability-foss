@@ -29,8 +29,7 @@ SPDX-License-Identifier: Apache-2.0
   <ng-template #mainTmp
     let-parts="view"
     let-customContext="customContext">
-    <app-parts-table [showAlertButton]="true"
-      [tableHeader]="'page.asBuiltParts' | i18n"
+    <app-parts-table [tableHeader]="'page.asBuiltParts' | i18n"
       [paginationData]="parts.data | formatPaginationSemanticDataModelToCamelCase"
       [noShadow]="true"
       [labelId]="customContext.labelId"
