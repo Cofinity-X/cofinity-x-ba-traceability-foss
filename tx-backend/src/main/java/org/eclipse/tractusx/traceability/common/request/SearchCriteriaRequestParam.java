@@ -65,13 +65,14 @@ public class SearchCriteriaRequestParam {
                                 .strategy(SearchStrategy.valueOf(filterParams[1]))
                                 .value(filterParams[2])
                                 .build();
-                    } catch (final Exception exception) {
-                        throw new InvalidFilterException(
-                                "Invalid inputFilter param provided inputFilter={provided} expected format is following inputFilter=parameter,operation,value"
-                                        .replace("{provided}", inputFilter)
-                        );
-                    }
-                })
+            } catch (final Exception exception) {
+                throw new InvalidFilterException(
+                        "Invalid filter param provided filter={provided} expected format is following filter=parameter,operation,value"
+                                .replace("{provided}", inputFilter)
+                );
+            }
+
+        })
                 .toList();
 
         final SearchCriteriaOperator operator;
