@@ -18,6 +18,7 @@
  ********************************************************************************/
 package org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.eclipse.tractusx.traceability.common.date.CustomOffSetDateTimeNullOnException;
@@ -32,6 +33,10 @@ public record Site(
         String function,
         // As long as no clear spelling is defined, be lax with it. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
         @JsonFormat(with = JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
+        @JsonAlias({
+                "catenaXSiteId", "catenaxSiteId", "catenaXsiteId", "catenaxsiteId",
+                "catenaXSiteid", "catenaxSiteid", "catenaXsiteid", "catenaxsiteid"})
         String catenaXSiteId
 ) {
+
 }
