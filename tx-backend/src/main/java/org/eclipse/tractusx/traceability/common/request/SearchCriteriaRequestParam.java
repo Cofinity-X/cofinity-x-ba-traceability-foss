@@ -62,7 +62,7 @@ public class SearchCriteriaRequestParam {
                 String[] filterParams = filter.split(",");
                 filters.add(
                         SearchCriteriaFilter.builder()
-                                .key(filterParams[0])
+                                .key(handleFilterParameter(filterParams[0]))
                                 .strategy(SearchStrategy.valueOf(filterParams[1]))
                                 .value(filterParams[2])
                                 .build());
@@ -87,4 +87,8 @@ public class SearchCriteriaRequestParam {
         return SearchCriteria.builder().searchCriteriaOperator(operator).searchCriteriaFilterList(filters).build();
     }
 
+    private static String handleFilterParameter(final String filterParameter) {
+        // As long as no clear spelling is defined, be lax with it. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
+        return filterParameter.equalsIgnoreCase("catenaxsiteid") ? "catenaXSiteId" : filterParameter;
+    }
 }
