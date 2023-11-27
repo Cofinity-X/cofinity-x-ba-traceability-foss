@@ -57,6 +57,7 @@ SPDX-License-Identifier: Apache-2.0
     matSortDisableClear
     multiTemplateDataRows
     data-testid="table-component--test-id"
+    [ngClass]="{ select: tableConfig.displayedColumns.includes('select') }"
   >
     <tr
       class="parts--table--header"
@@ -144,7 +145,7 @@ SPDX-License-Identifier: Apache-2.0
 
     <ng-template #SelectColumn>
       <ng-container matColumnDef="select">
-        <th *matHeaderCellDef mat-header-cell class="checkbox selectAllCheckbox">
+        <th *matHeaderCellDef mat-header-cell class="checkbox selectAllCheckbox select">
           <div class="table--select-all" [class.table--select-all__menu]="isMenuOpen">
             <mat-checkbox
               color="accent"
@@ -156,7 +157,7 @@ SPDX-License-Identifier: Apache-2.0
             </mat-checkbox>
           </div>
         </th>
-        <td *matCellDef="let row" mat-cell class="checkbox table--cell">
+        <td *matCellDef="let row" mat-cell class="checkbox table--cell select">
           <mat-checkbox
             color="accent"
             [checked]="isSelected(row)"
@@ -190,7 +191,7 @@ SPDX-License-Identifier: Apache-2.0
               <div class="table--header--cell--content">
                 <div>
                   {{
-                        tableConfig?.header?.[column] | i18n }}
+                  tableConfig?.header?.[column] | i18n }}
                 </div>
                 <div class="table--header--cell--content--sort" *ngIf="column !== '!'">
                   <ng-container *ngIf="multiSortList && multiSortList.length > 0">

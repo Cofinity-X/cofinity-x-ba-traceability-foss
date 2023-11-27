@@ -82,6 +82,12 @@ public class OwnPageable {
         return switch(column) {
             case "status" -> "statusrank";
             case "notifications_status" -> "notifications_statusrank";
+            // Include the notification table based attributes
+            case "createdBy" -> "notifications.createdBy";
+            case "targetDate" -> "notifications.targetDate";
+            case "sendTo" -> "notifications.sendTo";
+            case "qualityAlertsInStatusActive" -> "noOfActiveAlerts";
+            case "qualityInvestigationsInStatusActive" -> "noOfActiveInvestigations";
             default -> column;
         };
     }
