@@ -39,6 +39,7 @@ import { SemanticDataModel } from '@page/parts/model/parts.model';
 import { MultiSelectAutocompleteComponent } from '@shared/components/multi-select-autocomplete/multi-select-autocomplete.component';
 import {
   CreateHeaderFromColumns,
+  FilterConfig,
   PartTableType,
   TableConfig,
   TableEventConfig,
@@ -131,8 +132,8 @@ export class PartsTableComponent implements OnInit {
   public selectedRow: Record<string, unknown>;
   public isMenuOpen: boolean;
   public displayedFilter: boolean;
-
-  public filterConfiguration: any[];
+  public filterActive: any = {};
+  public filterConfiguration: FilterConfig[];
   public displayedColumns: string[];
 
   filterFormGroup = new FormGroup({});
@@ -393,6 +394,21 @@ export class PartsTableComponent implements OnInit {
       }
     }
     filterValues['semanticDataModel'] = selectedSemanticDataModelOptions;
+    this.filterConfiguration.forEach(filter => {
+      if (filter.filterKey !== 'Filter') {
+        let filterName: string;
+        if (filter.column) {
+          filterName = filter.column;
+        } else {
+          filterName = filter.filterKey;
+        }
+        if (filterValues[filter.filterKey] === null || filterValues[filter.filterKey].length === 0) {
+          this.filterActive[filterName] = false;
+        } else {
+          this.filterActive[filterName] = true;
+        }
+      }
+    });
     this.filterActivated.emit(filterValues);
   }
 
@@ -419,7 +435,7 @@ export class PartsTableComponent implements OnInit {
     displayedColumnsForTable: string[],
     displayedColumns: string[],
     sortableColumns: Record<string, boolean>,
-    filterConfiguration: any[],
+    filterConfiguration: FilterConfig[],
     filterFormGroup: any,
   ): any {
     const headerKey = 'table.column';
@@ -436,6 +452,13 @@ export class PartsTableComponent implements OnInit {
         this.filterFormGroup.addControl(controlName, filterFormGroup[controlName]);
       }
     }
+    this.filterConfiguration.forEach(filter => {
+      if (filter.column) {
+        this.filterActive[filter.column] = false;
+      } else {
+        this.filterActive[filter.filterKey] = false;
+      }
+    });
   }
 
   private setupTableViewSettings() {
@@ -567,7 +590,7 @@ export class PartsTableComponent implements OnInit {
     }
   }
 
-  public readonly assetAsBuiltFilterConfiguration: any[] = [
+  public readonly assetAsBuiltFilterConfiguration: FilterConfig[] = [
     this.filterConfigOptions.filterKeyOptionsAssets.filter,
     this.filterConfigOptions.filterKeyOptionsAssets.id,
     this.filterConfigOptions.filterKeyOptionsAssets.idShort,
@@ -661,7 +684,7 @@ export class PartsTableComponent implements OnInit {
     qualityInvestigationsInStatusActive: new FormControl([]),
   };
 
-  private readonly assetAsPlannedCustomerFilterConfiguration: any[] = [
+  private readonly assetAsPlannedCustomerFilterConfiguration: FilterConfig[] = [
     this.filterConfigOptions.filterKeyOptionsAssets.filter,
     this.filterConfigOptions.filterKeyOptionsAssets.semanticDataModel,
     this.filterConfigOptions.filterKeyOptionsAssets.nameAtManufacturer,
@@ -670,7 +693,7 @@ export class PartsTableComponent implements OnInit {
     this.filterConfigOptions.filterKeyOptionsAssets.semanticModelId,
   ];
 
-  private readonly assetAsPlannedSupplierFilterConfiguration: any[] = [
+  private readonly assetAsPlannedSupplierFilterConfiguration: FilterConfig[] = [
     this.filterConfigOptions.filterKeyOptionsAssets.filter,
     this.filterConfigOptions.filterKeyOptionsAssets.semanticDataModel,
     this.filterConfigOptions.filterKeyOptionsAssets.nameAtManufacturer,
@@ -679,19 +702,7 @@ export class PartsTableComponent implements OnInit {
     this.filterConfigOptions.filterKeyOptionsAssets.semanticModelId,
   ];
 
-  private readonly assetAsBuiltCustomerFilterConfiguration: any[] = [
-    this.filterConfigOptions.filterKeyOptionsAssets.filter,
-    this.filterConfigOptions.filterKeyOptionsAssets.semanticDataModel,
-    this.filterConfigOptions.filterKeyOptionsAssets.nameAtManufacturer,
-    this.filterConfigOptions.filterKeyOptionsAssets.manufacturerName,
-    this.filterConfigOptions.filterKeyOptionsAssets.manufacturerPartId,
-    this.filterConfigOptions.filterKeyOptionsAssets.semanticModelId,
-    this.filterConfigOptions.filterKeyOptionsAssets.manufacturingDate,
-    this.filterConfigOptions.filterKeyOptionsAssets.activeAlerts,
-    this.filterConfigOptions.filterKeyOptionsAssets.activeInvestigations,
-  ];
-
-  private readonly assetAsBuiltSupplierFilterConfiguration: any[] = [
+  private readonly assetAsBuiltCustomerFilterConfiguration: FilterConfig[] = [
     this.filterConfigOptions.filterKeyOptionsAssets.filter,
     this.filterConfigOptions.filterKeyOptionsAssets.semanticDataModel,
     this.filterConfigOptions.filterKeyOptionsAssets.nameAtManufacturer,
@@ -703,7 +714,19 @@ export class PartsTableComponent implements OnInit {
     this.filterConfigOptions.filterKeyOptionsAssets.activeInvestigations,
   ];
 
-  private readonly assetAsPlannedFilterConfiguration: any[] = [
+  private readonly assetAsBuiltSupplierFilterConfiguration: FilterConfig[] = [
+    this.filterConfigOptions.filterKeyOptionsAssets.filter,
+    this.filterConfigOptions.filterKeyOptionsAssets.semanticDataModel,
+    this.filterConfigOptions.filterKeyOptionsAssets.nameAtManufacturer,
+    this.filterConfigOptions.filterKeyOptionsAssets.manufacturerName,
+    this.filterConfigOptions.filterKeyOptionsAssets.manufacturerPartId,
+    this.filterConfigOptions.filterKeyOptionsAssets.semanticModelId,
+    this.filterConfigOptions.filterKeyOptionsAssets.manufacturingDate,
+    this.filterConfigOptions.filterKeyOptionsAssets.activeAlerts,
+    this.filterConfigOptions.filterKeyOptionsAssets.activeInvestigations,
+  ];
+
+  private readonly assetAsPlannedFilterConfiguration: FilterConfig[] = [
     this.filterConfigOptions.filterKeyOptionsAssets.filter,
     this.filterConfigOptions.filterKeyOptionsAssets.id,
     this.filterConfigOptions.filterKeyOptionsAssets.idShort,

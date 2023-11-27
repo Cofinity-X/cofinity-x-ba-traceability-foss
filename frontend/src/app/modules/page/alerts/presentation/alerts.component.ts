@@ -63,7 +63,7 @@ export class AlertsComponent {
   public readonly alertsReceivedFilterConfiguration: any[] = [
     this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
     this.filterConfigOptions.filterKeyOptionsNotifications.description,
-    this.filterConfigOptions.filterKeyOptionsNotifications.status('commonAlert'),
+    this.filterConfigOptions.filterKeyOptionsNotifications.status(TranslationContext.COMMONALERT),
     this.filterConfigOptions.filterKeyOptionsNotifications.severity,
     this.filterConfigOptions.filterKeyOptionsNotifications.createdBy,
   ];
@@ -71,16 +71,21 @@ export class AlertsComponent {
   public readonly alertsQueuedAndRequestedFilterConfiguration: any[] = [
     this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
     this.filterConfigOptions.filterKeyOptionsNotifications.description,
-    this.filterConfigOptions.filterKeyOptionsNotifications.status('commonAlert'),
+    this.filterConfigOptions.filterKeyOptionsNotifications.status(TranslationContext.COMMONALERT),
     this.filterConfigOptions.filterKeyOptionsNotifications.severity,
     this.filterConfigOptions.filterKeyOptionsNotifications.sendTo,
   ];
 
   private ctrlKeyState: boolean = false;
+  private DEFAULT_PAGE_SIZE = 50;
 
   private paramSubscription: Subscription;
 
-  private pagination: TableEventConfig = { page: 0, pageSize: 50, sorting: ['createdDate', 'desc'] };
+  private pagination: TableEventConfig = {
+    page: 0,
+    pageSize: this.DEFAULT_PAGE_SIZE,
+    sorting: ['createdDate', 'desc'],
+  };
 
   protected readonly PartTableType = PartTableType;
 
@@ -139,6 +144,9 @@ export class AlertsComponent {
 
   public onReceivedTableConfigChange(pagination: TableEventConfig) {
     this.pagination = pagination;
+    if (this.pagination.pageSize === 0) {
+      this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
+    }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.RECEIVED);
     if (pagination.filtering) {
       this.filterReceived = pagination.filtering;
@@ -153,6 +161,9 @@ export class AlertsComponent {
 
   public onQueuedAndRequestedTableConfigChange(pagination: TableEventConfig) {
     this.pagination = pagination;
+    if (this.pagination.pageSize === 0) {
+      this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
+    }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.QUEUED_AND_REQUESTED);
     if (pagination.filtering) {
       this.filterQueuedAndRequested = pagination.filtering;
@@ -163,6 +174,10 @@ export class AlertsComponent {
       this.alertQueuedAndRequestedSortList,
       this.filterQueuedAndRequested,
     );
+  }
+
+  public onDefaultPaginationSizeChange(pageSize: number) {
+    this.DEFAULT_PAGE_SIZE = pageSize;
   }
 
   public openDetailPage(notification: Notification): void {

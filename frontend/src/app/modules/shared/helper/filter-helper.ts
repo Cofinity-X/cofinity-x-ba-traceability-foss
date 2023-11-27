@@ -79,7 +79,7 @@ export function addFilteringParams(filtering: TableFilter, params: HttpParams): 
             }
           }
         } else {
-          if (filtering[key].filterValue !== '') {
+          if (filtering[key].filterValue !== '' && filtering[key].filterValue !== null) {
             filterApplied = true;
             params = params.append(
               'filter',

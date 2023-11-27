@@ -100,7 +100,13 @@ export class FilterCongigOptions {
   ];
 
   public readonly filterKeyOptionsNotifications = {
-    createdDate: { filterKey: 'createdDate', isTextSearch: false, isDate: true, option: this.optionTextSearch },
+    createdDate: {
+      filterKey: 'createdDate',
+      isTextSearch: false,
+      isDate: true,
+      option: this.optionTextSearch,
+      maxDate: new Date(),
+    },
     description: { filterKey: 'description', isTextSearch: true, option: this.optionTextSearch },
     status: (typeTranslationPath: string) => ({
       filterKey: 'status',
@@ -108,6 +114,13 @@ export class FilterCongigOptions {
       option: this.statusOptions(typeTranslationPath),
     }),
     severity: { filterKey: 'severity', isTextSearch: false, option: this.severityOptions },
+    targetDate: {
+      filterKey: 'targetDate',
+      isTextSearch: false,
+      isDate: true,
+      option: this.optionTextSearch,
+      maxDate: null,
+    },
     createdBy: { filterKey: 'createdBy', isTextSearch: true, option: this.optionTextSearch },
     sendTo: { filterKey: 'sendTo', isTextSearch: true, option: this.optionTextSearch },
   };
