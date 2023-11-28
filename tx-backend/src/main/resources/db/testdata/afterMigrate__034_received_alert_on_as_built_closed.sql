@@ -19,7 +19,7 @@ select setval('alert_id_seq', (select max(a.id) from alert a), true);
 insert into alert_notification
     (id                              , alert_id           , contract_agreement_id, edc_url, notification_reference_id             , created_by        , send_to           , target_date                           , severity, created_by_name, send_to_name, edc_notification_id                   , status, created                             , updated          , message_id                            , is_initial)
 values
-    (${alertNotificationReceivedId5a}, ${alertReceivedId5}, null                 , null   , 'cc49777f-3c8b-47d6-b1cf-f51783737292', 'BPNL000SUPPLIER3', 'BPNL000000000001', current_timestamp + interval '1 month', 2        , 'Philips'    , 'Hella'     , 'cc49777f-3c8b-47d6-b1cf-f51783737292', '7'   , current_timestamp - interval '5 days', current_timestamp, '68ebeb5f-158d-480e-b466-24304842c22c', false);
+    (${alertNotificationReceivedId5a}, ${alertReceivedId5}, null                 , null   , 'cc49777f-3c8b-47d6-b1cf-f51783737292', 'BPNL000SUPPLIER2', 'BPNL000000000001', current_timestamp + interval '1 month', 2        , 'Philips'    , 'Hella'     , 'cc49777f-3c8b-47d6-b1cf-f51783737292', '7'   , current_timestamp - interval '5 days', current_timestamp, '68ebeb5f-158d-480e-b466-24304842c22c', false);
 
 ---
 -- join initial notification to asset
