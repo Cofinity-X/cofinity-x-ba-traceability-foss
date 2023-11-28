@@ -120,6 +120,7 @@ export class PartsTableComponent implements OnInit {
   @Output() multiSelect = new EventEmitter<any[]>();
   @Output() clickSelectAction = new EventEmitter<void>();
   @Output() filterActivated = new EventEmitter<any>();
+  @Output() onPaginationPageSizeChange = new EventEmitter<number>();
 
   public readonly dataSource = new MatTableDataSource<unknown>();
   public readonly selection = new SelectionModel<unknown>(true, []);
@@ -828,6 +829,7 @@ export class PartsTableComponent implements OnInit {
   public onPaginationChange({ pageIndex, pageSize }: PageEvent): void {
     this.pageIndex = pageIndex;
     this.isDataLoading = true;
+    this.onPaginationPageSizeChange.emit(pageSize);
     this.configChanged.emit({ page: pageIndex, pageSize: pageSize, sorting: this.sorting });
   }
 

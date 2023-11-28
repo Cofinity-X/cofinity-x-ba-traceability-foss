@@ -111,6 +111,13 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableAsSupportedSortList = [];
     this.tableAsRecycledSortList = [];
 
+    this.assetAsBuiltFilter = {};
+    this.assetAsDesignedFilter = {};
+    this.assetAsOrderedFilter = {};
+    this.assetAsPlannedFilter = {};
+    this.assetAsRecycledFilter = {};
+    this.assetAsSupportedFilter = {};
+
     window.addEventListener('keydown', event => {
       this.ctrlKeyState = event.ctrlKey;
     });
@@ -255,7 +262,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsBuiltFilter) {
+    if (this.assetAsBuiltFilter !== null) {
       this.partsFacade.setPartsAsBuilt(
         0,
         pageSizeValue,
@@ -274,7 +281,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsPlannedFilter) {
+    if (this.assetAsPlannedFilter !== null) {
       this.partsFacade.setPartsAsPlanned(
         0,
         pageSizeValue,
@@ -284,6 +291,11 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.partsFacade.setPartsAsPlanned(page, pageSizeValue, this.tableAsPlannedSortList);
     }
+  }
+
+
+  public onDefaultPaginationSizeChange(pageSize: number) {
+    this.DEFAULT_PAGE_SIZE = pageSize;
   }
 
   private setTableSortingList(sorting: TableHeaderSort, partTable: MainAspectType): void {
@@ -438,7 +450,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsDesignedFilter) {
+    if (this.assetAsDesignedFilter !== null) {
       this.partsFacade.setPartsAsDesigned(
         0,
         pageSizeValue,
@@ -458,7 +470,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsOrderedFilter) {
+    if (this.assetAsOrderedFilter !== null) {
       this.partsFacade.setPartsAsOrdered(
         0,
         pageSizeValue,
@@ -478,7 +490,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsSupportedFilter) {
+    if (this.assetAsSupportedFilter !== null) {
       this.partsFacade.setPartsAsSupported(
         0,
         pageSizeValue,
@@ -498,7 +510,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsRecycledFilter) {
+    if (this.assetAsRecycledFilter !== null) {
       this.partsFacade.setPartsAsRecycled(
         0,
         pageSizeValue,
