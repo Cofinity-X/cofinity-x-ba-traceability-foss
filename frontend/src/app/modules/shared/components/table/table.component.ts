@@ -175,7 +175,7 @@ export class TableComponent {
     private readonly roleService: RoleService,
     private readonly tableSettingsService: TableSettingsService,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initializeTableViewSettings();
@@ -366,7 +366,6 @@ export class TableComponent {
     const filterSettings = this.tableConfig.filterConfig.filter(filter => filter.filterKey === filterName)[0];
 
     if (filterSettings.option.length > 0 && !isDate) {
-      // this.filtering.filterMethod = FilterMethod.OR;
       const filterOptions: FilterInfo[] = [];
       filterSettings.option.forEach(option => {
         if (option.checked) {
@@ -377,31 +376,19 @@ export class TableComponent {
         }
       });
       filterAdded = filterOptions;
-      if (filterAdded.length > 0) {
-        this.filterActive[filterName] = true;
-      } else {
-        this.filterActive[filterName] = false;
-      }
+      this.filterActive[filterName] = filterAdded.length > 0;
     } else if (isDate) {
       filterAdded = {
         filterValue: this.filterFormGroup.get(filterName).value,
         filterOperator: FilterOperator.AT_LOCAL_DATE,
       };
-      if (filterAdded.filterValue === null) {
-        this.filterActive[filterName] = false;
-      } else {
-        this.filterActive[filterName] = true;
-      }
+      this.filterActive[filterName] = filterAdded.filterValue !== null;
     } else {
       filterAdded = {
         filterValue: this.filterFormGroup.get(filterName).value,
         filterOperator: FilterOperator.STARTS_WITH,
       };
-      if (filterAdded.filterValue === '') {
-        this.filterActive[filterName] = false;
-      } else {
-        this.filterActive[filterName] = true;
-      }
+      this.filterActive[filterName] = filterAdded.filterValue !== '';
     }
     this.filtering[filterName] = filterAdded;
     this.filterChange.emit();

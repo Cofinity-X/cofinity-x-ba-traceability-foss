@@ -60,21 +60,10 @@ export class AlertsComponent {
   public filterReceived: TableFilter = { filterMethod: FilterMethod.AND };
   public filterQueuedAndRequested: TableFilter = { filterMethod: FilterMethod.AND };
   public readonly filterConfigOptions = new FilterCongigOptions();
-  public readonly alertsReceivedFilterConfiguration: any[] = [
-    this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
-    this.filterConfigOptions.filterKeyOptionsNotifications.description,
-    this.filterConfigOptions.filterKeyOptionsNotifications.status(TranslationContext.COMMONALERT),
-    this.filterConfigOptions.filterKeyOptionsNotifications.severity,
-    this.filterConfigOptions.filterKeyOptionsNotifications.createdBy,
-  ];
 
-  public readonly alertsQueuedAndRequestedFilterConfiguration: any[] = [
-    this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
-    this.filterConfigOptions.filterKeyOptionsNotifications.description,
-    this.filterConfigOptions.filterKeyOptionsNotifications.status(TranslationContext.COMMONALERT),
-    this.filterConfigOptions.filterKeyOptionsNotifications.severity,
-    this.filterConfigOptions.filterKeyOptionsNotifications.sendTo,
-  ];
+  public alertsReceivedFilterConfiguration: any[];
+
+  public alertsQueuedAndRequestedFilterConfiguration: any[];
 
   private ctrlKeyState: boolean = false;
   private DEFAULT_PAGE_SIZE = 50;
@@ -124,7 +113,7 @@ export class AlertsComponent {
         this.filterQueuedAndRequested,
       );
     });
-
+    this.setupFilterConfig();
     this.searchFormGroup.addControl('alertSearch', new FormControl([]));
     this.searchControl = this.searchFormGroup.get('alertSearch') as unknown as FormControl;
   }
@@ -140,6 +129,25 @@ export class AlertsComponent {
   public ngOnDestroy(): void {
     this.alertsFacade.stopAlerts();
     this.paramSubscription?.unsubscribe();
+  }
+
+  private setupFilterConfig() {
+    const { createdDate, description, status, severity, createdBy, sendTo } =
+      this.filterConfigOptions.filterKeyOptionsNotifications;
+    this.alertsReceivedFilterConfiguration = [
+      createdDate,
+      description,
+      status(TranslationContext.COMMONALERT),
+      severity,
+      createdBy,
+    ];
+    this.alertsQueuedAndRequestedFilterConfiguration = [
+      createdDate,
+      description,
+      status(TranslationContext.COMMONALERT),
+      severity,
+      sendTo,
+    ];
   }
 
   public onReceivedTableConfigChange(pagination: TableEventConfig) {

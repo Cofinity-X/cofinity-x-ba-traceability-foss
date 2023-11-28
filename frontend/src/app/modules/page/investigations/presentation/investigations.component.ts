@@ -64,23 +64,8 @@ export class InvestigationsComponent {
   public filterReceived: TableFilter = { filterMethod: FilterMethod.AND };
   public filterQueuedAndRequested: TableFilter = { filterMethod: FilterMethod.AND };
   public readonly filterConfigOptions = new FilterCongigOptions();
-  public readonly investigationsReceivedFilterConfiguration: any[] = [
-    this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
-    this.filterConfigOptions.filterKeyOptionsNotifications.description,
-    this.filterConfigOptions.filterKeyOptionsNotifications.status(TranslationContext.COMMONINVESTIGATION),
-    this.filterConfigOptions.filterKeyOptionsNotifications.targetDate,
-    this.filterConfigOptions.filterKeyOptionsNotifications.severity,
-    this.filterConfigOptions.filterKeyOptionsNotifications.createdBy,
-  ];
-
-  public readonly investigationsQueuedAndRequestedFilterConfiguration: any[] = [
-    this.filterConfigOptions.filterKeyOptionsNotifications.createdDate,
-    this.filterConfigOptions.filterKeyOptionsNotifications.description,
-    this.filterConfigOptions.filterKeyOptionsNotifications.status(TranslationContext.COMMONINVESTIGATION),
-    this.filterConfigOptions.filterKeyOptionsNotifications.targetDate,
-    this.filterConfigOptions.filterKeyOptionsNotifications.severity,
-    this.filterConfigOptions.filterKeyOptionsNotifications.sendTo,
-  ];
+  public investigationsReceivedFilterConfiguration: any[];
+  public investigationsQueuedAndRequestedFilterConfiguration: any[];
   private paramSubscription: Subscription;
   private ctrlKeyState: boolean = false;
   private DEFAULT_PAGE_SIZE = 50;
@@ -128,7 +113,7 @@ export class InvestigationsComponent {
         this.filterQueuedAndRequested,
       );
     });
-
+    this.setupFilterConfig();
     const searchControlName = 'investigationSearch';
     this.searchFormGroup.addControl(searchControlName, new FormControl([]));
     this.searchControl = this.searchFormGroup.get(searchControlName) as unknown as FormControl;
@@ -145,6 +130,27 @@ export class InvestigationsComponent {
   public ngOnDestroy(): void {
     this.investigationsFacade.stopInvestigations();
     this.paramSubscription?.unsubscribe();
+  }
+
+  private setupFilterConfig() {
+    const { createdDate, description, status, targetDate, severity, createdBy, sendTo } =
+      this.filterConfigOptions.filterKeyOptionsNotifications;
+    this.investigationsReceivedFilterConfiguration = [
+      createdDate,
+      description,
+      status(TranslationContext.COMMONINVESTIGATION),
+      targetDate,
+      severity,
+      createdBy,
+    ];
+    this.investigationsQueuedAndRequestedFilterConfiguration = [
+      createdDate,
+      description,
+      status(TranslationContext.COMMONINVESTIGATION),
+      targetDate,
+      severity,
+      sendTo,
+    ];
   }
 
   public onReceivedTableConfigChanged(pagination: TableEventConfig) {

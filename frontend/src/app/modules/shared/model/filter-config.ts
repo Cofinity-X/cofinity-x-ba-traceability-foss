@@ -223,7 +223,7 @@ export class FilterCongigOptions {
       option: this.optionTextSearch,
       maxDate: null,
     },
-    function: {
+    psFunction: {
       filterKey: 'function',
       headerKey: 'filterPsFunction',
       isTextSearch: true,
