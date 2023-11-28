@@ -32,7 +32,7 @@ public record Site(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss", timezone = "UTC") OffsetDateTime functionValidFrom,
         String function,
         // As long as no clear spelling is defined, be lax with it. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
-        @JsonFormat(with = JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
+        // JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES is not working, as it is a global feature.
         @JsonAlias({
                 "catenaXSiteId", "catenaxSiteId", "catenaXsiteId", "catenaxsiteId",
                 "catenaXSiteid", "catenaxSiteid", "catenaXsiteid", "catenaxsiteid"})

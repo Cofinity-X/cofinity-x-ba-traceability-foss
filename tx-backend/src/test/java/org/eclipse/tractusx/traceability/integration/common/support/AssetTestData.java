@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import lombok.SneakyThrows;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.AssetBase;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.JobDetailResponse;
 
@@ -81,14 +82,10 @@ public class AssetTestData {
         return readAndConvertAssetsAsPlannedForTests("/data/irs_assets_as_planned_v4.json");
     }
 
+    @SneakyThrows(IOException.class)
     List<AssetBase> readAndConvertAssetsAsPlannedForTests(final String resourceName) {
-        try {
-            final var file = AssetTestData.class.getResourceAsStream(resourceName);
-            final var response = mapper.readValue(file, JobDetailResponse.class);
-            return response.convertAssets();
-        } catch (final IOException e) {
-            e.printStackTrace(); // is allowed in test scope
-            return Collections.emptyList();
-        }
+        final var file = AssetTestData.class.getResourceAsStream(resourceName);
+        final var response = mapper.readValue(file, JobDetailResponse.class);
+        return response.convertAssets();
     }
 }
