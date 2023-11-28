@@ -127,7 +127,20 @@ describe('AlertsComponent', () => {
     expect(alertsComponent.DEFAULT_PAGE_SIZE).toEqual(100);
   });
 
-  it('should use the default page size if the page size in the config is given as 0', async () => {
+  it('should use the default page size if the page size in the ReceivedConfig is given as 0', async () => {
+    const { fixture } = await renderAlerts();
+    const alertsComponent = fixture.componentInstance;
+
+    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: ['description', 'asc'] };
+    spyOn(alertsComponent.alertsFacade, 'setReceivedAlerts');
+
+    alertsComponent.onReceivedTableConfigChange(pagination);
+    fixture.detectChanges();
+    expect(alertsComponent.alertsFacade.setReceivedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], Object({ filterMethod: 'AND' }));
+
+  });
+
+  it('should use the default page size if the page size in the QueuedAndRequestedConfig is given as 0', async () => {
     const { fixture } = await renderAlerts();
     const alertsComponent = fixture.componentInstance;
 
@@ -137,13 +150,6 @@ describe('AlertsComponent', () => {
     alertsComponent.onQueuedAndRequestedTableConfigChange(pagination);
     fixture.detectChanges();
     expect(alertsComponent.alertsFacade.setQueuedAndRequestedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], Object({ filterMethod: 'AND' }));
-
-    spyOn(alertsComponent.alertsFacade, 'setReceivedAlerts');
-
-    alertsComponent.onReceivedTableConfigChange(pagination);
-    fixture.detectChanges();
-    expect(alertsComponent.alertsFacade.setReceivedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], Object({ filterMethod: 'AND' }));
-
   });
 
   it('should pass on the filtering to the api services', async () => {
