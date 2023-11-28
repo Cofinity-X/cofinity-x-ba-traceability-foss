@@ -44,9 +44,9 @@ update assets_as_built
 ---
 -- DECLINED by receiver notification message
 insert into alert_notification
-    (id                              , alert_id           , contract_agreement_id, edc_url                                                 , notification_reference_id             , created_by        , send_to           , target_date                            , severity , created_by_name, send_to_name, edc_notification_id                    , status, created                                , updated                                , message_id                            , is_initial)
+    (id                              , alert_id           , contract_agreement_id, edc_url                                                 , notification_reference_id             , created_by         , send_to           , target_date                           , severity , created_by_name, send_to_name, edc_notification_id                    , status, created                                , updated                                , message_id                            , is_initial)
 values
-    (${alertNotificationReceivedId4b}, ${alertReceivedId4}, 'contractAgreementId', 'http://localhost:8082/api/qualitynotifications/receive', 'cc49777f-3c8b-47d6-b1cf-f51783737292',  'BPNL000000000001', 'BPNL000SUPPLIER3', current_timestamp + interval '1 month', 1        , 'Würth'        , 'Hella'      , 'cc49777f-3c8b-47d6-b1cf-f51783737292', 4     , current_timestamp - interval '12 hours', current_timestamp - interval '12 hours', 'f305046d-333a-4d44-ba3e-9a4ef1337ba6', false);
+    (${alertNotificationReceivedId4b}, ${alertReceivedId4}, 'contractAgreementId', 'http://localhost:8082/api/qualitynotifications/receive', 'cc49777f-3c8b-47d6-b1cf-f51783737292',  'BPNL000000000001', 'BPNL000SUPPLIER3', current_timestamp + interval '1 month', 1        , 'Hella'        , 'Würth'     , 'cc49777f-3c8b-47d6-b1cf-f51783737292', 4     , current_timestamp - interval '12 hours', current_timestamp - interval '12 hours', 'f305046d-333a-4d44-ba3e-9a4ef1337ba6', false);
 
 ---
 -- join DECLINED notification to asset

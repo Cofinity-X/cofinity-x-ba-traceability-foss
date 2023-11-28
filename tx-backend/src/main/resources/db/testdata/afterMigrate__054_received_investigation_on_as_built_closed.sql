@@ -43,9 +43,9 @@ update assets_as_built
 ---
 -- CLOSED by sender notification message
 insert into investigation_notification
-    (id                                      , contract_agreement_id, edc_url                                                 , notification_reference_id, send_to           , created_by        , investigation_id           , target_date                           , severity, created_by_name, send_to_name, edc_notification_id                   , status, created                               , updated                              , message_id                            , is_initial)
+    (id                                      , contract_agreement_id, edc_url                                                 , notification_reference_id, created_by        , send_to           , investigation_id           , target_date                           , severity, created_by_name, send_to_name, edc_notification_id                   , status, created                               , updated                              , message_id                            , is_initial)
 values
-    (${investigationNotificationReceivedId5b}, 'contractAgreementId', 'http://localhost:8082/api/qualitynotifications/receive', null                     , 'BPNL000CUSTOMER3', 'BPNL000000000001', ${investigationReceivedId5}, current_timestamp + interval '1 month', 0       , 'Hella'        , 'VW AG'     , '8925f21f-09eb-4789-81fb-ec221e9e1561', 7     , current_timestamp - interval '5 days ', current_timestamp - interval '1 hour', '207ba6cf-217b-401d-a5da-69cac8b154a5', false);
+    (${investigationNotificationReceivedId5b}, 'contractAgreementId', 'http://localhost:8082/api/qualitynotifications/receive', null                     , 'BPNL000CUSTOMER3', 'BPNL000000000001', ${investigationReceivedId5}, current_timestamp + interval '1 month', 0       , 'VW AG'        ,'Hella'      , '8925f21f-09eb-4789-81fb-ec221e9e1561', 7     , current_timestamp - interval '5 days ', current_timestamp - interval '1 hour', '207ba6cf-217b-401d-a5da-69cac8b154a5', false);
 
 ---
 -- join CLOSED notification to asset
