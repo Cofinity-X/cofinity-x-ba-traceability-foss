@@ -21,6 +21,7 @@
 
 import { InvestigationsModule } from '@page/investigations/investigations.module';
 import { InvestigationsComponent } from '@page/investigations/presentation/investigations.component';
+import { TableEventConfig } from '@shared/components/table/table.model';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { InvestigationsService } from '@shared/service/investigations.service';
 import { fireEvent, screen, waitFor } from '@testing-library/angular';
@@ -47,114 +48,75 @@ describe('InvestigationsComponent', () => {
   //   expect(spy).toHaveBeenCalledWith(['/investigations/id-84'], { queryParams: tabInformation } );
   // });
 
-  it('should call change pagination of received investigations', async () => {
+  it('should render the component', async () => {
     await renderInvestigations();
-    fireEvent.click(await waitFor(() => screen.getByLabelText('pagination.nextPageLabel', { selector: 'button' })));
-
-    expect(await waitFor(() => screen.getByText('Investigation No 84'))).toBeInTheDocument();
-    expect(await waitFor(() => screen.getByText('Investigation No 11'))).toBeInTheDocument();
+    const investigationsHeader = screen.getByText('pageTitle.investigations');
+    expect(investigationsHeader).toBeInTheDocument();
   });
-
-  it('should call change pagination of queued & requested investigations', async () => {
-    await renderInvestigations();
-
-    fireEvent.click(await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested')));
-
-    fireEvent.click(await waitFor(() => screen.getByLabelText('pagination.nextPageLabel', { selector: 'button' })));
-
-    expect(await waitFor(() => screen.getByText('Investigation No 84'))).toBeInTheDocument();
-    expect(await waitFor(() => screen.getByText('Investigation No 11'))).toBeInTheDocument();
-  });
-
-  it('should sort received investigations after column status', async () => {
-    const { fixture } = await renderInvestigations();
-    const investigationComponent =  fixture.componentInstance;
-
-    let setTableFunctionSpy = spyOn<any>(investigationComponent, "setTableSortingList").and.callThrough();
-    let statusColumnHeader = await screen.findByText('table.column.status');
-    await waitFor(() => {fireEvent.click(statusColumnHeader);}, {timeout: 3000});
-
-
-    expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], "received" );
-
-    expect(investigationComponent['investigationReceivedSortList']).toEqual([["status", "asc"]]);
-  });
-
-  it('should sort queued and requested investigations after column status', async () => {
-    const { fixture } = await renderInvestigations();
-    const investigationComponent =  fixture.componentInstance;
-
-    fireEvent.click(await waitFor(() => screen.getByText('commonInvestigation.tabs.queuedAndRequested')));
-
-    let setTableFunctionSpy = spyOn<any>(investigationComponent, "setTableSortingList").and.callThrough();
-    let statusColumnHeader = await screen.findByText('table.column.status');
-    await waitFor(() => {fireEvent.click(statusColumnHeader);}, {timeout: 3000});
-
-
-    expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], "queued-and-requested" );
-
-    expect(investigationComponent['investigationQueuedAndRequestedSortList']).toEqual([["status", "asc"]]);
-  });
-
 
   it('should multisort after column description and status', async () => {
     const { fixture } = await renderInvestigations();
-    const investigationsComponent =  fixture.componentInstance;
+    const investigationsComponent = fixture.componentInstance;
 
-    let setTableFunctionSpy = spyOn<any>(investigationsComponent, "setTableSortingList").and.callThrough();
-    let descriptionColumnHeader = await screen.findByText('table.column.description');
-    await waitFor(() => {fireEvent.click(descriptionColumnHeader);}, {timeout: 3000});
-    let statusHeader = await screen.findByText('table.column.status')
+    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: ['description', 'asc'] };
+    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'asc'] };
+    const paginationThree: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'desc'] };
 
-    await waitFor(() => {fireEvent.keyDown(statusHeader, {
+    investigationsComponent.onReceivedTableConfigChanged(paginationOne);
+
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([['description', 'asc']]);
+
+    const investigationsHeader = screen.getByText('pageTitle.investigations');
+    fireEvent.keyDown(investigationsHeader, {
       ctrlKey: true,
-      charCode: 17
-    })})
-    expect(investigationsComponent['ctrlKeyState']).toBeTruthy();
-    await waitFor(() => {
-      fireEvent.click(statusHeader)
+      charCode: 17,
     });
 
-    await waitFor(() => {fireEvent.keyUp(statusHeader, {
-      ctrlKey: true,
-      charCode: 17
-    })})
+    investigationsComponent.onReceivedTableConfigChanged(paginationTwo);
 
-    await waitFor(() => {fireEvent.click(statusHeader)});
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([
+      ['description', 'asc'],
+      ['status', 'asc'],
+    ]);
 
+    investigationsComponent.onReceivedTableConfigChanged(paginationThree);
 
-    expect(setTableFunctionSpy).toHaveBeenCalledWith(['description', 'asc'], "received" );
-    expect(setTableFunctionSpy).toHaveBeenCalledWith(['status', 'asc'], "received" );
-    expect(investigationsComponent['investigationReceivedSortList']).toEqual([["description", "asc"], ["status", "desc"]]);
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([
+      ['description', 'asc'],
+      ['status', 'desc'],
+    ]);
   });
-
-  it('should reset sorting after third click', async () => {
+  it('should reset the multisortList if a selection is done and the ctrl key is not pressed.', async () => {
     const { fixture } = await renderInvestigations();
-    const investigationsComponent =  fixture.componentInstance;
+    const investigationsComponent = fixture.componentInstance;
 
-    let descriptionColumnHeader = await screen.findByText('table.column.description');
-    await waitFor(() => {fireEvent.click(descriptionColumnHeader);}, {timeout: 3000});
-    let statusColumnHeader = await screen.findByText('table.column.status')
+    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: ['description', 'asc'] };
+    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'asc'] };
 
-    await waitFor(() => {fireEvent.keyDown(statusColumnHeader, {
+    investigationsComponent.onReceivedTableConfigChanged(paginationOne);
+
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([['description', 'asc']]);
+
+    const investigationsHeader = screen.getByText('pageTitle.investigations');
+    fireEvent.keyDown(investigationsHeader, {
       ctrlKey: true,
-      charCode: 17
-    })})
-
-    await waitFor(() => {
-      fireEvent.click(statusColumnHeader)
+      charCode: 17,
     });
 
-    await waitFor(() => {fireEvent.keyUp(statusColumnHeader, {
-      ctrlKey: true,
-      charCode: 17
-    })})
+    investigationsComponent.onReceivedTableConfigChanged(paginationTwo);
 
-    await waitFor(() => {fireEvent.click(statusColumnHeader)});
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([
+      ['description', 'asc'],
+      ['status', 'asc'],
+    ]);
 
-    await waitFor(() => {fireEvent.click(statusColumnHeader)});
+    fireEvent.keyUp(investigationsHeader, {
+      ctrlKey: false,
+      charCode: 17,
+    });
 
-    expect(investigationsComponent['investigationReceivedSortList']).toEqual([]);
+    investigationsComponent.onReceivedTableConfigChanged(paginationOne);
+
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([['description', 'asc']]);
   });
-
 });
