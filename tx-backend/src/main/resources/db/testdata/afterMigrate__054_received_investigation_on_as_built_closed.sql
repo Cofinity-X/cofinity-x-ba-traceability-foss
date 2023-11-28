@@ -36,7 +36,7 @@ values
 
 ---
 update assets_as_built
-    set in_investigation = true
+    set in_investigation = false
     where id in (${assetAsBuiltId15});
 
 ---

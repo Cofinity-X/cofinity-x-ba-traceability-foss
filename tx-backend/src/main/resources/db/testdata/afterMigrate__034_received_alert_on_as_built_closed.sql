@@ -37,7 +37,7 @@ values
 
 ---
 update assets_as_built
-    set active_alert = true
+    set active_alert = false
     where id in (${assetAsBuiltId22});
 
 ---
