@@ -66,7 +66,7 @@ export class AlertsComponent {
   public alertsQueuedAndRequestedFilterConfiguration: any[];
 
   private ctrlKeyState: boolean = false;
-  private DEFAULT_PAGE_SIZE = 50;
+  public DEFAULT_PAGE_SIZE = 50;
 
   private paramSubscription: Subscription;
 
@@ -80,7 +80,7 @@ export class AlertsComponent {
 
   constructor(
     public readonly helperService: AlertHelperService,
-    private readonly alertsFacade: AlertsFacade,
+    public readonly alertsFacade: AlertsFacade,
     private readonly alertDetailFacade: AlertDetailFacade,
     private readonly router: Router,
     private readonly route: ActivatedRoute,

@@ -35,7 +35,7 @@ export class InvestigationsFacade {
   constructor(
     private readonly investigationsService: InvestigationsService,
     private readonly investigationsState: InvestigationsState,
-  ) {}
+  ) { }
 
   public get investigationsReceived$(): Observable<View<Notifications>> {
     return this.investigationsState.investigationsReceived$;
@@ -49,7 +49,7 @@ export class InvestigationsFacade {
     return this.investigationsService.getInvestigation(id);
   }
 
-  public setReceivedInvestigation(
+  public setReceivedInvestigations(
     page = 0,
     pageSize = 50,
     sorting: TableHeaderSort[] = [],

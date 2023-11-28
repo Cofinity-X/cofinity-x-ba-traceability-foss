@@ -68,7 +68,7 @@ export class InvestigationsComponent {
   public investigationsQueuedAndRequestedFilterConfiguration: any[];
   private paramSubscription: Subscription;
   private ctrlKeyState: boolean = false;
-  private DEFAULT_PAGE_SIZE = 50;
+  public DEFAULT_PAGE_SIZE = 50;
 
   private pagination: TableEventConfig = {
     page: 0,
@@ -100,7 +100,7 @@ export class InvestigationsComponent {
   public ngOnInit(): void {
     this.paramSubscription = this.route.queryParams.subscribe(params => {
       this.pagination.page = params?.pageNumber;
-      this.investigationsFacade.setReceivedInvestigation(
+      this.investigationsFacade.setReceivedInvestigations(
         this.pagination.page,
         this.pagination.pageSize,
         this.investigationReceivedSortList,
@@ -162,7 +162,7 @@ export class InvestigationsComponent {
     if (pagination.filtering) {
       this.filterReceived = pagination.filtering;
     }
-    this.investigationsFacade.setReceivedInvestigation(
+    this.investigationsFacade.setReceivedInvestigations(
       this.pagination.page,
       this.pagination.pageSize,
       this.investigationReceivedSortList,
