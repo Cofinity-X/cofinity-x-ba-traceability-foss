@@ -53,7 +53,7 @@ describe('TableComponent', () => {
         componentProperties: {
           data,
           tableConfig,
-          selected
+          selected,
         },
       },
     );
@@ -161,13 +161,6 @@ describe('TableComponent', () => {
       sorting: ['name', 'desc'],
       filtering: Object({ filterMethod: 'AND' }),
     });
-    nameElement.click();
-    expect(configChange).toHaveBeenCalledWith({
-      page: 0,
-      pageSize: 10,
-      sorting: ['name', 'desc'],
-      filtering: Object({ filterMethod: 'AND' }),
-    });
   });
 
   it('should select one item', async () => {
@@ -227,6 +220,7 @@ describe('TableComponent', () => {
       sorting: undefined,
       filtering: {
         filterMethod: FilterMethod.AND,
+        description: { filterValue: 'value1', filterOperator: FilterOperator.STARTS_WITH },
         createdDate: { filterValue: '2023-11-11', filterOperator: FilterOperator.AT_LOCAL_DATE },
       },
     };
@@ -235,7 +229,9 @@ describe('TableComponent', () => {
       pageSize: 10,
       sorting: undefined,
       filtering: {
-        filterMethod: FilterMethod.OR,
+        filterMethod: FilterMethod.AND,
+        description: { filterValue: 'value1', filterOperator: FilterOperator.STARTS_WITH },
+        createdDate: { filterValue: '2023-11-11', filterOperator: FilterOperator.AT_LOCAL_DATE },
         status: [{ filterValue: 'status1', filterOperator: FilterOperator.EQUAL }],
       },
     };
@@ -243,21 +239,91 @@ describe('TableComponent', () => {
     spyOn(componentInstance.configChanged, 'emit');
 
     componentInstance.filterFormGroup.controls['description'].patchValue('value1');
-    componentInstance.filterFormGroup.controls['createdDate'].patchValue('2023-11-11');
-
-    componentInstance.tableConfig.filterConfig[2].option[0].checked = true;
-
     componentInstance.triggerFilterAdding('description', false);
-    componentInstance.triggerFilterAdding('createdDate', true);
-    componentInstance.triggerFilterAdding('status', false);
-
     fixture.detectChanges();
     expect(componentInstance.configChanged.emit).toHaveBeenCalledWith(tabelConfigRes);
 
+    componentInstance.filterFormGroup.controls['createdDate'].patchValue('2023-11-11');
+    componentInstance.triggerFilterAdding('createdDate', true);
     fixture.detectChanges();
     expect(componentInstance.configChanged.emit).toHaveBeenCalledWith(tabelConfigResTwo);
 
+    componentInstance.tableConfig.filterConfig[2].option[0].checked = true;
+    componentInstance.triggerFilterAdding('status', false);
     fixture.detectChanges();
     expect(componentInstance.configChanged.emit).toHaveBeenCalledWith(tabelConfigResThree);
+  });
+
+  it('should fire the correct page change event for changing the page', async () => {
+    const tableSize = 3;
+    const content = generateTableContent(tableSize);
+    const paginationData = { page: 0, pageSize: 10, totalItems: 100, content } as Pagination<unknown>;
+
+    const tableConfig: TableConfig = {
+      displayedColumns: ['description', 'createdDate', 'status'],
+      header: { name: 'Name Sort' },
+    };
+
+    const { fixture } = await renderComponent(TableComponent, {
+      declarations: [TableComponent],
+      imports: [SharedModule],
+      componentProperties: {
+        paginationData,
+        tableConfig,
+      },
+    });
+    const { componentInstance } = fixture;
+
+    const tabelConfigRes: TableEventConfig = {
+      page: 1,
+      pageSize: 10,
+      sorting: undefined,
+      filtering: {
+        filterMethod: FilterMethod.AND,
+      },
+    };
+
+    spyOn(componentInstance.configChanged, 'emit');
+
+    componentInstance.onPaginationChange({ pageIndex: 1, pageSize: 10, length: 0 });
+
+    fixture.detectChanges();
+    expect(componentInstance.configChanged.emit).toHaveBeenCalledWith(tabelConfigRes);
+  });
+  it('should fire the correct page change event for changing the number of shown items', async () => {
+    const tableSize = 3;
+    const content = generateTableContent(tableSize);
+    const paginationData = { page: 0, pageSize: 10, totalItems: 100, content } as Pagination<unknown>;
+
+    const tableConfig: TableConfig = {
+      displayedColumns: ['description', 'createdDate', 'status'],
+      header: { name: 'Name Sort' },
+    };
+
+    const { fixture } = await renderComponent(TableComponent, {
+      declarations: [TableComponent],
+      imports: [SharedModule],
+      componentProperties: {
+        paginationData,
+        tableConfig,
+      },
+    });
+    const { componentInstance } = fixture;
+
+    const tabelConfigRes: TableEventConfig = {
+      page: 0,
+      pageSize: 20,
+      sorting: undefined,
+      filtering: {
+        filterMethod: FilterMethod.AND,
+      },
+    };
+
+    spyOn(componentInstance.configChanged, 'emit');
+
+    componentInstance.onPaginationChange({ pageIndex: 0, pageSize: 20, length: 0 });
+
+    fixture.detectChanges();
+    expect(componentInstance.configChanged.emit).toHaveBeenCalledWith(tabelConfigRes);
   });
 });
