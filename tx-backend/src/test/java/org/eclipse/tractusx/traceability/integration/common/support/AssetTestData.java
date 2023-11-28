@@ -59,13 +59,14 @@ public class AssetTestData {
     }
 
     List<AssetBase> readAndConvertAssetsAsPlannedForTests() {
+        // Test data contains different spellings for 'catenaXSiteId', as long as no clear spelling is defined. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
         return getAssetBases("/testdata/irs_assets_as_planned_v4.json");
     }
 
     @NotNull
     @SneakyThrows(IOException.class)
-    private List<AssetBase> getAssetBases(final String name) {
-        final var file = AssetTestData.class.getResourceAsStream(name);
+    private List<AssetBase> getAssetBases(final String resourceName) {
+        final var file = AssetTestData.class.getResourceAsStream(resourceName);
         final var response = mapper.readValue(file, JobDetailResponse.class);
         return response.convertAssets();
     }
