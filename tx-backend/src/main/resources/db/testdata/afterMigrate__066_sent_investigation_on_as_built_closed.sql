@@ -44,7 +44,7 @@ update assets_as_built
 insert into investigation_notification
     (id                                  , contract_agreement_id, edc_url                                                 , notification_reference_id, send_to           , created_by        , investigation_id       , target_date                          , severity, created_by_name, send_to_name, edc_notification_id                   , status, created                               , updated                              , message_id                            , is_initial)
 values
-    (${investigationNotificationSentId7b}, 'contractAgreementId', 'http://localhost:8082/api/qualitynotifications/receive', null                     , 'BPNL000SUPPLIER2', 'BPNL000000000001', ${investigationSentId7}, current_timestamp + interval '1 week', 2       , 'Hella'        , 'Philips'   , '8925f21f-09eb-4789-81fb-ec221e9e1561', '6'   , current_timestamp - interval '6 days' , current_timestamp - interval '1 hour', '207ba6cf-217b-401d-a5da-69cac8b154a5', false);
+    (${investigationNotificationSentId7b}, 'contractAgreementId', 'http://localhost:8082/api/qualitynotifications/receive', null                     , 'BPNL000SUPPLIER2', 'BPNL000000000001', ${investigationSentId7}, current_timestamp + interval '1 week', 2       , 'Hella'        , 'Philips'   , '8925f21f-09eb-4789-81fb-ec221e9e1561', 6     , current_timestamp - interval '6 days' , current_timestamp - interval '1 hour', '207ba6cf-217b-401d-a5da-69cac8b154a5', false);
 
 ---
 -- join CLOSED notification to asset
