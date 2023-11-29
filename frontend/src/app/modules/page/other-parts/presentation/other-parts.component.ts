@@ -32,10 +32,6 @@ import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails
 import { BomLifecycleSettingsService, UserSettingView } from '@shared/service/bom-lifecycle-settings.service';
 import { StaticIdService } from '@shared/service/staticId.service';
 import { resetMultiSelectionAutoCompleteComponent } from "@page/parts/core/parts.helper";
-import { MatDialog } from '@angular/material/dialog';
-import { RequestInvestigationComponent } from '@shared/components/request-notification';
-import { BehaviorSubject } from 'rxjs';
-import { Part } from '@page/parts/model/parts.model';
 
 @Component({
     selector: 'app-other-parts',
