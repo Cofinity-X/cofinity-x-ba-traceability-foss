@@ -56,7 +56,7 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
   public bomLifecycle: MainAspectType;
 
   constructor(
-    private readonly otherPartsFacade: OtherPartsFacade,
+    public readonly otherPartsFacade: OtherPartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
   ) {
@@ -93,6 +93,7 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
   }
 
   filterActivated(isAsBuilt: boolean, assetFilter: any): void {
+    console.log(assetFilter);
     if (isAsBuilt) {
       this.assetAsBuiltFilter = assetFilter;
       this.otherPartsFacade.setCustomerPartsAsBuilt(

@@ -261,17 +261,13 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (pageSize !== 0) {
       pageSizeValue = pageSize;
     }
+    this.partsFacade.setPartsAsBuilt(
+      page,
+      pageSizeValue,
+      this.tableAsBuiltSortList,
+      toAssetFilter(this.assetAsBuiltFilter, true),
+    );
 
-    if (this.assetAsBuiltFilter !== null) {
-      this.partsFacade.setPartsAsBuilt(
-        0,
-        pageSizeValue,
-        this.tableAsBuiltSortList,
-        toAssetFilter(this.assetAsBuiltFilter, true),
-      );
-    } else {
-      this.partsFacade.setPartsAsBuilt(page, pageSizeValue, this.tableAsBuiltSortList);
-    }
   }
 
   public onAsPlannedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
@@ -281,16 +277,13 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsPlannedFilter !== null) {
-      this.partsFacade.setPartsAsPlanned(
-        0,
-        pageSizeValue,
-        this.tableAsPlannedSortList,
-        toAssetFilter(this.assetAsPlannedFilter, true),
-      );
-    } else {
-      this.partsFacade.setPartsAsPlanned(page, pageSizeValue, this.tableAsPlannedSortList);
-    }
+    this.partsFacade.setPartsAsPlanned(
+      page,
+      pageSizeValue,
+      this.tableAsPlannedSortList,
+      toAssetFilter(this.assetAsPlannedFilter, true),
+    );
+
   }
 
 
@@ -450,16 +443,13 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsDesignedFilter !== null) {
-      this.partsFacade.setPartsAsDesigned(
-        0,
-        pageSizeValue,
-        this.tableAsDesignedSortList,
-        toAssetFilter(this.assetAsDesignedFilter, true),
-      );
-    } else {
-      this.partsFacade.setPartsAsDesigned(page, pageSizeValue, this.tableAsDesignedSortList);
-    }
+    this.partsFacade.setPartsAsDesigned(
+      page,
+      pageSizeValue,
+      this.tableAsDesignedSortList,
+      toAssetFilter(this.assetAsDesignedFilter, true),
+    );
+
   }
 
   public onAsOrderedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
@@ -470,16 +460,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsOrderedFilter !== null) {
-      this.partsFacade.setPartsAsOrdered(
-        0,
-        pageSizeValue,
-        this.tableAsOrderedSortList,
-        toAssetFilter(this.assetAsOrderedFilter, true),
-      );
-    } else {
-      this.partsFacade.setPartsAsOrdered(page, pageSizeValue, this.tableAsOrderedSortList);
-    }
+    this.partsFacade.setPartsAsOrdered(
+      page,
+      pageSizeValue,
+      this.tableAsOrderedSortList,
+      toAssetFilter(this.assetAsOrderedFilter, true),
+    );
   }
 
   public onAsSupportedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
@@ -489,17 +475,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (pageSize !== 0) {
       pageSizeValue = pageSize;
     }
-
-    if (this.assetAsSupportedFilter !== null) {
-      this.partsFacade.setPartsAsSupported(
-        0,
-        pageSizeValue,
-        this.tableAsSupportedSortList,
-        toAssetFilter(this.assetAsSupportedFilter, true),
-      );
-    } else {
-      this.partsFacade.setPartsAsSupported(page, pageSizeValue, this.tableAsSupportedSortList);
-    }
+    this.partsFacade.setPartsAsSupported(
+      page,
+      pageSizeValue,
+      this.tableAsSupportedSortList,
+      toAssetFilter(this.assetAsSupportedFilter, true),
+    );
   }
 
   public onAsRecycledTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
@@ -510,16 +491,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue = pageSize;
     }
 
-    if (this.assetAsRecycledFilter !== null) {
-      this.partsFacade.setPartsAsRecycled(
-        0,
-        pageSizeValue,
-        this.tableAsRecycledSortList,
-        toAssetFilter(this.assetAsRecycledFilter, true),
-      );
-    } else {
-      this.partsFacade.setPartsAsRecycled(page, pageSizeValue, this.tableAsRecycledSortList);
-    }
+    this.partsFacade.setPartsAsRecycled(
+      page,
+      pageSizeValue,
+      this.tableAsRecycledSortList,
+      toAssetFilter(this.assetAsRecycledFilter, true),
+    );
   }
 
   public handleTableActivationEvent(bomLifecycleSize: BomLifecycleSize) {

@@ -65,7 +65,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
 
   constructor(
-    private readonly otherPartsFacade: OtherPartsFacade,
+    public readonly otherPartsFacade: OtherPartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
   ) {
