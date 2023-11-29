@@ -63,6 +63,10 @@ public class AssetTestData {
         return getAssetBases("/testdata/irs_assets_as_planned_v4.json");
     }
 
+    List<AssetBase> readAndConvertAssetsAsPlannedForTests(final String resourceName) {
+        return getAssetBases(resourceName);
+    }
+
     @NotNull
     @SneakyThrows(IOException.class)
     private List<AssetBase> getAssetBases(final String resourceName) {

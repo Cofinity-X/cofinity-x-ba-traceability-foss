@@ -126,17 +126,15 @@ class ReadInvestigationsControllerIT extends IntegrationTestSpecification {
 
         IntStream.range(1, 101)
                 .forEach(
-                        number -> {
-                            investigationsSupport.storedInvestigation(
-                                    InvestigationEntity.builder()
-                                            .assets(Collections.emptyList())
-                                            .bpn(testBpn)
-                                            .status(NotificationStatusBaseEntity.CREATED)
-                                            .side(NotificationSideBaseEntity.SENDER)
-                                            .createdDate(now)
-                                            .build()
-                            );
-                        }
+                        number -> investigationsSupport.storedInvestigation(
+                                InvestigationEntity.builder()
+                                        .assets(Collections.emptyList())
+                                        .bpn(testBpn)
+                                        .status(NotificationStatusBaseEntity.CREATED)
+                                        .side(NotificationSideBaseEntity.SENDER)
+                                        .createdDate(now)
+                                        .build()
+                        )
                 );
 
         // when/then
