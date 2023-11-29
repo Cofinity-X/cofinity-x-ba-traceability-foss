@@ -19,11 +19,13 @@
 
 
 import { Component, Input, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Pagination } from '@core/model/pagination.model';
 import { OtherPartsFacade } from '@page/other-parts/core/other-parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { Part, SemanticDataModel } from '@page/parts/model/parts.model';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
+import { RequestInvestigationComponent } from '@shared/components/request-notification';
 import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
@@ -35,7 +37,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Component({
   selector: 'app-supplier-parts',
   templateUrl: './supplier-parts.component.html',
-  styleUrls: [ '../other-parts.component.scss' ],
+  styleUrls: ['../other-parts.component.scss'],
 })
 export class SupplierPartsComponent implements OnInit, OnDestroy {
 
@@ -64,6 +66,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
     private readonly otherPartsFacade: OtherPartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
+    public dialog: MatDialog,
   ) {
 
     window.addEventListener('keydown', (event) => {
@@ -99,6 +102,12 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
       this.tableSupplierAsPlannedSortList = [];
       this.otherPartsFacade.setSupplierPartsAsPlanned();
     }
+  }
+
+  openDialog(): void {
+    this.dialog.open(RequestInvestigationComponent, {
+      data: { selectedItems: this.currentSelectedItems, showHeadline: true },
+    });
   }
 
   filterActivated(isAsBuilt: boolean, assetFilter: any): void {
@@ -142,7 +151,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   }
 
   public removeItemFromSelection(part: Part): void {
-    this.deselectPartTrigger$.next([ part ]);
+    this.deselectPartTrigger$.next([part]);
     this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
   }
 
@@ -153,7 +162,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   public addItemToSelection(part: Part): void {
     this.addPartTrigger$.next(part);
-    this.currentSelectedItems = [ ...this.currentSelectedItems, part ];
+    this.currentSelectedItems = [...this.currentSelectedItems, part];
   }
 
   public submit(): void {

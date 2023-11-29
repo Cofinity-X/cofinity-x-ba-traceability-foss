@@ -300,13 +300,15 @@
     "openInvestigations": "Offene Ausschreibungen/Ermittlungen",
     "confirmationDialog": {
       "deletePartTitle": "Part löschen?",
-      "deletePartMessage": "Wenn Sie diesen Part löschen, wird er vollständig aus der aktuellen Auswahl der Ausschreibung entfernt.",
+      "deletePartMessage": "Wenn Sie dieses Teil löschen, wird es vollständig aus der aktuellen Auswahl entfernt.",
       "deletePartButton": "Löschen"
     }
   },
   "datepicker": {
-    "apply": "Filter",
-    "cancel": "Zurücksetzen"
+    "apply": "Bewerbung",
+    "cancel": "Abbrechen",
+    "filter": "Filter",
+    "reset": "Zurücksetzen"
   },
   "semanticDataModels": {
     "BATCH": "Batch",
