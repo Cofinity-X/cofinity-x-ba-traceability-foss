@@ -246,7 +246,7 @@ export class TableComponent {
   }
 
   private setupTableViewSettings() {
-    if (!this.tableType && !this.tableViewConfig) {
+    if (!this.tableType && this.tableViewConfig) {
       this.setupTableConfigurations(
         this.tableViewConfig.displayedColumnsForTable,
         this.tableViewConfig.displayedColumns,
