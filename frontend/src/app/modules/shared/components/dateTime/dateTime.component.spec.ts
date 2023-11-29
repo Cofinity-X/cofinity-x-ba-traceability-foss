@@ -57,7 +57,7 @@ describe('DateTimeComponent', () => {
   it('should render minimum date error message', async () => {
     const label = 'Some label';
     const minDate = new Date('2022-02-20T12:00');
-    const dateInput = 'Sat Feb 20 2021 12:00:00 GMT+0100 (Central European Standard Time)';
+    const dateInput = 'Sat, 20 Feb 2021 12:00:00 GMT';
 
     const { form } = await renderDateTime(label, [DateValidators.min(minDate)]);
 
@@ -78,7 +78,7 @@ describe('DateTimeComponent', () => {
     const label = 'Some label';
 
     const maxDate = new Date('2022-02-20T12:00');
-    const dateInput = 'Mon Feb 20 2023 12:00:00 GMT+0100 (Central European Standard Time)';
+    const dateInput = 'Mon, 20 Feb 2023 11:00:00 GMT';
 
     const { form } = await renderDateTime(label, [DateValidators.max(maxDate)]);
 
