@@ -56,7 +56,7 @@ SPDX-License-Identifier: Apache-2.0
     matSortDisableClear
     multiTemplateDataRows
     data-testid="table-component--test-id"
-    [ngClass]="{select : tableConfig.displayedColumns.includes('select')}">
+    [ngClass]="{ select: tableConfig.displayedColumns.includes('select') }">
     <tr class="parts--table--header"
       *matHeaderRowDef="tableConfig.displayedColumns; sticky: true"
       mat-header-row
@@ -183,7 +183,7 @@ SPDX-License-Identifier: Apache-2.0
           [mat-sort-header]="tableConfig.sortableColumns?.[column] ? '' : null"
           [disabled]="!tableConfig.sortableColumns?.[column]"
           mat-header-cell
-          [ngClass]="{ hasQualityAlertsHeader: column === '!'}"
+          [ngClass]="{ hasQualityAlertsHeader: column === '!' }"
           class="table--header--id: column === 'id'">
           <ng-container *ngIf="tableConfig?.header?.[column]; else pureColumn">
             <div class="table--header--cell">
@@ -215,13 +215,21 @@ SPDX-License-Identifier: Apache-2.0
               </div>
               <div *ngIf="column !== '!'"
                 (click)="$event.stopPropagation()"
-                class="table--header--row__menu"
+                class="table--header--row__filter"
                 [matMenuTriggerFor]="selectMenu"
                 (menuOpened)="isMenuOpen = true"
                 (menuClosed)="isMenuOpen = false">
-                <img src="\assets\images\icons\filterAltIcon.svg"
-                  alt="filterIcon"
-                  class="table--header--row__menu--dropdown" />
+                <div class="table--header--row__filter--border--top"></div>
+                <div class="table--header--row__filter--content">
+                  <img src="\assets\images\icons\filterAltIcon.svg"
+                    alt="filterIcon"
+                    class="table--header--row__filter--icon" />
+                </div>
+                <div [class]="
+                    filterActive[column]
+                      ? 'table--header--row__filter--border--bottom--enabled'
+                      : 'table--header--row__filter--border--bottom--disabled'
+                  "></div>
               </div>
               <mat-menu #selectMenu="matMenu"
                 xPosition="before"

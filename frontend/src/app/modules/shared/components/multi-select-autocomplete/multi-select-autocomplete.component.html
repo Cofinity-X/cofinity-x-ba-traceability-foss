@@ -18,7 +18,8 @@ SPDX-License-Identifier: Apache-2.0
 -->
 <div class="filter-input">
   <mat-label class="label-medium">{{ 'multiSelect.' + filterName | i18n }}</mat-label>
-  <mat-form-field appearance="outline"
+  <mat-form-field class="filter-input__textarea"
+    appearance="outline"
     color="accent"
     [floatLabel]="'auto'"
     *ngIf="!isDate && !multiple">
@@ -29,6 +30,7 @@ SPDX-License-Identifier: Apache-2.0
       class="filter-input__textarea-input"
       (keydown.enter)="this.triggerFilter.emit(); setFilterActive()"
       data-testid="multi-select-autocomplete--text-search-input" />
+    <mat-hint>{{ 'multiSelect.inputTextHint' | i18n }}</mat-hint>
   </mat-form-field>
 
   <button *ngIf="!isDate && !multiple && searched && (this.filterActive !== '' || this.theSearchElement !== '')"
@@ -63,6 +65,7 @@ SPDX-License-Identifier: Apache-2.0
         data-testid="multi-select-autocomplete--multi-option-search-selct-one">{{ option[display] | i18n
         }}</mat-checkbox>
     </div>
+    <div class="filter-input__option-list-hint">{{ 'multiSelect.inputOptionsHint' | i18n }}</div>
   </div>
 
   <mat-form-field color="accent"
@@ -77,7 +80,7 @@ SPDX-License-Identifier: Apache-2.0
       [max]="maxDate"
       (dateInput)="dateSelectionEvent($event)"
       (dateChange)="dateSelectionEvent($event)"
-      (keydown.enter)="this.triggerFilter.emit()" />
+      disabled />
     <mat-datepicker-toggle matIconSuffix
       [for]="datepicker"></mat-datepicker-toggle>
     <mat-datepicker disabled="false"
