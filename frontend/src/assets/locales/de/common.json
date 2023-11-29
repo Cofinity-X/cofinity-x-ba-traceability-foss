@@ -300,7 +300,7 @@
     "openInvestigations": "Offene Ausschreibungen/Ermittlungen",
     "confirmationDialog": {
       "deletePartTitle": "Part löschen?",
-      "deletePartMessage": "Wenn Sie dieses Teil löschen, wird es vollständig aus der aktuellen Auswahl entfernt.",
+      "deletePartMessage": "Wenn Sie dieses Part löschen, wird er vollständig aus der aktuellen Auswahl entfernt.",
       "deletePartButton": "Löschen"
     }
   },
