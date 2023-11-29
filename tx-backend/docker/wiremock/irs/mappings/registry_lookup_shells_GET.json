@@ -1,0 +1,13 @@
+{
+  "request" : {
+    "method" : "GET",
+    "urlPattern" : "/lookup/shells\\?.*"
+  },
+  "response" : {
+    "status" : 200,
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "bodyFileName": "registry_lookup_shells_response.json"
+  }
+}
