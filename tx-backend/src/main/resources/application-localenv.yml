@@ -31,37 +31,56 @@
 server:
   port: 8082
 
+traceability:
+  bpn: BPNL000000000001
+  url: http://localhost:8082/
+
+edc:
+  api-auth-key: api-key
+  provider-edc-url: http://localhost:3002/
+
+irs-edc-client:
+  controlplane:
+    endpoint:
+      data: http://localhost:3002/api
+
+jwt:
+  resource-client: ${JWT_RESOURCE_CLIENT}
+
+feign:
+  irsApi:
+    url: http://localhost:3001/
+
+cors:
+  origins: >
+    http://localhost:4200,
+    http://localhost:4201
 
 spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/trace
+    username: postgres
+    password: docker
   security:
     oauth2:
       client:
         registration:
           keycloak:
             authorization-grant-type: client_credentials
-            client-id: ${OAUTH2_CLIENT_ID}
-            client-secret: ${OAUTH2_CLIENT_SECRET}
-            scope: service-acct-role
-          OKTA:
-            client-id: ${OAUTH2_CLIENT_ID}
-            client-secret: ${OAUTH2_CLIENT_SECRET}
-            authorization-grant-type: client_credentials
+            client-id: catena-client-id
+            # This client secret is meant for local env
+            client-secret: r8jiU6MM5wCuaVL54mCLI6OeaWWRqzL4
             scope: service-acct-role
         provider:
           keycloak:
-            token-uri: ${OAUTH2_PROVIDER_TOKEN_URI}
-          OKTA:
-            token-uri: ${OAUTH2_PROVIDER_TOKEN_URI}
+            token-uri: http://localhost:4011/realms/CX-Central/protocol/openid-connect/token
       resourceserver:
         jwt:
-          jwk-set-uri: ${OAUTH2_JWK_SET_URI:https://default}
+          jwk-set-uri: http://localhost:4011/realms/CX-Central/protocol/openid-connect/certs
 
+# reduced attempts config for local env
 resilience4j:
   retry:
     instances:
@@ -77,11 +96,6 @@ resilience4j:
         enableExponentialBackoff: true
         exponentialBackoffMultiplier: 1
 
-irs:
-  policies:
-    -
-      policyId: "ID 3.0 Trace"
-      ttl: "2023-09-30T23:59:59.99Z"
-    -
-      policyId: "ID 3.2 Trace"
-      ttl: "2023-09-30T23:59:59.99Z"
+digitalTwinRegistryClient:
+  discoveryFinderUrl: http://localhost:3001/administration/connectors/discovery/search
+
