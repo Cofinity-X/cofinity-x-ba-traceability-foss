@@ -46,7 +46,6 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
 import { isDateFilter } from '@shared/helper/filter-helper';
-import i18next from 'i18next';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableSettingsService } from '@core/user/table-settings.service';
 import { TableViewConfig } from './table-view-config.model';

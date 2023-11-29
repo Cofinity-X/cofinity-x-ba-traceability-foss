@@ -26,8 +26,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 
 import { CustomerPartsComponent } from './customer-parts.component';
-import { FilterMethod, TableEventConfig } from '@shared/components/table/table.model';
-import { FilterOperator } from '@page/parts/model/parts.model';
+import { TableEventConfig } from '@shared/components/table/table.model';
 
 describe('CustomerPartsComponent', () => {
   let otherPartsState: OtherPartsState;
@@ -167,6 +166,19 @@ describe('CustomerPartsComponent', () => {
 
   });
 
+  it('should use the given page size if the page size in the onAsBuiltTableConfigChange is given as not 0', async () => {
+    const { fixture } = await renderCustomerPartsAsBuilt();
+    const customerPartsComponent = fixture.componentInstance;
+
+    const pagination: TableEventConfig = { page: 0, pageSize: 10, sorting: ['name', 'asc'] };
+    spyOn(customerPartsComponent.otherPartsFacade, 'setCustomerPartsAsBuilt');
+
+    customerPartsComponent.onAsBuiltTableConfigChange(pagination);
+    fixture.detectChanges();
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, true));
+
+  });
+
   it('should use the default page size if the page size in the onAsPlannedTableConfigChange is given as 0', async () => {
     const { fixture } = await renderCustomerPartsAsPlanned();
     const customerPartsComponent = fixture.componentInstance;
@@ -177,6 +189,18 @@ describe('CustomerPartsComponent', () => {
     customerPartsComponent.onAsPlannedTableConfigChange(pagination);
     fixture.detectChanges();
     expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 50, [['name', 'asc']], toAssetFilter(null, false));
+  });
+
+  it('should use the given page size if the page size in the onAsPlannedTableConfigChange is given as not 0', async () => {
+    const { fixture } = await renderCustomerPartsAsPlanned();
+    const customerPartsComponent = fixture.componentInstance;
+
+    const pagination: TableEventConfig = { page: 0, pageSize: 10, sorting: ['name', 'asc'] };
+    spyOn(customerPartsComponent.otherPartsFacade, 'setCustomerPartsAsPlanned');
+
+    customerPartsComponent.onAsPlannedTableConfigChange(pagination);
+    fixture.detectChanges();
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, false));
   });
 
   it('should pass on the filtering to the api services for As_Built', async () => {

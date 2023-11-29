@@ -146,12 +146,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       } else {
         this.options.forEach(option => (option.checked = false));
       }
-    } else {
-      if (!val.checked && this.selectAllChecked) {
-        this.selectAllChecked = false;
-      } else if (val.checked && !this.selectAllChecked && this.options.filter(option => !option.checked).length === 0) {
-        this.selectAllChecked = true;
-      }
+    } else if (!isSelectAll && !val.checked && this.selectAllChecked) {
+      this.selectAllChecked = false;
+    } else if (!isSelectAll && val.checked && !this.selectAllChecked && this.options.filter(option => !option.checked).length === 0) {
+      this.selectAllChecked = true;
     }
     this.triggerFilteringTimeout(false);
   };

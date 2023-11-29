@@ -24,7 +24,7 @@ import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
 import { fireEvent, screen, waitFor } from '@testing-library/angular';
-import { getTableCheckbox, renderComponent } from '@tests/test-render.utils';
+import { renderComponent } from '@tests/test-render.utils';
 import { OTHER_PARTS_MOCK_6 } from '../../../../../mocks/services/otherParts-mock/otherParts.test.model';
 
 import { SupplierPartsComponent } from './supplier-parts.component';
@@ -221,6 +221,19 @@ describe('SupplierPartsComponent', () => {
 
   });
 
+  it('should use the given page size if the page size in the onAsBuiltTableConfigChange is given as not 0', async () => {
+    const { fixture } = await renderSupplierPartsAsBuilt();
+    const supplierPartsComponent = fixture.componentInstance;
+
+    const pagination: TableEventConfig = { page: 0, pageSize: 10, sorting: ['name', 'asc'] };
+    spyOn(supplierPartsComponent.otherPartsFacade, 'setSupplierPartsAsBuilt');
+
+    supplierPartsComponent.onAsBuiltTableConfigChange(pagination);
+    fixture.detectChanges();
+    expect(supplierPartsComponent.otherPartsFacade.setSupplierPartsAsBuilt).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, true));
+
+  });
+
   it('should use the default page size if the page size in the onAsPlannedTableConfigChange is given as 0', async () => {
     const { fixture } = await renderSupplierPartsAsPlanned();
     const supplierPartsComponent = fixture.componentInstance;
@@ -231,6 +244,18 @@ describe('SupplierPartsComponent', () => {
     supplierPartsComponent.onAsPlannedTableConfigChange(pagination);
     fixture.detectChanges();
     expect(supplierPartsComponent.otherPartsFacade.setSupplierPartsAsPlanned).toHaveBeenCalledWith(0, 50, [['name', 'asc']], toAssetFilter(null, false));
+  });
+
+  it('should use the given page size if the page size in the onAsPlannedTableConfigChange is given as not 0', async () => {
+    const { fixture } = await renderSupplierPartsAsPlanned();
+    const supplierPartsComponent = fixture.componentInstance;
+
+    const pagination: TableEventConfig = { page: 0, pageSize: 10, sorting: ['name', 'asc'] };
+    spyOn(supplierPartsComponent.otherPartsFacade, 'setSupplierPartsAsPlanned');
+
+    supplierPartsComponent.onAsPlannedTableConfigChange(pagination);
+    fixture.detectChanges();
+    expect(supplierPartsComponent.otherPartsFacade.setSupplierPartsAsPlanned).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, false));
   });
 
   it('should pass on the filtering to the api services for As_Built', async () => {

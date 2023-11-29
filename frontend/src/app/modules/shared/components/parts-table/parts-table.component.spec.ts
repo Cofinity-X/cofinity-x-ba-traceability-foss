@@ -349,6 +349,20 @@ describe('PartsTableComponent', () => {
     expect(multiSelectSpy).toHaveBeenCalledWith([{ id: 1 }]);
   });
 
+  it('should emit the correct events in an onPaginationChange event.', async () => {
+    const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_PLANNED_OWN);
+    const { componentInstance } = fixture;
+
+
+    const onSizeChangeSpy = spyOn(componentInstance.onPaginationPageSizeChange, 'emit');
+    const configChangedSpy = spyOn(componentInstance.configChanged, 'emit');
+
+    componentInstance.onPaginationChange({ pageSize: 10, pageIndex: 0, length: 10 });
+
+    expect(onSizeChangeSpy).toHaveBeenCalledWith(10);
+    expect(configChangedSpy).toHaveBeenCalledWith({ page: 0, pageSize: 10, sorting: undefined });
+  });
+
   it('should toggle all rows correctly', async () => {
     const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_PLANNED_OWN);
     const { componentInstance } = fixture;
