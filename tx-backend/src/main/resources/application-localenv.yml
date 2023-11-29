@@ -18,8 +18,18 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 ################################################################################
+
+# TraceX Backend in the local setup fails to start with the profile name "local" due to the issue in IRS below:
+################################################################################
+# Description:
+# Parameter 0 of constructor in org.eclipse.tractusx.irs.edc.client.EdcSubmodelClientLocalStub required a bean of type 'org.eclipse.tractusx.irs.data.CxTestDataContainer' that could not be found.
+# Action:
+# Consider defining a bean of type 'org.eclipse.tractusx.irs.data.CxTestDataContainer' in your configuration.
+################################################################################
+# Having the profile name "localenv" is a workaround until the profile name "local" in IRS is fixed
+
 server:
-  port: 8080
+  port: 8082
 
 
 spring:
