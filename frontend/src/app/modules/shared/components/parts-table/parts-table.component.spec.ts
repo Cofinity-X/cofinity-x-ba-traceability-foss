@@ -387,13 +387,6 @@ describe('PartsTableComponent', () => {
     expect(componentInstance.selection.selected).toEqual([]);
   });
 
-  it('should return the tooltip string for the given part', async () => {
-    const { fixture } = await renderPartsTableComponent(1, PartTableType.AS_PLANNED_OWN);
-    const { componentInstance } = fixture;
-
-    expect(componentInstance.getTooltip('!')).not.toBeNull();
-  });
-
   it('should trigger the correct filter activation event', async () => {
     const { fixture } = await renderPartsTableComponent(2, PartTableType.AS_BUILT_OWN);
     const { componentInstance } = fixture;

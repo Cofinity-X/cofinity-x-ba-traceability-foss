@@ -421,10 +421,6 @@ export class PartsTableComponent implements OnInit {
     this.setupTableViewSettings();
   }
 
-  public getTooltip(column: string) {
-    return column === '!' ? i18next.t('parts.openInvestigations') : i18next.t('table.sortTooltip');
-  }
-
   private setupTableConfigurations(
     displayedColumnsForTable: string[],
     displayedColumns: string[],

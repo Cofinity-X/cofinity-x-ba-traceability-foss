@@ -93,7 +93,6 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
   }
 
   filterActivated(isAsBuilt: boolean, assetFilter: any): void {
-    console.log(assetFilter);
     if (isAsBuilt) {
       this.assetAsBuiltFilter = assetFilter;
       this.otherPartsFacade.setCustomerPartsAsBuilt(
