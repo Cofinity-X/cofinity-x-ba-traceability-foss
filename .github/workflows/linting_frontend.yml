@@ -15,7 +15,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[FE][TEST] Format Linting Check"
+name: "[FE] Format Linting Check"
 
 on:
   push:
