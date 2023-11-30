@@ -192,8 +192,8 @@ describe('SupplierPartsComponent', () => {
   it('should show the RequestInvestigationComponent dialog when openDialog is called', async () => {
     const { fixture } = await renderSupplierParts();
     const { componentInstance } = fixture;
-    const requestInvestigationComponentSpy = spyOn(componentInstance, 'openDialog');
+    const openDialogSpy = spyOn(componentInstance.dialog, 'open');
     componentInstance.openDialog();
-    expect(requestInvestigationComponentSpy).toHaveBeenCalled();
+    expect(openDialogSpy).toHaveBeenCalled();
   });
 });

@@ -114,7 +114,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
       this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
     };
 
-    dialogRef.componentInstance.deselectPart.subscribe(callback);
+    dialogRef?.componentInstance.deselectPart.subscribe(callback);
     if (dialogRef?.afterClosed) {
       dialogRef.afterClosed().subscribe((part: Part) => {
         dialogRef.componentInstance.deselectPart.unsubscribe();
