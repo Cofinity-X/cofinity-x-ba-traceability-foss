@@ -70,9 +70,6 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
 
   public submit(): void {
     this.prepareSubmit();
-    if (this.formGroup.invalid) {
-      return;
-    }
 
     const partIds = this.selectedItems.map(part => part.id);
     const { description, targetDate, severity } = this.formGroup.value;
