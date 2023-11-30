@@ -64,6 +64,9 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   public readonly deselectPartTrigger$ = new Subject<Part[]>();
   public readonly addPartTrigger$ = new Subject<Part>();
   public readonly currentSelectedItems$ = new BehaviorSubject<Part[]>([]);
+  public readonly searchListAsBuilt: string[];
+  public readonly searchListAsPlanned: string[];
+
 
   public tableAsBuiltSortList: TableHeaderSort[];
   public tableAsPlannedSortList: TableHeaderSort[];
@@ -102,6 +105,32 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableAsOrderedSortList = [];
     this.tableAsSupportedSortList = [];
     this.tableAsRecycledSortList = [];
+    this.searchListAsBuilt = ['id',
+      'idShort',
+      'nameAtManufacturer',
+      'manufacturerName',
+      'manufacturerPartId',
+      'customerPartId',
+      'classification',
+      'nameAtCustomer',
+      'semanticDataModel',
+      'semanticModelId',
+      'manufacturingDate',
+      'manufacturingCountry',];
+    this.searchListAsPlanned = ['id',
+      'idShort',
+      'nameAtManufacturer',
+      'manufacturerName',
+      'manufacturerPartId',
+      'classification',
+      'semanticDataModel',
+      'semanticModelId',
+      'validityPeriodFrom',
+      'validityPeriodTo',
+      'function',
+      'catenaXSiteId',
+      'functionValidFrom',
+      'functionValidUntil',];
 
     window.addEventListener('keydown', event => {
       this.ctrlKeyState = event.ctrlKey;
@@ -201,25 +230,24 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   triggerPartSearch() {
     this.resetFilterAndShowToast();
     const searchValue = this.searchFormGroup.get('partSearch').value;
-
     if (searchValue && searchValue !== '') {
       this.partsFacade.setPartsAsPlanned(
         0,
         this.DEFAULT_PAGE_SIZE,
         this.tableAsPlannedSortList,
-        toGlobalSearchAssetFilter(searchValue, false),
+        toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt),
         true,
       );
       this.partsFacade.setPartsAsBuilt(
         0,
         this.DEFAULT_PAGE_SIZE,
         this.tableAsBuiltSortList,
-        toGlobalSearchAssetFilter(searchValue, true),
+        toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned),
         true,
       );
     } else {
-      this.partsFacade.setPartsAsBuilt();
-      this.partsFacade.setPartsAsPlanned();
+      this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
+      this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
     }
   }
 

@@ -129,9 +129,8 @@ export interface Relation {
 export interface AssetAsBuiltFilter {
   id?: string;
   idShort?: string;
-  name?: string;
-  manufacturer?: string;
-  partId?: string;
+  nameAtManufacturer?: string;
+  manufacturerName?: string;
   manufacturerPartId?: string;
   customerPartId?: string;
   classification?: string;
@@ -140,6 +139,8 @@ export interface AssetAsBuiltFilter {
   semanticDataModel?: string[];
   manufacturingDate?: string;
   manufacturingCountry?: string;
+  qualityAlertsInStatusActive?: string;
+  qualityInvestigationsInStatusActive?: string;
 }
 
 export interface AssetAsPlannedFilter {
