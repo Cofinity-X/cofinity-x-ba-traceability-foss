@@ -35,6 +35,13 @@ describe('SeverityComponent', () => {
     });
   };
 
+  const renderSeverityComponent = (severity: Severity) => {
+    return renderComponent(SeverityComponent, {
+      imports: [SharedModule],
+      componentProperties: { severity },
+    });
+  };
+
   it('should render correct Minor icon', async () => {
     const { fixture } = await renderSeverity(Severity.MINOR);
     const img: any = fixture.nativeElement.querySelector('img');
@@ -57,5 +64,11 @@ describe('SeverityComponent', () => {
     const { fixture } = await renderSeverity(Severity.LIFE_THREATENING);
     const img: any = fixture.nativeElement.querySelector('img');
     expect(img.src).toContain('/assets/images/icons/error.svg');
+  });
+
+  it('should get the correct icon', async () => {
+    const { fixture } = await renderSeverityComponent(Severity.LIFE_THREATENING);
+    const { componentInstance } = fixture;
+    expect(componentInstance.getIconBySeverity(Severity.LIFE_THREATENING)).toContain('/assets/images/icons/error.svg');
   });
 });

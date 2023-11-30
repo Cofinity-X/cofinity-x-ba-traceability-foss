@@ -21,7 +21,6 @@
 
 import { Component, Input } from '@angular/core';
 import { Severity } from '@shared/model/severity.model';
-import { includes } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-severity',
