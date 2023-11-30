@@ -246,7 +246,7 @@ export class TableComponent {
   }
 
   private setupTableViewSettings() {
-    if (!this.tableType) {
+    if (!this.tableType && this.tableViewConfig) {
       this.setupTableConfigurations(
         this.tableViewConfig.displayedColumnsForTable,
         this.tableViewConfig.displayedColumns,
@@ -333,6 +333,7 @@ export class TableComponent {
     this.filterConfiguration = filterConfiguration;
     this.displayedColumns = displayedColumns;
     for (const controlName in filterFormGroup) {
+      // eslint-disable-next-line no-prototype-builtins
       if (filterFormGroup.hasOwnProperty(controlName)) {
         this.filterFormGroup.addControl(controlName, filterFormGroup[controlName]);
       }

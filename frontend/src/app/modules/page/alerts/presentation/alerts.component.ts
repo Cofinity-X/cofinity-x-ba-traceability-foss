@@ -65,7 +65,7 @@ export class AlertsComponent {
 
   public alertsQueuedAndRequestedFilterConfiguration: any[];
 
-  private ctrlKeyState: boolean = false;
+  private ctrlKeyState = false;
   public DEFAULT_PAGE_SIZE = 50;
 
   private paramSubscription: Subscription;
@@ -137,14 +137,14 @@ export class AlertsComponent {
     this.alertsReceivedFilterConfiguration = [
       createdDate,
       description,
-      status(TranslationContext.COMMONALERT),
+      status(TranslationContext.COMMONALERT, true),
       severity,
       createdBy,
     ];
     this.alertsQueuedAndRequestedFilterConfiguration = [
       createdDate,
       description,
-      status(TranslationContext.COMMONALERT),
+      status(TranslationContext.COMMONALERT, false),
       severity,
       sendTo,
     ];
