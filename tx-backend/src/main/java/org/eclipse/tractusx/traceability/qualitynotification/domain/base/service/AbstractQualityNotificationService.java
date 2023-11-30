@@ -26,15 +26,19 @@ import org.eclipse.tractusx.traceability.qualitynotification.application.base.se
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.exception.SendNotificationException;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSeverity;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.repository.QualityNotificationRepository;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
 public abstract class AbstractQualityNotificationService implements QualityNotificationService {
+
+    private static final List<String> SUPPORTED_ENUM_FIELDS = List.of("status", "side", "notifications_severity");
 
     protected abstract NotificationPublisherService getNotificationPublisherService();
 
@@ -94,6 +98,23 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
 
     @Override
     public List<String> getDistinctFilterValues(String fieldName, String startWith, Integer size, QualityNotificationSide side) {
+        if (isSupportedEnumType(fieldName)) {
+            return getAssetEnumFieldValues(fieldName);
+        }
         return getQualityNotificationRepository().getDistinctFieldValues(fieldName, startWith, size, side);
+    }
+
+    private boolean isSupportedEnumType(String fieldName) {
+        return SUPPORTED_ENUM_FIELDS.contains(fieldName);
+    }
+
+    private List<String> getAssetEnumFieldValues(String fieldName) {
+        return switch (fieldName) {
+            case "status" -> Arrays.stream(QualityNotificationStatus.values()).map(Enum::name).toList();
+            case "side" -> Arrays.stream(QualityNotificationSide.values()).map(Enum::name).toList();
+            case "notifications_severity" ->
+                    Arrays.stream(QualityNotificationSeverity.values()).map(Enum::name).toList();
+            default -> null;
+        };
     }
 }
