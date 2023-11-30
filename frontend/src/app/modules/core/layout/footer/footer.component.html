@@ -37,6 +37,7 @@
   <a *appHasRole="[role]"
     href="{{ origin + '.' + link | i18n }}"
     target="_blank"
+    rel="noopener"
     [class.selected]="type === activeMenu">
     <p class="footer--text">{{ origin + '.' + type | i18n }}</p>
   </a>
