@@ -23,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Pagination } from '@core/model/pagination.model';
 import { OtherPartsFacade } from '@page/other-parts/core/other-parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
-import { Part, SemanticDataModel } from '@page/parts/model/parts.model';
+import { AssetAsBuiltFilter, AssetAsPlannedFilter, Part, SemanticDataModel } from '@page/parts/model/parts.model';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { RequestInvestigationComponent } from '@shared/components/request-notification';
 import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
@@ -55,6 +55,10 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   public tableSupplierAsBuiltSortList: TableHeaderSort[];
   public tableSupplierAsPlannedSortList: TableHeaderSort[];
 
+  public assetAsBuiltFilter: AssetAsBuiltFilter;
+  public assetAsPlannedFilter: AssetAsPlannedFilter;
+
+  public DEFAULT_PAGE_SIZE = 50;
   private ctrlKeyState = false;
 
   @Input()
@@ -63,7 +67,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
 
   constructor(
-    private readonly otherPartsFacade: OtherPartsFacade,
+    public readonly otherPartsFacade: OtherPartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
     public dialog: MatDialog,
@@ -96,10 +100,22 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
     if (this.bomLifecycle === MainAspectType.AS_BUILT) {
       this.supplierPartsAsBuilt$ = this.otherPartsFacade.supplierPartsAsBuilt$;
       this.tableSupplierAsBuiltSortList = [];
+      this.assetAsBuiltFilter = {};
       this.otherPartsFacade.setSupplierPartsAsBuilt();
     } else if (this.bomLifecycle === MainAspectType.AS_PLANNED) {
       this.supplierPartsAsPlanned$ = this.otherPartsFacade.supplierPartsAsPlanned$;
       this.tableSupplierAsPlannedSortList = [];
+      this.assetAsPlannedFilter = {};
+      this.otherPartsFacade.setSupplierPartsAsPlanned();
+    }
+  }
+
+  updateSupplierParts(searchValue?: string): void {
+    if (searchValue || searchValue === '') {
+      this.otherPartsFacade.setSupplierPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, [], toGlobalSearchAssetFilter(searchValue, true), true);
+      this.otherPartsFacade.setSupplierPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, [], toGlobalSearchAssetFilter(searchValue, false), true);
+    } else {
+      this.otherPartsFacade.setSupplierPartsAsBuilt();
       this.otherPartsFacade.setSupplierPartsAsPlanned();
     }
   }
@@ -125,19 +141,11 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   filterActivated(isAsBuilt: boolean, assetFilter: any): void {
     if (isAsBuilt) {
-      this.otherPartsFacade.setSupplierPartsAsBuilt(0, 50, [], toAssetFilter(assetFilter, true));
+      this.assetAsBuiltFilter = assetFilter;
+      this.otherPartsFacade.setSupplierPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, this.tableSupplierAsBuiltSortList, toAssetFilter(this.assetAsBuiltFilter, true));
     } else {
-      this.otherPartsFacade.setSupplierPartsAsPlanned(0, 50, [], toAssetFilter(assetFilter, false));
-    }
-  }
-
-  updateSupplierParts(searchValue?: string): void {
-    if (searchValue || searchValue === '') {
-      this.otherPartsFacade.setSupplierPartsAsBuilt(0, 50, [], toGlobalSearchAssetFilter(searchValue, true), true);
-      this.otherPartsFacade.setSupplierPartsAsPlanned(0, 50, [], toGlobalSearchAssetFilter(searchValue, false), true);
-    } else {
-      this.otherPartsFacade.setSupplierPartsAsBuilt();
-      this.otherPartsFacade.setSupplierPartsAsPlanned();
+      this.assetAsPlannedFilter = assetFilter;
+      this.otherPartsFacade.setSupplierPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, this.tableSupplierAsPlannedSortList, toAssetFilter(this.assetAsPlannedFilter, false));
     }
   }
 
@@ -150,17 +158,29 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   }
 
   public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize
+    }
     this.setTableSortingList(sorting, MainAspectType.AS_BUILT);
-    this.otherPartsFacade.setSupplierPartsAsBuilt(page, pageSize, this.tableSupplierAsBuiltSortList);
+    this.otherPartsFacade.setSupplierPartsAsBuilt(page, pageSizeValue, this.tableSupplierAsBuiltSortList, toAssetFilter(this.assetAsBuiltFilter, true));
   }
 
   public onAsPlannedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize
+    }
     this.setTableSortingList(sorting, MainAspectType.AS_PLANNED);
-    this.otherPartsFacade.setSupplierPartsAsPlanned(page, pageSize, this.tableSupplierAsPlannedSortList);
+    this.otherPartsFacade.setSupplierPartsAsPlanned(page, pageSizeValue, this.tableSupplierAsPlannedSortList, toAssetFilter(this.assetAsPlannedFilter, false));
   }
 
   public onMultiSelect(event: unknown[]): void {
     this.currentSelectedItems = event as Part[];
+  }
+
+  public onDefaultPaginationSizeChange(pageSize: number) {
+    this.DEFAULT_PAGE_SIZE = pageSize;
   }
 
   public removeItemFromSelection(part: Part): void {

@@ -28,7 +28,6 @@ SPDX-License-Identifier: Apache-2.0
       [formControl]="formControl"
       matInput
       class="filter-input__textarea-input"
-      (keydown.enter)="this.triggerFilter.emit(); setFilterActive()"
       data-testid="multi-select-autocomplete--text-search-input" />
     <mat-hint>{{ 'multiSelect.inputTextHint' | i18n }}</mat-hint>
   </mat-form-field>
@@ -45,13 +44,12 @@ SPDX-License-Identifier: Apache-2.0
   </button>
 
   <div class="filter-input__option-list"
-    *ngIf="!isDate && multiple"
-    (keydown.enter)="this.triggerFilter.emit()">
+    *ngIf="!isDate && multiple">
     <div class="filter-input__option-list-select-all-container">
       <mat-checkbox color="accent"
         class="body-large filter-input__option-list-select-all"
         [(ngModel)]="selectAllChecked"
-        (change)="toggleSelectAll($event)"
+        (change)="toggleSelect($event, true)"
         [checked]="selectAllChecked"
         [indeterminate]="someSelected()"
         data-testid="multi-select-autocomplete--multi-option-search-selct-all">{{ 'multiSelect.selectAll' | i18n
@@ -61,11 +59,10 @@ SPDX-License-Identifier: Apache-2.0
       <mat-checkbox color="accent"
         class="body-large"
         [(ngModel)]="option.checked"
-        (change)="toggleSelectOne($event)"
+        (change)="toggleSelect($event, false)"
         data-testid="multi-select-autocomplete--multi-option-search-selct-one">{{ option[display] | i18n
         }}</mat-checkbox>
     </div>
-    <div class="filter-input__option-list-hint">{{ 'multiSelect.inputOptionsHint' | i18n }}</div>
   </div>
 
   <mat-form-field color="accent"

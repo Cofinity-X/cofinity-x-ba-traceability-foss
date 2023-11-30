@@ -174,7 +174,7 @@ SPDX-License-Identifier: Apache-2.0
       <ng-container matColumnDef="{{ column }}">
         <th class="table--header"
           *matHeaderCellDef
-          matTooltip="{{ getTooltip(column) }}"
+          matTooltip="{{ column === '!' ? ('parts.openInvestigations' |i18n) : '' }}"
           matTooltipClass="table--header--tooltip"
           matTooltipPosition="above"
           [class.mdc-tooltip--multiline]="true"

@@ -236,11 +236,7 @@ SPDX-License-Identifier: Apache-2.0
       let-column>
       <ng-container matColumnDef="{{ column }}">
         <th *matHeaderCellDef
-          matTooltip="{{ tableConfig?.sortableColumns?.[column] ? ('table.sortTooltip' | i18n) : '' }}"
-          matTooltipClass="notification-table--header--tooltip"
-          matTooltipPosition="above"
           [class.mdc-tooltip--multiline]="true"
-          [matTooltipShowDelay]="1000"
           [mat-sort-header]="tableConfig?.sortableColumns?.[column] ? '' : null"
           [disabled]="!tableConfig?.sortableColumns?.[column]"
           mat-header-cell
