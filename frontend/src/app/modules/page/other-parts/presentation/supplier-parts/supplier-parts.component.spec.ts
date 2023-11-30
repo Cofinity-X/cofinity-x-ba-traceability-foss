@@ -187,4 +187,13 @@ describe('SupplierPartsComponent', () => {
       true,
     );
   });
+
+
+  it('should show the RequestInvestigationComponent dialog when openDialog is called', async () => {
+    const { fixture } = await renderSupplierParts();
+    const { componentInstance } = fixture;
+    const requestInvestigationComponentSpy = spyOn(componentInstance, 'openDialog');
+    componentInstance.openDialog();
+    expect(requestInvestigationComponentSpy).toHaveBeenCalled();
+  });
 });
