@@ -28,11 +28,9 @@ import { sleepForTests } from '../../../../../test';
 import { RequestInvestigationComponent } from '@shared/components/request-notification/request-investigation.component';
 import { RequestAlertComponent } from '@shared/components/request-notification/request-alert.component';
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash-es';
 import { RequestComponentData } from './request.componenet.model';
-import { Severity } from '@shared/model/severity.model';
 import { By } from '@angular/platform-browser';
 
 describe('requestInvestigationComponent', () => {
@@ -68,6 +66,20 @@ describe('requestInvestigationComponent', () => {
         submittedMock,
         currentSelectedItems,
       },
+    });
+  };
+
+  const renderRequestInvestigationComponentObject = () => {
+    return renderComponent(RequestInvestigationComponent, {
+      imports: [SharedModule, LayoutModule, OtherPartsModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: requestData },
+        {
+          provide: MatDialogRef, useValue: {
+            close: jasmine.createSpy(),
+          }
+        },
+      ],
     });
   };
 
@@ -123,6 +135,14 @@ describe('requestInvestigationComponent', () => {
     it('should submit parts', async () => {
       const { fixture } = await renderRequestInvestigationComponent();
       await shouldSubmitParts('requestInvestigations', fixture);
+    });
+
+    it('should submit', async () => {
+      const { fixture } = await renderRequestInvestigationComponentObject();
+      const { componentInstance } = fixture;
+      const requestInvestigationComponentSpy = spyOn(componentInstance, 'submit');
+      componentInstance.submit();
+      expect(requestInvestigationComponentSpy).toHaveBeenCalled();
     });
   });
 
