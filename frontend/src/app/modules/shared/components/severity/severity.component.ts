@@ -40,10 +40,6 @@ export class SeverityComponent {
   ]);
 
   public getIconBySeverity(severity: Severity): string {
-    if (this.iconMap.has(severity) === false) {
-      return '';
-    }
-
-    return `${this.basePath}${this.iconMap.get(severity)}.svg`;
+    return this.iconMap.has(severity) === false ? '' : `${this.basePath}${this.iconMap.get(severity)}.svg`;
   }
 }
