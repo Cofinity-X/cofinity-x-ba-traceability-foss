@@ -78,14 +78,14 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   @ViewChild('searchInput', { static: true }) searchInput: any;
 
-  theSearchElement: string = '';
+  theSearchElement = '';
 
   @Output() triggerFilter = new EventEmitter<void>();
   @Output()
   selectionChange: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('selectElem', { static: true }) selectElem: MatSelect;
-  filterName: String = 'filterLabel';
+  filterName = 'filterLabel';
   filteredOptions: Array<any> = [];
   selectedValue: Array<any> = [];
   selectAllChecked = false;
@@ -105,7 +105,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
   ngOnInit(): void {
     if (this.textSearch) {
-      this.formControl.valueChanges.pipe(startWith(0), pairwise()).subscribe(([prev, next]: [any, any]) => {
+      this.formControl.valueChanges.pipe(startWith(0), pairwise()).subscribe(([_prev, next]: [any, any]) => {
         this.theSearchElement = next;
         this.searched = true;
       });
@@ -153,7 +153,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   dateSelectionEvent(event: MatDatepickerInputEvent<Date>) {
-    let value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+    const value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
     this.formControl.patchValue(value);
     this.selectedValue = value as unknown as [];
     this.theSearchElement = value;
