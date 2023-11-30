@@ -26,13 +26,16 @@ SPDX-License-Identifier: Apache-2.0
     data-testid="multi-select-autocomplete--date-search-form">
     <mat-label>{{ label }}</mat-label>
     <input matInput
+      readonly
       [ngxMatDatetimePicker]="picker"
-      [attr.min]="minDate || null"
-      [attr.max]="maxDate || null"
+      [min]="minDate || null"
+      [max]="maxDate || null"
       [attr.data-testId]="htmlId"
       [formControl]="control"
       [errorStateMatcher]="matcher" />
     <mat-datepicker-toggle matSuffix
+      [disableRipple]="true"
+      class="date-picker-icon"
       [for]="$any(picker)"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #picker
       color="primary">

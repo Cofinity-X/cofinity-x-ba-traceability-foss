@@ -105,9 +105,22 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   }
 
   openDialog(): void {
-    this.dialog.open(RequestInvestigationComponent, {
+    const dialogRef = this.dialog.open(RequestInvestigationComponent, {
       data: { selectedItems: this.currentSelectedItems, showHeadline: true },
     });
+
+    const callback = (part: Part) => {
+      this.deselectPartTrigger$.next([part]);
+      this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
+    };
+
+    dialogRef.componentInstance.deselectPart.subscribe(callback);
+    if (dialogRef?.afterClosed) {
+      dialogRef.afterClosed().subscribe((part: Part) => {
+        dialogRef.componentInstance.deselectPart.unsubscribe();
+      });
+    }
+
   }
 
   filterActivated(isAsBuilt: boolean, assetFilter: any): void {

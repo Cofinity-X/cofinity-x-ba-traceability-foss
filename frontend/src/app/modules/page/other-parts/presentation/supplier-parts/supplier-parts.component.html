@@ -91,14 +91,3 @@ SPDX-License-Identifier: Apache-2.0
   let-parts="view">
   <mat-spinner></mat-spinner>
 </ng-template>
-
-<!-- [selectedItems]="currentSelectedItems" -->
-
-<app-sidenav-wrapper [isOpen]="isInvestigationOpen$ | async"
-  (sidenavAction)="isInvestigationOpen$.next($event)">
-  <app-request-investigation *ngIf="isInvestigationOpen$ | async"
-    (deselectPart)="removeItemFromSelection($event)"
-    (restorePart)="addItemToSelection($event)"
-    (clearSelected)="clearSelected()"
-    (submitted)="submit()"></app-request-investigation>
-</app-sidenav-wrapper>

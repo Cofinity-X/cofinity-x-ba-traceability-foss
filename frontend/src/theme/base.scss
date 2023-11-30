@@ -528,6 +528,14 @@
     padding-bottom: 16px !important;
   }
 
+  .mat-datepicker-toggle .mat-icon-button {
+    /* Disable pointer events */
+    pointer-events: none;
+    /* Disable ripple effect */
+    --mat-ripple-fg-opacity: 0 !important;
+    /* Use !important to ensure overriding */
+  }
+
   .mat-mdc-card-header {
     padding: 20px 20px 0;
   }
