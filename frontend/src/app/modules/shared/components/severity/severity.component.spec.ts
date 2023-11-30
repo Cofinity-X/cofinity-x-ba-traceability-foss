@@ -70,5 +70,6 @@ describe('SeverityComponent', () => {
     const { fixture } = await renderSeverityComponent(Severity.LIFE_THREATENING);
     const { componentInstance } = fixture;
     expect(componentInstance.getIconBySeverity(Severity.LIFE_THREATENING)).toContain('/assets/images/icons/error.svg');
+    expect(componentInstance.getIconBySeverity(undefined)).toEqual('');
   });
 });
