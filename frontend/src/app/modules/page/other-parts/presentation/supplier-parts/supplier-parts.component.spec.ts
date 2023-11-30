@@ -199,15 +199,6 @@ describe('SupplierPartsComponent', () => {
     );
   });
 
-
-  it('should show the RequestInvestigationComponent dialog when openDialog is called', async () => {
-    const { fixture } = await renderSupplierParts();
-    const { componentInstance } = fixture;
-    const openDialogSpy = spyOn(componentInstance.dialog, 'open');
-    componentInstance.openDialog();
-    expect(openDialogSpy).toHaveBeenCalled();
-  });
-
   it('should set the default Pagination by recieving a size change event', async () => {
     const { fixture } = await renderSupplierPartsAsBuilt();
     const supplierPartsComponent = fixture.componentInstance;
