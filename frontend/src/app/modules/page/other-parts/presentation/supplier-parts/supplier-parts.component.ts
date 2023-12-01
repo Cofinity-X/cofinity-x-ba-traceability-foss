@@ -127,16 +127,19 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   }
 
   updateSupplierParts(searchValue?: string): void {
-    this.globalSearchActive = true;
-    this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
-    this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
-    if (searchValue || searchValue === '') {
+    if (searchValue || searchValue !== '') {
+      this.globalSearchActive = true;
+      this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
+      this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
       if (this.bomLifecycle === MainAspectType.AS_BUILT) {
         this.otherPartsFacade.setSupplierPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, [], this.assetAsBuiltFilter, this.globalSearchActive);
       } else {
         this.otherPartsFacade.setSupplierPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, [], this.assetAsPlannedFilter, this.globalSearchActive);
       }
     } else {
+      this.globalSearchActive = false;
+      this.assetAsBuiltFilter = {};
+      this.assetAsPlannedFilter = {};
       if (this.bomLifecycle === MainAspectType.AS_BUILT) {
         this.otherPartsFacade.setSupplierPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
       } else {

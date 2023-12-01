@@ -250,12 +250,12 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // TODO implement search for other tables when they are implemented
   triggerPartSearch() {
-    this.globalSearchActive = true;
     this.resetFilterAndShowToast();
     const searchValue = this.searchFormGroup.get('partSearch').value;
-    this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
-    this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
     if (searchValue && searchValue !== '') {
+      this.globalSearchActive = true;
+      this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
+      this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
       this.partsFacade.setPartsAsPlanned(
         0,
         this.DEFAULT_PAGE_SIZE,
@@ -271,6 +271,9 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.globalSearchActive,
       );
     } else {
+      this.globalSearchActive = false;
+      this.assetAsBuiltFilter = {};
+      this.assetAsPlannedFilter = {};
       this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
       this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
     }
