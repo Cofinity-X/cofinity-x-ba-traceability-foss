@@ -28,10 +28,10 @@ import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { BomLifecycleSize } from '@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model';
 import { ToastService } from '@shared/components/toasts/toast.service';
+import { resetFilterForAssetComponents } from '@shared/helper/search-helper';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { BomLifecycleSettingsService, UserSettingView } from '@shared/service/bom-lifecycle-settings.service';
 import { StaticIdService } from '@shared/service/staticId.service';
-import { resetMultiSelectionAutoCompleteComponent } from "@page/parts/core/parts.helper";
 
 @Component({
     selector: 'app-other-parts',
@@ -39,7 +39,6 @@ import { resetMultiSelectionAutoCompleteComponent } from "@page/parts/core/parts
     styleUrls: ['./other-parts.component.scss'],
 })
 export class OtherPartsComponent implements OnDestroy, OnInit {
-
     public selectedTab = 0;
     public showStartInvestigationArray = [true, false];
 
@@ -71,7 +70,6 @@ export class OtherPartsComponent implements OnDestroy, OnInit {
     }
 
     triggerPartSearch() {
-
         this.resetFilterAndShowToast();
 
         const searchValue = this.searchFormGroup.get('partSearch').value;
@@ -85,13 +83,11 @@ export class OtherPartsComponent implements OnDestroy, OnInit {
     }
 
     private resetFilterAndShowToast() {
-        const resetComponents = (
-            components: QueryList<SupplierPartsComponent> | QueryList<CustomerPartsComponent>
-        ) => {
+        const resetComponents = (components: QueryList<SupplierPartsComponent> | QueryList<CustomerPartsComponent>) => {
             for (const component of components) {
-                const filterIsSet = resetMultiSelectionAutoCompleteComponent(component.partsTableComponents, false);
+                const filterIsSet = resetFilterForAssetComponents(component.partsTableComponents, false);
                 if (filterIsSet) {
-                    this.toastService.info("parts.input.global-search.toastInfo");
+                    this.toastService.info('parts.input.global-search.toastInfo');
                 }
             }
         };

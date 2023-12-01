@@ -871,4 +871,8 @@ export class PartsTableComponent implements OnInit {
   private removeSelectedValues(itemsToRemove: unknown[]): void {
     removeSelectedValues(this.selection, itemsToRemove);
   }
+
+  public resetfilterActive(): void {
+    this.filterActive = {};
+  }
 }

@@ -24,6 +24,7 @@ import { ALERT_BASE_ROUTE, getRoute } from '@core/known-route';
 import { AlertDetailFacade } from '@page/alerts/core/alert-detail.facade';
 import { AlertHelperService } from '@page/alerts/core/alert-helper.service';
 import { AlertsFacade } from '@page/alerts/core/alerts.facade';
+import { FilterOperator } from '@page/parts/model/parts.model';
 import { NotificationMenuActionsAssembler } from '@shared/assembler/notificationMenuActions.assembler';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
 import {
@@ -33,12 +34,16 @@ import {
   TableHeaderSort,
   TableFilter,
   FilterMethod,
+  FilterInfo,
 } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
+import { resetFilterForNotificationComponents } from '@shared/helper/search-helper';
+import { ToastService } from '@shared/index';
 import { FilterCongigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
+import { NotificationComponent } from '@shared/modules/notification/presentation/notification.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -48,6 +53,8 @@ import { Subscription } from 'rxjs';
 })
 export class AlertsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;
+  @ViewChild(NotificationComponent) notifcationComponent: NotificationComponent;
+
   public searchFormGroup = new FormGroup({});
   public searchControl: FormControl;
   public readonly alertsReceived$;
@@ -85,6 +92,7 @@ export class AlertsComponent {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly cd: ChangeDetectorRef,
+    public toastService: ToastService,
   ) {
     this.alertsReceived$ = this.alertsFacade.alertsReceived$;
     this.alertsQueuedAndRequested$ = this.alertsFacade.alertsQueuedAndRequested$;
@@ -156,7 +164,7 @@ export class AlertsComponent {
       this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
     }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.RECEIVED);
-    if (pagination.filtering) {
+    if (Object.keys(pagination.filtering).length > 1) {
       this.filterReceived = pagination.filtering;
     }
     this.alertsFacade.setReceivedAlerts(
@@ -201,7 +209,24 @@ export class AlertsComponent {
   }
 
   public triggerSearch(): void {
-    // TODO: implement search
+    this.resetFilterAndShowToast();
+    const searchValue = this.searchFormGroup.get('alertSearch').value;
+    const filterDescription: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    const filterCreatedBy: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    const filterSendTo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    this.filterReceived = { filterMethod: FilterMethod.OR, description: filterDescription, createdBy: filterCreatedBy };
+    this.filterQueuedAndRequested = { filterMethod: FilterMethod.OR, description: filterDescription, sendTo: filterSendTo };
+
+    this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, this.filterReceived);
+    this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, this.filterQueuedAndRequested);
+
+  }
+
+  private resetFilterAndShowToast() {
+    const filterIsSet = resetFilterForNotificationComponents(this.notifcationComponent, false);
+    if (filterIsSet) {
+      this.toastService.info('parts.input.global-search.toastInfo');
+    }
   }
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {

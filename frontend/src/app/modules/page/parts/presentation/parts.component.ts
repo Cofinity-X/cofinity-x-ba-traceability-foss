@@ -43,9 +43,9 @@ import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-
 import { FormControl, FormGroup } from '@angular/forms';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
-import { resetMultiSelectionAutoCompleteComponent } from '@page/parts/core/parts.helper';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestAlertComponent } from '@shared/components/request-notification/request-alert.component';
+import { resetFilterForAssetComponents } from '@shared/helper/search-helper';
 
 @Component({
   selector: 'app-parts',
@@ -67,7 +67,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   public readonly currentSelectedItems$ = new BehaviorSubject<Part[]>([]);
   public readonly searchListAsBuilt: string[];
   public readonly searchListAsPlanned: string[];
-
 
   public tableAsBuiltSortList: TableHeaderSort[];
   public tableAsPlannedSortList: TableHeaderSort[];
@@ -126,7 +125,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       'semanticDataModel',
       'semanticModelId',
       'manufacturingDate',
-      'manufacturingCountry',];
+      'manufacturingCountry',
+    ];
     this.searchListAsPlanned = [
       'id',
       'idShort',
@@ -141,7 +141,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       'function',
       'catenaXSiteId',
       'functionValidFrom',
-      'functionValidUntil',];
+      'functionValidUntil',
+    ];
 
     this.assetAsBuiltFilter = {};
     this.assetAsDesignedFilter = {};
@@ -280,7 +281,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private resetFilterAndShowToast() {
-    const filterIsSet = resetMultiSelectionAutoCompleteComponent(this.partsTableComponents, false);
+    const filterIsSet = resetFilterForAssetComponents(this.partsTableComponents, false);
     if (filterIsSet) {
       this.toastService.info('parts.input.global-search.toastInfo');
     }
@@ -312,7 +313,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       toAssetFilter(this.assetAsBuiltFilter, true),
       this.globalSearchActive,
     );
-
   }
 
   public onAsPlannedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
@@ -329,9 +329,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       toAssetFilter(this.assetAsPlannedFilter, false),
       this.globalSearchActive,
     );
-
   }
-
 
   public onDefaultPaginationSizeChange(pageSize: number) {
     this.DEFAULT_PAGE_SIZE = pageSize;
@@ -496,7 +494,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       toAssetFilter(this.assetAsDesignedFilter, true),
       this.globalSearchActive,
     );
-
   }
 
   public onAsOrderedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
