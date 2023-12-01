@@ -85,6 +85,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public DEFAULT_PAGE_SIZE = 50;
   public ctrlKeyState = false;
+  public globalSearchActive = false;
 
   protected readonly UserSettingView = UserSettingView;
   protected readonly PartTableType = PartTableType;
@@ -113,7 +114,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableAsOrderedSortList = [];
     this.tableAsSupportedSortList = [];
     this.tableAsRecycledSortList = [];
-    this.searchListAsBuilt = ['id',
+    this.searchListAsBuilt = [
+      'id',
       'idShort',
       'nameAtManufacturer',
       'manufacturerName',
@@ -125,7 +127,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       'semanticModelId',
       'manufacturingDate',
       'manufacturingCountry',];
-    this.searchListAsPlanned = ['id',
+    this.searchListAsPlanned = [
+      'id',
       'idShort',
       'nameAtManufacturer',
       'manufacturerName',
@@ -174,6 +177,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   filterActivated(type: MainAspectType, assetFilter: any): void {
+    this.globalSearchActive = false;
     switch (type) {
       case MainAspectType.AS_BUILT: {
         this.assetAsBuiltFilter = assetFilter;
@@ -182,6 +186,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.DEFAULT_PAGE_SIZE,
           this.tableAsBuiltSortList,
           toAssetFilter(this.assetAsBuiltFilter, true),
+          this.globalSearchActive,
         );
         break;
       }
@@ -192,6 +197,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.DEFAULT_PAGE_SIZE,
           this.tableAsPlannedSortList,
           toAssetFilter(this.assetAsPlannedFilter, false),
+          this.globalSearchActive,
         );
         break;
       }
@@ -202,6 +208,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.DEFAULT_PAGE_SIZE,
           this.tableAsDesignedSortList,
           toAssetFilter(this.assetAsDesignedFilter, true),
+          this.globalSearchActive,
         );
         break;
       }
@@ -212,6 +219,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.DEFAULT_PAGE_SIZE,
           this.tableAsOrderedSortList,
           toAssetFilter(this.assetAsOrderedFilter, true),
+          this.globalSearchActive,
         );
         break;
       }
@@ -222,6 +230,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.DEFAULT_PAGE_SIZE,
           this.tableAsSupportedSortList,
           toAssetFilter(this.assetAsSupportedFilter, true),
+          this.globalSearchActive,
         );
         break;
       }
@@ -232,6 +241,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.DEFAULT_PAGE_SIZE,
           this.tableAsRecycledSortList,
           toAssetFilter(this.assetAsRecycledFilter, true),
+          this.globalSearchActive,
         );
         break;
       }
@@ -240,22 +250,25 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // TODO implement search for other tables when they are implemented
   triggerPartSearch() {
+    this.globalSearchActive = true;
     this.resetFilterAndShowToast();
     const searchValue = this.searchFormGroup.get('partSearch').value;
+    this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
+    this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
     if (searchValue && searchValue !== '') {
       this.partsFacade.setPartsAsPlanned(
         0,
         this.DEFAULT_PAGE_SIZE,
         this.tableAsPlannedSortList,
-        toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt),
-        true,
+        this.assetAsBuiltFilter,
+        this.globalSearchActive,
       );
       this.partsFacade.setPartsAsBuilt(
         0,
         this.DEFAULT_PAGE_SIZE,
         this.tableAsBuiltSortList,
-        toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned),
-        true,
+        this.assetAsPlannedFilter,
+        this.globalSearchActive,
       );
     } else {
       this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
@@ -294,6 +307,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue,
       this.tableAsBuiltSortList,
       toAssetFilter(this.assetAsBuiltFilter, true),
+      this.globalSearchActive,
     );
 
   }
@@ -309,7 +323,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       page,
       pageSizeValue,
       this.tableAsPlannedSortList,
-      toAssetFilter(this.assetAsPlannedFilter, true),
+      toAssetFilter(this.assetAsPlannedFilter, false),
+      this.globalSearchActive,
     );
 
   }
@@ -476,6 +491,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue,
       this.tableAsDesignedSortList,
       toAssetFilter(this.assetAsDesignedFilter, true),
+      this.globalSearchActive,
     );
 
   }
@@ -493,6 +509,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue,
       this.tableAsOrderedSortList,
       toAssetFilter(this.assetAsOrderedFilter, true),
+      this.globalSearchActive,
     );
   }
 
@@ -508,6 +525,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue,
       this.tableAsSupportedSortList,
       toAssetFilter(this.assetAsSupportedFilter, true),
+      this.globalSearchActive,
     );
   }
 
@@ -524,6 +542,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       pageSizeValue,
       this.tableAsRecycledSortList,
       toAssetFilter(this.assetAsRecycledFilter, true),
+      this.globalSearchActive,
     );
   }
 

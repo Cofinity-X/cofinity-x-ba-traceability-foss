@@ -57,14 +57,12 @@ export class OtherPartsComponent implements OnDestroy, OnInit {
         private readonly staticIdService: StaticIdService,
         public userSettings: BomLifecycleSettingsService,
         public toastService: ToastService,
-    ) {
-    }
+    ) { }
 
     ngOnInit(): void {
         this.searchFormGroup.addControl('partSearch', new FormControl([]));
         this.searchControl = this.searchFormGroup.get('partSearch') as unknown as FormControl;
     }
-
 
     public bomLifecycleSize: BomLifecycleSize = this.userSettings.getSize(UserSettingView.OTHER_PARTS);
 
@@ -86,25 +84,20 @@ export class OtherPartsComponent implements OnDestroy, OnInit {
         }
     }
 
-
     private resetFilterAndShowToast() {
-        const oneFilterSet = false;
-
         const resetComponents = (
             components: QueryList<SupplierPartsComponent> | QueryList<CustomerPartsComponent>
         ) => {
             for (const component of components) {
-                const filterIsSet = resetMultiSelectionAutoCompleteComponent(component.partsTableComponents, oneFilterSet);
+                const filterIsSet = resetMultiSelectionAutoCompleteComponent(component.partsTableComponents, false);
                 if (filterIsSet) {
                     this.toastService.info("parts.input.global-search.toastInfo");
                 }
             }
         };
-
         resetComponents(this.supplierPartsComponents);
         resetComponents(this.customerPartsComponents);
     }
-
 
     public onTabChange({ index }: MatTabChangeEvent): void {
         this.selectedTab = index;
