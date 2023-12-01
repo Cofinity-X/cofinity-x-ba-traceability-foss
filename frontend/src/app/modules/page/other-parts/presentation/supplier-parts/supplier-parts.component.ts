@@ -19,11 +19,13 @@
 
 
 import { Component, Input, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Pagination } from '@core/model/pagination.model';
 import { OtherPartsFacade } from '@page/other-parts/core/other-parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { AssetAsBuiltFilter, AssetAsPlannedFilter, Part, SemanticDataModel } from '@page/parts/model/parts.model';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
+import { RequestInvestigationComponent } from '@shared/components/request-notification';
 import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
@@ -68,6 +70,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
     public readonly otherPartsFacade: OtherPartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
+    public dialog: MatDialog,
   ) {
 
     window.addEventListener('keydown', (event) => {
@@ -117,6 +120,25 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
     }
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(RequestInvestigationComponent, {
+      data: { selectedItems: this.currentSelectedItems, showHeadline: true },
+    });
+
+    const callback = (part: Part) => {
+      this.deselectPartTrigger$.next([part]);
+      this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
+    };
+
+    dialogRef?.componentInstance.deselectPart.subscribe(callback);
+    if (dialogRef?.afterClosed) {
+      dialogRef.afterClosed().subscribe((_part: Part) => {
+        dialogRef.componentInstance.deselectPart.unsubscribe();
+      });
+    }
+
+  }
+
   filterActivated(isAsBuilt: boolean, assetFilter: any): void {
     if (isAsBuilt) {
       this.assetAsBuiltFilter = assetFilter;
@@ -138,7 +160,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
     let pageSizeValue = this.DEFAULT_PAGE_SIZE;
     if (pageSize !== 0) {
-      pageSizeValue = pageSize
+      pageSizeValue = pageSize;
     }
     this.setTableSortingList(sorting, MainAspectType.AS_BUILT);
     this.otherPartsFacade.setSupplierPartsAsBuilt(page, pageSizeValue, this.tableSupplierAsBuiltSortList, toAssetFilter(this.assetAsBuiltFilter, true));
@@ -147,7 +169,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   public onAsPlannedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
     let pageSizeValue = this.DEFAULT_PAGE_SIZE;
     if (pageSize !== 0) {
-      pageSizeValue = pageSize
+      pageSizeValue = pageSize;
     }
     this.setTableSortingList(sorting, MainAspectType.AS_PLANNED);
     this.otherPartsFacade.setSupplierPartsAsPlanned(page, pageSizeValue, this.tableSupplierAsPlannedSortList, toAssetFilter(this.assetAsPlannedFilter, false));

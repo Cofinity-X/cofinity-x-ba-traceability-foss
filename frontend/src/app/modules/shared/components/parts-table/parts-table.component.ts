@@ -69,7 +69,9 @@ export class PartsTableComponent implements OnInit {
   @Input() labelId: string;
   @Input() noShadow = false;
   @Input() showHover = true;
-  @Input() showAlertButton = false;
+  @Input() actionIcon;
+  @Input() actionIconAlternative;
+  @Input() showActionButton = false;
 
   @Input() selectedPartsInfoLabel: string;
   @Input() selectedPartsActionLabel: string;
@@ -437,6 +439,7 @@ export class PartsTableComponent implements OnInit {
     this.filterConfiguration = filterConfiguration;
     this.displayedColumns = displayedColumns;
     for (const controlName in filterFormGroup) {
+      // eslint-disable-next-line no-prototype-builtins
       if (filterFormGroup.hasOwnProperty(controlName)) {
         this.filterFormGroup.addControl(controlName, filterFormGroup[controlName]);
       }
