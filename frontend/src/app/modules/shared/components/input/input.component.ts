@@ -85,7 +85,7 @@ export class InputComponent extends BaseInputComponent<string> {
     }
 
     triggerFilteringTimeout(): void {
-        clearTimeout(this.inputTimer)
+        clearTimeout(this.inputTimer);
         this.inputTimer = setTimeout(() => {
             this.prefixIconClick.emit();
         }, 500);

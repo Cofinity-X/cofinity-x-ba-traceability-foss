@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { TableComponent } from '@shared/components/table/table.component';
 import {
   CreateHeaderFromColumns,
