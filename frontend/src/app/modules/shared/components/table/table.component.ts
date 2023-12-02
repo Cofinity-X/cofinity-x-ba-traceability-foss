@@ -439,7 +439,6 @@ export class TableComponent {
     for (const filterName of filterNames) {
       this.filterActive[filterName] = false;
     }
-    console.log(filterNames);
     this.filtering = { filterMethod: FilterMethod.AND };
   }
 }

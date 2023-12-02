@@ -37,7 +37,7 @@ import {
   FilterInfo,
 } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
-import { resetFilterForNotificationComponents } from '@shared/helper/search-helper';
+import { resetFilterAndShowToast } from '@shared/helper/search-helper';
 import { ToastService } from '@shared/index';
 import { FilterCongigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
@@ -209,7 +209,7 @@ export class AlertsComponent {
   }
 
   public triggerSearch(): void {
-    this.resetFilterAndShowToast();
+    resetFilterAndShowToast(false, this.notifcationComponent, this.toastService);
     const searchValue = this.searchFormGroup.get('alertSearch').value;
     const filterDescription: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
     const filterCreatedBy: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
@@ -219,14 +219,6 @@ export class AlertsComponent {
 
     this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, this.filterReceived);
     this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, this.filterQueuedAndRequested);
-
-  }
-
-  private resetFilterAndShowToast() {
-    const filterIsSet = resetFilterForNotificationComponents(this.notifcationComponent, false);
-    if (filterIsSet) {
-      this.toastService.info('parts.input.global-search.toastInfo');
-    }
   }
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {

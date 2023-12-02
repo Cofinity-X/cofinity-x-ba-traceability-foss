@@ -45,7 +45,7 @@ import { ToastService } from '@shared/components/toasts/toast.service';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestAlertComponent } from '@shared/components/request-notification/request-alert.component';
-import { resetFilterForAssetComponents } from '@shared/helper/search-helper';
+import { resetFilterAndShowToast } from '@shared/helper/search-helper';
 
 @Component({
   selector: 'app-parts',
@@ -251,7 +251,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // TODO implement search for other tables when they are implemented
   triggerPartSearch() {
-    this.resetFilterAndShowToast();
+    resetFilterAndShowToast(true, this.partsTableComponents, this.toastService);
     const searchValue = this.searchFormGroup.get('partSearch').value;
     if (searchValue && searchValue !== '') {
       this.globalSearchActive = true;
@@ -277,13 +277,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.assetAsPlannedFilter = {};
       this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
       this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
-    }
-  }
-
-  private resetFilterAndShowToast() {
-    const filterIsSet = resetFilterForAssetComponents(this.partsTableComponents, false);
-    if (filterIsSet) {
-      this.toastService.info('parts.input.global-search.toastInfo');
     }
   }
 

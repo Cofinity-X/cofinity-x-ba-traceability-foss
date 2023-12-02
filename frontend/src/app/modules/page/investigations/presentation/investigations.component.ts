@@ -33,6 +33,7 @@ import {
   TableHeaderSort,
   TableFilter,
   FilterMethod,
+  FilterInfo,
 } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { FilterCongigOptions } from '@shared/model/filter-config';
@@ -42,6 +43,10 @@ import { TranslationContext } from '@shared/model/translation-context.model';
 import { Subscription } from 'rxjs';
 import { InvestigationsFacade } from '../core/investigations.facade';
 import { FormGroup, FormControl } from '@angular/forms';
+import { resetFilterAndShowToast } from '@shared/helper/search-helper';
+import { ToastService } from '@shared/index';
+import { NotificationComponent } from '@shared/modules/notification/presentation/notification.component';
+import { FilterOperator } from '@page/parts/model/parts.model';
 
 @Component({
   selector: 'app-investigations',
@@ -50,6 +55,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class InvestigationsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;
+  @ViewChild(NotificationComponent) notifcationComponent: NotificationComponent;
 
   public searchFormGroup = new FormGroup({});
   public searchControl: FormControl;
@@ -85,6 +91,7 @@ export class InvestigationsComponent {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly cd: ChangeDetectorRef,
+    public toastService: ToastService,
   ) {
     this.investigationsReceived$ = this.investigationsFacade.investigationsReceived$;
     this.investigationsQueuedAndRequested$ = this.investigationsFacade.investigationsQueuedAndRequested$;
@@ -204,8 +211,18 @@ export class InvestigationsComponent {
   }
 
   public triggerSearch(): void {
-    // TODO: implement search
+    resetFilterAndShowToast(false, this.notifcationComponent, this.toastService);
+    const searchValue = this.searchFormGroup.get('investigationSearch').value;
+    const filterDescription: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    const filterCreatedBy: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    const filterSendTo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    this.filterReceived = { filterMethod: FilterMethod.OR, description: filterDescription, createdBy: filterCreatedBy };
+    this.filterQueuedAndRequested = { filterMethod: FilterMethod.OR, description: filterDescription, sendTo: filterSendTo };
+
+    this.investigationsFacade.setReceivedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, this.filterReceived);
+    this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, this.filterQueuedAndRequested);
   }
+
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {
     const tableSortList =
