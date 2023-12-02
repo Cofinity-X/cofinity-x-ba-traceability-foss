@@ -4,35 +4,38 @@ import { PartsTableComponent } from "@shared/components/parts-table/parts-table.
 import { MultiSelectAutocompleteComponent } from "@shared/components/multi-select-autocomplete/multi-select-autocomplete.component";
 import { ToastService } from "..";
 
-function resetFilterSelector(multiSelectAutocompleteComponents: QueryList<MultiSelectAutocompleteComponent>, oneFilterSet): boolean {
-  for (const multiSelectAutocompleteComponent of multiSelectAutocompleteComponents) {
-    let wasSet = false;
-    wasSet = multiSelectAutocompleteComponent.clickClear(true);
-    oneFilterSet = wasSet || oneFilterSet;
-  }
-  return oneFilterSet;
-}
+export class SearchHelper {
 
-export function resetFilterForAssetComponents(partsTableComponents: QueryList<PartsTableComponent>, oneFilterSet: boolean): boolean {
-  for (const partsTableComponent of partsTableComponents) {
-    oneFilterSet = resetFilterSelector(partsTableComponent.multiSelectAutocompleteComponents, oneFilterSet);
-    partsTableComponent.resetFilterActive();
-  }
-  return oneFilterSet;
-}
+  private resetFilterSelector(multiSelectAutocompleteComponents: QueryList<MultiSelectAutocompleteComponent>, oneFilterSet): boolean {
+    for (const multiSelectAutocompleteComponent of multiSelectAutocompleteComponents) {
+      let wasSet = false;
+      wasSet = multiSelectAutocompleteComponent.clickClear(true);
+      oneFilterSet = wasSet || oneFilterSet;
+    }
+    return oneFilterSet;
+  };
 
-export function resetFilterForNotificationComponents(notificationComponent: NotificationComponent, oneFilterSet: boolean): boolean {
-  for (const notifcationTabComponent of notificationComponent.notifcationTabComponents) {
-    notifcationTabComponent.onFilterChange();
-    notifcationTabComponent.tableComponent.resetFilter();
-    oneFilterSet = resetFilterSelector(notifcationTabComponent.tableComponent.multiSelectAutocompleteComponents, oneFilterSet);
-  }
-  return oneFilterSet;
-}
+  public resetFilterForAssetComponents(partsTableComponents: QueryList<PartsTableComponent>, oneFilterSet: boolean): boolean {
+    for (const partsTableComponent of partsTableComponents) {
+      oneFilterSet = this.resetFilterSelector(partsTableComponent.multiSelectAutocompleteComponents, oneFilterSet);
+      partsTableComponent.resetFilterActive();
+    }
+    return oneFilterSet;
+  };
 
-export function resetFilterAndShowToast(isAsset: boolean, component, toastService: ToastService) {
-  const filterIsSet = isAsset ? resetFilterForAssetComponents(component, false) : resetFilterForNotificationComponents(component, false);
-  if (filterIsSet) {
-    toastService.info('parts.input.global-search.toastInfo');
-  }
+  public resetFilterForNotificationComponents(notificationComponent: NotificationComponent, oneFilterSet: boolean): boolean {
+    for (const notifcationTabComponent of notificationComponent.notifcationTabComponents) {
+      notifcationTabComponent.onFilterChange();
+      notifcationTabComponent.tableComponent.resetFilter();
+      oneFilterSet = this.resetFilterSelector(notifcationTabComponent.tableComponent.multiSelectAutocompleteComponents, oneFilterSet);
+    }
+    return oneFilterSet;
+  };
+
+  public resetFilterAndShowToast(isAsset: boolean, component, toastService: ToastService) {
+    const filterIsSet = isAsset ? this.resetFilterForAssetComponents(component, false) : this.resetFilterForNotificationComponents(component, false);
+    if (filterIsSet) {
+      toastService.info('parts.input.global-search.toastInfo');
+    }
+  };
 }

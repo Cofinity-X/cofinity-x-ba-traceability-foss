@@ -873,6 +873,12 @@ export class PartsTableComponent implements OnInit {
   }
 
   public resetFilterActive(): void {
-    this.filterActive = {};
+    this.filterConfiguration.forEach(filter => {
+      if (filter.column) {
+        this.filterActive[filter.column] = false;
+      } else {
+        this.filterActive[filter.filterKey] = false;
+      }
+    });
   }
 }

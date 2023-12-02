@@ -43,7 +43,7 @@ import { TranslationContext } from '@shared/model/translation-context.model';
 import { Subscription } from 'rxjs';
 import { InvestigationsFacade } from '../core/investigations.facade';
 import { FormGroup, FormControl } from '@angular/forms';
-import { resetFilterAndShowToast } from '@shared/helper/search-helper';
+import { SearchHelper } from '@shared/helper/search-helper';
 import { ToastService } from '@shared/index';
 import { NotificationComponent } from '@shared/modules/notification/presentation/notification.component';
 import { FilterOperator } from '@page/parts/model/parts.model';
@@ -83,6 +83,7 @@ export class InvestigationsComponent {
   };
 
   protected readonly PartTableType = PartTableType;
+  public readonly searchHelper = new SearchHelper();
 
   constructor(
     public readonly helperService: InvestigationHelperService,
@@ -211,13 +212,11 @@ export class InvestigationsComponent {
   }
 
   public triggerSearch(): void {
-    resetFilterAndShowToast(false, this.notifcationComponent, this.toastService);
-    const searchValue = this.searchFormGroup.get('investigationSearch').value;
-    const filterDescription: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
-    const filterCreatedBy: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
-    const filterSendTo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
-    this.filterReceived = { filterMethod: FilterMethod.OR, description: filterDescription, createdBy: filterCreatedBy };
-    this.filterQueuedAndRequested = { filterMethod: FilterMethod.OR, description: filterDescription, sendTo: filterSendTo };
+    this.searchHelper.resetFilterAndShowToast(false, this.notifcationComponent, this.toastService);
+    const searchValue = this.searchControl.value;
+    const filterInfo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    this.filterReceived = { filterMethod: FilterMethod.OR, description: filterInfo, createdBy: filterInfo };
+    this.filterQueuedAndRequested = { filterMethod: FilterMethod.OR, description: filterInfo, sendTo: filterInfo };
 
     this.investigationsFacade.setReceivedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, this.filterReceived);
     this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, this.filterQueuedAndRequested);

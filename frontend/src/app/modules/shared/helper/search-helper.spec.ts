@@ -19,14 +19,14 @@
 
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { QueryList } from "@angular/core";
-import { resetFilterAndShowToast } from './search-helper';
+import { SearchHelper } from './search-helper';
 import { NotificationComponent } from '@shared/modules/notification/presentation/notification.component';
 
 
 describe('search helper functions', () => {
   it('should reset multiSelectAutocompleteComponents for Assets', () => {
     // Arrange
-
+    const searchHelper = new SearchHelper();
     const mockQueryList = <T>(items: T[]): QueryList<T> => {
       const queryList = new QueryList<T>();
       queryList.reset(items);
@@ -52,7 +52,7 @@ describe('search helper functions', () => {
 
 
     // Act
-    resetFilterAndShowToast(true, partsTableComponentsQueryList, undefined);
+    searchHelper.resetFilterAndShowToast(true, partsTableComponentsQueryList, undefined);
     //resetFilterForAssetComponents(partsTableComponentsQueryList, oneFilterSet);
 
     // Assert
@@ -69,6 +69,7 @@ describe('search helper functions', () => {
   it('should reset multiSelectAutocompleteComponents for alerts and investigations', () => {
     // Arrange
 
+    const searchHelper = new SearchHelper();
     const mockQueryList = <T>(items: T[]): QueryList<T> => {
       const queryList = new QueryList<T>();
       queryList.reset(items);
@@ -100,7 +101,7 @@ describe('search helper functions', () => {
     };
 
     // Act
-    resetFilterAndShowToast(false, notificationComponent, undefined);
+    searchHelper.resetFilterAndShowToast(false, notificationComponent, undefined);
     //resetFilterForNotificationComponents(notificationComponent, oneFilterSet);
 
     // Assert

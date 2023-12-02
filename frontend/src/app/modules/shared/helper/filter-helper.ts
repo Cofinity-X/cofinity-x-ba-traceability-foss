@@ -123,37 +123,18 @@ export function toAssetFilter(formValues: any, isAsBuilt: boolean): AssetAsPlann
   }
 }
 
-export function toGlobalSearchAssetFilter(formValues: string, isAsBuilt: boolean, filterItemList: string[] = []) {
-  let filter = {};
-  if (filterItemList.length > 0) {
-    if (isAsBuilt) {
-      for (const filterItem of filterItemList) {
-        filter[filterItem] = formValues;
-      };
-      filter as AssetAsBuiltFilter;
-    } else {
-      for (const filterItem of filterItemList) {
-        filter[filterItem] = formValues;
-      };
-      filter as AssetAsPlannedFilter;
-    }
+export function toGlobalSearchAssetFilter(formValues: string, isAsBuilt: boolean, filterItemList: string[]) {
+  const filter = {};
+  if (isAsBuilt) {
+    for (const filterItem of filterItemList) {
+      filter[filterItem] = formValues;
+    };
+    filter as AssetAsBuiltFilter;
   } else {
-    if (isAsBuilt) {
-      filter = {
-        id: formValues,
-        semanticModelId: formValues,
-        idShort: formValues,
-        customerPartId: formValues,
-        manufacturerPartId: formValues,
-      } as AssetAsBuiltFilter;
-    } else {
-      filter = {
-        id: formValues,
-        idShort: formValues,
-        semanticModelId: formValues,
-        manufacturerPartId: formValues,
-      } as AssetAsPlannedFilter;
-    }
+    for (const filterItem of filterItemList) {
+      filter[filterItem] = formValues;
+    };
+    filter as AssetAsPlannedFilter;
   }
   return filter;
 }

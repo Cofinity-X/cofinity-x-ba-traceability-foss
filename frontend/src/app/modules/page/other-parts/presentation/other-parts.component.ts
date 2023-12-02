@@ -28,7 +28,7 @@ import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { BomLifecycleSize } from '@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model';
 import { ToastService } from '@shared/components/toasts/toast.service';
-import { resetFilterForAssetComponents } from '@shared/helper/search-helper';
+import { SearchHelper } from '@shared/helper/search-helper';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { BomLifecycleSettingsService, UserSettingView } from '@shared/service/bom-lifecycle-settings.service';
 import { StaticIdService } from '@shared/service/staticId.service';
@@ -44,6 +44,7 @@ export class OtherPartsComponent implements OnDestroy, OnInit {
 
     public readonly supplierTabLabelId = this.staticIdService.generateId('OtherParts.supplierTabLabel');
     public readonly customerTabLabelId = this.staticIdService.generateId('OtherParts.customerTabLabel');
+    public readonly searchHelper = new SearchHelper();
 
     public searchFormGroup = new FormGroup({});
     public searchControl: FormControl;
@@ -85,7 +86,7 @@ export class OtherPartsComponent implements OnDestroy, OnInit {
     private resetFilterAndShowToast() {
         const resetComponents = (components: QueryList<SupplierPartsComponent> | QueryList<CustomerPartsComponent>) => {
             for (const component of components) {
-                const filterIsSet = resetFilterForAssetComponents(component.partsTableComponents, false);
+                const filterIsSet = this.searchHelper.resetFilterForAssetComponents(component.partsTableComponents, false);
                 if (filterIsSet) {
                     this.toastService.info('parts.input.global-search.toastInfo');
                 }
