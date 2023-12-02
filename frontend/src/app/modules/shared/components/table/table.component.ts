@@ -392,11 +392,7 @@ export class TableComponent {
       };
       this.filterActive[filterName] = filterAdded.filterValue !== '';
     }
-    if (this.filterActive[filterName]) {
-      this.filtering[filterName] = filterAdded;
-    } else {
-      delete this.filtering[filterName];
-    }
+    this.filtering[filterName] = filterAdded;
     this.filterChange.emit();
     this.configChanged.emit({ page: 0, pageSize: this.pageSize, sorting: this.sorting, filtering: this.filtering });
   }
