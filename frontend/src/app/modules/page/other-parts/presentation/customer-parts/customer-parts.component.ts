@@ -89,17 +89,17 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
       this.customerPartsAsBuilt$ = this.otherPartsFacade.customerPartsAsBuilt$;
       this.tableCustomerAsBuiltSortList = [];
       this.assetAsBuiltFilter = {};
-      this.otherPartsFacade.setCustomerPartsAsBuilt();
+      this.otherPartsFacade.setCustomerPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
     } else if (this.bomLifecycle === MainAspectType.AS_PLANNED) {
       this.customerPartsAsPlanned$ = this.otherPartsFacade.customerPartsAsPlanned$;
       this.tableCustomerAsPlannedSortList = [];
       this.assetAsPlannedFilter = {};
-      this.otherPartsFacade.setCustomerPartsAsPlanned();
+      this.otherPartsFacade.setCustomerPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
     }
   }
 
   updateCustomerParts(searchValue?: string): void {
-    if (searchValue || searchValue !== '') {
+    if (searchValue && searchValue !== '') {
       this.globalSearchActive = true;
       this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
       this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);

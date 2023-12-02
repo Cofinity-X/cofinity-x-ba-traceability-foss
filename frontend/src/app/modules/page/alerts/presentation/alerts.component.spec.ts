@@ -60,7 +60,6 @@ describe('AlertsComponent', () => {
     const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: ['description', 'asc'] };
     const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'asc'] };
     const paginationThree: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'desc'] };
-
     alertsComponent.onReceivedTableConfigChange(paginationOne);
 
     expect(alertsComponent.alertReceivedSortList).toEqual([['description', 'asc']]);
@@ -70,14 +69,12 @@ describe('AlertsComponent', () => {
       ctrlKey: true,
       charCode: 17,
     });
-
     alertsComponent.onReceivedTableConfigChange(paginationTwo);
 
     expect(alertsComponent.alertReceivedSortList).toEqual([
       ['description', 'asc'],
       ['status', 'asc'],
     ]);
-
     alertsComponent.onReceivedTableConfigChange(paginationThree);
 
     expect(alertsComponent.alertReceivedSortList).toEqual([
@@ -133,7 +130,6 @@ describe('AlertsComponent', () => {
 
     const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: ['description', 'asc'] };
     spyOn(alertsComponent.alertsFacade, 'setReceivedAlerts');
-
     alertsComponent.onReceivedTableConfigChange(pagination);
     fixture.detectChanges();
     expect(alertsComponent.alertsFacade.setReceivedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], Object({ filterMethod: 'AND' }));

@@ -166,7 +166,7 @@ export class InvestigationsComponent {
       this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
     }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.RECEIVED);
-    if (pagination.filtering) {
+    if (pagination.filtering && Object.keys(pagination.filtering).length > 1) {
       this.filterReceived = pagination.filtering;
     }
     this.investigationsFacade.setReceivedInvestigations(
@@ -183,7 +183,7 @@ export class InvestigationsComponent {
       this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
     }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.QUEUED_AND_REQUESTED);
-    if (pagination.filtering) {
+    if (pagination.filtering && Object.keys(pagination.filtering).length > 1) {
       this.filterQueuedAndRequested = pagination.filtering;
     }
     this.investigationsFacade.setQueuedAndRequestedInvestigations(
@@ -222,7 +222,6 @@ export class InvestigationsComponent {
     this.investigationsFacade.setReceivedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, this.filterReceived);
     this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, this.filterQueuedAndRequested);
   }
-
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {
     const tableSortList =

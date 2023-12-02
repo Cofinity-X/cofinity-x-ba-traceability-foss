@@ -19,10 +19,12 @@
 
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { QueryList } from "@angular/core";
-import { resetFilterForAssetComponents } from './search-helper';
+import { resetFilterAndShowToast } from './search-helper';
+import { NotificationComponent } from '@shared/modules/notification/presentation/notification.component';
 
-describe('resetFilterForAssetComponents', () => {
-  it('should reset multiSelectAutocompleteComponents and set oneFilterSet to true if filterFormGroup is dirty', () => {
+
+describe('search helper functions', () => {
+  it('should reset multiSelectAutocompleteComponents for Assets', () => {
     // Arrange
 
     const mockQueryList = <T>(items: T[]): QueryList<T> => {
@@ -33,10 +35,7 @@ describe('resetFilterForAssetComponents', () => {
 
     const multiSelectAutoCompleteComponents = [
       {
-        theSearchElement: 'test',
         clickClear: jasmine.createSpy('clickClear'),
-        formControl: { reset: jasmine.createSpy('reset') },
-
       }]
     const queryListMultiSelect = mockQueryList(multiSelectAutoCompleteComponents);
 
@@ -45,27 +44,73 @@ describe('resetFilterForAssetComponents', () => {
         // @ts-ignore
         multiSelectAutocompleteComponents: queryListMultiSelect,
         // @ts-ignore
-        filterFormGroup: {
-          dirty: true,
-        },
+        resetFilterActive: jasmine.createSpy('resetFilterActive'),
       },
     ];
 
     const partsTableComponentsQueryList = mockQueryList(partsTableComponents);
 
-    let oneFilterSet = false;
 
     // Act
-    oneFilterSet = resetFilterForAssetComponents(partsTableComponentsQueryList, oneFilterSet);
+    resetFilterAndShowToast(true, partsTableComponentsQueryList, undefined);
+    //resetFilterForAssetComponents(partsTableComponentsQueryList, oneFilterSet);
 
     // Assert
-    expect(oneFilterSet).toBe(true);
 
     partsTableComponents.forEach((partsTableComponent) => {
       partsTableComponent.multiSelectAutocompleteComponents.forEach((multiSelectAutocompleteComponent) => {
-        expect(multiSelectAutocompleteComponent.theSearchElement).toBeNull();
-        expect(multiSelectAutocompleteComponent.clickClear).toHaveBeenCalled();
-        expect(multiSelectAutocompleteComponent.formControl.reset).toHaveBeenCalled();
+        expect(multiSelectAutocompleteComponent.clickClear).toHaveBeenCalledWith(true);
+      });
+      expect(partsTableComponent.resetFilterActive).toHaveBeenCalled();
+    });
+  });
+
+
+  it('should reset multiSelectAutocompleteComponents for alerts and investigations', () => {
+    // Arrange
+
+    const mockQueryList = <T>(items: T[]): QueryList<T> => {
+      const queryList = new QueryList<T>();
+      queryList.reset(items);
+      return queryList;
+    };
+
+
+    const multiSelectAutoCompleteComponents = [
+      {
+        clickClear: jasmine.createSpy('clickClear'),
+      }]
+
+    const queryListMultiSelect = mockQueryList(multiSelectAutoCompleteComponents);
+
+    const tableComponent = {
+      resetFilter: jasmine.createSpy('resetFilter'),
+      multiSelectAutocompleteComponents: queryListMultiSelect,
+    }
+    const notifcationTabComponents = [
+      {
+        onFilterChange: jasmine.createSpy('onFilterChange'),
+        tableComponent
+      }]
+    const queryListNotificationTab = mockQueryList(notifcationTabComponents);
+
+    const notificationComponent: NotificationComponent = {
+      //@ts-ignore
+      notifcationTabComponents: queryListNotificationTab,
+    };
+
+    // Act
+    resetFilterAndShowToast(false, notificationComponent, undefined);
+    //resetFilterForNotificationComponents(notificationComponent, oneFilterSet);
+
+    // Assert
+
+
+    notificationComponent.notifcationTabComponents.forEach((notifcationTabComponent) => {
+      expect(notifcationTabComponent.onFilterChange).toHaveBeenCalled();
+      expect(notifcationTabComponent.tableComponent.resetFilter).toHaveBeenCalled();
+      notifcationTabComponent.tableComponent.multiSelectAutocompleteComponents.forEach((multiSelectAutocompleteComponent) => {
+        expect(multiSelectAutocompleteComponent.clickClear).toHaveBeenCalledWith(true);
       });
     });
   });

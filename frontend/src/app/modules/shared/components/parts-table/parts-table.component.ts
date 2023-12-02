@@ -872,7 +872,7 @@ export class PartsTableComponent implements OnInit {
     removeSelectedValues(this.selection, itemsToRemove);
   }
 
-  public resetfilterActive(): void {
+  public resetFilterActive(): void {
     this.filterActive = {};
   }
 }

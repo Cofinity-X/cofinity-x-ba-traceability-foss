@@ -257,14 +257,14 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.globalSearchActive = true;
       this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
       this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
-      this.partsFacade.setPartsAsPlanned(
+      this.partsFacade.setPartsAsBuilt(
         0,
         this.DEFAULT_PAGE_SIZE,
         this.tableAsPlannedSortList,
         this.assetAsBuiltFilter,
         this.globalSearchActive,
       );
-      this.partsFacade.setPartsAsBuilt(
+      this.partsFacade.setPartsAsPlanned(
         0,
         this.DEFAULT_PAGE_SIZE,
         this.tableAsBuiltSortList,

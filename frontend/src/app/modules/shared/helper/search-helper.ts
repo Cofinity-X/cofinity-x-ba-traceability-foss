@@ -16,7 +16,7 @@ function resetFilterSelector(multiSelectAutocompleteComponents: QueryList<MultiS
 export function resetFilterForAssetComponents(partsTableComponents: QueryList<PartsTableComponent>, oneFilterSet: boolean): boolean {
   for (const partsTableComponent of partsTableComponents) {
     oneFilterSet = resetFilterSelector(partsTableComponent.multiSelectAutocompleteComponents, oneFilterSet);
-    partsTableComponent.resetfilterActive();
+    partsTableComponent.resetFilterActive();
   }
   return oneFilterSet;
 }

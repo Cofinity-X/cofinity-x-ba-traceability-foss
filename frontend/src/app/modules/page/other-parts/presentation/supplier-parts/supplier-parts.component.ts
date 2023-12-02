@@ -127,7 +127,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   }
 
   updateSupplierParts(searchValue?: string): void {
-    if (searchValue || searchValue !== '') {
+    if (searchValue && searchValue !== '') {
       this.globalSearchActive = true;
       this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
       this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);

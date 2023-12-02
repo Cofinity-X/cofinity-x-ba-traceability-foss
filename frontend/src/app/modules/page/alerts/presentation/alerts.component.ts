@@ -164,7 +164,7 @@ export class AlertsComponent {
       this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
     }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.RECEIVED);
-    if (Object.keys(pagination.filtering).length > 1) {
+    if (pagination.filtering && Object.keys(pagination.filtering).length > 1) {
       this.filterReceived = pagination.filtering;
     }
     this.alertsFacade.setReceivedAlerts(
@@ -181,7 +181,7 @@ export class AlertsComponent {
       this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
     }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.QUEUED_AND_REQUESTED);
-    if (pagination.filtering) {
+    if (pagination.filtering && Object.keys(pagination.filtering).length > 1) {
       this.filterQueuedAndRequested = pagination.filtering;
     }
     this.alertsFacade.setQueuedAndRequestedAlerts(
