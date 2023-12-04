@@ -20,8 +20,7 @@ package org.eclipse.tractusx.traceability.qualitynotification.domain.base.servic
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.service.AssetAsBuiltServiceImpl;
-import org.eclipse.tractusx.traceability.common.model.PageResult;
-import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
+import org.eclipse.tractusx.traceability.common.model.*;
 import org.eclipse.tractusx.traceability.qualitynotification.application.base.service.QualityNotificationService;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
@@ -32,7 +31,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public abstract class AbstractQualityNotificationService implements QualityNotificationService {
@@ -93,14 +94,32 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     }
 
     private PageResult<QualityNotification> getQualityNotificationsPageResultBySide(Pageable pageable, QualityNotificationSide notificationSide, SearchCriteria searchCriteria) {
+        addSideToSearchCriteria(searchCriteria, notificationSide);
         List<QualityNotification> notificationList = getQualityNotificationRepository()
                                                     .findAll(pageable, searchCriteria)
                                                     .content()
                                                     .stream()
-                                                    .filter(qualityNotification -> qualityNotification.getNotificationSide().equals(notificationSide))
                                                     .toList();
         Page<QualityNotification> notificationPage = new PageImpl<>(notificationList, pageable, getQualityNotificationRepository().countQualityNotificationEntitiesBySide(notificationSide));
         return new PageResult<>(notificationPage);
+    }
+
+    private void addSideToSearchCriteria(SearchCriteria searchCriteria, QualityNotificationSide notificationSide) {
+        Optional.ofNullable(searchCriteria.getSearchCriteriaOperator())
+                .ifPresentOrElse(
+                        searchCriteriaOperator -> {},
+                        () -> searchCriteria.setSearchCriteriaOperator(SearchCriteriaOperator.AND)
+                );
+        final List<SearchCriteriaFilter> filters = new ArrayList<>();
+        Optional.ofNullable(searchCriteria.getSearchCriteriaFilterList())
+                .ifPresent(filters::addAll);
+        final SearchCriteriaFilter sideFilter = SearchCriteriaFilter.builder()
+                .key("side")
+                .value(notificationSide.toString())
+                .strategy(SearchStrategy.EQUAL)
+                .build();
+        filters.add(sideFilter);
+        searchCriteria.setSearchCriteriaFilterList(filters);
     }
 
     @Override
