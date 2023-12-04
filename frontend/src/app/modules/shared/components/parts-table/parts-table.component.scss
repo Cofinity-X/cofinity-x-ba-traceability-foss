@@ -124,6 +124,14 @@
   border: none;
   white-space: nowrap;
   padding: 0 10px;
+
+  &--sticky {
+    position: sticky !important;
+    right: 0;
+    top: 0;
+    width: 41px;
+    padding: 0px !important;
+  }
 }
 
 .selectAllCheckbox {
