@@ -52,10 +52,10 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
   @Input() isStandalone = true;
   @Input() htmlId: string;
 
-  @Input() set direction(_direction: 'LEFT' | 'RIGHT') {
+  @Input() set direction(_direction: 'UP' | 'DOWN') {
     this.treeDirection = TreeDirection[_direction];
 
-    this.relationsFacade.isParentRelationTree = _direction === 'LEFT';
+    this.relationsFacade.isParentRelationTree = _direction === 'UP';
     const sub = this.relationsFacade.initRequestPartDetailQueue().subscribe();
     this.subscriptions.add(sub);
   }

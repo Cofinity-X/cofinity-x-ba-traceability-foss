@@ -316,8 +316,8 @@ export class D3RenderHelper {
       .classed('tree--element__arrow-container', true)
       .on('click', () => callback(data, direction));
 
-    const startAngleFactor = direction === TreeDirection.LEFT ? 1.3 : 0.3;
-    const endAngleFactor = direction === TreeDirection.LEFT ? 1.7 : 0.7;
+    const startAngleFactor = direction === TreeDirection.UP ? 1.3 : 0.3;
+    const endAngleFactor = direction === TreeDirection.UP ? 1.7 : 0.7;
 
     const arc = d3
       .arc<HierarchyNode<TreeStructure>>()
@@ -344,7 +344,7 @@ export class D3RenderHelper {
       { x: -r - 10 + 4, y: r - 25 },
     ];
 
-    const arrow = direction === TreeDirection.LEFT ? leftArrow : rightArrow;
+    const arrow = direction === TreeDirection.UP ? leftArrow : rightArrow;
 
     const curveFunc = d3
       .area<{ x: number; y: number }>()
@@ -383,7 +383,7 @@ export class D3RenderHelper {
   }
 
   private static modifyYByDirection(direction: TreeDirection, y: number): number {
-    if (direction === TreeDirection.LEFT) {
+    if (direction === TreeDirection.UP) {
       return -1 * y;
     }
 

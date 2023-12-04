@@ -19,46 +19,51 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { QualityType, SemanticDataModel } from '@page/parts/model/parts.model';
+.info-list--container {}
 
+.info-list--row {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-template-rows: minmax(23px, auto);
+  align-items: center;
+  padding-bottom: 5px;
 
-type State = 'done' | 'loading' | 'error' | QualityType | SemanticDataModel;
+  >span {
+    line-height: 1.25rem;
+  }
 
-export interface TreeElement {
-  id: string;
-  title: string;
-  text?: string;
+  @media (max-width: 1440px) {
+    grid-template-columns: 40% 60%;
+  }
 
-  state?: State | string;
-  children?: string[];
-  parents?: string[];
+  @media (max-width: 1280px) {
+    grid-template-columns: 50% 50%;
+  }
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 30% 70%;
+  }
 }
 
-//ToDo: Move to model.d3.ts!!
-export type LoadedElements = Record<string, TreeElement>;
-export type OpenElements = Record<string, string[]>;
-
-export interface TreeStructure {
-  id: string;
-  title: string;
-  text?: string;
-
-  state: State | string;
-  children?: TreeStructure[];
-  relations?: TreeStructure[];
+.info-list--full-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d91e18;
 }
 
-export enum TreeDirection {
-  UP = 'UP',
-  DOWN = 'DOWN',
+.info-list--key {
+  padding-right: 10px;
+  font-weight: bold;
 }
 
-export interface TreeData {
-  id: string;
-  mainId: string;
-  treeId?: string;
-  r?: number;
-  defaultZoom?: number;
-  openDetails?: (data: TreeStructure) => void;
-  updateChildren?: (data: TreeStructure, direction: TreeDirection) => void;
+.info-list--value {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.info-list--full-value {
+  //text-overflow: ;
+  width: 100%;
 }

@@ -24,49 +24,43 @@ SPDX-License-Identifier: Apache-2.0
   </ng-container>
 </ng-container>
 
-<ng-template #partRelationMainTmp let-partDetails="view">
+<ng-template #partRelationMainTmp
+  let-partDetails="view">
   <div class="part-relation--button-container">
-    <app-button
-      (click)="decreaseSize()"
+    <app-button (click)="decreaseSize()"
       [label]="'relation.decrease' | i18n"
       data-testid="tree--zoom__increase"
-      color="primary"
-      >+
+      color="primary">+
     </app-button>
-    <app-button
-      (click)="increaseSize()"
+    <app-button (click)="increaseSize()"
       [label]="'relation.increase' | i18n"
       data-testid="tree--zoom__decrease"
-      color="primary"
-      >-
+      color="primary">-
     </app-button>
   </div>
-  <figure class="part-relation--container" data-testId="part-relation--test-id" [id]="htmlId"></figure>
-  <app-tree
-    [rootPart]="rootPart$ | async"
+  <figure class="part-relation--container"
+    data-testId="part-relation--test-id"
+    [id]="htmlId"></figure>
+  <app-tree [rootPart]="rootPart$ | async"
     [resizeTrigger$]="resizeTrigger$"
     [showMiniMap]="showMiniMap"
     [shouldRenderParents]="true"
     [isStandalone]="isStandalone"
     [htmlId]="htmlId"
-    [direction]="'RIGHT'"
-  ></app-tree>
-  <app-tree
-    [rootPart]="rootPart$ | async"
+    [direction]="'DOWN'"></app-tree>
+  <app-tree [rootPart]="rootPart$ | async"
     [resizeTrigger$]="resizeTrigger$"
     [isStandalone]="isStandalone"
     [htmlId]="htmlId"
-    [direction]="'LEFT'"
-  ></app-tree>
-  <figure
-    *ngIf="this.showMiniMap"
+    [direction]="'UP'"></app-tree>
+  <figure *ngIf="this.showMiniMap"
     class="part-relation--minimap"
     data-testId="part-relation--minimap--test-id"
-    [id]="htmlId + '--minimap'"
-  ></figure>
+    [id]="htmlId + '--minimap'"></figure>
 </ng-template>
 
-<ng-template #errorTmp let-partDetails="view">
+<ng-template #errorTmp
+  let-partDetails="view">
   <h1>{{ 'dataLoading.error' | i18n }}</h1>
   <p>{{ partDetails.error.message }}</p>
 </ng-template>

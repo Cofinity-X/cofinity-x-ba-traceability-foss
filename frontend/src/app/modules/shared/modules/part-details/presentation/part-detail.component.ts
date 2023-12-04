@@ -21,6 +21,7 @@
 
 import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { Part, QualityType } from '@page/parts/model/parts.model';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
@@ -40,25 +41,26 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   @Input() showRelation = true;
   @Input() showStartInvestigation = true;
 
+  public selectedTab = 0;
   public readonly shortenPartDetails$: Observable<View<Part>>;
   public readonly selectedPartDetails$: Observable<View<Part>>;
   public readonly manufacturerDetails$: Observable<View<Part>>;
+  public manufacturerDetailsHeader$: Subscription;
+
   public readonly customerOrPartSiteDetails$: Observable<View<Part>>;
   public customerOrPartSiteDetailsHeader$: Subscription;
 
   public customerOrPartSiteHeader: string;
+  public manufacturerNameHeader: string;
 
   public showQualityTypeDropdown = false;
   public qualityTypeOptions: SelectOption[];
 
   public qualityTypeControl = new FormControl<QualityType>(null);
-  public readonly isOpen$: Observable<boolean>;
 
   private readonly isOpenState: State<boolean> = new State<boolean>(false);
 
   constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router) {
-    this.isOpen$ = this.isOpenState.observable;
-
     this.selectedPartDetails$ = this.partDetailsFacade.selectedPart$;
     this.shortenPartDetails$ = this.partDetailsFacade.selectedPart$.pipe(
       PartsAssembler.mapPartForView(),
@@ -66,15 +68,19 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
     );
 
     this.manufacturerDetails$ = this.partDetailsFacade.selectedPart$.pipe(PartsAssembler.mapPartForManufacturerView());
+    this.manufacturerDetailsHeader$ = this.manufacturerDetails$?.subscribe(data => {
+      this.manufacturerNameHeader = data?.data?.nameAtManufacturer;
+    });
+
     this.customerOrPartSiteDetails$ = this.partDetailsFacade.selectedPart$.pipe(PartsAssembler.mapPartForCustomerOrPartSiteView());
-    this.customerOrPartSiteDetailsHeader$ = this.customerOrPartSiteDetails$?.subscribe(data=> {
-      if(data?.data?.functionValidFrom){
+
+    this.customerOrPartSiteDetailsHeader$ = this.customerOrPartSiteDetails$?.subscribe(data => {
+      if (data?.data?.functionValidFrom) {
         this.customerOrPartSiteHeader = 'partDetail.partSiteInformationData';
       } else {
         this.customerOrPartSiteHeader = 'partDetail.customerData';
       }
     });
-
 
     this.qualityTypeOptions = Object.values(QualityType).map(value => ({
       label: value,
@@ -98,9 +104,19 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  public onTabChange({ index }: MatTabChangeEvent): void {
+    this.selectedTab = index;
+    this.partDetailsFacade.selectedPart = null;
+  }
+
   public openRelationPage(part: Part): void {
     this.partDetailsFacade.selectedPart = null;
     this.router.navigate([`parts/relations/${part.id}`]).then(_ => window.location.reload());
+  }
+
+  public navigateBackToParts(): void {
+    this.partDetailsFacade.selectedPart = null;
+    this.router.navigate(['/parts']);
   }
 
 }

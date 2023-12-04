@@ -46,6 +46,8 @@ import { PartsTableComponent } from '@shared/components/parts-table/parts-table.
 import { resetMultiSelectionAutoCompleteComponent } from '@page/parts/core/parts.helper';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestAlertComponent } from '@shared/components/request-notification/request-alert.component';
+import { PARTS_BASE_ROUTE, getRoute } from '@core/known-route';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-parts',
@@ -95,6 +97,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     private readonly staticIdService: StaticIdService,
     private readonly userSettingService: BomLifecycleSettingsService,
     public dialog: MatDialog,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     public toastService: ToastService,
   ) {
     this.partsAsBuilt$ = this.partsFacade.partsAsBuilt$;
@@ -142,6 +146,11 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dialog.open(RequestAlertComponent, {
       data: { selectedItems: this.currentSelectedItems$.value, showHeadline: true },
     });
+  }
+
+  openDetailPage(part: Part): void {
+    const { link } = getRoute(PARTS_BASE_ROUTE);
+    this.router.navigate([`/${link}/${part.id}`]);
   }
 
   filterActivated(type: MainAspectType, assetFilter: any): void {
@@ -251,7 +260,9 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onSelectItem($event: Record<string, unknown>): void {
-    this.partDetailsFacade.selectedPart = $event as unknown as Part;
+    const selectedPart = $event as unknown as Part;
+    this.partDetailsFacade.selectedPart = selectedPart;
+    this.openDetailPage(selectedPart);
   }
 
   public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
