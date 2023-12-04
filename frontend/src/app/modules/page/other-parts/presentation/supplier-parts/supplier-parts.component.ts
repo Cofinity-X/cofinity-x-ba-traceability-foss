@@ -19,11 +19,13 @@
 
 
 import { Component, Input, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Pagination } from '@core/model/pagination.model';
 import { OtherPartsFacade } from '@page/other-parts/core/other-parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
-import { Part, SemanticDataModel } from '@page/parts/model/parts.model';
+import { AssetAsBuiltFilter, AssetAsPlannedFilter, Part, SemanticDataModel } from '@page/parts/model/parts.model';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
+import { RequestInvestigationComponent } from '@shared/components/request-notification';
 import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
@@ -35,7 +37,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Component({
   selector: 'app-supplier-parts',
   templateUrl: './supplier-parts.component.html',
-  styleUrls: [ '../other-parts.component.scss' ],
+  styleUrls: ['../other-parts.component.scss'],
 })
 export class SupplierPartsComponent implements OnInit, OnDestroy {
 
@@ -53,7 +55,15 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   public tableSupplierAsBuiltSortList: TableHeaderSort[];
   public tableSupplierAsPlannedSortList: TableHeaderSort[];
 
-  private ctrlKeyState = false;
+  public assetAsBuiltFilter: AssetAsBuiltFilter;
+  public assetAsPlannedFilter: AssetAsPlannedFilter;
+
+  public readonly searchListAsBuilt: string[];
+  public readonly searchListAsPlanned: string[];
+
+  public DEFAULT_PAGE_SIZE = 50;
+  public ctrlKeyState = false;
+  public globalSearchActive = false;
 
   @Input()
   public bomLifecycle: MainAspectType;
@@ -61,11 +71,24 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
 
   constructor(
-    private readonly otherPartsFacade: OtherPartsFacade,
+    public readonly otherPartsFacade: OtherPartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
+    public dialog: MatDialog,
   ) {
-
+    this.searchListAsBuilt = [
+      'semanticDataModel',
+      'nameAtManufacturer',
+      'manufacturerName',
+      'manufacturerPartId',
+      'semanticModelId',
+      'manufacturingDate'];
+    this.searchListAsPlanned = [
+      'semanticDataModel',
+      'nameAtManufacturer',
+      'manufacturerName',
+      'manufacturerPartId',
+      'semanticModelId'];
     window.addEventListener('keydown', (event) => {
       this.ctrlKeyState = event.ctrlKey;
     });
@@ -93,29 +116,65 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
     if (this.bomLifecycle === MainAspectType.AS_BUILT) {
       this.supplierPartsAsBuilt$ = this.otherPartsFacade.supplierPartsAsBuilt$;
       this.tableSupplierAsBuiltSortList = [];
+      this.assetAsBuiltFilter = {};
       this.otherPartsFacade.setSupplierPartsAsBuilt();
     } else if (this.bomLifecycle === MainAspectType.AS_PLANNED) {
       this.supplierPartsAsPlanned$ = this.otherPartsFacade.supplierPartsAsPlanned$;
       this.tableSupplierAsPlannedSortList = [];
+      this.assetAsPlannedFilter = {};
       this.otherPartsFacade.setSupplierPartsAsPlanned();
-    }
-  }
-
-  filterActivated(isAsBuilt: boolean, assetFilter: any): void {
-    if (isAsBuilt) {
-      this.otherPartsFacade.setSupplierPartsAsBuilt(0, 50, [], toAssetFilter(assetFilter, true));
-    } else {
-      this.otherPartsFacade.setSupplierPartsAsPlanned(0, 50, [], toAssetFilter(assetFilter, false));
     }
   }
 
   updateSupplierParts(searchValue?: string): void {
-    if (searchValue || searchValue === '') {
-      this.otherPartsFacade.setSupplierPartsAsBuilt(0, 50, [], toGlobalSearchAssetFilter(searchValue, true), true);
-      this.otherPartsFacade.setSupplierPartsAsPlanned(0, 50, [], toGlobalSearchAssetFilter(searchValue, false), true);
+    if (searchValue && searchValue !== '') {
+      this.globalSearchActive = true;
+      this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
+      this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
+      if (this.bomLifecycle === MainAspectType.AS_BUILT) {
+        this.otherPartsFacade.setSupplierPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, [], this.assetAsBuiltFilter, this.globalSearchActive);
+      } else {
+        this.otherPartsFacade.setSupplierPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, [], this.assetAsPlannedFilter, this.globalSearchActive);
+      }
     } else {
-      this.otherPartsFacade.setSupplierPartsAsBuilt();
-      this.otherPartsFacade.setSupplierPartsAsPlanned();
+      this.globalSearchActive = false;
+      this.assetAsBuiltFilter = {};
+      this.assetAsPlannedFilter = {};
+      if (this.bomLifecycle === MainAspectType.AS_BUILT) {
+        this.otherPartsFacade.setSupplierPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
+      } else {
+        this.otherPartsFacade.setSupplierPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
+      }
+    }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(RequestInvestigationComponent, {
+      data: { selectedItems: this.currentSelectedItems, showHeadline: true },
+    });
+
+    const callback = (part: Part) => {
+      this.deselectPartTrigger$.next([part]);
+      this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
+    };
+
+    dialogRef?.componentInstance.deselectPart.subscribe(callback);
+    if (dialogRef?.afterClosed) {
+      dialogRef.afterClosed().subscribe((_part: Part) => {
+        dialogRef.componentInstance.deselectPart.unsubscribe();
+      });
+    }
+
+  }
+
+  filterActivated(isAsBuilt: boolean, assetFilter: any): void {
+    this.globalSearchActive = false;
+    if (isAsBuilt) {
+      this.assetAsBuiltFilter = assetFilter;
+      this.otherPartsFacade.setSupplierPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, this.tableSupplierAsBuiltSortList, toAssetFilter(this.assetAsBuiltFilter, true), this.globalSearchActive);
+    } else {
+      this.assetAsPlannedFilter = assetFilter;
+      this.otherPartsFacade.setSupplierPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, this.tableSupplierAsPlannedSortList, toAssetFilter(this.assetAsPlannedFilter, false), this.globalSearchActive);
     }
   }
 
@@ -128,21 +187,33 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   }
 
   public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize;
+    }
     this.setTableSortingList(sorting, MainAspectType.AS_BUILT);
-    this.otherPartsFacade.setSupplierPartsAsBuilt(page, pageSize, this.tableSupplierAsBuiltSortList);
+    this.otherPartsFacade.setSupplierPartsAsBuilt(page, pageSizeValue, this.tableSupplierAsBuiltSortList, toAssetFilter(this.assetAsBuiltFilter, true), this.globalSearchActive);
   }
 
   public onAsPlannedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize;
+    }
     this.setTableSortingList(sorting, MainAspectType.AS_PLANNED);
-    this.otherPartsFacade.setSupplierPartsAsPlanned(page, pageSize, this.tableSupplierAsPlannedSortList);
+    this.otherPartsFacade.setSupplierPartsAsPlanned(page, pageSizeValue, this.tableSupplierAsPlannedSortList, toAssetFilter(this.assetAsPlannedFilter, false), this.globalSearchActive);
   }
 
   public onMultiSelect(event: unknown[]): void {
     this.currentSelectedItems = event as Part[];
   }
 
+  public onDefaultPaginationSizeChange(pageSize: number) {
+    this.DEFAULT_PAGE_SIZE = pageSize;
+  }
+
   public removeItemFromSelection(part: Part): void {
-    this.deselectPartTrigger$.next([ part ]);
+    this.deselectPartTrigger$.next([part]);
     this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
   }
 
@@ -153,7 +224,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   public addItemToSelection(part: Part): void {
     this.addPartTrigger$.next(part);
-    this.currentSelectedItems = [ ...this.currentSelectedItems, part ];
+    this.currentSelectedItems = [...this.currentSelectedItems, part];
   }
 
   public submit(): void {

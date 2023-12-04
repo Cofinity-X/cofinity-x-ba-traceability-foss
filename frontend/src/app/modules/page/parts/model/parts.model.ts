@@ -25,6 +25,96 @@ import { DetailAspectModel } from '@page/parts/model/detailAspectModel.model';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { Owner } from '@page/parts/model/owner.enum';
 
+// TODO: needs to be aligned with Severity in the future in terms of coding standards and use
+export enum QualityType {
+  Ok = 'Ok',
+  Minor = 'Minor',
+  Major = 'Major',
+  Critical = 'Critical',
+  LifeThreatening = 'LifeThreatening',
+}
+
+export enum SemanticDataModel {
+  BATCH = 'BATCH',
+  SERIALPART = 'SERIALPART',
+  PARTASPLANNED = 'PARTASPLANNED',
+  JUSTINSEQUENCE = 'JUSTINSEQUENCE',
+  UNKNOWN = 'UNKNOWN',
+}
+
+export enum SemanticDataModelInCamelCase {
+  BATCH = 'Batch',
+  SERIALPART = 'SerialPart',
+  PARTASPLANNED = 'PartAsPlanned',
+  JUSTINSEQUENCE = 'JustInSequence',
+  UNKNOWN = 'Unknown',
+}
+
+export interface Relation {
+  id: string;
+  idShort: string;
+}
+
+export interface AssetAsBuiltFilter {
+  id?: string;
+  idShort?: string;
+  nameAtManufacturer?: string;
+  manufacturerName?: string;
+  manufacturerPartId?: string;
+  customerPartId?: string;
+  classification?: string;
+  nameAtCustomer?: string;
+  semanticModelId?: string;
+  semanticDataModel?: string[];
+  manufacturingDate?: string;
+  manufacturingCountry?: string;
+  qualityAlertsInStatusActive?: string;
+  qualityInvestigationsInStatusActive?: string;
+}
+
+export interface AssetAsPlannedFilter {
+  id?: string;
+  idShort?: string;
+  name?: string;
+  manufacturer?: string;
+  manufacturerPartId?: string;
+  classification?: string;
+  semanticDataModel?: string[];
+  semanticModelId?: string;
+  validityPeriodFrom?: string;
+  validityPeriodTo?: string;
+  psFunction?: string;
+  catenaXSiteId?: string;
+  functionValidFrom?: string;
+  functionValidUntil?: string;
+}
+
+export interface AssetAsDesignedFilter {
+  id?: string;
+}
+
+export interface AssetAsSupportedFilter {
+  id?: string;
+}
+
+export interface AssetAsOrderedFilter {
+  id?: string;
+}
+
+export interface AssetAsRecycledFilter {
+  id?: string;
+}
+
+export enum FilterOperator {
+  EQUAL = 'EQUAL',
+  AT_LOCAL_DATE = 'AT_LOCAL_DATE',
+  STARTS_WITH = 'STARTS_WITH',
+}
+
+export function getFilterOperatorValue(operator: FilterOperator) {
+  return operator as string;
+}
+
 export interface Part {
   id: string;
   idShort: string;
@@ -95,92 +185,3 @@ export interface PartResponse {
 }
 
 export type PartsResponse = PaginationResponse<PartResponse>;
-
-// TODO: needs to be aligned with Severity in the future in terms of coding standards and use
-export enum QualityType {
-  Ok = 'Ok',
-  Minor = 'Minor',
-  Major = 'Major',
-  Critical = 'Critical',
-  LifeThreatening = 'LifeThreatening',
-}
-
-export enum SemanticDataModel {
-  BATCH = 'BATCH',
-  SERIALPART = 'SERIALPART',
-  PARTASPLANNED = 'PARTASPLANNED',
-  JUSTINSEQUENCE = 'JUSTINSEQUENCE',
-  UNKNOWN = 'UNKNOWN',
-}
-
-export enum SemanticDataModelInCamelCase {
-  BATCH = 'Batch',
-  SERIALPART = 'SerialPart',
-  PARTASPLANNED = 'PartAsPlanned',
-  JUSTINSEQUENCE = 'JustInSequence',
-  UNKNOWN = 'Unknown',
-}
-
-export interface Relation {
-  id: string;
-  idShort: string;
-}
-
-export interface AssetAsBuiltFilter {
-  id?: string;
-  idShort?: string;
-  name?: string;
-  manufacturer?: string;
-  partId?: string;
-  manufacturerPartId?: string;
-  customerPartId?: string;
-  classification?: string;
-  nameAtCustomer?: string;
-  semanticModelId?: string;
-  semanticDataModel?: string[];
-  manufacturingDate?: string;
-  manufacturingCountry?: string;
-}
-
-export interface AssetAsPlannedFilter {
-  id?: string;
-  idShort?: string;
-  name?: string;
-  manufacturer?: string;
-  manufacturerPartId?: string;
-  classification?: string;
-  semanticDataModel?: string[];
-  semanticModelId?: string;
-  validityPeriodFrom?: string;
-  validityPeriodTo?: string;
-  psFunction?: string;
-  catenaXSiteId?: string;
-  functionValidFrom?: string;
-  functionValidUntil?: string;
-}
-
-export interface AssetAsDesignedFilter {
-  id?: string;
-}
-
-export interface AssetAsSupportedFilter {
-  id?: string;
-}
-
-export interface AssetAsOrderedFilter {
-  id?: string;
-}
-
-export interface AssetAsRecycledFilter {
-  id?: string;
-}
-
-export enum FilterOperator {
-  EQUAL = 'EQUAL',
-  AT_LOCAL_DATE = 'AT_LOCAL_DATE',
-  STARTS_WITH = 'STARTS_WITH',
-}
-
-export function getFilterOperatorValue(operator: FilterOperator) {
-  return operator as string;
-}

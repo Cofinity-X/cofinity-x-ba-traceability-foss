@@ -20,6 +20,7 @@
  ********************************************************************************/
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { TableComponent } from '@shared/components/table/table.component';
 import {
   CreateHeaderFromColumns,
   DisplayColumns,
@@ -47,7 +48,7 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() optionalColumns: Array<'targetDate' | 'severity' | 'createdBy' | 'sendTo'> = [];
   @Input() sortableColumns: Record<string, boolean> = {};
   @Input() multiSortList: TableHeaderSort[] = [];
-  @Input() enableScroll: boolean = true;
+  @Input() enableScroll = true;
   @Input() tableType: PartTableType;
   @Input() filterConfig: any[] = [];
 
@@ -62,6 +63,7 @@ export class NotificationTabComponent implements AfterViewInit {
   @ViewChild('descriptionTmp') descriptionTemplate: TemplateRef<unknown>;
   @ViewChild('targetDateTmp') targetDateTemplate: TemplateRef<unknown>;
   @ViewChild('userTmp') userTemplate: TemplateRef<unknown>;
+  @ViewChild(TableComponent) tableComponent: TableComponent;
 
   public tableConfig: TableConfig<keyof Notification>;
   public filteredContent = false;
