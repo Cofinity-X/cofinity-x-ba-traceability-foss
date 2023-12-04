@@ -53,7 +53,7 @@ import { Subscription } from 'rxjs';
 })
 export class AlertsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;
-  @ViewChild(NotificationComponent) notifcationComponent: NotificationComponent;
+  @ViewChild(NotificationComponent) notificationComponent: NotificationComponent;
 
   public searchFormGroup = new FormGroup({});
   public searchControl: FormControl;
@@ -210,7 +210,7 @@ export class AlertsComponent {
   }
 
   public triggerSearch(): void {
-    this.searchHelper.resetFilterAndShowToast(false, this.notifcationComponent, this.toastService);
+    this.searchHelper.resetFilterAndShowToast(false, this.notificationComponent, this.toastService);
     const searchValue = this.searchControl.value;
     const filterInfo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
     this.filterReceived = { filterMethod: FilterMethod.OR, description: filterInfo, createdBy: filterInfo };

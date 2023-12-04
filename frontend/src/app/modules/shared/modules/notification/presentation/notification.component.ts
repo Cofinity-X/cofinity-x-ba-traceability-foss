@@ -39,7 +39,7 @@ import { NotificationTabComponent } from '../notification-tab/notification-tab.c
   templateUrl: './notification.component.html',
 })
 export class NotificationComponent {
-  @ViewChildren(NotificationTabComponent) notifcationTabComponents: QueryList<NotificationTabComponent>;
+  @ViewChildren(NotificationTabComponent) notificationTabComponents: QueryList<NotificationTabComponent>;
 
   @Input() receivedNotifications$: Observable<View<Notifications>>;
   @Input() queuedAndRequestedNotifications$: Observable<View<Notifications>>;
