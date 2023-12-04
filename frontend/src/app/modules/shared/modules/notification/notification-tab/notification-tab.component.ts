@@ -73,6 +73,7 @@ export class NotificationTabComponent implements AfterViewInit {
     const displayedColumns: DisplayColumns<keyof Notification>[] = [
       ...defaultColumns,
       ...this.optionalColumns,
+      'menu',
       'settings',
     ];
     const sortableColumns: Record<string, boolean> = this.sortableColumns;

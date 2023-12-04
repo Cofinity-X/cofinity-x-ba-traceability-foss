@@ -135,7 +135,7 @@ export class TableSettingsComponent {
 
   selectAll(isChecked: boolean) {
     for (const column of this.dialogColumns) {
-      if (column === 'select' || column === 'settings') {
+      if (column === 'select' || column === 'menu' || column === 'settings') {
         continue;
       }
       this.columnOptions.set(column, isChecked);
