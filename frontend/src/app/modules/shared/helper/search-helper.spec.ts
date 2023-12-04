@@ -50,13 +50,11 @@ describe('search helper functions', () => {
 
     const partsTableComponentsQueryList = mockQueryList(partsTableComponents);
 
-
     // Act
     searchHelper.resetFilterAndShowToast(true, partsTableComponentsQueryList, undefined);
     //resetFilterForAssetComponents(partsTableComponentsQueryList, oneFilterSet);
 
     // Assert
-
     partsTableComponents.forEach((partsTableComponent) => {
       partsTableComponent.multiSelectAutocompleteComponents.forEach((multiSelectAutocompleteComponent) => {
         expect(multiSelectAutocompleteComponent.clickClear).toHaveBeenCalledWith(true);
@@ -76,7 +74,6 @@ describe('search helper functions', () => {
       return queryList;
     };
 
-
     const multiSelectAutoCompleteComponents = [
       {
         clickClear: jasmine.createSpy('clickClear'),
@@ -88,16 +85,16 @@ describe('search helper functions', () => {
       resetFilter: jasmine.createSpy('resetFilter'),
       multiSelectAutocompleteComponents: queryListMultiSelect,
     }
-    const notifcationTabComponents = [
+    const notificationTabComponents = [
       {
         onFilterChange: jasmine.createSpy('onFilterChange'),
         tableComponent
       }]
-    const queryListNotificationTab = mockQueryList(notifcationTabComponents);
+    const queryListNotificationTab = mockQueryList(notificationTabComponents);
 
     const notificationComponent: NotificationComponent = {
       //@ts-ignore
-      notifcationTabComponents: queryListNotificationTab,
+      notificationTabComponents: queryListNotificationTab,
     };
 
     // Act
@@ -105,12 +102,10 @@ describe('search helper functions', () => {
     //resetFilterForNotificationComponents(notificationComponent, oneFilterSet);
 
     // Assert
-
-
-    notificationComponent.notifcationTabComponents.forEach((notifcationTabComponent) => {
-      expect(notifcationTabComponent.onFilterChange).toHaveBeenCalled();
-      expect(notifcationTabComponent.tableComponent.resetFilter).toHaveBeenCalled();
-      notifcationTabComponent.tableComponent.multiSelectAutocompleteComponents.forEach((multiSelectAutocompleteComponent) => {
+    notificationComponent.notificationTabComponents.forEach((notificationTabComponent) => {
+      expect(notificationTabComponent.onFilterChange).toHaveBeenCalled();
+      expect(notificationTabComponent.tableComponent.resetFilter).toHaveBeenCalled();
+      notificationTabComponent.tableComponent.multiSelectAutocompleteComponents.forEach((multiSelectAutocompleteComponent) => {
         expect(multiSelectAutocompleteComponent.clickClear).toHaveBeenCalledWith(true);
       });
     });

@@ -24,10 +24,10 @@ export class SearchHelper {
   };
 
   public resetFilterForNotificationComponents(notificationComponent: NotificationComponent, oneFilterSet: boolean): boolean {
-    for (const notifcationTabComponent of notificationComponent.notifcationTabComponents) {
-      notifcationTabComponent.onFilterChange();
-      notifcationTabComponent.tableComponent.resetFilter();
-      oneFilterSet = this.resetFilterSelector(notifcationTabComponent.tableComponent.multiSelectAutocompleteComponents, oneFilterSet);
+    for (const notificationTabComponent of notificationComponent.notificationTabComponents) {
+      notificationTabComponent.onFilterChange();
+      notificationTabComponent.tableComponent.resetFilter();
+      oneFilterSet = this.resetFilterSelector(notificationTabComponent.tableComponent.multiSelectAutocompleteComponents, oneFilterSet);
     }
     return oneFilterSet;
   };
