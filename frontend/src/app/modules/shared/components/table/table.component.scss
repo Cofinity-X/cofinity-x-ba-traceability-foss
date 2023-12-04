@@ -353,6 +353,7 @@ table {
 
 .notification-table--body--row .notification-table--body--cell {
   &--sticky {
+    position:-webkit-sticky;
     position: sticky !important;
     right: 0;
     top: 0;
