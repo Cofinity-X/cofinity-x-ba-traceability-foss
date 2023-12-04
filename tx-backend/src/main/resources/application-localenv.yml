@@ -40,16 +40,17 @@ edc:
   provider-edc-url: http://localhost:3002/
 
 irs-edc-client:
+  callback-url: http://localhost:8082/
   controlplane:
     endpoint:
       data: http://localhost:3002/api
+    api-key:
+      secret: password
 
-jwt:
-  resource-client: ${JWT_RESOURCE_CLIENT}
+IRS_URL: http://localhost:3001/
 
-feign:
-  irsApi:
-    url: http://localhost:3001/
+digitalTwinRegistryClient:
+  discoveryFinderUrl: http://localhost:3001/administration/connectors/discovery/search
 
 cors:
   origins: >
@@ -68,7 +69,11 @@ spring:
       client:
         registration:
           keycloak:
-            authorization-grant-type: client_credentials
+            client-id: catena-client-id
+            # This client secret is meant for local env
+            client-secret: r8jiU6MM5wCuaVL54mCLI6OeaWWRqzL4
+            scope: service-acct-role
+          OKTA:
             client-id: catena-client-id
             # This client secret is meant for local env
             client-secret: r8jiU6MM5wCuaVL54mCLI6OeaWWRqzL4
@@ -76,9 +81,14 @@ spring:
         provider:
           keycloak:
             token-uri: http://localhost:4011/realms/CX-Central/protocol/openid-connect/token
+          OKTA:
+            token-uri: http://localhost:4011/realms/CX-Central/protocol/openid-connect/token
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:4011/realms/CX-Central/protocol/openid-connect/certs
+
+jwt:
+  resource-client: Cl17-CX-Part
 
 # reduced attempts config for local env
 resilience4j:
@@ -96,6 +106,11 @@ resilience4j:
         enableExponentialBackoff: true
         exponentialBackoffMultiplier: 1
 
-digitalTwinRegistryClient:
-  discoveryFinderUrl: http://localhost:3001/administration/connectors/discovery/search
+irs:
+  policies:
+    #    -
+    #      policyId: "ID 3.0 Trace"
+    #      ttl: "2023-09-30T23:59:59.99Z"
+    - policyId: "ID 3.2 Trace"
+      ttl: "2023-09-30T23:59:59.99Z"
 
