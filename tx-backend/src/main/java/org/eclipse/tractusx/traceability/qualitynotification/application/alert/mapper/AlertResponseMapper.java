@@ -34,6 +34,7 @@ import qualitynotification.base.response.QualityNotificationReasonResponse;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AlertResponseMapper {
@@ -74,14 +75,14 @@ public class AlertResponseMapper {
 
     private static String getSenderBPN(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
-                .findFirst()
+                .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getCreatedBy)
                 .orElse(null);
     }
 
     private static String getReceiverBPN(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
-                .findFirst()
+                .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getSendTo)
                 .orElse(null);
     }
