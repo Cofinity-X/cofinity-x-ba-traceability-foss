@@ -127,7 +127,7 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
       id,
       mainId: this.htmlId,
       openDetails: this.isStandalone ? this.openDetails.bind(this) : _ => null,
-      defaultZoom: this.isStandalone ? 1 : 0.7,
+      defaultZoom: this.isStandalone ? 1 : 0.8,
       updateChildren: this.updateChildren.bind(this),
     };
 

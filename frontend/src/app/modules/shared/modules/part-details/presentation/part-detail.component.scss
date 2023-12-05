@@ -118,8 +118,15 @@
   padding: 0 10px 0 10px;
 }
 
+.part-detail--relation__icon {
+  margin-top: -20px;
+  margin-left: -10px;
+}
+
 .part-detail--relation__card {
   display: flex;
+  height: 454px !important;
+  overflow: hidden;
 }
 
 .part-detail-section-item {

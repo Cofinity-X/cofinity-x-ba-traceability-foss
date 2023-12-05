@@ -98,7 +98,6 @@ export class D3RenderHelper {
       const el = d3.select(this);
 
       D3RenderHelper.renderCircle(direction, el, dataNode, r, id, openDetails);
-      // D3RenderHelper.renderStatusBorder(direction, el, dataNode, r, id);
       D3RenderHelper.renderLoading(direction, el, dataNode, r, id);
       D3RenderHelper.renderRelationArrow(direction, el, dataNode, r, id, updateChildren);
     }
@@ -114,7 +113,10 @@ export class D3RenderHelper {
     id: string,
     callback: (data) => void,
   ) {
-    const { data, x, y } = dataNode;
+    const { data, x, y, children } = dataNode;
+    if (!children) {
+      r /= 1.5;
+    }
 
     let circleNode = el.select(`#${id}--Circle`);
 
@@ -123,6 +125,16 @@ export class D3RenderHelper {
         .append('a')
         .attr('id', `${id}--Circle`)
         .on('click', () => callback(data));
+
+      const statusBorderColor = data.state === SemanticDataModel.BATCH ? 'Batch' : data.state.toString();
+
+      // This is to make the border of the circle
+      circleNode
+        .append('circle')
+        .attr('r', r + 2)
+        .attr('data-testid', 'tree--element__circle')
+        .attr('class', () => `tree--element__border-${statusBorderColor}`);
+      circleNode.append('title').text(() => data.title);
 
       circleNode
         .append('circle')
@@ -283,25 +295,43 @@ export class D3RenderHelper {
   ) {
     const { data, x, y } = dataNode;
 
-    const circleRadius = 15;
+    const circleRadius = 14;
     el.attr(
       'transform',
-      () => `translate(${x},${D3RenderHelper.modifyByDirection(direction, y + r + circleRadius + 5)})`,
+      () => `translate(${x},${D3RenderHelper.modifyByDirection(direction, y + r + circleRadius + 2)})`,
     )
       .on('click', () => callback(data, direction))
       .attr('data-testid', 'tree--element__closing')
       .classed('tree--element__closing', true);
 
+    const imageId = crypto.randomUUID(); // Unique ID for the associated image
+
     el.append('circle')
+      .attr('data-associated-image-id', imageId)
       .attr('r', circleRadius)
       .attr('data-testid', 'tree--element__closing-animation tree--element__closing-circle')
-      .classed('tree--element__closing-animation tree--element__closing-circle', true);
+      .classed('tree--element__closing-animation tree--element__closing-circle', true)
+      .on('mouseover', function () {
+        // Change the image source when hovering over the associated circle
+        const associatedImageId = d3.select(this).attr('data-associated-image-id');
+        d3.select(`svg image[data-associated-image-id="${associatedImageId}"]`)
+          .attr('xlink:href', '/assets/images/icons/collapse_relation_hover_icon.svg')
+      })
+      .on('mouseout', function () {
+        // Revert the image source when mouse leaves the associated circle
+        const associatedImageId = d3.select(this).attr('data-associated-image-id');
+        d3.select(`svg image[data-associated-image-id="${associatedImageId}"]`)
+          .attr('xlink:href', '/assets/images/icons/collapse_relation_icon.svg')
+      });
 
-    el.append('text')
-      .attr('dy', '0.26em')
-      .attr('data-testid', 'tree--element__text tree--element__closing-text tree--element__closing-animation')
-      .classed('tree--element__text tree--element__closing-text tree--element__closing-animation', true)
-      .text(' - ');
+    el.append('svg:image')
+      .attr('id', imageId)
+      .attr('x', -7)
+      .attr('y', -1)
+      .attr('width', 14)
+      .attr('height', 2)
+      .attr('xlink:href', '/assets/images/icons/collapse_relation_icon.svg')
+      .attr('data-associated-image-id', imageId);
   }
 
   public static renderRelationExpand(
