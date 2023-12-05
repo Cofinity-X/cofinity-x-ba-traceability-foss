@@ -41,6 +41,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
+    text-align: left;
   }
   &__option-list {
     display: flex;
@@ -78,53 +79,5 @@
         color: white;
       }
     }
-  }
-  .mat-mdc-form-field-infix {
-    display: flex;
-    justify-content: center;
-  }
-  .mat-mdc-floating-label {
-    padding-bottom: 0 !important;
-    display: flex;
-    justify-content: center;
-    @extend .body-large;
-  }
-}
-
-app-multiselect .mat-mdc-form-field {
-  --mat-mdc-form-field-floating-label-scale: 1;
-}
-
-app-multiselect .mat-datepicker-content {
-  border-radius: 10px !important;
-}
-
-app-multiselect .mat-datepicker-actions {
-  padding: 10px 20px 20px 20px !important;
-  justify-content: space-between !important;
-}
-
-app-multiselect .mat-calendar {
-  height: auto !important;
-}
-
-app-multiselect .mat-calendar-header {
-  padding: 0 0 0 22px !important;
-}
-
-app-multiselect .mat-calendar-body-label {
-  opacity: 0;
-}
-app-multiselect .mat-calendar-body-label[colspan='7'] {
-  display: none;
-}
-app-multiselect .mdc-button__label > span {
-  @extend .body-small-emphasis;
-}
-
-.filter-input__textarea .mat-mdc-form-field-subscript-wrapper {
-  display: block;
-  .mat-mdc-form-field-hint-wrapper {
-    padding: 0;
   }
 }

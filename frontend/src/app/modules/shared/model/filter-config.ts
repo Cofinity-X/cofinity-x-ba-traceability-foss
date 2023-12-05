@@ -9,21 +9,25 @@ export class FilterCongigOptions {
       display: 'severity.' + Severity.MINOR,
       value: 0,
       checked: false,
+      severity: Severity.MINOR,
     },
     {
       display: 'severity.' + Severity.MAJOR,
       value: 1,
       checked: false,
+      severity: Severity.MAJOR,
     },
     {
       display: 'severity.' + Severity.CRITICAL,
       value: 2,
       checked: false,
+      severity: Severity.CRITICAL
     },
     {
       display: 'severity.' + Severity.LIFE_THREATENING,
       value: 3,
       checked: false,
+      severity: Severity.LIFE_THREATENING,
     },
   ];
   //Approved and Requested only exist in the frontend commonInvestigation

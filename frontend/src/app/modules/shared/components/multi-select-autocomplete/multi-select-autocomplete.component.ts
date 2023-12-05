@@ -26,7 +26,6 @@ import {
   OnChanges,
   Output,
   ViewChild,
-  ViewEncapsulation,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -41,7 +40,6 @@ import { pairwise, startWith } from 'rxjs';
   selector: 'app-multiselect',
   templateUrl: 'multi-select-autocomplete.component.html',
   styleUrls: ['multi-select-autocomplete.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class MultiSelectAutocompleteComponent implements OnChanges {
   @Input()
@@ -94,6 +92,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   public filterActive = '';
   public searched = false;
   private inputTimer;
+  public optionClasses = {};
+  public isSeverity = false;
+  public severityIcon = {};
+  public severityIconName = {};
 
   constructor(
     public datePipe: DatePipe,
@@ -103,6 +105,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   ) {
     registerLocaleData(localeDe, 'de', localeDeExtra);
     this._adapter.setLocale(locale);
+
   }
   ngOnInit(): void {
     if (this.textSearch) {
@@ -115,6 +118,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.filterName = 'filterLabelDate';
     } else if (this.multiple) {
       this.filterName = 'filterLabelSelect';
+      this.setColumnClass();
     }
   }
 
@@ -134,7 +138,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
         this.setFilterActive();
       }
       this.triggerFilter.emit();
-    }, 500);
+    }, 350);
   }
 
   public toggleSelect = function (val: any, isSelectAll: boolean): void {
@@ -185,8 +189,43 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.filterActive = '';
       this.searched = false;
     }
-
     return wasSet;
+  }
 
+  public getColumnName(): string {
+    const columnName = this.options[0]['display'].split('.');
+    return columnName[columnName.length - 2].toUpperCase();
+  }
+
+  public setColumnClass(): void {
+    for (const option of this.options) {
+      const optionClass = { 'body-large': true };
+      const column = option['display'].split('.');
+      if (column[column.length - 2].toUpperCase() === 'STATUS') {
+        optionClass['notification-display-status'] = true;
+        const statusClass = 'notification-display-status--' + column[column.length - 1].toUpperCase();
+        optionClass[statusClass] = true;
+      } else if (column[column.length - 2].toUpperCase() === 'SEVERITY') {
+        optionClass['notification-display-severity'] = true;
+        this.isSeverity = true;
+        this.setSeverityIcon(column);
+      }
+      this.optionClasses[option['display']] = optionClass;
+    }
+  }
+  private setSeverityIcon(column): void {
+    if (column[column.length - 1].toUpperCase() === 'MINOR') {
+      this.severityIcon[column.join('.')] = './assets/images/icons/info.svg';
+      this.severityIconName[column.join('.')] = 'MINOR';
+    } else if (column[column.length - 1].toUpperCase() === 'MAJOR') {
+      this.severityIcon[column.join('.')] = './assets/images/icons/warning.svg';
+      this.severityIconName[column.join('.')] = 'MAJOR';
+    } else if (column[column.length - 1].toUpperCase() === 'CRITICAL') {
+      this.severityIcon[column.join('.')] = './assets/images/icons/error_outline.svg';
+      this.severityIconName[column.join('.')] = 'CRITICAL';
+    } else {
+      this.severityIcon[column.join('.')] = './assets/images/icons/error.svg';
+      this.severityIconName[column.join('.')] = 'LIFE-THREATENING';
+    }
   }
 }

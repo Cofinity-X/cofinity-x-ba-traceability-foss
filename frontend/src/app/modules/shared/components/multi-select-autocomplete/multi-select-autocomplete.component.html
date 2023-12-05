@@ -57,14 +57,24 @@ SPDX-License-Identifier: Apache-2.0
     </div>
     <div *ngFor="let option of options">
       <mat-checkbox color="accent"
-        class="body-large"
+        [class]="optionClasses[option['display']]"
         [(ngModel)]="option.checked"
         (change)="toggleSelect($event, false)"
-        data-testid="multi-select-autocomplete--multi-option-search-selct-one">{{ option[display] | i18n
-        }}</mat-checkbox>
+        data-testid="multi-select-autocomplete--multi-option-search-selct-one">
+        <img *ngIf="isSeverity"
+          src="{{severityIcon[option['display']]}}"
+          alt="{{severityIconName[option['display']]}}"
+          class="pr-3.5">{{ option[display] | i18n
+        }}
+      </mat-checkbox>
     </div>
   </div>
 
+  <!-- <app-date-time *ngIf="isDate"
+    [label]="'requestNotification.targetDateLabel' | i18n"
+    [hint]="'requestNotification.targetDateDescription' | i18n"
+    [min]="minDate"
+    formControlName="targetDate"></app-date-time> -->
   <mat-form-field color="accent"
     appearance="outline"
     [floatLabel]="'auto'"
