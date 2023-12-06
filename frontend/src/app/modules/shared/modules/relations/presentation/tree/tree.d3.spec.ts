@@ -49,17 +49,17 @@ describe('D3 Tree', () => {
     expect(tree.renderTree).toBeTruthy();
   });
 
-  it('should render element borders - TreeDirection.RIGHT', () => {
+  it('should render element borders - TreeDirection.DOWN', () => {
     const tree = new Tree(treeData);
-    const treeSvg = tree.renderTree(D3TreeDummyData, TreeDirection.RIGHT).node();
+    const treeSvg = tree.renderTree(D3TreeDummyData, TreeDirection.DOWN).node();
 
     expect(treeSvg.getElementsByClassName('tree--element__border-done').length).toBe(2);
     expect(treeSvg.getElementsByClassName('tree--element__border-loading').length).toBe(1);
   });
 
-  it('should render element borders - TreeDirection.LEFT', () => {
+  it('should render element borders - TreeDirection.UP', () => {
     const tree = new Tree(treeData);
-    const treeSvg = tree.renderTree(D3TreeDummyData, TreeDirection.LEFT).node();
+    const treeSvg = tree.renderTree(D3TreeDummyData, TreeDirection.UP).node();
 
     expect(treeSvg.getElementsByClassName('tree--element__border-done').length).toBe(2);
     expect(treeSvg.getElementsByClassName('tree--element__border-loading').length).toBe(1);
@@ -89,20 +89,20 @@ describe('D3 Tree', () => {
     expect(cameraElement).toHaveAttribute('transform', 'translate(0,0) scale(1)');
   });
 
-  it('should render modified text for different sizes - TreeDirection.RIGHT', () => {
+  it('should render modified text for different sizes - TreeDirection.DOWN', () => {
     const tree = new Tree(treeData);
-    tree.renderTree(D3TreeDummyData, TreeDirection.RIGHT).node();
+    tree.renderTree(D3TreeDummyData, TreeDirection.DOWN).node();
 
     expect(screen.getByText('Small')).toBeInTheDocument();
-    expect(screen.getByText('Long text...')).toBeInTheDocument();
+    expect(screen.getByText('Long tex...')).toBeInTheDocument();
   });
 
-  it('should render modified text for different sizes - TreeDirection.LEFT', () => {
+  it('should render modified text for different sizes - TreeDirection.UP', () => {
     const tree = new Tree(treeData);
-    tree.renderTree(D3TreeDummyData, TreeDirection.LEFT).node();
+    tree.renderTree(D3TreeDummyData, TreeDirection.UP).node();
 
     expect(screen.getByText('Small')).toBeInTheDocument();
-    expect(screen.getByText('Long text...')).toBeInTheDocument();
+    expect(screen.getByText('Long tex...')).toBeInTheDocument();
   });
 
 });

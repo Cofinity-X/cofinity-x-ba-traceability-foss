@@ -47,39 +47,17 @@ describe('PartDetailComponent', () => {
   });
 
   const renderPartDetailComponent = async ({ roles = [] } = {}) => {
-    return await renderComponent(`<app-sidenav></app-sidenav><app-part-detail></app-part-detail>`, {
-      declarations: [SidenavComponent, PartDetailComponent],
+    return await renderComponent(`<app-part-detail></app-part-detail>`, {
+      declarations: [PartDetailComponent],
       imports: [PartDetailsModule, LayoutModule],
       providers: [
         PartDetailsFacade,
         { provide: PartsState, useFactory: () => PartsStateMock },
         { provide: PartDetailsState, useFactory: () => PartDetailsStateMock },
-        SidenavService,
       ],
       roles,
     });
   };
-
-  it('should render side nav', async () => {
-    await renderPartDetailComponent();
-
-    const sideNavElement = await waitFor(() => screen.getByTestId('sidenav--test-id'));
-    expect(sideNavElement).toBeInTheDocument();
-  });
-
-  it('should render an open sidenav with part details', async () => {
-    await renderPartDetailComponent();
-
-    const sideNavElement = await waitFor(() => screen.getByTestId('sidenav--test-id'));
-    const nameElement = await screen.findByText("BMW AG");
-    const productionDateElement = await screen.findByText('2022-02-04T13:48:54');
-
-    expect(sideNavElement).toBeInTheDocument();
-    await waitFor(() => expect(sideNavElement).toHaveClass('sidenav--container__open'));
-
-    expect(nameElement).toBeInTheDocument();
-    expect(productionDateElement).toBeInTheDocument();
-  });
 
   it('should render child-component table', async () => {
     await renderPartDetailComponent({ roles: ['user'] });

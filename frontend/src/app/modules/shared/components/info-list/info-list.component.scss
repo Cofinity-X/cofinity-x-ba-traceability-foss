@@ -19,7 +19,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-.info-list--container {}
+.info-list--row:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
 
 .info-list--row {
   display: grid;
@@ -45,13 +47,6 @@
   }
 }
 
-.info-list--full-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #d91e18;
-}
-
 .info-list--key {
   padding-right: 10px;
   font-weight: bold;
@@ -61,9 +56,4 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-}
-
-.info-list--full-value {
-  //text-overflow: ;
-  width: 100%;
 }

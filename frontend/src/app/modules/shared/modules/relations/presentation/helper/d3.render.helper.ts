@@ -114,6 +114,7 @@ export class D3RenderHelper {
     callback: (data) => void,
   ) {
     const { data, x, y, children } = dataNode;
+
     if (!children) {
       r /= 1.5;
     }
@@ -145,12 +146,12 @@ export class D3RenderHelper {
 
       circleNode
         .append('text')
-        .attr('dy', '0.32em')
-        .attr('textLength', '90px')
+        .attr('dy', '0.25em')
+        .attr('textLength', '75px')
         .attr('lengthAdjust', 'spacing')
         .attr('data-testid', 'tree--element__text')
         .classed('tree--element__text', true)
-        .text(() => HelperD3.shortenText(data.text || data.id));
+        .text(() => HelperD3.shortenText(data.text || data.id, 11));
     }
 
     circleNode.attr('transform', () => `translate(${D3RenderHelper.modifyByDirection(direction, x)},${D3RenderHelper.modifyByDirection(direction, y)})`);
@@ -315,13 +316,13 @@ export class D3RenderHelper {
         // Change the image source when hovering over the associated circle
         const associatedImageId = d3.select(this).attr('data-associated-image-id');
         d3.select(`svg image[data-associated-image-id="${associatedImageId}"]`)
-          .attr('xlink:href', '/assets/images/icons/collapse_relation_hover_icon.svg')
+          .attr('xlink:href', '/assets/images/icons/collapse_relation_hover_icon.svg');
       })
       .on('mouseout', function () {
         // Revert the image source when mouse leaves the associated circle
         const associatedImageId = d3.select(this).attr('data-associated-image-id');
         d3.select(`svg image[data-associated-image-id="${associatedImageId}"]`)
-          .attr('xlink:href', '/assets/images/icons/collapse_relation_icon.svg')
+          .attr('xlink:href', '/assets/images/icons/collapse_relation_icon.svg');
       });
 
     el.append('svg:image')
@@ -330,6 +331,14 @@ export class D3RenderHelper {
       .attr('y', -1)
       .attr('width', 14)
       .attr('height', 2)
+      .on('mouseover', function () {
+        // Change the image source when hovering over
+        d3.select(this).attr('xlink:href', '/assets/images/icons/collapse_relation_hover_icon.svg')
+      })
+      .on('mouseout', function () {
+        // Revert the image source when mouse leaves the associated circle
+        d3.select(this).attr('xlink:href', '/assets/images/icons/collapse_relation_icon.svg');
+      })
       .attr('xlink:href', '/assets/images/icons/collapse_relation_icon.svg')
       .attr('data-associated-image-id', imageId);
   }
