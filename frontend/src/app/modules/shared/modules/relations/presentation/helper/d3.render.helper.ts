@@ -333,7 +333,7 @@ export class D3RenderHelper {
       .attr('height', 2)
       .on('mouseover', function () {
         // Change the image source when hovering over
-        d3.select(this).attr('xlink:href', '/assets/images/icons/collapse_relation_hover_icon.svg')
+        d3.select(this).attr('xlink:href', '/assets/images/icons/collapse_relation_hover_icon.svg');
       })
       .on('mouseout', function () {
         // Revert the image source when mouse leaves the associated circle
