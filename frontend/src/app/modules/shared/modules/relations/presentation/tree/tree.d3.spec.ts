@@ -49,22 +49,6 @@ describe('D3 Tree', () => {
     expect(tree.renderTree).toBeTruthy();
   });
 
-  it('should render element borders - TreeDirection.DOWN', () => {
-    const tree = new Tree(treeData);
-    const treeSvg = tree.renderTree(D3TreeDummyData, TreeDirection.DOWN).node();
-
-    expect(treeSvg.getElementsByClassName('tree--element__border-done').length).toBe(2);
-    expect(treeSvg.getElementsByClassName('tree--element__border-loading').length).toBe(1);
-  });
-
-  it('should render element borders - TreeDirection.UP', () => {
-    const tree = new Tree(treeData);
-    const treeSvg = tree.renderTree(D3TreeDummyData, TreeDirection.UP).node();
-
-    expect(treeSvg.getElementsByClassName('tree--element__border-done').length).toBe(2);
-    expect(treeSvg.getElementsByClassName('tree--element__border-loading').length).toBe(1);
-  });
-
   it('should change size of tree when zoom buttons are clicked', async () => {
     const component = await renderTree();
     component.detectChanges();

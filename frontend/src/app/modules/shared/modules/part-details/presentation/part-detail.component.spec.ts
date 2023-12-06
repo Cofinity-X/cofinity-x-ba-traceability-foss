@@ -20,15 +20,13 @@
  ********************************************************************************/
 
 import { LayoutModule } from '@layout/layout.module';
-import { SidenavComponent } from '@layout/sidenav/sidenav.component';
-import { SidenavService } from '@layout/sidenav/sidenav.service';
 import { PartsState } from '@page/parts/core/parts.state';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { PartDetailsState } from '@shared/modules/part-details/core/partDetails.state';
 import { PartDetailsModule } from '@shared/modules/part-details/partDetails.module';
-import { screen, waitFor } from '@testing-library/angular';
+import { screen } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 import { MOCK_part_1 } from '../../../../../mocks/services/parts-mock/partsAsBuilt/partsAsBuilt.test.model';
 import { PartDetailComponent } from './part-detail.component';
@@ -62,8 +60,8 @@ describe('PartDetailComponent', () => {
   it('should render child-component table', async () => {
     await renderPartDetailComponent({ roles: ['user'] });
 
-    const childTableHeadline = await screen.findByText('partDetail.investigation.headline');
+    const childTableHeadline = await screen.findByText('partDetail.investigation.tab.header');
     expect(childTableHeadline).toBeInTheDocument();
-    expect(await screen.findByText('partDetail.investigation.noSelection.header')).toBeInTheDocument();
+    expect(await screen.findByText('partDetail.tab.header')).toBeInTheDocument();
   });
 });
