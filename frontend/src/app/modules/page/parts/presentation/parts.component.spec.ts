@@ -594,8 +594,8 @@ describe('Parts', () => {
         componentInstance.triggerPartSearch();
 
         // Assert
-        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], toGlobalSearchAssetFilter(searchValue, true, componentInstance.searchListAsBuilt), true);
-        expect(partsFacadeAsPlannedSpy).toHaveBeenCalledWith(0, 50, [], toGlobalSearchAssetFilter(searchValue, false, componentInstance.searchListAsPlanned), true);
+        expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], toGlobalSearchAssetFilter(searchValue, true, componentInstance.searchListAsBuilt, componentInstance.datePipe), true);
+        expect(partsFacadeAsPlannedSpy).toHaveBeenCalledWith(0, 50, [], toGlobalSearchAssetFilter(searchValue, false, componentInstance.searchListAsPlanned, componentInstance.datePipe), true);
     });
 
     it('should not filter if filter search is unset', async () => {
