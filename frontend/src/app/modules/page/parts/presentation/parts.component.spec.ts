@@ -577,13 +577,13 @@ describe('Parts', () => {
     });
 
 
-    it('should clear filters and call partsFacade methods with search value', async () => {
+    it('should clear filters and call partsFacade methods with search value as a date', async () => {
 
         const { fixture } = await renderParts();
         const { componentInstance } = fixture;
         // Arrange
-        const searchValue = 'searchTerm';
-
+        const searchValue = '1.20.23';
+        // search value should be interpreted as 20.01.2023
         const partsFacade = (componentInstance as any)['partsFacade'];
         const partsFacadeSpy = spyOn(partsFacade, 'setPartsAsBuilt');
         const partsFacadeAsPlannedSpy = spyOn(partsFacade, 'setPartsAsPlanned');
@@ -597,6 +597,8 @@ describe('Parts', () => {
         expect(partsFacadeSpy).toHaveBeenCalledWith(0, 50, [], toGlobalSearchAssetFilter(searchValue, true, componentInstance.searchListAsBuilt, componentInstance.datePipe), true);
         expect(partsFacadeAsPlannedSpy).toHaveBeenCalledWith(0, 50, [], toGlobalSearchAssetFilter(searchValue, false, componentInstance.searchListAsPlanned, componentInstance.datePipe), true);
     });
+
+
 
     it('should not filter if filter search is unset', async () => {
 

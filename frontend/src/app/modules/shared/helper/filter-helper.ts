@@ -128,7 +128,14 @@ function dateValue(dateString: string, datePipe: DatePipe): string {
   const dateArray = dateString.split(/[./-]/);
   let returnDate = '';
   if (dateArray.length === 3 && !isNaN(+dateArray[0]) && !isNaN(+dateArray[1]) && !isNaN(+dateArray[2])) {
-    console.log('was Split');
+    if (dateArray[2].length === 2) {
+      dateArray[2] = '20' + dateArray[2];
+    }
+    if (+dateArray[1] > 12 && +dateArray[0] <= 12) {
+      const tmp = dateArray[1];
+      dateArray[1] = dateArray[0];
+      dateArray[0] = tmp;
+    }
     const date = new Date(+dateArray[2], +dateArray[1] - 1, +dateArray[0]);
     returnDate = datePipe.transform(date, 'yyyy-MM-dd');
   }
