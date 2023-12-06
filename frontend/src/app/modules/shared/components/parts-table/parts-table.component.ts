@@ -46,7 +46,6 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
 import { isDateFilter } from '@shared/helper/filter-helper';
-import i18next from 'i18next';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableSettingsService } from '@core/user/table-settings.service';
 import { TableViewConfig } from './table-view-config.model';
@@ -70,7 +69,9 @@ export class PartsTableComponent implements OnInit {
   @Input() labelId: string;
   @Input() noShadow = false;
   @Input() showHover = true;
-  @Input() showAlertButton = false;
+  @Input() actionIcon;
+  @Input() actionIconAlternative;
+  @Input() showActionButton = false;
 
   @Input() selectedPartsInfoLabel: string;
   @Input() selectedPartsActionLabel: string;
@@ -120,6 +121,7 @@ export class PartsTableComponent implements OnInit {
   @Output() multiSelect = new EventEmitter<any[]>();
   @Output() clickSelectAction = new EventEmitter<void>();
   @Output() filterActivated = new EventEmitter<any>();
+  @Output() onPaginationPageSizeChange = new EventEmitter<number>();
 
   public readonly dataSource = new MatTableDataSource<unknown>();
   public readonly selection = new SelectionModel<unknown>(true, []);
@@ -275,7 +277,7 @@ export class PartsTableComponent implements OnInit {
     'filterSemanticDataModel',
     'filterName',
     'filterManufacturer',
-    'filterPartId',
+    'filterManufacturerPartId',
     'filterSemanticModelId',
     'filterManufacturingDate',
     'filterActiveAlerts',
@@ -287,7 +289,7 @@ export class PartsTableComponent implements OnInit {
     'filterSemanticDataModel',
     'filterName',
     'filterManufacturer',
-    'filterPartId',
+    'filterManufacturerPartId',
     'filterSemanticModelId',
     'filterManufacturingDate',
     'filterActiveAlerts',
@@ -420,10 +422,6 @@ export class PartsTableComponent implements OnInit {
     this.setupTableViewSettings();
   }
 
-  public getTooltip(column: string) {
-    return column === '!' ? i18next.t('parts.openInvestigations') : i18next.t('table.sortTooltip');
-  }
-
   private setupTableConfigurations(
     displayedColumnsForTable: string[],
     displayedColumns: string[],
@@ -441,6 +439,7 @@ export class PartsTableComponent implements OnInit {
     this.filterConfiguration = filterConfiguration;
     this.displayedColumns = displayedColumns;
     for (const controlName in filterFormGroup) {
+      // eslint-disable-next-line no-prototype-builtins
       if (filterFormGroup.hasOwnProperty(controlName)) {
         this.filterFormGroup.addControl(controlName, filterFormGroup[controlName]);
       }
@@ -828,6 +827,7 @@ export class PartsTableComponent implements OnInit {
   public onPaginationChange({ pageIndex, pageSize }: PageEvent): void {
     this.pageIndex = pageIndex;
     this.isDataLoading = true;
+    this.onPaginationPageSizeChange.emit(pageSize);
     this.configChanged.emit({ page: pageIndex, pageSize: pageSize, sorting: this.sorting });
   }
 
@@ -870,5 +870,15 @@ export class PartsTableComponent implements OnInit {
 
   private removeSelectedValues(itemsToRemove: unknown[]): void {
     removeSelectedValues(this.selection, itemsToRemove);
+  }
+
+  public resetFilterActive(): void {
+    this.filterConfiguration.forEach(filter => {
+      if (filter.column) {
+        this.filterActive[filter.column] = false;
+      } else {
+        this.filterActive[filter.filterKey] = false;
+      }
+    });
   }
 }

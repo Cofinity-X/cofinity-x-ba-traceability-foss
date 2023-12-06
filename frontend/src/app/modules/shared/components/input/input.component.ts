@@ -48,15 +48,15 @@ export class InputComponent extends BaseInputComponent<string> {
 
     @Input() prefixIcon: string;
     @Input() prefixIconColor: ThemePalette;
-    @Input() prefixIconHover: boolean = false;
+    @Input() prefixIconHover = false;
 
     @Input() suffixIcon: string;
     @Input() suffixIconColor: ThemePalette;
-    @Input() suffixIconHover: boolean = false;
-    @Input() isSearchBar: boolean = false;
+    @Input() suffixIconHover = false;
+    @Input() isSearchBar = false;
 
-    @Input() onEnterActive: boolean = false;
-    @Input() displayClearButton: boolean = false;
+    @Input() onEnterActive = false;
+    @Input() displayClearButton = false;
     @Input() parentFormGroup: FormGroup;
     @Input() parentControlName: string;
 
@@ -66,7 +66,8 @@ export class InputComponent extends BaseInputComponent<string> {
     @ViewChild('inputElement') inputElement: ElementRef;
 
     public placeholder: string;
-    public isFocused: boolean = false;
+    public isFocused = false;
+    private inputTimer;
 
     constructor(@Inject(Injector) injector: Injector, staticIdService: StaticIdService) {
         super(injector, staticIdService);
@@ -77,7 +78,17 @@ export class InputComponent extends BaseInputComponent<string> {
 
         if (this.isSearchBar) {
             this.placeholder = this.label;
+            this.control.valueChanges.subscribe(() => {
+                this.triggerFilteringTimeout();
+            });
         }
+    }
+
+    triggerFilteringTimeout(): void {
+        clearTimeout(this.inputTimer);
+        this.inputTimer = setTimeout(() => {
+            this.prefixIconClick.emit();
+        }, 500);
     }
 
     shouldHideClearButton(): boolean {

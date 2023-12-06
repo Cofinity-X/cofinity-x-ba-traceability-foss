@@ -47,19 +47,28 @@ public class AssetsSupport {
     }
 
     public void defaultAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.assetsConverter().readAndConvertAssetsForTests());
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.assetsConverter().readAndConvertAssetsForTests());
     }
 
     public void defaultMultipleAssetsAsBuiltStored() {
-        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.assetsConverter().readAndConvertMultipleAssetsAsBuiltForTests());
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.assetsConverter().readAndConvertMultipleAssetsAsBuiltForTests());
     }
 
     public void tractionBatteryCodeAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.assetsConverter().readAndConvertTractionBatteryCodeAssetsForTests());
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.assetsConverter().readAndConvertTractionBatteryCodeAssetsForTests());
     }
 
     public void defaultAssetsAsPlannedStored() {
-        assetRepositoryProvider.assetAsPlannedRepository().saveAll(assetRepositoryProvider.assetsConverter().readAndConvertAssetsAsPlannedForTests());
+        assetRepositoryProvider.assetAsPlannedRepository()
+                .saveAll(assetRepositoryProvider.assetsConverter().readAndConvertAssetsAsPlannedForTests());
+    }
+
+    public void assetsAsPlannedStored(final String resourceName) {
+        assetRepositoryProvider.assetAsPlannedRepository()
+                .saveAll(assetRepositoryProvider.assetsConverter().readAndConvertAssetsAsPlannedForTests(resourceName));
     }
 
     public void defaultAssetsStoredWithOnGoingInvestigation(NotificationStatusBaseEntity investigationStatus, boolean inInvestigation) {

@@ -25,15 +25,10 @@ import { FilterOperator } from '@page/parts/model/parts.model';
 
 export type TableHeaderSort = [string, 'asc' | 'desc'];
 
-export interface TableConfig<Columns extends string = string> {
-  displayedColumns: DisplayColumns<Columns>[];
-  columnRoles?: Record<Columns, Role>;
-  sortableColumns?: Record<Columns, boolean>;
-  filterConfig?: FilterConfig[];
-  header?: Record<Columns, string>;
-  hasPagination?: boolean;
-  cellRenderers?: Partial<Record<Columns, TemplateRef<unknown>>>;
-  menuActionsConfig?: MenuActionConfig<unknown>[];
+export interface Option {
+  display: string;
+  value: any;
+  checked: boolean;
 }
 
 export interface FilterConfig {
@@ -43,12 +38,6 @@ export interface FilterConfig {
   option: Option[];
   maxDate?: Date | null;
   column?: string;
-}
-
-export interface Option {
-  display: string;
-  value: any;
-  checked: boolean;
 }
 
 export enum PartTableType {
@@ -82,23 +71,6 @@ export const CreateHeaderFromColumns = (columns: string[], headerKey: string): R
   return columns?.reduce((header, column) => ({ ...header, [column]: `${headerKey}.${column}` }), {});
 };
 
-export interface TablePaginationEventConfig {
-  page: number;
-  pageSize: number;
-}
-
-export interface TableEventConfig extends TablePaginationEventConfig {
-  sorting: TableHeaderSort;
-  filtering?: TableFilter;
-}
-
-export interface MenuActionConfig<T> {
-  label: string;
-  icon: string;
-  action: (data: T) => void;
-  condition?: (data: T) => boolean;
-}
-
 export interface FilterInfo {
   filterValue: string;
   filterOperator: FilterOperator;
@@ -119,8 +91,37 @@ export interface TableFilter {
   sendTo?: FilterInfo;
 }
 
+export interface TablePaginationEventConfig {
+  page: number;
+  pageSize: number;
+}
+
+export interface TableEventConfig extends TablePaginationEventConfig {
+  sorting: TableHeaderSort;
+  filtering?: TableFilter;
+}
+
+export interface MenuActionConfig<T> {
+  label: string;
+  icon: string;
+  action: (data: T) => void;
+  condition?: (data: T) => boolean;
+}
+
+
 export enum SortingOptions {
   NONE = 'NONE',
   ASC = 'ASC',
   DSC = 'DSC',
+}
+
+export interface TableConfig<Columns extends string = string> {
+  displayedColumns: DisplayColumns<Columns>[];
+  columnRoles?: Record<Columns, Role>;
+  sortableColumns?: Record<Columns, boolean>;
+  filterConfig?: FilterConfig[];
+  header?: Record<Columns, string>;
+  hasPagination?: boolean;
+  cellRenderers?: Partial<Record<Columns, TemplateRef<unknown>>>;
+  menuActionsConfig?: MenuActionConfig<unknown>[];
 }
