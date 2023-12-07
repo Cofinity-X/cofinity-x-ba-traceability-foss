@@ -31,9 +31,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 public abstract class AbstractQualityNotificationService implements QualityNotificationService {
@@ -44,6 +42,7 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
 
     protected abstract void setAssetStatus(QualityNotification qualityNotification);
 
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
     @Override
     public PageResult<QualityNotification> getCreated(Pageable pageable) {
         return getQualityNotificationsPageResult(pageable, QualityNotificationSide.SENDER);
@@ -54,6 +53,7 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
         return getQualityNotificationsPageResultBySide(pageable, QualityNotificationSide.SENDER, searchCriteria);
     }
 
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
     @Override
     public PageResult<QualityNotification> getReceived(Pageable pageable) {
         return getQualityNotificationsPageResult(pageable, QualityNotificationSide.RECEIVER);
@@ -86,6 +86,7 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
         getQualityNotificationRepository().updateQualityNotificationEntity(approvedNotification);
     }
 
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
     private PageResult<QualityNotification> getQualityNotificationsPageResult(Pageable pageable, QualityNotificationSide alertSide) {
         List<QualityNotification> alertData = getQualityNotificationRepository().findQualityNotificationsBySide(alertSide, pageable)
                 .content();
@@ -94,32 +95,13 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     }
 
     private PageResult<QualityNotification> getQualityNotificationsPageResultBySide(Pageable pageable, QualityNotificationSide notificationSide, SearchCriteria searchCriteria) {
-        addSideToSearchCriteria(searchCriteria, notificationSide);
         List<QualityNotification> notificationList = getQualityNotificationRepository()
                                                     .findAll(pageable, searchCriteria)
                                                     .content()
                                                     .stream()
                                                     .toList();
-        Page<QualityNotification> notificationPage = new PageImpl<>(notificationList, pageable, getQualityNotificationRepository().countQualityNotificationEntitiesBySide(notificationSide));
+        Page<QualityNotification> notificationPage = new PageImpl<>(notificationList, pageable, getQualityNotificationRepository().countAll(searchCriteria));
         return new PageResult<>(notificationPage);
-    }
-
-    private void addSideToSearchCriteria(SearchCriteria searchCriteria, QualityNotificationSide notificationSide) {
-        Optional.ofNullable(searchCriteria.getSearchCriteriaOperator())
-                .ifPresentOrElse(
-                        searchCriteriaOperator -> {},
-                        () -> searchCriteria.setSearchCriteriaOperator(SearchCriteriaOperator.AND)
-                );
-        final List<SearchCriteriaFilter> filters = new ArrayList<>();
-        Optional.ofNullable(searchCriteria.getSearchCriteriaFilterList())
-                .ifPresent(filters::addAll);
-        final SearchCriteriaFilter sideFilter = SearchCriteriaFilter.builder()
-                .key("side")
-                .value(notificationSide.toString())
-                .strategy(SearchStrategy.EQUAL)
-                .build();
-        filters.add(sideFilter);
-        searchCriteria.setSearchCriteriaFilterList(filters);
     }
 
     @Override

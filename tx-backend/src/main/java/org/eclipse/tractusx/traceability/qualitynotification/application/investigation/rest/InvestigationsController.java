@@ -38,6 +38,7 @@ import org.eclipse.tractusx.traceability.common.request.SearchCriteriaRequestPar
 import org.eclipse.tractusx.traceability.common.response.ErrorResponse;
 import org.eclipse.tractusx.traceability.qualitynotification.application.base.service.QualityNotificationService;
 import org.eclipse.tractusx.traceability.qualitynotification.application.investigation.mapper.InvestigationResponseMapper;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -184,7 +185,7 @@ public class InvestigationsController {
     @GetMapping("/created")
     public PageResult<InvestigationResponse> getCreatedInvestigations(OwnPageable pageable, SearchCriteriaRequestParam searchCriteriaRequestParam) {
         log.info(API_LOG_START + "/created");
-        return InvestigationResponseMapper.fromAsPageResult(investigationService.getCreated(OwnPageable.toPageable(pageable), searchCriteriaRequestParam.toSearchCriteria()));
+        return InvestigationResponseMapper.fromAsPageResult(investigationService.getCreated(OwnPageable.toPageable(pageable), searchCriteriaRequestParam.toSearchCriteria(QualityNotificationSide.SENDER)));
     }
 
     @Operation(operationId = "getReceivedInvestigations",
@@ -242,7 +243,7 @@ public class InvestigationsController {
     @GetMapping("/received")
     public PageResult<InvestigationResponse> getReceivedInvestigations(OwnPageable pageable, SearchCriteriaRequestParam searchCriteriaRequestParam) {
         log.info(API_LOG_START + "/received");
-        return InvestigationResponseMapper.fromAsPageResult(investigationService.getReceived(OwnPageable.toPageable(pageable), searchCriteriaRequestParam.toSearchCriteria()));
+        return InvestigationResponseMapper.fromAsPageResult(investigationService.getReceived(OwnPageable.toPageable(pageable), searchCriteriaRequestParam.toSearchCriteria(QualityNotificationSide.RECEIVER)));
     }
 
     @Operation(operationId = "getInvestigation",
