@@ -119,7 +119,7 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
     }
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorRoleAllowed")
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorAndUserRolesAllowed")
     void shouldAllowApproveEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException {
 
         given()
@@ -134,7 +134,7 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
     }
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#allRolesAllowed")
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorRoleAllowed")
     void shouldAllowCancelEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException {
 
         given()
@@ -149,7 +149,7 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
     }
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorAndAdminRolesAllowed")
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorRoleAllowed")
     void shouldAllowCloseEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException, JsonProcessingException {
         var request = new CloseQualityNotificationRequest();
         request.setReason("reason for closing");
@@ -167,7 +167,7 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
     }
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorAndAdminRolesAllowed")
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorAndUserRolesAllowed")
     void shouldAllowUpdateEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException, JsonProcessingException {
 
         var request = new UpdateQualityNotificationRequest();
