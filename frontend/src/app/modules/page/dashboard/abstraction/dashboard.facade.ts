@@ -45,7 +45,7 @@ export class DashboardFacade {
       { filterValue: NotificationStatus.DECLINED.toString(), filterOperator: FilterOperator.EQUAL },
       { filterValue: NotificationStatus.RECEIVED.toString(), filterOperator: FilterOperator.EQUAL },
     ]
-  }
+  };
 
   constructor(
     private readonly dashboardService: DashboardService,
