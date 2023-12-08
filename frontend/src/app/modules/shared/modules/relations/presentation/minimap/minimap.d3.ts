@@ -149,12 +149,9 @@ export class Minimap {
     this.zoom.on('zoom', ({ transform }) => {
       const { k, x, y } = this.currentZoom;
 
-      if (transform.k === 0) {
-        return rectGroup.call(this.zoom.transform, new ZoomTransform(1 / k, x, y));
-      }
-      if (this.nextTreeUpdateAt < Date.now()) {
-        this.moveTree(new ZoomTransform(transform.k, transform.x - 10, transform.y));
-      }
+      if (transform.k === 0) return rectGroup.call(this.zoom.transform, new ZoomTransform(1 / k, x, y));
+
+      if (this.nextTreeUpdateAt < Date.now()) this.moveTree(new ZoomTransform(transform.k, transform.x - 10, transform.y));
 
       this.currentZoom = new ZoomTransform(1 / transform.k, transform.x, transform.y);
       return rect.attr('transform', this.currentZoom as any);
