@@ -162,56 +162,6 @@ export class D3RenderHelper {
     circleNode.attr('transform', () => `translate(${D3RenderHelper.modifyByDirection(direction, x)},${D3RenderHelper.modifyByDirection(direction, y)})`);
   }
 
-  public static renderStatusBorder(
-    direction: TreeDirection,
-    el: SVGSelection,
-    dataNode: TreeNode,
-    r: number,
-    id: string,
-  ) {
-    const { data, x, y } = dataNode;
-    const isLoaded = data.state !== 'loading';
-
-    let statusBorder = el.select(`#${id}--StatusBorder`);
-
-    if (!isLoaded) {
-      statusBorder.remove();
-      return;
-    }
-
-    if (statusBorder.empty()) {
-      statusBorder = el.append('a').attr('id', `${id}--StatusBorder`);
-
-      const addBorder = (innerRadius: number, outerRadius: number, startAngle: number, endAngle: number) => {
-        const arc = d3
-          .arc<HierarchyNode<TreeStructure>>()
-          .innerRadius(innerRadius)
-          .outerRadius(outerRadius)
-          .startAngle(startAngle)
-          .endAngle(endAngle);
-
-        return statusBorder.append('path').attr('d', () => arc(dataNode));
-      };
-
-      const borderData = [
-        { inner: -3.2, outer: 0, start: -0.3, end: 1.6 },
-        { inner: -7, outer: -3, start: 0, end: 0.4 },
-        { inner: -7, outer: -3, start: 1.5, end: 1.8 },
-        { inner: -7, outer: -3, start: 0.7, end: 0.9 },
-        { inner: -8, outer: -5, start: 0.7, end: 1.2 },
-        { inner: -12, outer: -10, start: -1.6, end: -0.7 },
-        { inner: -12, outer: -10, start: -0.6, end: 0.3 },
-      ];
-
-      borderData.forEach(a => addBorder(r + a.inner, r + a.outer, a.start * Math.PI, a.end * Math.PI));
-    }
-
-    const statusBorderColor = data.state === SemanticDataModel.BATCH ? 'Batch' : data.state.toString();
-    statusBorder
-      .attr('class', () => `tree--element__border tree--element__border-${statusBorderColor}`)
-      .attr('transform', () => `translate(${D3RenderHelper.modifyByDirection(direction, x)},${D3RenderHelper.modifyByDirection(direction, y)})`);
-  }
-
   public static renderLoading(direction: TreeDirection, el: SVGSelection, dataNode: TreeNode, r: number, id: string) {
     const { data, x, y } = dataNode;
 
