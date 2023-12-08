@@ -27,9 +27,6 @@ import {
   OnDestroy,
   OnInit,
   SimpleChanges,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
