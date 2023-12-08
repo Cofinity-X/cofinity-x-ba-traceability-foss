@@ -26,7 +26,7 @@ import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { PartDetailsState } from '@shared/modules/part-details/core/partDetails.state';
 import { PartDetailsModule } from '@shared/modules/part-details/partDetails.module';
-import { screen } from '@testing-library/angular';
+import { fireEvent, screen, waitFor } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 import { MOCK_part_1 } from '../../../../../mocks/services/parts-mock/partsAsBuilt/partsAsBuilt.test.model';
 import { PartDetailComponent } from './part-detail.component';
@@ -86,4 +86,17 @@ describe('PartDetailComponent', () => {
     fixture.detectChanges();
     expect(componentInstance.selectedTab).toEqual(1);
   });
+
+  it('should call navigateBackToParts when close button is clicked', async () => {
+    const { fixture } = await renderPartDetailComponent({ roles: ['user'] });
+
+    const { componentInstance } = fixture;
+    spyOn(componentInstance, 'navigateBackToParts');
+
+    const closeButton = (await waitFor(() => screen.getByTestId('Part-details-back-button-test-id'))) as HTMLInputElement;
+    fireEvent.click(closeButton);
+
+    expect(componentInstance.navigateBackToParts).toHaveBeenCalled();
+  });
+
 });
