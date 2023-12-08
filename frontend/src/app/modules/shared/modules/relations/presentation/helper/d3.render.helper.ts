@@ -40,8 +40,8 @@ export class D3RenderHelper {
   ): void {
     const offset = isMinimap ? 0 : r + 15;
     const link = d3
-      .linkHorizontal<HierarchyCircularLink<TreeStructure>, HierarchyCircularNode<TreeStructure>>()
-      .source(({ source }) => ({ ...source, y: source.y + offset } as HierarchyCircularNode<TreeStructure>))
+      .linkVertical<HierarchyCircularLink<TreeStructure>, HierarchyCircularNode<TreeStructure>>()
+      .source(({ source }) => ({ ...source, y: source.y + offset * 2 + 15 } as HierarchyCircularNode<TreeStructure>))
       .x(({ x }) => x)
       .y(({ y }) => D3RenderHelper.modifyByDirection(direction, y));
 
@@ -79,7 +79,7 @@ export class D3RenderHelper {
           .attr('class', ({ data }: TreeNode) => `tree--element__circle-${data.state}`);
       }
 
-      circleNode.attr('transform', () => `translate(${y},${x})`);
+      circleNode.attr('transform', () => `translate(${x + 75},${y})`);
     }
 
     D3RenderHelper.renderNodes(svg, root, r, id, renderElements);
@@ -96,6 +96,13 @@ export class D3RenderHelper {
   ): void {
     function renderElements(dataNode: TreeNode) {
       const el = d3.select(this);
+      const { depth } = dataNode;
+
+      if (depth !== 0) {
+        r = 40;
+      } else {
+        r = 60;
+      }
 
       D3RenderHelper.renderCircle(direction, el, dataNode, r, id, openDetails);
       D3RenderHelper.renderLoading(direction, el, dataNode, r, id);
@@ -113,11 +120,9 @@ export class D3RenderHelper {
     id: string,
     callback: (data) => void,
   ) {
-    const { data, x, y, children } = dataNode;
-
-    if (!children) {
-      r /= 1.5;
-    }
+    const { data, x, y } = dataNode;
+    const text = HelperD3.shortenText(data.text || data.id, 11);
+    const textLength = text.length * 6.81;
 
     let circleNode = el.select(`#${id}--Circle`);
 
@@ -147,11 +152,11 @@ export class D3RenderHelper {
       circleNode
         .append('text')
         .attr('dy', '0.25em')
-        .attr('textLength', '75px')
+        .attr('textLength', `${textLength}px`)
         .attr('lengthAdjust', 'spacing')
         .attr('data-testid', 'tree--element__text')
         .classed('tree--element__text', true)
-        .text(() => HelperD3.shortenText(data.text || data.id, 11));
+        .text(() => text);
     }
 
     circleNode.attr('transform', () => `translate(${D3RenderHelper.modifyByDirection(direction, x)},${D3RenderHelper.modifyByDirection(direction, y)})`);
@@ -350,39 +355,46 @@ export class D3RenderHelper {
     r: number,
     callback: (data, direction) => void,
   ) {
-    const { data, x, y } = dataNode;
+    const { data, x, y, depth } = dataNode;
     el.attr('data-testid', 'tree--element__arrow-container')
       .classed('tree--element__arrow-container', true)
       .on('click', () => callback(data, direction));
 
-    const startAngleFactor = direction === TreeDirection.UP ? 1.8 : 0.8;
-    const endAngleFactor = direction === TreeDirection.UP ? 2.2 : 1.2;
+    let startAngleFactor = direction === TreeDirection.DOWN ? 1.8 : 0.8;
+    let endAngleFactor = direction === TreeDirection.DOWN ? 2.2 : 1.2;
+
+    if (depth !== 0) {
+      startAngleFactor = direction === TreeDirection.DOWN ? 1.9 : 0.85;
+      endAngleFactor = direction === TreeDirection.DOWN ? 2.3 : 1.15;
+    }
 
     const arc = d3
       .arc<HierarchyNode<TreeStructure>>()
-      .innerRadius(r + 5)
-      .outerRadius(r + 15)
+      .innerRadius(r + 0.083 * r)
+      .outerRadius(r + 0.25 * r)
       .startAngle(({ data }) => (data.children?.length ? 0 : startAngleFactor) * Math.PI)
       .endAngle(({ data }) => (data.children?.length ? 0 : endAngleFactor) * Math.PI);
 
     el.append('path')
+      .attr('transform', () => `translate(${x},${D3RenderHelper.modifyByDirection(direction, y)})`)
       .attr('d', () => arc(dataNode))
       .attr('data-testid', 'tree--element__arrow')
       .classed('tree--element__arrow', true);
 
-    const downArrow = [
-      { y: r + 10 - 4, x: -r + 25 },
-      { y: r + 30 - 4, x: 0 },
-      { y: r + 10 - 4, x: r - 25 },
-    ];
-
+    // These values are based on the radius of the circle
     const upArrow = [
-      { y: -r - 10 + 4, x: -r + 25 },
-      { y: -r - 30 + 4, x: 0 },
-      { y: -r - 10 + 4, x: r - 25 },
+      { y: r + 0.1 * r, x: -r + 0.416 * r },
+      { y: r + 0.433 * r, x: 0 },
+      { y: r + 0.1 * r, x: r - 0.416 * r },
     ];
 
-    const arrow = direction === TreeDirection.UP ? upArrow : downArrow;
+    const downArrow = [
+      { y: -r - 0.1 * r, x: -r + 0.416 * r },
+      { y: -r - 0.433 * r, x: 0 },
+      { y: -r - 0.1 * r, x: r - 0.416 * r },
+    ];
+
+    const arrow = direction === TreeDirection.DOWN ? downArrow : upArrow;
 
     const curveFunc = d3
       .area<{ x: number; y: number }>()
@@ -421,7 +433,7 @@ export class D3RenderHelper {
   }
 
   private static modifyByDirection(direction: TreeDirection, x: number): number {
-    if (direction === TreeDirection.UP) {
+    if (direction === TreeDirection.DOWN) {
       return -1 * x;
     }
 

@@ -43,7 +43,7 @@ SPDX-License-Identifier: Apache-2.0
         alt="-" />
     </app-button>
   </mat-card>
-  <figure class="part-relation--container"
+  <figure [ngClass]="isStandalone ? 'part-relation--container-fullscreen' : 'part-relation--container'"
     data-testId="part-relation--test-id"
     [id]="htmlId"></figure>
   <app-tree [rootPart]="rootPart$ | async"

@@ -84,15 +84,18 @@ SPDX-License-Identifier: Apache-2.0
         <ng-template mat-tab-label>
           <div>{{ 'partDetail.investigation.tab.header' | i18n }} </div>
         </ng-template>
+        <!-- TODO finish with investigations of components -->
         <!--TODO Other tab content-->
       </mat-tab>
     </mat-tab-group>
 
+    <!-- TODO finish with investigations of components -->
     <!-- <app-part-detail [showRelation]="false"
         [showStartInvestigation]="showStartInvestigationArray[selectedTab]"></app-part-detail> -->
   </mat-card-content>
 </mat-card>
 
+<!-- TODO finish with investigations of components -->
 <!-- <mat-accordion class="example-headers-align"
   multi>
   <mat-expansion-panel [expanded]="true">
@@ -132,7 +135,6 @@ SPDX-License-Identifier: Apache-2.0
   <app-info-list class="part-detail-section-item"
     [list]="customerOrPartSiteDetails.data"
     [title]=" customerOrPartSiteHeader.toString() | i18n"></app-info-list>
-
 </ng-template>
 
 <ng-template #partRelationMainTmp
@@ -143,7 +145,8 @@ SPDX-License-Identifier: Apache-2.0
       class="part-detail--relation__card">
       <mat-card-content class="part-detail--relation__container">
         <ng-container>
-          <app-part-relation [isStandalone]="false"
+          <app-part-relation [partId]="partDetails.data.id"
+            [isStandalone]="false"
             [showMiniMap]="false">
           </app-part-relation>
           <mat-icon (click)="openRelationPage(partDetails.data)"

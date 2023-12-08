@@ -19,10 +19,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Part, QualityType } from '@page/parts/model/parts.model';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { SelectOption } from '@shared/components/select/select.component';
@@ -41,13 +41,16 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   @Input() showRelation = true;
   @Input() showStartInvestigation = true;
 
+  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
+  @ViewChild('relation', { read: TemplateRef }) contentRef: TemplateRef<any>;
+
   public selectedTab = 0;
-  public readonly shortenPartDetails$: Observable<View<Part>>;
-  public readonly selectedPartDetails$: Observable<View<Part>>;
-  public readonly manufacturerDetails$: Observable<View<Part>>;
+  public shortenPartDetails$: Observable<View<Part>>;
+  public selectedPartDetails$: Observable<View<Part>>;
+  public manufacturerDetails$: Observable<View<Part>>;
   public manufacturerDetailsHeader$: Subscription;
 
-  public readonly customerOrPartSiteDetails$: Observable<View<Part>>;
+  public customerOrPartSiteDetails$: Observable<View<Part>>;
   public customerOrPartSiteDetailsHeader$: Subscription;
 
   public customerOrPartSiteHeader: string;
@@ -59,33 +62,53 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   public qualityTypeControl = new FormControl<QualityType>(null);
 
   private readonly isOpenState: State<boolean> = new State<boolean>(false);
+  private activatedRoute = inject(ActivatedRoute);
+  private readyPromise = Promise.resolve();
 
   constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router) {
-    this.selectedPartDetails$ = this.partDetailsFacade.selectedPart$;
-    this.shortenPartDetails$ = this.partDetailsFacade.selectedPart$.pipe(
-      PartsAssembler.mapPartForView(),
-      tap(({ data }) => this.qualityTypeControl.patchValue(data.qualityType, { emitEvent: false, onlySelf: true })),
-    );
 
-    this.manufacturerDetails$ = this.partDetailsFacade.selectedPart$.pipe(PartsAssembler.mapPartForManufacturerView());
-    this.manufacturerDetailsHeader$ = this.manufacturerDetails$?.subscribe(data => {
-      this.manufacturerNameHeader = data?.data?.nameAtManufacturer;
+    if (!this.partDetailsFacade.selectedPart) {
+      const partId = this.activatedRoute.snapshot.params['partId'];
+      this.readyPromise = new Promise((resolve) => {
+        this.partDetailsFacade.setPartFromTree(partId).subscribe(() => {
+          resolve();
+        });
+      });
+    }
+
+    this.readyPromise.then(() => {
+
+      this.selectedPartDetails$ = this.partDetailsFacade.selectedPart$;
+
+      this.shortenPartDetails$ = this.partDetailsFacade.selectedPart$.pipe(
+        PartsAssembler.mapPartForView(),
+        tap(({ data }) => {
+          this.qualityTypeControl.patchValue(data.qualityType, { emitEvent: false, onlySelf: true });
+        }),
+      );
+
+      this.manufacturerDetails$ = this.partDetailsFacade.selectedPart$.pipe(PartsAssembler.mapPartForManufacturerView());
+      this.manufacturerDetailsHeader$ = this.manufacturerDetails$?.subscribe(data => {
+        this.manufacturerNameHeader = data?.data?.nameAtManufacturer;
+      });
+
+      this.customerOrPartSiteDetails$ = this.partDetailsFacade.selectedPart$.pipe(PartsAssembler.mapPartForCustomerOrPartSiteView());
+
+      this.customerOrPartSiteDetailsHeader$ = this.customerOrPartSiteDetails$?.subscribe(data => {
+        if (data?.data?.functionValidFrom) {
+          this.customerOrPartSiteHeader = 'partDetail.partSiteInformationData';
+        } else {
+          this.customerOrPartSiteHeader = 'partDetail.customerData';
+        }
+      });
+
+      this.qualityTypeOptions = Object.values(QualityType).map(value => ({
+        label: value,
+        value: value,
+      }));
+
+
     });
-
-    this.customerOrPartSiteDetails$ = this.partDetailsFacade.selectedPart$.pipe(PartsAssembler.mapPartForCustomerOrPartSiteView());
-
-    this.customerOrPartSiteDetailsHeader$ = this.customerOrPartSiteDetails$?.subscribe(data => {
-      if (data?.data?.functionValidFrom) {
-        this.customerOrPartSiteHeader = 'partDetail.partSiteInformationData';
-      } else {
-        this.customerOrPartSiteHeader = 'partDetail.customerData';
-      }
-    });
-
-    this.qualityTypeOptions = Object.values(QualityType).map(value => ({
-      label: value,
-      value: value,
-    }));
   }
 
   public ngOnDestroy(): void {

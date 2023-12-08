@@ -34,6 +34,7 @@ export class Tree {
   public readonly r: number;
 
   private readonly defaultZoom: number;
+  private readonly centerXOffset: number;
   private readonly zoomConfig: [number, number] = [0.2, 1.5];
 
   private currentZoom = new ZoomTransform(1, 0, 0);
@@ -58,6 +59,7 @@ export class Tree {
     this.width = HelperD3.calculateWidth(this.mainElement);
     this.height = HelperD3.calculateHeight(this.mainElement);
     this.defaultZoom = treeData.defaultZoom;
+    this.centerXOffset = treeData.centerXOffset;
 
     this.r = 60;
 
@@ -133,7 +135,8 @@ export class Tree {
     });
 
     svg.call(this.zoom);
-    if (this.defaultZoom !== 1) svg.call(this.zoom.transform as any, new ZoomTransform(this.defaultZoom, 100, 0));
+
+    svg.call(this.zoom.transform as any, new ZoomTransform(this.defaultZoom, this.centerXOffset, 0));
 
     return cameraBody;
   }
