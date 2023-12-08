@@ -44,9 +44,6 @@ testem.log
 /typings
 /audit-reports
 src/tests/test-report.xml
-/mvnw
-/.mvn
-/mvnw.cmd
 
 # e2e
 cypress/videos
