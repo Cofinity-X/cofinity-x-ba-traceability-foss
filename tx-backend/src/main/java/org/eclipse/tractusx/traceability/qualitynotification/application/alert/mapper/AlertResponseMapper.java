@@ -89,14 +89,14 @@ public class AlertResponseMapper {
 
     private static String getSenderName(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
-                .findFirst()
+                .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getCreatedByName)
                 .orElse(null);
     }
 
     private static String getReceiverName(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
-                .findFirst()
+                .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getSendToName)
                 .orElse(null);
     }
