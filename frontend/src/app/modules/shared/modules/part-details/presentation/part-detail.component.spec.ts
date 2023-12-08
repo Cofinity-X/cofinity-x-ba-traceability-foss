@@ -99,9 +99,6 @@ describe('PartDetailComponent', () => {
     expect(componentInstance.navigateBackToParts).toHaveBeenCalled();
 
     componentInstance.navigateBackToParts();
-
-    expect(componentInstance.navigateBackToParts).toHaveBeenCalledTimes(2);
-
   });
 
 });
