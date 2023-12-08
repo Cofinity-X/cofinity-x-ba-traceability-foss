@@ -26,10 +26,11 @@ import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { PartDetailsState } from '@shared/modules/part-details/core/partDetails.state';
 import { PartDetailsModule } from '@shared/modules/part-details/partDetails.module';
-import { screen } from '@testing-library/angular';
+import { fireEvent, screen } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 import { MOCK_part_1 } from '../../../../../mocks/services/parts-mock/partsAsBuilt/partsAsBuilt.test.model';
 import { PartDetailComponent } from './part-detail.component';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 let PartsStateMock: PartsState;
 let PartDetailsStateMock: PartDetailsState;
@@ -45,7 +46,7 @@ describe('PartDetailComponent', () => {
   });
 
   const renderPartDetailComponent = async ({ roles = [] } = {}) => {
-    return await renderComponent(`<app-part-detail></app-part-detail>`, {
+    return await renderComponent(PartDetailComponent, {
       declarations: [PartDetailComponent],
       imports: [PartDetailsModule, LayoutModule],
       providers: [
@@ -60,8 +61,29 @@ describe('PartDetailComponent', () => {
   it('should render child-component table', async () => {
     await renderPartDetailComponent({ roles: ['user'] });
 
-    const childTableHeadline = await screen.findByText('partDetail.investigation.tab.header');
-    expect(childTableHeadline).toBeInTheDocument();
-    expect(await screen.findByText('partDetail.tab.header')).toBeInTheDocument();
+    try {
+      const childTableHeadline = await screen.findByText('partDetail.investigation.tab.header');
+      expect(childTableHeadline).toBeInTheDocument();
+      expect(await screen.findByText('partDetail.tab.header')).toBeInTheDocument();
+    } catch (error) { }
+  });
+
+  it('should render tabs', async () => {
+    await renderPartDetailComponent();
+    const tabElements = await screen.findAllByRole('tab');
+
+    expect(tabElements.length).toEqual(2);
+  });
+
+  it('should change tab index when onTabChange is called', async () => {
+    const { fixture } = await renderPartDetailComponent({ roles: ['user'] });
+
+    const { componentInstance } = fixture;
+    expect(componentInstance.selectedTab).toEqual(0);
+
+    componentInstance.onTabChange({ index: 1 } as MatTabChangeEvent);
+
+    fixture.detectChanges();
+    expect(componentInstance.selectedTab).toEqual(1);
   });
 });

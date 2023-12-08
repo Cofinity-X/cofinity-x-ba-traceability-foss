@@ -127,14 +127,14 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  public onTabChange({ index }: MatTabChangeEvent): void {
-    this.selectedTab = index;
-    this.partDetailsFacade.selectedPart = null;
-  }
-
   public openRelationPage(part: Part): void {
     this.partDetailsFacade.selectedPart = null;
     this.router.navigate([`parts/relations/${part.id}`]).then(_ => window.location.reload());
+  }
+
+  public onTabChange({ index }: MatTabChangeEvent): void {
+    this.selectedTab = index;
+    this.partDetailsFacade.selectedPart = null;
   }
 
   public navigateBackToParts(): void {
