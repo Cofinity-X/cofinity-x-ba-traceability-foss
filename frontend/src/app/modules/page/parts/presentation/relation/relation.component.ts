@@ -27,10 +27,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./relation.component.scss'],
 })
 export class RelationComponent {
-
-  public hasInitialized = false;
-
-  public ngOnInit(): void {
-    this.hasInitialized = true;
-  }
 }
