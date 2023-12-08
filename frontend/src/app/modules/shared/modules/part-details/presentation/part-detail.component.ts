@@ -41,9 +41,6 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   @Input() showRelation = true;
   @Input() showStartInvestigation = true;
 
-  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
-  @ViewChild('relation', { read: TemplateRef }) contentRef: TemplateRef<any>;
-
   public selectedTab = 0;
   public shortenPartDetails$: Observable<View<Part>>;
   public selectedPartDetails$: Observable<View<Part>>;
@@ -60,12 +57,15 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   public qualityTypeOptions: SelectOption[];
 
   public qualityTypeControl = new FormControl<QualityType>(null);
+  public context: string;
 
   private readonly isOpenState: State<boolean> = new State<boolean>(false);
   private activatedRoute = inject(ActivatedRoute);
   private readyPromise = Promise.resolve();
 
   constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router) {
+
+    this.context = this.activatedRoute?.parent?.toString().split('\'')[1];
 
     if (!this.partDetailsFacade.selectedPart) {
       const partId = this.activatedRoute.snapshot.params['partId'];
@@ -129,7 +129,7 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
 
   public openRelationPage(part: Part): void {
     this.partDetailsFacade.selectedPart = null;
-    this.router.navigate([`parts/relations/${part.id}`]).then(_ => window.location.reload());
+    this.router.navigate([`${this.context}/relations/${part.id}`]).then(_ => window.location.reload());
   }
 
   public onTabChange({ index }: MatTabChangeEvent): void {
@@ -139,7 +139,7 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
 
   public navigateBackToParts(): void {
     this.partDetailsFacade.selectedPart = null;
-    this.router.navigate(['/parts']);
+    this.router.navigate([`/${this.context}`]);
   }
 
 }

@@ -46,7 +46,7 @@ import { PartsTableComponent } from '@shared/components/parts-table/parts-table.
 import { MatDialog } from '@angular/material/dialog';
 import { RequestAlertComponent } from '@shared/components/request-notification/request-alert.component';
 import { PARTS_BASE_ROUTE, getRoute } from '@core/known-route';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SearchHelper } from '@shared/helper/search-helper';
 import { DatePipe } from '@angular/common';
 
@@ -103,7 +103,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     private readonly userSettingService: BomLifecycleSettingsService,
     public dialog: MatDialog,
     private readonly router: Router,
-    private readonly route: ActivatedRoute,
     public toastService: ToastService,
     public datePipe: DatePipe,
   ) {
