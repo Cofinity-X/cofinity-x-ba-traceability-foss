@@ -63,14 +63,14 @@ describe('D3 Tree', () => {
     const decreaseButton = await waitFor(() => screen.getByTestId('tree--zoom__decrease'));
     const cameraElement = await waitFor(() => screen.getByTestId('app-part-relation-0--camera'));
 
-    expect(cameraElement).not.toHaveAttribute('transform');
+    expect(cameraElement).toHaveAttribute('transform', 'translate(190,0) scale(1)');
     increaseButton.click();
     await sleepForTests(100);
-    expect(cameraElement).toHaveAttribute('transform', 'translate(0,0) scale(1.1)');
+    expect(cameraElement).toHaveAttribute('transform', 'translate(190,0) scale(1.1)');
 
     decreaseButton.click();
     await sleepForTests(100);
-    expect(cameraElement).toHaveAttribute('transform', 'translate(0,0) scale(1)');
+    expect(cameraElement).toHaveAttribute('transform', 'translate(190,0) scale(1)');
   });
 
   it('should render modified text for different sizes - TreeDirection.DOWN', () => {

@@ -25,8 +25,8 @@ import { SharedModule } from '@shared/shared.module';
 import { screen } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 
-describe('CardList', () => {
-  it('should render card list', async () => {
+describe('InfoList', () => {
+  it('should render info list', async () => {
     await renderComponent(`<app-info-list [list]="{ test_key: 'test_value' }" title='Test title'></app-info-list>`, {
       declarations: [InfoListComponent],
       imports: [MatCardModule, SharedModule],
