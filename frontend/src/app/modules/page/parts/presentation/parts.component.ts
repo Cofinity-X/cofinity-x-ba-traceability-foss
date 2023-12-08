@@ -48,6 +48,7 @@ import { RequestAlertComponent } from '@shared/components/request-notification/r
 import { PARTS_BASE_ROUTE, getRoute } from '@core/known-route';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchHelper } from '@shared/helper/search-helper';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-parts',
@@ -104,6 +105,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     public toastService: ToastService,
+    public datePipe: DatePipe,
   ) {
     this.partsAsBuilt$ = this.partsFacade.partsAsBuilt$;
     this.partsAsPlanned$ = this.partsFacade.partsAsPlanned$;
@@ -265,8 +267,8 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     const searchValue = this.searchFormGroup.get('partSearch').value;
     if (searchValue && searchValue !== '') {
       this.globalSearchActive = true;
-      this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsBuilt);
-      this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsPlanned);
+      this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsBuilt, this.datePipe);
+      this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsPlanned, this.datePipe);
       this.partsFacade.setPartsAsBuilt(
         0,
         this.DEFAULT_PAGE_SIZE,
