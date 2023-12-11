@@ -28,7 +28,8 @@ SPDX-License-Identifier: Apache-2.0
       [formControl]="formControl"
       matInput
       class="filter-input__textarea-input"
-      data-testid="multi-select-autocomplete--text-search-input" />
+      data-testid="multi-select-autocomplete--text-search-input"
+      (blur)="onDeselect('textFilter')" />
     <mat-hint>{{ 'multiSelect.inputTextHint' | i18n }}</mat-hint>
   </mat-form-field>
 
@@ -52,7 +53,8 @@ SPDX-License-Identifier: Apache-2.0
         (change)="toggleSelect($event, true)"
         [checked]="selectAllChecked"
         [indeterminate]="someSelected()"
-        data-testid="multi-select-autocomplete--multi-option-search-selct-all">{{ 'multiSelect.selectAll' | i18n
+        data-testid="multi-select-autocomplete--multi-option-search-selct-all"
+        (blur)="onDeselect('selectionFilter')">{{ 'multiSelect.selectAll' | i18n
         }}</mat-checkbox>
     </div>
     <div *ngFor="let option of options">
@@ -60,7 +62,8 @@ SPDX-License-Identifier: Apache-2.0
         [class]="optionClasses[option['display']]"
         [(ngModel)]="option.checked"
         (change)="toggleSelect($event, false)"
-        data-testid="multi-select-autocomplete--multi-option-search-selct-one">
+        data-testid="multi-select-autocomplete--multi-option-search-selct-one"
+        (blur)="onDeselect('selectionFilter')">
         <img *ngIf="isSeverity"
           src="{{severityIcon[option['display']]}}"
           alt="{{severityIconName[option['display']]}}"
@@ -78,7 +81,8 @@ SPDX-License-Identifier: Apache-2.0
     <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
     <input matInput
       [value]="theSearchElement"
-      [formControl]="searchDate" />
+      [formControl]="searchDate"
+      (blur)="onDeselect('dateFilter')" />
     <div matIconSuffix
       (click)="$event.stopPropagation();"
       [matMenuTriggerFor]="appDate">

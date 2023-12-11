@@ -93,6 +93,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   public filterActive = '';
   public searched = false;
   private inputTimer;
+  public runningTimer = false;
   public optionClasses = {};
   public isSeverity = false;
   public severityIcon = {};
@@ -127,8 +128,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
         clearTimeout(this.inputTimer);
         this.inputTimer = setTimeout(() => {
           this.dateManuelSelectionEvent(next);
-          this.triggerFilter.emit();
         }, 750);
+        this.runningTimer = true;
       });
     } else if (this.multiple) {
       this.filterName = 'filterLabelSelect';
@@ -148,11 +149,17 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   private triggerFilteringTimeout(isTextSearch: boolean): void {
     clearTimeout(this.inputTimer);
     this.inputTimer = setTimeout(() => {
-      if (isTextSearch) {
-        this.setFilterActive();
-      }
-      this.triggerFilter.emit();
-    }, 350);
+      this.triggerFiltering(isTextSearch);
+    }, 500);
+    this.runningTimer = true;
+  }
+
+  private triggerFiltering(isTextSearch: boolean): void {
+    this.runningTimer = false;
+    if (isTextSearch) {
+      this.setFilterActive();
+    }
+    this.triggerFilter.emit();
   }
 
   public toggleSelect = function (val: any, isSelectAll: boolean): void {
@@ -182,6 +189,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   private dateValidation(dateString: string): Date {
+    this.runningTimer = false;
     const regexOne = /[a-zA-Z]/;
     const regexTwo = /[./-]/;
     if (!regexOne.test(dateString)) {
@@ -196,7 +204,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
         }
       }
     }
-    clearTimeout(this.inputTimer);
     return null;
   }
 
@@ -216,9 +223,14 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.formControl.patchValue(null);
       this.theSearchElement = null;
     }
+    this.triggerFilter.emit();
   }
 
   public dateSelectionEvent(event: Date) {
+    if (this.runningTimer) {
+      clearTimeout(this.inputTimer);
+      this.runningTimer = false;
+    }
     this.theSearchDate.patchValue(event);
     const value = this.datePipe.transform(event, 'yyyy-MM-dd');
     this.formControl.patchValue(value);
@@ -238,6 +250,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.formControl.reset();
     if (extern) {
       clearTimeout(this.inputTimer);
+      this.runningTimer = false;
       this.filterActive = '';
       this.searched = false;
     }
@@ -278,6 +291,22 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     } else {
       this.severityIcon[column.join('.')] = './assets/images/icons/error.svg';
       this.severityIconName[column.join('.')] = 'LIFE-THREATENING';
+    }
+  }
+
+  public onDeselect(inputfield: string): void {
+    if (this.runningTimer) {
+      this.runningTimer = false;
+      if (inputfield === 'textFilter') {
+        clearTimeout(this.inputTimer);
+        this.triggerFiltering(true);
+      } else if (inputfield === 'dateFilter') {
+        clearTimeout(this.inputTimer);
+        this.dateManuelSelectionEvent(this.searchDate.value);
+      } else if (inputfield === 'selectionFilter') {
+        clearTimeout(this.inputTimer);
+        this.triggerFiltering(false);
+      }
     }
   }
 }
