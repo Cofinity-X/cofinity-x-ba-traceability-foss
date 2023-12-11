@@ -51,7 +51,7 @@ import { delay, switchMap, takeWhile, tap } from 'rxjs/operators';
 export class PartRelationComponent implements OnInit, OnDestroy {
   @Input() partId: string;
   @Input() isStandalone = true;
-  @Input() showMiniMap = true;
+  @Input() showMiniMap = false;
 
   public readonly htmlIdBase = 'app-part-relation-';
   public readonly subscriptions = new Subscription();
