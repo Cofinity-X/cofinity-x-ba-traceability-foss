@@ -31,6 +31,8 @@ import { renderComponent } from '@tests/test-render.utils';
 import { MOCK_part_1 } from '../../../../../mocks/services/parts-mock/partsAsBuilt/partsAsBuilt.test.model';
 import { PartDetailComponent } from './part-detail.component';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 let PartsStateMock: PartsState;
 let PartDetailsStateMock: PartDetailsState;
@@ -101,4 +103,23 @@ describe('PartDetailComponent', () => {
     componentInstance.navigateBackToParts();
   });
 
+  it('should open relation page', async () => {
+    const { fixture } = await renderPartDetailComponent({ roles: ['user'] });
+    const router = TestBed.inject(Router);
+    const { componentInstance } = fixture;
+
+    const part: any = { id: 1 };
+    const context = 'some-context';
+    window.onbeforeunload = jasmine.createSpy();
+
+    const partDetailsFacade = (componentInstance as any)['partDetailsFacade'];
+
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
+
+    componentInstance.context = context;
+    componentInstance.openRelationPage(part);
+
+    expect(partDetailsFacade.selectedPart).toEqual(null);
+    expect(router.navigate).toHaveBeenCalledWith([`${context}/relations/${part.id}`]);
+  });
 });
