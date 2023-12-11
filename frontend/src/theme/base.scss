@@ -676,26 +676,41 @@ app-multiselect {
   .mat-mdc-form-field {
     --mat-mdc-form-field-floating-label-scale: 1;
   }
-  .mat-datepicker-content {
-    border-radius: 10px !important;
-  }
-  .mat-datepicker-actions {
-    padding: 10px 20px 20px 20px !important;
-    justify-content: space-between !important;
-  }
-  .mat-calendar {
-    height: auto !important;
-  }
-  .mat-calendar-header {
-    padding: 0 0 0 22px !important;
-  }
-  .mat-calendar-body-label {
-    opacity: 0;
-  }
-  .mat-calendar-body-label[colspan='7'] {
-    display: none;
-  }
   .mdc-button__label > span {
     @extend .body-small-emphasis;
+  }
+}
+.mat-mdc-menu-panel.mat-mdc-menu-panel {
+  max-width: unset !important;
+}
+
+.filter-input__calender {
+  .mat-calendar-header {
+    padding: 0 0 0 22px !important;
+    span {
+      @extend .body-small-emphasis;
+    }
+  }
+  .mat-calendar-controls {
+    max-width: 278px;
+  }
+  .mat-calendar-table-header {
+    span {
+      @extend .body-large;
+    }
+  }
+  .mat-calendar-body {
+    span {
+      @extend .body-large-emphasis;
+    }
+    &-label {
+      opacity: 0;
+    }
+    &-label[colspan='7'] {
+      display: none;
+    }
+    &-selected {
+      box-shadow: none;
+    }
   }
 }

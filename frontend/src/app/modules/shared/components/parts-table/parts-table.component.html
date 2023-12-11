@@ -127,7 +127,8 @@ SPDX-License-Identifier: Apache-2.0
     <ng-template #MenuColumn>
       <ng-container matColumnDef="menu">
         <th *matHeaderCellDef
-          mat-header-cell class="table--header--sticky">
+          mat-header-cell
+          class="table--header--sticky">
           <img class="settings-icon table-menu"
             src="/assets/images/icons/table_settings_icon.svg"
             alt="*"
@@ -215,9 +216,7 @@ SPDX-License-Identifier: Apache-2.0
               <div *ngIf="column !== '!'"
                 (click)="$event.stopPropagation()"
                 class="table--header--row__filter"
-                [matMenuTriggerFor]="selectMenu"
-                (menuOpened)="isMenuOpen = true"
-                (menuClosed)="isMenuOpen = false">
+                [matMenuTriggerFor]="selectMenu">
                 <div class="table--header--row__filter--border--top"></div>
                 <div class="table--header--row__filter--content">
                   <img src="\assets\images\icons\filterAltIcon.svg"

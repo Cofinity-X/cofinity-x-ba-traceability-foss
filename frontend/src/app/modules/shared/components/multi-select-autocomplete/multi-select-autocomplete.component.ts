@@ -28,13 +28,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { MatSelect } from '@angular/material/select';
 import { pairwise, startWith } from 'rxjs';
+
 
 @Component({
   selector: 'app-multiselect',
@@ -77,6 +77,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   @ViewChild('searchInput', { static: true }) searchInput: any;
 
   theSearchElement = '';
+  theSearchDate: FormControl<Date> = new FormControl();
 
   @Output() triggerFilter = new EventEmitter<void>();
 
@@ -96,6 +97,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   public isSeverity = false;
   public severityIcon = {};
   public severityIconName = {};
+  public searchDate = new FormControl<string>('');
 
   constructor(
     public datePipe: DatePipe,
@@ -103,10 +105,15 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     @Inject(MAT_DATE_LOCALE) public _locale: string,
     @Inject(LOCALE_ID) private locale: string,
   ) {
+    let localeTime = 'en-GB';
+    if (locale === 'de') {
+      localeTime = 'de-DE';
+    }
     registerLocaleData(localeDe, 'de', localeDeExtra);
-    this._adapter.setLocale(locale);
-
+    this._adapter.setLocale(localeTime);
+    this._adapter.getFirstDayOfWeek = () => { return 1; };
   }
+
   ngOnInit(): void {
     if (this.textSearch) {
       this.formControl.valueChanges.pipe(startWith(0), pairwise()).subscribe(([_prev, next]: [any, any]) => {
@@ -116,6 +123,13 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       });
     } else if (this.isDate) {
       this.filterName = 'filterLabelDate';
+      this.searchDate.valueChanges.pipe(startWith(0), pairwise()).subscribe(([_prev, next]: [any, any]) => {
+        clearTimeout(this.inputTimer);
+        this.inputTimer = setTimeout(() => {
+          this.dateManuelSelectionEvent(next);
+          this.triggerFilter.emit();
+        }, 750);
+      });
     } else if (this.multiple) {
       this.filterName = 'filterLabelSelect';
       this.setColumnClass();
@@ -167,11 +181,49 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.filterActive = this.theSearchElement;
   }
 
-  public dateSelectionEvent(event: MatDatepickerInputEvent<Date>) {
-    const value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+  private dateValidation(dateString: string): Date {
+    const regexOne = /[a-zA-Z]/;
+    const regexTwo = /[./-]/;
+    if (!regexOne.test(dateString)) {
+      const dateArray = dateString.split(regexTwo);
+      if (dateArray.length === 3 && !isNaN(+dateArray[0]) && !isNaN(+dateArray[1]) && !isNaN(+dateArray[2]) && +dateArray[0] <= 31 && +dateArray[1] <= 12 && (dateArray[2].length === 2 || dateArray[2].length === 4)) {
+        if (dateArray[2].length === 2) {
+          dateArray[2] = '20' + dateArray[2];
+        }
+        const date = new Date(+dateArray[2], +dateArray[1] - 1, +dateArray[0]);
+        if (date <= this.maxDate) {
+          return date;
+        }
+      }
+    }
+    clearTimeout(this.inputTimer);
+    return null;
+  }
+
+  public dateManuelSelectionEvent(dateString: string) {
+    if (dateString === '') {
+      this.theSearchDate.patchValue(null);
+      this.formControl.patchValue(null);
+      this.theSearchElement = null;
+      return;
+    }
+    this.theSearchDate.patchValue(this.dateValidation(dateString));
+    if (this.theSearchDate.value !== null) {
+      const value = this.datePipe.transform(this.theSearchDate.value, 'yyyy-MM-dd');
+      this.formControl.patchValue(value);
+      this.theSearchElement = this.theSearchDate.value.toLocaleDateString('en-GB');
+    } else {
+      this.formControl.patchValue(null);
+      this.theSearchElement = null;
+    }
+  }
+
+  public dateSelectionEvent(event: Date) {
+    this.theSearchDate.patchValue(event);
+    const value = this.datePipe.transform(event, 'yyyy-MM-dd');
     this.formControl.patchValue(value);
-    this.selectedValue = value as unknown as [];
-    this.theSearchElement = value;
+    this.theSearchElement = this.theSearchDate.value.toLocaleDateString('en-GB');
+    this.triggerFilter.emit();
   }
 
   public clickClear(extern = false): boolean {

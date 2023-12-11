@@ -81,20 +81,32 @@ SPDX-License-Identifier: Apache-2.0
     *ngIf="isDate"
     data-testid="multi-select-autocomplete--date-search-form">
     <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
-    <input [value]="theSearchElement"
-      matInput
-      [matDatepicker]="datepicker"
-      [max]="maxDate"
-      (dateInput)="dateSelectionEvent($event)"
-      (dateChange)="dateSelectionEvent($event)"
-      disabled />
-    <mat-datepicker-toggle matIconSuffix
+    <input matInput
+      [value]="theSearchElement"
+      [formControl]="searchDate" />
+    <div matIconSuffix
+      (click)="$event.stopPropagation();"
+      [matMenuTriggerFor]="appDate">
+      <button mat-icon-button>
+        <mat-icon color="accent">event</mat-icon>
+      </button>
+      <mat-menu #appDate="matMenu">
+        <mat-calendar class="filter-input__calender"
+          [maxDate]="maxDate"
+          #calendar
+          [selected]="theSearchDate.value"
+          (selectedChange)="dateSelectionEvent($event);"
+          (click)="$event.stopPropagation()">
+        </mat-calendar>
+      </mat-menu>
+    </div>
+    <!-- <mat-datepicker-toggle matIconSuffix
       [for]="datepicker"></mat-datepicker-toggle>
     <mat-datepicker disabled="false"
       #datepicker
       color="primary"
       class="Test">
-      <mat-datepicker-actions>
+       <mat-datepicker-actions>
         <button class="filter-input__datepicker-buttons-reset"
           (click)="clickClear(); this.triggerFilter.emit()"
           mat-button
@@ -108,7 +120,7 @@ SPDX-License-Identifier: Apache-2.0
           (click)="this.triggerFilter.emit()">
           {{ 'datepicker.filter' | i18n }}
         </button>
-      </mat-datepicker-actions>
-    </mat-datepicker>
+      </mat-datepicker-actions> 
+    </mat-datepicker> -->
   </mat-form-field>
 </div>

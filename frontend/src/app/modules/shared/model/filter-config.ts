@@ -75,9 +75,9 @@ export class FilterCongigOptions {
     };
 
     if (isReceivedTable) {
-      returnList.push(received, acknowledged, accepted, declined, closed);
+      returnList.push(received, acknowledged, accepted, declined, closed, canceled);
     } else {
-      returnList.push(created, canceled, sent, acknowledged, accepted, declined, closed);
+      returnList.push(created, sent, acknowledged, accepted, declined, closed, canceled);
     }
     return returnList;
   }
