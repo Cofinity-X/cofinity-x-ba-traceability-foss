@@ -139,5 +139,4 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
     this.partDetailsFacade.selectedPart = null;
     this.router.navigate([`/${this.context}`]);
   }
-
 }
