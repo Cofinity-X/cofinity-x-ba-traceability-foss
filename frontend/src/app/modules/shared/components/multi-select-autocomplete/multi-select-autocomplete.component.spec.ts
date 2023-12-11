@@ -2,7 +2,6 @@ import { renderComponent } from '@tests/test-render.utils';
 import { SharedModule } from '@shared/shared.module';
 import { MultiSelectAutocompleteComponent } from '@shared/components/multi-select-autocomplete/multi-select-autocomplete.component';
 import { SemanticDataModel } from '@page/parts/model/parts.model';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { screen } from '@testing-library/angular';
 
@@ -240,25 +239,41 @@ describe('MultiSelectAutocompleteComponent', () => {
     expect(componentInstance.filterActive).toEqual('Search value');
   });
 
-  it('should emit data correctly when changeEvent of Datepicker is triggered', async () => {
+  it('should emit data correctly when the date is selected in the calender', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
     const inputValue = new Date('2023-10-12'); // Replace with your desired date
 
-    // Create a mock event with the selected date
-    const event: MatDatepickerInputEvent<Date> = {
-      value: inputValue,
-      target: undefined,
-      targetElement: undefined,
-    };
 
     // Call the function to test
-    componentInstance.dateSelectionEvent(event);
+    componentInstance.dateSelectionEvent(inputValue);
 
     // Expectations
-    expect(componentInstance.formControl.value).toBe('2023-10-12'); // Replace with your actual form control variable
-    expect(componentInstance.selectedValue).toBe('2023-10-12');
-    expect(componentInstance.theSearchElement).toBe('2023-10-12');
+    expect(componentInstance.theSearchDate.value).toBe(inputValue);
+    expect(componentInstance.formControl.value).toBe('2023-10-12');
+    expect(componentInstance.theSearchElement).toBe('12/10/2023');
   });
+
+  // it('should emit data correctly when changeEvent of Datepicker is triggered', async () => {
+  //   const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
+  //   const { componentInstance } = fixture;
+
+  //   const inputValue = new Date('2023-10-12'); // Replace with your desired date
+
+  //   // Create a mock event with the selected date
+  //   const event: MatDatepickerInputEvent<Date> = {
+  //     value: inputValue,
+  //     target: undefined,
+  //     targetElement: undefined,
+  //   };
+
+  //   // Call the function to test
+  //   componentInstance.dateSelectionEvent(event);
+
+  //   // Expectations
+  //   expect(componentInstance.formControl.value).toBe('2023-10-12'); // Replace with your actual form control variable
+  //   expect(componentInstance.selectedValue).toBe('2023-10-12');
+  //   expect(componentInstance.theSearchElement).toBe('2023-10-12');
+  // });
 });
