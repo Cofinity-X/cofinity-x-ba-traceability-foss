@@ -147,10 +147,14 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   private triggerFilteringTimeout(isTextSearch: boolean): void {
+    let timeoutTime = 200;
+    if (isTextSearch) {
+      timeoutTime = 500;
+    }
     clearTimeout(this.inputTimer);
     this.inputTimer = setTimeout(() => {
       this.triggerFiltering(isTextSearch);
-    }, 500);
+    }, timeoutTime);
     this.runningTimer = true;
   }
 
