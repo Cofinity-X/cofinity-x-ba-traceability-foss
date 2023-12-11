@@ -70,11 +70,6 @@ SPDX-License-Identifier: Apache-2.0
     </div>
   </div>
 
-  <!-- <app-date-time *ngIf="isDate"
-    [label]="'requestNotification.targetDateLabel' | i18n"
-    [hint]="'requestNotification.targetDateDescription' | i18n"
-    [min]="minDate"
-    formControlName="targetDate"></app-date-time> -->
   <mat-form-field color="accent"
     appearance="outline"
     [floatLabel]="'auto'"
@@ -90,7 +85,8 @@ SPDX-License-Identifier: Apache-2.0
       <button mat-icon-button>
         <mat-icon color="accent">event</mat-icon>
       </button>
-      <mat-menu #appDate="matMenu">
+      <mat-menu #appDate="matMenu"
+        xPosition="before">
         <mat-calendar class="filter-input__calender"
           [maxDate]="maxDate"
           #calendar
@@ -100,27 +96,5 @@ SPDX-License-Identifier: Apache-2.0
         </mat-calendar>
       </mat-menu>
     </div>
-    <!-- <mat-datepicker-toggle matIconSuffix
-      [for]="datepicker"></mat-datepicker-toggle>
-    <mat-datepicker disabled="false"
-      #datepicker
-      color="primary"
-      class="Test">
-       <mat-datepicker-actions>
-        <button class="filter-input__datepicker-buttons-reset"
-          (click)="clickClear(); this.triggerFilter.emit()"
-          mat-button
-          matDatepickerCancel>
-          {{ 'datepicker.reset' | i18n }}
-        </button>
-        <button class="filter-input__datepicker-buttons-filter"
-          mat-raised-button
-          color="primary"
-          matDatepickerApply
-          (click)="this.triggerFilter.emit()">
-          {{ 'datepicker.filter' | i18n }}
-        </button>
-      </mat-datepicker-actions> 
-    </mat-datepicker> -->
   </mat-form-field>
 </div>
