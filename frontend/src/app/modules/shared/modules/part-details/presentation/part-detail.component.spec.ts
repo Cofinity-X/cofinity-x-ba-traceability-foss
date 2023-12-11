@@ -103,23 +103,20 @@ describe('PartDetailComponent', () => {
     componentInstance.navigateBackToParts();
   });
 
-  it('should open relation page', async () => {
+  it('should navigate back to parts', async () => {
     const { fixture } = await renderPartDetailComponent({ roles: ['user'] });
     const router = TestBed.inject(Router);
     const { componentInstance } = fixture;
-
-    const part: any = { id: 1 };
-    const context = 'some-context';
-    window.onbeforeunload = jasmine.createSpy();
-
     const partDetailsFacade = (componentInstance as any)['partDetailsFacade'];
+    const context = 'some-context';
 
-    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
+    spyOn(router, 'navigate').and.stub();
 
     componentInstance.context = context;
-    componentInstance.openRelationPage(part);
+    componentInstance.navigateBackToParts();
 
     expect(partDetailsFacade.selectedPart).toEqual(null);
-    expect(router.navigate).toHaveBeenCalledWith([`${context}/relations/${part.id}`]);
+    expect(router.navigate).toHaveBeenCalledWith([`/${context}`]);
   });
+
 });

@@ -36,13 +36,6 @@ export /** @type {*} */
       resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
     },
     {
-      path: ':partId',
-      pathMatch: 'full',
-      component: PartDetailComponent,
-      data: { i18nextNamespaces: ['page.parts', 'partDetail'] },
-      resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
-    },
-    {
       path: 'relations',
       pathMatch: 'full',
       component: RelationComponent,
@@ -56,6 +49,14 @@ export /** @type {*} */
       data: { i18nextNamespaces: ['page.parts', 'partDetail'] },
       resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
     },
+    {
+      path: ':partId',
+      pathMatch: 'full',
+      component: PartDetailComponent,
+      data: { i18nextNamespaces: ['page.parts', 'partDetail'] },
+      resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
+    },
+
   ];
 
 @NgModule({
