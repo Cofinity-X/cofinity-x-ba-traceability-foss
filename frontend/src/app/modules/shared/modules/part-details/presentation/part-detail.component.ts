@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { AfterViewInit, Component, Input, OnDestroy, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -106,8 +106,6 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
         label: value,
         value: value,
       }));
-
-
     });
   }
 
