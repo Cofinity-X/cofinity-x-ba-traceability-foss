@@ -24,6 +24,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 export enum KnownAdminRouts {
   BPN = 'configure-bpn',
+  IMPORT = 'configure-import'
 }
 
 
