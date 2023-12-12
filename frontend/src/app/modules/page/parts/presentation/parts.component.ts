@@ -185,7 +185,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openDetailPage(part: Part): void {
     const { link } = getRoute(PARTS_BASE_ROUTE);
-    this.router.navigate([`/${link}/${part.id}`]);
+    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } });
   }
 
   filterActivated(type: MainAspectType, assetFilter: any): void {
@@ -299,8 +299,9 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.partsFacade.unsubscribeParts();
   }
 
-  public onSelectItem($event: Record<string, unknown>): void {
+  public onSelectItem($event: Record<string, unknown>, type: MainAspectType): void {
     const selectedPart = $event as unknown as Part;
+    this.partDetailsFacade.mainAspectType = type;
     this.partDetailsFacade.selectedPart = selectedPart;
     this.openDetailPage(selectedPart);
   }
