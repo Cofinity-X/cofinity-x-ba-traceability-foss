@@ -146,7 +146,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     }
   }
 
-  private triggerFilteringTimeout(isTextSearch: boolean): void {
+  public triggerFilteringTimeout(isTextSearch: boolean): void {
     let timeoutTime = 200;
     if (isTextSearch) {
       timeoutTime = 500;
@@ -158,7 +158,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.runningTimer = true;
   }
 
-  private triggerFiltering(isTextSearch: boolean): void {
+  public triggerFiltering(isTextSearch: boolean): void {
     this.runningTimer = false;
     if (isTextSearch) {
       this.setFilterActive();
@@ -261,12 +261,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     return wasSet;
   }
 
-  public getColumnName(): string {
-    const columnName = this.options[0]['display'].split('.');
-    return columnName[columnName.length - 2].toUpperCase();
-  }
-
-  public setColumnClass(): void {
+  private setColumnClass(): void {
     for (const option of this.options) {
       const optionClass = { 'body-large': true };
       const column = option['display'].split('.');

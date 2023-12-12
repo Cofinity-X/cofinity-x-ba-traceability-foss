@@ -3,7 +3,8 @@ import { SharedModule } from '@shared/shared.module';
 import { MultiSelectAutocompleteComponent } from '@shared/components/multi-select-autocomplete/multi-select-autocomplete.component';
 import { SemanticDataModel } from '@page/parts/model/parts.model';
 import { DatePipe } from '@angular/common';
-import { screen } from '@testing-library/angular';
+import { screen, waitFor } from '@testing-library/angular';
+import { Severity } from '@shared/model/severity.model';
 
 describe('MultiSelectAutocompleteComponent', () => {
   const renderMultiSelectAutoCompleteComponent = (isDate = false, multiple = false, filterActive = '') => {
@@ -243,8 +244,9 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    const inputValue = new Date('2023-10-12'); // Replace with your desired date
+    const inputValue = new Date('2023-10-12');
 
+    componentInstance.runningTimer = true;
 
     // Call the function to test
     componentInstance.dateSelectionEvent(inputValue);
@@ -253,6 +255,181 @@ describe('MultiSelectAutocompleteComponent', () => {
     expect(componentInstance.theSearchDate.value).toBe(inputValue);
     expect(componentInstance.formControl.value).toBe('2023-10-12');
     expect(componentInstance.theSearchElement).toBe('12/10/2023');
+    expect(componentInstance.runningTimer).toBe(false);
+  });
+
+  it('should emit data correctly when the date is manually typed into the search Date', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
+    const { componentInstance } = fixture;
+
+    const inputDate = new Date(2023, 9, 12);
+    const inputValue = '12/10/23'; // Replace with your desired date
+
+
+    // Call the function to test
+    componentInstance.searchDate.patchValue(inputValue);
+    componentInstance.runningTimer = true;
+    componentInstance.onDeselect('dateFilter');
+
+    // Expectations
+    expect(componentInstance.theSearchDate.value.toLocaleDateString()).toBe(inputDate.toLocaleDateString());
+    expect(componentInstance.formControl.value).toBe('2023-10-12');
+    expect(componentInstance.theSearchElement).toBe('12/10/2023');
+    expect(componentInstance.runningTimer).toBe(false);
+  });
+
+  it('should emit set date to null if a invalid date is typed in', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
+    const { componentInstance } = fixture;
+
+    const inputValue = '20.a.23'; // Replace with your desired date
+    componentInstance.theSearchDate.patchValue(new Date());
+    componentInstance.theSearchElement = "12/10/2023";
+
+    // Call the function to test
+    componentInstance.dateManuelSelectionEvent(inputValue);
+
+    // Expectations
+    expect(componentInstance.theSearchDate.value).toBe(null);
+    expect(componentInstance.formControl.value).toBe(null);
+    expect(componentInstance.theSearchElement).toBe(null);
+    expect(componentInstance.runningTimer).toBe(false);
+  });
+
+  it('should emit set date to null if the input is cleared.', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
+    const { componentInstance } = fixture;
+
+    const inputValue = '20.a.23'; // Replace with your desired date
+    componentInstance.theSearchDate.patchValue(new Date());
+    componentInstance.theSearchElement = "12/10/2023";
+
+    // Call the function to test
+    componentInstance.dateManuelSelectionEvent(inputValue);
+
+    // Expectations
+    expect(componentInstance.theSearchDate.value).toBe(null);
+    expect(componentInstance.formControl.value).toBe(null);
+    expect(componentInstance.theSearchElement).toBe(null);
+    expect(componentInstance.runningTimer).toBe(false);
+  });
+
+  it('should emit set date to null if the input is cleared.', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
+    const { componentInstance } = fixture;
+
+    const inputValue = '20.a.23'; // Replace with your desired date
+    componentInstance.theSearchDate.patchValue(new Date());
+    componentInstance.theSearchElement = "12/10/2023";
+
+    // Call the function to test
+    componentInstance.dateManuelSelectionEvent(inputValue);
+
+    // Expectations
+    expect(componentInstance.theSearchDate.value).toBe(null);
+    expect(componentInstance.formControl.value).toBe(null);
+    expect(componentInstance.theSearchElement).toBe(null);
+    expect(componentInstance.runningTimer).toBe(false);
+  });
+
+  it('should create the correct class lists for the status options', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent(false, true);
+    const { componentInstance } = fixture;
+
+    //modify wanted changes
+    componentInstance.multiple = true;
+    componentInstance.isDate = false;
+    componentInstance.textSearch = false;
+    componentInstance.options = [{
+      display: 'status.ACCEPTED',
+      value: 'ACCEPTED',
+      checked: false,
+    },
+    {
+      display: 'status.DECLINDED',
+      value: 'DECLINDED',
+      checked: false,
+    }];
+    componentInstance.optionClasses = {};
+
+    //apply changes via ngOnInit();
+    componentInstance.ngOnInit();
+
+    //expected value
+    const expectedClasses = {
+      'status.ACCEPTED': { 'body-large': true, 'notification-display-status': true, 'notification-display-status--ACCEPTED': true },
+      'status.DECLINDED': { 'body-large': true, 'notification-display-status': true, 'notification-display-status--DECLINDED': true },
+    }
+
+    //expect
+    expect(componentInstance.optionClasses).toEqual(expectedClasses);
+  });
+
+  it('should create the correct class lists for the severity options and add the correct icon paths.', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent(false, true);
+    const { componentInstance } = fixture;
+
+    //modify wanted changes
+    componentInstance.multiple = true;
+    componentInstance.isDate = false;
+    componentInstance.textSearch = false;
+    componentInstance.options = [
+      {
+        display: 'severity.' + Severity.MINOR,
+        value: 0,
+        checked: false,
+        severity: Severity.MINOR,
+      },
+      {
+        display: 'severity.' + Severity.MAJOR,
+        value: 1,
+        checked: false,
+        severity: Severity.MAJOR,
+      },
+      {
+        display: 'severity.' + Severity.CRITICAL,
+        value: 2,
+        checked: false,
+        severity: Severity.CRITICAL
+      },
+      {
+        display: 'severity.' + Severity.LIFE_THREATENING,
+        value: 3,
+        checked: false,
+        severity: Severity.LIFE_THREATENING,
+      },
+    ];
+    componentInstance.optionClasses = {};
+
+    //apply changes via ngOnInit();
+    componentInstance.ngOnInit();
+
+    //expected value
+    const expectedClasses = {
+      'severity.MINOR': { 'body-large': true, 'notification-display-severity': true },
+      'severity.MAJOR': { 'body-large': true, 'notification-display-severity': true },
+      'severity.CRITICAL': { 'body-large': true, 'notification-display-severity': true },
+      'severity.LIFE-THREATENING': { 'body-large': true, 'notification-display-severity': true },
+    }
+    const expectedIconList = {
+      'severity.MINOR': './assets/images/icons/info.svg',
+      'severity.MAJOR': './assets/images/icons/warning.svg',
+      'severity.CRITICAL': './assets/images/icons/error_outline.svg',
+      'severity.LIFE-THREATENING': './assets/images/icons/error.svg',
+    }
+    const expectedIconNameList = {
+      'severity.MINOR': 'MINOR',
+      'severity.MAJOR': 'MAJOR',
+      'severity.CRITICAL': 'CRITICAL',
+      'severity.LIFE-THREATENING': 'LIFE-THREATENING'
+    };
+
+    //epxect
+    expect(componentInstance.optionClasses).toEqual(expectedClasses);
+    expect(componentInstance.severityIcon).toEqual(expectedIconList);
+    expect(componentInstance.severityIconName).toEqual(expectedIconNameList);
+    expect(componentInstance.isSeverity).toEqual(true);
+
   });
 
   // it('should emit data correctly when changeEvent of Datepicker is triggered', async () => {
