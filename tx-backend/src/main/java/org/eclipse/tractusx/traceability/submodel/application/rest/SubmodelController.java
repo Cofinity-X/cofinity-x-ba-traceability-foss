@@ -31,6 +31,7 @@ import org.eclipse.tractusx.traceability.common.response.ErrorResponse;
 import org.eclipse.tractusx.traceability.submodel.application.service.SubmodelService;
 import org.eclipse.tractusx.traceability.submodel.domain.model.Submodel;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -99,6 +100,7 @@ public class SubmodelController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @GetMapping("/{submodelId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_USER')")
     public String getSubmodel(@PathVariable String submodelId) {
         return submodelService.getById(submodelId).getPayload();
     }
@@ -153,6 +155,7 @@ public class SubmodelController {
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @PostMapping("/{submodelId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public void saveSubmodel(@PathVariable String submodelId, @RequestBody String submodelPayload) {
         submodelService.save(Submodel.builder()
                 .id(submodelId)
@@ -210,6 +213,7 @@ public class SubmodelController {
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public void deleteSubmodels() {
         submodelService.deleteAll();
     }

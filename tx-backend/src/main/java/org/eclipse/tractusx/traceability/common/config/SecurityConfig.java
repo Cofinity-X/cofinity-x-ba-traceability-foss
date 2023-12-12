@@ -57,15 +57,9 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/webjars/swagger-ui/**",
-            "/qualitynotifications/receive",
-            "/qualityalerts/receive",
-            "/qualitynotifications/update",
-            "/qualityalerts/update",
             "/callback/endpoint-data-reference",
             "/internal/endpoint-data-reference",
-            "/actuator/**",
-            "/registry/reload",
-            "/submodel/**"
+            "/actuator/**"
 
     };
 

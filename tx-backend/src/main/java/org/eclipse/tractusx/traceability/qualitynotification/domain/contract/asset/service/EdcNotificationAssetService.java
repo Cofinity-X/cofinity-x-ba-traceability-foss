@@ -79,6 +79,9 @@ public class EdcNotificationAssetService {
                 .method(DEFAULT_METHOD)
                 .proxyBody("true")
                 .proxyMethod("true")
+                .oauth2TokenUrl(edcProperties.getOAuth2TokenUrl())
+                .oauth2ClientId(edcProperties.getOAuth2ClientId())
+                .oauth2ClientSecretKey(edcProperties.getOAuth2ClientSecretKey())
                 .build();
 
         String description = "endpoint to %s %s".formatted(notificationMethodValue, notificationType.getValue());

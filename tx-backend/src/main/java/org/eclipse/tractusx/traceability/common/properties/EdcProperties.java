@@ -54,4 +54,13 @@ public class EdcProperties {
     @NotBlank
     @Value("${edc.api-auth-key}")
     private String apiAuthKey;
+
+    @Value("${edc.asset-security.token-url}")
+    private String oAuth2TokenUrl;
+
+    @Value("${edc.asset-security.client-id}")
+    private String oAuth2ClientId;
+
+    @Value("${edc.asset-security.client-secret-key}")
+    private String oAuth2ClientSecretKey;
 }
