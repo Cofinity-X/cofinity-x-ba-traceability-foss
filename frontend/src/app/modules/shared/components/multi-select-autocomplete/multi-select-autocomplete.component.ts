@@ -126,10 +126,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.filterName = 'filterLabelDate';
       this.searchDate.valueChanges.pipe(startWith(0), pairwise()).subscribe(([_prev, next]: [any, any]) => {
         clearTimeout(this.inputTimer);
+        this.runningTimer = true;
         this.inputTimer = setTimeout(() => {
           this.dateManuelSelectionEvent(next);
         }, 750);
-        this.runningTimer = true;
       });
     } else if (this.multiple) {
       this.filterName = 'filterLabelSelect';
@@ -147,6 +147,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   public triggerFilteringTimeout(isTextSearch: boolean): void {
+    this.runningTimer = true;
     let timeoutTime = 200;
     if (isTextSearch) {
       timeoutTime = 500;
@@ -155,7 +156,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.inputTimer = setTimeout(() => {
       this.triggerFiltering(isTextSearch);
     }, timeoutTime);
-    this.runningTimer = true;
   }
 
   public triggerFiltering(isTextSearch: boolean): void {
@@ -193,7 +193,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   private dateValidation(dateString: string): Date {
-    this.runningTimer = false;
     const regexOne = /[a-zA-Z]/;
     const regexTwo = /[./-]/;
     if (!regexOne.test(dateString)) {
@@ -212,6 +211,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   public dateManuelSelectionEvent(dateString: string) {
+    this.runningTimer = false;
     if (dateString === '') {
       this.theSearchDate.patchValue(null);
       this.formControl.patchValue(null);
@@ -295,7 +295,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   public onDeselect(inputfield: string): void {
     if (this.runningTimer) {
-      this.runningTimer = false;
       if (inputfield === 'textFilter') {
         clearTimeout(this.inputTimer);
         this.triggerFiltering(true);

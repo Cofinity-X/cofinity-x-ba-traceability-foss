@@ -263,7 +263,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { componentInstance } = fixture;
 
     const inputDate = new Date(2023, 9, 12);
-    const inputValue = '12/10/23'; // Replace with your desired date
+    const inputValue = '12/10/23';
 
 
     // Call the function to test
@@ -282,7 +282,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    const inputValue = '20.a.23'; // Replace with your desired date
+    const inputValue = '20.a.23';
     componentInstance.theSearchDate.patchValue(new Date());
     componentInstance.theSearchElement = "12/10/2023";
 
@@ -300,7 +300,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    const inputValue = '20.a.23'; // Replace with your desired date
+    const inputValue = '20.a.23';
     componentInstance.theSearchDate.patchValue(new Date());
     componentInstance.theSearchElement = "12/10/2023";
 
@@ -318,7 +318,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    const inputValue = '20.a.23'; // Replace with your desired date
+    const inputValue = '';
     componentInstance.theSearchDate.patchValue(new Date());
     componentInstance.theSearchElement = "12/10/2023";
 
@@ -432,25 +432,38 @@ describe('MultiSelectAutocompleteComponent', () => {
 
   });
 
-  // it('should emit data correctly when changeEvent of Datepicker is triggered', async () => {
-  //   const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
-  //   const { componentInstance } = fixture;
+  it('should trigger text search when the onDeselect function is called.', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent();
+    const { componentInstance } = fixture;
 
-  //   const inputValue = new Date('2023-10-12'); // Replace with your desired date
+    //setup
+    componentInstance.runningTimer = true;
+    componentInstance.theSearchElement = 'Search Value';
+    spyOn(componentInstance.triggerFilter, 'emit');
 
-  //   // Create a mock event with the selected date
-  //   const event: MatDatepickerInputEvent<Date> = {
-  //     value: inputValue,
-  //     target: undefined,
-  //     targetElement: undefined,
-  //   };
+    // Call the function to test
+    componentInstance.onDeselect('textFilter');
 
-  //   // Call the function to test
-  //   componentInstance.dateSelectionEvent(event);
+    // Expectations
+    expect(componentInstance.filterActive).toEqual('Search Value');
+    expect(componentInstance.runningTimer).toBe(false);
+    expect(componentInstance.triggerFilter.emit).toHaveBeenCalled();
+  });
 
-  //   // Expectations
-  //   expect(componentInstance.formControl.value).toBe('2023-10-12'); // Replace with your actual form control variable
-  //   expect(componentInstance.selectedValue).toBe('2023-10-12');
-  //   expect(componentInstance.theSearchElement).toBe('2023-10-12');
-  // });
+  it('should trigger text search when the onDeselect function is called.', async () => {
+    const { fixture } = await renderMultiSelectAutoCompleteComponent();
+    const { componentInstance } = fixture;
+
+    //setup
+    componentInstance.runningTimer = true;
+    spyOn(componentInstance.triggerFilter, 'emit');
+
+    // Call the function to test
+    componentInstance.onDeselect('selectionFilter');
+
+    // Expectations
+    expect(componentInstance.runningTimer).toBe(false);
+    expect(componentInstance.triggerFilter.emit).toHaveBeenCalled();
+  });
+
 });
