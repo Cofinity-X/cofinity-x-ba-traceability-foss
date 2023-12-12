@@ -34,6 +34,7 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { MatSelect } from '@angular/material/select';
 import { pairwise, startWith } from 'rxjs';
+import { MatCalendar } from '@angular/material/datepicker';
 
 
 @Component({
@@ -72,18 +73,18 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   @Input()
   appearance = 'standard';
 
-  public readonly minDate = new Date();
 
   @ViewChild('searchInput', { static: true }) searchInput: any;
+  @ViewChild('calendar', { static: false }) calendar: MatCalendar<Date>;
 
-  theSearchElement = '';
-  theSearchDate: FormControl<Date> = new FormControl();
+  @ViewChild('selectElem', { static: true }) selectElem: MatSelect;
 
   @Output() triggerFilter = new EventEmitter<void>();
 
   selectionChange: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('selectElem', { static: true }) selectElem: MatSelect;
+  public theSearchElement = '';
+  public theSearchDate: FormControl<Date> = new FormControl();
   public filterName = 'filterLabel';
   public filteredOptions: Array<any> = [];
   public selectedValue: Array<any> = [];
@@ -96,8 +97,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   public runningTimer = false;
   public optionClasses = {};
   public isSeverity = false;
-  public severityIcon = {};
-  public severityIconName = {};
   public searchDate = new FormControl<string>('');
 
   constructor(
@@ -126,10 +125,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.filterName = 'filterLabelDate';
       this.searchDate.valueChanges.pipe(startWith(0), pairwise()).subscribe(([_prev, next]: [any, any]) => {
         clearTimeout(this.inputTimer);
-        this.runningTimer = true;
         this.inputTimer = setTimeout(() => {
-          this.dateManuelSelectionEvent(next);
+          this.dateManualSelectionEvent(next);
         }, 750);
+        this.runningTimer = true;
       });
     } else if (this.multiple) {
       this.filterName = 'filterLabelSelect';
@@ -202,7 +201,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
           dateArray[2] = '20' + dateArray[2];
         }
         const date = new Date(+dateArray[2], +dateArray[1] - 1, +dateArray[0]);
-        if (date <= this.maxDate) {
+        if (date <= this.maxDate || !this.maxDate) {
           return date;
         }
       }
@@ -210,22 +209,25 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     return null;
   }
 
-  public dateManuelSelectionEvent(dateString: string) {
+  public dateManualSelectionEvent(dateString: string) {
     this.runningTimer = false;
     if (dateString === '') {
       this.theSearchDate.patchValue(null);
       this.formControl.patchValue(null);
       this.theSearchElement = null;
-      return;
-    }
-    this.theSearchDate.patchValue(this.dateValidation(dateString));
-    if (this.theSearchDate.value !== null) {
-      const value = this.datePipe.transform(this.theSearchDate.value, 'yyyy-MM-dd');
-      this.formControl.patchValue(value);
-      this.theSearchElement = this.theSearchDate.value.toLocaleDateString('en-GB');
+      this.calendar._goToDateInView(new Date(), 'month');
     } else {
-      this.formControl.patchValue(null);
-      this.theSearchElement = null;
+      this.theSearchDate.patchValue(this.dateValidation(dateString));
+      if (this.theSearchDate.value !== null) {
+        const value = this.datePipe.transform(this.theSearchDate.value, 'yyyy-MM-dd');
+        this.formControl.patchValue(value);
+        this.theSearchElement = this.theSearchDate.value.toLocaleDateString('en-GB');
+        this.calendar._goToDateInView(this.theSearchDate.value, 'month');
+      } else {
+        this.formControl.patchValue(null);
+        this.theSearchElement = null;
+        this.calendar._goToDateInView(new Date(), 'month');
+      }
     }
     this.triggerFilter.emit();
   }
@@ -264,45 +266,25 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   private setColumnClass(): void {
     for (const option of this.options) {
       const optionClass = { 'body-large': true };
-      const column = option['display'].split('.');
-      if (column[column.length - 2].toUpperCase() === 'STATUS') {
+      if (option['display'].includes('status')) {
         optionClass['notification-display-status'] = true;
-        const statusClass = 'notification-display-status--' + column[column.length - 1].toUpperCase();
-        optionClass[statusClass] = true;
-      } else if (column[column.length - 2].toUpperCase() === 'SEVERITY') {
+        optionClass[option['displayClass']] = true;
+      } else if (option['display'].includes('severity')) {
         optionClass['notification-display-severity'] = true;
         this.isSeverity = true;
-        this.setSeverityIcon(column);
       }
       this.optionClasses[option['display']] = optionClass;
     }
   }
-  private setSeverityIcon(column): void {
-    if (column[column.length - 1].toUpperCase() === 'MINOR') {
-      this.severityIcon[column.join('.')] = './assets/images/icons/info.svg';
-      this.severityIconName[column.join('.')] = 'MINOR';
-    } else if (column[column.length - 1].toUpperCase() === 'MAJOR') {
-      this.severityIcon[column.join('.')] = './assets/images/icons/warning.svg';
-      this.severityIconName[column.join('.')] = 'MAJOR';
-    } else if (column[column.length - 1].toUpperCase() === 'CRITICAL') {
-      this.severityIcon[column.join('.')] = './assets/images/icons/error_outline.svg';
-      this.severityIconName[column.join('.')] = 'CRITICAL';
-    } else {
-      this.severityIcon[column.join('.')] = './assets/images/icons/error.svg';
-      this.severityIconName[column.join('.')] = 'LIFE-THREATENING';
-    }
-  }
 
-  public onDeselect(inputfield: string): void {
+  public onBlur(inputfield: string): void {
     if (this.runningTimer) {
+      clearTimeout(this.inputTimer);
       if (inputfield === 'textFilter') {
-        clearTimeout(this.inputTimer);
         this.triggerFiltering(true);
       } else if (inputfield === 'dateFilter') {
-        clearTimeout(this.inputTimer);
-        this.dateManuelSelectionEvent(this.searchDate.value);
+        this.dateManualSelectionEvent(this.searchDate.value);
       } else if (inputfield === 'selectionFilter') {
-        clearTimeout(this.inputTimer);
         this.triggerFiltering(false);
       }
     }

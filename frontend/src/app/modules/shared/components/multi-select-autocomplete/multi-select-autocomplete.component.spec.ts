@@ -269,7 +269,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     // Call the function to test
     componentInstance.searchDate.patchValue(inputValue);
     componentInstance.runningTimer = true;
-    componentInstance.onDeselect('dateFilter');
+    componentInstance.onBlur('dateFilter');
 
     // Expectations
     expect(componentInstance.theSearchDate.value.toLocaleDateString()).toBe(inputDate.toLocaleDateString());
@@ -287,7 +287,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     componentInstance.theSearchElement = "12/10/2023";
 
     // Call the function to test
-    componentInstance.dateManuelSelectionEvent(inputValue);
+    componentInstance.dateManualSelectionEvent(inputValue);
 
     // Expectations
     expect(componentInstance.theSearchDate.value).toBe(null);
@@ -305,7 +305,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     componentInstance.theSearchElement = "12/10/2023";
 
     // Call the function to test
-    componentInstance.dateManuelSelectionEvent(inputValue);
+    componentInstance.dateManualSelectionEvent(inputValue);
 
     // Expectations
     expect(componentInstance.theSearchDate.value).toBe(null);
@@ -323,7 +323,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     componentInstance.theSearchElement = "12/10/2023";
 
     // Call the function to test
-    componentInstance.dateManuelSelectionEvent(inputValue);
+    componentInstance.dateManualSelectionEvent(inputValue);
 
     // Expectations
     expect(componentInstance.theSearchDate.value).toBe(null);
@@ -337,18 +337,17 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { componentInstance } = fixture;
 
     //modify wanted changes
-    componentInstance.multiple = true;
-    componentInstance.isDate = false;
-    componentInstance.textSearch = false;
     componentInstance.options = [{
       display: 'status.ACCEPTED',
       value: 'ACCEPTED',
       checked: false,
+      displayClass: 'notification-display-status--ACCEPTED',
     },
     {
       display: 'status.DECLINDED',
       value: 'DECLINDED',
       checked: false,
+      displayClass: 'notification-display-status--DECLINDED',
     }];
     componentInstance.optionClasses = {};
 
@@ -365,7 +364,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     expect(componentInstance.optionClasses).toEqual(expectedClasses);
   });
 
-  it('should create the correct class lists for the severity options and add the correct icon paths.', async () => {
+  it('should create the correct class lists for the severity options', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(false, true);
     const { componentInstance } = fixture;
 
@@ -411,28 +410,14 @@ describe('MultiSelectAutocompleteComponent', () => {
       'severity.CRITICAL': { 'body-large': true, 'notification-display-severity': true },
       'severity.LIFE-THREATENING': { 'body-large': true, 'notification-display-severity': true },
     }
-    const expectedIconList = {
-      'severity.MINOR': './assets/images/icons/info.svg',
-      'severity.MAJOR': './assets/images/icons/warning.svg',
-      'severity.CRITICAL': './assets/images/icons/error_outline.svg',
-      'severity.LIFE-THREATENING': './assets/images/icons/error.svg',
-    }
-    const expectedIconNameList = {
-      'severity.MINOR': 'MINOR',
-      'severity.MAJOR': 'MAJOR',
-      'severity.CRITICAL': 'CRITICAL',
-      'severity.LIFE-THREATENING': 'LIFE-THREATENING'
-    };
 
     //epxect
     expect(componentInstance.optionClasses).toEqual(expectedClasses);
-    expect(componentInstance.severityIcon).toEqual(expectedIconList);
-    expect(componentInstance.severityIconName).toEqual(expectedIconNameList);
     expect(componentInstance.isSeverity).toEqual(true);
 
   });
 
-  it('should trigger text search when the onDeselect function is called.', async () => {
+  it('should trigger text search when the onBlur function is called.', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent();
     const { componentInstance } = fixture;
 
@@ -442,7 +427,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     spyOn(componentInstance.triggerFilter, 'emit');
 
     // Call the function to test
-    componentInstance.onDeselect('textFilter');
+    componentInstance.onBlur('textFilter');
 
     // Expectations
     expect(componentInstance.filterActive).toEqual('Search Value');
@@ -450,7 +435,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     expect(componentInstance.triggerFilter.emit).toHaveBeenCalled();
   });
 
-  it('should trigger text search when the onDeselect function is called.', async () => {
+  it('should trigger option search when the onBlur function is called.', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent();
     const { componentInstance } = fixture;
 
@@ -459,7 +444,7 @@ describe('MultiSelectAutocompleteComponent', () => {
     spyOn(componentInstance.triggerFilter, 'emit');
 
     // Call the function to test
-    componentInstance.onDeselect('selectionFilter');
+    componentInstance.onBlur('selectionFilter');
 
     // Expectations
     expect(componentInstance.runningTimer).toBe(false);
