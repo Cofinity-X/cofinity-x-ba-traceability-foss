@@ -189,14 +189,14 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   public onSelectItem($event: Record<string, unknown>): void {
     const selectedPart = $event as unknown as Part;
-    this.partDetailsFacade.mainAspectType = this.bomLifecycle;
+    this.partDetailsFacade.mainAspectType = selectedPart.mainAspectType;
     this.partDetailsFacade.selectedPart = selectedPart;
     this.openDetailPage(selectedPart);
   }
 
   public openDetailPage(part: Part): void {
     const { link } = getRoute(OTHER_PARTS_BASE_ROUTE);
-    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: this.bomLifecycle } }).then(_ => window.location.reload());
+    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
   }
 
   public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {

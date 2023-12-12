@@ -76,12 +76,13 @@ export class PartsService {
     }
 
     public getPart(id: string, type: MainAspectType): Observable<Part> {
-        if (type === MainAspectType.AS_BUILT) {
-            return this.apiService.get<PartResponse>(`${this.url}/assets/as-built/${id}`)
-                .pipe(map(part => PartsAssembler.assemblePart(part, MainAspectType.AS_BUILT)));
+        if (type === MainAspectType.AS_PLANNED) {
+            return this.apiService.get<PartResponse>(`${this.url}/assets/as-planned/${id}`)
+                .pipe(map(part => PartsAssembler.assemblePart(part, MainAspectType.AS_PLANNED)));
         }
-        return this.apiService.get<PartResponse>(`${this.url}/assets/as-planned/${id}`)
-            .pipe(map(part => PartsAssembler.assemblePart(part, MainAspectType.AS_PLANNED)));
+
+        return this.apiService.get<PartResponse>(`${this.url}/assets/as-built/${id}`)
+            .pipe(map(part => PartsAssembler.assemblePart(part, MainAspectType.AS_BUILT)));
     }
 
 

@@ -73,7 +73,7 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
 
     if (!this.partDetailsFacade.selectedPart) {
       const partId = this.activatedRoute.snapshot.params['partId'];
-      const mainAspectType = this.activatedRoute.snapshot.queryParams.type as MainAspectType;
+      const mainAspectType = this.activatedRoute.snapshot.queryParams?.type as MainAspectType;
       this.readyPromise = new Promise((resolve) => {
         this.partDetailsFacade.mainAspectType = mainAspectType;
         this.partDetailsFacade.setPartFromTree(partId).subscribe(() => {
