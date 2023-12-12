@@ -56,7 +56,7 @@ class SubmodelControllerAuthorizationIT extends IntegrationTestSpecification {
     }
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#allRolesAllowed")
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#adminRoleAllowed")
     void shouldAllowPostEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException, JsonProcessingException {
 
         given()
@@ -72,7 +72,7 @@ class SubmodelControllerAuthorizationIT extends IntegrationTestSpecification {
     }
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#allRolesAllowed")
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#adminRoleAllowed")
     void shouldAllowDeleteEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException {
 
         given()

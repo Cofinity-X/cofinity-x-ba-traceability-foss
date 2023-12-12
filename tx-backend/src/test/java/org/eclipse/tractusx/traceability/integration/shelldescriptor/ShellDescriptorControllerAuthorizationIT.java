@@ -52,7 +52,7 @@ class ShellDescriptorControllerAuthorizationIT extends IntegrationTestSpecificat
     }
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#allRolesAllowed")
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#adminRoleAllowed")
     void shouldAllowDeleteEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException {
 
         given()

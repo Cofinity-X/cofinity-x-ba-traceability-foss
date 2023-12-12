@@ -22,14 +22,9 @@ import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.common.security.JwtRole;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.ForbiddenMatcher;
-//import org.eclipse.tractusx.traceability.qualitynotification.application.contract.model.CreateNotificationContractRequest;
-//import org.eclipse.tractusx.traceability.qualitynotification.application.contract.model.NotificationMethod;
-//import org.eclipse.tractusx.traceability.qualitynotification.application.contract.model.NotificationType;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
-//import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import static io.restassured.RestAssured.given;
 
@@ -41,18 +36,15 @@ class EdcNotificationContractControllerAuthorizationIT extends IntegrationTestSp
 
     private static final String ROOT = "/api/edc/notification/contract";
 
-    //private final ObjectMapper objectMapper = new ObjectMapper();
-
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorRoleAllowed")
-    void shouldAllowPostEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException, JsonProcessingException {
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#adminRoleAllowed")
+    void shouldAllowPostEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException {
 
-        // TODO no JSON serialization for this class?
-        //var request = new CreateNotificationContractRequest(NotificationType.QUALITY_ALERT, NotificationMethod.RECEIVE);
+        // Request class does not support JSON serialization
         given()
                 .header(oAuth2Support.jwtAuthorizationWithOptionalRole(role))
                 .contentType(ContentType.JSON)
-                .body(//objectMapper.writeValueAsString(request)
+                .body(
                         """
                             {
                             "notificationType" : "QUALITY_INVESTIGATION",

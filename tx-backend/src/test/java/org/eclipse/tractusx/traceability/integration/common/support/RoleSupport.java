@@ -58,4 +58,13 @@ public abstract class RoleSupport {
                 arguments(null, false)
         );
     }
+
+    static Stream<Arguments> noRoleRequired() {
+        return Stream.of(
+                arguments(USER, true),
+                arguments(SUPERVISOR, true),
+                arguments(ADMIN, true),
+                arguments(null, true)
+        );
+    }
 }
