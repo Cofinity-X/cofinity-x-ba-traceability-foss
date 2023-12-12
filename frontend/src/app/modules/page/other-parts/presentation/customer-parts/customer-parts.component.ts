@@ -152,18 +152,6 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
     this.otherPartsFacade.unsubscribeParts();
   }
 
-  public onSelectItem($event: Record<string, unknown>): void {
-    const selectedPart = $event as unknown as Part;
-    this.partDetailsFacade.mainAspectType = selectedPart.mainAspectType;
-    this.partDetailsFacade.selectedPart = selectedPart;
-    this.openDetailPage(selectedPart);
-  }
-
-  public openDetailPage(part: Part): void {
-    const { link } = getRoute(OTHER_PARTS_BASE_ROUTE);
-    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
-  }
-
   public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
     let pageSizeValue = this.DEFAULT_PAGE_SIZE;
     if (pageSize !== 0) {
@@ -184,6 +172,18 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
 
   public onDefaultPaginationSizeChange(pageSize: number) {
     this.DEFAULT_PAGE_SIZE = pageSize;
+  }
+
+  public openDetailPage(part: Part): void {
+    const { link } = getRoute(OTHER_PARTS_BASE_ROUTE);
+    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
+  }
+
+  public onSelectItem($event: Record<string, unknown>): void {
+    const selectedPart = $event as unknown as Part;
+    this.partDetailsFacade.mainAspectType = selectedPart.mainAspectType;
+    this.partDetailsFacade.selectedPart = selectedPart;
+    this.openDetailPage(selectedPart);
   }
 
   private setTableSortingList(sorting: TableHeaderSort, partTable: MainAspectType): void {
