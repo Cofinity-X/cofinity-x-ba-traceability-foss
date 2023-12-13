@@ -53,8 +53,7 @@ SPDX-License-Identifier: Apache-2.0
         (change)="toggleSelect($event, true)"
         [checked]="selectAllChecked"
         [indeterminate]="someSelected()"
-        data-testid="multi-select-autocomplete--multi-option-search-selct-all"
-        (blur)="onBlur('selectionFilter')">{{ 'multiSelect.selectAll' | i18n
+        data-testid="multi-select-autocomplete--multi-option-search-selct-all">{{ 'multiSelect.selectAll' | i18n
         }}</mat-checkbox>
     </div>
     <div *ngFor="let option of options">
@@ -80,25 +79,19 @@ SPDX-License-Identifier: Apache-2.0
     data-testid="multi-select-autocomplete--date-search-form">
     <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
     <input matInput
-      [formControl]="searchDateInputControll"
-      (blur)="onBlur('dateFilter')"
-      maxlength="10" />
-    <div matIconSuffix
-      (click)="$event.stopPropagation();"
-      [matMenuTriggerFor]="appDate">
-      <button mat-icon-button>
-        <mat-icon color="accent">event</mat-icon>
-      </button>
-      <mat-menu #appDate="matMenu"
-        xPosition="before">
-        <mat-calendar class="filter-input__calender"
-          [maxDate]="maxDate"
-          #calendar
-          [selected]="theSearchDate.value"
-          (selectedChange)="dateSelectionEvent($event);"
-          (click)="$event.stopPropagation()">
-        </mat-calendar>
-      </mat-menu>
-    </div>
+      [matDatepicker]="datepicker"
+      [formControl]="theSearchDate"
+      maxlength="10"
+      [max]="maxDate"
+      (dateInput)="triggerFilteringTimeout('date')"
+      (dateChange)="dateSelectionEvent($event)"
+      (blur)="onBlur('dateFilter')" />
+    <mat-datepicker-toggle matIconSuffix
+      [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker
+      panelClass="input__datepicker"
+      color="primary">
+    </mat-datepicker>
   </mat-form-field>
+
 </div>
