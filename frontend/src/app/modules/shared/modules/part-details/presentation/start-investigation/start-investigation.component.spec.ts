@@ -34,6 +34,18 @@ import {
 } from '../../../../../../mocks/services/parts-mock/partsAsBuilt/partsAsBuilt.test.model';
 import { StartInvestigationComponent } from './start-investigation.component';
 import { RequestInvestigationComponent } from '@shared/components/request-notification';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TestBed } from '@angular/core/testing';
+import { Subject } from 'rxjs';
+
+class MatDialogRefMock<T, TResult> {
+  componentInstance = { deselectPart: new Subject<void>() };
+  afterClosed() {
+    return new Subject<TResult>();
+  }
+  close() { }
+  closeWithResult(_result: T) { }
+}
 
 describe('StartInvestigationComponent', () => {
   const part = { data: PartsAssembler.assemblePart(MOCK_part_1, MainAspectType.AS_BUILT) };
@@ -43,7 +55,9 @@ describe('StartInvestigationComponent', () => {
     const { fixture } = await renderComponent(StartInvestigationComponent, {
       declarations: [StartInvestigationComponent],
       imports: [PartDetailsModule, PartsModule, OtherPartsModule, LayoutModule],
-      providers: [StaticIdService],
+      providers: [StaticIdService,
+        { provide: MatDialog, useValue: { open: () => new MatDialogRefMock<RequestInvestigationComponent, any>() } },
+      ],
     });
 
     fixture.componentInstance.part = part;
@@ -73,15 +87,38 @@ describe('StartInvestigationComponent', () => {
   it('should open investigation dialog and subscribe to events', async () => {
     const fixture = await renderStartInvestigation();
     const { componentInstance } = fixture;
-    const { dialog } = componentInstance;
+    const selectedChildPartsState = (componentInstance as any)['selectedChildPartsState'];
+    const dialog = TestBed.inject(MatDialog);
 
-    spyOn(dialog, 'open');
+    spyOn(dialog, 'open').and.callThrough();
+
+    const openDialogRef = dialog.open(RequestInvestigationComponent, {
+      data: { selectedItems: selectedChildPartsState.snapshot, showHeadline: true },
+    }) as MatDialogRef<any>;
+
+    const unsubscribeSpy = spyOn(openDialogRef.componentInstance.deselectPart, 'unsubscribe');
+
+    const afterClosedSpy = spyOn(openDialogRef, 'afterClosed').and.callThrough();
+    const closeSpy = spyOn(openDialogRef, 'close');
 
     componentInstance.openInvestigationDialog();
-    const selectedChildPartsState = (componentInstance as any)['selectedChildPartsState'];
 
     expect(dialog.open).toHaveBeenCalledWith(RequestInvestigationComponent, {
       data: { selectedItems: selectedChildPartsState.snapshot, showHeadline: true },
     });
+
+    openDialogRef.componentInstance.deselectPart.next(); // Simulate next event
+
+    expect(afterClosedSpy).not.toHaveBeenCalled(); // Dialog should not have been closed yet
+
+    // Simulate closing the dialog
+    openDialogRef.afterClosed().subscribe(() => {
+      // After the dialog is closed, the afterClosedSpy should have been called
+      expect(afterClosedSpy).toHaveBeenCalled();
+      expect(unsubscribeSpy).toHaveBeenCalled();
+    });
+
+    openDialogRef.close(); // Close the dialog
+    expect(closeSpy).toHaveBeenCalled();
   });
 });
