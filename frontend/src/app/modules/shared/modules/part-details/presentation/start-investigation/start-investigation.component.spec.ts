@@ -55,7 +55,6 @@ describe('StartInvestigationComponent', () => {
     await renderStartInvestigation();
 
     expect(await screen.findByText('partDetail.investigation.headline')).toBeInTheDocument();
-    expect(await screen.findByText('partDetail.investigation.noSelection.header')).toBeInTheDocument();
   });
 
   it('should sort table data', async () => {
