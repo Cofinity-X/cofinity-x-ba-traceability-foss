@@ -33,6 +33,7 @@ import {
   MOCK_part_2,
 } from '../../../../../../mocks/services/parts-mock/partsAsBuilt/partsAsBuilt.test.model';
 import { StartInvestigationComponent } from './start-investigation.component';
+import { RequestInvestigationComponent } from '@shared/components/request-notification';
 
 describe('StartInvestigationComponent', () => {
   const part = { data: PartsAssembler.assemblePart(MOCK_part_1, MainAspectType.AS_BUILT) };
@@ -67,5 +68,20 @@ describe('StartInvestigationComponent', () => {
 
     fireEvent.click(nameHeader);
     expect(spy).toHaveBeenCalledWith({ data: [firstChild] });
+  });
+
+  it('should open investigation dialog and subscribe to events', async () => {
+    const fixture = await renderStartInvestigation();
+    const { componentInstance } = fixture;
+    const { dialog } = componentInstance;
+
+    spyOn(dialog, 'open');
+
+    componentInstance.openInvestigationDialog();
+    const selectedChildPartsState = (componentInstance as any)['selectedChildPartsState'];
+
+    expect(dialog.open).toHaveBeenCalledWith(RequestInvestigationComponent, {
+      data: { selectedItems: selectedChildPartsState.snapshot, showHeadline: true },
+    });
   });
 });
