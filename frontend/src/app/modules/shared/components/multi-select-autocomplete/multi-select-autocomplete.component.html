@@ -80,9 +80,9 @@ SPDX-License-Identifier: Apache-2.0
     data-testid="multi-select-autocomplete--date-search-form">
     <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
     <input matInput
-      [value]="theSearchElement"
-      [formControl]="searchDate"
-      (blur)="onBlur('dateFilter')" />
+      [formControl]="searchDateInputControll"
+      (blur)="onBlur('dateFilter')"
+      maxlength="10" />
     <div matIconSuffix
       (click)="$event.stopPropagation();"
       [matMenuTriggerFor]="appDate">
