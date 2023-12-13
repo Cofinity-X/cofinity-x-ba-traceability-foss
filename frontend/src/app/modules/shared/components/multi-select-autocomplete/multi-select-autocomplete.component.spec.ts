@@ -245,7 +245,8 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    componentInstance.theSearchDate.patchValue(new Date(2023, 9, 12));
+    const date = new Date(2023, 9, 12);
+    componentInstance.theSearchDate.patchValue(date);
     componentInstance.runningTimer = true;
     spyOn(componentInstance.triggerFilter, 'emit');
 
@@ -254,9 +255,9 @@ describe('MultiSelectAutocompleteComponent', () => {
     componentInstance.dateSelectionEvent(event);
 
     // Expectations
-    expect(componentInstance.formControl.value).toBe('2023-10-12');
-    expect(componentInstance.runningTimer).toBe(false);
-    expect(componentInstance.cleared).toBe(false);
+    expect(componentInstance.formControl.value).toEqual('2023-10-12');
+    expect(componentInstance.runningTimer).toEqual(false);
+    expect(componentInstance.cleared).toEqual(false);
     expect(componentInstance.triggerFilter.emit).toHaveBeenCalled();
   });
 
