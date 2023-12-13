@@ -5,6 +5,7 @@ import { SemanticDataModel } from '@page/parts/model/parts.model';
 import { DatePipe } from '@angular/common';
 import { screen, waitFor } from '@testing-library/angular';
 import { Severity } from '@shared/model/severity.model';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 describe('MultiSelectAutocompleteComponent', () => {
   const renderMultiSelectAutoCompleteComponent = (isDate = false, multiple = false, filterActive = '') => {
@@ -244,92 +245,57 @@ describe('MultiSelectAutocompleteComponent', () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    const inputValue = new Date('2023-10-12');
-
+    componentInstance.theSearchDate.patchValue(new Date(2023, 9, 12));
     componentInstance.runningTimer = true;
+    spyOn(componentInstance.triggerFilter, 'emit');
 
     // Call the function to test
-    componentInstance.dateSelectionEvent(inputValue);
+    const event: MatDatepickerInputEvent<Date> = { target: undefined, targetElement: undefined, value: componentInstance.theSearchDate.value };
+    componentInstance.dateSelectionEvent(event);
 
     // Expectations
-    expect(componentInstance.theSearchDate.value).toBe(inputValue);
     expect(componentInstance.formControl.value).toBe('2023-10-12');
-    expect(componentInstance.theSearchElement).toBe('12/10/2023');
     expect(componentInstance.runningTimer).toBe(false);
+    expect(componentInstance.cleared).toBe(false);
+    expect(componentInstance.triggerFilter.emit).toHaveBeenCalled();
   });
 
-  it('should emit data correctly when the date is manually typed into the search Date', async () => {
+  it('should format the data correctly when the date is manually typed into the date filter.', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    const inputDate = new Date(2023, 9, 12);
-    const inputValue = '12/10/23';
-
+    componentInstance.theSearchDate.patchValue(new Date(2023, 9, 12));
+    componentInstance.runningTimer = true;
+    spyOn(componentInstance.triggerFilter, 'emit');
 
     // Call the function to test
-    componentInstance.searchDate.patchValue(inputValue);
-    componentInstance.runningTimer = true;
     componentInstance.onBlur('dateFilter');
 
     // Expectations
-    expect(componentInstance.theSearchDate.value.toLocaleDateString()).toBe(inputDate.toLocaleDateString());
     expect(componentInstance.formControl.value).toBe('2023-10-12');
-    expect(componentInstance.theSearchElement).toBe('12/10/2023');
     expect(componentInstance.runningTimer).toBe(false);
+    expect(componentInstance.cleared).toBe(false);
+    expect(componentInstance.triggerFilter.emit).toHaveBeenCalled();
   });
 
-  it('should emit set date to null if a invalid date is typed in', async () => {
+
+  it('should reset the date search only once if input empty.', async () => {
     const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
     const { componentInstance } = fixture;
 
-    const inputValue = '20.a.23';
-    componentInstance.theSearchDate.patchValue(new Date());
-    componentInstance.theSearchElement = "12/10/2023";
+    componentInstance.runningTimer = true;
+    componentInstance.formControl.patchValue('2023-12-06');
+    componentInstance.theSearchDate.patchValue(null);
+    componentInstance.cleared = false;
+    spyOn(componentInstance.triggerFilter, 'emit');
 
     // Call the function to test
-    componentInstance.dateManualSelectionEvent(inputValue);
-
+    componentInstance.triggerFiltering('date');
+    componentInstance.triggerFiltering('date');
     // Expectations
-    expect(componentInstance.theSearchDate.value).toBe(null);
     expect(componentInstance.formControl.value).toBe(null);
-    expect(componentInstance.theSearchElement).toBe(null);
     expect(componentInstance.runningTimer).toBe(false);
-  });
-
-  it('should emit set date to null if the input is cleared.', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
-    const { componentInstance } = fixture;
-
-    const inputValue = '20.a.23';
-    componentInstance.theSearchDate.patchValue(new Date());
-    componentInstance.theSearchElement = "12/10/2023";
-
-    // Call the function to test
-    componentInstance.dateManualSelectionEvent(inputValue);
-
-    // Expectations
-    expect(componentInstance.theSearchDate.value).toBe(null);
-    expect(componentInstance.formControl.value).toBe(null);
-    expect(componentInstance.theSearchElement).toBe(null);
-    expect(componentInstance.runningTimer).toBe(false);
-  });
-
-  it('should emit set date to null if the input is cleared.', async () => {
-    const { fixture } = await renderMultiSelectAutoCompleteComponent(true);
-    const { componentInstance } = fixture;
-
-    const inputValue = '';
-    componentInstance.theSearchDate.patchValue(new Date());
-    componentInstance.theSearchElement = "12/10/2023";
-
-    // Call the function to test
-    componentInstance.dateManualSelectionEvent(inputValue);
-
-    // Expectations
-    expect(componentInstance.theSearchDate.value).toBe(null);
-    expect(componentInstance.formControl.value).toBe(null);
-    expect(componentInstance.theSearchElement).toBe(null);
-    expect(componentInstance.runningTimer).toBe(false);
+    expect(componentInstance.triggerFilter.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should create the correct class lists for the status options', async () => {

@@ -20,19 +20,23 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   Input,
+  LOCALE_ID,
   OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { pairwise, startWith } from 'rxjs';
 import { CustomDateAdapter } from '@shared/helper/custom-date-adapter';
 import { Platform } from '@angular/cdk/platform';
 import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
 
 
 @Component({
@@ -98,10 +102,21 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   public isSeverity = false;
   public theSearchElement = '';
   public theSearchDate: FormControl<Date> = new FormControl();
-  private cleared = true;
+  public cleared = true;
 
   constructor(
-    public datePipe: DatePipe) {
+    public datePipe: DatePipe,
+    public _adapter: DateAdapter<any>,
+    @Inject(MAT_DATE_LOCALE) public _locale: string,
+    @Inject(LOCALE_ID) private locale: string,
+  ) {
+    let localeTime = 'en-GB';
+    if (locale === 'de') {
+      localeTime = 'de-DE';
+    }
+    registerLocaleData(localeDe, 'de', localeDeExtra);
+    this._adapter.setLocale(localeTime);
+    this._adapter.getFirstDayOfWeek = () => { return 1; };
   }
 
   ngOnInit(): void {
@@ -127,30 +142,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.formControl.patchValue(this.selectedValue);
     }
   }
-
-  // private setDateInputValue(dateString: string, removed: boolean): void {
-  //   let newDateString = dateString;
-  //   if (!removed) {
-  //     newDateString = toDateInputMask(dateString);
-  //     if (newDateString.length === 10) {
-  //       const newDate = new Date(+newDateString.substring(6, 10), +newDateString.substring(3, 5) - 1, +newDateString.substring(0, 2));
-  //       if (this.maxDate !== null && this.maxDate < newDate) {
-  //         newDateString = new Date().toLocaleDateString('en-GB');
-  //       }
-  //     }
-  //     this.previnput = newDateString;
-  //     this.searchDateInputControll.setValue(newDateString, { emitEvent: false, onlySelf: true });
-  //   }
-  //   clearTimeout(this.inputTimer);
-  //   this.inputTimer = setTimeout(() => {
-  //     if (newDateString.length !== 10 && newDateString.length !== 0) {
-  //       newDateString = toDateInputMask(newDateString, true);
-  //       this.searchDateInputControll.patchValue(newDateString, { emitEvent: false, onlySelf: true });
-  //     }
-  //     this.dateManualSelectionEvent(newDateString);
-  //   }, 750);
-  //   this.runningTimer = true;
-  // }
 
   public triggerFilteringTimeout(searchType: string): void {
     this.runningTimer = true;
