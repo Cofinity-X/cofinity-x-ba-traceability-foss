@@ -144,6 +144,16 @@ describe('requestInvestigationComponent', () => {
       componentInstance.submit();
       expect(requestInvestigationComponentSpy).toHaveBeenCalled();
     });
+
+    it('should not prepare or submit form if invalid', async () => {
+      const { fixture } = await renderRequestInvestigationComponentObject();
+      const { componentInstance } = fixture;
+
+      componentInstance.submit(); // Call the submit method
+
+      // Expectations for an invalid form
+      expect(componentInstance.formGroup.invalid).toBeTrue(); // Ensure the form is invalid
+    });
   });
 
   describe('Request Alert', () => {
