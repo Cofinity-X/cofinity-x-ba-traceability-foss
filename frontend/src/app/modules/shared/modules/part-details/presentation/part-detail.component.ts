@@ -21,10 +21,12 @@
 
 import { AfterViewInit, Component, Input, OnDestroy, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { Part, QualityType } from '@page/parts/model/parts.model';
+import { RelationComponent } from '@page/parts/presentation/relation/relation.component';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { SelectOption } from '@shared/components/select/select.component';
 import { State } from '@shared/model/state';
@@ -67,7 +69,9 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
 
   protected readonly MainAspectType = MainAspectType;
 
-  constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router) {
+  constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router,
+    public dialog: MatDialog,
+  ) {
 
     this.context = this.activatedRoute?.parent?.toString().split('\'')[1];
 
@@ -127,7 +131,15 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
 
   public openRelationPage(part: Part): void {
     this.partDetailsFacade.selectedPart = null;
-    this.router.navigate([`${this.context}/relations/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
+
+    this.dialog.open(RelationComponent, {
+      autoFocus: false,
+      data: {
+        partId: part.id,
+      }
+    });
+
+    // this.router.navigate([`${this.context}/relations/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
   }
 
   public onTabChange({ index }: MatTabChangeEvent): void {
