@@ -49,8 +49,8 @@ export interface TreeStructure {
 }
 
 export enum TreeDirection {
-  LEFT = 'LEFT',
-  RIGHT = 'RIGHT',
+  UP = 'UP',
+  DOWN = 'DOWN',
 }
 
 export interface TreeData {
@@ -59,6 +59,7 @@ export interface TreeData {
   treeId?: string;
   r?: number;
   defaultZoom?: number;
+  centerXOffset?: number;
   openDetails?: (data: TreeStructure) => void;
   updateChildren?: (data: TreeStructure, direction: TreeDirection) => void;
 }

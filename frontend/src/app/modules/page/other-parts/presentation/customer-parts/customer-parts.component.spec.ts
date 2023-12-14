@@ -27,6 +27,8 @@ import { renderComponent } from '@tests/test-render.utils';
 
 import { CustomerPartsComponent } from './customer-parts.component';
 import { TableEventConfig } from '@shared/components/table/table.model';
+import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 describe('CustomerPartsComponent', () => {
   let otherPartsState: OtherPartsState;
@@ -109,41 +111,60 @@ describe('CustomerPartsComponent', () => {
     ]);
   });
 
-  it('should handle updateCustomerParts null', async () => {
+  it('should handle updateCustomerParts null for AsBuilt', async () => {
     const { fixture } = await renderCustomerPartsAsBuilt();
     const customerPartsComponent = fixture.componentInstance;
 
-    const otherPartsFacade = (customerPartsComponent as any)['otherPartsFacade'];
-    const updateCustomerPartAsBuiltSpy = spyOn(otherPartsFacade, 'setCustomerPartsAsBuilt');
-    const updateCustomerPartAsPlannedSpy = spyOn(otherPartsFacade, 'setCustomerPartsAsPlanned');
+    spyOn(customerPartsComponent.otherPartsFacade, 'setCustomerPartsAsBuilt');
 
     customerPartsComponent.updateCustomerParts();
 
-    expect(updateCustomerPartAsBuiltSpy).toHaveBeenCalledWith();
-    expect(updateCustomerPartAsPlannedSpy).toHaveBeenCalledWith();
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 50);
   });
 
-  it('should handle updateCustomerParts including search', async () => {
+  it('should handle updateCustomerParts null for AsPlanned', async () => {
+    const { fixture } = await renderCustomerPartsAsPlanned();
+    const customerPartsComponent = fixture.componentInstance;
+
+    spyOn(customerPartsComponent.otherPartsFacade, 'setCustomerPartsAsPlanned');
+
+    customerPartsComponent.updateCustomerParts();
+
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 50);
+  });
+
+  it('should handle updateCustomerParts including search for AsBuilt', async () => {
     const { fixture } = await renderCustomerPartsAsBuilt();
     const customerPartsComponent = fixture.componentInstance;
 
-    const otherPartsFacade = (customerPartsComponent as any)['otherPartsFacade'];
-    const updateCustomerPartAsBuiltSpy = spyOn(otherPartsFacade, 'setCustomerPartsAsBuilt');
-    const updateCustomerPartAsPlannedSpy = spyOn(otherPartsFacade, 'setCustomerPartsAsPlanned');
+    spyOn(customerPartsComponent.otherPartsFacade, 'setCustomerPartsAsBuilt');
 
     const search = 'test';
     customerPartsComponent.updateCustomerParts(search);
 
-    expect(updateCustomerPartAsBuiltSpy).toHaveBeenCalledWith(0, 50, [], toGlobalSearchAssetFilter(search, true), true);
-    expect(updateCustomerPartAsPlannedSpy).toHaveBeenCalledWith(
-      0,
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0,
       50,
       [],
-      toGlobalSearchAssetFilter(search, false),
+      toGlobalSearchAssetFilter(search, true, customerPartsComponent.searchListAsBuilt, customerPartsComponent.datePipe),
+      true);
+  });
+
+  it('should handle updateCustomerParts including search for AsPlanned', async () => {
+    const { fixture } = await renderCustomerPartsAsPlanned();
+    const customerPartsComponent = fixture.componentInstance;
+
+    spyOn(customerPartsComponent.otherPartsFacade, 'setCustomerPartsAsPlanned');
+
+    const search = 'test';
+    customerPartsComponent.updateCustomerParts(search);
+
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0,
+      50,
+      [],
+      toGlobalSearchAssetFilter(search, false, customerPartsComponent.searchListAsPlanned, customerPartsComponent.datePipe),
       true,
     );
   });
-
 
   it('should set the default Pagination by recieving a size change event', async () => {
     const { fixture } = await renderCustomerPartsAsBuilt();
@@ -162,7 +183,7 @@ describe('CustomerPartsComponent', () => {
 
     customerPartsComponent.onAsBuiltTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 50, [['name', 'asc']], toAssetFilter(null, true));
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 50, [['name', 'asc']], toAssetFilter(null, true), false);
 
   });
 
@@ -175,7 +196,7 @@ describe('CustomerPartsComponent', () => {
 
     customerPartsComponent.onAsBuiltTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, true));
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, true), false);
 
   });
 
@@ -188,7 +209,7 @@ describe('CustomerPartsComponent', () => {
 
     customerPartsComponent.onAsPlannedTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 50, [['name', 'asc']], toAssetFilter(null, false));
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 50, [['name', 'asc']], toAssetFilter(null, false), false);
   });
 
   it('should use the given page size if the page size in the onAsPlannedTableConfigChange is given as not 0', async () => {
@@ -200,7 +221,7 @@ describe('CustomerPartsComponent', () => {
 
     customerPartsComponent.onAsPlannedTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, false));
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 10, [['name', 'asc']], toAssetFilter(null, false), false);
   });
 
   it('should pass on the filtering to the api services for As_Built', async () => {
@@ -223,7 +244,7 @@ describe('CustomerPartsComponent', () => {
 
     customerPartsComponent.filterActivated(true, assetFilterAsBuilt);
     fixture.detectChanges();
-    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 50, [], toAssetFilter(assetFilterAsBuilt, true));
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsBuilt).toHaveBeenCalledWith(0, 50, [], toAssetFilter(assetFilterAsBuilt, true), false);
   });
 
   it('should pass on the filtering to the api services for As_Planned', async () => {
@@ -242,7 +263,39 @@ describe('CustomerPartsComponent', () => {
 
     customerPartsComponent.filterActivated(false, assetFilterAsPlanned);
     fixture.detectChanges();
-    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 50, [], toAssetFilter(assetFilterAsPlanned, false));
+    expect(customerPartsComponent.otherPartsFacade.setCustomerPartsAsPlanned).toHaveBeenCalledWith(0, 50, [], toAssetFilter(assetFilterAsPlanned, false), false);
+  });
+
+  it('should set selected part and open detail page when item is selected', async () => {
+    const { fixture } = await renderCustomerPartsAsPlanned();
+    const supplierPartsComponent = fixture.componentInstance;
+    const router = TestBed.inject(Router);
+
+    const part: any = { id: '1', mainAspectType: MainAspectType.AS_BUILT };
+
+    spyOn(router, 'navigate').and.stub();
+
+    const partDetailsFacade = (supplierPartsComponent as any)['partDetailsFacade'];
+
+    supplierPartsComponent.onSelectItem(part);
+
+    expect(partDetailsFacade.selectedPart).toEqual(part);
+    expect(router.navigate).toHaveBeenCalledWith(['/otherParts/1'], { queryParams: { type: part.mainAspectType } });
+  });
+
+  it('should navigate to the correct detail page with the provided part', async () => {
+    const { fixture } = await renderCustomerPartsAsPlanned();
+    const supplierPartsComponent = fixture.componentInstance;
+    const router = TestBed.inject(Router);
+
+    const part: any = { id: '2', mainAspectType: MainAspectType.AS_BUILT };
+
+    spyOn(router, 'navigate').and.stub();
+
+    supplierPartsComponent.openDetailPage(part);
+
+    const expectedLink = '/otherParts/2';
+    expect(router.navigate).toHaveBeenCalledWith([expectedLink], { queryParams: { type: part.mainAspectType } });
   });
 
 });

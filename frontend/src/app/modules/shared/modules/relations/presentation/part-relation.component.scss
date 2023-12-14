@@ -30,29 +30,56 @@
 }
 
 .part-relation--button-container {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  right: 32px;
+  width: 44px;
+  height: 90px;
+  right: 10px !important;
+  top: 10px;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly;
+  text-align: center;
+  position: absolute !important;
   background: white;
-  border-radius: 20%;
+  -webkit-filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.1));
   @apply shadow;
 }
 
+.button-container-divider {
+  color: #D2D2D2;
+  margin: 0px 10px 0px 10px !important;
+  border-top-width: 2px;
+}
+
+.button-increase {
+  margin-top: -8px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.button-decrease {
+  margin-bottom: -2px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .part-relation--minimap {
-  position: fixed;
-  width: 10%;
   min-width: 150px;
-  min-height: 30%;
+  min-height: 150px;
   opacity: 0.3;
   transition: opacity 0.5s, width 0.25s, min-height 0.25s, min-width 0.25s;
   cursor: pointer;
 
-  right: 2rem;
-  bottom: 2rem;
-
+  position: absolute;
   border-radius: 5px;
   box-shadow: 0 0 20px 2px #00000059;
+
+  right: 3rem;
+  bottom: 3rem;
 
   background-color: white;
   overflow: hidden;
@@ -67,7 +94,12 @@
 }
 
 .part-relation--container {
-  height: 100%;
+  height: 414px !important;
+  overflow: hidden;
+}
+
+.part-relation--container-fullscreen {
+  height: 550px !important;
   overflow: hidden;
 }
 
@@ -125,7 +157,7 @@
 
 .tree--element {
   min-width: 100%;
-  height: auto;
+  height: 100%;
   cursor: grab;
 
   &__grabbing {
@@ -141,8 +173,9 @@
 
   &__circle {
     @apply fill-white;
-    -webkit-filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.24));
-    filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.24));
+
+    -webkit-filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.05));
+    filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.05));
 
     &-done {
       @apply fill-qualityTypeOk;
@@ -238,12 +271,12 @@
   }
 
   &__arrow-container {
-    @apply text-primary;
+    @apply text-inactiveShape;
     -webkit-filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.24));
     filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.24));
 
     &:hover {
-      @apply text-primaryDark;
+      @apply text-secondary;
     }
   }
 
@@ -256,8 +289,9 @@
     user-select: none;
     text-anchor: middle;
     font-size: 16px;
-    font-weight: bold;
-
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    line-height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: 'Cofinity-X Regular', monospace;
@@ -265,12 +299,17 @@
 
   &__closing {
     &-text {
-      font-size: 25px;
-      @apply fill-white;
+      padding-top: 1px;
+      font-size: 27px;
+      @apply fill-black;
+    }
+
+    &-icon {
+      background-image: url('../../../../../../assets/images/icons/collapse_relation_hover_icon.svg');
     }
 
     &-circle {
-      @apply fill-primary;
+      @apply fill-inactiveShape;
     }
 
     &-animation {
@@ -278,11 +317,15 @@
     }
 
     &:hover>.tree--element__closing-animation {
-      transform: scale(1.5) translate(5px, 0);
+      transform: scale(1.1) translate(0, 0);
     }
 
     &:hover>.tree--element__closing-circle {
-      @apply fill-primaryDark;
+      @apply fill-secondary;
+    }
+
+    &:hover>.tree--element__closing-icon {
+      background-image: url('../../../../../../assets/images/icons/collapse_relation_hover_icon.svg');
     }
   }
 }

@@ -34,8 +34,11 @@ table {
 }
 
 .settings-icon {
-  margin-left: 50px;
-  margin-right: 25px;
+  margin: 0;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0px;
+  cursor: pointer;
 }
 
 .notification-table--select-all {
@@ -45,7 +48,7 @@ table {
   &__menu {
     background: rgba(0, 0, 0, 0.04);
 
-    & > .notification-table--select-all__dropdown:hover {
+    &>.notification-table--select-all__dropdown:hover {
       background: none;
     }
   }
@@ -88,15 +91,13 @@ table {
   outline: unset;
 }
 
-.notification-table--header {
-  border-bottom: 1px solid #d2d2d2 !important;
-}
 
 .notification-table--cell {
   padding: 2px 12px 2px 12px;
   border: none !important;
   max-width: 332px;
 }
+
 
 .notification-table--header--cell {
   display: flex;
@@ -114,6 +115,7 @@ table {
       display: flex;
       flex-direction: row;
       align-items: center;
+
       &--asc {
         width: 10px;
         transform: rotate(180deg);
@@ -124,6 +126,7 @@ table {
         width: 10px;
         margin: 9.5px 7px;
       }
+
       &--indicator {
         display: flex;
         align-items: center;
@@ -138,22 +141,26 @@ table {
   flex-direction: column;
   height: 40px;
   justify-content: space-between;
+
   &--border--bottom--disabled,
   &--border--top {
     height: 3px;
     width: 100%;
     background: none;
   }
+
   &--border--bottom--enabled {
     height: 3px;
     width: 100%;
-    background: linear-gradient(90deg, #fdb913 0%, #d31184 100%);
+    background: linear-gradient(90deg, #338e7d 0%, #00725C 100%);
   }
+
   &--content {
     width: 24px;
     display: flex;
     justify-content: center;
     align-content: center;
+
     &--icon {
       width: 12px;
     }
@@ -226,6 +233,15 @@ table {
 }
 
 .notification-table--menu {
+  &--action {
+    display: flex;
+    justify-content: center;
+  }
+
+  &--empty {
+    display: none;
+  }
+
   &__mobile {
     display: none;
   }
@@ -301,6 +317,7 @@ table {
 
 .notification-table--header--tooltip {
   white-space: pre-line;
+
   .mdc-tooltip__surface {
     background-color: rgb(48, 48, 48);
     @apply font-medium;
@@ -323,4 +340,37 @@ table {
 .notification-table--body--row .mdc-data-table__cell {
   padding: 0 12px 0 12px !important;
   border-bottom-style: none !important;
+}
+
+.notification-table--body--row .notification-table--body--cell {
+  &--sticky {
+    position: sticky !important;
+    right: 0;
+    top: 0;
+    width: 41px;
+    padding: 0px !important;
+  }
+
+  .mdc-icon-button {
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+  }
+}
+
+.notification-table--header {
+  border-bottom: 1px solid #d2d2d2 !important;
+
+  &--sticky {
+    position: sticky !important;
+    right: 0;
+    top: 0;
+    width: 41px;
+    max-width: 41px;
+  }
+}
+
+.notification-table--header--row .notification-table--header--sticky {
+  padding: 0px !important;
 }

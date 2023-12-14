@@ -24,6 +24,7 @@ import {
 } from '@page/parts/model/parts.model';
 import { HttpParams } from '@angular/common/http';
 import { TableFilter } from '@shared/components/table/table.model';
+import { DatePipe } from '@angular/common';
 
 export const FILTER_KEYS = [
   'manufacturingDate',
@@ -123,24 +124,39 @@ export function toAssetFilter(formValues: any, isAsBuilt: boolean): AssetAsPlann
   }
 }
 
-export function toGlobalSearchAssetFilter(formValues: string, isAsBuilt: boolean) {
-  let filter;
-  if (isAsBuilt) {
-    filter = {
-      id: formValues,
-      semanticModelId: formValues,
-      idShort: formValues,
-      customerPartId: formValues,
-      manufacturerPartId: formValues,
-    } as AssetAsBuiltFilter;
-  } else {
-    filter = {
-      id: formValues,
-      idShort: formValues,
-      semanticModelId: formValues,
-      manufacturerPartId: formValues,
-    } as AssetAsPlannedFilter;
+function dateValue(dateString: string, datePipe: DatePipe): string {
+  const dateArray = dateString.split(/[./-]/);
+  let returnDate = '';
+  if (dateArray.length === 3 && !isNaN(+dateArray[0]) && !isNaN(+dateArray[1]) && !isNaN(+dateArray[2])) {
+    if (dateArray[2].length === 2) {
+      dateArray[2] = '20' + dateArray[2];
+    }
+    if (+dateArray[1] > 12 && +dateArray[0] <= 12) {
+      const tmp = dateArray[1];
+      dateArray[1] = dateArray[0];
+      dateArray[0] = tmp;
+    }
+    const date = new Date(+dateArray[2], +dateArray[1] - 1, +dateArray[0]);
+    returnDate = datePipe.transform(date, 'yyyy-MM-dd');
   }
+  return returnDate;
+}
 
+export function toGlobalSearchAssetFilter(formValue: string, isAsBuilt: boolean, filterItemList: string[], datePipe?: DatePipe) {
+  const filter = {};
+  for (const filterItem of filterItemList) {
+    if (isDateFilter(filterItem)) {
+      if (datePipe) {
+        filter[filterItem] = dateValue(formValue, datePipe);
+      }
+    } else {
+      filter[filterItem] = formValue;
+    };
+  }
+  if (isAsBuilt) {
+    filter as AssetAsBuiltFilter;
+  } else {
+    filter as AssetAsPlannedFilter;
+  }
   return filter;
 }

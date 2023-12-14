@@ -21,14 +21,15 @@
 
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { Part } from '@page/parts/model/parts.model';
 import { State } from '@shared/model/state';
 import { View } from '@shared/model/view.model';
@@ -48,6 +49,7 @@ import { delay, switchMap, takeWhile, tap } from 'rxjs/operators';
   },
 })
 export class PartRelationComponent implements OnInit, OnDestroy {
+  @Input() partId: string;
   @Input() isStandalone = true;
   @Input() showMiniMap = true;
 
@@ -63,7 +65,6 @@ export class PartRelationComponent implements OnInit, OnDestroy {
   constructor(
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly route: ActivatedRoute,
-    private readonly cdr: ChangeDetectorRef,
     staticIdService: StaticIdService,
   ) {
     this.resizeTrigger$ = this._resizeTrigger$.pipe(delay(0));
@@ -75,13 +76,21 @@ export class PartRelationComponent implements OnInit, OnDestroy {
     const initSubscription = this.route.paramMap
       .pipe(
         switchMap(params => {
-          if (this.partDetailsFacade.selectedPart) return this.partDetailsFacade.selectedPart$;
+          if (this.partDetailsFacade.selectedPart) {
+            return this.partDetailsFacade.selectedPart$;
+          }
 
           const partId = params.get('partId');
+          const mainAspectType = this.route?.snapshot?.queryParams?.type as MainAspectType;
+          this.partDetailsFacade.mainAspectType = mainAspectType;
           return partId ? this.partDetailsFacade.getRootPart(partId) : this.partDetailsFacade.selectedPart$;
         }),
-        tap(viewData => this._rootPart$.update(viewData)),
-        takeWhile(({ data }) => !data, true),
+        tap(viewData => {
+          this._rootPart$.update(viewData);
+        }),
+        takeWhile(({ data }) => {
+          return !data;
+        }, true),
       )
       .subscribe();
     this.subscriptions.add(initSubscription);
@@ -97,5 +106,11 @@ export class PartRelationComponent implements OnInit, OnDestroy {
 
   public decreaseSize(): void {
     this._resizeTrigger$.next(-0.1);
+  }
+
+  public ngOnChanges(changes: SimpleChanges) {
+    if (changes.partId) {
+      this.ngOnInit();
+    }
   }
 }

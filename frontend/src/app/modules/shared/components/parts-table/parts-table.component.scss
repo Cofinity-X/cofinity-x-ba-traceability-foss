@@ -24,7 +24,11 @@
 }
 
 .settings-icon {
-  padding-left: 13px;
+  margin: 0;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0px;
+  cursor: pointer;
 }
 
 .table-menu {
@@ -124,6 +128,14 @@
   border: none;
   white-space: nowrap;
   padding: 0 10px;
+
+  &--sticky {
+    position: sticky !important;
+    right: 0;
+    top: 0;
+    width: 41px;
+    padding: 0px !important;
+  }
 }
 
 .selectAllCheckbox {
@@ -335,22 +347,26 @@ tr.error {
   flex-direction: column;
   height: 40px;
   justify-content: space-between;
+
   &--border--bottom--disabled,
   &--border--top {
     height: 3px;
     width: 100%;
     background: none;
   }
+
   &--border--bottom--enabled {
     height: 3px;
     width: 100%;
-    background: linear-gradient(90deg, #fdb913 0%, #d31184 100%);
+    background: linear-gradient(90deg, #338e7d 0%, #00725C 100%);
   }
+
   &--content {
     width: 24px;
     display: flex;
     justify-content: center;
     align-content: center;
+
     &--icon {
       width: 12px;
     }
@@ -360,6 +376,14 @@ tr.error {
 .table--header {
   padding-bottom: 8px;
   border-bottom: 1px solid #d2d2d2 !important;
+
+  &--sticky {
+    position: sticky !important;
+    right: 0;
+    top: 0;
+    width: 41px;
+    padding: 0px !important;
+  }
 }
 
 .table--header--id {
@@ -389,13 +413,12 @@ tr.error {
 }
 
 .hasQualityAlertsHeader {
-  @apply text-secondary;
+  @apply text-secondary !important;
   padding: 0 !important;
 }
 
 .checkbox+.mdc-data-table__header-cell,
 .checkbox+.mdc-data-table__cell {
-  @apply text-secondary;
   padding: 0 !important;
 }
 
@@ -420,4 +443,8 @@ tr.error {
   .mdc-tooltip--multiline {
     white-space: pre-line;
   }
+}
+
+.table--body--row .table--cell--sticky {
+  padding: 0px !important;
 }
