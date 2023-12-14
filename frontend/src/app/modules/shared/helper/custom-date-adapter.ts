@@ -13,7 +13,6 @@ export class CustomDateAdapter extends NativeDateAdapter {
     return isNaN(timestamp) ? null : new Date(timestamp);
   }
   format(date: Date, displayFormat: { year?, month?, day?}): string {
-    console.log(displayFormat);
     const { year, month, day } = displayFormat;
     if (year === 'numeric' && month === 'numeric' && day === 'numeric') {
       const days = ("0" + date.getDate()).slice(-2);
