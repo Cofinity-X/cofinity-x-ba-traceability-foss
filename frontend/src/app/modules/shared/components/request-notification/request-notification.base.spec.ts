@@ -219,10 +219,18 @@ describe('requestInvestigationComponent', () => {
     const option = fixture.debugElement.query(By.css('mat-option')).nativeElement;
     option.click();  // Select the option
     fixture.detectChanges(); // Update the view
+    const tomorrow = new Date(); // Get the current date
+    tomorrow.setDate(tomorrow.getDate() + 1); // Set it to tomorrow
+    const tomorrowString = tomorrow.toISOString().split('T')[0];
+    const targetDate: HTMLInputElement = null
 
     if (shouldFillBpn) {
       const bpnInput = (await waitFor(() => screen.getByTestId('BaseInputElement-3'))) as HTMLTextAreaElement;
       fireEvent.input(bpnInput, { target: { value: 'BPNA0123TEST0123' } });
+    } else {
+      const matFormField = (await waitFor(() => screen.getByTestId('multi-select-autocomplete--date-search-form'))) as HTMLInputElement;
+      const targetDate = matFormField.querySelector('input');
+      fireEvent.input(targetDate, { target: { value: tomorrowString } }); // Set the date
     }
 
     const submit = await waitFor(() => screen.getByText('requestNotification.submit'));
