@@ -46,7 +46,7 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
 import { isDateFilter } from '@shared/helper/filter-helper';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableSettingsService } from '@core/user/table-settings.service';
 import { TableViewConfig } from './table-view-config.model';
 import { TableSettingsComponent } from '../table-settings/table-settings.component';
@@ -412,7 +412,6 @@ export class PartsTableComponent implements OnInit {
     });
     this.filterActivated.emit(filterValues);
   }
-
 
   constructor(private readonly tableViewSettingsService: TableSettingsService, private dialog: MatDialog) { }
 
@@ -799,16 +798,16 @@ export class PartsTableComponent implements OnInit {
   private assetAsPlannedFilterConfiguration: FilterConfig[];
 
   openDialog(): void {
-    this.dialog.open(TableSettingsComponent, {
-      autoFocus: false,
-      data: {
-        title: 'table.tableSettings.title',
-        panelClass: 'custom',
-        tableType: this.tableType,
-        defaultColumns: this.tableViewConfig.displayedColumnsForTable,
-        defaultFilterColumns: this.tableViewConfig.displayedColumns,
-      }
-    });
+    const config = new MatDialogConfig();
+    config.autoFocus = false;
+    config.data = {
+      title: 'table.tableSettings.title',
+      panelClass: 'custom',
+      tableType: this.tableType,
+      defaultColumns: this.tableViewConfig.displayedColumnsForTable,
+      defaultFilterColumns: this.tableViewConfig.displayedColumns,
+    };
+    this.dialog.open(TableSettingsComponent, config);
   }
 
   public areAllRowsSelected(): boolean {
