@@ -107,8 +107,8 @@ describe('MultiSelectAutocompleteComponent', () => {
     componentInstance.clickClear();
 
     // Assert
-    expect(componentInstance.searchInput.value).toBe('');
-    expect(componentInstance.theSearchElement).toBe(null);
+    expect(componentInstance.searchInput.value).toEqual('');
+    expect(componentInstance.theSearchElement).toEqual('');
     expect(componentInstance.selectedValue).toEqual([]);
   });
 
@@ -127,12 +127,12 @@ describe('MultiSelectAutocompleteComponent', () => {
     const wasSet = componentInstance.clickClear(true);
 
     // Assert
-    expect(componentInstance.searchInput.value).toBe('');
-    expect(componentInstance.theSearchElement).toBe(null);
+    expect(componentInstance.searchInput.value).toEqual('');
+    expect(componentInstance.theSearchElement).toEqual('');
     expect(componentInstance.selectedValue).toEqual([]);
-    expect(wasSet).toBe(true);
-    expect(componentInstance.searched).toBe(false);
-    expect(componentInstance.filterActive).toBe('');
+    expect(wasSet).toEqual(true);
+    expect(componentInstance.searched).toEqual(false);
+    expect(componentInstance.filterActive).toEqual('');
 
   });
 
