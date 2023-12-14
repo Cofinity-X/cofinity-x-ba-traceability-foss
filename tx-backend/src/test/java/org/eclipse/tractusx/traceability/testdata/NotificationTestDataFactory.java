@@ -28,7 +28,7 @@ import java.util.List;
 
 public class NotificationTestDataFactory {
 
-    public static QualityNotificationMessage createNotificationTestData() {
+    public static QualityNotificationMessage createQualityNotificationMessageTestData() {
         List<QualityNotificationAffectedPart> affectedParts = List.of(new QualityNotificationAffectedPart("partId"));
 
         return QualityNotificationMessage.builder()
@@ -48,30 +48,6 @@ public class NotificationTestDataFactory {
                 .targetDate(Instant.parse("2022-03-01T12:00:00Z"))
                 .messageId("messageId")
                 .isInitial(true)
-                .build();
-    }
-
-    public static QualityNotificationMessage createNotificationTestData(QualityNotificationType qualityNotificationType) {
-        List<QualityNotificationAffectedPart> affectedParts = List.of(new QualityNotificationAffectedPart("partId"));
-
-        return QualityNotificationMessage.builder()
-                .id("123")
-                .notificationReferenceId("id123")
-                .createdBy("senderBPN")
-                .createdByName("senderManufacturerName")
-                .sendTo("recipientBPN")
-                .sendToName("receiverManufacturerName")
-                .edcUrl("senderAddress")
-                .contractAgreementId("agreement")
-                .description("123")
-                .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
-                .affectedParts(affectedParts)
-                .severity(QualityNotificationSeverity.MINOR)
-                .edcNotificationId("123")
-                .targetDate(Instant.parse("2022-03-01T12:00:00Z"))
-                .messageId("messageId")
-                .isInitial(true)
-                .type(qualityNotificationType)
                 .build();
     }
 
