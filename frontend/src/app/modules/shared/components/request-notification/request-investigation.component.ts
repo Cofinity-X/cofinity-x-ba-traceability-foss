@@ -64,7 +64,7 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
     severity: FormControl<Severity>;
   }>({
     description: new FormControl('', [Validators.required, Validators.maxLength(1000), Validators.minLength(15)]),
-    targetDate: new FormControl(null, [DateValidators.atLeastNow(), Validators.required]),
+    targetDate: new FormControl(null, [DateValidators.atLeastNow()]),
     severity: new FormControl(Severity.MINOR),
   });
 
