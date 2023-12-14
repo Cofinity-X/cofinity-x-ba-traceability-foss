@@ -19,13 +19,11 @@
 
 package org.eclipse.tractusx.traceability.testdata;
 
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationAffectedPart;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSeverity;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationType;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class NotificationTestDataFactory {
@@ -74,6 +72,49 @@ public class NotificationTestDataFactory {
                 .messageId("messageId")
                 .isInitial(true)
                 .type(qualityNotificationType)
+                .build();
+    }
+
+    private static QualityNotificationMessage createReceivedNotificationMessageTestData() {
+
+        return QualityNotificationMessage.builder()
+                .id("1")
+                .created(LocalDateTime.now().minusDays(2))
+                .createdBy("BPN01")
+                .createdByName("Company1")
+                .sendTo("BPN02")
+                .sendToName("Company2")
+                .severity(QualityNotificationSeverity.CRITICAL)
+                .notificationStatus(QualityNotificationStatus.RECEIVED)
+                .targetDate(Instant.now().plus(1, ChronoUnit.DAYS))
+                .build();
+    }
+
+    private static QualityNotificationMessage createAcknowledgedNotificationMessageTestData() {
+
+        return QualityNotificationMessage.builder()
+                .id("2")
+                .created(LocalDateTime.now().minusDays(1))
+                .createdBy("BPN02")
+                .createdByName("Company2")
+                .sendTo("BPN01")
+                .sendToName("Company1")
+                .severity(QualityNotificationSeverity.CRITICAL)
+                .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
+                .targetDate(Instant.now().plus(1, ChronoUnit.DAYS))
+                .build();
+    }
+
+    public static QualityNotification createQualityNotificationTestData() {
+
+        return QualityNotification.builder()
+                .notificationId(new QualityNotificationId(1L))
+                .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
+                .description("test")
+                .notifications(List.of(createAcknowledgedNotificationMessageTestData(), createReceivedNotificationMessageTestData()))
+                .createdAt(Instant.now().minus(2, ChronoUnit.DAYS))
+                .assetIds(List.of("1"))
+                .notificationSide(QualityNotificationSide.RECEIVER)
                 .build();
     }
 }

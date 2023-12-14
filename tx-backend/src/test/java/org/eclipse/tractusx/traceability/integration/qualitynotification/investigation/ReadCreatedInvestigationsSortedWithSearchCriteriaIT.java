@@ -20,18 +20,23 @@ import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ReadCreatedInvestigationsSortedWithSearchCriteriaIT extends IntegrationTestSpecification {
+class ReadCreatedInvestigationsSortedWithSearchCriteriaIT extends IntegrationTestSpecification {
 
     @Autowired
     BpnSupport bpnSupport;
 
     @Autowired
     InvestigationNotificationsSupport investigationNotificationsSupport;
+
     @BeforeEach
     void before() {
-        final InvestigationNotificationEntity[] testData = InvestigationTestDataFactory.createExtendedSenderInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
+        final InvestigationNotificationEntity[] testData = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
         investigationNotificationsSupport.storedNotifications(testData);
+
+        final InvestigationNotificationEntity[] extendedTestData = InvestigationTestDataFactory.createExtendedSenderInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
+        investigationNotificationsSupport.storedNotifications(extendedTestData);
     }
+
     private static Stream<Arguments> sortAndFilterArguments() {
         return Stream.of(
                 Arguments.of(

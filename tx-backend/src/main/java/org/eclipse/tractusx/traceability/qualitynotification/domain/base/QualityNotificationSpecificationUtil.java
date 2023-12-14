@@ -49,7 +49,6 @@ public class QualityNotificationSpecificationUtil {
         Specification<T> resultSeverity = null;
         Specification<T> resultSide = null;
 
-
         for (BaseSpecification<T> sideSpecification : sideSpecifications) {
             resultSide = Specification.where(resultStatus).or(sideSpecification);
         }

@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ReadInvestigationsAndTestAllPagesIT extends IntegrationTestSpecification {
+class ReadInvestigationsAndTestAllPagesIT extends IntegrationTestSpecification {
 
     @Autowired
     BpnSupport bpnSupport;
@@ -51,8 +51,11 @@ public class ReadInvestigationsAndTestAllPagesIT extends IntegrationTestSpecific
             final String[] expectedOrderOfIdShortItems
     ) throws JoseException {
 
-        final InvestigationNotificationEntity[] testData = InvestigationTestDataFactory.createExtendedSenderInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
+        final InvestigationNotificationEntity[] testData = InvestigationTestDataFactory.createSenderMajorityInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
         investigationNotificationsSupport.storedNotifications(testData);
+
+        final InvestigationNotificationEntity[] extendedTestData = InvestigationTestDataFactory.createExtendedSenderInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
+        investigationNotificationsSupport.storedNotifications(extendedTestData);
 
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
@@ -97,8 +100,11 @@ public class ReadInvestigationsAndTestAllPagesIT extends IntegrationTestSpecific
             final String[] expectedOrderOfIdShortItems
     ) throws JoseException {
 
-        final InvestigationNotificationEntity[] testData = InvestigationTestDataFactory.createExtendedReceiverInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
+        final InvestigationNotificationEntity[] testData = InvestigationTestDataFactory.createReceiverMajorityInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
         investigationNotificationsSupport.storedNotifications(testData);
+
+        final InvestigationNotificationEntity[] extendedTestData = InvestigationTestDataFactory.createExtendedReceiverInvestigationNotificationEntitiesTestData(bpnSupport.testBpn());
+        investigationNotificationsSupport.storedNotifications(extendedTestData);
 
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))

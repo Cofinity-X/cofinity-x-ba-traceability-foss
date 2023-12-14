@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ReadAlertsAndTestAllPagesIT extends IntegrationTestSpecification {
+class ReadAlertsAndTestAllPagesIT extends IntegrationTestSpecification {
 
     @Autowired
     BpnSupport bpnSupport;
@@ -47,8 +47,12 @@ public class ReadAlertsAndTestAllPagesIT extends IntegrationTestSpecification {
             final long page,
             final String[] expectedOrderOfIdShortItems
     ) throws JoseException {
-        final AlertNotificationEntity[] testData = AlertTestDataFactory.createExtendedSenderAlertNotificationEntitiesTestData(bpnSupport.testBpn());
+
+        final AlertNotificationEntity[] testData = AlertTestDataFactory.createSenderMajorityAlertNotificationEntitiesTestData(bpnSupport.testBpn());
         alertNotificationsSupport.storedAlertNotifications(testData);
+
+        final AlertNotificationEntity[] extendedTestData = AlertTestDataFactory.createExtendedSenderAlertNotificationEntitiesTestData(bpnSupport.testBpn());
+        alertNotificationsSupport.storedAlertNotifications(extendedTestData);
 
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
@@ -93,8 +97,12 @@ public class ReadAlertsAndTestAllPagesIT extends IntegrationTestSpecification {
             final long page,
             final String[] expectedOrderOfIdShortItems
     ) throws JoseException {
-        final AlertNotificationEntity[] testData = AlertTestDataFactory.createExtendedReceiverAlertNotificationEntitiesTestData(bpnSupport.testBpn());
+
+        final AlertNotificationEntity[] testData = AlertTestDataFactory.createReceiverMajorityAlertNotificationEntitiesTestData(bpnSupport.testBpn());
         alertNotificationsSupport.storedAlertNotifications(testData);
+
+        final AlertNotificationEntity[] extendedTestData = AlertTestDataFactory.createExtendedReceiverAlertNotificationEntitiesTestData(bpnSupport.testBpn());
+        alertNotificationsSupport.storedAlertNotifications(extendedTestData);
 
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))

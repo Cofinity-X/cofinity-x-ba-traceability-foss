@@ -50,7 +50,7 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
 
     @Override
     public PageResult<QualityNotification> getCreated(Pageable pageable, SearchCriteria searchCriteria) {
-        return getQualityNotificationsPageResultBySide(pageable, searchCriteria);
+        return getQualityNotificationsPageResult(pageable, searchCriteria);
     }
 
     // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
@@ -61,7 +61,7 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
 
     @Override
     public PageResult<QualityNotification> getReceived(Pageable pageable, SearchCriteria searchCriteria) {
-        return getQualityNotificationsPageResultBySide(pageable, searchCriteria);
+        return getQualityNotificationsPageResult(pageable, searchCriteria);
     }
 
     @Override
@@ -94,7 +94,7 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
         return new PageResult<>(alertDataPage);
     }
 
-    private PageResult<QualityNotification> getQualityNotificationsPageResultBySide(Pageable pageable, SearchCriteria searchCriteria) {
+    private PageResult<QualityNotification> getQualityNotificationsPageResult(Pageable pageable, SearchCriteria searchCriteria) {
         List<QualityNotification> notificationList = getQualityNotificationRepository()
                                                     .findAll(pageable, searchCriteria)
                                                     .content()

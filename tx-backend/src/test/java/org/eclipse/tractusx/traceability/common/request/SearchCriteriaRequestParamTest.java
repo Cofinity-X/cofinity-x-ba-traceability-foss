@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SearchCriteriaRequestParamTest {
+class SearchCriteriaRequestParamTest {
 
     @Test
     void testToSearchCriteria() {
@@ -20,10 +20,10 @@ public class SearchCriteriaRequestParamTest {
 
         SearchCriteria searchCriteria = searchCriteriaRequestParam.toSearchCriteria();
 
-        assertEquals(searchCriteria.getSearchCriteriaOperator().toString(), "AND");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getKey(), "status");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getValue(), "RECEIVED");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getStrategy().toString(), "EQUAL");
+        assertEquals("AND", searchCriteria.getSearchCriteriaOperator().toString());
+        assertEquals("status", searchCriteria.getSearchCriteriaFilterList().get(0).getKey());
+        assertEquals("EQUAL", searchCriteria.getSearchCriteriaFilterList().get(0).getStrategy().toString());
+        assertEquals("RECEIVED", searchCriteria.getSearchCriteriaFilterList().get(0).getValue());
     }
 
     @Test
@@ -36,13 +36,13 @@ public class SearchCriteriaRequestParamTest {
 
         SearchCriteria searchCriteria = searchCriteriaRequestParam.toSearchCriteria(QualityNotificationSide.RECEIVER);
 
-        assertEquals(searchCriteria.getSearchCriteriaOperator().toString(), operator);
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getKey(), "status");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getValue(), "RECEIVED");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getStrategy().toString(), "EQUAL");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(1).getKey(), "side");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(1).getValue(), "RECEIVER");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(1).getStrategy().toString(), "EQUAL");
+        assertEquals(operator, searchCriteria.getSearchCriteriaOperator().toString());
+        assertEquals("status", searchCriteria.getSearchCriteriaFilterList().get(0).getKey());
+        assertEquals("EQUAL", searchCriteria.getSearchCriteriaFilterList().get(0).getStrategy().toString());
+        assertEquals("RECEIVED", searchCriteria.getSearchCriteriaFilterList().get(0).getValue());
+        assertEquals("side", searchCriteria.getSearchCriteriaFilterList().get(1).getKey());
+        assertEquals("EQUAL", searchCriteria.getSearchCriteriaFilterList().get(1).getStrategy().toString());
+        assertEquals("RECEIVER", searchCriteria.getSearchCriteriaFilterList().get(1).getValue());
     }
 
     @Test
@@ -52,9 +52,9 @@ public class SearchCriteriaRequestParamTest {
 
         SearchCriteria searchCriteria = searchCriteriaRequestParam.toSearchCriteria(QualityNotificationSide.SENDER);
 
-        assertEquals(searchCriteria.getSearchCriteriaOperator().toString(), "AND");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getKey(), "side");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getValue(), "SENDER");
-        assertEquals(searchCriteria.getSearchCriteriaFilterList().get(0).getStrategy().toString(), "EQUAL");
+        assertEquals("AND", searchCriteria.getSearchCriteriaOperator().toString());
+        assertEquals("side", searchCriteria.getSearchCriteriaFilterList().get(0).getKey());
+        assertEquals("EQUAL", searchCriteria.getSearchCriteriaFilterList().get(0).getStrategy().toString());
+        assertEquals("SENDER", searchCriteria.getSearchCriteriaFilterList().get(0).getValue());
     }
 }

@@ -206,6 +206,7 @@ class ReadReceivedAlertsInSortedOrderControllerIT extends IntegrationTestSpecifi
         AlertNotificationEntity[] alertNotificationEntities = AlertTestDataFactory.createReceiverMajorityAlertNotificationEntitiesTestData(testBpn);
         alertNotificationsSupport.storedAlertNotifications(alertNotificationEntities);
 
+        // not all entities have a different target date
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .param("page", "0")

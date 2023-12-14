@@ -289,7 +289,7 @@ public class AlertTestDataFactory {
         return alertNotificationEntities;
     }
 
-    public static AlertNotificationEntity[] createExtendedReceiverAlertNotificationEntitiesTestData(String bpn) {
+    public static AlertNotificationEntity[] createExtendedReceiverAlertNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -300,15 +300,13 @@ public class AlertTestDataFactory {
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
 
-        AlertEntity[] alertEntities = createExtendedReceiverAlertEntitiesTestData(bpn);
+        AlertEntity[] alertEntities = createExtendedReceiverAlertEntitiesTestData(senderBpn);
 
-        AlertNotificationEntity[] alertNotificationEntities = createReceiverMajorityAlertNotificationEntitiesTestData(bpn);
-
-        AlertNotificationEntity[] newAlertNotificationEntities = {
+        AlertNotificationEntity[] alertNotificationEntities = {
                 AlertNotificationEntity
                         .builder()
                         .id("6")
-                        .alert(alertEntities[5])
+                        .alert(alertEntities[0])
                         .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
@@ -320,7 +318,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("7")
-                        .alert(alertEntities[6])
+                        .alert(alertEntities[1])
                         .status(NotificationStatusBaseEntity.RECEIVED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
@@ -332,7 +330,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("8")
-                        .alert(alertEntities[7])
+                        .alert(alertEntities[2])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
@@ -344,7 +342,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("9")
-                        .alert(alertEntities[8])
+                        .alert(alertEntities[3])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
@@ -356,7 +354,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("10")
-                        .alert(alertEntities[9])
+                        .alert(alertEntities[4])
                         .status(NotificationStatusBaseEntity.CANCELED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
@@ -367,49 +365,47 @@ public class AlertTestDataFactory {
                         .build()
         };
 
-        return concatWithStream(alertNotificationEntities, newAlertNotificationEntities);
+        return alertNotificationEntities;
     }
 
-    private static AlertEntity[] createExtendedReceiverAlertEntitiesTestData(String bpn) {
-        AlertEntity[] alertEntities = createReceiverMajorityAlertEntitiesTestData(bpn);
-
+    private static AlertEntity[] createExtendedReceiverAlertEntitiesTestData(String senderBpn) {
         Instant now = Instant.now();
 
-        AlertEntity sixthAlert = AlertEntity.builder()
+        AlertEntity firstAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                 .description("Sixth Alert on Asset1")
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.minusSeconds(100L))
                 .build();
-        AlertEntity seventhAlert = AlertEntity.builder()
+        AlertEntity secondAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.RECEIVED)
                 .description("Seventh Alert on Asset2")
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(210L))
                 .build();
-        AlertEntity eighthAlert = AlertEntity.builder()
+        AlertEntity thirdAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Eighth Alert on Asset3")
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(1L))
                 .build();
-        AlertEntity ninthAlert = AlertEntity.builder()
+        AlertEntity fourthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Ninth Alert on Asset4")
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(25L))
                 .build();
-        AlertEntity tenthAlert = AlertEntity.builder()
+        AlertEntity fifthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CANCELED)
                 .description("Tenth Alert on Asset5")
                 .side(NotificationSideBaseEntity.RECEIVER)
@@ -417,11 +413,10 @@ public class AlertTestDataFactory {
                 .build();
 
 
-        AlertEntity[] newAlerts = {sixthAlert, seventhAlert, eighthAlert, ninthAlert, tenthAlert};
-        return concatWithStream(alertEntities, newAlerts);
+        return new AlertEntity[]{firstAlert, secondAlert, thirdAlert, fourthAlert, fifthAlert};
     }
 
-    public static AlertNotificationEntity[] createExtendedSenderAlertNotificationEntitiesTestData(String bpn) {
+    public static AlertNotificationEntity[] createExtendedSenderAlertNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -432,15 +427,13 @@ public class AlertTestDataFactory {
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
 
-        AlertEntity[] alertEntities = createExtendedSenderAlertEntitiesTestData(bpn);
+        AlertEntity[] alertEntities = createExtendedSenderAlertEntitiesTestData(senderBpn);
 
-        AlertNotificationEntity[] alertNotificationEntities = createSenderMajorityAlertNotificationEntitiesTestData(bpn);
-
-        AlertNotificationEntity[] newAlertNotificationEntities = {
+        AlertNotificationEntity[] alertNotificationEntities = {
                 AlertNotificationEntity
                         .builder()
                         .id("6")
-                        .alert(alertEntities[5])
+                        .alert(alertEntities[0])
                         .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
@@ -452,7 +445,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("7")
-                        .alert(alertEntities[6])
+                        .alert(alertEntities[1])
                         .status(NotificationStatusBaseEntity.SENT)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
@@ -464,7 +457,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("8")
-                        .alert(alertEntities[7])
+                        .alert(alertEntities[2])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
@@ -476,7 +469,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("9")
-                        .alert(alertEntities[8])
+                        .alert(alertEntities[3])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
@@ -488,7 +481,7 @@ public class AlertTestDataFactory {
                 AlertNotificationEntity
                         .builder()
                         .id("10")
-                        .alert(alertEntities[9])
+                        .alert(alertEntities[4])
                         .status(NotificationStatusBaseEntity.CANCELED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
@@ -499,62 +492,53 @@ public class AlertTestDataFactory {
                         .build()
         };
 
-        return concatWithStream(alertNotificationEntities, newAlertNotificationEntities);
+        return alertNotificationEntities;
     }
 
-    private static AlertEntity[] createExtendedSenderAlertEntitiesTestData(String bpn) {
-        AlertEntity[] alertEntities = createSenderMajorityAlertEntitiesTestData(bpn);
-
+    private static AlertEntity[] createExtendedSenderAlertEntitiesTestData(String senderBpn) {
         Instant now = Instant.now();
 
-        AlertEntity sixthAlert = AlertEntity.builder()
+        AlertEntity firstAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                 .description("Sixth Alert on Asset1")
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.minusSeconds(100L))
                 .build();
-        AlertEntity seventhAlert = AlertEntity.builder()
+        AlertEntity secondAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.SENT)
                 .description("Seventh Alert on Asset2")
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(210L))
                 .build();
-        AlertEntity eighthAlert = AlertEntity.builder()
+        AlertEntity thirdAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Eighth Alert on Asset3")
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(1L))
                 .build();
-        AlertEntity ninthAlert = AlertEntity.builder()
+        AlertEntity fourthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
                 .description("Ninth Alert on Asset4")
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(25L))
                 .build();
-        AlertEntity tenthAlert = AlertEntity.builder()
+        AlertEntity fifthAlert = AlertEntity.builder()
                 .assets(Collections.emptyList())
-                .bpn(bpn)
+                .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CANCELED)
                 .description("Tenth Alert on Asset5")
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(80L))
                 .build();
 
-
-        AlertEntity[] newAlerts = {sixthAlert, seventhAlert, eighthAlert, ninthAlert, tenthAlert};
-        return concatWithStream(alertEntities, newAlerts);
-    }
-    @SuppressWarnings("unchecked")
-    private static <T> T[] concatWithStream(T[] array1, T[] array2) {
-        return Stream.concat(Arrays.stream(array1), Arrays.stream(array2))
-                .toArray(size -> (T[]) Array.newInstance(array1.getClass().getComponentType(), size));
+        return new AlertEntity[]{firstAlert, secondAlert, thirdAlert, fourthAlert, fifthAlert};
     }
 }

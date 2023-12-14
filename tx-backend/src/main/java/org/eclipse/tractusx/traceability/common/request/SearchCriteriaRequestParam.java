@@ -108,8 +108,8 @@ public class SearchCriteriaRequestParam {
                 .ifPresent(filters::addAll);
         final SearchCriteriaFilter sideFilter = SearchCriteriaFilter.builder()
                 .key("side")
-                .value(notificationSide.toString())
                 .strategy(SearchStrategy.EQUAL)
+                .value(notificationSide.toString())
                 .build();
         filters.add(sideFilter);
         searchCriteria.setSearchCriteriaFilterList(filters);
