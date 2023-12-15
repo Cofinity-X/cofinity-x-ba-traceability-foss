@@ -25,6 +25,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.UUID;
 
 public class NotificationTestDataFactory {
 
@@ -54,7 +55,7 @@ public class NotificationTestDataFactory {
     private static QualityNotificationMessage createReceivedNotificationMessageTestData() {
 
         return QualityNotificationMessage.builder()
-                .id("1")
+                .id(UUID.randomUUID().toString())
                 .created(LocalDateTime.now().minusDays(2))
                 .createdBy("BPN01")
                 .createdByName("Company1")
@@ -69,7 +70,7 @@ public class NotificationTestDataFactory {
     private static QualityNotificationMessage createAcknowledgedNotificationMessageTestData() {
 
         return QualityNotificationMessage.builder()
-                .id("2")
+                .id(UUID.randomUUID().toString())
                 .created(LocalDateTime.now().minusDays(1))
                 .createdBy("BPN02")
                 .createdByName("Company2")

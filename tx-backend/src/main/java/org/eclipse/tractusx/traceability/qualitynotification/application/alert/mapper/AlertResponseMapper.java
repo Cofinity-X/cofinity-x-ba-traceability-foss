@@ -45,8 +45,8 @@ public class AlertResponseMapper {
                 .id(qualityNotification.getNotificationId().value())
                 .status(QualityNotificationMapper.from(qualityNotification.getNotificationStatus()))
                 .description(qualityNotification.getDescription())
-                .createdBy(getSenderBPN(qualityNotification.getNotifications()))
-                .createdByName(getSenderName(qualityNotification.getNotifications()))
+                .createdBy(getCreatedByOfOldestMessage(qualityNotification.getNotifications()))
+                .createdByName(getCreatedByNameOfOldestMessage(qualityNotification.getNotifications()))
                 .createdDate(qualityNotification.getCreatedAt().toString())
                 .assetIds(Collections.unmodifiableList(qualityNotification.getAssetIds()))
                 .channel(QualityNotificationMapper.from(qualityNotification.getNotificationSide()))
@@ -55,8 +55,8 @@ public class AlertResponseMapper {
                         qualityNotification.getAcceptReason(),
                         qualityNotification.getDeclineReason()
                 ))
-                .sendTo(getReceiverBPN(qualityNotification.getNotifications()))
-                .sendToName(getReceiverName(qualityNotification.getNotifications()))
+                .sendTo(getSendToOfOldestMessage(qualityNotification.getNotifications()))
+                .sendToName(getSendToNameOfOldestMessage(qualityNotification.getNotifications()))
                 .severity(QualityNotificationMapper.from(qualityNotification.getNotifications().stream().findFirst().map(QualityNotificationMessage::getSeverity).orElse(QualityNotificationSeverity.MINOR)))
                 .targetDate(qualityNotification.getNotifications().stream().findFirst().map(QualityNotificationMessage::getTargetDate).map(Instant::toString).orElse(null))
                 .errorMessage(qualityNotification.getErrorMessage())
@@ -73,28 +73,28 @@ public class AlertResponseMapper {
         return new PageResult<>(investigationDataPage);
     }
 
-    private static String getSenderBPN(Collection<QualityNotificationMessage> notifications) {
+    private static String getCreatedByOfOldestMessage(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
                 .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getCreatedBy)
                 .orElse(null);
     }
 
-    private static String getReceiverBPN(Collection<QualityNotificationMessage> notifications) {
+    private static String getSendToOfOldestMessage(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
                 .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getSendTo)
                 .orElse(null);
     }
 
-    private static String getSenderName(Collection<QualityNotificationMessage> notifications) {
+    private static String getCreatedByNameOfOldestMessage(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
                 .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getCreatedByName)
                 .orElse(null);
     }
 
-    private static String getReceiverName(Collection<QualityNotificationMessage> notifications) {
+    private static String getSendToNameOfOldestMessage(Collection<QualityNotificationMessage> notifications) {
         return notifications.stream()
                 .min(Comparator.comparing(QualityNotificationMessage::getCreated))
                 .map(QualityNotificationMessage::getSendToName)

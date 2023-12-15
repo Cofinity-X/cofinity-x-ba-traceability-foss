@@ -13,7 +13,7 @@ class AlertResponseMapperTest {
     QualityNotification qualityNotification;
 
     @BeforeEach
-    void setup() {
+    void beforeEach() {
         qualityNotification = NotificationTestDataFactory.createQualityNotificationTestData();
     }
 
