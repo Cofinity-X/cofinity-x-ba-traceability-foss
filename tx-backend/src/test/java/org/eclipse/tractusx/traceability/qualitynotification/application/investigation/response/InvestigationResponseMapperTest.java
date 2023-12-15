@@ -9,7 +9,7 @@ import qualitynotification.investigation.response.InvestigationResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class InvestigationResponseMapperTest {
+class InvestigationResponseMapperTest {
 
     QualityNotification qualityNotification;
 
