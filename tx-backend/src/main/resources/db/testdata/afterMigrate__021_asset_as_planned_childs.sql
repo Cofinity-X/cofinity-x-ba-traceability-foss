@@ -6,11 +6,11 @@ insert into assets_as_planned_childs
     (asset_as_planned_id  , id                   , id_short)
 values
     -- owner has child supplier
-    (${assetAsPlannedId03}, ${assetAsPlannedId01}, 'H-LeftTailLight'),  -- Xenon Left-Taillight has child Osram Rear Left-ZX500
-    (${assetAsPlannedId05}, ${assetAsPlannedId01}, 'H-LeftTailLight'),  -- Xenon Left-Taillight has child Philips Rear Left-C4R
-    (${assetAsPlannedId04}, ${assetAsPlannedId02}, 'H-RightTailLight'), -- Xenon Right-Taillight has child Osram Rear Right-ZX500
-    (${assetAsPlannedId06}, ${assetAsPlannedId02}, 'H-RightTailLight'), -- Xenon Right-Taillight has child Philips Rear Right-C4R
+    (${assetAsPlannedId01}, ${assetAsPlannedId03}, 'O-LeftTailBulb'),   -- Xenon Left-Taillight has child Osram Rear Left-ZX500
+    (${assetAsPlannedId01}, ${assetAsPlannedId05}, 'P-LeftTailBulb'),   -- Xenon Left-Taillight has child Philips Rear Left-C4R
+    (${assetAsPlannedId02}, ${assetAsPlannedId04}, 'O-RightTailBulb'),  -- Xenon Right-Taillight has child Osram Rear Right-ZX500
+    (${assetAsPlannedId02}, ${assetAsPlannedId06}, 'P-RightTailBulb'),  -- Xenon Right-Taillight has child Philips Rear Right-C4R
 
     -- customer has child owner
-    (${assetAsPlannedId01}, ${assetAsPlannedId09}, 'Audi-A7'), -- A7 has child Xenon Left-Taillight
-    (${assetAsPlannedId02}, ${assetAsPlannedId09}, 'Audi-A7'); -- A7 has child Xenon Right-Taillight
+    (${assetAsPlannedId09}, ${assetAsPlannedId01}, 'H-LeftTailLight'),  -- A7 has child Xenon Left-Taillight
+    (${assetAsPlannedId09}, ${assetAsPlannedId02}, 'H-RightTailLight'); -- A7 has child Xenon Right-Taillight

@@ -3,7 +3,7 @@
 -- it is only intended for usage in local or test environments
 
 insert into assets_as_planned
-    (id                   , id_short             , manufacturer_part_id, name_at_manufacturer         , quality_type, classification, owner     , semantic_data_model   , function    , manufacturer_name, van , semantic_model_id          , catenax_site_id   , function_valid_from  , function_valid_until , validity_period_from , validity_period_to)
+    (id                   , id_short             , manufacturer_part_id, name_at_manufacturer        , quality_type, classification, owner     , semantic_data_model, function    , manufacturer_name, van , semantic_model_id          , catenax_site_id   , function_valid_from  , function_valid_until , validity_period_from , validity_period_to)
 values
     (${assetAsPlannedId01}, 'H-LeftTailLight'    , 'XT2309'            , 'Xenon Left-Taillight'      , 'OK'        , 'C-Level'     , 'OWN'     , 'PARTASPLANNED'    , 'production', 'Hella'          , '--', '5739525733343254979259249', 'BPNL000000000001', '2019-03-04T10:00:00', '2025-03-04T10:00:00', '2022-02-04T08:00:00', '2024-02-04T08:00:00'),
     (${assetAsPlannedId02}, 'H-RightTailLight'   , 'XT2310'            , 'Xenon Right-Taillight'     , 'OK'        , 'C-Level'     , 'OWN'     , 'PARTASPLANNED'    , 'production', 'Hella'          , '--', '3555795495432474727732252', 'BPNL000000000001', '2019-03-04T16:00:00', '2025-03-04T16:00:00', '2022-02-04T08:00:00', '2024-02-04T08:00:00'),

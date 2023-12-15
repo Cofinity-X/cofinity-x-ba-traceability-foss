@@ -5,12 +5,12 @@
 insert into assets_as_built_parents
     (asset_as_built_id  , id                 , id_short)
 values
-    -- owner has child customer
-    (${assetAsBuiltId01}, ${assetAsBuiltId07}, 'H-LeftHeadLight'),  -- Xenon Left-Headlights has child Z1
-    (${assetAsBuiltId02}, ${assetAsBuiltId07}, 'H-RightHeadLight'), -- Xenon Right-Headlights has child Z1
+    -- owner has parent customer
+    (${assetAsBuiltId01}, ${assetAsBuiltId07}, 'BMW-Z1'),  -- Xenon Left-Headlights has child Z1
+    (${assetAsBuiltId02}, ${assetAsBuiltId07}, 'BMW-Z1'), -- Xenon Right-Headlights has child Z1
 
-    -- supplier has child owner
-    (${assetAsBuiltId03}, ${assetAsBuiltId01}, 'O-LeftHeadBulb'),   -- Osram Front Left-AX400 has child Xenon Left-Headlights
-    (${assetAsBuiltId05}, ${assetAsBuiltId01}, 'P-LeftHeadBulb'),   -- Philips Front Left-D3H has child Xenon Left-Headlights
-    (${assetAsBuiltId04}, ${assetAsBuiltId02}, 'O-RightHeadBulb'),  -- Osram Front Right-AX400 has child Xenon Right-Headlights
-    (${assetAsBuiltId06}, ${assetAsBuiltId02}, 'P-RightHeadBulb');  -- Philips Front Right-D3H has child Xenon Right-Headlights
+    -- supplier has parent owner
+    (${assetAsBuiltId03}, ${assetAsBuiltId01}, 'H-LeftHeadLight'),   -- Osram Front Left-AX400 has child Xenon Left-Headlights
+    (${assetAsBuiltId05}, ${assetAsBuiltId01}, 'H-LeftHeadLight'),   -- Philips Front Left-D3H has child Xenon Left-Headlights
+    (${assetAsBuiltId04}, ${assetAsBuiltId02}, 'H-RightHeadLight'),  -- Osram Front Right-AX400 has child Xenon Right-Headlights
+    (${assetAsBuiltId06}, ${assetAsBuiltId02}, 'H-RightHeadLight');  -- Philips Front Right-D3H has child Xenon Right-Headlights
