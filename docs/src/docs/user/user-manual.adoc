@@ -142,7 +142,7 @@ Once the quality alert is created you will get a pop-up and can directly navigat
 On the right upper site of a table there is a settings icon in which you can set the table columns to a desired view.
 With a click on it a dialog opens where you can change the settings of the corresponding table:
 
-image::../../images/arc42/user-guide/tx-column-selection.PNG[Column Settings]
+image::../../images/arc42/user-guide/tx-column-selection.png[Column Settings]
 
 Hide/show table columns by clicking on the checkbox or the column name.
 It is possible to hide/show all columns by clicking on the "All"- checkbox.
