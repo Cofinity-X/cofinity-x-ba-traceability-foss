@@ -130,16 +130,17 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   }
 
   public openRelationPage(part: Part): void {
-    this.partDetailsFacade.selectedPart = null;
-
     this.dialog.open(RelationComponent, {
       autoFocus: false,
+      width: '100%',
+      maxWidth: '85vw',
+      height: '80vh',
       data: {
         partId: part.id,
+        partName: part.name,
+        context: this.activatedRoute?.parent?.toString().split('\'')[1]
       }
     });
-
-    // this.router.navigate([`${this.context}/relations/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
   }
 
   public onTabChange({ index }: MatTabChangeEvent): void {

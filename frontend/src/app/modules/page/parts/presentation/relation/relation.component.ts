@@ -21,6 +21,7 @@
 
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-relation',
@@ -30,9 +31,14 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class RelationComponent {
 
   public partId: string;
+  public partName: string;
+  public overwriteContext;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any,
   ) {
     this.partId = data.partId;
+    this.partName = data.partName;
+    this.overwriteContext = data.context;
   }
+
 }
