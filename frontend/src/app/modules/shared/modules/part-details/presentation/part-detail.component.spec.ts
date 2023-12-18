@@ -33,7 +33,6 @@ import { PartDetailComponent } from './part-detail.component';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RelationComponent } from '@page/parts/presentation/relation/relation.component';
 
 let PartsStateMock: PartsState;
 let PartDetailsStateMock: PartDetailsState;
