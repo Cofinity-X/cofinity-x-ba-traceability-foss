@@ -55,7 +55,7 @@ To login use the credentials provided by the hosting company.
 
 Navigation is done based on the top menu.
 
-image::../../images/arc42/user-guide/navigation.PNG[Navigation]
+image::../../images/arc42/user-guide/tx-navigation.png[Navigation]
 
 === Dashboard
 
