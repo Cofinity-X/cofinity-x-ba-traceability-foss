@@ -59,14 +59,14 @@ image::../../images/arc42/user-guide/tx-navigation.png[Navigation]
 
 === Dashboard
 
-Provides a fast overview about the amount of manufactured and supplied / customer (other) parts and batches, as well as the amount of open investigations and alerts.
-Lists the five newest quality investigations and alerts to get an overview of the current state.
+Provides a fast overview about the amount of manufactured (my parts) and supplier parts (shared parts) and batches, as well as the amount of open investigations and alerts.
+Lists the five most recent quality investigations and alerts to get an overview of the current state.
 
-=== Parts
+=== My Parts
 
 Navigates to the own manufactured parts and batches list view.
 
-=== Other parts
+=== Shared parts
 
 Navigates to the supplier and customer parts and batches list view.
 
@@ -76,56 +76,48 @@ Navigates to the inbox and outgoing investigations.
 
 === Quality alert
 
-Navigates to the inbox and outgoing alerts.
+Navigates to the incoming and outgoing alerts.
 
-=== Administration
+=== Burger menu
 
-Only applicable for the admin user role.
-Possibility to check the network status based on logfiles and will provide access to configuration possibilities for the application.
+Use the burger menu to use view user details, access the help desk, logout or change the language.
 
-=== Logout
-
-Use the Icon in upper right corner to open User details and sign out button.
-
-=== Language
-
-image:https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/user-guide/language-icon.png[] Change language. +
 Supported languages:
 
-* English
-* German
+*English
+*German
+
+image::../../images/arc42/user-guide/tx-burgermenu.png[Burger menu]
 
 == Parts
 
 List view of the own manufactured (asBuilt) or planned (asPlanned) parts and batches.
 By default, both tables are displayed.
-You can adjust the View of tables by activating/deactivating the tables.
+You can adjust the view of tables by activating/deactivating the tables.
 
 image::../../images/arc42/user-guide/tx-myparts-highlights.png[My Parts]
 
 === Parts Table
 
-A Table View split into the different BOM Lifecycle phases (AsBuilt / AsPlanned) of a part.
+A table view split into the different BOM lifecycle phases (AsBuilt / AsPlanned) of a part.
 
 Between the views, there is a slider to adjust the view to make either the left or the right table more visible.
 Alternatively, you can use the view toggle to adjust the visibility of the tables.
 
 Both tables can be sorted, filtered and searched.
-The global search bar at the top returns part results from both Tables.
+The global search bar at the top returns part results from both tables.
 
-You can sort the table by clicking on the table header. On the first click, the table is sorted in ascending order, on the second click the table is sorted in descending order. If the table is already sorted and you hold shift while clicking on another table header. The table is sorted primarily by the already given column but is then ordered secondly by the specified column. You can sort by as many columns as you desire.
+You can sort the table by clicking on the table header. On the first click, the table is sorted in ascending order, on the second click the table is sorted in descending order. If the table is already sorted, and you hold shift while clicking on another table header. The table is sorted primarily by the already given column but is then ordered secondly by the specified column. You can sort by as many columns as you desire.
 
 === AsBuilt Lifecycle Parts
 
 List view of own Parts with AsBuilt Lifecycle.
-Gives detailed information on the assets registered in the Digital Twin Registry of Catena-X for the company.
-This includes data based on the aspect models of Use Case Traceability: Asbuilt, SerialPart, Batch.
+This includes data based on the aspect models of Use Case Traceability: AsBuilt, SerialPart, Batch.
 Parts that are in a quality alert are highlighted yellow.
 
 === AsPlanned Lifecycle Parts
 
 List view of own Parts with AsPlanned Lifecycle.
-Gives detailed information on the assets registered in the Digital Twin Registry of Catena-X for the company.
 This includes data based on the aspect models of Use Case Traceability: AsPlanned, SerialPart, Batch.
 Parts that are in a quality alert are highlighted yellow.
 
@@ -133,7 +125,7 @@ Parts that are in a quality alert are highlighted yellow.
 
 Select one or multiple child components/parts/batches that are build into your part.
 Selection will enable you to create a quality alert (notification) to your customers.
-The quality alert will be added to a queue (queued & requested inbox) and not directly sent to the customers.
+The quality alert will be added to a queue (queued & sent inbox) and not directly sent to the customers.
 
 Once the quality alert is created you will get a pop-up and can directly navigate to the inbox for further action.
 
@@ -212,11 +204,9 @@ Supplier parts that are in a quality investigation are highlighted yellow.
 
 ==== Supplier parts select / Quality Investigation
 
-Select one or multiple supplier parts.
+Select one or multiple supplier parts asBuilt.
 Selection will enable you to create a quality investigation (notification) to your supplier.
-The quality investigation will be added to a queue (queued & requested inbox) and not directly be sent to the supplier.
-
-Once the quality investigation is created you will get a pop-up and can directly navigate to the inbox for further action.
+The quality investigation will be added to a queue (queued & sent inbox) and not directly be sent to the supplier.
 
 === Supplier part details
 
@@ -241,7 +231,6 @@ Information about the identifiers at the customer (in this case own company) for
 === Customer Parts
 
 List view of customer parts and batches.
-Customer Parts that are in a quality alert are highlighted yellow.
 
 === Customer part details
 
@@ -267,11 +256,11 @@ In the “Quality investigation”-tab all received quality investigations are s
 
 image::../../images/arc42/user-guide/tx-qualityinvestigations.png[Quality Investigation]
 
-image:https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/user-guide/notification-drafts.png[] Received investigations.
+Received investigations.
 
 Received investigations by a customer specify that the given customer has found a defect or has a request for you to investigate on a specific part/ batch on your side and waits for your feedback.
 
-image:https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/user-guide/notification-send.png[] Queued & Requested investigations.
+Queued & Requested investigations.
 
 Queued & Requested investigations on the other hand are investigations that were requested by your company and that are sent to the supplier after you detected a defect, or you have a request on a specific part/ batch. The given supplier is now informed that you expect feedback on the request.
 Queued investigations are investigations that were created by a user in your company but are not yet sent to the supplier until a supervisor approves them.
@@ -280,18 +269,17 @@ Requested investigations are investigations that were approved by a supervisor i
 === Quality investigation context action
 
 Clicking on the three dots menu on the right side of a quality investigation entry opens the quality investigation context menu. In the context menu, users can open the detailed of the given quality investigation. Supervisor can additionally update the status of the given quality investigation. Only possible status update actions will be shown in the menu.
+
+image::../../images/arc42/user-guide/tx-qualityinvestigation-actionmenu-highlight.png[Quality Investigation Context Menu]
+
 After selecting to update the status of the quality investigation, a dialog will open in which the details of the status update are shown. The status is then updated after completing all steps in the dialog. A pop-up will notify you, it the update was successful. Reverting status updates is not intended.
+
+image::../../images/arc42/user-guide/tx-qualityinvestigation-accept.png[Quality Investigation Dialog]
 
 You can sort the table by clicking on the table header. On the first click, the table is sorted in ascending order, on the second click the table is sorted in descending order. If the table is already sorted and you hold shift while clicking on another table header. The table is sorted primarily by the already given column but is then ordered secondly by the specified column. You can sort by as many columns as you desire.
 Next to each column header is a filter icon. If you click on that icon, a filter option menu will appear by which you can filter the table.
 You can select which columns are displayed by clicking on the settings icon on the top right corner of the table.
 In search bar, you can search for specific quality investigations by entering the given description or BPN (business partner number).
-
-image::../../images/arc42/user-guide/tx-qualityinvestigation-actionmenu-highlight.png[Quality Investigation Context Menu]
-
-image::../../images/arc42/user-guide/tx-qualityinvestigation-accept.png[Quality Investigation Dialog]
-
-A pop-up will notify you if the status transition was successful.
 
 === Quality investigation Detail view
 
@@ -380,9 +368,9 @@ Received quality alerts by a customer specify that the given customer has found 
 
 image:https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/user-guide/notification-send.png[] Queued & Requested alerts.
 
-Queued & Requested quality alerts on the other hand are quality alerts that were requested by your company and that are sent to the supplier after you detected a defect, or you have a request on a specific part/ batch. The given supplier is now informed that you expect feedback on the request.
-Queued quality alerts are quality alerts that were created by a user in your company but are not yet sent to the supplier until a supervisor approves them.
-Requested quality alerts are quality alerts that were approved by a supervisor in your company and consequently been sent to the supplier.
+Queued & Requested quality alerts on the other hand are quality alerts that were requested by your company and that are sent to the customer after you detected a defect, or you have a request on a specific part/ batch.
+Queued quality alerts are quality alerts that were created by a user in your company but are not yet sent to the customer until a supervisor approves them.
+Requested quality alerts are quality alerts that were approved by a supervisor in your company and consequently been sent to the customer.
 
 === Quality alert context action
 
