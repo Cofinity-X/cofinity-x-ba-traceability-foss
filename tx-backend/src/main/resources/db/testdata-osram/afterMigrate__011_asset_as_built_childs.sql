@@ -5,12 +5,12 @@
 insert into assets_as_built_childs
     (asset_as_built_id  , id                 , id_short)
 values
-    -- supplier is child of owner
-    (${assetAsBuiltId09}, ${assetAsBuiltId07}, 'Turning Light'),  -- Glass bulb for turning light isChildOf Turning Light Bulb
-    (${assetAsBuiltId10}, ${assetAsBuiltId07}, 'Turning Light'),  -- Packaging for turning light isChildOf Turning Light Bulb
+    -- owner has child of supplier
+    (${assetAsBuiltId07}, ${assetAsBuiltId09}, 'S-GlassBulb'),  -- Turning Light Bulb has child Glass bulb
+    (${assetAsBuiltId07}, ${assetAsBuiltId10}, 'P-Packaging'),  -- Turning Light Bulb has child Packaging
 
-    -- owner is child of customer
-    (${assetAsBuiltId05}, ${assetAsBuiltId01}, 'Xenon Left-Headlights'),  -- Left Head Bulb isChildOf Xenon Left-Headlights
-    (${assetAsBuiltId06}, ${assetAsBuiltId02}, 'Xenon Right-Headlights'), -- Right Head Bulb isChildOf Xenon Right-Headlights
-    (${assetAsBuiltId07}, ${assetAsBuiltId03}, 'Left Turning Lights'),    -- Turning Light Bulb isChildOf Left Turning Lights
-    (${assetAsBuiltId07}, ${assetAsBuiltId04}, 'Right Turning Lights');   -- Turning Light Bulb isChildOf Right Turning Lights
+    -- customer has child owner
+    (${assetAsBuiltId01}, ${assetAsBuiltId05}, 'Left Head Bulb'),      -- Xenon Left-Headlights has child Left Head Bulb
+    (${assetAsBuiltId02}, ${assetAsBuiltId06}, 'Right Head Bulb'),     -- Xenon Right-Headlights has child Right Head Bulb
+    (${assetAsBuiltId03}, ${assetAsBuiltId07}, 'Turning Light Bulb'),  -- Left Turning Lights has child Turning Light Bulb
+    (${assetAsBuiltId04}, ${assetAsBuiltId07}, 'Turning Light Bulb');  -- Right Turning Lights has child Turning Light Bulb

@@ -5,12 +5,12 @@
 insert into assets_as_built_parents
     (asset_as_built_id  , id                 , id_short)
 values
-    -- customer is parent of owner
-    (${assetAsBuiltId01}, ${assetAsBuiltId05}, 'Left Head Bulb'),   -- Left Headlights isParentOf Left Head Bulb
-    (${assetAsBuiltId02}, ${assetAsBuiltId06}, 'Right Head Bulb'),  -- Right Headlights isParentOf Right Head Bulb
-    (${assetAsBuiltId03}, ${assetAsBuiltId07}, 'Turning Light'),    -- Left Turning Light isParentOf Turning Light
-    (${assetAsBuiltId04}, ${assetAsBuiltId07}, 'Turning Light'),    -- Right Turning Light isParentOf Turning Light
+    -- owner has parent customer
+    (${assetAsBuiltId05}, ${assetAsBuiltId01}, 'Left Headlights'),     -- Left Head Bulb has parent Left Headlights
+    (${assetAsBuiltId06}, ${assetAsBuiltId02}, 'Right Headlights'),    -- Right Head Bulb has parent Right Headlights
+    (${assetAsBuiltId07}, ${assetAsBuiltId03}, 'Left Turning Light'),  --  Turning Light has parent Left Turning Light
+    (${assetAsBuiltId07}, ${assetAsBuiltId04}, 'Right Turning Light'), --  Turning Light has parent Right Turning Light
 
-    -- owner is parent of supplier
-    (${assetAsBuiltId07}, ${assetAsBuiltId09}, 'Turning Light'),  -- Turning Light isParentOf GlassBulb
-    (${assetAsBuiltId07}, ${assetAsBuiltId10}, 'Turning Light');  -- Turning Light isParentOf Packaging
+    -- supplier has parent owner
+    (${assetAsBuiltId09}, ${assetAsBuiltId07}, 'Turning Light'),  -- GlassBulb has parent Turning Light
+    (${assetAsBuiltId10}, ${assetAsBuiltId07}, 'Turning Light');  -- Packaging has parent Turning Light

@@ -5,12 +5,12 @@
 insert into assets_as_planned_childs
     (asset_as_planned_id  , id                   , id_short)
 values
-    -- supplier is child of owner
-    (${assetAsPlannedId09}, ${assetAsPlannedId07}, 'Turning Light'),  -- GlassBulb isChildOf Turning Light
-    (${assetAsPlannedId10}, ${assetAsPlannedId07}, 'Turning Light'),  -- Packaging isChildOf Turning Light
+    -- owner has child of supplier
+    (${assetAsPlannedId07}, ${assetAsPlannedId09}, 'S-GlassBulb'),  -- Turning Light Bulb has child Glass bulb
+    (${assetAsPlannedId07}, ${assetAsPlannedId10}, 'P-Packaging'),  -- Turning Light Bulb has child Packaging
 
-    -- owner is child of customer
-    (${assetAsPlannedId05}, ${assetAsPlannedId01}, 'Xenon Left-Headlights'),  -- Left Head Bulb isChildOf Xenon Left-Headlights
-    (${assetAsPlannedId06}, ${assetAsPlannedId02}, 'Xenon Right-Headlights'), -- Right Head Bulb isChildOf Xenon Right-Headlights
-    (${assetAsPlannedId07}, ${assetAsPlannedId03}, 'Left Turning Lights'),    -- Turning Lights isChildOf Left Turning Lights
-    (${assetAsPlannedId07}, ${assetAsPlannedId04}, 'Right Turning Lights');   -- Turning Lights isChildOf Right Turning Lights
+    -- customer has child owner
+    (${assetAsPlannedId01}, ${assetAsPlannedId05}, 'Left Head Bulb'),      -- Xenon Left-Headlights has child Left Head Bulb
+    (${assetAsPlannedId02}, ${assetAsPlannedId06}, 'Right Head Bulb'),     -- Xenon Right-Headlights has child Right Head Bulb
+    (${assetAsPlannedId03}, ${assetAsPlannedId07}, 'Turning Light Bulb'),  -- Left Turning Lights has child Turning Light Bulb
+    (${assetAsPlannedId04}, ${assetAsPlannedId07}, 'Turning Light Bulb');  -- Right Turning Lights has child Turning Light Bulb
