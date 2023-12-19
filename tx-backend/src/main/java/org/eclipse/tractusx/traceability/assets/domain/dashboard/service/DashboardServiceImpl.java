@@ -21,22 +21,35 @@
 
 package org.eclipse.tractusx.traceability.assets.domain.dashboard.service;
 
+import static org.eclipse.tractusx.traceability.common.model.SearchStrategy.EQUAL;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.tractusx.traceability.assets.application.dashboard.service.DashboardService;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.repository.AssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.assets.domain.asplanned.repository.AssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.Owner;
 import org.eclipse.tractusx.traceability.assets.domain.dashboard.model.Dashboard;
+import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
+import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
+import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.AlertRepository;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.InvestigationRepository;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class DashboardServiceImpl implements DashboardService {
+
+    private static final List<SearchCriteriaFilter> FILTER_ACTIVE_NOTIFICATIONS = QualityNotificationStatus.ACTIVE_STATES.stream()
+            .map(status -> SearchCriteriaFilter.builder().key("status").strategy(EQUAL).value(status.name()).build())
+            .toList();
+
+    private static final SearchCriteria RECEIVED_OPEN_NOTIFICATIONS = SearchCriteria.builder()
+            .searchCriteriaFilterList(FILTER_ACTIVE_NOTIFICATIONS)
+            .searchCriteriaOperator(SearchCriteriaOperator.AND)
+            .build();
 
     private final AssetAsBuiltRepository assetAsBuiltRepository;
     private final AssetAsPlannedRepository assetAsPlannedRepository;
@@ -45,24 +58,24 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public Dashboard getDashboard() {
-        long customerParts = assetAsBuiltRepository.countAssetsByOwner(Owner.CUSTOMER) + assetAsPlannedRepository.countAssetsByOwner(Owner.CUSTOMER);
-        long supplierParts = assetAsBuiltRepository.countAssetsByOwner(Owner.SUPPLIER) + assetAsPlannedRepository.countAssetsByOwner(Owner.SUPPLIER);
-        long otherParts = customerParts + supplierParts;
-        long ownParts = assetAsBuiltRepository.countAssetsByOwner(Owner.OWN) + assetAsPlannedRepository.countAssetsByOwner(Owner.OWN);
-        long investigationsInReceivedState = investigationsRepository.countQualityNotificationEntitiesByStatus(QualityNotificationStatus.RECEIVED);
-        long alertsInReceivedState = alertRepository.countQualityNotificationEntitiesByStatus(QualityNotificationStatus.RECEIVED);
-        long alertsInSentState = alertRepository.countQualityNotificationEntitiesByStatus(QualityNotificationStatus.SENT);
-        long myPartsWithOpenAlerts = alertRepository.countPartsByStatusAndOwnership(List.of(QualityNotificationStatus.SENT), Owner.OWN);
-        long supplierPartsWithOpenAlerts = alertRepository.countPartsByStatusAndOwnership(List.of(QualityNotificationStatus.RECEIVED), Owner.SUPPLIER);
+
+        final long myParts = assetAsBuiltRepository.countAssetsByOwner(Owner.OWN)
+                + assetAsPlannedRepository.countAssetsByOwner(Owner.OWN);
+
+        final long supplierParts = assetAsBuiltRepository.countAssetsByOwner(Owner.SUPPLIER) +
+                assetAsPlannedRepository.countAssetsByOwner(Owner.SUPPLIER);
+
+        final long customerParts = assetAsBuiltRepository.countAssetsByOwner(Owner.CUSTOMER)
+                + assetAsPlannedRepository.countAssetsByOwner(Owner.CUSTOMER);
+
+        final long investigationsReceived = investigationsRepository.countAll(RECEIVED_OPEN_NOTIFICATIONS);
+        final long alertsReceived = alertRepository.countAll(RECEIVED_OPEN_NOTIFICATIONS);
 
         return Dashboard.builder()
-                .myParts(ownParts)
-                .otherParts(otherParts)
-                .investigationsReceived(investigationsInReceivedState)
-                .alertsReceived(alertsInReceivedState)
-                .alertsSent(alertsInSentState)
-                .myPartsWithOpenAlerts(myPartsWithOpenAlerts)
-                .supplierPartsWithOpenAlerts(supplierPartsWithOpenAlerts)
+                .myParts(myParts)
+                .otherParts(supplierParts + customerParts)
+                .investigationsReceived(investigationsReceived)
+                .alertsReceived(alertsReceived)
                 .build();
     }
 }
