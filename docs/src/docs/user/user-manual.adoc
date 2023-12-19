@@ -80,7 +80,7 @@ Navigates to the incoming and outgoing alerts.
 
 === Burger menu
 
-Use the burger menu to use view user details, access the help desk, logout or change the language.
+Use the burger menu to use view user details, access the user manual, logout or change the language.
 
 Supported languages:
 
