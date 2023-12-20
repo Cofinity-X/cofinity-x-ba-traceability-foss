@@ -21,35 +21,19 @@ A list of user or technical roles can be found below:
 
 === Trace-X app roles
 
-Available roles: https://portal.int.demo.catena-x.net/appusermanagement/3bbc88ae-5f0d-45cb-ab3e-8c7602ff58b4
+One user can have multiple roles. The available roles are:
 
-image::https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/user-manual/app_roles.png[]
+==== User
 
-Assignment of roles: https://portal.int.demo.catena-x.net/documentation/?path=docs%2F03.+User+Management%2F02.+Modify+User+Account%2F03.+User+Permissions.md
+With the user authorization, the user is able to create new alerts and investigations, view and edit existing alerts and investigations. The user can send alerts and investigations to the supervisor for approval.
 
-image::https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/user-manual/assign_app_roles.png[]
+==== Supervisor
 
-=== Catena-X portal roles
+With supervisor authorization, the user is able to view, evaluate and approve alerts and investigations that have been created. The supervisor also has all the authorizations that the standard user has.
 
-Role details: https://portal.int.demo.catena-x.net/role-details
+==== Admin
 
-image::https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/user-manual/cx_portal_roles.png[]
-
-User accounts: https://portal.int.demo.catena-x.net/documentation/?path=docs%2F03.+User+Management%2F01.+User+Account
-
-=== Technical users
-
-Documentation Portal: https://portal.int.demo.catena-x.net/documentation/?path=docs%2F03.+User+Management%2F01.+User+Account
-
-To login use the credentials provided by the hosting company.
-
- The application is configured with a technical user, which holds the required IRS roles:
-- Creating a policy in IRS -> admin_irs
-- Requesting jobs in IRS -> view_irs
-
-
- For usage of an EDC it is necessary to provide another technical user. Required roles:
- - Identity Wallet Management Role
+With administrator authorization, the user is primarily able to configure the technical configuration of the EDC connection. From a technical perspective, the admin only has read authorization for existing warnings, investigations and products.
 
 == Navigation
 
