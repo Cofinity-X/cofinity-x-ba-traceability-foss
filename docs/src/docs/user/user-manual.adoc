@@ -1,4 +1,4 @@
-= Users Manual
+= User Manual
 
 == Notice
 
