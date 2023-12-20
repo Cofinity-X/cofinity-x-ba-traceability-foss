@@ -34,9 +34,11 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.common.model.PageResult;
 import org.eclipse.tractusx.traceability.common.request.OwnPageable;
+import org.eclipse.tractusx.traceability.common.request.SearchCriteriaRequestParam;
 import org.eclipse.tractusx.traceability.common.response.ErrorResponse;
 import org.eclipse.tractusx.traceability.qualitynotification.application.base.service.QualityNotificationService;
 import org.eclipse.tractusx.traceability.qualitynotification.application.investigation.mapper.InvestigationResponseMapper;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,7 +58,7 @@ import static org.eclipse.tractusx.traceability.qualitynotification.domain.base.
 
 @RestController
 @RequestMapping(value = "/investigations", consumes = "application/json", produces = "application/json")
-@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_USER')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERVISOR')") // default role, will be overridden for specific endpoints
 @Tag(name = "Investigations", description = "Operations on Investigation Notification")
 @Validated
 @Slf4j
@@ -120,6 +122,7 @@ public class InvestigationsController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR', 'ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     public QualityNotificationIdResponse investigateAssets(@RequestBody @Valid StartQualityNotificationRequest request) {
         StartQualityNotificationRequest cleanRequest = sanitize(request);
@@ -181,9 +184,10 @@ public class InvestigationsController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @GetMapping("/created")
-    public PageResult<InvestigationResponse> getCreatedInvestigations(OwnPageable pageable) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_USER')")
+    public PageResult<InvestigationResponse> getCreatedInvestigations(OwnPageable pageable, SearchCriteriaRequestParam searchCriteriaRequestParam) {
         log.info(API_LOG_START + "/created");
-        return InvestigationResponseMapper.fromAsPageResult(investigationService.getCreated(OwnPageable.toPageable(pageable)));
+        return InvestigationResponseMapper.fromAsPageResult(investigationService.getCreated(OwnPageable.toPageable(pageable), searchCriteriaRequestParam.toSearchCriteria(QualityNotificationSide.SENDER)));
     }
 
     @Operation(operationId = "getReceivedInvestigations",
@@ -239,9 +243,10 @@ public class InvestigationsController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @GetMapping("/received")
-    public PageResult<InvestigationResponse> getReceivedInvestigations(OwnPageable pageable) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_USER')")
+    public PageResult<InvestigationResponse> getReceivedInvestigations(OwnPageable pageable, SearchCriteriaRequestParam searchCriteriaRequestParam) {
         log.info(API_LOG_START + "/received");
-        return InvestigationResponseMapper.fromAsPageResult(investigationService.getReceived(OwnPageable.toPageable(pageable)));
+        return InvestigationResponseMapper.fromAsPageResult(investigationService.getReceived(OwnPageable.toPageable(pageable), searchCriteriaRequestParam.toSearchCriteria(QualityNotificationSide.RECEIVER)));
     }
 
     @Operation(operationId = "getInvestigation",
@@ -294,6 +299,7 @@ public class InvestigationsController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @GetMapping("/{investigationId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_USER')")
     public InvestigationResponse getInvestigation(@PathVariable Long investigationId) {
         log.info(API_LOG_START + "/{}", investigationId);
         return InvestigationResponseMapper.from(investigationService.find(investigationId));
@@ -353,6 +359,7 @@ public class InvestigationsController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @PostMapping("/{investigationId}/approve")
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR', 'ROLE_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void approveInvestigation(@PathVariable Long investigationId) {
         log.info(API_LOG_START + "/{}/approve", investigationId);
@@ -360,9 +367,9 @@ public class InvestigationsController {
     }
 
     @Operation(operationId = "cancelInvestigation",
-            summary = "Cancles investigations by id",
+            summary = "Cancels investigations by id",
             tags = {"Investigations"},
-            description = "The endpoint cancles investigations by their id.",
+            description = "The endpoint cancels investigations by their id.",
             security = @SecurityRequirement(name = "oAuth2", scopes = "profile email"))
     @ApiResponses(value = {
             @ApiResponse(
@@ -412,6 +419,7 @@ public class InvestigationsController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @PostMapping("/{investigationId}/cancel")
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelInvestigation(@PathVariable Long investigationId) {
         log.info(API_LOG_START + "/{}/cancel", investigationId);
@@ -471,8 +479,8 @@ public class InvestigationsController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR')")
     @PostMapping("/{investigationId}/close")
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void closeInvestigation(@PathVariable Long investigationId, @Valid @RequestBody CloseQualityNotificationRequest closeInvestigationRequest) {
         CloseQualityNotificationRequest cleanCloseQualityNotificationRequest = sanitize(closeInvestigationRequest);
@@ -533,8 +541,8 @@ public class InvestigationsController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
-    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR')")
     @PostMapping("/{investigationId}/update")
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR', 'ROLE_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInvestigation(@PathVariable Long investigationId, @Valid @RequestBody UpdateQualityNotificationRequest updateInvestigationRequest) {
         UpdateQualityNotificationRequest cleanUpdateQualityNotificationRequest = sanitize(updateInvestigationRequest);

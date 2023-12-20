@@ -35,7 +35,7 @@ export class UserMenuComponent {
   public isExpanded = false;
   public userInitials = '';
   public userDetails = { name: '', email: '', role: '' };
-  public activeItem: string = '';
+  public activeItem = '';
   public portalUrl = environment.portalUrl;
 
   constructor(private readonly layoutFacade: LayoutFacade, private readonly router: Router) {
@@ -65,8 +65,12 @@ export class UserMenuComponent {
     this.router.navigate(['']).then();
   }
 
+  public navigateToFaqs(): void {
+    this.router.navigate(['faqs']).then();
+  }
+
   @HostListener('window:click', [])
-  private onClick(): void {
+  public onClick(): void {
     this.isExpanded = false;
   }
 

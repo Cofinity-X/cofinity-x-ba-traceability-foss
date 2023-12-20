@@ -78,23 +78,27 @@ frontend:
 
   podAnnotations: {}
 
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+    fsGroup: 10100
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   securityContext:
+    seccompProfile:
+      type: RuntimeDefault
     allowPrivilegeEscalation: false
     runAsNonRoot: true
-    runAsUser: 101
-    # runAsGroup: 3000
+    runAsUser: 10100
+    runAsGroup: 10100
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: false  # Variables are written to the HTML files on startup, so this is not possible.
 
   service:
     type: ClusterIP
     port: 8080
 
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-resource-requests-and-limits
   resources:
     limits:
@@ -108,7 +112,6 @@ frontend:
 
   tolerations: []
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity:
     podAntiAffinity:
@@ -128,7 +131,6 @@ frontend:
     hosts: []
     tls: []
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://github.com/helm/charts/blob/master/stable/nginx-ingress/values.yaml#L210
   livenessProbe:
     failureThreshold: 6
@@ -196,7 +198,6 @@ backend:
     seccompProfile:
       type: RuntimeDefault
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   securityContext:
     allowPrivilegeEscalation: false
@@ -206,7 +207,7 @@ backend:
     capabilities:
       drop:
         - ALL
-    readOnlyRootFilesystem: false
+    readOnlyRootFilesystem: true
 
   service:
     type: ClusterIP
@@ -215,7 +216,6 @@ backend:
   autoscaling:
     enabled: false
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-resource-requests-and-limits
   resources:
     limits:
@@ -229,7 +229,6 @@ backend:
 
   tolerations: []
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity:
     podAntiAffinity:
@@ -242,7 +241,6 @@ backend:
                   operator: DoesNotExist
             topologyKey: kubernetes.io/hostname
 
-  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://github.com/helm/charts/blob/master/stable/nginx-ingress/values.yaml#L210
   livenessProbe:
     failureThreshold: 6

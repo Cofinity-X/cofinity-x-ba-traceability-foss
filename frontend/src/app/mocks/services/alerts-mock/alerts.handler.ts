@@ -69,9 +69,8 @@ export const alertsHandlers = [
     const pagination = extractPagination(req);
 
     const currentStatus = [
-      NotificationStatus.RECEIVED,
+      NotificationStatus.SENT,
       NotificationStatus.ACKNOWLEDGED,
-      NotificationStatus.ACCEPTED,
       NotificationStatus.DECLINED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
@@ -87,15 +86,11 @@ export const alertsHandlers = [
     const statusCollection = [
       NotificationStatus.CREATED,
       NotificationStatus.SENT,
-      NotificationStatus.RECEIVED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
       NotificationStatus.ACKNOWLEDGED,
-      NotificationStatus.ACCEPTED,
       NotificationStatus.DECLINED,
-
       NotificationStatus.ACKNOWLEDGED,
-      NotificationStatus.ACCEPTED,
       NotificationStatus.DECLINED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
@@ -149,7 +144,6 @@ export const alertsTestHandlers = [
     const statusCollection = [
       NotificationStatus.CREATED,
       NotificationStatus.SENT,
-      NotificationStatus.RECEIVED,
       NotificationStatus.CLOSED,
       NotificationStatus.CANCELED,
       NotificationStatus.ACKNOWLEDGED,

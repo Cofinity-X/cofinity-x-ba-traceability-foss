@@ -28,64 +28,90 @@ import { sleepForTests } from '../../../../../test';
 import { RequestInvestigationComponent } from '@shared/components/request-notification/request-investigation.component';
 import { RequestAlertComponent } from '@shared/components/request-notification/request-alert.component';
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { cloneDeep } from 'lodash-es';
+import { RequestComponentData } from './request.componenet.model';
+import { By } from '@angular/platform-browser';
 
 describe('requestInvestigationComponent', () => {
   let deselectPartMock: jasmine.Spy<jasmine.Func>;
   let clearSelectedMock: jasmine.Spy<jasmine.Func>;
-  let submittedMock: jasmine.Spy<jasmine.Func>;
+  let submittedMock: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
+
   const currentSelectedItems = [{ name: 'part_1' }, { name: 'part_2' }, { name: 'part_3' }];
 
-  const renderRequestInvestigationComponent = async () => {
-    return renderComponent(
-      `<app-request-investigation
-        (deselectPart)='deselectPartMock($event)'
-        (clearSelected)='clearSelectedMock($event)'
-        (submitted)='submittedMock($event)'
-        [selectedItems]='currentSelectedItems'
-        ></app-request-investigation>`,
-      {
-        declarations: [RequestInvestigationComponent],
-        imports: [SharedModule, LayoutModule, OtherPartsModule],
-        translations: ['page.otherParts', 'partDetail'],
-        componentProperties: {
-          deselectPartMock,
-          clearSelectedMock,
-          submittedMock,
-          currentSelectedItems,
+  const requestDataDefault = {
+    showHeadline: true,
+    selectedItems: currentSelectedItems,
+  } as RequestComponentData;
+
+  let requestData = requestDataDefault;
+
+  const renderRequestInvestigationComponent = (component = `<app-request-investigation (submitted)='submittedMock($event)'></app-request-investigation>` as any) => {
+    return renderComponent(component, {
+      declarations: [RequestInvestigationComponent],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: requestData },
+        {
+          provide: MatDialogRef, useValue: {
+            close: jasmine.createSpy(),
+          }
         },
+      ],
+      imports: [SharedModule, LayoutModule, OtherPartsModule],
+      translations: ['page.otherParts', 'partDetail'],
+      componentProperties: {
+        deselectPartMock,
+        clearSelectedMock,
+        submittedMock,
+        currentSelectedItems,
       },
-    );
+    });
   };
 
-  const renderRequestAlertComponent = async () => {
-    return renderComponent(
-      `<app-request-alert
-        (deselectPart)='deselectPartMock($event)'
-        (clearSelected)='clearSelectedMock($event)'
-        (submitted)='submittedMock($event)'
-        [selectedItems]='currentSelectedItems'
-        ></app-request-alert>`,
-      {
-        declarations: [RequestAlertComponent],
-        imports: [SharedModule, LayoutModule, OtherPartsModule],
-        translations: ['page.otherParts', 'partDetail'],
-        componentProperties: {
-          deselectPartMock,
-          clearSelectedMock,
-          submittedMock,
-          currentSelectedItems,
+  const renderRequestInvestigationComponentObject = () => {
+    return renderComponent(RequestInvestigationComponent, {
+      imports: [SharedModule, LayoutModule, OtherPartsModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: requestData },
+        {
+          provide: MatDialogRef, useValue: {
+            close: jasmine.createSpy(),
+          }
         },
-      },
-    );
+      ],
+    });
   };
 
-  beforeEach(() => {
-    deselectPartMock = jasmine.createSpy();
-    clearSelectedMock = jasmine.createSpy();
-    submittedMock = jasmine.createSpy();
-  });
+  // by default we use component as a string, but when need to use spyOn we pass componend class
+  const renderRequestAlertComponent = (component = `<app-request-alert (submitted)='submittedMock($event)'></app-request-alert>` as any) => {
+    return renderComponent(component, {
+      declarations: [RequestAlertComponent],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: requestData },
+        {
+          provide: MatDialogRef, useValue: {
+            close: jasmine.createSpy(),
+          }
+        },
+      ],
+      imports: [SharedModule, LayoutModule, OtherPartsModule],
+      translations: ['page.otherParts', 'partDetail'],
+      componentProperties: {
+        deselectPartMock,
+        clearSelectedMock,
+        submittedMock,
+        currentSelectedItems,
+      },
+    });
+  };
 
   describe('Request Investigation', () => {
+    beforeEach(() => {
+      requestData = cloneDeep(requestDataDefault)
+      submittedMock = jasmine.createSpy();
+    });
+
     it('should render', async () => {
       await renderRequestInvestigationComponent();
       await shouldRender('requestInvestigations');
@@ -107,12 +133,35 @@ describe('requestInvestigationComponent', () => {
     });
 
     it('should submit parts', async () => {
-      await renderRequestInvestigationComponent();
-      await shouldSubmitParts('requestInvestigations');
+      const { fixture } = await renderRequestInvestigationComponent();
+      await shouldSubmitParts('requestInvestigations', fixture);
+    });
+
+    it('should submit', async () => {
+      const { fixture } = await renderRequestInvestigationComponentObject();
+      const { componentInstance } = fixture;
+      const requestInvestigationComponentSpy = spyOn(componentInstance, 'submit');
+      componentInstance.submit();
+      expect(requestInvestigationComponentSpy).toHaveBeenCalled();
+    });
+
+    it('should not prepare or submit form if invalid', async () => {
+      const { fixture } = await renderRequestInvestigationComponentObject();
+      const { componentInstance } = fixture;
+
+      componentInstance.submit(); // Call the submit method
+
+      // Expectations for an invalid form
+      expect(componentInstance.formGroup.invalid).toBeTrue(); // Ensure the form is invalid
     });
   });
 
   describe('Request Alert', () => {
+    beforeEach(() => {
+      requestData = cloneDeep(requestDataDefault);
+      submittedMock = jasmine.createSpy();
+    });
+
     it('should render', async () => {
       await renderRequestAlertComponent();
       await shouldRender('requestAlert');
@@ -134,8 +183,8 @@ describe('requestInvestigationComponent', () => {
     });
 
     it('should submit parts', async () => {
-      await renderRequestAlertComponent();
-      await shouldSubmitParts('requestAlert', true);
+      const { fixture } = await renderRequestAlertComponent();
+      await shouldSubmitParts('requestAlert', fixture, true);
     });
   });
 
@@ -168,14 +217,30 @@ describe('requestInvestigationComponent', () => {
     expect(submitElement).toBeInTheDocument();
   };
 
-  const shouldSubmitParts = async (context: RequestContext, shouldFillBpn = false) => {
+  const shouldSubmitParts = async (context: RequestContext, fixture, shouldFillBpn = false) => {
     const testText = 'This is for a testing purpose.';
     const textArea = (await waitFor(() => screen.getByTestId('BaseInputElement-1'))) as HTMLTextAreaElement;
     fireEvent.input(textArea, { target: { value: testText } });
 
+    const severitySelect = fixture.debugElement.query(By.css('mat-select')).nativeElement;
+    severitySelect.click();  // Open the dropdown
+    fixture.detectChanges(); // Update the view
+
+    const option = fixture.debugElement.query(By.css('mat-option')).nativeElement;
+    option.click();  // Select the option
+    fixture.detectChanges(); // Update the view
+    const tomorrow = new Date(); // Get the current date
+    tomorrow.setDate(tomorrow.getDate() + 1); // Set it to tomorrow
+    const tomorrowString = tomorrow.toISOString().split('T')[0];
+    const targetDate: HTMLInputElement = null
+
     if (shouldFillBpn) {
       const bpnInput = (await waitFor(() => screen.getByTestId('BaseInputElement-3'))) as HTMLTextAreaElement;
       fireEvent.input(bpnInput, { target: { value: 'BPNA0123TEST0123' } });
+    } else {
+      const matFormField = (await waitFor(() => screen.getByTestId('multi-select-autocomplete--date-search-form'))) as HTMLInputElement;
+      const targetDate = matFormField.querySelector('input');
+      fireEvent.input(targetDate, { target: { value: tomorrowString } }); // Set the date
     }
 
     const submit = await waitFor(() => screen.getByText('requestNotification.submit'));

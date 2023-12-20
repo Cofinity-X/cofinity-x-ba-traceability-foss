@@ -20,7 +20,7 @@
  ********************************************************************************/
 
 import { Injectable } from '@angular/core';
-import { Notifications } from '@shared/model/notification.model';
+import { NotificationStatus, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { InvestigationsService } from '@shared/service/investigations.service';
 import { PartsService } from '@shared/service/parts.service';
@@ -28,18 +28,32 @@ import { Observable, Subscription } from 'rxjs';
 import { DashboardService } from '../core/dashboard.service';
 import { DashboardState } from '../core/dashboard.state';
 import { DashboardStats } from '../model/dashboard.model';
+import { AlertsService } from '@shared/service/alerts.service';
+import { FilterMethod, TableFilter } from '@shared/components/table/table.model';
+import { FilterOperator } from '@page/parts/model/parts.model';
 
 @Injectable()
 export class DashboardFacade {
   private assetNumbersSubscription: Subscription;
   private investigationSubscription: Subscription;
+  private alertSubscription: Subscription;
+  private filtering: TableFilter = {
+    filterMethod: FilterMethod.OR,
+    status: [
+      { filterValue: NotificationStatus.ACCEPTED.toString(), filterOperator: FilterOperator.EQUAL },
+      { filterValue: NotificationStatus.ACKNOWLEDGED.toString(), filterOperator: FilterOperator.EQUAL },
+      { filterValue: NotificationStatus.DECLINED.toString(), filterOperator: FilterOperator.EQUAL },
+      { filterValue: NotificationStatus.RECEIVED.toString(), filterOperator: FilterOperator.EQUAL },
+    ]
+  };
 
   constructor(
     private readonly dashboardService: DashboardService,
     private readonly dashboardState: DashboardState,
     private readonly partsService: PartsService,
     private readonly investigationsService: InvestigationsService,
-  ) {}
+    private readonly alertsService: AlertsService,
+  ) { }
 
   public get numberOfMyParts$(): Observable<View<number>> {
     return this.dashboardState.numberOfMyParts$;
@@ -53,31 +67,43 @@ export class DashboardFacade {
     return this.dashboardState.numberOfInvestigations$;
   }
 
+  public get numberOfAlerts$(): Observable<View<number>> {
+    return this.dashboardState.numberOfAlerts$;
+  }
+
   public get investigations$(): Observable<View<Notifications>> {
     return this.dashboardState.investigations$;
+  }
+
+  public get alerts$(): Observable<View<Notifications>> {
+    return this.dashboardState.alerts$;
   }
 
   public setDashboardData(): void {
     this.setAssetNumbers();
     this.setInvestigations();
+    this.setAlerts();
   }
 
   private setAssetNumbers(): void {
     this.dashboardState.setNumberOfMyParts({ loader: true });
     this.dashboardState.setNumberOfOtherParts({ loader: true });
     this.dashboardState.setNumberOfInvestigations({ loader: true });
+    this.dashboardState.setNumberOfAlerts({ loader: true });
 
     this.assetNumbersSubscription?.unsubscribe();
     this.assetNumbersSubscription = this.dashboardService.getStats().subscribe({
       next: (dashboardStats: DashboardStats) => {
-        this.dashboardState.setNumberOfMyParts({ data: dashboardStats.myItems });
+        this.dashboardState.setNumberOfMyParts({ data: dashboardStats.myParts });
         this.dashboardState.setNumberOfOtherParts({ data: dashboardStats.otherParts });
         this.dashboardState.setNumberOfInvestigations({ data: dashboardStats.investigations || 0 });
+        this.dashboardState.setNumberOfAlerts({ data: dashboardStats.alerts || 0 });
       },
       error: error => {
         this.dashboardState.setNumberOfMyParts({ error });
         this.dashboardState.setNumberOfOtherParts({ error });
         this.dashboardState.setNumberOfInvestigations({ error });
+        this.dashboardState.setNumberOfAlerts({ error });
       },
     });
   }
@@ -88,10 +114,19 @@ export class DashboardFacade {
   }
 
   private setInvestigations(): void {
+
     this.investigationSubscription?.unsubscribe();
-    this.investigationSubscription = this.investigationsService.getReceivedInvestigations(0, 5, []).subscribe({
+    this.investigationSubscription = this.investigationsService.getReceivedInvestigations(0, 5, [], this.filtering).subscribe({
       next: data => this.dashboardState.setInvestigation({ data }),
       error: (error: Error) => this.dashboardState.setInvestigation({ error }),
+    });
+  }
+
+  private setAlerts(): void {
+    this.alertSubscription?.unsubscribe();
+    this.alertSubscription = this.alertsService.getReceivedAlerts(0, 5, [], this.filtering).subscribe({
+      next: data => this.dashboardState.setAlerts({ data }),
+      error: (error: Error) => this.dashboardState.setAlerts({ error }),
     });
   }
 }

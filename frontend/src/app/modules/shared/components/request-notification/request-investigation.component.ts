@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateTimeString } from '@shared/components/dateTime/dateTime.component';
 import { DateValidators } from '@shared/components/dateTime/dateValidators.model';
@@ -33,24 +33,29 @@ import { getRoute, INVESTIGATION_BASE_ROUTE } from '@core/known-route';
 import { NotificationStatusGroup } from '@shared/model/notification.model';
 import { InvestigationsService } from '@shared/service/investigations.service';
 import { Part } from '@page/parts/model/parts.model';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { RequestComponentData } from './request.componenet.model';
 
 @Component({
   selector: 'app-request-investigation',
   templateUrl: './request-notification.base.html',
+  styleUrls: ['./request-notification.base.scss'],
 })
 export class RequestInvestigationComponent extends RequestNotificationBase {
-  @Input() selectedItems: Part[];
-  @Input() showHeadline = true;
-
   @Output() deselectPart = new EventEmitter<Part>();
   @Output() restorePart = new EventEmitter<Part>();
   @Output() clearSelected = new EventEmitter<void>();
   @Output() submitted = new EventEmitter<void>();
 
+  public selectedItems: Part[] = [];
+  public showHeadline = true;
+
   public readonly context: RequestContext = 'requestInvestigations';
 
-  constructor(toastService: ToastService, private readonly investigationsService: InvestigationsService) {
-    super(toastService);
+  constructor(toastService: ToastService, private readonly investigationsService: InvestigationsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
+    super(toastService, dialog);
+    this.selectedItems = data.selectedItems;
+    this.showHeadline = data.showHeadline;
   }
 
   public readonly formGroup = new FormGroup<{
@@ -59,13 +64,15 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
     severity: FormControl<Severity>;
   }>({
     description: new FormControl('', [Validators.required, Validators.maxLength(1000), Validators.minLength(15)]),
-    targetDate: new FormControl(null, [DateValidators.atLeastNow()]),
-    severity: new FormControl(Severity.MINOR, [Validators.required]),
+    targetDate: new FormControl(null, [DateValidators.atLeastNow(), Validators.required]),
+    severity: new FormControl(Severity.MINOR),
   });
 
   public submit(): void {
     this.prepareSubmit();
-    if (this.formGroup.invalid) return;
+    if (this.formGroup.invalid) {
+      return;
+    }
 
     const partIds = this.selectedItems.map(part => part.id);
     const { description, targetDate, severity } = this.formGroup.value;
@@ -75,5 +82,7 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
       next: () => this.onSuccessfulSubmit(link, queryParams),
       error: () => this.onUnsuccessfulSubmit(),
     });
+
+    this.dialog.closeAll();
   }
 }

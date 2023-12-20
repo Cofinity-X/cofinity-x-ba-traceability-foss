@@ -1,6 +1,7 @@
 {
   "partDetail": {
     "relations": "Beziehungen",
+    "fullScreenRelations": "Beziehungen für",
     "overview": "Übersicht",
     "manufacturerData": "Herstellerdaten",
     "customerData": "Kundendaten",
@@ -13,8 +14,8 @@
     "qualityType": "Qualitätsstufe",
     "productionDate": "Produktionsdatum",
     "manufacturer": "Hersteller",
-    "manufacturerPartId": "Hersteller produktnummer",
-    "nameAtManufacturer": "Hersteller produktname",
+    "manufacturerPartId": "Hersteller Produktnummer",
+    "nameAtManufacturer": "Hersteller Produktname",
     "nameAtCustomer": "Name beim Kunden",
     "customerPartId": "Kunden Produktnummer",
     "semanticDataModel": "Semantisches Datenmodell",

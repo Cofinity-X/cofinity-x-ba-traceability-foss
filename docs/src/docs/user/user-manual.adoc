@@ -1,4 +1,5 @@
-= User Manual
+= Users Manual
+:toc:
 
 == Notice
 

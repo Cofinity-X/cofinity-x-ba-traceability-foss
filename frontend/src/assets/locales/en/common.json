@@ -3,9 +3,9 @@
   "routing": {
     "home": "Home",
     "dashboard": "Dashboard",
-    "parts": "Parts",
-    "otherParts": "Other parts",
-    "about": "About",
+    "parts": "My parts",
+    "otherParts": "Shared parts",
+    "about": "About Cofinity-X",
     "relations": "Relations",
     "admin": "Administration",
     "investigations": "Quality investigations",
@@ -15,19 +15,24 @@
   },
   "pageTitle": {
     "dashboard": "Dashboard",
-    "parts": "My Parts",
-    "otherParts": "Other Parts",
-    "about": "About Catena-X Open-Source Traceability",
-    "relations": "Part Relations",
+    "parts": "My parts",
+    "otherParts": "Shared parts",
+    "about": "About Cofinity-X",
+    "relations": "Part relations",
     "admin": "Administration Catena-X",
-    "investigations": "Quality Investigations",
-    "alerts": "Quality Alerts"
+    "investigations": "Quality investigations",
+    "alerts": "Quality alerts"
   },
   "layout": {
     "nav": {
-      "openUserMenu": "Open user menu",
-      "signOut": "Sign out",
-      "goToPortal": "Go to CX Portal"
+      "faqs": "FAQs",
+      "helpdesk": "Helpdesk",
+      "signOut": "Logout"
+    },
+    "footer": {
+      "imprint": "Imprint",
+      "version": "Version updates",
+      "imprintLink": "https://www.cofinity-x.com/contact/imprint/"
     }
   },
   "actions": {
@@ -51,6 +56,7 @@
     "goBack": "Back"
   },
   "table": {
+    "latestFive": "(Latest 5)",
     "noResultFound": "NO RESULTS FOUND.",
     "tryAgain": "Please try again later.",
     "selectPageSize": "Select page of periodic elements",
@@ -66,8 +72,17 @@
       "shellDescriptorsFetchDelta": "Fetch Delta",
       "endDate": "End date"
     },
+    "tableSettings": {
+      "title": "Column settings",
+      "selectAll": "All",
+      "refreshTooltip": "Reset individual table column settings to default",
+      "saveAction": "Save"
+    },
     "column": {
       "id": "ID",
+      "alertId": "Alert ID",
+      "investigationId": "Investigation ID",
+      "!": "!",
       "idShort": "ID Short",
       "name": "Name",
       "manufacturer": "Manufacturer",
@@ -94,9 +109,9 @@
       "catenaXSiteId": "SiteId",
       "psFunction": "Function",
       "functionValidFrom": "Function valid from",
-      "functionValidUntil" : "Function valid until",
-      "activeAlerts" : "Active Quality alerts",
-      "activeInvestigations" : "Active Quality investigations"
+      "functionValidUntil": "Function valid until",
+      "activeAlerts": "Active Quality alerts",
+      "activeInvestigations": "Active Quality investigations"
     }
   },
   "dataLoading": {
@@ -108,13 +123,13 @@
     "Minor": "Minor",
     "Major": "Major",
     "Critical": "Critical",
-    "LifeThreatening": "Life-Threatening"
+    "LifeThreatening": "Life threatening"
   },
   "severity": {
     "MINOR": "Minor",
     "MAJOR": "Major",
     "CRITICAL": "Critical",
-    "LIFE-THREATENING": "Life-Threatening"
+    "LIFE-THREATENING": "Life threatening"
   },
   "input": {
     "minMaxLengthHint": "{{current}} Characters. (Min. {{min}} and max. {{max}} characters)",
@@ -155,29 +170,32 @@
     "success_other": "You queued an investigation for {{count}} parts"
   },
   "requestNotification": {
-    "partDescription": "You selected the following parts:",
+    "partDescription": "You selected the following parts",
     "targetDateDescription": "Please specify the deadline by which you expect a response.",
     "targetDateLabel": "Deadline",
-    "bpnLabel": "BPN",
+    "bpnLabel": "Recipient BPN",
     "bpnDescription": "Please specify the receiver BPN.",
     "restoreItem": "Do you want to restore your last item?",
     "textAreaLabel": "Description",
-    "cancel": "CANCEL",
-    "submit": "ADD TO QUEUE",
+    "cancel": "Cancel",
+    "submitTooltip": "You must first fill in all fields marked with an *",
+    "submit": "Add to queue",
     "severity": "Severity",
     "severityDescription": "Select the severity for the problem at hand"
   },
   "pagination": {
-    "itemsPerPageLabel": "Items per page:",
+    "itemsPerPageLabel": "Show",
     "nextPageLabel": "Next page",
     "previousPageLabel": "Previous page",
     "firstPageLabel": "First page",
     "lastPageLabel": "Last page",
     "emptyRange": "0 of {{length}}",
-    "range": "{{startIndex}} – {{endIndex}} of {{length}}"
+    "range": "{{startIndex}} of {{length}}"
   },
   "commonInvestigation": {
-    "viewAll": "View all",
+    "viewAll": "view all",
+    "noInvestigations": "No current quality investigations",
+    "noInvestigationsDescription": "If there are any quality investigations, they will be displayed here.",
     "tabs": {
       "received": "Received",
       "queuedAndRequested": "Queued & Requested"
@@ -193,16 +211,16 @@
       "DECLINED": "Declined"
     },
     "modal": {
-      "acceptTitle": "Accept of investigation",
+      "acceptTitle": "Accept investigation",
       "acceptReasonHint": "Enter the reason for accepting this investigation.",
-      "acknowledgeTitle": "Acknowledgment of investigation",
-      "approvalTitle": "Approval of investigation",
-      "closeTitle": "Close of investigation",
-      "closeReasonHint": "Enter the reason for close action.",
-      "cancellationTitle": "Cancellation of investigation",
-      "cancellationHint": "Enter the ID of the investigation to confirm your cancellation.",
-      "declineTitle": "Decline of investigation",
-      "declineReasonHint": "Enter the reason for declining this investigation.",
+      "acknowledgeTitle": "Acknowledge investigation",
+      "approvalTitle": "Approve investigation",
+      "closeTitle": "Close investigation",
+      "closeReasonHint": "Enter the reason for closing this investigation",
+      "cancellationTitle": "Cancel investigation",
+      "cancellationHint": "Enter the ID of the investigation to confirm your cancellation",
+      "declineTitle": "Decline investigation",
+      "declineReasonHint": "Enter the reason for declining this investigation",
       "successfullyAccepted": "Investigation was accepted successfully.",
       "successfullyAcknowledged": "Investigation was acknowledged successfully.",
       "successfullyApproved": "Investigation was approved successfully.",
@@ -218,13 +236,15 @@
     }
   },
   "commonAlert": {
-    "viewAll": "View all",
+    "viewAll": "view all",
+    "noAlerts": "No current quality alerts",
+    "noAlertsDescription": "If there are any quality alerts, they will be displayed here.",
     "tabs": {
       "received": "Received",
       "queuedAndRequested": "Queued & Sent"
     },
     "status": {
-      "SENT": "Sent",
+      "SENT": "Requested",
       "CANCELED": "Cancelled",
       "CLOSED": "Closed",
       "CREATED": "Queued",
@@ -234,16 +254,16 @@
       "DECLINED": "Declined"
     },
     "modal": {
-      "acceptTitle": "Accept of alert",
-      "acceptReasonHint": "Enter the reason for accepting this alert.",
-      "acknowledgeTitle": "Acknowledgment of alert",
-      "approvalTitle": "Approval of alert",
-      "closeTitle": "Close of alert",
-      "closeReasonHint": "Enter the reason for close action.",
-      "cancellationTitle": "Cancellation of alert",
-      "cancellationHint": "Enter the ID of the alert to confirm your cancellation.",
-      "declineTitle": "Decline of alert",
-      "declineReasonHint": "Enter the reason for declining this alert.",
+      "acceptTitle": "Accept alert",
+      "acceptReasonHint": "Enter the reason for accepting this alert",
+      "acknowledgeTitle": "Acknowledge alert",
+      "approvalTitle": "Approve alert",
+      "closeTitle": "Close alert",
+      "closeReasonHint": "Enter the reason for closing this alert",
+      "cancellationTitle": "Cancel alert",
+      "cancellationHint": "Enter the ID of the alert to confirm your cancellation",
+      "declineTitle": "Decline alert",
+      "declineReasonHint": "Enter the reason for declining this alert",
       "successfullyAccepted": "Alert was accepted successfully.",
       "successfullyAcknowledged": "Alert was acknowledged successfully.",
       "successfullyApproved": "Alert was approved successfully.",
@@ -259,23 +279,50 @@
     }
   },
   "bomLifecycleActivator": {
+    "selectLifeCycles": "Select 2 lifecycle stages",
     "asBuilt": "As Built",
-    "asPlanned": "As Planned"
+    "asPlanned": "As Planned",
+    "unImplemented": "Coming soon"
   },
   "multiSelect": {
+    "placeHolder": "All",
+    "selectAll": "All",
     "filterLabel": "Filter",
-    "placeHolder": "All"
+    "filterLabelDate": "Filter by date",
+    "filterLabelSelect": "Choose",
+    "inputLabelText": "Search...",
+    "inputLabelDate": "DD/MM/YYYY",
+    "inputTextHint": "Checks if value starts with the filter."
   },
   "parts": {
     "input": {
       "global-search": {
-        "placeholder": "Search by entering C-X ID, partInstanceId or partNumber / BPN",
+        "placeholderAsset": "Search for IDs, Name, Manufacturer, Customer Part...",
+        "placeholderAlertsAndInvestigations": "Search for Description and BPN ",
         "toastInfo": "By using global search on view level, the local filters on table level was removed."
       }
+    },
+    "openInvestigations": "Open alerts/investigations",
+    "confirmationDialog": {
+      "deletePartTitle": "Delete part?",
+      "deletePartMessage": "If you delete this part, it will be fully removed from the current selection",
+      "deletePartButton": "Delete"
     }
   },
   "datepicker": {
-    "apply": "Filter",
-    "cancel": "Reset"
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "filter": "Filter",
+    "reset": "Reset"
+  },
+  "semanticDataModels": {
+    "BATCH": "Batch",
+    "JUSTINSEQUENCE": "JustInSequence",
+    "SERIALPART": "SerialPart",
+    "UNKNOWN": "Unknown",
+    "PARTASPLANNED": "PartAsPlanned"
+  },
+  "confirmationDialog": {
+    "cancel": "Cancel"
   }
 }

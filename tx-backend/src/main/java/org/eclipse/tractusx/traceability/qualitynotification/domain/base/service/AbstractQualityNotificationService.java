@@ -20,7 +20,7 @@ package org.eclipse.tractusx.traceability.qualitynotification.domain.base.servic
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.service.AssetAsBuiltServiceImpl;
-import org.eclipse.tractusx.traceability.common.model.PageResult;
+import org.eclipse.tractusx.traceability.common.model.*;
 import org.eclipse.tractusx.traceability.qualitynotification.application.base.service.QualityNotificationService;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
@@ -42,14 +42,26 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
 
     protected abstract void setAssetStatus(QualityNotification qualityNotification);
 
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
     @Override
     public PageResult<QualityNotification> getCreated(Pageable pageable) {
         return getQualityNotificationsPageResult(pageable, QualityNotificationSide.SENDER);
     }
 
     @Override
+    public PageResult<QualityNotification> getCreated(Pageable pageable, SearchCriteria searchCriteria) {
+        return getQualityNotificationsPageResult(pageable, searchCriteria);
+    }
+
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
+    @Override
     public PageResult<QualityNotification> getReceived(Pageable pageable) {
         return getQualityNotificationsPageResult(pageable, QualityNotificationSide.RECEIVER);
+    }
+
+    @Override
+    public PageResult<QualityNotification> getReceived(Pageable pageable, SearchCriteria searchCriteria) {
+        return getQualityNotificationsPageResult(pageable, searchCriteria);
     }
 
     @Override
@@ -70,15 +82,26 @@ public abstract class AbstractQualityNotificationService implements QualityNotif
     @Override
     public void approve(Long notificationId) {
         QualityNotification notification = loadOrNotFoundException(new QualityNotificationId(notificationId));
-        final QualityNotification approvedInvestigation = getNotificationPublisherService().approveNotification(notification);
-        getQualityNotificationRepository().updateQualityNotificationEntity(approvedInvestigation);
+        final QualityNotification approvedNotification = getNotificationPublisherService().approveNotification(notification);
+        getQualityNotificationRepository().updateQualityNotificationEntity(approvedNotification);
     }
 
+    // TODO: Propose to upstream tractusx team to remove this method and use searchCriteria based method
     private PageResult<QualityNotification> getQualityNotificationsPageResult(Pageable pageable, QualityNotificationSide alertSide) {
         List<QualityNotification> alertData = getQualityNotificationRepository().findQualityNotificationsBySide(alertSide, pageable)
                 .content();
         Page<QualityNotification> alertDataPage = new PageImpl<>(alertData, pageable, getQualityNotificationRepository().countQualityNotificationEntitiesBySide(alertSide));
         return new PageResult<>(alertDataPage);
+    }
+
+    private PageResult<QualityNotification> getQualityNotificationsPageResult(Pageable pageable, SearchCriteria searchCriteria) {
+        List<QualityNotification> notificationList = getQualityNotificationRepository()
+                                                    .findAll(pageable, searchCriteria)
+                                                    .content()
+                                                    .stream()
+                                                    .toList();
+        Page<QualityNotification> notificationPage = new PageImpl<>(notificationList, pageable, getQualityNotificationRepository().countAll(searchCriteria));
+        return new PageResult<>(notificationPage);
     }
 
     @Override

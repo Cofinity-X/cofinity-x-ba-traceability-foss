@@ -128,7 +128,6 @@ public class ApplicationConfig {
         } catch (Exception exception) {
             log.error("Failed to create Irs Policies : ", exception);
         }
-
     }
 
     @NotNull

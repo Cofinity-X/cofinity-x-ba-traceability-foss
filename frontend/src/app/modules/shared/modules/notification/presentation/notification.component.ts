@@ -19,20 +19,28 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import {
+  MenuActionConfig,
+  PartTableType,
+  TableEventConfig,
+  TableHeaderSort,
+} from '@shared/components/table/table.model';
 import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { StaticIdService } from '@shared/service/staticId.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NotificationTabComponent } from '../notification-tab/notification-tab.component';
 
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
 })
 export class NotificationComponent {
+  @ViewChildren(NotificationTabComponent) notificationTabComponents: QueryList<NotificationTabComponent>;
+
   @Input() receivedNotifications$: Observable<View<Notifications>>;
   @Input() queuedAndRequestedNotifications$: Observable<View<Notifications>>;
   @Input() translationContext: 'commonInvestigation' | 'commonAlert';
@@ -43,15 +51,23 @@ export class NotificationComponent {
   @Input() queuedAndRequestedSortableColumns: Record<string, boolean> = {};
   @Input() receivedMultiSortList: TableHeaderSort[] = [];
   @Input() queuedAndRequestedMultiSortList: TableHeaderSort[] = [];
+  @Input() tablesType: PartTableType[];
+  @Input() receivedFilterConfig: any[] = [];
+  @Input() queuedAndRequestedFilterConfig: any[] = [];
 
   @Output() onReceivedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() onQueuedAndRequestedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
+  @Output() onPaginationPageSizeChange = new EventEmitter<number>();
 
   public readonly tabIndex$ = this.route.queryParams.pipe(map(params => parseInt(params.tabIndex, 10) || 0));
 
   public readonly receivedTabLabelId = this.staticIdService.generateId('Notification.receivedTab');
   public readonly queuedAndRequestedTabLabelId = this.staticIdService.generateId('Notification.queuedAndRequestedTab');
+
+  public itemCount: number[] = [];
+
+  protected readonly PartTableType = PartTableType;
 
   constructor(
     private readonly router: Router,
@@ -61,5 +77,9 @@ export class NotificationComponent {
 
   public onTabChange(tabIndex: number): void {
     void this.router.navigate([], { queryParams: { tabIndex }, replaceUrl: true });
+  }
+
+  public onItemCountChanged(itemCount: number, tabIndex: number): void {
+    this.itemCount[tabIndex] = itemCount;
   }
 }

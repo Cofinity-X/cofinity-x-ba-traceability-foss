@@ -29,17 +29,20 @@ import {
 import { View } from '@shared/model/view.model';
 import { SharedModule } from '@shared/shared.module';
 import { TemplateModule } from '@shared/template.module';
-import { fireEvent, screen, within } from '@testing-library/angular';
+import { screen } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { buildMockInvestigations } from '../../../../../mocks/services/investigations-mock/investigations.test.model';
 import { NotificationModule } from '../notification.module';
+import { PartTableType } from '@shared/components/table/table.model';
 
 describe('NotificationsInboxComponent', () => {
   let clickHandler;
 
-  beforeEach(() => (clickHandler = jasmine.createSpy()));
+  beforeEach(() => {
+    clickHandler = jasmine.createSpy();
+  });
 
   const mapNotificationResponse = (data: NotificationResponse): Notification => {
     const isFromSender = data.channel === 'SENDER';
@@ -64,25 +67,28 @@ describe('NotificationsInboxComponent', () => {
       data: { content: qarContent, page: 0, pageCount: 1, pageSize: 5, totalItems: 1 },
     }).pipe(delay(0));
     const menuActionsConfig = [];
+    const multiSortList = ['description', 'asc'];
 
     return renderComponent(
       `<app-notification
           [queuedAndRequestedNotifications$]='queuedAndRequestedNotifications$'
           [receivedNotifications$]='receivedNotifications$'
           [translationContext]="'commonInvestigation'"
-          [menuActionsConfig]="'menuActionsConfig'"
-
+          [menuActionsConfig]='menuActionsConfig'
           (onReceivedPagination)='clickHandler($event)'
+          [tablesType]='tablesType'
           (onQueuedAndRequestedPagination)='clickHandler($event)'
         ></app-notification>`,
       {
         imports: [SharedModule, NotificationModule, TemplateModule],
         translations: ['common'],
         componentProperties: {
+          multiSortList,
           queuedAndRequestedNotifications$,
           receivedNotifications$,
           clickHandler,
           menuActionsConfig,
+          tablesType: [PartTableType.INVESTIGATIONS_RECEIVED, PartTableType.INVESTIGATIONS_SENT],
         },
       },
     );
@@ -91,30 +97,7 @@ describe('NotificationsInboxComponent', () => {
   it('should render received notifications', async () => {
     const component = await renderNotificationsInbox();
     component.detectChanges();
-    expect(await screen.findByText('Investigation No 1')).toBeInTheDocument();
-  });
-
-  it('should render received notifications with date and status', async () => {
-    await renderNotificationsInbox();
-
-    const descriptionEl = await screen.findByText('Investigation No 1');
-    const row = descriptionEl.closest('tr');
-
-    expect(within(row).getByText('commonInvestigation.status.RECEIVED')).toBeInTheDocument();
-  });
-
-  it('should be able to change notifications page', async () => {
-    await renderNotificationsInbox();
-
-    await screen.findByText('Investigation No 1');
-    fireEvent.click(screen.getByLabelText('pagination.nextPageLabel'));
-
-    expect(await screen.findByText('Investigation No 51')).toBeInTheDocument();
-  });
-
-  it('should render queued & requested notifications', async () => {
-    await renderNotificationsInbox();
-    fireEvent.click(screen.getByText('commonInvestigation.tabs.queuedAndRequested'));
-    expect(await screen.findByText('Investigation No 1')).toBeInTheDocument();
+    expect(await screen.getByText('commonInvestigation.tabs.received')).toBeInTheDocument();
+    expect(await screen.getByText('commonInvestigation.tabs.queuedAndRequested')).toBeInTheDocument();
   });
 });

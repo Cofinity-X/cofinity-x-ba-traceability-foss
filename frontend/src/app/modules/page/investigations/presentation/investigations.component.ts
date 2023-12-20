@@ -26,21 +26,39 @@ import { InvestigationDetailFacade } from '@page/investigations/core/investigati
 import { InvestigationHelperService } from '@page/investigations/core/investigation-helper.service';
 import { NotificationMenuActionsAssembler } from '@shared/assembler/notificationMenuActions.assembler';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
-import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import {
+  MenuActionConfig,
+  PartTableType,
+  TableEventConfig,
+  TableHeaderSort,
+  TableFilter,
+  FilterMethod,
+  FilterInfo,
+} from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
+import { FilterCongigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
 import { Subscription } from 'rxjs';
 import { InvestigationsFacade } from '../core/investigations.facade';
+import { FormGroup, FormControl } from '@angular/forms';
+import { SearchHelper } from '@shared/helper/search-helper';
+import { ToastService } from '@shared/index';
+import { NotificationComponent } from '@shared/modules/notification/presentation/notification.component';
+import { FilterOperator } from '@page/parts/model/parts.model';
 
 @Component({
   selector: 'app-investigations',
   templateUrl: './investigations.component.html',
+  styleUrls: ['./investigations.component.scss'],
 })
 export class InvestigationsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;
+  @ViewChild(NotificationComponent) notificationComponent: NotificationComponent;
 
+  public searchFormGroup = new FormGroup({});
+  public searchControl: FormControl;
   public readonly investigationsReceived$;
   public readonly investigationsQueuedAndRequested$;
 
@@ -48,11 +66,24 @@ export class InvestigationsComponent {
 
   public investigationReceivedSortList: TableHeaderSort[] = [];
   public investigationQueuedAndRequestedSortList: TableHeaderSort[] = [];
-  private ctrlKeyState: boolean = false;
 
+  public filterReceived: TableFilter = { filterMethod: FilterMethod.AND };
+  public filterQueuedAndRequested: TableFilter = { filterMethod: FilterMethod.AND };
+  public readonly filterConfigOptions = new FilterCongigOptions();
+  public investigationsReceivedFilterConfiguration: any[];
+  public investigationsQueuedAndRequestedFilterConfiguration: any[];
   private paramSubscription: Subscription;
+  private ctrlKeyState = false;
+  public DEFAULT_PAGE_SIZE = 50;
 
-  private pagination: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'createdDate', 'desc' ] };
+  private pagination: TableEventConfig = {
+    page: 0,
+    pageSize: this.DEFAULT_PAGE_SIZE,
+    sorting: ['createdDate', 'desc'],
+  };
+
+  protected readonly PartTableType = PartTableType;
+  public readonly searchHelper = new SearchHelper();
 
   constructor(
     public readonly helperService: InvestigationHelperService,
@@ -61,29 +92,46 @@ export class InvestigationsComponent {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly cd: ChangeDetectorRef,
+    public toastService: ToastService,
   ) {
     this.investigationsReceived$ = this.investigationsFacade.investigationsReceived$;
     this.investigationsQueuedAndRequested$ = this.investigationsFacade.investigationsQueuedAndRequested$;
 
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', event => {
       this.ctrlKeyState = event.ctrlKey;
     });
-    window.addEventListener('keyup', (event) => {
+    window.addEventListener('keyup', event => {
       this.ctrlKeyState = event.ctrlKey;
     });
-
   }
 
   public ngOnInit(): void {
     this.paramSubscription = this.route.queryParams.subscribe(params => {
       this.pagination.page = params?.pageNumber;
-      this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList);
-      this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList);
+      this.investigationsFacade.setReceivedInvestigations(
+        this.pagination.page,
+        this.pagination.pageSize,
+        this.investigationReceivedSortList,
+        this.filterReceived,
+      );
+      this.investigationsFacade.setQueuedAndRequestedInvestigations(
+        this.pagination.page,
+        this.pagination.pageSize,
+        this.investigationQueuedAndRequestedSortList,
+        this.filterQueuedAndRequested,
+      );
     });
+    this.setupFilterConfig();
+    const searchControlName = 'investigationSearch';
+    this.searchFormGroup.addControl(searchControlName, new FormControl([]));
+    this.searchControl = this.searchFormGroup.get(searchControlName) as unknown as FormControl;
   }
 
   public ngAfterViewInit(): void {
-    this.menuActionsConfig = NotificationMenuActionsAssembler.getMenuActions(this.helperService, this.notificationCommonModalComponent);
+    this.menuActionsConfig = NotificationMenuActionsAssembler.getMenuActions(
+      this.helperService,
+      this.notificationCommonModalComponent,
+    );
     this.cd.detectChanges();
   }
 
@@ -92,16 +140,63 @@ export class InvestigationsComponent {
     this.paramSubscription?.unsubscribe();
   }
 
+  private setupFilterConfig() {
+    const { createdDate, description, status, targetDate, severity, createdBy, sendTo } =
+      this.filterConfigOptions.filterKeyOptionsNotifications;
+    this.investigationsReceivedFilterConfiguration = [
+      createdDate,
+      description,
+      status(TranslationContext.COMMONINVESTIGATION, true),
+      targetDate,
+      severity,
+      createdBy,
+    ];
+    this.investigationsQueuedAndRequestedFilterConfiguration = [
+      createdDate,
+      description,
+      status(TranslationContext.COMMONINVESTIGATION, false),
+      targetDate,
+      severity,
+      sendTo,
+    ];
+  }
+
   public onReceivedTableConfigChanged(pagination: TableEventConfig) {
     this.pagination = pagination;
+    if (this.pagination.pageSize === 0) {
+      this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
+    }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.RECEIVED);
-    this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList);
+    if (pagination.filtering && Object.keys(pagination.filtering).length > 1) {
+      this.filterReceived = pagination.filtering;
+    }
+    this.investigationsFacade.setReceivedInvestigations(
+      this.pagination.page,
+      this.pagination.pageSize,
+      this.investigationReceivedSortList,
+      this.filterReceived,
+    );
   }
 
   public onQueuedAndRequestedTableConfigChanged(pagination: TableEventConfig) {
     this.pagination = pagination;
+    if (this.pagination.pageSize === 0) {
+      this.pagination.pageSize = this.DEFAULT_PAGE_SIZE;
+    }
     this.setTableSortingList(pagination.sorting, NotificationStatusGroup.QUEUED_AND_REQUESTED);
-    this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList);
+    if (pagination.filtering && Object.keys(pagination.filtering).length > 1) {
+      this.filterQueuedAndRequested = pagination.filtering;
+    }
+    this.investigationsFacade.setQueuedAndRequestedInvestigations(
+      this.pagination.page,
+      this.pagination.pageSize,
+      this.investigationQueuedAndRequestedSortList,
+      this.filterQueuedAndRequested,
+    );
+  }
+
+  public onDefaultPaginationSizeChange(pageSize: number) {
+    this.DEFAULT_PAGE_SIZE = pageSize;
   }
 
   public openDetailPage(notification: Notification): void {
@@ -109,16 +204,29 @@ export class InvestigationsComponent {
     const { link } = getRoute(INVESTIGATION_BASE_ROUTE);
     const tabIndex = this.route.snapshot.queryParamMap.get('tabIndex');
     const tabInformation: NotificationTabInformation = { tabIndex: tabIndex, pageNumber: this.pagination.page };
-    this.router.navigate([ `/${ link }/${ notification.id }` ], { queryParams: tabInformation });
+    this.router.navigate([`/${link}/${notification.id}`], { queryParams: tabInformation });
   }
 
   public handleConfirmActionCompletedEvent() {
     this.ngOnInit();
   }
 
+  public triggerSearch(): void {
+    this.searchHelper.resetFilterAndShowToast(false, this.notificationComponent, this.toastService);
+    const searchValue = this.searchControl.value;
+    const filterInfo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
+    this.filterReceived = { filterMethod: FilterMethod.OR, description: filterInfo, createdBy: filterInfo };
+    this.filterQueuedAndRequested = { filterMethod: FilterMethod.OR, description: filterInfo, sendTo: filterInfo };
+
+    this.investigationsFacade.setReceivedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, this.filterReceived);
+    this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, this.filterQueuedAndRequested);
+  }
+
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {
-    const tableSortList = notificationTable === NotificationStatusGroup.RECEIVED ?
-      this.investigationReceivedSortList : this.investigationQueuedAndRequestedSortList;
+    const tableSortList =
+      notificationTable === NotificationStatusGroup.RECEIVED
+        ? this.investigationReceivedSortList
+        : this.investigationQueuedAndRequestedSortList;
     TableSortingUtil.setTableSortingList(sorting, tableSortList, this.ctrlKeyState);
   }
 

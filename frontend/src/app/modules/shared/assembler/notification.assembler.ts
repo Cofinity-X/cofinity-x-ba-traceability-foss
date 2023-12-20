@@ -48,11 +48,10 @@ export class NotificationAssembler {
       severity: _severity,
       createdDate: _createdDate = '',
       createdBy: _createdBy = '',
-      createdByName: _createdByName = '',
       sendTo: _sendTo = '',
       sendToName: _sendToName = '',
       targetDate: _targetDate = '',
-      errorMessage: _errorMessage= '',
+      errorMessage: _errorMessage = '',
     } = response;
 
     const isFromSender = channel === 'SENDER';
@@ -60,12 +59,12 @@ export class NotificationAssembler {
     const severity = Object.values(Severity).find(element => element == _severity) ?? null;
     const createdDate = new CalendarDateModel(_createdDate);
     const targetDate = new CalendarDateModel(_targetDate);
-    const createdBy = { bpn: _createdBy, name: _createdByName };
+    const createdBy = { bpn: _createdBy, name: '' };
     const sendTo = { bpn: _sendTo, name: _sendToName };
     const errorMessage = _errorMessage || undefined;
     const notificationType = myNotificationType || undefined;
 
-    let assembled = {
+    const assembled = {
       id,
       description,
       createdBy,
@@ -81,6 +80,6 @@ export class NotificationAssembler {
       notificationType
     };
 
-    return errorMessage ? {...assembled, errorMessage: errorMessage} : assembled;
+    return errorMessage ? { ...assembled, errorMessage: errorMessage } : assembled;
   }
 }

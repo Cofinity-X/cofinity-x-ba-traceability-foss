@@ -19,7 +19,9 @@ name: "[FE][TEST] Unit Tests"
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - dev
     paths:
       - 'frontend/**'
   pull_request:
@@ -46,6 +48,7 @@ jobs:
       run: yarn install
     - name: Run yarn test:ci
       run: CHROMIUM_BIN=$(which chrome) yarn test:ci # will run `test:ci` command
+
     - name: Run SonarCloud check
       uses: SonarSource/sonarcloud-github-action@master
       env:

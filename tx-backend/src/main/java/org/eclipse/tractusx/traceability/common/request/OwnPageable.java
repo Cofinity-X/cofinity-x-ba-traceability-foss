@@ -67,7 +67,7 @@ public class OwnPageable {
             try {
                 String[] sortParams = sort.split(",");
                 orders.add(new Sort.Order(Sort.Direction.valueOf(sortParams[1].toUpperCase()),
-                        sortParams[0]));
+                        handleEnumColumns(sortParams[0])));
             } catch (Exception exception) {
                 throw new InvalidSortException(
                         "Invalid sort param provided sort={provided} expected format is following sort=parameter,order"
@@ -76,5 +76,22 @@ public class OwnPageable {
             }
         }
         return Sort.by(orders);
+    }
+
+    private static String handleEnumColumns(final String column) {
+        return switch (column) {
+            case "status" -> "statusrank";
+            case "notifications_status" -> "notifications_statusrank";
+            // Include the notification table based attributes
+            case "createdBy" -> "notifications.createdBy";
+            case "targetDate" -> "notifications.targetDate";
+            case "sendTo" -> "notifications.sendTo";
+            case "qualityAlertsInStatusActive" -> "noOfActiveAlerts";
+            case "qualityInvestigationsInStatusActive" -> "noOfActiveInvestigations";
+            // As long as no clear spelling is defined, be lax with it. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
+            default -> column.equalsIgnoreCase("catenaxsiteid")
+                    ? "catenaXSiteId"
+                    : column;
+        };
     }
 }

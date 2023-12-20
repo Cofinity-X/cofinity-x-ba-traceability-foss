@@ -17,49 +17,68 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
     BomLifecycleConfig,
     BomLifecycleSize
 } from "@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model";
+
+export enum UserSettingView {
+    PARTS = 'parts', OTHER_PARTS = 'other_parts'
+}
 
 @Injectable({
     providedIn: 'root',
 })
 export class BomLifecycleSettingsService {
     private readonly DEFAULT: BomLifecycleConfig = {
+        asDesignedActive: false,
         asBuiltActive: true,
-        asPlannedActive: true
-    }
+        asOrderedActive: false,
+        asPlannedActive: true,
+        asSupportedActive: false,
+        asRecycledActive: false
+    };
 
     getUserSettings(userSettingView: UserSettingView): BomLifecycleConfig {
         const settingsJson = localStorage.getItem(userSettingView.toString());
         if (settingsJson) {
             return JSON.parse(settingsJson);
         }
-        return this.DEFAULT
+        return this.DEFAULT;
     };
 
     getSize(userSettingView: UserSettingView): BomLifecycleSize {
         let size: BomLifecycleSize;
         const userSettings: BomLifecycleConfig = this.getUserSettings(userSettingView);
 
-
         if (userSettings.asPlannedActive && userSettings.asBuiltActive) {
             size = {
                 asBuiltSize: 50,
-                asPlannedSize: 50
-            }
+                asPlannedSize: 50,
+                asDesignedSize: 0,
+                asOrderedSize: 0,
+                asRecycledSize: 0,
+                asSupportedSize: 0,
+            };
         } else if (userSettings.asPlannedActive) {
             size = {
+                asDesignedSize: 0,
                 asBuiltSize: 0,
+                asOrderedSize: 0,
+                asRecycledSize: 0,
+                asSupportedSize: 0,
                 asPlannedSize: 100
-            }
+            };
         } else if (userSettings.asBuiltActive) {
             size = {
                 asBuiltSize: 100,
+                asDesignedSize: 0,
+                asOrderedSize: 0,
+                asRecycledSize: 0,
+                asSupportedSize: 0,
                 asPlannedSize: 0
-            }
+            };
         }
         return size;
     }
@@ -71,8 +90,4 @@ export class BomLifecycleSettingsService {
     clearUserSettings(userSettingView: UserSettingView): void {
         localStorage.removeItem(userSettingView.toString());
     }
-}
-
-export enum UserSettingView {
-    PARTS = 'parts', OTHER_PARTS = 'other_parts'
 }

@@ -20,12 +20,15 @@
  ********************************************************************************/
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { TableComponent } from '@shared/components/table/table.component';
 import {
   CreateHeaderFromColumns,
   DisplayColumns,
   MenuActionConfig,
+  PartTableType,
   TableConfig,
-  TableEventConfig, TableHeaderSort,
+  TableEventConfig,
+  TableHeaderSort,
 } from '@shared/components/table/table.model';
 import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
@@ -45,30 +48,47 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() optionalColumns: Array<'targetDate' | 'severity' | 'createdBy' | 'sendTo'> = [];
   @Input() sortableColumns: Record<string, boolean> = {};
   @Input() multiSortList: TableHeaderSort[] = [];
+  @Input() enableScroll = true;
+  @Input() tableType: PartTableType;
+  @Input() filterConfig: any[] = [];
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
+  @Output() itemCount = new EventEmitter<number>();
+  @Output() onPaginationPageSizeChange = new EventEmitter<number>();
 
+  @ViewChild('idTmp') idTemplate: TemplateRef<unknown>;
   @ViewChild('statusTmp') statusTemplate: TemplateRef<unknown>;
   @ViewChild('severityTmp') severityTemplate: TemplateRef<unknown>;
   @ViewChild('descriptionTmp') descriptionTemplate: TemplateRef<unknown>;
   @ViewChild('targetDateTmp') targetDateTemplate: TemplateRef<unknown>;
   @ViewChild('userTmp') userTemplate: TemplateRef<unknown>;
+  @ViewChild(TableComponent) tableComponent: TableComponent;
 
   public tableConfig: TableConfig<keyof Notification>;
+  public filteredContent = false;
+
+  protected readonly PartTableType = PartTableType;
 
   public ngAfterViewInit(): void {
-    const defaultColumns: DisplayColumns<keyof Notification>[] = ['description', 'status', 'createdDate'];
-    const displayedColumns: DisplayColumns<keyof Notification>[] = [...defaultColumns, ...this.optionalColumns, 'menu'];
+    const defaultColumns: DisplayColumns<keyof Notification>[] = ['createdDate', 'description', 'status'];
+    const displayedColumns: DisplayColumns<keyof Notification>[] = [
+      ...defaultColumns,
+      ...this.optionalColumns,
+      'menu',
+      'settings',
+    ];
     const sortableColumns: Record<string, boolean> = this.sortableColumns;
-
+    const filterConfig: any[] = this.filterConfig;
     this.tableConfig = {
       displayedColumns,
       sortableColumns,
+      filterConfig,
       header: CreateHeaderFromColumns(displayedColumns, 'table.column'),
       hasPagination: this.hasPagination,
       menuActionsConfig: this.menuActionsConfig || [],
       cellRenderers: {
+        id: this.idTemplate,
         status: this.statusTemplate,
         severity: this.severityTemplate,
         description: this.descriptionTemplate,
@@ -77,7 +97,10 @@ export class NotificationTabComponent implements AfterViewInit {
         sendTo: this.userTemplate,
       },
     };
+  }
 
+  public onItemCountChange(itemCount: number): void {
+    this.itemCount.emit(itemCount);
   }
 
   public selectNotification(notification: Record<string, unknown>): void {
@@ -88,6 +111,7 @@ export class NotificationTabComponent implements AfterViewInit {
     this.tableConfigChanged.emit(tableEventConfig);
   }
 
-
-
+  public onFilterChange(): void {
+    this.filteredContent = true;
+  }
 }
