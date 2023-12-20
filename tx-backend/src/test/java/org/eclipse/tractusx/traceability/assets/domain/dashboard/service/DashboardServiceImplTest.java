@@ -20,6 +20,7 @@
 package org.eclipse.tractusx.traceability.assets.domain.dashboard.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
@@ -30,10 +31,15 @@ import org.eclipse.tractusx.traceability.assets.domain.asplanned.repository.Asse
 import org.eclipse.tractusx.traceability.assets.domain.base.model.Owner;
 import org.eclipse.tractusx.traceability.assets.domain.dashboard.model.Dashboard;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
+import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
+import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
+import org.eclipse.tractusx.traceability.common.model.SearchStrategy;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.AlertRepository;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.InvestigationRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -52,6 +58,11 @@ class DashboardServiceImplTest {
 
     @InjectMocks
     private DashboardServiceImpl dashboardService;
+
+    @Captor
+    ArgumentCaptor<SearchCriteria> investigationSearchCriteriaArgumentCaptor;
+    @Captor
+    ArgumentCaptor<SearchCriteria> alertSearchCriteriaArgumentCaptor;
 
     @Test
     void givenAllRepositories_whenGetDashboard_executing() {
@@ -86,7 +97,40 @@ class DashboardServiceImplTest {
         verify(assetAsPlannedRepository).countAssetsByOwner(Owner.SUPPLIER);
         verify(assetAsPlannedRepository).countAssetsByOwner(Owner.CUSTOMER);
 
-        verify(investigationsRepository).countAll(isA(SearchCriteria.class));
-        verify(alertRepository).countAll(isA(SearchCriteria.class));
+        verify(investigationsRepository).countAll(investigationSearchCriteriaArgumentCaptor.capture());
+        final SearchCriteria investigationSearchCriteria = investigationSearchCriteriaArgumentCaptor.getValue();
+        assertThat(investigationSearchCriteria.getSearchCriteriaOperator(), is(SearchCriteriaOperator.AND));
+        assertThat(investigationSearchCriteria.getSearchCriteriaFilterList()
+                        .stream()
+                        .filter(filter -> "status".equals(filter.getKey()))
+                        .filter(filter -> SearchStrategy.EQUAL.equals(filter.getStrategy()))
+                        .map(SearchCriteriaFilter::getValue)
+                        .toList(),
+                containsInAnyOrder("CREATED", "SENT", "RECEIVED", "ACKNOWLEDGED", "ACCEPTED", "DECLINED"));
+        assertThat(investigationSearchCriteria.getSearchCriteriaFilterList()
+                        .stream()
+                        .filter(filter -> "side".equals(filter.getKey()))
+                        .filter(filter -> SearchStrategy.EQUAL.equals(filter.getStrategy()))
+                        .map(SearchCriteriaFilter::getValue)
+                        .toList(),
+                containsInAnyOrder("RECEIVER"));
+
+        verify(alertRepository).countAll(alertSearchCriteriaArgumentCaptor.capture());
+        final SearchCriteria alertSearchCriteria = alertSearchCriteriaArgumentCaptor.getValue();
+        assertThat(alertSearchCriteria.getSearchCriteriaOperator(), is(SearchCriteriaOperator.AND));
+        assertThat(alertSearchCriteria.getSearchCriteriaFilterList()
+                        .stream()
+                        .filter(filter -> "status".equals(filter.getKey()))
+                        .filter(filter -> SearchStrategy.EQUAL.equals(filter.getStrategy()))
+                        .map(SearchCriteriaFilter::getValue)
+                        .toList(),
+                containsInAnyOrder("CREATED", "SENT", "RECEIVED", "ACKNOWLEDGED", "ACCEPTED", "DECLINED"));
+        assertThat(alertSearchCriteria.getSearchCriteriaFilterList()
+                        .stream()
+                        .filter(filter -> "side".equals(filter.getKey()))
+                        .filter(filter -> SearchStrategy.EQUAL.equals(filter.getStrategy()))
+                        .map(SearchCriteriaFilter::getValue)
+                        .toList(),
+                containsInAnyOrder("RECEIVER"));
     }
 }

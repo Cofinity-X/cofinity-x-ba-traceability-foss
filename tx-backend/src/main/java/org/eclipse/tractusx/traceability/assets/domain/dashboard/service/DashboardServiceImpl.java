@@ -23,7 +23,7 @@ package org.eclipse.tractusx.traceability.assets.domain.dashboard.service;
 
 import static org.eclipse.tractusx.traceability.common.model.SearchStrategy.EQUAL;
 
-import java.util.List;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.tractusx.traceability.assets.application.dashboard.service.DashboardService;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.repository.AssetAsBuiltRepository;
@@ -35,6 +35,7 @@ import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.AlertRepository;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.InvestigationRepository;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
 import org.springframework.stereotype.Component;
 
@@ -42,12 +43,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DashboardServiceImpl implements DashboardService {
 
-    private static final List<SearchCriteriaFilter> FILTER_ACTIVE_NOTIFICATIONS = QualityNotificationStatus.ACTIVE_STATES.stream()
-            .map(status -> SearchCriteriaFilter.builder().key("status").strategy(EQUAL).value(status.name()).build())
-            .toList();
-
-    private static final SearchCriteria RECEIVED_OPEN_NOTIFICATIONS = SearchCriteria.builder()
-            .searchCriteriaFilterList(FILTER_ACTIVE_NOTIFICATIONS)
+    private static final SearchCriteria RECEIVED_ACTIVE_NOTIFICATIONS = SearchCriteria.builder()
+            .searchCriteriaFilterList(
+                    Stream.concat(
+                            Stream.of(SearchCriteriaFilter.builder()
+                                    .key("side").strategy(EQUAL).value(QualityNotificationSide.RECEIVER.name())
+                                    .build()),
+                            QualityNotificationStatus.ACTIVE_STATES.stream()
+                                    .map(status -> SearchCriteriaFilter.builder()
+                                            .key("status").strategy(EQUAL).value(status.name())
+                                            .build())
+                    ).toList()
+            )
             .searchCriteriaOperator(SearchCriteriaOperator.AND)
             .build();
 
@@ -68,8 +75,8 @@ public class DashboardServiceImpl implements DashboardService {
         final long customerParts = assetAsBuiltRepository.countAssetsByOwner(Owner.CUSTOMER)
                 + assetAsPlannedRepository.countAssetsByOwner(Owner.CUSTOMER);
 
-        final long investigationsReceived = investigationsRepository.countAll(RECEIVED_OPEN_NOTIFICATIONS);
-        final long alertsReceived = alertRepository.countAll(RECEIVED_OPEN_NOTIFICATIONS);
+        final long investigationsReceived = investigationsRepository.countAll(RECEIVED_ACTIVE_NOTIFICATIONS);
+        final long alertsReceived = alertRepository.countAll(RECEIVED_ACTIVE_NOTIFICATIONS);
 
         return Dashboard.builder()
                 .myParts(myParts)

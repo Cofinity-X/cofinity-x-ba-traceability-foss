@@ -32,6 +32,7 @@ import org.eclipse.tractusx.traceability.integration.common.support.BpnSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.InvestigationNotificationsSupport;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationNotificationEntity;
+import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
 import org.eclipse.tractusx.traceability.testdata.AlertTestDataFactory;
 import org.eclipse.tractusx.traceability.testdata.InvestigationTestDataFactory;
@@ -65,24 +66,46 @@ class DashboardControllerIT extends IntegrationTestSpecification {
         // store one received investigation per status
         investigationNotificationsSupport.storedNotifications(
                 Arrays.stream(NotificationStatusBaseEntity.values())
-                        .map(status -> InvestigationTestDataFactory
-                                .createReceiverInvestigationTestData(status, bpnSupport.testBpn()))
+                        .map(status -> InvestigationTestDataFactory.createInvestigationTestData(
+                                NotificationSideBaseEntity.RECEIVER,
+                                status,
+                                bpnSupport.testBpn()))
+                        .toArray(InvestigationNotificationEntity[]::new)
+        );
+        // store one send investigation per status
+        investigationNotificationsSupport.storedNotifications(
+                Arrays.stream(NotificationStatusBaseEntity.values())
+                        .map(status -> InvestigationTestDataFactory.createInvestigationTestData(
+                                NotificationSideBaseEntity.SENDER,
+                                status,
+                                bpnSupport.testBpn()))
                         .toArray(InvestigationNotificationEntity[]::new)
         );
 
         // store one received alert per status
         alertNotificationsSupport.storedAlertNotifications(
                 Arrays.stream(NotificationStatusBaseEntity.values())
-                        .map(status -> AlertTestDataFactory
-                                .createReceiverAlertTestData(status, bpnSupport.testBpn()))
+                        .map(status -> AlertTestDataFactory.createAlertTestData(
+                                NotificationSideBaseEntity.RECEIVER,
+                                status,
+                                bpnSupport.testBpn()))
+                        .toArray(AlertNotificationEntity[]::new)
+        );
+        // store one send alert per status
+        alertNotificationsSupport.storedAlertNotifications(
+                Arrays.stream(NotificationStatusBaseEntity.values())
+                        .map(status -> AlertTestDataFactory.createAlertTestData(
+                                NotificationSideBaseEntity.SENDER,
+                                status,
+                                bpnSupport.testBpn()))
                         .toArray(AlertNotificationEntity[]::new)
         );
 
         // assert amount of given entities before
         assetsSupport.assertAssetAsBuiltSize(14);
         assetsSupport.assertAssetAsPlannedSize(12);
-        investigationNotificationsSupport.assertNotificationsSize(8);
-        alertNotificationsSupport.assertAlertNotificationsSize(8);
+        investigationNotificationsSupport.assertNotificationsSize(16);
+        alertNotificationsSupport.assertAlertNotificationsSize(16);
 
         // when/then
         given()

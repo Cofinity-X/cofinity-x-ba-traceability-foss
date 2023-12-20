@@ -43,10 +43,10 @@ import java.util.Locale;
 
 public class InvestigationTestDataFactory {
 
-    public static InvestigationNotificationEntity createReceiverInvestigationTestData(
-            final NotificationStatusBaseEntity investigationStatus, final String receiverBpn) {
-
-        final var notificationSide = NotificationSideBaseEntity.RECEIVER;
+    public static InvestigationNotificationEntity createInvestigationTestData(
+            final NotificationSideBaseEntity notificationSide,
+            final NotificationStatusBaseEntity investigationStatus,
+            final String receiverBpn) {
 
         final InvestigationEntity investigation = InvestigationEntity.builder()
                 .assets(Collections.emptyList())

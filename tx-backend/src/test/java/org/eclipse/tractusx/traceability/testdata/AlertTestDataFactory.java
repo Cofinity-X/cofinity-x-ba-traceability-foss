@@ -33,10 +33,10 @@ import java.util.*;
 
 public class AlertTestDataFactory {
 
-    public static AlertNotificationEntity createReceiverAlertTestData(
-            final NotificationStatusBaseEntity alertStatus, final String receiverBpn) {
-
-        final var notificationSide = NotificationSideBaseEntity.RECEIVER;
+    public static AlertNotificationEntity createAlertTestData(
+            final NotificationSideBaseEntity notificationSide,
+            final NotificationStatusBaseEntity alertStatus,
+            final String receiverBpn) {
 
         final AlertEntity alert = AlertEntity.builder()
                 .assets(Collections.emptyList())
