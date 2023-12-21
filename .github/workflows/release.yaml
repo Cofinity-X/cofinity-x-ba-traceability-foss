@@ -61,18 +61,14 @@ jobs:
           npm install -g json
           json -I -f frontend/package.json -e "this.version='${{ github.ref_name }}'"
 
-      - name: Prepare Helm release
-        uses: peter-evans/create-pull-request@v5
-        with:
-          commit-message: "chore(release): Prepare release for Helm version ${{ env.HELM_VERSION }}"
-          branch: chore/prepare-helm-release-${{ env.HELM_VERSION }}
-          base: main
-          delete-branch: true
-          title: Prepare Helm release for next version
-          body: |
-            This PR prepares the Helm chart release for version ${{ env.HELM_VERSION }}.
-            Please check whether the Chart was updated correctly and that the CHANGELOG contains the relevant information
-            for this release. Also, make sure that the values.yaml is correct before merging this PR.
+      - name: Commit report
+        run: |
+          git config --global user.name 'GitHub Releaser'
+          git config --global user.email 'noreply@users.noreply.github.com'
+          git checkout chore/prepare-helm-release-${{ env.HELM_VERSION }}
+          git commit -am "chore(release): Prepare release for Helm version ${{ env.HELM_VERSION }}"
+          git push
+
 
       - name: Get previous version
         run: echo PREVIOUS_VERSION=$(git tag | grep -E ^[0-9]+\\.[0-9]+\\.[0-9]+ | tail -2 | head -n +1) >> $GITHUB_ENV
@@ -90,11 +86,3 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body: ${{ env.CHANGELOG }}
-
-  trigger-jira:
-    needs:
-      - release
-    uses: ./.github/workflows/jira-publish-release.yaml
-    with:
-      version: ${{ github.ref_name }}
-    secrets: inherit
