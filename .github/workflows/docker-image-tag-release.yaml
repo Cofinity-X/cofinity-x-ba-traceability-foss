@@ -25,7 +25,8 @@ on:
 
 env:
   TAG_NAME: "${{ github.ref_name }}"
-  GHCR_REGISTRY: acrcfxsharedservices.azurecr.io
+  GHCR_REGISTRY: ghcr.io
+  IMAGE_REGISTRY: acrcfxsharedservices.azurecr.io
   JAVA_VERSION: 17
   DOCKER_HUB_REGISTRY_NAMESPACE: cofinity-x
   BACKEND_IMAGE_DOCKER_HUB: cofinity-x-ba-traceability-foss
@@ -40,6 +41,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -119,6 +121,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4

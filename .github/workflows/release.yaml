@@ -61,14 +61,15 @@ jobs:
           npm install -g json
           json -I -f frontend/package.json -e "this.version='${{ github.ref_name }}'"
 
-      - name: Commit Helm release preparations
+      - name: Prepare patch
         run: |
-          git config --global user.name 'GitHub Releaser'
-          git config --global user.email 'noreply@users.noreply.github.com'
-          git checkout -b chore/prepare-helm-release-${{ env.HELM_VERSION }}
-          git commit -am "chore(release): Prepare release for Helm version ${{ env.HELM_VERSION }}"
-          git push --set-upstream origin chore/prepare-helm-release-${{ env.HELM_VERSION }}
+          git diff --cached > helm-release.patch
 
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: helm-release.patch
+          path: helm-release.patch
 
       - name: Get previous version
         run: echo PREVIOUS_VERSION=$(git tag | grep -E ^[0-9]+\\.[0-9]+\\.[0-9]+ | tail -2 | head -n +1) >> $GITHUB_ENV
