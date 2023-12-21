@@ -34,7 +34,7 @@ With supervisor authorization, the user is able to view, evaluate and approve al
 
 ==== Admin
 
-With administrator authorization, the user is primarily able to configure the technical configuration of the EDC connection. From a technical perspective, the admin only has read authorization for existing warnings, investigations and products.
+With administrator authorization, the user is primarily able to configure the technical configuration of the EDC connection. From a technical perspective, the admin only has read authorization for existing quality alerts, investigations and parts.
 
 == Navigation
 
@@ -44,8 +44,10 @@ image::../../images/arc42/user-guide/tx-navigation.png[Navigation]
 
 === Dashboard
 
-Provides a fast overview about the amount of manufactured (my parts) and supplier parts (shared parts) and batches, as well as the amount of open investigations and alerts.
-Lists the five most recent quality investigations and alerts to get an overview of the current state.
+Provides a fast overview about the amount of manufactured (my parts) and supplier and customer parts (shared parts) and batches, as well as the amount of open investigations and alerts.
+Lists the five most recent received and open quality investigations and alerts to get an overview of the current state.
+
+Open alerts and investigations are alert/ investigations with the with the status Created, Sent, Received, Acknowledged, Accepted, or Declined.
 
 === My Parts
 
@@ -65,12 +67,12 @@ Navigates to the incoming and outgoing alerts.
 
 === Burger menu
 
-Use the burger menu to use view user details, access the user manual, logout or change the language.
+Use the burger menu to view user details, access the user manual, log out or change the language.
 
 Supported languages:
 
-*English
-*German
+* English
+* German
 
 image::../../images/arc42/user-guide/tx-burgermenu.png[Burger menu]
 
@@ -122,7 +124,7 @@ With a click on it a dialog opens where you can change the settings of the corre
 image::../../images/arc42/user-guide/tx-column-selection.png[Column Settings]
 
 Hide/show table columns by clicking on the checkbox or the column name.
-It is possible to hide/show all columns by clicking on the "All"- checkbox.
+It is possible to hide/show all columns by clicking on the "All"-checkbox.
 
 The reset icon resets the table columns to its default view.
 
@@ -130,7 +132,7 @@ Reorder the table columns by selecting a list item (click on the right of the co
 By selecting the column, you can reorder it with the up and down arrow icons to move it in the front or back of other columns.
 
 Apply your changes by clicking on the "Save" - button.
-If you want to discard your changes, simply press you "ESC" - button, click anywhere else except in the dialog or close it explicitely with the close icon on the upper right of the dialog.
+If you want to discard your changes, simply press you "ESC" - button, click anywhere else except in the dialog or close it explicitly with the close icon on the upper right of the dialog.
 
 The settings will be stored in the local storage of the browser and will be persisted until they get deleted.
 
@@ -253,7 +255,7 @@ Requested investigations are investigations that were approved by a supervisor i
 
 === Quality investigation context action
 
-Clicking on the three dots menu on the right side of a quality investigation entry opens the quality investigation context menu. In the context menu, users can open the detailed of the given quality investigation. Supervisor can additionally update the status of the given quality investigation. Only possible status update actions will be shown in the menu.
+Clicking on the three dots menu on the right side of a quality investigation entry opens the quality investigation context menu. In the context menu, users can open the details of the given quality investigation. Supervisor can additionally update the status of the given quality investigation. Only possible status update actions will be shown in the menu.
 
 image::../../images/arc42/user-guide/tx-qualityinvestigation-actionmenu-highlight.png[Quality Investigation Context Menu]
 
@@ -261,9 +263,9 @@ After selecting to update the status of the quality investigation, a dialog will
 
 image::../../images/arc42/user-guide/tx-qualityinvestigation-accept.png[Quality Investigation Dialog]
 
-You can sort the table by clicking on the table header. On the first click, the table is sorted in ascending order, on the second click the table is sorted in descending order. If the table is already sorted and you hold shift while clicking on another table header. The table is sorted primarily by the already given column but is then ordered secondly by the specified column. You can sort by as many columns as you desire.
+You can sort the table by clicking on the table header. On the first click, the table is sorted in ascending order, on the second click the table is sorted in descending order. If the table is already sorted, and you hold shift while clicking on another table header, the table is sorted primarily by the already given column but is then ordered secondly by the specified column. You can sort by as many columns as you desire.
 Next to each column header is a filter icon. If you click on that icon, a filter option menu will appear by which you can filter the table.
-You can select which columns are displayed by clicking on the settings icon on the top right corner of the table.
+You can select which columns are displayed by clicking on the settings icon in the top right corner of the table.
 In search bar, you can search for specific quality investigations by entering the given description or BPN (business partner number).
 
 === Quality investigation Detail view
@@ -359,12 +361,12 @@ Requested quality alerts are quality alerts that were approved by a supervisor i
 
 === Quality alert context action
 
-Clicking on the three dots menu on the right side of a quality alert entry opens the quality alert context menu. In the context menu, users can open the detailed of the given quality alert. Supervisor can additionally update the status of the given quality alert. Only possible status update actions will be shown in the menu.
+Clicking on the three dots menu on the right side of a quality alert entry opens the quality alert context menu. In the context menu, users can open the details of the given quality alert. Supervisor can additionally update the status of the given quality alert. Only possible status update actions will be shown in the menu.
 After selecting to update the status of the quality alert, a dialog will open in which the details of the status update are shown. The status is then updated after completing all steps in the dialog. A pop-up will notify you, it the update was successful. Reverting status updates is not intended.
 
-You can sort the table by clicking on the table header. On the first click, the table is sorted in ascending order, on the second click the table is sorted in descending order. If the table is already sorted and you hold shift while clicking on another table header. The table is sorted primarily by the already given column but is then ordered secondly by the specified column. You can sort by as many columns as you desire.
+You can sort the table by clicking on the table header. On the first click, the table is sorted in ascending order, on the second click the table is sorted in descending order. If the table is already sorted, and you hold shift while clicking on another table header, the table is sorted primarily by the already given column but is then ordered secondly by the specified column. You can sort by as many columns as you desire.
 Next to each column header is a filter icon. If you click on that icon, a filter option menu will appear by which you can filter the table.
-You can select which columns are displayed by clicking on the settings icon on the top right corner of the table.
+You can select which columns are displayed by clicking on the settings icon in the top right corner of the table.
 In search bar, you can search for specific Quality alerts by entering the given description or BPN (business partner number).
 
 A pop-up will notify you if the status transition was successful.
