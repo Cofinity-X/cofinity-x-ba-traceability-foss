@@ -25,11 +25,11 @@ on:
 
 env:
   TAG_NAME: "${{ github.ref_name }}"
-  GHCR_REGISTRY: ghcr.io
+  GHCR_REGISTRY: acrcfxsharedservices.azurecr.io
   JAVA_VERSION: 17
-  DOCKER_HUB_REGISTRY_NAMESPACE: tractusx
-  BACKEND_IMAGE_DOCKER_HUB: traceability-foss
-  FRONTEND_IMAGE_DOCKER_HUB: traceability-foss-frontend
+  DOCKER_HUB_REGISTRY_NAMESPACE: cofinity-x
+  BACKEND_IMAGE_DOCKER_HUB: cofinity-x-ba-traceability-foss
+  FRONTEND_IMAGE_DOCKER_HUB: cofinity-x-ba-traceability-foss-frontend
 
 jobs:
   Release-docker-image-frontend:
@@ -45,6 +45,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Make organization and repository name lowercase
+        run: echo "GITHUB_REPOSITORY_LOWERCASE=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Login to GHCR Registry
         env:
           DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
@@ -55,7 +58,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push to GHCR Registry ${{ env.GHCR_REGISTRY }}/${{ github.repository }}-frontend:${{ env.TAG_NAME }} and :latest
+      # Establish authentication with azure account
+      - name: Azure CLI auth
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: ACR Login
+        run: az acr login --name ${{ env.IMAGE_REGISTRY }}
+
+      - name: Build and push ${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend::${{ env.TAG_NAME }}
         env:
           DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
         if: env.DOCKER_HUB_USER == ''
@@ -63,7 +77,9 @@ jobs:
         with:
           context: frontend
           push: true
-          tags: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}-frontend:${{ env.TAG_NAME }}, ${{ env.GHCR_REGISTRY }}/${{ github.repository }}-frontend:latest
+          tags: |
+            ${{ env.GHCR_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ env.TAG_NAME }}
+            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ env.TAG_NAME }}
 
       - name: Login to Docker Hub
         env:
@@ -119,6 +135,9 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Make organization and repository name lowercase
+        run: echo "GITHUB_REPOSITORY_LOWERCASE=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Login to GHCR Registry
         env:
           DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
@@ -129,7 +148,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build & push docker image for GHCR Registry ${{ env.GHCR_REGISTRY }}/${{ github.repository }}:${{ env.TAG_NAME }}
+      # Establish authentication with azure account
+      - name: Azure CLI auth
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: ACR Login
+        run: az acr login --name ${{ env.IMAGE_REGISTRY }}
+
+      - name: Build and push ${{ env.GITHUB_REPOSITORY_LOWERCASE }}::${{ env.TAG_NAME }}
         env:
           DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
         if: env.DOCKER_HUB_USER == ''
@@ -137,7 +167,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}:${{ env.TAG_NAME }}, ${{ env.GHCR_REGISTRY }}/${{ github.repository }}:latest
+          tags: |
+            ${{ env.GHCR_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.TAG_NAME }}
+            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.TAG_NAME }}
 
       - name: Login to Docker Hub
         env:

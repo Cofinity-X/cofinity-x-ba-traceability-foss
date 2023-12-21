@@ -61,13 +61,13 @@ jobs:
           npm install -g json
           json -I -f frontend/package.json -e "this.version='${{ github.ref_name }}'"
 
-      - name: Commit report
+      - name: Commit Helm release preparations
         run: |
           git config --global user.name 'GitHub Releaser'
           git config --global user.email 'noreply@users.noreply.github.com'
-          git checkout chore/prepare-helm-release-${{ env.HELM_VERSION }}
+          git checkout -b chore/prepare-helm-release-${{ env.HELM_VERSION }}
           git commit -am "chore(release): Prepare release for Helm version ${{ env.HELM_VERSION }}"
-          git push
+          git push --set-upstream origin chore/prepare-helm-release-${{ env.HELM_VERSION }}
 
 
       - name: Get previous version
