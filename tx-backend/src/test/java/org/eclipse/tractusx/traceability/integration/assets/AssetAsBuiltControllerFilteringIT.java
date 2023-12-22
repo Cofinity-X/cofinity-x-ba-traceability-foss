@@ -313,7 +313,7 @@ class AssetAsBuiltControllerFilteringIT extends IntegrationTestSpecification {
     private static Stream<Arguments> filterCaseInsensitive() {
         return Stream.of(
                 Arguments.of(
-                        "nameAtManufacturer,STARTS_WITH,Vehicle Hybrid"
+                        "nameAtManufacturer,STARTS_WITH,vehicle hybrid"
                 ),
                 Arguments.of(
                         "nameAtManufacturer,STARTS_WITH,Vehicle Hybrid"
