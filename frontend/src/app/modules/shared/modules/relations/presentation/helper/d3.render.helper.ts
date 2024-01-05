@@ -305,18 +305,13 @@ export class D3RenderHelper {
     r: number,
     callback: (data, direction) => void,
   ) {
-    const { data, x, y, depth } = dataNode;
+    const { data, x, y } = dataNode;
     el.attr('data-testid', 'tree--element__arrow-container')
       .classed('tree--element__arrow-container', true)
       .on('click', () => callback(data, direction));
 
-    let startAngleFactor = direction === TreeDirection.DOWN ? 1.8 : 0.8;
-    let endAngleFactor = direction === TreeDirection.DOWN ? 2.2 : 1.2;
-
-    if (depth !== 0) {
-      startAngleFactor = direction === TreeDirection.DOWN ? 1.9 : 0.85;
-      endAngleFactor = direction === TreeDirection.DOWN ? 2.3 : 1.15;
-    }
+    const startAngleFactor = direction === TreeDirection.UP ? 1.8 : 0.8;
+    const endAngleFactor = direction === TreeDirection.UP ? 2.2 : 1.2;
 
     const arc = d3
       .arc<HierarchyNode<TreeStructure>>()
@@ -332,13 +327,13 @@ export class D3RenderHelper {
       .classed('tree--element__arrow', true);
 
     // These values are based on the radius of the circle
-    const upArrow = [
+    const downArrow = [
       { y: r + 0.1 * r, x: -r + 0.416 * r },
       { y: r + 0.433 * r, x: 0 },
       { y: r + 0.1 * r, x: r - 0.416 * r },
     ];
 
-    const downArrow = [
+    const upArrow = [
       { y: -r - 0.1 * r, x: -r + 0.416 * r },
       { y: -r - 0.433 * r, x: 0 },
       { y: -r - 0.1 * r, x: r - 0.416 * r },
@@ -383,7 +378,7 @@ export class D3RenderHelper {
   }
 
   private static modifyByDirection(direction: TreeDirection, x: number): number {
-    if (direction === TreeDirection.DOWN) {
+    if (direction === TreeDirection.UP) {
       return -1 * x;
     }
 

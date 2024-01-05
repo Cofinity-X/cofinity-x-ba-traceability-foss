@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 @Tag(name = "Submodel")
 @RequestMapping(path = "/submodel/data")
 @RequiredArgsConstructor
@@ -99,6 +100,7 @@ public class SubmodelController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SUPERVISOR','ROLE_USER')")
     @GetMapping("/{submodelId}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_USER')")
     public String getSubmodel(@PathVariable String submodelId) {

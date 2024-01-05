@@ -21,15 +21,14 @@
 
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
   OnInit,
   SimpleChanges,
-  ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { Part } from '@page/parts/model/parts.model';
 import { State } from '@shared/model/state';
 import { View } from '@shared/model/view.model';
@@ -43,7 +42,6 @@ import { delay, switchMap, takeWhile, tap } from 'rxjs/operators';
   templateUrl: './part-relation.component.html',
   styleUrls: ['./part-relation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   host: {
     'class.app-part-relation-host': 'isStandalone',
   },
@@ -52,6 +50,8 @@ export class PartRelationComponent implements OnInit, OnDestroy {
   @Input() partId: string;
   @Input() isStandalone = true;
   @Input() showMiniMap = true;
+  @Input() overwriteContext: string = undefined;
+
 
   public readonly htmlIdBase = 'app-part-relation-';
   public readonly subscriptions = new Subscription();
@@ -65,7 +65,6 @@ export class PartRelationComponent implements OnInit, OnDestroy {
   constructor(
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly route: ActivatedRoute,
-    private readonly cdr: ChangeDetectorRef,
     staticIdService: StaticIdService,
   ) {
     this.resizeTrigger$ = this._resizeTrigger$.pipe(delay(0));
@@ -82,6 +81,9 @@ export class PartRelationComponent implements OnInit, OnDestroy {
           }
 
           const partId = params.get('partId');
+
+          const mainAspectType = this.route?.snapshot?.queryParams?.type as MainAspectType;
+          this.partDetailsFacade.mainAspectType = mainAspectType;
           return partId ? this.partDetailsFacade.getRootPart(partId) : this.partDetailsFacade.selectedPart$;
         }),
         tap(viewData => {

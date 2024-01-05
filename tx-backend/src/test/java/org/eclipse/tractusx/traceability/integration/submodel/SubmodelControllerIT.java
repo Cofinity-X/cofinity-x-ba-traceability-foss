@@ -20,6 +20,7 @@
 package org.eclipse.tractusx.traceability.integration.submodel;
 
 import io.restassured.http.ContentType;
+import org.eclipse.tractusx.traceability.common.security.JwtRole;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.submodel.infrastructure.model.SubmodelEntity;
 import org.eclipse.tractusx.traceability.submodel.infrastructure.reposotory.JpaSubmodelRepository;
@@ -52,7 +53,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
 
         // when
         given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .log().all()
                 .when()
                 .delete("/api/submodel/data")
@@ -77,7 +78,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
 
         // when
         String responseBody = given()
-                .header(oAuth2Support.jwtAuthorization(USER))
+                .header(oAuth2Support.jwtAuthorization(JwtRole.USER))
                 .log().all()
                 .when()
                 .get("/api/submodel/data/" + submodelId)
@@ -98,7 +99,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
 
         // when/then
         given()
-                .header(oAuth2Support.jwtAuthorization(USER))
+                .header(oAuth2Support.jwtAuthorization(JwtRole.USER))
                 .log().all()
                 .when()
                 .get("/api/submodel/data/" + submodelId)
@@ -117,6 +118,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .log().all()
                 .when()
                 .body(requestContent)

@@ -28,7 +28,6 @@ import {
   QueryList,
   ViewChild,
   ViewChildren,
-  ViewEncapsulation,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -56,7 +55,6 @@ import { FilterCongigOptions } from '@shared/model/filter-config';
   selector: 'app-parts-table',
   templateUrl: './parts-table.component.html',
   styleUrls: ['parts-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class PartsTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -85,12 +83,13 @@ export class PartsTableComponent implements OnInit {
 
   filterKey = 'Filter';
 
-  @Input() set paginationData({ page, pageSize, totalItems, content }: Pagination<unknown>) {
+  @Input() set paginationData({ page, pageSize, totalItems, content, pageCount }: Pagination<unknown>) {
     this.totalItems = totalItems;
     this.pageSize = pageSize;
     this.dataSource.data = content;
     this.isDataLoading = false;
     this.pageIndex = page;
+    this.pageCount = pageCount;
   }
 
   @Input() set data(content: unknown[]) {
@@ -136,6 +135,9 @@ export class PartsTableComponent implements OnInit {
   public filterActive: any = {};
   public filterConfiguration: FilterConfig[];
   public displayedColumns: string[];
+  public pageSize: number;
+  public pageCount: number;
+
 
   filterFormGroup = new FormGroup({});
 
@@ -378,7 +380,6 @@ export class PartsTableComponent implements OnInit {
     semanticModelId: true,
   };
 
-  private pageSize: number;
   private sorting: TableHeaderSort;
 
   ngAfterViewInit() {

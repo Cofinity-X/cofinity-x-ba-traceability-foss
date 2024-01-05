@@ -27,7 +27,6 @@ import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.Q
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSide;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
@@ -38,11 +37,11 @@ public interface QualityNotificationRepository {
 
     PageResult<QualityNotification> findAll(Pageable pageable, SearchCriteria searchCriteria);
 
+    long countAll(SearchCriteria searchCriteria);
+
     Optional<QualityNotification> findOptionalQualityNotificationById(QualityNotificationId notificationId);
 
     Optional<QualityNotification> findByEdcNotificationId(String edcNotificationId);
-
-    long countQualityNotificationEntitiesByStatus(QualityNotificationStatus qualityNotificationStatus);
 
     long countQualityNotificationEntitiesBySide(QualityNotificationSide notificationSide);
 

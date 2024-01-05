@@ -19,11 +19,14 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { AfterViewInit, Component, Input, OnDestroy, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { Part, QualityType } from '@page/parts/model/parts.model';
+import { RelationComponent } from '@page/parts/presentation/relation/relation.component';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { SelectOption } from '@shared/components/select/select.component';
 import { State } from '@shared/model/state';
@@ -40,9 +43,7 @@ import { filter, tap } from 'rxjs/operators';
 export class PartDetailComponent implements AfterViewInit, OnDestroy {
   @Input() showRelation = true;
   @Input() showStartInvestigation = true;
-
-  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
-  @ViewChild('relation', { read: TemplateRef }) contentRef: TemplateRef<any>;
+  @Input() mainAspectType: MainAspectType;
 
   public selectedTab = 0;
   public shortenPartDetails$: Observable<View<Part>>;
@@ -60,16 +61,25 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   public qualityTypeOptions: SelectOption[];
 
   public qualityTypeControl = new FormControl<QualityType>(null);
+  public context: string;
 
   private readonly isOpenState: State<boolean> = new State<boolean>(false);
   private activatedRoute = inject(ActivatedRoute);
   private readyPromise = Promise.resolve();
 
-  constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router) {
+  protected readonly MainAspectType = MainAspectType;
+
+  constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router,
+    public dialog: MatDialog,
+  ) {
+
+    this.context = this.activatedRoute?.parent?.toString().split('\'')[1];
 
     if (!this.partDetailsFacade.selectedPart) {
       const partId = this.activatedRoute.snapshot.params['partId'];
+      const mainAspectType = this.activatedRoute.snapshot.queryParams?.type as MainAspectType;
       this.readyPromise = new Promise((resolve) => {
+        this.partDetailsFacade.mainAspectType = mainAspectType;
         this.partDetailsFacade.setPartFromTree(partId).subscribe(() => {
           resolve();
         });
@@ -83,7 +93,9 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
       this.shortenPartDetails$ = this.partDetailsFacade.selectedPart$.pipe(
         PartsAssembler.mapPartForView(),
         tap(({ data }) => {
-          this.qualityTypeControl.patchValue(data.qualityType, { emitEvent: false, onlySelf: true });
+          if (data) {
+            this.qualityTypeControl.patchValue(data.qualityType, { emitEvent: false, onlySelf: true });
+          }
         }),
       );
 
@@ -106,8 +118,6 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
         label: value,
         value: value,
       }));
-
-
     });
   }
 
@@ -116,30 +126,29 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-    this.partDetailsFacade.selectedPart$.pipe(filter(({ data }) => !!data)).subscribe(_ => this.setIsOpen(true));
-  }
-
-  public setIsOpen(openState: boolean) {
-    this.isOpenState.update(openState);
-
-    if (!openState) {
-      this.partDetailsFacade.selectedPart = null;
-    }
+    this.partDetailsFacade.selectedPart$.pipe(filter(({ data }) => !!data));
   }
 
   public openRelationPage(part: Part): void {
-    this.partDetailsFacade.selectedPart = null;
-    this.router.navigate([`parts/relations/${part.id}`]).then(_ => window.location.reload());
+    this.dialog.open(RelationComponent, {
+      autoFocus: false,
+      width: '100%',
+      maxWidth: '85vw',
+      height: '80vh',
+      data: {
+        partId: part.id,
+        partName: part.name,
+        context: this.activatedRoute?.parent?.toString().split('\'')[1]
+      }
+    });
   }
 
   public onTabChange({ index }: MatTabChangeEvent): void {
     this.selectedTab = index;
-    this.partDetailsFacade.selectedPart = null;
   }
 
   public navigateBackToParts(): void {
     this.partDetailsFacade.selectedPart = null;
-    this.router.navigate(['/parts']);
+    this.router.navigate([`/${this.context}`]);
   }
-
 }

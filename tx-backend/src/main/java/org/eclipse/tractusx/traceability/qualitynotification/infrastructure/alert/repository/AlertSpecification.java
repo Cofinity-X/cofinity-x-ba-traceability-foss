@@ -26,7 +26,6 @@ import org.eclipse.tractusx.traceability.common.model.SearchStrategy;
 import org.eclipse.tractusx.traceability.common.repository.BaseSpecification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.QualityNotificationSpecificationUtil;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertNotificationEntity;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -39,30 +38,26 @@ import java.util.List;
 
 public class AlertSpecification extends BaseSpecification<AlertEntity> implements Specification<AlertEntity> {
 
-    private static final List<String> ATTRIBUTES_IN_ALERT_ENTITY = List.of("description", "status", "createdDate");
-
     public AlertSpecification(SearchCriteriaFilter criteria) {
         super(criteria);
     }
 
     @Override
     public Predicate toPredicate(@NotNull Root<AlertEntity> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
-        return createPredicateBasedOnJoin(getSearchCriteriaFilter(), root, builder);
+        return createPredicateBasedOfSearchCriteria(getSearchCriteriaFilter(), root, builder);
     }
 
-    private Predicate createPredicateBasedOnJoin(SearchCriteriaFilter criteria, Root<?> root, CriteriaBuilder builder) {
-        Join<AlertEntity, AlertNotificationEntity> alertJoin = root.join("notifications");
-        Path predicatePath = ATTRIBUTES_IN_ALERT_ENTITY.contains(criteria.getKey()) ?
-                root.get(criteria.getKey()) : alertJoin.get(criteria.getKey());
+    private Predicate createPredicateBasedOfSearchCriteria(SearchCriteriaFilter criteria, Root<?> root, CriteriaBuilder builder) {
+        Path predicatePath = root.get(criteria.getKey());
         if (criteria.getStrategy().equals(SearchStrategy.EQUAL)) {
             return builder.equal(
-                    predicatePath.as(String.class),
-                    criteria.getValue());
+                    builder.lower(predicatePath.as(String.class)),
+                    criteria.getValue().toLowerCase());
         }
         if (criteria.getStrategy().equals(SearchStrategy.STARTS_WITH)) {
             return builder.like(
-                    predicatePath,
-                    criteria.getValue() + "%");
+                    builder.lower(predicatePath),
+                    criteria.getValue().toLowerCase() + "%");
         }
         if (criteria.getStrategy().equals(SearchStrategy.AT_LOCAL_DATE)) {
             final LocalDate localDate = LocalDate.parse(criteria.getValue());

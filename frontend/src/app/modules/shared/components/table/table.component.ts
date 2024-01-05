@@ -20,7 +20,7 @@
  ********************************************************************************/
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -50,7 +50,6 @@ import { MultiSelectAutocompleteComponent } from '../multi-select-autocomplete/m
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class TableComponent {
   @ViewChild(MatSort) sort: MatSort;
@@ -112,12 +111,13 @@ export class TableComponent {
   @Input() enableScroll: boolean;
   @Input() multiSortList: TableHeaderSort[];
 
-  @Input() set paginationData({ page, pageSize, totalItems, content }: Pagination<unknown>) {
+  @Input() set paginationData({ page, pageSize, totalItems, content, pageCount }: Pagination<unknown>) {
     this.totalItems = totalItems;
     this.pageSize = pageSize;
     this.dataSource.data = content;
     this.isDataLoading = false;
     this.pageIndex = page;
+    this.pageCount = pageCount;
   }
 
   @Input() set data(content: unknown[]) {
@@ -154,6 +154,7 @@ export class TableComponent {
   public readonly selection = new SelectionModel<unknown>(true, []);
 
   public totalItems: number;
+  public pageCount: number;
   public pageIndex: number;
   public isDataLoading: boolean;
   public selectedRow: Record<string, unknown>;
@@ -164,7 +165,7 @@ export class TableComponent {
   public defaultColumns: string[];
   public filterFormGroup = new FormGroup({});
 
-  private pageSize: number;
+  public pageSize: number;
   private sorting: TableHeaderSort;
   private filtering: TableFilter = { filterMethod: FilterMethod.AND };
   public filterActive: any = {};
@@ -240,10 +241,7 @@ export class TableComponent {
 
   public selectElement(row: Record<string, unknown>) {
     this.selectedRow = this.selectedRow === row ? null : row;
-
-    if (!this.tableConfig.menuActionsConfig) {
-      this.selected.emit(row);
-    }
+    this.selected.emit(row);
   }
 
   private setupTableViewSettings() {
