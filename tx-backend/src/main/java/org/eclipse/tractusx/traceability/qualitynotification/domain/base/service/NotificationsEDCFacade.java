@@ -120,7 +120,7 @@ public class NotificationsEDCFacade {
             return edcCatalogFacade.fetchCatalogItems(
                             CatalogRequest.Builder.newInstance()
                                     .protocol(DEFAULT_PROTOCOL)
-                                    .providerUrl(receiverEdcUrl + edcProperties.getIdsPath())
+                                    .counterPartyAddress(receiverEdcUrl + edcProperties.getIdsPath())
                                     .querySpec(QuerySpec.Builder.newInstance()
                                             .filter(
                                                     List.of(new Criterion(NAMESPACE_EDC + "notificationtype", "=", propertyNotificationTypeValue),
