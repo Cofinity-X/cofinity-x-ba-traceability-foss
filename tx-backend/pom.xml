@@ -54,7 +54,7 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.eclipse.tractusx.irs</groupId>
             <artifactId>irs-registry-client</artifactId>
-            <version>${irs-client-lib.version}</version>
+            <version>${irs-registry-client.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jetty-jakarta-websocket-api</artifactId>
@@ -95,7 +95,7 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.eclipse.edc</groupId>
             <artifactId>connector-core</artifactId>
-            <version>${edc-library.version}</version>
+            <version>${org.eclipse.edc.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>runtime-metamodel</artifactId>
@@ -106,7 +106,7 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.eclipse.edc</groupId>
             <artifactId>dsp</artifactId>
-            <version>${edc-library.version}</version>
+            <version>${org.eclipse.edc.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>runtime-metamodel</artifactId>
@@ -143,7 +143,7 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.eclipse.edc</groupId>
             <artifactId>json-ld</artifactId>
-            <version>${edc-library.version}</version>
+            <version>${org.eclipse.edc.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>runtime-metamodel</artifactId>
@@ -154,7 +154,7 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <artifactId>runtime-metamodel</artifactId>
             <groupId>org.eclipse.edc</groupId>
-            <version>${edc-library.version}</version>
+            <version>${org.eclipse.edc.version}</version>
         </dependency>
 
         <dependency>
