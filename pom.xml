@@ -67,19 +67,29 @@ SPDX-License-Identifier: Apache-2.0
         <snakeyaml.version>2.2</snakeyaml.version>
 
         <commons-fileupload.version>1.5</commons-fileupload.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <json-smart.version>2.4.10</json-smart.version>
 
         <!-- managed by spring boot -->
-
         <flyway-core.version>9.16.3</flyway-core.version>
         <postgresql.version>42.6.0</postgresql.version>
+        <mockito-core.version>4.8.1</mockito-core.version>
+        <spring-boot-starter.version>3.1.6</spring-boot-starter.version>
         <spring-boot-starter-data-jpa.version>3.1.6</spring-boot-starter-data-jpa.version>
-
-
-        <json-smart.version>2.4.10</json-smart.version>
-        <spring-security-test.version>6.1.5</spring-security-test.version>
+        <spring-boot-starter-oauth2-client.version>3.1.6</spring-boot-starter-oauth2-client.version>
         <spring-boot-test.version>3.1.6</spring-boot-test.version>
+        <spring-security-test.version>6.1.5</spring-security-test.version>
         <junit-jupiter-api.version>5.9.3</junit-jupiter-api.version>
         <spring-test.version>6.0.14</spring-test.version>
+
+
+        <!-- manual update to avoid CVE-2023-41080 in version 10.1.12 -->
+        <tomcat-embed-core.version>10.1.16</tomcat-embed-core.version>
+        <spring-cloud-starter-openfeign.version>4.0.3</spring-cloud-starter-openfeign.version>
+        <spring-security-rsa.version>1.0.12.RELEASE</spring-security-rsa.version>
+        <jackson-datatype-jsr310.version>2.15.3</jackson-datatype-jsr310.version>
+        <jakarta.annotation-api.version>2.1.1</jakarta.annotation-api.version>
+
 
         <!-- versions for 3rd party dependencies -->
         <eclipse-dash-ip.version>0.0.1-SNAPSHOT</eclipse-dash-ip.version>
@@ -292,6 +302,73 @@ SPDX-License-Identifier: Apache-2.0
             <version>${springboot.version}</version>
         </dependency>
 
+        <!-- Fixes CVE-2023-34035  -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-config.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <!-- manual update to avoid CVE-2023-41080 in version 10.1.12 -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat-embed-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${spring-cloud-starter-openfeign.version}</version>
+        </dependency>
+
+        <!-- override because 1.0.11.RELEASE still uses bouncy castle jdk15on -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-rsa</artifactId>
+            <version>${spring-security-rsa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${jakarta.annotation-api.version}</version>
+        </dependency>
+
+        <!-- Managed by spring boot but set own version-->
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <!-- Higher version than in spring boot bom -->
+            <version>${jakarta-ws-rs.version}</version>
+        </dependency>
 
         <!-- 3rd party dependecies - NOT managed by spring boot -->
         <dependency>
@@ -398,8 +475,15 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
+            <version>${commons-collections4.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <version>${spring-boot-starter-oauth2-client.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -426,6 +510,37 @@ SPDX-License-Identifier: Apache-2.0
             <version>${junit-bom.version}</version>
         </dependency>
 
+        <!-- test dependencies spring boot managed -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot-starter.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.minidev</groupId>
+                    <artifactId>json-smart</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- Still necessary 18.09.2023 -->
         <!-- Update json-smart manually to avoid vulnerability CVE-2023-1370; can be removed after Spring updates their dependency -->

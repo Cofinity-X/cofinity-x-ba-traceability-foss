@@ -173,7 +173,7 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
             <version>${springboot.version}</version>
         </dependency>-->
-        <!-- Fixes CVE-2023-34035  -->
+       <!-- &lt;!&ndash; Fixes CVE-2023-34035  &ndash;&gt;
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
@@ -199,7 +199,7 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- manual update to avoid CVE-2023-41080 in version 10.1.12 -->
+        &lt;!&ndash; manual update to avoid CVE-2023-41080 in version 10.1.12 &ndash;&gt;
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
@@ -208,8 +208,8 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!-- override because 1.0.11.RELEASE still uses bouncy castle jdk15on -->
+        </dependency>-->
+      <!--  &lt;!&ndash; override because 1.0.11.RELEASE still uses bouncy castle jdk15on &ndash;&gt;
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-rsa</artifactId>
@@ -222,15 +222,15 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-        </dependency>
+        </dependency>-->
 
-        <!-- Managed by spring boot but set own version-->
+<!--        &lt;!&ndash; Managed by spring boot but set own version&ndash;&gt;
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <!-- Higher version than in spring boot bom -->
+            &lt;!&ndash; Higher version than in spring boot bom &ndash;&gt;
             <version>${jakarta-ws-rs.version}</version>
-        </dependency>
+        </dependency>-->
         <!--
 
                 &lt;!&ndash; 3rd party dependecies - NOT managed by spring boot &ndash;&gt;
@@ -340,14 +340,14 @@ SPDX-License-Identifier: Apache-2.0
                     <artifactId>commons-collections4</artifactId>
                     <version>4.4</version>
                 </dependency>
-        -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
+-->
 
-
-        <!-- test dependencies spring boot managed -->
+     <!--   &lt;!&ndash; test dependencies spring boot managed &ndash;&gt;
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -373,7 +373,7 @@ SPDX-License-Identifier: Apache-2.0
                     <artifactId>json-smart</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
        <!-- &lt;!&ndash; Still necessary 18.09.2023 &ndash;&gt;
         &lt;!&ndash; Update json-smart manually to avoid vulnerability CVE-2023-1370; can be removed after Spring updates their dependency &ndash;&gt;
         <dependency>
