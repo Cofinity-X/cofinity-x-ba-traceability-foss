@@ -64,6 +64,23 @@ SPDX-License-Identifier: Apache-2.0
         <maven-failsafe-plugin.version>3.0.0-M8</maven-failsafe-plugin.version>
         <maven-site-plugin.version>4.0.0-M9</maven-site-plugin.version>
         <edc-library.version>0.1.3</edc-library.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
+
+        <commons-fileupload.version>1.5</commons-fileupload.version>
+
+        <!-- managed by spring boot -->
+
+        <flyway-core.version>9.16.3</flyway-core.version>
+        <postgresql.version>42.6.0</postgresql.version>
+        <spring-boot-starter-data-jpa.version>3.1.6</spring-boot-starter-data-jpa.version>
+
+
+        <json-smart.version>2.4.10</json-smart.version>
+        <spring-security-test.version>6.1.5</spring-security-test.version>
+        <spring-boot-test.version>3.1.6</spring-boot-test.version>
+        <junit-jupiter-api.version>5.9.3</junit-jupiter-api.version>
+        <spring-test.version>6.0.14</spring-test.version>
+
         <!-- versions for 3rd party dependencies -->
         <eclipse-dash-ip.version>0.0.1-SNAPSHOT</eclipse-dash-ip.version>
         <nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
@@ -161,10 +178,228 @@ SPDX-License-Identifier: Apache-2.0
                 <artifactId>snakeyaml</artifactId>
                 <version>${org-snakeyaml.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
     <dependencies>
 
+        <!-- managed by spring boot -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot-starter-data-jpa.version}</version>
+        </dependency>
+
+        <!-- Still necessary 18.09.2023 -->
+        <!--Fix CVE-2023-24998 - can be removed once org.springframework.cloud:spring-cloud-openfeign-core:jar:4.0.1 is updated-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons-fileupload.version}</version>
+        </dependency>
+
+        <!-- EDC Client -->
+        <dependency>
+            <groupId>org.eclipse.edc</groupId>
+            <artifactId>connector-core</artifactId>
+            <version>${edc-library.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>runtime-metamodel</artifactId>
+                    <groupId>org.eclipse.edc</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.edc</groupId>
+            <artifactId>dsp</artifactId>
+            <version>${edc-library.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>runtime-metamodel</artifactId>
+                    <groupId>org.eclipse.edc</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jetty-core</artifactId>
+                    <groupId>org.eclipse.edc</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Update org.eclipse.jetty to avoid vulnerabilities, can be removed when org.eclipse.edc has never versions-->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-io</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-jndi</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <!-- manual update to avoid GHSA-58qw-p7qm-5rvh -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-xml</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.edc</groupId>
+            <artifactId>json-ld</artifactId>
+            <version>${edc-library.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>runtime-metamodel</artifactId>
+                    <groupId>org.eclipse.edc</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <artifactId>runtime-metamodel</artifactId>
+            <groupId>org.eclipse.edc</groupId>
+            <version>${edc-library.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
+        <!-- Update spring-expression manually to avoid vulnerability CVE-2023-20861; can be removed after Spring updates their dependency -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+
+
+        <!-- 3rd party dependecies - NOT managed by spring boot -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${auth-0-java-jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${nimbus-jose-jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-feign</artifactId>
+            <version>${resilience4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-retry</artifactId>
+            <version>${resilience4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-core</artifactId>
+            <version>${resilience4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-spring-boot2</artifactId>
+            <version>${resilience4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-provider-jdbc-template</artifactId>
+            <version>${schedlock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-spring</artifactId>
+            <version>${schedlock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${jetbrains-annotation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form</artifactId>
+            <version>${feign-form.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+            <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+            <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-slf4j</artifactId>
+            <version>${feign-slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.scribejava</groupId>
+            <artifactId>scribejava-core</artifactId>
+            <version>${scribe-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${findbugs-jsr305.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -189,6 +424,94 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
             <version>${junit-bom.version}</version>
+        </dependency>
+
+
+        <!-- Still necessary 18.09.2023 -->
+        <!-- Update json-smart manually to avoid vulnerability CVE-2023-1370; can be removed after Spring updates their dependency -->
+        <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+            <version>${json-smart.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring-security-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <version>${spring-boot-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter-api.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bitbucket.b_c</groupId>
+            <artifactId>jose4j</artifactId>
+            <version>${jose4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.xebialabs.restito</groupId>
+            <artifactId>restito</artifactId>
+            <version>${restito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${testcontainer-postgresql.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainer-postgresql.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility-proxy</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <version>1.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Fixes CVE-2023-36478  https://github.com/catenax-ng/tx-traceability-foss/security/code-scanning/6770-->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-http</artifactId>
+            <version>${jetty.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jetty-io</artifactId>
+                    <groupId>org.eclipse.jetty</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -369,3 +692,4 @@ SPDX-License-Identifier: Apache-2.0
     </profiles>
 
 </project>
+
