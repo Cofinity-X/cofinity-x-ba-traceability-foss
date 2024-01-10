@@ -27,7 +27,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AlertHelperService {
-  constructor(private readonly roleService: RoleService, private readonly alertsFacade: AlertsFacade) {}
+  constructor(private readonly roleService: RoleService, private readonly alertsFacade: AlertsFacade) { }
 
   public approve(id: string): Observable<void> {
     return this.alertsFacade.approveAlert(id);
@@ -58,7 +58,7 @@ export class AlertHelperService {
   }
 
   public showCancelButton({ status, isFromSender } = {} as Notification): boolean {
-    return isFromSender && status === NotificationStatus.CREATED && this.roleService.isAtLeastSupervisor();
+    return isFromSender && status === NotificationStatus.CREATED && this.roleService.isAtLeastUser();
   }
 
   public showCloseButton({ status, isFromSender } = {} as Notification): boolean {
@@ -67,14 +67,14 @@ export class AlertHelperService {
   }
 
   public showAcknowledgeButton({ status, isFromSender } = {} as Notification): boolean {
-    return !isFromSender && status === NotificationStatus.RECEIVED && this.roleService.isAtLeastSupervisor();
+    return !isFromSender && status === NotificationStatus.RECEIVED && this.roleService.isAtLeastUser();
   }
 
   public showAcceptButton({ status, isFromSender } = {} as Notification): boolean {
-    return !isFromSender && status === NotificationStatus.ACKNOWLEDGED && this.roleService.isAtLeastSupervisor();
+    return !isFromSender && status === NotificationStatus.ACKNOWLEDGED && this.roleService.isAtLeastUser();
   }
 
   public showDeclineButton({ status, isFromSender } = {} as Notification): boolean {
-    return !isFromSender && status === NotificationStatus.ACKNOWLEDGED && this.roleService.isAtLeastSupervisor();
+    return !isFromSender && status === NotificationStatus.ACKNOWLEDGED && this.roleService.isAtLeastUser();
   }
 }

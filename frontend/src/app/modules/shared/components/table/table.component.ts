@@ -66,7 +66,7 @@ export class TableComponent {
     }
 
     const { menuActionsConfig: menuActions, displayedColumns: dc, columnRoles, hasPagination } = tableConfig;
-    const displayedColumns = dc.filter(column => this.roleService.hasAccess(columnRoles?.[column] ?? 'user'));
+    const displayedColumns = dc.filter(column => this.roleService.hasAccess(columnRoles?.[column] ?? ['user', 'admin']));
 
     const cellRenderers = this._tableConfig?.cellRenderers ?? tableConfig.cellRenderers;
 

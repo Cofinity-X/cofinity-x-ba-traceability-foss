@@ -71,7 +71,7 @@ describe('PartDetailComponent', () => {
   });
 
   it('should render tabs', async () => {
-    await renderPartDetailComponent();
+    await renderPartDetailComponent({ roles: ['user'] });
     const tabElements = await screen.findAllByRole('tab');
 
     expect(tabElements.length).toEqual(2);

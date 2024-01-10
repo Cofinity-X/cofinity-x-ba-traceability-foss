@@ -29,7 +29,6 @@ const ROLES_RELATIONS: RoleRelation[] = [
   },
   {
     role: 'admin',
-    child: 'supervisor',
   },
   {
     role: 'supervisor',
@@ -41,7 +40,7 @@ const ROLES_RELATIONS: RoleRelation[] = [
   providedIn: 'root',
 })
 export class RoleService {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   public hasAccess(requiredRoles: Role | Role[]): boolean {
     const requiredRolesList = typeof requiredRoles === 'string' ? [requiredRoles] : requiredRoles;

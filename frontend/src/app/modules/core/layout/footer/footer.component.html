@@ -3,12 +3,12 @@
     <div class="footer--items-container">
       <div class="footer--items">
         <ng-container
-          *ngTemplateOutlet="menuItemExtern; context: { value: 'imprint', role: 'user', origin: 'layout.footer', link: 'imprintLink' }"></ng-container>
+          *ngTemplateOutlet="menuItemExtern; context: { value: 'imprint', roles: ['user', 'admin'], origin: 'layout.footer', link: 'imprintLink' }"></ng-container>
         <!--<ng-container
         *ngTemplateOutlet="menuItem; context: { value: 'faqs', role: 'user', origin: 'layout.nav' }"
       ></ng-container>-->
         <ng-container
-          *ngTemplateOutlet="menuItem; context: { value: 'about', role: 'user', origin: 'routing' }"></ng-container>
+          *ngTemplateOutlet="menuItem; context: { value: 'about', roles: ['user', 'admin'], origin: 'routing' }"></ng-container>
         <!--<ng-container
         *ngTemplateOutlet="menuItem; context: { value: 'version', role: 'user', origin: 'layout.footer' }"
       ></ng-container>-->
@@ -21,10 +21,10 @@
 </footer>
 
 <ng-template let-type="value"
-  let-role="role"
+  let-roles="roles"
   let-origin="origin"
   #menuItem>
-  <a *appHasRole="[role]"
+  <a *appHasRole="roles"
     [routerLink]="['/' + type]"
     [class.selected]="type === activeMenu">
     <p class="footer--text">{{ origin + '.' + type | i18n }}</p>
@@ -32,11 +32,11 @@
 </ng-template>
 
 <ng-template let-type="value"
-  let-role="role"
+  let-roles="roles"
   let-origin="origin"
   let-link="link"
   #menuItemExtern>
-  <a *appHasRole="[role]"
+  <a *appHasRole="roles"
     href="{{ origin + '.' + link | i18n }}"
     target="_blank"
     rel="noopener"
