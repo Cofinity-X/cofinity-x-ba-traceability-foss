@@ -57,17 +57,13 @@ export class AlertHelperService {
     return isFromSender && status === NotificationStatus.CREATED && this.roleService.isAtLeastSupervisor();
   }
 
-  public showCancelButton({ status, isFromSender } = {} as Notification): boolean {
-    return isFromSender && status === NotificationStatus.CREATED && this.roleService.isAtLeastUser();
-  }
-
   public showCloseButton({ status, isFromSender } = {} as Notification): boolean {
     const disallowedStatus = [NotificationStatus.CREATED, NotificationStatus.CLOSED, NotificationStatus.CANCELED];
     return isFromSender && !disallowedStatus.includes(status) && this.roleService.isAtLeastSupervisor();
   }
 
-  public showAcknowledgeButton({ status, isFromSender } = {} as Notification): boolean {
-    return !isFromSender && status === NotificationStatus.RECEIVED && this.roleService.isAtLeastUser();
+  public showCancelButton({ status, isFromSender } = {} as Notification): boolean {
+    return isFromSender && status === NotificationStatus.CREATED && this.roleService.isAtLeastUser();
   }
 
   public showAcceptButton({ status, isFromSender } = {} as Notification): boolean {
@@ -76,5 +72,9 @@ export class AlertHelperService {
 
   public showDeclineButton({ status, isFromSender } = {} as Notification): boolean {
     return !isFromSender && status === NotificationStatus.ACKNOWLEDGED && this.roleService.isAtLeastUser();
+  }
+
+  public showAcknowledgeButton({ status, isFromSender } = {} as Notification): boolean {
+    return !isFromSender && status === NotificationStatus.RECEIVED && this.roleService.isAtLeastUser();
   }
 }
