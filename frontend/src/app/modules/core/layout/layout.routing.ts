@@ -32,6 +32,7 @@ import {
   PARTS_BASE_ROUTE,
 } from '@core/known-route';
 import { RoleGuard } from '@core/user/role.guard';
+import { Role } from '@core/user/role.model';
 import { AdminComponent } from '@page/admin/presentation/admin.component';
 import { ErrorPageType } from '@page/error-page/model/error-page.model';
 import { I18NEXT_NAMESPACE_RESOLVER } from 'angular-i18next';
@@ -59,7 +60,7 @@ export /** @type {*} */
       loadChildren: () => import('../../page/dashboard/dashboard.module').then(m => m.DashboardModule),
       data: {
         breadcrumb: 'home',
-        roles: ['user', 'admin'],
+        roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],
     },
@@ -68,7 +69,7 @@ export /** @type {*} */
       loadChildren: () => import('../../page/parts/parts.module').then(m => m.PartsModule),
       data: {
         breadcrumb: 'parts',
-        roles: ['user', 'admin'],
+        roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],
     },
@@ -77,7 +78,7 @@ export /** @type {*} */
       loadChildren: () => import('@page/other-parts/other-parts.module').then(m => m.OtherPartsModule),
       data: {
         breadcrumb: 'otherParts',
-        roles: ['user', 'admin'],
+        roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],
     },
@@ -86,7 +87,7 @@ export /** @type {*} */
       loadChildren: () => import('../../page/investigations/investigations.module').then(m => m.InvestigationsModule),
       data: {
         breadcrumb: 'investigations',
-        roles: ['user', 'admin'],
+        roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],
     },
@@ -95,7 +96,7 @@ export /** @type {*} */
       loadChildren: () => import('../../page/alerts/alerts.module').then(m => m.AlertsModule),
       data: {
         breadcrumb: 'alerts',
-        roles: ['user', 'admin'],
+        roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],
     },
@@ -104,7 +105,7 @@ export /** @type {*} */
       loadChildren: () => import('../../page/about/about.module').then(m => m.AboutModule),
       data: {
         breadcrumb: 'about',
-        roles: ['user', 'admin'],
+        roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],
     },
@@ -115,7 +116,7 @@ export /** @type {*} */
       data: {
         i18nextNamespaces: ['page.admin'],
         breadcrumb: 'admin',
-        roles: ['admin'],
+        roles: [Role.ADMIN],
       },
       resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
       canActivate: [RoleGuard],

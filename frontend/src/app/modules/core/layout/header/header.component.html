@@ -31,15 +31,15 @@ SPDX-License-Identifier: Apache-2.0
 
       <div class="header--menu">
         <ng-container
-          *ngTemplateOutlet="menuItem; context: { value: 'dashboard', roles: ['user', 'admin'] }"></ng-container>
+          *ngTemplateOutlet="menuItem; context: { value: 'dashboard', roles: [Role.USER, Role.ADMIN] }"></ng-container>
         <ng-container
-          *ngTemplateOutlet="menuItem; context: { value: 'parts', roles: ['user', 'admin'] }"></ng-container>
+          *ngTemplateOutlet="menuItem; context: { value: 'parts', roles: [Role.USER, Role.ADMIN] }"></ng-container>
         <ng-container
-          *ngTemplateOutlet="menuItem; context: { value: 'otherParts', roles: ['user', 'admin'] }"></ng-container>
+          *ngTemplateOutlet="menuItem; context: { value: 'otherParts', roles: [Role.USER, Role.ADMIN] }"></ng-container>
         <ng-container
-          *ngTemplateOutlet="menuItem; context: { value: 'investigations', roles: ['user', 'admin'] }"></ng-container>
+          *ngTemplateOutlet="menuItem; context: { value: 'investigations', roles: [Role.USER, Role.ADMIN] }"></ng-container>
         <ng-container
-          *ngTemplateOutlet="menuItem; context: { value: 'alerts', roles: ['user', 'admin'] }"></ng-container>
+          *ngTemplateOutlet="menuItem; context: { value: 'alerts', roles: [Role.USER, Role.ADMIN] }"></ng-container>
         <app-user-navigation></app-user-navigation>
       </div>
     </nav>

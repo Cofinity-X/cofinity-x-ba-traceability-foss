@@ -81,7 +81,7 @@ SPDX-License-Identifier: Apache-2.0
           </div>
         </div>
       </mat-tab>
-      <mat-tab *appHasRole="['user']"
+      <mat-tab *appHasRole="[Role.USER]"
         [disabled]="(selectedPartDetails$ | async)?.data?.children?.length === 0">
         <ng-template mat-tab-label>
           <div>{{ 'partDetail.investigation.tab.header' | i18n }} </div>

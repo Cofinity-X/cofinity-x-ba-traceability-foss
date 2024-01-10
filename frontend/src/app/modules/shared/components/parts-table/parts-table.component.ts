@@ -51,6 +51,7 @@ import { TableViewConfig } from './table-view-config.model';
 import { TableSettingsComponent } from '../table-settings/table-settings.component';
 import { FilterCongigOptions } from '@shared/model/filter-config';
 import { RoleService } from '@core/user/role.service';
+import { Role } from '@core/user/role.model';
 
 @Component({
   selector: 'app-parts-table',
@@ -381,6 +382,8 @@ export class PartsTableComponent implements OnInit {
 
   private sorting: TableHeaderSort;
 
+  protected readonly Role = Role;
+
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Show';
   }
@@ -415,7 +418,7 @@ export class PartsTableComponent implements OnInit {
     private readonly roleService: RoleService,
   ) {
 
-    if (this.roleService.hasAccess(['user'])) {
+    if (this.roleService.hasAccess([Role.USER])) {
       const selectColumn = 'select';
       this.displayedColumnsAsBuiltSupplierForTable.splice(0, 0, selectColumn);
       this.displayedColumnsAsBuiltForTable.splice(0, 0, selectColumn);

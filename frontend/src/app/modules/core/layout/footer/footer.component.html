@@ -3,15 +3,9 @@
     <div class="footer--items-container">
       <div class="footer--items">
         <ng-container
-          *ngTemplateOutlet="menuItemExtern; context: { value: 'imprint', roles: ['user', 'admin'], origin: 'layout.footer', link: 'imprintLink' }"></ng-container>
-        <!--<ng-container
-        *ngTemplateOutlet="menuItem; context: { value: 'faqs', role: 'user', origin: 'layout.nav' }"
-      ></ng-container>-->
+          *ngTemplateOutlet="menuItemExtern; context: { value: 'imprint', roles: [Role.USER, Role.ADMIN], origin: 'layout.footer', link: 'imprintLink' }"></ng-container>
         <ng-container
-          *ngTemplateOutlet="menuItem; context: { value: 'about', roles: ['user', 'admin'], origin: 'routing' }"></ng-container>
-        <!--<ng-container
-        *ngTemplateOutlet="menuItem; context: { value: 'version', role: 'user', origin: 'layout.footer' }"
-      ></ng-container>-->
+          *ngTemplateOutlet="menuItem; context: { value: 'about', roles: [Role.USER, Role.ADMIN], origin: 'routing' }"></ng-container>
       </div>
       <div class="footer--copyright">
         <p class="footer--text">© Cofinity-X GmbH - All rights reserved.</p>
