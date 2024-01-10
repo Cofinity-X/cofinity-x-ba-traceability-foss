@@ -51,7 +51,7 @@ SPDX-License-Identifier: Apache-2.0
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Update dependencies to avoid CVE-2023-34055,spring-aop & spring-context can be removed when updating springboot version to 3.2-->
+    <!--    &lt;!&ndash; Update dependencies to avoid CVE-2023-34055,spring-aop & spring-context can be removed when updating springboot version to 3.2&ndash;&gt;
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -61,7 +61,7 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring-core.version}</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
     <build>
         <plugins>
