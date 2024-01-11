@@ -45,6 +45,7 @@ import { TableViewConfig } from '../parts-table/table-view-config.model';
 import { TableSettingsComponent } from '../table-settings/table-settings.component';
 import { FilterOperator } from '@page/parts/model/parts.model';
 import { MultiSelectAutocompleteComponent } from '../multi-select-autocomplete/multi-select-autocomplete.component';
+import { Role } from '@core/user/role.model';
 
 @Component({
   selector: 'app-table',
@@ -66,7 +67,7 @@ export class TableComponent {
     }
 
     const { menuActionsConfig: menuActions, displayedColumns: dc, columnRoles, hasPagination } = tableConfig;
-    const displayedColumns = dc.filter(column => this.roleService.hasAccess(columnRoles?.[column] ?? 'user'));
+    const displayedColumns = dc.filter(column => this.roleService.hasAccess(columnRoles?.[column] ?? [Role.USER, Role.ADMIN]));
 
     const cellRenderers = this._tableConfig?.cellRenderers ?? tableConfig.cellRenderers;
 
@@ -173,6 +174,8 @@ export class TableComponent {
   private _tableConfig: TableConfig;
   private tableViewConfig: TableViewConfig;
 
+  protected readonly Role = Role;
+
   constructor(
     private readonly roleService: RoleService,
     private readonly tableSettingsService: TableSettingsService,
@@ -245,6 +248,10 @@ export class TableComponent {
   }
 
   private setupTableViewSettings() {
+    if (!this.tableViewConfig) {
+      return;
+    }
+
     if (!this.tableType && this.tableViewConfig) {
       this.setupTableConfigurations(
         this.tableViewConfig.displayedColumnsForTable,
@@ -304,10 +311,10 @@ export class TableComponent {
 
   private createSettingsList(): any {
     return {
-      columnsForDialog: this.tableViewConfig.displayedColumnsForTable,
+      columnsForDialog: this.tableViewConfig?.displayedColumnsForTable,
       columnSettingsOptions: this.getDefaultColumnVisibilityMap(),
-      columnsForTable: this.tableViewConfig.displayedColumnsForTable,
-      filterColumnsForTable: this.tableViewConfig.displayedColumns,
+      columnsForTable: this.tableViewConfig?.displayedColumnsForTable,
+      filterColumnsForTable: this.tableViewConfig?.displayedColumns,
     };
   }
 
@@ -341,9 +348,12 @@ export class TableComponent {
 
   private getDefaultColumnVisibilityMap(): Map<string, boolean> {
     const initialColumnMap = new Map<string, boolean>();
-    for (const column of this.tableViewConfig.displayedColumnsForTable) {
-      initialColumnMap.set(column, true);
+    if (this.tableViewConfig) {
+      for (const column of this.tableViewConfig.displayedColumnsForTable) {
+        initialColumnMap.set(column, true);
+      }
     }
+
     return initialColumnMap;
   }
 

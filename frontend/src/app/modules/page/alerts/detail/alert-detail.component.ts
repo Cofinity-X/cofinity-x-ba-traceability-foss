@@ -90,9 +90,7 @@ export class AlertDetailComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-    if (!this.alertDetailFacade.selected?.data) {
-      this.selectedNotificationBasedOnUrl();
-    }
+    this.selectedNotificationBasedOnUrl();
 
     this.subscription = this.selected$
       .pipe(
@@ -182,8 +180,8 @@ export class AlertDetailComponent implements AfterViewInit, OnDestroy {
     this.alertDetailFacade.setAndSupplierPartsInformation();
     this.supplierPartsTableConfig = {
       ...tableConfig,
-      displayedColumns: ['select', ...displayedColumns],
-      header: CreateHeaderFromColumns(['select', ...displayedColumns], 'table.column'),
+      displayedColumns: [...displayedColumns],
+      header: CreateHeaderFromColumns([...displayedColumns], 'table.column'),
     };
   }
 
