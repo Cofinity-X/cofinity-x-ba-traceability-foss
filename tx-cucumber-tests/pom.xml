@@ -58,80 +58,12 @@ SPDX-License-Identifier: Apache-2.0
     </dependencyManagement>
 
     <dependencies>
-
-        <!-- tx-cucumber-testes dependencies -->
-        <!-- needed for rest assured. for some reason it is not used from other dependencies -->
-<!--        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${commons-logging.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.javacrumbs.json-unit</groupId>
-            <artifactId>json-unit-assertj</artifactId>
-            <version>${json-unit-assertj.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>${cucumber.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <version>${cucumber.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite</artifactId>
-            <version>${junit-platform.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>${org-snakeyaml.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson-datatype.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jdk8</artifactId>
-            <version>${jackson-datatype.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility</artifactId>
-            <version>${awaitility.version}</version>
-            <scope>test</scope>
-        </dependency>-->
         <!-- tx-application modules -->
         <dependency>
             <groupId>org.eclipse.tractusx.traceability</groupId>
             <artifactId>tx-models</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -145,32 +77,6 @@ SPDX-License-Identifier: Apache-2.0
                     <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
-            <!--  <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-failsafe-plugin</artifactId>
-               <configuration>
-                   <properties>
-                       <configurationParameters>
-                           cucumber.execution.parallel.enabled=true
-                       </configurationParameters>
-                   </properties>
-               </configuration>
-           </plugin>
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-surefire-plugin</artifactId>
-               <configuration>
-                   <properties>
-                       &lt;!&ndash; Work around. Surefire does not include enough
-                            information to disambiguate between different
-                            examples and scenarios. &ndash;&gt;
-                       <configurationParameters>
-                           cucumber.execution.parallel.enabled=true
-                       </configurationParameters>
-                   </properties>
-               </configuration>
-           </plugin>-->
-
         </plugins>
     </build>
 </project>
