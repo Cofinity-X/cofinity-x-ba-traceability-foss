@@ -222,7 +222,7 @@ SPDX-License-Identifier: Apache-2.0
             <version>${junit-bom.version}</version>
         </dependency>
 
-        <!-- tx-converage dependencies -->
+        <!-- tx-converage dependencies  start-->
         <!-- Update dependencies to avoid CVE-2023-34055,spring-aop & spring-context can be removed when updating springboot version to 3.2-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -236,7 +236,7 @@ SPDX-License-Identifier: Apache-2.0
         </dependency>
         <!-- tx-converage dependencies end -->
 
-        <!-- tx-models dependencies  -->
+        <!-- tx-models dependencies start  -->
         <!-- managed by spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -265,11 +265,11 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>jackson-annotations</artifactId>
             <version>2.16.0</version>
         </dependency>
-     <!--   <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-            <version>2.1.1</version>
-        </dependency>-->
+        <!--   <dependency>
+               <groupId>jakarta.annotation</groupId>
+               <artifactId>jakarta.annotation-api</artifactId>
+               <version>2.1.1</version>
+           </dependency>-->
 
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -280,7 +280,7 @@ SPDX-License-Identifier: Apache-2.0
         <!-- tx-models dependencies end -->
 
 
-        <!-- tx-cucumber-testes dependencies -->
+        <!-- tx-cucumber-testes dependencies start -->
         <!-- needed for rest assured. for some reason it is not used from other dependencies -->
         <dependency>
             <groupId>commons-logging</groupId>
@@ -348,25 +348,25 @@ SPDX-License-Identifier: Apache-2.0
         </dependency>
         <!-- tx-cucumber-testes dependencies end -->
 
-        <!-- tx-backend dependencies -->
+        <!-- tx-backend dependencies start -->
 
         <!--  managed by spring boot  -->
-      <dependency>
-          <groupId>org.flywaydb</groupId>
-          <artifactId>flyway-core</artifactId>
-          <version>${flyway-core.version}</version>
-      </dependency>
-      <dependency>
-          <groupId>org.postgresql</groupId>
-          <artifactId>postgresql</artifactId>
-          <version>${postgresql.version}</version>
-      </dependency>
-     <!-- <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-data-jpa</artifactId>
-          <version>${spring-boot-starter-data-jpa.version}</version>
-      </dependency>-->
-      <!-- Still necessary 18.09.2023 -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <!-- <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-data-jpa</artifactId>
+             <version>${spring-boot-starter-data-jpa.version}</version>
+         </dependency>-->
+        <!-- Still necessary 18.09.2023 -->
         <!-- Fix CVE-2023-24998 - can be removed once org.springframework.cloud:spring-cloud-openfeign-core:jar:4.0.1 is updated -->
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -472,21 +472,21 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>${spring-boot-starter.version}</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-            <version>${spring-boot-starter.version}</version>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-validation</artifactId>
+             <version>${spring-boot-starter.version}</version>
+         </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <version>${spring-boot-starter.version}</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot-starter.version}</version>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-web</artifactId>
+             <version>${spring-boot-starter.version}</version>
+         </dependency>-->
         <!-- manual update to avoid CVE-2023-41080 in version 10.1.12 -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -504,22 +504,22 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>spring-security-rsa</artifactId>
             <version>${spring-security-rsa.version}</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson-datatype-jsr310.version}</version>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>com.fasterxml.jackson.datatype</groupId>
+             <artifactId>jackson-datatype-jsr310</artifactId>
+             <version>${jackson-datatype-jsr310.version}</version>
+         </dependency>-->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
             <version>${jakarta.annotation-api.version}</version>
         </dependency>
 
-<!--          Managed by spring boot but set own version -->
+        <!--          Managed by spring boot but set own version -->
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-<!--             Higher version than in spring boot bom-->
+            <!--             Higher version than in spring boot bom-->
             <version>${jakarta-ws-rs.version}</version>
         </dependency>
 
@@ -554,11 +554,11 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>resilience4j-spring-boot2</artifactId>
             <version>${resilience4j.version}</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc.version}</version>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>org.springdoc</groupId>
+             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+             <version>${springdoc.version}</version>
+         </dependency>-->
         <dependency>
             <groupId>net.javacrumbs.shedlock</groupId>
             <artifactId>shedlock-provider-jdbc-template</artifactId>
@@ -609,11 +609,11 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>jsr305</artifactId>
             <version>${findbugs-jsr305.version}</version>
         </dependency>
-      <!--  <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotation.version}</version>
-        </dependency>-->
+        <!--  <dependency>
+              <groupId>io.swagger</groupId>
+              <artifactId>swagger-annotations</artifactId>
+              <version>${swagger-annotation.version}</version>
+          </dependency>-->
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
@@ -724,12 +724,12 @@ SPDX-License-Identifier: Apache-2.0
             <version>${testcontainer-postgresql.version}</version>
             <scope>test</scope>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility</artifactId>
-            <version>${awaitility.version}</version>
-            <scope>test</scope>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>org.awaitility</groupId>
+             <artifactId>awaitility</artifactId>
+             <version>${awaitility.version}</version>
+             <scope>test</scope>
+         </dependency>-->
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility-proxy</artifactId>
@@ -754,7 +754,6 @@ SPDX-License-Identifier: Apache-2.0
                 </exclusion>
             </exclusions>
         </dependency>
-
     </dependencies>
 
     <pluginRepositories>
@@ -769,6 +768,7 @@ SPDX-License-Identifier: Apache-2.0
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -844,6 +844,119 @@ SPDX-License-Identifier: Apache-2.0
         </plugins>
         <pluginManagement>
             <plugins>
+                <!-- tx-backend plugins start -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${install-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${maven-project-info-reports-plugin.version}</version>
+                </plugin>
+                <!--     <plugin>
+                       <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                    </plugin>
+    -->
+                <!-- Spring Boot Plugin-->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                </plugin>
+
+                <!-- tx-backend plugins end -->
+
+                <!-- docs plugins start -->
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${ascii-doctor.maven.plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.jruby</groupId>
+                            <artifactId>jruby</artifactId>
+                            <version>${jruby.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj</artifactId>
+                            <version>${ascii-dcotor-j.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-diagram</artifactId>
+                            <version>${ascii-doctor-j-diagram.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <requires>
+                            <require>asciidoctor-diagram</require>
+                        </requires>
+                        <backend>html5</backend>
+                        <sourceDirectory>src/docs</sourceDirectory>
+                        <relativeBaseDir>true</relativeBaseDir>
+                        <preserveDirectories>true</preserveDirectories>
+                        <attributes>
+                            <source-highlighter>rouge</source-highlighter>
+                            <toc>left</toc>
+                            <icons>font</icons>
+                            <icon-set>fas</icon-set>
+                        </attributes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>output-html</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- docs plugins end -->
+
+                <!-- tx-cucumber-tests plugin start -->
+              <!--  <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
+                </plugin>-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <configuration>
+                        <properties>
+                            <configurationParameters>
+                                cucumber.execution.parallel.enabled=true
+                            </configurationParameters>
+                        </properties>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <properties>
+                            <!-- Work around. Surefire does not include enough
+                                 information to disambiguate between different
+                                 examples and scenarios. -->
+                            <configurationParameters>
+                                cucumber.execution.parallel.enabled=true
+                            </configurationParameters>
+                        </properties>
+                    </configuration>
+                </plugin>
+
+                <!-- tx-cucumber-tests plugin end -->
+
                 <plugin>
                     <groupId>org.eclipse.dash</groupId>
                     <artifactId>license-tool-plugin</artifactId>

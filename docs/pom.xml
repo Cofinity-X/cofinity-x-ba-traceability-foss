@@ -39,7 +39,7 @@ SPDX-License-Identifier: Apache-2.0
     <build>
         <defaultGoal>generate-resources</defaultGoal>
         <plugins>
-            <plugin>
+           <!-- <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>${ascii-doctor.maven.plugin.version}</version>
@@ -84,7 +84,7 @@ SPDX-License-Identifier: Apache-2.0
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>
