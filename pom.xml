@@ -168,21 +168,11 @@ SPDX-License-Identifier: Apache-2.0
                 <version>${logback.version}</version>
             </dependency>
             <!-- Update com.fasterxml.jackson.core to avoid CVE-2023-35116, can be removed after org.eclipse.edc updates their dependency -->
-           <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-           <!-- <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>-->
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-bom</artifactId>
@@ -324,19 +314,16 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson-datatype.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
             <version>${jackson-datatype.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
@@ -347,7 +334,6 @@ SPDX-License-Identifier: Apache-2.0
         <!-- tx-cucumber-testes dependencies end -->
 
         <!-- tx-backend dependencies start -->
-
         <!--  managed by spring boot  -->
         <dependency>
             <groupId>org.flywaydb</groupId>
