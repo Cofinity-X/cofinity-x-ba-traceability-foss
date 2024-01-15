@@ -975,8 +975,17 @@ app-input {
   }
 }
 
-//table-componet
+app-button {
+  .dashboard-action-button {
+    .mat-mdc-outlined-button.mat-mdc-button-base {
+      width: 163px !important;
+      height: 32px !important;
+    }
+  }
 
+}
+
+//table-component
 app-table {
   .mat-mdc-row .mat-mdc-cell {
     cursor: pointer;

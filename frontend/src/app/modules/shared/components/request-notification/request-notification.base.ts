@@ -29,7 +29,10 @@ import { Severity } from '@shared/model/severity.model';
 import { BehaviorSubject } from 'rxjs';
 import { ModalComponent } from '@shared/modules/modal/component/modal.component';
 
-export type RequestContext = 'requestInvestigations' | 'requestAlert';
+export enum RequestContext {
+  REQUEST_ALERT = 'requestAlert',
+  REQUEST_INVESTIGATION = 'requestInvestigations',
+}
 
 export abstract class RequestNotificationBase {
   public abstract readonly selectedItems: Part[];
@@ -39,6 +42,7 @@ export abstract class RequestNotificationBase {
   public abstract readonly restorePart: EventEmitter<Part>;
   public abstract readonly clearSelected: EventEmitter<void>;
   public abstract readonly submitted: EventEmitter<void>;
+  public abstract readonly onBackClicked: EventEmitter<void>;
 
   public abstract readonly context: RequestContext;
   public abstract readonly formGroup:
@@ -88,7 +92,6 @@ export abstract class RequestNotificationBase {
   }
 
   protected openToast(count: number, link: string, linkQueryParams: Record<string, string>): void {
-
     this.toastService.success({
       id: `${this.context}.success`,
       values: { count }

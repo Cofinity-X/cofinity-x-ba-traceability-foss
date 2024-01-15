@@ -19,7 +19,7 @@
 
 
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OTHER_PARTS_BASE_ROUTE, getRoute } from '@core/known-route';
@@ -43,6 +43,8 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   styleUrls: ['../other-parts.component.scss'],
 })
 export class SupplierPartsComponent implements OnInit, OnDestroy {
+
+  @Output() onPartsSelected = new EventEmitter<Part[]>();
 
   public supplierPartsAsBuilt$: Observable<View<Pagination<Part>>>;
   public supplierPartsAsPlanned$: Observable<View<Pagination<Part>>>;
@@ -68,8 +70,9 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   public ctrlKeyState = false;
   public globalSearchActive = false;
 
-  @Input()
-  public bomLifecycle: MainAspectType;
+  @Input() public bomLifecycle: MainAspectType;
+  @Input() public showActionButton = true;
+  @Input() public asBuiltPartsHeader = 'page.asBuiltParts';
 
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
 
@@ -110,11 +113,14 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
         semanticDataModel: SemanticDataModel[part.semanticDataModel.toUpperCase() as keyof typeof SemanticDataModel],
       };
     });
+
     return this.selectedItems || [];
   }
 
   public set currentSelectedItems(parts: Part[]) {
     this.selectedItems = parts;
+
+    this.onPartsSelected.emit(this.selectedItems);
   }
 
   public ngOnInit(): void {

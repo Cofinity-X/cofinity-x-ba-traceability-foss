@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateTimeString } from '@shared/components/dateTime/dateTime.component';
 import { DateValidators } from '@shared/components/dateTime/dateValidators.model';
@@ -46,19 +46,20 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   @Output() restorePart = new EventEmitter<Part>();
   @Output() clearSelected = new EventEmitter<void>();
   @Output() submitted = new EventEmitter<void>();
+  @Output() onBackClicked = new EventEmitter<void>();
 
-  public selectedItems: Part[] = [];
+  @Input() selectedItems: Part[] = [];
   public showHeadline = true;
 
-  public readonly context: RequestContext = 'requestInvestigations';
+  public readonly context: RequestContext = RequestContext.REQUEST_INVESTIGATION;
 
   constructor(toastService: ToastService, private readonly investigationsService: InvestigationsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
     super(toastService, dialog);
-    this.selectedItems = data.selectedItems;
+    // this.selectedItems = data.selectedItems;
     this.showHeadline = data.showHeadline;
   }
 
-  public readonly formGroup = new FormGroup<{
+  @Input() formGroup = new FormGroup<{
     description: FormControl<string>;
     targetDate: FormControl<DateTimeString>;
     severity: FormControl<Severity>;

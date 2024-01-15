@@ -22,12 +22,6 @@ SPDX-License-Identifier: Apache-2.0
   <div class="header">
     <div *ngIf="showHeadline">{{ this.context + '.headline' | i18n }}
     </div>
-    <div>
-      <img mat-dialog-close
-        class="pr-2"
-        src="/assets/images/icons/closeDialog_icon.svg"
-        alt="X" />
-    </div>
   </div>
 
   <div class="mb-8 pt-5">
@@ -97,13 +91,12 @@ SPDX-License-Identifier: Apache-2.0
     <app-textarea [label]="'requestNotification.textAreaLabel' | i18n"
       formControlName="description"></app-textarea>
 
-    <div class="flex flex-row justify-end mt-10 md:mt-6">
+    <div class="buttons-wrapper">
       <app-button [variant]="'stroked'"
         [isDisabled]="isLoading$ | async"
-        (click)="resetForm()"
-        mat-dialog-close
+        (click)="onBackClicked.emit()"
         class="mr-4">
-        <div class="cancel-button-text">{{ 'requestNotification.cancel' | i18n }}</div>
+        <div class="cancel-button-text">{{ 'requestNotification.back' | i18n }}</div>
       </app-button>
 
       <div>

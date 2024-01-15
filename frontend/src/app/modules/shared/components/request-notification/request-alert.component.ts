@@ -47,11 +47,12 @@ export class RequestAlertComponent extends RequestNotificationBase {
   @Output() restorePart = new EventEmitter<Part>();
   @Output() clearSelected = new EventEmitter<void>();
   @Output() submitted = new EventEmitter<void>();
+  @Output() onBackClicked = new EventEmitter<void>();
 
   public selectedItems: Part[] = [];
   public showHeadline = true;
 
-  public readonly context: RequestContext = 'requestAlert';
+  public readonly context: RequestContext = RequestContext.REQUEST_ALERT;
 
   constructor(toastService: ToastService, private readonly alertsService: AlertsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
     super(toastService, dialog);

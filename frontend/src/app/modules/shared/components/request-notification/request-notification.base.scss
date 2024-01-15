@@ -20,7 +20,8 @@
 @tailwind base;
 
 .container {
-  width: 804px;
+  width: 820px;
+  overflow-y: hidden;
 }
 
 .header {
@@ -56,6 +57,12 @@
   line-height: 20px;
   letter-spacing: 0.1px;
   padding: 0 5px 0 5px;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
 }
 
 .accept-button-text {

@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="header">
+    <div>{{ this.context + '.headline' | i18n }}
+    </div>
+    <div>
+      <img class="pr-2"
+        (click)="closeAction()"
+        src="/assets/images/icons/closeDialog_icon.svg"
+        alt="X" />
+    </div>
+  </div>
+
+  <div class="mb-8 pt-5">
+    <mat-tab-group [selectedIndex]="tabIndex"
+      appTabAsPanel
+      mat-stretch-tabs="false"
+      mat-align-tabs="start"
+      class="other-parts-mat-tab-group parts-tab-wrapper">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="flex items-center">
+            <div class="step"
+              [ngClass]="this.tabIndex === 0 ? 'step--ACTIVE' : 'step--COMPLETED'">
+              1</div>
+            <div class="select-parts-tab">{{ 'requestNotification.selectParts' | i18n
+              }} </div>
+          </div>
+        </ng-template>
+
+        <app-supplier-parts [bomLifecycle]="MainAspectType.AS_BUILT"
+          [showActionButton]="false"
+          [asBuiltPartsHeader]="'requestNotification.otherPartsList'"
+          (onPartsSelected)="onPartsSelected($event)"></app-supplier-parts>
+      </mat-tab>
+      <mat-tab [disabled]="tabIndex !== 1">
+        <ng-template mat-tab-label>
+          <div class="flex items-center">
+            <div class="step"
+              [ngClass]="this.tabIndex === 1 ? 'step--ACTIVE' : 'step--INACTIVE'">
+              2</div>
+            <div class="select-parts-tab">{{ 'requestNotification.selectParts' | i18n
+              }} </div>
+          </div>
+        </ng-template>
+
+        <app-request-investigation *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION; requestAlert"
+          (onBackClicked)="onTabChange(0)"
+          [selectedItems]="selectedParts"></app-request-investigation>
+        <ng-template #requestAlert>
+          <app-request-alert *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION"></app-request-alert>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <div *ngIf="tabIndex === 0"
+    class="buttons-wrapper">
+    <app-button [variant]="'stroked'"
+      [isDisabled]="isLoading$ | async"
+      (click)="closeAction()"
+      class="mr-4">
+      <div class="cancel-button-text">{{ 'requestNotification.cancel' | i18n }}</div>
+    </app-button>
+    <div>
+      <app-button [isDisabled]="selectedParts.length === 0"
+        [variant]="'flat'"
+        [color]="'primary'"
+        (click)="onTabChange(1)">
+        <div class="accept-button-text">{{ 'requestNotification.continue' | i18n }}</div>
+      </app-button>
+    </div>
+  </div>
+
+  <mat-progress-bar *ngIf="isLoading$ | async"
+    mode="indeterminate"></mat-progress-bar>
+</div>

@@ -29,8 +29,8 @@ SPDX-License-Identifier: Apache-2.0
   <ng-template #mainTmp
     let-parts="view"
     let-customContext="customContext">
-    <app-parts-table [tableHeader]="'page.asBuiltParts' | i18n"
-      [showActionButton]="true"
+    <app-parts-table [tableHeader]=" asBuiltPartsHeader | i18n"
+      [showActionButton]="showActionButton"
       [actionIcon]="'/assets/images/icons/create_investigation_icon.svg'"
       [actionIconAlternative]="'Create investigation icon'"
       [paginationData]="parts.data | formatPaginationSemanticDataModelToCamelCase"
