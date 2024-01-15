@@ -197,9 +197,7 @@ class ReadCreatedInvestigationsInSortedOrderControllerIT extends IntegrationTest
                 .body("content.sendTo", Matchers.containsInRelativeOrder("BPNL000000000003", "BPNL000000000002", "BPNL000000000001", "BPNL000000000001"));
     }
 
-
-    // TODO  getting error , Test and fix issues
-   // @Test
+    @Test
     void givenSortByTargetDateProvided_whenGetInvestigations_thenReturnInvestigationsProperlySorted() throws JoseException {
         // given
         String sortString = "targetDate,asc";
@@ -222,6 +220,6 @@ class ReadCreatedInvestigationsInSortedOrderControllerIT extends IntegrationTest
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(4))
                 .body("totalItems", Matchers.is(4))
-                .body("content.sendToName", Matchers.containsInRelativeOrder("OEM1", "OEM2", "OEM1", "OEM3"));
+                .body("content.sendToName", Matchers.containsInRelativeOrder("OEM1", "OEM2", "OEM3", "OEM1"));
     }
 }
