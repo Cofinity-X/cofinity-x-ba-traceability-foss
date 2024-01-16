@@ -27,16 +27,23 @@ SPDX-License-Identifier: Apache-2.0
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-	<groupId>org.eclipse.tractusx.tracex</groupId>
-	<artifactId>docs</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
+    <groupId>org.eclipse.tractusx.tracex</groupId>
+    <artifactId>docs</artifactId>
     <name>TX Documentation</name>
     <description>Trace-X system documentation</description>
-   <properties>
-       <sonar.skip>true</sonar.skip>
-   </properties>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <sonar.skip>true</sonar.skip>
+    </properties>
+
     <build>
         <defaultGoal>generate-resources</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>
