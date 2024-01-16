@@ -172,6 +172,11 @@ SPDX-License-Identifier: Apache-2.0
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.eclipse.tractusx.traceability</groupId>
+                <artifactId>tx-backend</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>tx-backend</artifactId>
                 <version>${project.version}</version>
