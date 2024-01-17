@@ -111,8 +111,8 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>json-ld</artifactId>
         </dependency>
         <dependency>
-            <artifactId>runtime-metamodel</artifactId>
             <groupId>org.eclipse.edc</groupId>
+            <artifactId>runtime-metamodel</artifactId>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
