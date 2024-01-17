@@ -69,8 +69,8 @@ export class PartsTableComponent implements OnInit {
   @Input() labelId: string;
   @Input() noShadow = false;
   @Input() showHover = true;
+  @Input() canClickSelect = true;
   @Input() actionIcon;
-  // @Input() showSearchbar = false;
   @Input() actionIconAlternative;
   @Input() showActionButton = false;
 
@@ -78,6 +78,7 @@ export class PartsTableComponent implements OnInit {
   @Input() selectedPartsActionLabel: string;
 
   @Input() tableHeader: string;
+  @Input() showHeader = true;
   @Input() multiSortList: TableHeaderSort[];
 
   @Input() tableType: PartTableType;
@@ -116,6 +117,15 @@ export class PartsTableComponent implements OnInit {
     }
 
     this.selection.select(newItem);
+    this.emitMultiSelect();
+  }
+
+  @Input() set initialSelection(selectedItems: unknown[]) {
+    if (!selectedItems) {
+      return;
+    }
+
+    this.selection.select(selectedItems);
     this.emitMultiSelect();
   }
 

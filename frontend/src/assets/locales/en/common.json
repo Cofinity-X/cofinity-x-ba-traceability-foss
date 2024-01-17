@@ -199,7 +199,8 @@
   "commonInvestigation": {
     "viewAll": "Go to all investigations",
     "selectedPartsActions": "Start investigation",
-    "discardHeader": "Discard investigation",
+    "create": "Define investigation",
+    "discardHeader": "Discard investigation?",
     "discardMessage": "Your selection and input will be lost. To continue working on your investigation, click \"Resume\".",
     "noInvestigations": "No current quality investigations",
     "noInvestigationsDescription": "If there are any quality investigations, they will be displayed here.",

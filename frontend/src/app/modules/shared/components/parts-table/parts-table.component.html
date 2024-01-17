@@ -18,26 +18,13 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <ng-container>
-  <div class="header-container">
+  <div *ngIf="showHeader"
+    class="header-container">
     <div class="pt-5">
       <span class="header-text">{{ tableHeader }}</span>
       <span class="lifecycle-size-text"> ({{ totalItems }})</span>
     </div>
     <div>
-      <!-- <div *ngif="showSearchbar" [formGroup]="searchFormGroup">
-            <app-input color="accent"
-              [label]="'parts.input.global-search.placeholderAsset' | i18n"
-              [prefixIconHover]="true"
-              (prefixIconClick)="triggerPartSearch()"
-              [onEnterActive]="true"
-              [prefixIcon]="'search'"
-              [isSearchBar]="true"
-              formControlName="partSearch"
-              [parentFormGroup]="searchFormGroup"
-              [parentControlName]="'partSearch'"
-              [displayClearButton]="true"
-              prefixIconColor="accent"></app-input>
-          </div> -->
       <div *appHasRole="tableConfig.columnRoles?.['select'] ?? [Role.USER]">
         <app-button *ngIf="showActionButton"
           class="create-action-button"
@@ -81,7 +68,7 @@ SPDX-License-Identifier: Apache-2.0
       *matRowDef="let row; columns: tableConfig.displayedColumns"
       [class.loading]="isDataLoading"
       [class.no-hover]="!showHover"
-      (click)="selectElement(row)"
+      (click)="canClickSelect && selectElement(row)"
       mat-row
       data-testid="table-component--body-row"></tr>
 

@@ -49,14 +49,11 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   @Output() onBackClicked = new EventEmitter<void>();
 
   @Input() selectedItems: Part[] = [];
-  public showHeadline = true;
 
   public readonly context: RequestContext = RequestContext.REQUEST_INVESTIGATION;
 
   constructor(toastService: ToastService, private readonly investigationsService: InvestigationsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
     super(toastService, dialog);
-    // this.selectedItems = data.selectedItems;
-    this.showHeadline = data.showHeadline;
   }
 
   @Input() formGroup = new FormGroup<{

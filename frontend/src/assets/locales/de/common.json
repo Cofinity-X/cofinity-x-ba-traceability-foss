@@ -196,7 +196,8 @@
   "commonInvestigation": {
     "viewAll": "Zu allen Untersuchungen gehen",
     "selectedPartsActions": "Untersuchung starten",
-    "discardHeader": "Untersuchung verwerfen",
+    "create": "Untersuchung definieren",
+    "discardHeader": "Untersuchung verwerfen?",
     "discardMessage": "Ihre Auswahl und Eingaben gehen verloren. Um mit Ihrer Untersuchung fortzufahren, klicken Sie auf \"Fortsetzen\".",
     "noInvestigations": "Keine aktuellen Qualitätsuntersuchungen",
     "noInvestigationsDescription": "Wenn es Qualitätsuntersuchungen gibt, werden sie hier angezeigt.",

@@ -36,7 +36,6 @@ export enum RequestContext {
 
 export abstract class RequestNotificationBase {
   public abstract readonly selectedItems: Part[];
-  public abstract readonly showHeadline: boolean;
 
   public abstract readonly deselectPart: EventEmitter<Part>;
   public abstract readonly restorePart: EventEmitter<Part>;
@@ -127,6 +126,14 @@ export abstract class RequestNotificationBase {
   public restoreLastItem(): void {
     this.restorePart.emit(this.removedItemsHistory[0]);
     this.removedItemsHistory.shift();
+  }
+
+  public onBack(): void {
+    this.formGroup.enable();
+    this.formGroup.markAsPristine();
+    this.formGroup.reset();
+
+    this.onBackClicked.emit();
   }
 
   public resetForm(): void {

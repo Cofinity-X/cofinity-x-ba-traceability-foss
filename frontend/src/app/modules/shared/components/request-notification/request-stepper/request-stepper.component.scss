@@ -3,7 +3,8 @@
 
 .container {
   width: 850px;
-  overflow-y: visible;
+  overflow-y: hidden;
+  margin-right: 0.5px;
 }
 
 .header {
@@ -15,6 +16,10 @@
 
   display: flex;
   justify-content: space-between;
+}
+
+.table-header {
+  @extend .title-medium;
 }
 
 .button-text {
@@ -38,6 +43,7 @@
 .buttons-wrapper {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 .parts-tab-wrapper {

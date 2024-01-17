@@ -3,20 +3,19 @@
     <div>{{ this.context + '.headline' | i18n }}
     </div>
     <div>
-      <img class="pr-2"
-        (click)="closeAction()"
+      <img (click)="closeAction()"
         src="/assets/images/icons/closeDialog_icon.svg"
         alt="X" />
     </div>
   </div>
 
-  <div class="mb-8 pt-5">
+  <div class="pt-5">
     <mat-tab-group [selectedIndex]="tabIndex"
       appTabAsPanel
       mat-stretch-tabs="false"
       mat-align-tabs="start"
       class="other-parts-mat-tab-group parts-tab-wrapper">
-      <mat-tab>
+      <mat-tab [disabled]="tabIndex !== 0">
         <ng-template mat-tab-label>
           <div class="flex items-center">
             <div class="step"
@@ -25,11 +24,38 @@
             <div class="select-parts-tab">{{ 'requestNotification.selectParts' | i18n
               }} </div>
           </div>
+
         </ng-template>
+
+        <div class="flex justify-between items-center pt-5">
+          <div class="flex items-center table-header">
+            {{ 'requestNotification.otherPartsList' | i18n }}
+            ({{ totalItems }})
+          </div>
+          <div [formGroup]="searchFormGroup">
+            <app-input color="accent"
+              [label]="'parts.input.global-search.placeholderAsset' | i18n"
+              [prefixIconHover]="true"
+              (prefixIconClick)="triggerPartSearch()"
+              [onEnterActive]="true"
+              [prefixIcon]="'search'"
+              [isSearchBar]="true"
+              [size]="'small'"
+              formControlName="partSearch"
+              [parentFormGroup]="searchFormGroup"
+              [parentControlName]="'partSearch'"
+              [displayClearButton]="true"
+              prefixIconColor="accent"></app-input>
+          </div>
+        </div>
 
         <app-supplier-parts [bomLifecycle]="MainAspectType.AS_BUILT"
           [showActionButton]="false"
-          [asBuiltPartsHeader]="'requestNotification.otherPartsList'"
+          [showHeader]="false"
+          [compactSize]="true"
+          (initialSelectedParts)="selectedParts"
+          (onPartDeselected)="deselectPart.emit($event)"
+          (onTotalItemsChanged)="onTotalItemsChangedEvent($event)"
           (onPartsSelected)="onPartsSelected($event)"></app-supplier-parts>
       </mat-tab>
       <mat-tab [disabled]="tabIndex !== 1">
@@ -38,13 +64,15 @@
             <div class="step"
               [ngClass]="this.tabIndex === 1 ? 'step--ACTIVE' : 'step--INACTIVE'">
               2</div>
-            <div class="select-parts-tab">{{ 'requestNotification.selectParts' | i18n
+            <div class="select-parts-tab">{{ (this.context === RequestContext.REQUEST_INVESTIGATION ?
+              'commonInvestigation.create' : 'commonAlert.create') | i18n
               }} </div>
           </div>
         </ng-template>
 
         <app-request-investigation *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION; requestAlert"
-          (onBackClicked)="onTabChange(0)"
+          (onBackClicked)="onBackClicked()"
+          (deselectPart)="deselectPart.emit($event)"
           [selectedItems]="selectedParts"></app-request-investigation>
         <ng-template #requestAlert>
           <app-request-alert *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION"></app-request-alert>
@@ -58,17 +86,16 @@
     <app-button [variant]="'stroked'"
       [isDisabled]="isLoading$ | async"
       (click)="closeAction()"
-      class="mr-4">
+      class="mr-4 button-small">
       <div class="cancel-button-text">{{ 'requestNotification.cancel' | i18n }}</div>
     </app-button>
-    <div>
-      <app-button [isDisabled]="selectedParts.length === 0"
-        [variant]="'flat'"
-        [color]="'primary'"
-        (click)="onTabChange(1)">
-        <div class="accept-button-text">{{ 'requestNotification.continue' | i18n }}</div>
-      </app-button>
-    </div>
+    <app-button [isDisabled]="selectedParts.length === 0"
+      [variant]="'flat'"
+      [color]="'primary'"
+      class="button-small"
+      (click)="onTabChange(1)">
+      <div class="accept-button-text">{{ 'requestNotification.continue' | i18n }}</div>
+    </app-button>
   </div>
 
   <mat-progress-bar *ngIf="isLoading$ | async"

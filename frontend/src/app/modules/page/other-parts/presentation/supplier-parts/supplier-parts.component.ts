@@ -28,7 +28,8 @@ import { OtherPartsFacade } from '@page/other-parts/core/other-parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { AssetAsBuiltFilter, AssetAsPlannedFilter, Part, SemanticDataModel } from '@page/parts/model/parts.model';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
-import { RequestInvestigationComponent } from '@shared/components/request-notification';
+import { RequestContext } from '@shared/components/request-notification/request-notification.base';
+import { RequestStepperComponent } from '@shared/components/request-notification/request-stepper/request-stepper.component';
 import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
@@ -45,6 +46,8 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   @Output() onPartsSelected = new EventEmitter<Part[]>();
+  @Output() onTotalItemsChanged = new EventEmitter<number>();
+  @Output() onPartDeselected = new EventEmitter<Part>();
 
   public supplierPartsAsBuilt$: Observable<View<Pagination<Part>>>;
   public supplierPartsAsPlanned$: Observable<View<Pagination<Part>>>;
@@ -72,7 +75,8 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   @Input() public bomLifecycle: MainAspectType;
   @Input() public showActionButton = true;
-  @Input() public asBuiltPartsHeader = 'page.asBuiltParts';
+  @Input() public showHeader = true;
+  @Input() public compactSize = false;
 
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
 
@@ -160,8 +164,15 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(RequestInvestigationComponent, {
-      data: { selectedItems: this.currentSelectedItems, showHeadline: true },
+    const dialogRef = this.dialog.open(RequestStepperComponent, {
+      autoFocus: false,
+      data: {
+        selectedItems: this.currentSelectedItems,
+        showHeadline: true,
+        context: RequestContext.REQUEST_INVESTIGATION,
+        tabIndex: 1,
+        fromExternal: true,
+      },
     });
 
     const callback = (part: Part) => {
@@ -233,6 +244,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   public removeItemFromSelection(part: Part): void {
     this.deselectPartTrigger$.next([part]);
+    this.onPartDeselected.emit(part);
     this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
   }
 

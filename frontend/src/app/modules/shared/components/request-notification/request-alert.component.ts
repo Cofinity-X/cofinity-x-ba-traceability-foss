@@ -50,14 +50,12 @@ export class RequestAlertComponent extends RequestNotificationBase {
   @Output() onBackClicked = new EventEmitter<void>();
 
   public selectedItems: Part[] = [];
-  public showHeadline = true;
 
   public readonly context: RequestContext = RequestContext.REQUEST_ALERT;
 
   constructor(toastService: ToastService, private readonly alertsService: AlertsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
     super(toastService, dialog);
     this.selectedItems = data.selectedItems;
-    this.showHeadline = data.showHeadline;
   }
 
   public readonly formGroup = new FormGroup({
