@@ -36,7 +36,6 @@ SPDX-License-Identifier: Apache-2.0
         <sonar.skip>false</sonar.skip>
         <skipTests>false</skipTests>
         <skipUTs>${skipTests}</skipUTs>
-        <project.version>0.0.1-SNAPSHOT</project.version>
     </properties>
 
     <repositories>
@@ -346,6 +345,7 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>jetty-http</artifactId>
         </dependency>
     </dependencies>
+
     <pluginRepositories>
         <pluginRepository>
             <id>dash-licenses-snapshots</id>
@@ -355,6 +355,7 @@ SPDX-License-Identifier: Apache-2.0
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
     <build>
         <finalName>traceability-app-${project.version}</finalName>
         <plugins>
@@ -375,7 +376,6 @@ SPDX-License-Identifier: Apache-2.0
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -384,7 +384,6 @@ SPDX-License-Identifier: Apache-2.0
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-
             <!-- Spring Boot Plugin-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -406,7 +405,6 @@ SPDX-License-Identifier: Apache-2.0
 
     <!-- Maven Profiles -->
     <profiles>
-
         <profile>
             <id>license-check</id>
             <build>
@@ -445,7 +443,6 @@ SPDX-License-Identifier: Apache-2.0
                 </plugins>
             </build>
         </profile>
-
     </profiles>
 
 </project>

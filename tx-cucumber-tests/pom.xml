@@ -37,7 +37,6 @@ SPDX-License-Identifier: Apache-2.0
         <!--TODO HGO@2023-10-05_16:45 can be enabled/removed after providing proper setup for integration test in local and github environment.
         See DO-1509 -->
         <skipTests>true</skipTests>
-        <project.version>0.0.1-SNAPSHOT</project.version>
     </properties>
 
     <dependencyManagement>
