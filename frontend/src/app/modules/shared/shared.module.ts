@@ -92,7 +92,6 @@ import {
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InfoListComponent } from './components/info-list/info-list.component';
 import { RequestStepperComponent } from './components/request-notification/request-stepper/request-stepper.component';
-import { RequestPartSelectionComponent } from './components/request-notification/request-part-selection/request-part-selection.component';
 import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-parts/supplier-parts.component';
 @NgModule({
   declarations: [
@@ -126,7 +125,6 @@ import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-
     TextareaComponent,
     ErrorMessagePipe,
     SupplierPartsComponent,
-    RequestPartSelectionComponent,
     RequestStepperComponent,
     RequestInvestigationComponent,
     RequestAlertComponent,
@@ -175,7 +173,6 @@ import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-
     TextareaComponent,
     ErrorMessagePipe,
     SupplierPartsComponent,
-    RequestPartSelectionComponent,
     RequestStepperComponent,
     RequestInvestigationComponent,
     RequestAlertComponent,

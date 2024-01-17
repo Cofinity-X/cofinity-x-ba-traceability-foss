@@ -120,15 +120,6 @@ export class PartsTableComponent implements OnInit {
     this.emitMultiSelect();
   }
 
-  @Input() set initialSelection(selectedItems: unknown[]) {
-    if (!selectedItems) {
-      return;
-    }
-
-    this.selection.select(selectedItems);
-    this.emitMultiSelect();
-  }
-
   @Output() selected = new EventEmitter<Record<string, unknown>>();
   @Output() configChanged = new EventEmitter<TableEventConfig>();
   @Output() multiSelect = new EventEmitter<any[]>();

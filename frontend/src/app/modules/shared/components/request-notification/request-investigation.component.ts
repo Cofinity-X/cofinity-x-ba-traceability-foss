@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateTimeString } from '@shared/components/dateTime/dateTime.component';
 import { DateValidators } from '@shared/components/dateTime/dateValidators.model';
@@ -33,8 +33,7 @@ import { getRoute, INVESTIGATION_BASE_ROUTE } from '@core/known-route';
 import { NotificationStatusGroup } from '@shared/model/notification.model';
 import { InvestigationsService } from '@shared/service/investigations.service';
 import { Part } from '@page/parts/model/parts.model';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { RequestComponentData } from './request.componenet.model';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-request-investigation',
@@ -52,7 +51,7 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
 
   public readonly context: RequestContext = RequestContext.REQUEST_INVESTIGATION;
 
-  constructor(toastService: ToastService, private readonly investigationsService: InvestigationsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
+  constructor(toastService: ToastService, private readonly investigationsService: InvestigationsService, public dialog: MatDialog) {
     super(toastService, dialog);
   }
 

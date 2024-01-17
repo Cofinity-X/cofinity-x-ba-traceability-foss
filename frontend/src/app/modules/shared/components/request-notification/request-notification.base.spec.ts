@@ -159,6 +159,16 @@ describe('requestInvestigationComponent', () => {
       // Expectations for an invalid form
       expect(componentInstance.formGroup.invalid).toBeTrue(); // Ensure the form is invalid
     });
+
+    it('should emit onBackClicked when onBack is called', async () => {
+      const { fixture } = await renderRequestInvestigationComponentObject();
+      const { componentInstance } = fixture;
+
+      spyOn(componentInstance.onBackClicked, 'emit');
+
+      componentInstance.onBack();
+      expect(componentInstance.onBackClicked.emit).toHaveBeenCalled();
+    });
   });
 
   describe('Request Alert', () => {

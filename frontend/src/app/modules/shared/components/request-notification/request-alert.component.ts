@@ -19,9 +19,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ALERT_BASE_ROUTE, getRoute } from '@core/known-route';
 import { bpnRegex } from '@page/admin/presentation/bpn-configuration/bpn-configuration.component';
 import { Part, SemanticDataModel } from '@page/parts/model/parts.model';
@@ -34,7 +34,6 @@ import { ToastService } from '@shared/components/toasts/toast.service';
 import { NotificationStatusGroup } from '@shared/model/notification.model';
 import { Severity } from '@shared/model/severity.model';
 import { AlertsService } from '@shared/service/alerts.service';
-import { RequestComponentData } from './request.componenet.model';
 
 @Component({
   selector: 'app-request-alert',
@@ -53,7 +52,7 @@ export class RequestAlertComponent extends RequestNotificationBase {
 
   public readonly context: RequestContext = RequestContext.REQUEST_ALERT;
 
-  constructor(toastService: ToastService, private readonly alertsService: AlertsService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data: RequestComponentData) {
+  constructor(toastService: ToastService, private readonly alertsService: AlertsService, public dialog: MatDialog) {
     super(toastService, dialog);
   }
 
