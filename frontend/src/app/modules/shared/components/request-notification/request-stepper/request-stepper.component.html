@@ -70,13 +70,14 @@
           </div>
         </ng-template>
 
-        <app-request-investigation *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION; requestAlert"
+        <app-request-investigation *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION"
           (onBackClicked)="onBackClicked()"
           (deselectPart)="deselectPart.emit($event)"
           [selectedItems]="selectedParts"></app-request-investigation>
-        <ng-template #requestAlert>
-          <app-request-alert *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION"></app-request-alert>
-        </ng-template>
+        <app-request-alert *ngIf="this.context === RequestContext.REQUEST_ALERT"
+          (onBackClicked)="onBackClicked()"
+          (deselectPart)="deselectPart.emit($event)"
+          [selectedItems]="selectedParts"></app-request-alert>
       </mat-tab>
     </mat-tab-group>
   </div>
