@@ -61,6 +61,8 @@ export abstract class RequestNotificationBase {
 
   public removedItemsHistory: Part[] = [];
 
+  public showButtons = true;
+
   protected constructor(private readonly toastService: ToastService,
     public dialog: MatDialog,
   ) { }
@@ -129,9 +131,11 @@ export abstract class RequestNotificationBase {
   }
 
   public onBack(): void {
-    this.formGroup.enable();
-    this.formGroup.markAsPristine();
-    this.formGroup.reset();
+    this.showButtons = false;
+
+    setTimeout(() => {
+      this.showButtons = true;
+    }, 1000);
 
     this.onBackClicked.emit();
   }

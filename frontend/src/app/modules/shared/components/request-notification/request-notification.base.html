@@ -60,8 +60,7 @@ SPDX-License-Identifier: Apache-2.0
   </div>
 
   <form [formGroup]="formGroup"
-    (keydown.enter)="$event.preventDefault()"
-    (submit)="submit()">
+    (keydown.enter)="$event.preventDefault()">
     <div class="flex flex-row justify-start mb-7">
       <div *ngIf="!!formGroup.controls?.['targetDate']"
         class="mr-5 w-full">
@@ -89,7 +88,8 @@ SPDX-License-Identifier: Apache-2.0
     <app-textarea [label]="'requestNotification.textAreaLabel' | i18n"
       formControlName="description"></app-textarea>
 
-    <div class="buttons-wrapper">
+    <div *ngIf="showButtons"
+      class="buttons-wrapper">
       <app-button [variant]="'stroked'"
         [isDisabled]="isLoading$ | async"
         (click)="onBack()"
@@ -97,14 +97,12 @@ SPDX-License-Identifier: Apache-2.0
         <div class="cancel-button-text">{{ 'requestNotification.back' | i18n }}</div>
       </app-button>
 
-      <div>
-        <app-button class="button-small"
-          [variant]="'flat'"
-          [color]="'primary'"
-          type="submit">
-          <div class="accept-button-text">{{ 'requestNotification.submit' | i18n }}</div>
-        </app-button>
-      </div>
+      <app-button class="button-small"
+        [variant]="'flat'"
+        [color]="'primary'"
+        (click)="submit()">
+        <div class="accept-button-text">{{ 'requestNotification.submit' | i18n }}</div>
+      </app-button>
     </div>
   </form>
 
