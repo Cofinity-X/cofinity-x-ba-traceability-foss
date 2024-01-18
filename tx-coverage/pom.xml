@@ -39,11 +39,11 @@ SPDX-License-Identifier: Apache-2.0
 
     <dependencies>
         <dependency>
-            <groupId>org.eclipse.tractusx.traceability</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>tx-models</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.tractusx.traceability</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>tx-backend</artifactId>
         </dependency>
     </dependencies>

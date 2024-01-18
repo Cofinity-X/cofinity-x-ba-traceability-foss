@@ -57,7 +57,7 @@ SPDX-License-Identifier: Apache-2.0
         </dependency>
         <!-- tx-application modules -->
         <dependency>
-            <groupId>org.eclipse.tractusx.traceability</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>tx-models</artifactId>
         </dependency>
         <!-- managed by spring boot -->
@@ -179,7 +179,7 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
         </dependency>
-        <!-- 3rd party dependecies - NOT managed by spring boot -->
+        <!-- 3rd party dependencies - NOT managed by spring boot -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
@@ -344,25 +344,24 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-http</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
     </dependencies>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>dash-licenses-snapshots</id>
-            <url>https://repo.eclipse.org/content/repositories/dash-licenses-snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
         <finalName>traceability-app-${project.version}</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
@@ -374,15 +373,11 @@ SPDX-License-Identifier: Apache-2.0
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <!-- Spring Boot Plugin-->
             <plugin>
@@ -427,22 +422,5 @@ SPDX-License-Identifier: Apache-2.0
                 </plugins>
             </build>
         </profile>
-        <!--
-             Profile docs, used to convert your AsciiDoc documentation using Asciidoctor from an Apache Maven build.
-             See: https://github.com/asciidoctor/asciidoctor-maven-plugin
-             Command: mvn clean generate-resources -Pdocs
-        -->
-        <profile>
-            <id>docs</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctor-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
-
 </project>
