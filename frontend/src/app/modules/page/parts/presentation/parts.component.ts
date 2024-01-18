@@ -44,7 +44,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { MatDialog } from '@angular/material/dialog';
-import { RequestAlertComponent } from '@shared/components/request-notification/request-alert.component';
 import { PARTS_BASE_ROUTE, getRoute } from '@core/known-route';
 import { Router } from '@angular/router';
 import { SearchHelper } from '@shared/helper/search-helper';
@@ -184,7 +183,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
       autoFocus: false,
       data: {
         selectedItems: this.currentSelectedItems$.value,
-        showHeadline: true,
         context: RequestContext.REQUEST_ALERT,
         tabIndex: 1,
         fromExternal: true,

@@ -94,7 +94,7 @@ export class RequestStepperComponent {
     }
   }
 
-  public onTotalItemsChangedEvent(totalItems: number): void {
+  public onTotalItemsChanged(totalItems: number): void {
     this.totalItems = totalItems;
     this.changeDetector.detectChanges();
   }

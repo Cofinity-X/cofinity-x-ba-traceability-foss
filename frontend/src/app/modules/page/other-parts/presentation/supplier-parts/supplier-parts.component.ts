@@ -168,7 +168,6 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
       autoFocus: false,
       data: {
         selectedItems: this.currentSelectedItems,
-        showHeadline: true,
         context: RequestContext.REQUEST_INVESTIGATION,
         tabIndex: 1,
         fromExternal: true,

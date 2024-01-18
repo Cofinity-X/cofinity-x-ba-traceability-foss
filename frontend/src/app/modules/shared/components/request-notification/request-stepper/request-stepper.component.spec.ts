@@ -122,6 +122,13 @@ describe('RequestStepperComponent', () => {
     expect(componentInstance.selectedParts).toEqual(parts);
   });
 
+  it('should change the total items when onTotalItemsChanged is call', async () => {
+    componentInstance.onTotalItemsChanged(10);
+    expect(componentInstance.totalItems).toEqual(10);
+    componentInstance.onTotalItemsChanged(15);
+    expect(componentInstance.totalItems).toEqual(15);
+  });
+
   it('should trigger updateSupplierParts on supplierPartsComponents when triggerPartSearch is called', () => {
     const searchValue = 'testSearchValue';
 

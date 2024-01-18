@@ -55,7 +55,7 @@
           [compactSize]="true"
           (initialSelectedParts)="selectedParts"
           (onPartDeselected)="deselectPart.emit($event)"
-          (onTotalItemsChanged)="onTotalItemsChangedEvent($event)"
+          (onTotalItemsChanged)="onTotalItemsChanged($event)"
           (onPartsSelected)="onPartsSelected($event)"></app-supplier-parts>
       </mat-tab>
       <mat-tab [disabled]="tabIndex !== 1">
