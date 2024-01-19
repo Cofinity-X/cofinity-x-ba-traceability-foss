@@ -158,7 +158,7 @@
     "test02": "This is for unit tests purposes. {{test}}"
   },
   "requestAlert": {
-    "headline": "Start quality alert",
+    "headline": "Create quality alert",
     "textAreaDescription": "Add a description about the alert.",
     "success_one": "You queued an alert for {{count}} part",
     "success_other": "You queued an alert for {{count}} parts"
@@ -246,6 +246,7 @@
   "commonAlert": {
     "viewAll": "Go to all alerts",
     "noAlerts": "No current quality alerts",
+    "selectedPartsActions": "Create alert",
     "noAlertsDescription": "If there are any quality alerts, they will be displayed here.",
     "create": "Define alert",
     "tabs": {
