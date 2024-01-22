@@ -27,15 +27,16 @@ SPDX-License-Identifier: Apache-2.0
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../tx-parent-spring-boot/pom.xml</relativePath>
     </parent>
+
+    <artifactId>tx-backend</artifactId>
+    <name>TX Backend</name>
+    <version>0.0.1-SNAPSHOT</version>
+
     <properties>
         <sonar.skip>false</sonar.skip>
         <skipTests>false</skipTests>
         <skipUTs>${skipTests}</skipUTs>
     </properties>
-    <artifactId>tx-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
-    <name>TX Backend</name>
 
     <repositories>
         <repository>
@@ -48,28 +49,17 @@ SPDX-License-Identifier: Apache-2.0
         </repository>
     </repositories>
 
-
     <dependencies>
         <!-- IRS Client for decentral registry approach -->
         <dependency>
             <groupId>org.eclipse.tractusx.irs</groupId>
             <artifactId>irs-registry-client</artifactId>
-            <version>${irs-client-lib.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jetty-jakarta-websocket-api</artifactId>
-                    <groupId>org.eclipse.jetty.toolchain</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
-
         <!-- tx-application modules -->
         <dependency>
-            <groupId>org.eclipse.tractusx.traceability</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>tx-models</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <!-- managed by spring boot -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -83,100 +73,9 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <!-- Still necessary 18.09.2023 -->
-        <!--Fix CVE-2023-24998 - can be removed once org.springframework.cloud:spring-cloud-openfeign-core:jar:4.0.1 is updated-->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.5</version>
-        </dependency>
-
-        <!-- EDC Client -->
-        <dependency>
-            <groupId>org.eclipse.edc</groupId>
-            <artifactId>connector-core</artifactId>
-            <version>${edc-library.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>runtime-metamodel</artifactId>
-                    <groupId>org.eclipse.edc</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.edc</groupId>
-            <artifactId>dsp</artifactId>
-            <version>${edc-library.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>runtime-metamodel</artifactId>
-                    <groupId>org.eclipse.edc</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jetty-core</artifactId>
-                    <groupId>org.eclipse.edc</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Update org.eclipse.jetty to avoid vulnerabilities, can be removed when org.eclipse.edc has never versions-->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-io</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jndi</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <!-- manual update to avoid GHSA-58qw-p7qm-5rvh -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-xml</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.edc</groupId>
-            <artifactId>json-ld</artifactId>
-            <version>${edc-library.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>runtime-metamodel</artifactId>
-                    <groupId>org.eclipse.edc</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <artifactId>runtime-metamodel</artifactId>
-            <groupId>org.eclipse.edc</groupId>
-            <version>${edc-library.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-        </dependency>
-        <!-- Update spring-expression manually to avoid vulnerability CVE-2023-20861; can be removed after Spring updates their dependency -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
-            <version>${spring-core.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
-        <!-- Fixes CVE-2023-34035  -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>${spring-security-config.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -198,11 +97,60 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- manual update to avoid CVE-2023-41080 in version 10.1.12 -->
+        <!-- Still necessary 18.09.2023 -->
+        <!--Fix CVE-2023-24998 - can be removed once org.springframework.cloud:spring-cloud-openfeign-core:jar:4.0.1 is updated-->
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>10.1.16</version>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <!-- EDC Client -->
+        <dependency>
+            <groupId>org.eclipse.edc</groupId>
+            <artifactId>connector-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.edc</groupId>
+            <artifactId>dsp</artifactId>
+        </dependency>
+        <!-- Update org.eclipse.jetty to avoid vulnerabilities, can be removed when org.eclipse.edc has never versions-->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-jndi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+        </dependency>
+        <!-- manual update to avoid GHSA-58qw-p7qm-5rvh -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.edc</groupId>
+            <artifactId>json-ld</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.edc</groupId>
+            <artifactId>runtime-metamodel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+        <!-- Update spring-expression manually to avoid vulnerability CVE-2023-20861; can be removed after Spring updates their dependency -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <!-- Fixes CVE-2023-34035  -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -212,7 +160,11 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-rsa</artifactId>
-            <version>1.0.12.RELEASE</version>
+        </dependency>
+        <!-- manual update to avoid CVE-2023-41080 in version 10.1.12 -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -222,352 +174,228 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
-
         <!-- Managed by spring boot but set own version-->
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <!-- Higher version than in spring boot bom -->
-            <version>${jakarta-ws-rs.version}</version>
         </dependency>
-
-        <!-- 3rd party dependecies - NOT managed by spring boot -->
+        <!-- 3rd party dependencies - NOT managed by spring boot -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>${auth-0-java-jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
-            <version>${nimbus-jose-jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-feign</artifactId>
-            <version>${resilience4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-retry</artifactId>
-            <version>${resilience4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-core</artifactId>
-            <version>${resilience4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-spring-boot2</artifactId>
-            <version>${resilience4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>net.javacrumbs.shedlock</groupId>
             <artifactId>shedlock-provider-jdbc-template</artifactId>
-            <version>${schedlock.version}</version>
         </dependency>
         <dependency>
             <groupId>net.javacrumbs.shedlock</groupId>
             <artifactId>shedlock-spring</artifactId>
-            <version>${schedlock.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>${jetbrains-annotation.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-core</artifactId>
-            <version>${feign.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign.form</groupId>
             <artifactId>feign-form</artifactId>
-            <version>${feign-form.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jackson</artifactId>
-            <version>${feign.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-            <version>${feign.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-slf4j</artifactId>
-            <version>${feign-slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.scribejava</groupId>
             <artifactId>scribejava-core</artifactId>
-            <version>${scribe-java.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>${findbugs-jsr305.version}</version>
         </dependency>
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotation.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
-            <version>${jackson-databind-nullable.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency>
-
         <!-- test dependencies spring boot managed -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.minidev</groupId>
-                    <artifactId>json-smart</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- Still necessary 18.09.2023 -->
         <!-- Update json-smart manually to avoid vulnerability CVE-2023-1370; can be removed after Spring updates their dependency -->
         <dependency>
             <groupId>net.minidev</groupId>
             <artifactId>json-smart</artifactId>
-            <version>2.4.10</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.bitbucket.b_c</groupId>
             <artifactId>jose4j</artifactId>
-            <version>${jose4j.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.xebialabs.restito</groupId>
             <artifactId>restito</artifactId>
-            <version>${restito.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${testcontainer-postgresql.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>${testcontainer-postgresql.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <version>${awaitility.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility-proxy</artifactId>
-            <version>${awaitility.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit</artifactId>
-            <version>1.1.0</version>
-            <scope>test</scope>
         </dependency>
         <!-- Fixes CVE-2023-36478  https://github.com/catenax-ng/tx-traceability-foss/security/code-scanning/6770-->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-http</artifactId>
-            <version>${jetty.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jetty-io</artifactId>
-                    <groupId>org.eclipse.jetty</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
         </dependency>
     </dependencies>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>dash-licenses-snapshots</id>
-            <url>https://repo.eclipse.org/content/repositories/dash-licenses-snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
         <finalName>traceability-app-${project.version}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>resources</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>copy-meta-inf</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>
-                                target/classes/META-INF
-                            </outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>
-                                        ../
-                                    </directory>
-                                    <includes>
-                                        <include>LICENSE</include>
-                                        <include>NOTICE.md</include>
-                                        <include>DEPENDENCIES_BACKEND</include>
-                                        <include>SECURITY.md</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <resources>
-                        <resource>
-                            <directory>src/main/resources</directory>
-                            <filtering>true</filtering>
-                        </resource>
-                        <resource>
-                            <directory>src/test/resources</directory>
-                            <filtering>true</filtering>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
-                <version>6.0.0</version>
-                <configuration>
-                    <verbose>false</verbose>
-                    <!-- generateGitPropertiesFilename>${project.build.sourceDirectory}/../filters/git.properties</generateGitPropertiesFilename -->
-                    <includeOnlyProperties>
-                        <includeOnlyProperty>git.commit.id.abbrev</includeOnlyProperty>
-                        <includeOnlyProperty>git.commit.message.short</includeOnlyProperty>
-                        <includeOnlyProperty>git.commit.user.name</includeOnlyProperty>
-                        <includeOnlyProperty>git.commit.user.email</includeOnlyProperty>
-                        <includeOnlyProperty>git.commit.author.time</includeOnlyProperty>
-                        <includeOnlyProperty>git.branch</includeOnlyProperty>
-                    </includeOnlyProperties>
-                    <commitIdGenerationMode>full</commitIdGenerationMode>
-                </configuration>
             </plugin>
-
             <!-- Maven Plugins -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${jar-plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/application-local.yml</exclude>
-                    </excludes>
-                </configuration>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the VM argument line used when integration tests are run. -->
+                            <!--suppress UnresolvedMavenProperty -->
+                            <argLine>${failsafeArgLine}</argLine>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>${install-plugin.version}</version>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven-project-info-reports-plugin.version}</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-
             <!-- Spring Boot Plugin-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-maven-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
@@ -578,14 +406,13 @@ SPDX-License-Identifier: Apache-2.0
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${maven-jxr-plugin.version}</version>
             </plugin>
         </plugins>
     </reporting>
 
     <!-- Maven Profiles -->
     <profiles>
-
         <profile>
             <id>license-check</id>
             <build>
@@ -593,16 +420,6 @@ SPDX-License-Identifier: Apache-2.0
                     <plugin>
                         <groupId>org.eclipse.dash</groupId>
                         <artifactId>license-tool-plugin</artifactId>
-                        <version>${eclipse-dash-ip.version}</version>
-                        <executions>
-                            <execution>
-                                <id>check-license</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>license-check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -614,87 +431,9 @@ SPDX-License-Identifier: Apache-2.0
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>${checkstyle-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <phase>validate</phase>
-                                <configuration>
-                                    <configLocation>${project.basedir}/config/checkstyle/checkstyle.xml</configLocation>
-                                    <inputEncoding>UTF-8</inputEncoding>
-                                    <consoleOutput>true</consoleOutput>
-                                    <failsOnError>true</failsOnError>
-                                    <failOnViolation>true</failOnViolation>
-                                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                                    <includes>**\/*</includes>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-        <!--
-             Profile docs, used to convert your AsciiDoc documentation using Asciidoctor from an Apache Maven build.
-             See: https://github.com/asciidoctor/asciidoctor-maven-plugin
-             Command: mvn clean generate-resources -Pdocs
-        -->
-        <profile>
-            <id>docs</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctor-maven-plugin</artifactId>
-                        <version>${ascii-doctor.maven.plugin.version}</version>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.jruby</groupId>
-                                <artifactId>jruby</artifactId>
-                                <version>${jruby.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.asciidoctor</groupId>
-                                <artifactId>asciidoctorj</artifactId>
-                                <version>${ascii-dcotor-j.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.asciidoctor</groupId>
-                                <artifactId>asciidoctorj-diagram</artifactId>
-                                <version>${ascii-doctor-j-diagram.version}</version>
-                            </dependency>
-                        </dependencies>
-                        <configuration>
-                            <requires>
-                                <require>asciidoctor-diagram</require>
-                            </requires>
-                            <backend>html5</backend>
-                            <sourceDirectory>docs/src/docs</sourceDirectory>
-                            <relativeBaseDir>true</relativeBaseDir>
-                            <preserveDirectories>true</preserveDirectories>
-                            <attributes>
-                                <source-highlighter>rouge</source-highlighter>
-                                <toc>left</toc>
-                                <icons>font</icons>
-                                <icon-set>fas</icon-set>
-                            </attributes>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>output-html</id>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>process-asciidoc</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
     </profiles>
-
 </project>

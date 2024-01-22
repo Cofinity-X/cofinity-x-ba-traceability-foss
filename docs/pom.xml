@@ -27,63 +27,21 @@ SPDX-License-Identifier: Apache-2.0
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-	<groupId>org.eclipse.tractusx.tracex</groupId>
-	<artifactId>docs</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
+    <artifactId>docs</artifactId>
     <name>TX Documentation</name>
     <description>Trace-X system documentation</description>
-   <properties>
-       <sonar.skip>true</sonar.skip>
-   </properties>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <sonar.skip>true</sonar.skip>
+    </properties>
+
     <build>
         <defaultGoal>generate-resources</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>${ascii-doctor.maven.plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jruby</groupId>
-                        <artifactId>jruby</artifactId>
-                        <version>${jruby.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj</artifactId>
-                        <version>${ascii-dcotor-j.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj-diagram</artifactId>
-                        <version>${ascii-doctor-j-diagram.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <requires>
-                        <require>asciidoctor-diagram</require>
-                    </requires>
-                    <backend>html5</backend>
-                    <sourceDirectory>src/docs</sourceDirectory>
-                    <relativeBaseDir>true</relativeBaseDir>
-                    <preserveDirectories>true</preserveDirectories>
-                    <attributes>
-                        <source-highlighter>rouge</source-highlighter>
-                        <toc>left</toc>
-                        <icons>font</icons>
-                        <icon-set>fas</icon-set>
-                    </attributes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>output-html</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
