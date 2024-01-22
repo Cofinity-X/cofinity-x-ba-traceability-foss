@@ -832,21 +832,33 @@ SPDX-License-Identifier: Apache-2.0
                     <version>${jacoco-plugin.version}</version>
                     <configuration>
                         <excludes>
-                            <exclude>
-                                tx-backend/src/main/java/org/eclipse/tractusx/traceability/TraceabilityApplication.java
-                            </exclude>
-                            <exclude>
-                                tx-backend/src/main/java/org/eclipse/tractusx/traceability/infrastructure/edc/blackbox/HttpCallService.java
-                            </exclude>
-                            <exclude>
-                                tx-backend/src/main/java/org/eclipse/tractusx/traceability/infrastructure/edc/blackbox/InvestigationsEDCFacade.java
-                            </exclude>
-                            <exclude>
-                                tx-backend/src/main/java/org/eclipse/tractusx/traceability/infrastructure/edc/blackbox/EdcService.java
-                            </exclude>
+                            <exclude>**/*TraceabilityApplication.class</exclude>
+                            <exclude>**/*HttpCallService.class</exclude>
+                            <exclude>**/*InvestigationsEDCFacade.class</exclude>
+                            <exclude>**/*EdcService.class</exclude>
                         </excludes>
                     </configuration>
                     <executions>
+                        <!-- set arg line property for surefire -->
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <propertyName>surefireArgLine</propertyName>
+                            </configuration>
+                        </execution>
+                        <!-- set arg line property for failsafe -->
+                        <execution>
+                            <id>prepare-agent-integration</id>
+                            <goals>
+                                <goal>prepare-agent-integration</goal>
+                            </goals>
+                            <configuration>
+                                <propertyName>failsafeArgLine</propertyName>
+                            </configuration>
+                        </execution>
                         <execution>
                             <id>report-aggregate</id>
                             <phase>verify</phase>
