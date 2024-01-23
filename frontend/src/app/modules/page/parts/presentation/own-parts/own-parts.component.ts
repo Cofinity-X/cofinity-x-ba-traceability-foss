@@ -22,7 +22,7 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { OTHER_PARTS_BASE_ROUTE, getRoute } from '@core/known-route';
+import { PARTS_BASE_ROUTE, getRoute } from '@core/known-route';
 import { Pagination } from '@core/model/pagination.model';
 import { PartsFacade } from '@page/parts/core/parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
@@ -32,7 +32,7 @@ import { RequestContext } from '@shared/components/request-notification/request-
 import { RequestStepperComponent } from '@shared/components/request-notification/request-stepper/request-stepper.component';
 import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
-import { ToastService } from '@shared/index';
+import { ToastService } from '@shared/components/toasts/toast.service';
 import { View } from '@shared/model/view.model';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { StaticIdService } from '@shared/service/staticId.service';
@@ -304,7 +304,7 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
   }
 
   public openDetailPage(part: Part): void {
-    const { link } = getRoute(OTHER_PARTS_BASE_ROUTE);
+    const { link } = getRoute(PARTS_BASE_ROUTE);
     this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
   }
 
@@ -489,5 +489,72 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+
+  public onAsDesignedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    this.setTableSortingList(sorting, MainAspectType.AS_DESIGNED);
+
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize;
+    }
+
+    this.partsFacade.setPartsAsDesigned(
+      page,
+      pageSizeValue,
+      this.tableAsDesignedSortList,
+      toAssetFilter(this.assetAsDesignedFilter, true),
+      this.globalSearchActive,
+    );
+  }
+
+  public onAsOrderedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    this.setTableSortingList(sorting, MainAspectType.AS_ORDERED);
+
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize;
+    }
+
+    this.partsFacade.setPartsAsOrdered(
+      page,
+      pageSizeValue,
+      this.tableAsOrderedSortList,
+      toAssetFilter(this.assetAsOrderedFilter, true),
+      this.globalSearchActive,
+    );
+  }
+
+  public onAsSupportedTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    this.setTableSortingList(sorting, MainAspectType.AS_SUPPORTED);
+
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize;
+    }
+    this.partsFacade.setPartsAsSupported(
+      page,
+      pageSizeValue,
+      this.tableAsSupportedSortList,
+      toAssetFilter(this.assetAsSupportedFilter, true),
+      this.globalSearchActive,
+    );
+  }
+
+  public onAsRecycledTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {
+    this.setTableSortingList(sorting, MainAspectType.AS_RECYCLED);
+
+    let pageSizeValue = this.DEFAULT_PAGE_SIZE;
+    if (pageSize !== 0) {
+      pageSizeValue = pageSize;
+    }
+
+    this.partsFacade.setPartsAsRecycled(
+      page,
+      pageSizeValue,
+      this.tableAsRecycledSortList,
+      toAssetFilter(this.assetAsRecycledFilter, true),
+      this.globalSearchActive,
+    );
   }
 }

@@ -22,13 +22,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { PartsFacade } from '@page/parts/core/parts.facade';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
-import {
-  Part,
-} from '@page/parts/model/parts.model';
 import { PartTableType } from '@shared/components/table/table.model';
-import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { StaticIdService } from '@shared/service/staticId.service';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { BomLifecycleSize } from '@shared/components/bom-lifecycle-activator/bom-lifecycle-activator.model';
 import { BomLifecycleSettingsService, UserSettingView } from '@shared/service/bom-lifecycle-settings.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -43,10 +38,6 @@ import { OwnPartsComponent } from './own-parts/own-parts.component';
 })
 export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
   public readonly titleId = this.staticIdService.generateId('PartsComponent.title');
-
-  public readonly deselectPartTrigger$ = new Subject<Part[]>();
-  public readonly addPartTrigger$ = new Subject<Part>();
-  public readonly currentSelectedItems$ = new BehaviorSubject<Part[]>([]);
 
   public readonly searchListAsBuilt: string[];
   public readonly searchListAsPlanned: string[];
@@ -64,7 +55,6 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private readonly partsFacade: PartsFacade,
-    private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
     public userSettings: BomLifecycleSettingsService,
     public toastService: ToastService,

@@ -34,11 +34,17 @@ import { PartsComponent } from './presentation/parts.component';
 import { RelationComponent } from './presentation/relation/relation.component';
 import { AngularSplitModule } from "angular-split";
 import { BomLifecycleSettingsService } from "@shared/service/bom-lifecycle-settings.service";
-import { OwnPartsComponent } from './presentation/own-parts/own-parts.component';
 
 @NgModule({
-  declarations: [PartsComponent, RelationComponent, OwnPartsComponent],
+  declarations: [PartsComponent, RelationComponent],
   imports: [CommonModule, TemplateModule, SharedModule, PartsRoutingModule, RelationsModule, PartDetailsModule, AngularSplitModule],
-  providers: [PartsState, BomLifecycleSettingsService, PartsFacade, FormatPartSemanticDataModelToCamelCasePipe, ...getI18nPageProvider(['page.parts', 'partDetail'])],
+  providers: [
+    PartsState,
+    BomLifecycleSettingsService,
+    PartsFacade,
+    FormatPartSemanticDataModelToCamelCasePipe,
+    ...getI18nPageProvider(['page.parts', 'partDetail'])
+  ],
+  exports: [PartsComponent],
 })
 export class PartsModule { }
