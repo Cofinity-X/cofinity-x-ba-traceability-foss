@@ -55,6 +55,7 @@
           [showHeader]="false"
           [compactSize]="true"
           (onPartDeselected)="deselectPart.emit($event)"
+          [deselectTrigger]="deselectPartTrigger$ | async"
           (onTotalItemsChanged)="onTotalItemsChanged($event)"
           (onPartsSelected)="onPartsSelected($event)"></app-own-parts>
 
@@ -63,6 +64,7 @@
           [showActionButton]="false"
           [showHeader]="false"
           [compactSize]="true"
+          [deselectTrigger]="deselectPartTrigger$ | async"
           (onPartDeselected)="deselectPart.emit($event)"
           (onTotalItemsChanged)="onTotalItemsChanged($event)"
           (onPartsSelected)="onPartsSelected($event)"></app-supplier-parts>
@@ -81,11 +83,11 @@
 
         <app-request-investigation *ngIf="this.context === RequestContext.REQUEST_INVESTIGATION"
           (onBackClicked)="onBackClicked()"
-          (deselectPart)="deselectPart.emit($event)"
+          (deselectPart)="onPartDeselected($event)"
           [selectedItems]="selectedParts"></app-request-investigation>
         <app-request-alert *ngIf="this.context === RequestContext.REQUEST_ALERT"
           (onBackClicked)="onBackClicked()"
-          (deselectPart)="deselectPart.emit($event)"
+          (deselectPart)="onPartDeselected($event)"
           [selectedItems]="selectedParts"></app-request-alert>
       </mat-tab>
     </mat-tab-group>

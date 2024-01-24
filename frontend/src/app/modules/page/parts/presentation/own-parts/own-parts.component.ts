@@ -64,6 +64,14 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
   public readonly addPartTrigger$ = new Subject<Part>();
   public readonly currentSelectedItems$ = new BehaviorSubject<Part[]>([]);
 
+  @Input() set deselectTrigger(deselectItems: unknown[]) {
+    if (!deselectItems) {
+      return;
+    }
+
+    this.deselectPartTrigger$.next(deselectItems as Part[]);
+  }
+
   public tableAsBuiltSortList: TableHeaderSort[];
   public tableAsPlannedSortList: TableHeaderSort[];
   public tableAsDesignedSortList: TableHeaderSort[];
@@ -328,23 +336,11 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
 
   public onMultiSelect(event: Part[]): void {
     this.currentSelectedItems$.next(event);
+    this.onPartsSelected.emit(event);
   }
 
   public onDefaultPaginationSizeChange(pageSize: number) {
     this.DEFAULT_PAGE_SIZE = pageSize;
-  }
-
-  public removeItemFromSelection(part: Part): void {
-    this.deselectPartTrigger$.next([part]);
-    this.onPartDeselected.emit(part);
-  }
-
-  public clearSelected(): void {
-    this.deselectPartTrigger$.next(this.currentSelectedItems$.value);
-  }
-
-  public addItemToSelection(part: Part): void {
-    this.addPartTrigger$.next(part);
   }
 
   private setTableSortingList(sorting: TableHeaderSort, partTable: MainAspectType): void {
