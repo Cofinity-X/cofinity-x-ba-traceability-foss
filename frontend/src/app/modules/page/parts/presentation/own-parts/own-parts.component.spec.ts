@@ -18,11 +18,9 @@
  ********************************************************************************/
 
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
-import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
 import { fireEvent, screen, waitFor } from '@testing-library/angular';
 import { renderComponent } from '@tests/test-render.utils';
-import { OTHER_PARTS_MOCK_6 } from '../../../../../mocks/services/otherParts-mock/otherParts.test.model';
 
 import { OwnPartsComponent } from './own-parts.component';
 import { TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
@@ -75,39 +73,6 @@ describe('OwnPartsComponent', () => {
     expect(tableElement).toBeInTheDocument();
     expect(tableElement.children[1].childElementCount).toEqual(5);
   });
-
-  // it('test addItemToSelection method', async () => {
-  //   const { fixture } = await renderOwnPartsAsBuilt();
-
-  //   const expectedPart = PartsAssembler.assembleOtherPart(OTHER_PARTS_MOCK_6, MainAspectType.AS_BUILT);
-
-  //   fixture.componentInstance.addItemToSelection(expectedPart);
-  //   expect(fixture.componentInstance.currentSelectedItems$.value).toEqual([expectedPart]);
-  // });
-
-  // it('test removeItemFromSelection method', async () => {
-  //   const { fixture } = await renderOwnPartsAsBuilt();
-
-  //   const expectedPart = PartsAssembler.assembleOtherPart(OTHER_PARTS_MOCK_6, MainAspectType.AS_BUILT);
-
-  //   fixture.componentInstance.currentSelectedItems$.next([expectedPart]);
-  //   expect(fixture.componentInstance.currentSelectedItems$.value).toEqual([expectedPart]);
-
-
-  //   fixture.componentInstance.removeItemFromSelection(expectedPart);
-  //   expect(fixture.componentInstance.currentSelectedItems$.value).toEqual([]);
-  // });
-
-  // it('test clearSelected method', async () => {
-  //   const { fixture } = await renderOwnPartsAsBuilt();
-
-  //   const expectedPart = PartsAssembler.assembleOtherPart(OTHER_PARTS_MOCK_6, MainAspectType.AS_BUILT);
-
-  //   fixture.componentInstance.currentSelectedItems$.next([expectedPart]);
-
-  //   fixture.componentInstance.clearSelected();
-  //   expect(fixture.componentInstance.currentSelectedItems$.value).toEqual([]);
-  // });
 
   it('sort parts after name column', async () => {
     const { fixture } = await renderOwnPartsAsBuilt({ roles: [Role.ADMIN] });
@@ -326,7 +291,7 @@ describe('OwnPartsComponent', () => {
     ownPartsComponent.onSelectItem(part);
 
     expect(partDetailsFacade.selectedPart).toEqual(part);
-    expect(router.navigate).toHaveBeenCalledWith(['/otherParts/1'], { queryParams: { type: part.mainAspectType } });
+    expect(router.navigate).toHaveBeenCalledWith(['/parts/1'], { queryParams: { type: part.mainAspectType } });
   });
 
   it('should navigate to the correct detail page with the provided part', async () => {
@@ -340,7 +305,7 @@ describe('OwnPartsComponent', () => {
 
     ownPartsComponent.openDetailPage(part);
 
-    const expectedLink = '/otherParts/2';
+    const expectedLink = '/parts/2';
     expect(router.navigate).toHaveBeenCalledWith([expectedLink], { queryParams: { type: part.mainAspectType } });
   });
 

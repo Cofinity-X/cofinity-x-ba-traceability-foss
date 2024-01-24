@@ -101,7 +101,7 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
 
   constructor(
-    private readonly partsFacade: PartsFacade,
+    public readonly partsFacade: PartsFacade,
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
     public dialog: MatDialog,
