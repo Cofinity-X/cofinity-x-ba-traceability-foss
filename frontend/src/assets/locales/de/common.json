@@ -155,7 +155,7 @@
     "generic": "Die Eingabe ist ungültig."
   },
   "requestAlert": {
-    "headline": "Qualitätswarnung erstellen",
+    "headline": "Qualitätswarnung starten",
     "textAreaDescription": "Fügen sie eine Beschreibung hinzu.",
     "success_one": "Sie haben eine Qualitätswarnung für {{count}} Produkt erstellt.",
     "success_other": "Sie haben eine Qualitätswarnung für {{count}} Produkte erstellt."

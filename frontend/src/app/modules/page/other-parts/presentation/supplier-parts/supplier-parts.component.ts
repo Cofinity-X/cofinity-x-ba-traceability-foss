@@ -251,6 +251,7 @@ export class SupplierPartsComponent implements OnInit, OnDestroy {
 
   public removeItemFromSelection(part: Part): void {
     this.deselectPartTrigger$.next([part]);
+    this.onPartDeselected.emit(part);
     this.currentSelectedItems = this.currentSelectedItems.filter(({ id }) => id !== part.id);
   }
 
