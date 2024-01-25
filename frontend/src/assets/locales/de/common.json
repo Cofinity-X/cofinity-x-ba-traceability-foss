@@ -311,9 +311,9 @@
     },
     "openInvestigations": "Offene Warnungen/Untersuchungen",
     "confirmationDialog": {
-      "deletePartTitle": "Produkt löschen?",
-      "deletePartMessage": "Wenn Sie dieses Produkt löschen, wird er vollständig aus der aktuellen Auswahl entfernt.",
-      "deletePartButton": "Löschen",
+      "removePartTitle": "Produkt entfernen?",
+      "removePartMessage": "Wenn Sie dieses Produkt entfernen, wird es aus der aktuellen Auswahl gelöscht.",
+      "removePartButton": "Entfernen",
       "discard": "Ablegen",
       "resume": "Fortsetzen"
     }

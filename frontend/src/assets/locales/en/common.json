@@ -314,9 +314,9 @@
     },
     "openInvestigations": "Open alerts/investigations",
     "confirmationDialog": {
-      "deletePartTitle": "Delete part?",
-      "deletePartMessage": "If you delete this part, it will be fully removed from the current selection",
-      "deletePartButton": "Delete",
+      "removePartTitle": "Remove part?",
+      "removePartMessage": "If you remove this part, it will be deleted from the current selection",
+      "removePartButton": "Remove",
       "discard": "Discard",
       "resume": "Resume"
     }
