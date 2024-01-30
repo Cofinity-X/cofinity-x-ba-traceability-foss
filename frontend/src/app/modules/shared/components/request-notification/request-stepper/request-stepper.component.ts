@@ -29,6 +29,7 @@ export class RequestStepperComponent {
 
   public readonly deselectPartTrigger$ = new Subject<Part[]>();
   public readonly addPartTrigger$ = new Subject<Part>();
+  public isOpen = false;
 
   @ViewChildren(SupplierPartsComponent) supplierPartsComponents: QueryList<SupplierPartsComponent>;
   @ViewChildren(OwnPartsComponent) ownPartsComponents: QueryList<OwnPartsComponent>;
@@ -46,6 +47,7 @@ export class RequestStepperComponent {
     this.tabIndex = data.tabIndex ?? 0;
     this.selectedParts = data.selectedItems ?? [];
     this.fromExternal = data.fromExternal ?? false;
+    this.isOpen = true;
   }
 
   ngOnInit(): void {
@@ -68,6 +70,8 @@ export class RequestStepperComponent {
   }
 
   public closeAction(): void {
+    this.isOpen = false;
+
     if (this.fromExternal) {
       this.dialog.closeAll();
       return;
