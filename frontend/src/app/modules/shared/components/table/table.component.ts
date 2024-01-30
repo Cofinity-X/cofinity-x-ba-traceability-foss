@@ -21,7 +21,7 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren, } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -42,7 +42,6 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 import { TableViewConfig } from '../parts-table/table-view-config.model';
-import { TableSettingsComponent } from '../table-settings/table-settings.component';
 import { FilterOperator } from '@page/parts/model/parts.model';
 import { MultiSelectAutocompleteComponent } from '../multi-select-autocomplete/multi-select-autocomplete.component';
 import { Role } from '@core/user/role.model';
@@ -172,14 +171,13 @@ export class TableComponent {
   public filterActive: any = {};
 
   private _tableConfig: TableConfig;
-  private tableViewConfig: TableViewConfig;
+  public tableViewConfig: TableViewConfig;
 
   protected readonly Role = Role;
 
   constructor(
     private readonly roleService: RoleService,
     private readonly tableSettingsService: TableSettingsService,
-    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -425,24 +423,15 @@ export class TableComponent {
     removeSelectedValues(this.selection, itemsToRemove);
   }
 
-  openDialog(): void {
-    const config = new MatDialogConfig();
-    config.autoFocus = false;
-    config.data = {
-      title: 'table.tableSettings.title',
-      panelClass: 'custom',
-      tableType: this.tableType,
-      defaultColumns: this.tableViewConfig.displayedColumnsForTable,
-      defaultFilterColumns: this.tableViewConfig.displayedColumns,
-    };
-    this.dialog.open(TableSettingsComponent, config);
-  }
-
   public resetFilter(): void {
     const filterNames = Object.keys(this.filterActive);
     for (const filterName of filterNames) {
       this.filterActive[filterName] = false;
     }
     this.filtering = { filterMethod: FilterMethod.AND };
+  }
+
+  public onFiltersReset() {
+    this.filterFormGroup.reset();
   }
 }

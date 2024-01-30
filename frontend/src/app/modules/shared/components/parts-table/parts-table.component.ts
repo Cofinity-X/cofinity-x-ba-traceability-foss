@@ -45,10 +45,9 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
 import { isDateFilter } from '@shared/helper/filter-helper';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { TableSettingsService } from '@core/user/table-settings.service';
 import { TableViewConfig } from './table-view-config.model';
-import { TableSettingsComponent } from '../table-settings/table-settings.component';
 import { FilterCongigOptions } from '@shared/model/filter-config';
 import { RoleService } from '@core/user/role.service';
 import { Role } from '@core/user/role.model';
@@ -144,15 +143,58 @@ export class PartsTableComponent implements OnInit {
   public pageSize: number;
   public pageCount: number;
 
-
   filterFormGroup = new FormGroup({});
+
+  public onFiltersReset(): void {
+
+    switch (this.tableType) {
+      case PartTableType.AS_PLANNED_CUSTOMER:
+        (Object.keys(this.assetAsPlannedCustomerFilterFormGroup)).forEach((key) => {
+          this.assetAsPlannedCustomerFilterFormGroup[key].reset();
+        });
+        break;
+
+      case PartTableType.AS_PLANNED_OWN:
+        (Object.keys(this.assetAsPlannedFilterFormGroup)).forEach((key) => {
+          this.assetAsPlannedFilterFormGroup[key].reset();
+        });
+        break;
+
+      case PartTableType.AS_PLANNED_SUPPLIER:
+        (Object.keys(this.assetAsPlannedSupplierFilterFormGroup)).forEach((key) => {
+          this.assetAsPlannedSupplierFilterFormGroup[key].reset();
+        });
+        break;
+
+      case PartTableType.AS_BUILT_OWN:
+        (Object.keys(this.assetAsBuiltFilterFormGroup)).forEach((key) => {
+          this.assetAsBuiltFilterFormGroup[key].reset();
+        });
+        break;
+
+      case PartTableType.AS_BUILT_CUSTOMER:
+        (Object.keys(this.assetAsBuiltCustomerFilterFormGroup)).forEach((key) => {
+          this.assetAsBuiltCustomerFilterFormGroup[key].reset();
+        });
+        break;
+
+      case PartTableType.AS_BUILT_SUPPLIER:
+        (Object.keys(this.assetAsPlannedSupplierFilterFormGroup)).forEach((key) => {
+          this.assetAsPlannedSupplierFilterFormGroup[key].reset();
+        });
+        break;
+    }
+  }
 
   public isDateElement(key: string) {
     return isDateFilter(key);
   }
+
   public isMultipleSearch(filter: any): boolean {
     return !(filter.isDate || filter.isTextSearch);
   }
+
+  public showTableSettings = false;
 
   private readonly displayedColumnsAsBuilt: string[] = [
     'Filter',
@@ -430,8 +472,7 @@ export class PartsTableComponent implements OnInit {
   }
 
   public defaultColumns: string[];
-
-  private tableViewConfig: TableViewConfig;
+  public tableViewConfig: TableViewConfig;
 
   ngOnInit() {
     this.setupFilterConfig();
@@ -812,16 +853,25 @@ export class PartsTableComponent implements OnInit {
   private assetAsPlannedFilterConfiguration: FilterConfig[];
 
   openDialog(): void {
-    const config = new MatDialogConfig();
-    config.autoFocus = false;
-    config.data = {
-      title: 'table.tableSettings.title',
-      panelClass: 'custom',
-      tableType: this.tableType,
-      defaultColumns: this.tableViewConfig.displayedColumnsForTable,
-      defaultFilterColumns: this.tableViewConfig.displayedColumns,
-    };
-    this.dialog.open(TableSettingsComponent, config);
+    // const config = new MatDialogConfig();
+    // config.autoFocus = false;
+    // config.data = {
+    //   title: 'table.tableSettings.title',
+    //   panelClass: 'custom',
+    //   tableType: this.tableType,
+    //   defaultColumns: this.tableViewConfig.displayedColumnsForTable,
+    //   defaultFilterColumns: this.tableViewConfig.displayedColumns,
+    // };
+    // this.dialog.open(TableColumnSettingsComponent, config);
+
+    // const config = new MatDialogConfig();
+    // config.autoFocus = false;
+    // config.data = {
+    //   tableType: this.tableType,
+    //   defaultColumns: this.tableViewConfig.displayedColumnsForTable,
+    //   defaultFilterColumns: this.tableViewConfig.displayedColumns,
+    // };
+    // this.dialog.open(TableSettingsComponent, config);
   }
 
   public areAllRowsSelected(): boolean {

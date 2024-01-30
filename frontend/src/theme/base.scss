@@ -1023,6 +1023,10 @@ app-input {
   cursor: pointer;
 }
 
+.reset-button:hover {
+  @extend .close-button;
+}
+
 .button-small {
 
   .mdc-button {
@@ -1103,8 +1107,8 @@ app-table {
   }
 }
 
-//table-settings-component
-app-table-settings {
+//table--columnsettings-component
+app-table-column-settings {
   .dialog--content {
     .table--header--tooltip {
       .mdc-tooltip__surface {

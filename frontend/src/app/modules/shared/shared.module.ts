@@ -34,7 +34,7 @@ import { NotificationUserComponent } from '@shared/components/notification-user/
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { SeveritySelectComponent } from '@shared/components/severity-select/severity-select.component';
 import { SeverityComponent } from '@shared/components/severity/severity.component';
-import { TableSettingsComponent } from '@shared/components/table-settings/table-settings.component';
+import { TableColumnSettingsComponent } from '@shared/components/table-column-settings/table-column-settings.component';
 import { TextWithIconComponent } from '@shared/components/text-with-icon/text-with-icon.component';
 import {
   NotificationModalContentComponent
@@ -94,6 +94,7 @@ import { InfoListComponent } from './components/info-list/info-list.component';
 import { RequestStepperComponent } from './components/request-notification/request-stepper/request-stepper.component';
 import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-parts/supplier-parts.component';
 import { OwnPartsComponent } from '@page/parts/presentation/own-parts/own-parts.component';
+import { TableSettingsComponent } from './components/table-settings/table-settings.component';
 @NgModule({
   declarations: [
     ToastContainerComponent,
@@ -103,6 +104,7 @@ import { OwnPartsComponent } from '@page/parts/presentation/own-parts/own-parts.
     TextWithIconComponent,
     TableComponent,
     TableSettingsComponent,
+    TableColumnSettingsComponent,
     TooltipDirective,
     RoleDirective,
     I18nPipe,

@@ -131,7 +131,7 @@ SPDX-License-Identifier: Apache-2.0
         <th *matHeaderCellDef
           class="notification-table--menu notification-table--header--sticky"
           mat-header-cell>
-          <button (click)="openDialog()"
+          <button [matMenuTriggerFor]="menu"
             mat-icon-button>
             <img class="settings-icon"
               src="/assets/images/icons/settings_icon.svg"
@@ -307,3 +307,10 @@ SPDX-License-Identifier: Apache-2.0
   let-value="value">
   {{ value | autoFormat | i18n }}
 </ng-template>
+
+<mat-menu #menu="matMenu">
+  <app-table-settings [tableType]="tableType"
+    (filtersReset)="onFiltersReset()"
+    [defaultColumns]="tableViewConfig.displayedColumnsForTable"
+    [defaultFilterColumns]="tableViewConfig.displayedColumns"></app-table-settings>
+</mat-menu>

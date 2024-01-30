@@ -62,7 +62,8 @@ SPDX-License-Identifier: Apache-2.0
       *matHeaderRowDef="tableConfig.displayedColumns; sticky: true"
       mat-header-row
       data-testid="table-component--head-row"
-      class="table--header--row"></tr>
+      class="table--header--row">
+    </tr>
 
     <tr class="table--body--row"
       *matRowDef="let row; columns: tableConfig.displayedColumns"
@@ -111,6 +112,7 @@ SPDX-License-Identifier: Apache-2.0
           mat-header-cell
           class="table--header--sticky">
           <button (click)="openDialog()"
+            [matMenuTriggerFor]="menu"
             mat-icon-button>
             <img class="settings-icon"
               src="/assets/images/icons/settings_icon.svg"
@@ -286,3 +288,10 @@ SPDX-License-Identifier: Apache-2.0
   let-value="value">
   {{ value | autoFormat | i18n }}
 </ng-template>
+
+<mat-menu #menu="matMenu">
+  <app-table-settings (filtersReset)="onFiltersReset()"
+    [tableType]="tableType"
+    [defaultColumns]="tableViewConfig.displayedColumnsForTable"
+    [defaultFilterColumns]="tableViewConfig.displayedColumns"></app-table-settings>
+</mat-menu>
