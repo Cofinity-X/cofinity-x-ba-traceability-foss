@@ -211,6 +211,7 @@ describe('InvestigationsComponent', () => {
 
     expect(matDialog.open).toHaveBeenCalledWith(RequestStepperComponent, {
       autoFocus: false,
+      disableClose: true,
       data: { context: RequestContext.REQUEST_INVESTIGATION },
     });
   });
