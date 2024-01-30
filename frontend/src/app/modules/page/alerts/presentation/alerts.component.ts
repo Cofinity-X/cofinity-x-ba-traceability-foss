@@ -214,6 +214,7 @@ export class AlertsComponent {
   public openRequestDialog(): void {
     this.dialog.open(RequestStepperComponent, {
       autoFocus: false,
+      disableClose: true,
       data: {
         context: RequestContext.REQUEST_ALERT
       }
