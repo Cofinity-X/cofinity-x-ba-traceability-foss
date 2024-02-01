@@ -43,4 +43,12 @@ public class EdcDataAddress {
     @JsonProperty("method")
     private String method;
 
+    @JsonProperty("oauth2:tokenUrl")
+    private String oauth2TokenUrl;
+
+    @JsonProperty("oauth2:clientId")
+    private String oauth2ClientId;
+
+    @JsonProperty("oauth2:clientSecretKey")
+    private String oauth2ClientSecretKey;
 }

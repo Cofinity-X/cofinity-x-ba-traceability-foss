@@ -41,6 +41,10 @@ edc:
   bpn-provider-url-mappings: { }
   provider-edc-url: ${EDC_PROVIDER_URL}
   callback-urls: ${EDC_CALLBACK_URL}
+  asset-security:
+    token-url: ${EDC_ASSET_SECURITY_TOKEN_URL:} # Token URL of the OAuth2 provider used to access the Trace-X API
+    client-id: ${EDC_ASSET_SECURITY_CLIENT_ID:} # Client ID for the OAuth2 provider
+    client-secret-key: ${EDC_ASSET_SECURITY_CLIENT_SECRET_KEY:} # The key of the vault entry to be used by the EDC dataplane when accessing Trace-X
 
 irs-edc-client:
   callback-url: ${EDC_CALLBACK_URL_EDC_CLIENT}

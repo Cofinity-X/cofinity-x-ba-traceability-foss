@@ -32,6 +32,8 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
+import static org.eclipse.tractusx.traceability.common.security.JwtRole.USER;
 
 class SubmodelControllerIT extends IntegrationTestSpecification {
 
@@ -114,6 +116,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
 
         // when
         given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .log().all()

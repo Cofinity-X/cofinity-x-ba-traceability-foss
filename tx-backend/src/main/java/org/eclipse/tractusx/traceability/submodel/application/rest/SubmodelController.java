@@ -100,8 +100,8 @@ public class SubmodelController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))})
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SUPERVISOR','ROLE_USER')")
     @GetMapping("/{submodelId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_USER')")
     public String getSubmodel(@PathVariable String submodelId) {
         return submodelService.getById(submodelId).getPayload();
     }
@@ -156,6 +156,7 @@ public class SubmodelController {
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @PostMapping("/{submodelId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public void saveSubmodel(@PathVariable String submodelId, @RequestBody String submodelPayload) {
         submodelService.save(Submodel.builder()
                 .id(submodelId)
@@ -213,6 +214,7 @@ public class SubmodelController {
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public void deleteSubmodels() {
         submodelService.deleteAll();
     }
