@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import {SelectionModel} from '@angular/cdk/collections';
+import { SelectionModel } from '@angular/cdk/collections';
 import {
   Component,
   ElementRef,
@@ -29,52 +29,52 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {MatSort, Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {Router} from '@angular/router';
-import {EmptyPagination, Pagination} from '@core/model/pagination.model';
-import {RoleService} from '@core/user/role.service';
-import {TableSettingsService} from '@core/user/table-settings.service';
+import { FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { EmptyPagination, Pagination } from '@core/model/pagination.model';
+import { RoleService } from '@core/user/role.service';
+import { TableSettingsService } from '@core/user/table-settings.service';
 import {
   MultiSelectAutocompleteComponent
 } from '@shared/components/multi-select-autocomplete/multi-select-autocomplete.component';
-import {TableType} from '@shared/components/multi-select-autocomplete/table-type.model';
-import {PartsAsBuiltConfigurationModel} from '@shared/components/parts-table/parts-as-built-configuration.model';
+import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
+import { PartsAsBuiltConfigurationModel } from '@shared/components/parts-table/parts-as-built-configuration.model';
 import {
   PartsAsBuiltCustomerConfigurationModel
 } from '@shared/components/parts-table/parts-as-built-customer-configuration.model';
 import {
   PartsAsBuiltSupplierConfigurationModel
 } from '@shared/components/parts-table/parts-as-built-supplier-configuration.model';
-import {PartsAsPlannedConfigurationModel} from '@shared/components/parts-table/parts-as-planned-configuration.model';
+import { PartsAsPlannedConfigurationModel } from '@shared/components/parts-table/parts-as-planned-configuration.model';
 import {
   PartsAsPlannedCustomerConfigurationModel
 } from '@shared/components/parts-table/parts-as-planned-customer-configuration.model';
 import {
   PartsAsPlannedSupplierConfigurationModel
 } from '@shared/components/parts-table/parts-as-planned-supplier-configuration.model';
-import {TableViewConfig} from '@shared/components/parts-table/table-view-config.model';
-import {TableSettingsComponent} from '@shared/components/table-settings/table-settings.component';
+import { TableViewConfig } from '@shared/components/parts-table/table-view-config.model';
+import { TableSettingsComponent } from '@shared/components/table-settings/table-settings.component';
 import {
   CreateHeaderFromColumns,
   TableConfig,
   TableEventConfig,
   TableHeaderSort,
 } from '@shared/components/table/table.model';
-import {ToastService} from '@shared/components/toasts/toast.service';
-import {isDateFilter} from '@shared/helper/filter-helper';
-import {addSelectedValues, removeSelectedValues} from '@shared/helper/table-helper';
-import {NotificationColumn} from '@shared/model/notification.model';
-import {DeeplinkService} from '@shared/service/deeplink.service';
+import { ToastService } from '@shared/components/toasts/toast.service';
+import { isDateFilter } from '@shared/helper/filter-helper';
+import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
+import { NotificationColumn } from '@shared/model/notification.model';
+import { DeeplinkService } from '@shared/service/deeplink.service';
 
 
 @Component({
   selector: 'app-parts-table',
   templateUrl: './parts-table.component.html',
-  styleUrls: [ 'parts-table.component.scss' ],
+  styleUrls: ['parts-table.component.scss'],
 })
 export class PartsTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -140,9 +140,8 @@ export class PartsTableComponent implements OnInit {
     private toastService: ToastService,
     private deeplinkService: DeeplinkService,
     public roleService: RoleService
-    ) {
+  ) {
   }
-
 
   public readonly dataSource = new MatTableDataSource<unknown>();
   public readonly selection = new SelectionModel<unknown>(true, []);
@@ -161,10 +160,9 @@ export class PartsTableComponent implements OnInit {
 
   public tableViewConfig: TableViewConfig;
 
-
   public deeplinkToNotification(column: any, notificationId: string[]) {
     const deeplinkModel = this.deeplinkService.getDeeplink(column, notificationId);
-    this.router.navigate([ deeplinkModel.route ], {
+    this.router.navigate([deeplinkModel.route], {
       queryParams: {
         tabIndex: deeplinkModel.tabIndex,
         deeplink: true,
@@ -218,7 +216,6 @@ export class PartsTableComponent implements OnInit {
     this.filterFormGroup.valueChanges.subscribe((formValues) => {
       this.filterActivated.emit(formValues);
     });
-
   }
 
 
@@ -268,18 +265,17 @@ export class PartsTableComponent implements OnInit {
     return initialColumnMap;
   }
 
-
   private setupTableConfigurations(displayedColumnsForTable: string[], displayedColumns: string[], sortableColumns: Record<string, boolean>, filterConfiguration: any[], filterFormGroup: any): any {
     const headerKey = 'table.column';
     this.tableConfig = {
       displayedColumns: displayedColumnsForTable,
       header: CreateHeaderFromColumns(displayedColumnsForTable, headerKey),
       sortableColumns: sortableColumns,
-      menuActionsConfig: [ {
+      menuActionsConfig: [{
         label: 'actions.viewDetails',
         icon: 'remove_red_eye',
         action: (data: Record<string, unknown>) => this.selected.emit(data),
-      } ],
+      }],
     };
     this.displayedColumns = displayedColumns;
 
@@ -288,7 +284,6 @@ export class PartsTableComponent implements OnInit {
         this.filterFormGroup.addControl(controlName, filterFormGroup[controlName]);
       }
     }
-
   }
 
   public areAllRowsSelected(): boolean {
@@ -323,13 +318,13 @@ export class PartsTableComponent implements OnInit {
     this.pageSize = this.pageSize === 0 ? EmptyPagination.pageSize : this.pageSize;
     this.selection.clear();
     this.emitMultiSelect();
-    this.sorting = !direction ? null : ([ active, direction ] as TableHeaderSort);
+    this.sorting = !direction ? null : ([active, direction] as TableHeaderSort);
     this.isDataLoading = true;
     this.configChanged.emit({ page: 0, pageSize: this.pageSize, sorting: this.sorting });
   }
 
   public toggleSelection(row: unknown): void {
-    this.isSelected(row) ? this.removeSelectedValues([ row ]) : this.addSelectedValues([ row ]);
+    this.isSelected(row) ? this.removeSelectedValues([row]) : this.addSelectedValues([row]);
     this.emitMultiSelect();
   }
 
