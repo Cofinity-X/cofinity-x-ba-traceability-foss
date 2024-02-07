@@ -442,17 +442,18 @@ export class PartsTableComponent implements OnInit {
 
   public tableViewConfig: TableViewConfig;
 
+  public onFilterValueChanged(formValues: { filterKey: string, values: any[] }) {
+    const { filterKey, values } = formValues;
+    this.filterFormGroup.controls[filterKey].patchValue(values);
+    this.filterActivated.emit(this.filterFormGroup.value);
+  }
+
   ngOnInit() {
     this.initializeTableViewSettings();
     this.tableSettingsService.getEvent().subscribe(() => {
       this.setupTableViewSettings();
     });
     this.setupTableViewSettings();
-    this.filterFormGroup.valueChanges.subscribe((formValues) => {
-      this.filterActivated.emit(formValues);
-    });
-
-    console.log(this.filterConfiguration);
   }
 
   private setupTableViewSettings() {

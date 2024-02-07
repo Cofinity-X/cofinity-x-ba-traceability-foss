@@ -295,6 +295,7 @@
   },
   "multiSelect": {
     "filterLabel": "Filter",
+    "multipleResults": "Andere",
     "placeholder": "Alle",
     "selectAll": "Alle",
     "filterLabelDate": "Nach Datum filtern",

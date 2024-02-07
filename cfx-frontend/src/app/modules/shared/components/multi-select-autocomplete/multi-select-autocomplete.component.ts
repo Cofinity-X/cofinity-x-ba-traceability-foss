@@ -20,7 +20,7 @@
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { Component, EventEmitter, Inject, Injector, Input, LOCALE_ID, OnChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Injector, Input, LOCALE_ID, OnChanges, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -47,7 +47,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   options: any;
   allOptions: any;
   searchedOptions: any;
-  optionsSelected: any;
+  optionsSelected: any = [];
   @Input()
   disabled = false;
   @Input()
@@ -79,6 +79,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   @Input()
   tableType: TableType = TableType.AS_BUILT_OWN;
 
+  @Output() onFilterValueChanged = new EventEmitter<any>();
+
   strategy: AutocompleteStrategy;
 
   public readonly minDate = new Date();
@@ -104,6 +106,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   isLoadingSuggestions: boolean;
 
   filterName = 'filterLabel';
+
+  private cleared = false;
 
   constructor(public datePipe: DatePipe, public _adapter: DateAdapter<any>,
     @Inject(MAT_DATE_LOCALE) public _locale: string, @Inject(LOCALE_ID) private locale: string, public partsService: PartsService,
@@ -150,6 +154,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     if (selectCheckbox.checked) {
       // if there are no suggestion but the selectAll checkbox was checked
       if (!this.searchedOptions.length) {
+
         this.formControl.patchValue(this.searchElement);
         this.selectedValue = this.searchElement as unknown as [];
       } else {
@@ -166,6 +171,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       this.updateOptionsAndSelections();
     }
     this.formControl.patchValue(this.selectedValue);
+    this.onFilterValueChanged.emit({ filterKey: this.filterColumn, values: this.selectedValue });
   };
 
   changeSearchTextOptionSingleSearch() {
@@ -200,15 +206,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   filterItem(value: any): void {
-
-    console.log('filterItem', value);
-
-    if (!this.searchElement.length) {
-      return;
-    }
-
-    if (!value) {
-      this.searchedOptions = [];
+    if (!this.searchElement.length || !value || value === '') {
+      this.clickClear();
       return;
     }
 
@@ -225,6 +224,11 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
     // if there is no timeout currently, start the delay
     const timeoutCallback = async (): Promise<void> => {
+      if (this.cleared) {
+        this.cleared = false;
+        return;
+      }
+
       this.isLoadingSuggestions = true;
       try {
         firstValueFrom(this.strategy.retrieveSuggestionValues(this.tableType, this.filterColumn, this.searchElement)).then((res: any) => {
@@ -247,6 +251,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
             this.options = this.searchedOptions;
             this.allOptions = res.map(option => ({ display: option, value: option }));
             this.handleAllSelectedCheckbox();
+
+            console.log('searchedOptions!!', this.searchedOptions);
           }
 
           this.suggestionError = !this.searchedOptions?.length;
@@ -260,6 +266,9 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       } catch (error) {
         console.error('Error in timeoutCallback: ', error);
       }
+
+      console.log('searchedOptions', this.searchedOptions);
+
     };
 
     // Start the delay with the callback
@@ -295,7 +304,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.options = [];
     this.selectedValue = [];
     this.suggestionError = false;
+    this.cleared = true;
     this.updateOptionsAndSelections();
+
+    this.onFilterValueChanged.emit({ filterKey: this.filterColumn, values: [] });
   }
 
   private updateOptionsAndSelections() {
@@ -325,10 +337,31 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.formControl.patchValue(this.searchElement);
   }
 
+  onSelectValue(selected: boolean, value: any) {
+    if (!selected) {
+      this.optionsSelected.splice(this.optionsSelected.indexOf(value), 1);
+      this.options.push(value);
+    } else {
+      this.options.splice(this.options.indexOf(value), 1);
+      this.optionsSelected.push(value);
+    }
+
+    this.selectedValue = [];
+
+    this.optionsSelected.forEach(option => {
+      if (!this.selectedValue.includes(option.value)) {
+        this.selectedValue = this.selectedValue.concat(option.value);
+      }
+    });
+
+    this.onFilterValueChanged.emit({ filterKey: this.filterColumn, values: this.selectedValue });
+  }
+
   onSelectionChange(matSelectChange: MatSelectChange) {
     this.selectedValue = matSelectChange.value;
     this.formControl.patchValue(matSelectChange.value);
     this.updateOptionsAndSelections();
+    this.onFilterValueChanged.emit(this.selectedValue);
   }
 
   private handleAllSelectedCheckbox() {
@@ -347,5 +380,4 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     const allowedCharacters = /^\w+$/;
     return !allowedCharacters.test(text);
   }
-
 }

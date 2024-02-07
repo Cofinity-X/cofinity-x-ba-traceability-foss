@@ -297,6 +297,7 @@
     "unImplemented": "Coming soon"
   },
   "multiSelect": {
+    "multipleResults": "Others",
     "placeHolder": "All",
     "selectAll": "All",
     "filterLabel": "Filter",
