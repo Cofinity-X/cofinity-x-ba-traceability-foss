@@ -251,8 +251,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
             this.options = this.searchedOptions;
             this.allOptions = res.map(option => ({ display: option, value: option }));
             this.handleAllSelectedCheckbox();
-
-            console.log('searchedOptions!!', this.searchedOptions);
           }
 
           this.suggestionError = !this.searchedOptions?.length;
@@ -334,7 +332,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   dateFilter() {
-    this.formControl.patchValue(this.searchElement);
+    this.onFilterValueChanged.emit({ filterKey: this.filterColumn, values: this.searchElement });
   }
 
   onSelectValue(selected: boolean, value: any) {

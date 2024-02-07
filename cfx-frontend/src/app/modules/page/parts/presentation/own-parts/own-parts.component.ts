@@ -178,36 +178,8 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
   }
 
   public updateOwnParts(searchValue?: string) {
-    // if (searchValue && searchValue !== '') {
-    //   this.globalSearchActive = true;
-    //   this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsBuilt, this.datePipe);
-    //   this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsPlanned, this.datePipe);
-    //   this.partsFacade.setPartsAsBuilt(
-    //     0,
-    //     this.DEFAULT_PAGE_SIZE,
-    //     this.tableAsPlannedSortList,
-    //     this.assetAsBuiltFilter,
-    //     this.globalSearchActive,
-    //   );
-    //   this.partsFacade.setPartsAsPlanned(
-    //     0,
-    //     this.DEFAULT_PAGE_SIZE,
-    //     this.tableAsBuiltSortList,
-    //     this.assetAsPlannedFilter,
-    //     this.globalSearchActive,
-    //   );
-    // } else {
-    //   this.globalSearchActive = false;
-    //   this.assetAsBuiltFilter = {};
-    //   this.assetAsPlannedFilter = {};
-    //   this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
-    //   this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
-    // }
-
-    // this.resetFilterAndShowToast();
-    // const searchValue = this.searchFormGroup.get('partSearch').value;
-
     if (searchValue && searchValue !== '') {
+      console.log(this.tableAsBuiltSortList);
       this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, this.tableAsPlannedSortList, toGlobalSearchAssetFilter(searchValue, false), true);
       this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, this.tableAsBuiltSortList, toGlobalSearchAssetFilter(searchValue, true), true);
     } else {

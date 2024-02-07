@@ -26,7 +26,6 @@
   flex-direction: column;
   justify-content: center;
   padding: 10px 15px 15px 15px;
-  width: 250px;
   gap: 10px;
   border-radius: 10px;
   box-shadow: 0px 15px 25px 0px #3333330d, -10px -10px 15px 0px #ffffff1a, 0px 0px 25px 0px #33333308;
@@ -121,11 +120,12 @@ input {
   padding-left: 1rem;
 }
 
-.date-search {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Add any other necessary styling for the date-search container */
+.date-box {
+  width: 275px;
+}
+
+.text-box {
+  width: 250px;
 }
 
 .search-wrapper {

@@ -231,15 +231,6 @@ SPDX-License-Identifier: Apache-2.0
                       ngDefaultControl
                       [formControl]="filterFormGroup.controls[filter.filterKey]">
                     </app-multiselect>
-
-                    <!--<app-multiselect [options]="filter.option"
-                      [multiple]="isMultipleSearch(filter)"
-                      [textSearch]="filter.isTextSearch"
-                      [isDate]="filter.isDate"
-                      [maxDate]="filter.maxDate"
-                      (triggerFilter)="triggerFilterAdding()"
-                      ngDefaultControl
-                      [formControl]="filterFormGroup.controls[filter.filterKey]"></app-multiselect>-->
                   </div>
                 </ng-container>
               </mat-menu>
@@ -259,7 +250,6 @@ SPDX-License-Identifier: Apache-2.0
               <ng-template #autoFormatRef>
                 <ng-container ng-container
                   *ngIf="column !== '!'"
-                  ;
                   [ngTemplateOutlet]="tableConfig?.cellRenderers?.[column] ? tableConfig?.cellRenderers?.[column] : autoFormat"
                   [ngTemplateOutletContext]="{ value: element[column], row: element }">
                 </ng-container>

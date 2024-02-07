@@ -122,7 +122,8 @@ under the License.
 
 SPDX-License-Identifier: Apache-2.0
 -->
-<div class="filter-input">
+<div class="filter-input"
+  [ngClass]="isDate ? 'date-box' : 'text-box'">
   <mat-label class="label-medium">
     <div class="filter-input__label">
       {{ 'multiSelect.' + filterName | i18n }}
@@ -156,6 +157,40 @@ SPDX-License-Identifier: Apache-2.0
         (blur)="onBlur('textFilter')" />
     </div>
     <mat-hint>{{ 'multiSelect.inputTextHint' | i18n }}</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field color="accent"
+    appearance="outline"
+    [floatLabel]="'auto'"
+    *ngIf="isDate"
+    class="filter-input__textarea date-search"
+    data-testid="multi-select-autocomplete--date-search-form">
+    <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
+    <mat-date-range-input [rangePicker]="picker"
+      disabled>
+      <input matStartDate
+        [value]="startDate"
+        [placeholder]="'datepicker.startDate' | i18n"
+        (dateChange)="startDateSelected($event)">
+      <input matEndDate
+        [value]="endDate"
+        [placeholder]="'datepicker.endDate' | i18n"
+        (dateChange)="endDateSelected($event)">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix
+      [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker
+      disabled="false">
+      <mat-datepicker-actions>
+        <button (click)="clickClear()"
+          mat-button
+          matDatepickerCancel>{{ 'datepicker.cancel' | i18n }}</button>
+        <button (click)="dateFilter()"
+          mat-raised-button
+          color="primary"
+          matDatepickerApply>{{ 'datepicker.apply' | i18n }}</button>
+      </mat-datepicker-actions>
+    </mat-date-range-picker>
   </mat-form-field>
 
   <mat-spinner *ngIf="isLoadingSuggestions"
@@ -217,33 +252,4 @@ SPDX-License-Identifier: Apache-2.0
       </ng-container>
     </div>
   </mat-select-trigger>
-</div>
-
-<div *ngIf="isDate"
-  class="date-search">
-  <mat-date-range-input [rangePicker]="picker"
-    disabled>
-    <input matStartDate
-      [value]="startDate"
-      [placeholder]="'datepicker.startDate' | i18n"
-      (dateChange)="startDateSelected($event)">
-    <input matEndDate
-      [value]="endDate"
-      [placeholder]="'datepicker.endDate' | i18n"
-      (dateChange)="endDateSelected($event)">
-  </mat-date-range-input>
-  <mat-datepicker-toggle matSuffix
-    [for]="picker"></mat-datepicker-toggle>
-  <mat-date-range-picker #picker
-    disabled="false">
-    <mat-datepicker-actions>
-      <button (click)="clickClear()"
-        mat-button
-        matDatepickerCancel>{{ 'datepicker.cancel' | i18n }}</button>
-      <button (click)="dateFilter()"
-        mat-raised-button
-        color="primary"
-        matDatepickerApply>{{ 'datepicker.apply' | i18n }}</button>
-    </mat-datepicker-actions>
-  </mat-date-range-picker>
 </div>

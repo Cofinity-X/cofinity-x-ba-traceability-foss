@@ -190,9 +190,8 @@ export function provideFilterListForNotifications(filter?: NotificationFilter, f
     const params = enrichFilterAndGetUpdatedParams(fullFilter, new HttpParams(), 'AND');
     const filterParams = params.getAll('filter');
     if (filterParams) {
-      filterParams.forEach(filter => { filterList.push(filter) });
+      filterParams.forEach(filter => { filterList.push(filter); });
     }
-
   }
 
   return filterList;
