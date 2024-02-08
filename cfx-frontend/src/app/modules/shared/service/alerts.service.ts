@@ -83,7 +83,7 @@ export class AlertsService {
           sort: sort,
         },
         searchCriteria: {
-          filter: ['channel,EQUAL,RECEIVER,AND'],
+          filter: [`channel,EQUAL,RECEIVER,${_filtering.filterMethod}`],
         },
       })
       .pipe(map(alerts => NotificationAssembler.assembleNotifications(alerts, NotificationType.ALERT)));

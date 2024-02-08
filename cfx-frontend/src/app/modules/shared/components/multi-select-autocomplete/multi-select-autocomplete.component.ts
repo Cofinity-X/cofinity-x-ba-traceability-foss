@@ -264,9 +264,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       } catch (error) {
         console.error('Error in timeoutCallback: ', error);
       }
-
-      console.log('searchedOptions', this.searchedOptions);
-
     };
 
     // Start the delay with the callback

@@ -32,13 +32,14 @@ import {
   TableHeaderSort,
   TableFilter,
   FilterMethod,
+  FilterInfo,
 } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { SearchHelper } from '@shared/helper/search-helper';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { FilterCongigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
-import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
+import { Notification, NotificationFilter, NotificationStatusGroup, NotificationType } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
 import { NotificationComponent } from '@shared/modules/notification/presentation/notification.component';
 import { Subscription } from 'rxjs';
@@ -46,7 +47,8 @@ import { Role } from '@core/user/role.model';
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
 import { RequestStepperComponent } from '@shared/components/request-notification/request-stepper/request-stepper.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
+import { NotificationChannel, TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
+import { createDeeplinkNotificationFilter } from '@shared/helper/notification-helper';
 
 @Component({
   selector: 'app-alerts',
@@ -74,6 +76,9 @@ export class AlertsComponent {
 
   public alertsQueuedAndRequestedFilterConfiguration: any[];
 
+  public receivedFilter: NotificationFilter;
+  public requestedFilter: NotificationFilter;
+
   private ctrlKeyState = false;
   public DEFAULT_PAGE_SIZE = 50;
 
@@ -88,6 +93,7 @@ export class AlertsComponent {
 
   protected readonly TableType = TableType;
   protected readonly Role = Role;
+  protected readonly NotificationType = NotificationType;
 
   constructor(
     public readonly helperService: AlertHelperService,
@@ -112,19 +118,13 @@ export class AlertsComponent {
 
   public ngOnInit(): void {
     this.paramSubscription = this.route.queryParams.subscribe(params => {
+      const deeplinkNotificationFilter = createDeeplinkNotificationFilter(params);
+      this.pagination.page = params?.pageNumber ? params.pageNumber : 0;
       this.pagination.page = params?.pageNumber;
-      this.alertsFacade.setReceivedAlerts(
-        this.pagination.page,
-        this.pagination.pageSize,
-        this.alertReceivedSortList
-      );
-      this.alertsFacade.setQueuedAndRequestedAlerts(
-        this.pagination.page,
-        this.pagination.pageSize,
-        this.alertQueuedAndRequestedSortList
-      );
+      this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, deeplinkNotificationFilter?.receivedFilter, this.receivedFilter);
+      this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, deeplinkNotificationFilter?.sentFilter, this.requestedFilter);
     });
-    this.setupFilterConfig();
+
     this.searchFormGroup.addControl('alertSearch', new FormControl([]));
     this.searchControl = this.searchFormGroup.get('alertSearch') as unknown as FormControl;
   }
@@ -218,16 +218,31 @@ export class AlertsComponent {
     this.ngOnInit();
   }
 
-  // public triggerSearch(): void {
-  //   this.searchHelper.resetFilterAndShowToast(false, this.notificationComponent, this.toastService);
-  //   const searchValue = this.searchControl.value;
-  //   const filterInfo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
-  //   this.filterReceived = { filterMethod: FilterMethod.OR, description: filterInfo, createdBy: filterInfo };
-  //   this.filterQueuedAndRequested = { filterMethod: FilterMethod.OR, description: filterInfo, sendTo: filterInfo };
+  public triggerSearch(): void {
+    this.searchHelper.resetFilterAndShowToast(false, this.notificationComponent, this.toastService);
+    const searchValue = this.searchControl.value;
 
-  //   this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, this.filterReceived);
-  //   this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, this.filterQueuedAndRequested);
-  // }
+    const receivedFilter = { filterMethod: FilterMethod.OR, description: searchValue, createdBy: searchValue };
+    const queuedAndRequestedFilter = { filterMethod: FilterMethod.OR, description: searchValue, sendTo: searchValue };
+
+    this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, null, receivedFilter);
+    this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, null, queuedAndRequestedFilter);
+  }
+
+  public filterNotifications(filterContext: any) {
+    console.log(filterContext);
+    if (filterContext.channel === NotificationChannel.RECEIVER) {
+      this.receivedFilter = filterContext.filter;
+    } else {
+      this.requestedFilter = filterContext.filter;
+    }
+
+    if (filterContext.channel === NotificationChannel.RECEIVER) {
+      this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, null, this.receivedFilter);
+    } else {
+      this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, null, this.requestedFilter);
+    }
+  }
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {
     const tableSortList =

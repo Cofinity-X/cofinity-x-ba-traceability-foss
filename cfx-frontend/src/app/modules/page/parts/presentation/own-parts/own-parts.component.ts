@@ -179,7 +179,6 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
 
   public updateOwnParts(searchValue?: string) {
     if (searchValue && searchValue !== '') {
-      console.log(this.tableAsBuiltSortList);
       this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, this.tableAsPlannedSortList, toGlobalSearchAssetFilter(searchValue, false), true);
       this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, this.tableAsBuiltSortList, toGlobalSearchAssetFilter(searchValue, true), true);
     } else {

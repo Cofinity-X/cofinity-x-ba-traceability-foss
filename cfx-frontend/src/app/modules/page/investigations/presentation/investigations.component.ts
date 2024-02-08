@@ -36,7 +36,7 @@ import {
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { FilterCongigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
-import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
+import { Notification, NotificationFilter, NotificationStatusGroup } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
 import { Subscription } from 'rxjs';
 import { InvestigationsFacade } from '../core/investigations.facade';
@@ -48,7 +48,8 @@ import { Role } from '@core/user/role.model';
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
 import { RequestStepperComponent } from '@shared/components/request-notification/request-stepper/request-stepper.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
+import { NotificationChannel, TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
+import { createDeeplinkNotificationFilter } from '@shared/helper/notification-helper';
 
 @Component({
   selector: 'app-investigations',
@@ -77,6 +78,9 @@ export class InvestigationsComponent {
   private paramSubscription: Subscription;
   private ctrlKeyState = false;
   public DEFAULT_PAGE_SIZE = 50;
+
+  public receivedFilter: NotificationFilter;
+  public requestedFilter: NotificationFilter;
 
   private pagination: TableEventConfig = {
     page: 0,
@@ -111,18 +115,12 @@ export class InvestigationsComponent {
 
   public ngOnInit(): void {
     this.paramSubscription = this.route.queryParams.subscribe(params => {
-      this.pagination.page = params?.pageNumber;
-      this.investigationsFacade.setReceivedInvestigation(
-        this.pagination.page,
-        this.pagination.pageSize,
-        this.investigationReceivedSortList,
-      );
-      this.investigationsFacade.setQueuedAndRequestedInvestigations(
-        this.pagination.page,
-        this.pagination.pageSize,
-        this.investigationQueuedAndRequestedSortList,
-      );
+      this.pagination.page = params?.pageNumber ? params.pageNumber : 0;
+      const deeplinkNotificationFilter = createDeeplinkNotificationFilter(params);
+      this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, deeplinkNotificationFilter?.receivedFilter, this.receivedFilter /*Filter */);
+      this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, deeplinkNotificationFilter?.sentFilter, this.requestedFilter);
     });
+
     this.setupFilterConfig();
     const searchControlName = 'investigationSearch';
     this.searchFormGroup.addControl(searchControlName, new FormControl([]));
@@ -230,6 +228,22 @@ export class InvestigationsComponent {
   //   this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, this.filterReceived);
   //   this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, this.filterQueuedAndRequested);
   // }
+
+  public filterNotifications(filterContext: any) {
+    if (filterContext.channel === NotificationChannel.RECEIVER) {
+      this.receivedFilter = filterContext.filter;
+    } else {
+      this.requestedFilter = filterContext.filter;
+    }
+
+    if (filterContext.channel === NotificationChannel.RECEIVER) {
+      this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, null, this.receivedFilter /*Filter */);
+
+    } else {
+      this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, null, this.requestedFilter);
+
+    }
+  }
 
   private setTableSortingList(sorting: TableHeaderSort, notificationTable: NotificationStatusGroup): void {
     const tableSortList =
