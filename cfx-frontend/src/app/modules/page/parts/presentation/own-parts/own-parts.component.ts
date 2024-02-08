@@ -209,7 +209,6 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
         dialogRef.componentInstance.deselectPart.unsubscribe();
       });
     }
-
   }
 
   filterActivated(type: MainAspectType, assetFilter: any): void {
