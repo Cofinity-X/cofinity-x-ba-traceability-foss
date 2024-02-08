@@ -12,7 +12,7 @@ values
 
 ---
 -- reset sequence to highest next-val
-select setval('investigation_id_seq', (select max(i.id) from investigation i), true);
+select setval('investigation_id_seq1', (select max(i.id) from investigation i), true);
 
 ---
 insert into investigation_notification
@@ -33,11 +33,6 @@ insert into assets_as_built_investigations
     (investigation_id           , asset_id)
 values
     (${investigationReceivedId3}, ${assetAsBuiltId11});
-
----
--- update assets_as_built
---     set in_investigation = true
---     where id in (${assetAsBuiltId11});
 
 ---
 ---

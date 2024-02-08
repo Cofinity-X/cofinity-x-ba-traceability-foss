@@ -12,7 +12,7 @@ values
 
 ---
 -- reset sequence to highest next-val
-select setval('alert_id_seq', (select max(a.id) from alert a), true);
+select setval('alert_id_seq1', (select max(a.id) from alert a), true);
 
 ---
 -- initial message
@@ -34,11 +34,6 @@ insert into assets_as_built_alerts
     (alert_id           , asset_id)
 values
     (${alertReceivedId4}, ${assetAsBuiltId23});
-
----
--- update assets_as_built
---     set active_alert = true
---     where id in (${assetAsBuiltId23});
 
 ---
 ---
