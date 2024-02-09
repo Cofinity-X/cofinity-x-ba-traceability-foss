@@ -133,23 +133,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.formControl.patchValue(this.selectedValue);
   }
 
-  public onBlur(inputfield: string): void {
-    // if (this.runningTimer) {
-    //   let triggeredFilter = '';
-    //   clearTimeout(this.inputTimer);
-    //   if (inputfield === 'textFilter') {
-    //     triggeredFilter = 'text';
-    //   } else if (inputfield === 'dateFilter') {
-    //     triggeredFilter = 'date';
-    //   } else if (inputfield === 'selectionFilter') {
-    //     triggeredFilter = 'multiple';
-    //   }
-    //   if (triggeredFilter !== '') {
-    //     this.triggerFiltering(triggeredFilter);
-    //   }
-    // }
-  }
-
   toggleSelectAll(selectCheckbox: any): void {
     if (selectCheckbox.checked) {
       // if there are no suggestion but the selectAll checkbox was checked

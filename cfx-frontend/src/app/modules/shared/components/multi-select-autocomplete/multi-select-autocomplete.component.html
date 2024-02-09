@@ -153,8 +153,7 @@ SPDX-License-Identifier: Apache-2.0
         class="filter-input__textarea-input"
         data-testid="multi-select-autocomplete--text-search-input"
         (keydown)="filterKeyCommands($event)"
-        (input)="filterItem(searchInput.value)"
-        (blur)="onBlur('textFilter')" />
+        (input)="filterItem(searchInput.value)" />
     </div>
     <mat-hint>{{ 'multiSelect.inputTextHint' | i18n }}</mat-hint>
   </mat-form-field>

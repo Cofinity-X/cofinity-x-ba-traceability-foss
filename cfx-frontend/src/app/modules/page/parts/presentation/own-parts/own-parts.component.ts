@@ -87,9 +87,6 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
   public assetAsSupportedFilter: AssetAsSupportedFilter;
   public assetAsOrderedFilter: AssetAsOrderedFilter;
 
-  public readonly searchListAsBuilt: string[];
-  public readonly searchListAsPlanned: string[];
-
   public DEFAULT_PAGE_SIZE = 50;
   public ctrlKeyState = false;
   public globalSearchActive = false;
@@ -123,36 +120,6 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
     this.tableAsOrderedSortList = [];
     this.tableAsSupportedSortList = [];
     this.tableAsRecycledSortList = [];
-    this.searchListAsBuilt = [
-      'id',
-      'idShort',
-      'nameAtManufacturer',
-      'manufacturerName',
-      'manufacturerPartId',
-      'customerPartId',
-      'classification',
-      'nameAtCustomer',
-      'semanticDataModel',
-      'semanticModelId',
-      'manufacturingDate',
-      'manufacturingCountry',
-    ];
-    this.searchListAsPlanned = [
-      'id',
-      'idShort',
-      'nameAtManufacturer',
-      'manufacturerName',
-      'manufacturerPartId',
-      'classification',
-      'semanticDataModel',
-      'semanticModelId',
-      'validityPeriodFrom',
-      'validityPeriodTo',
-      'function',
-      'catenaXSiteId',
-      'functionValidFrom',
-      'functionValidUntil',
-    ];
 
     this.assetAsBuiltFilter = {};
     this.assetAsDesignedFilter = {};

@@ -161,42 +161,6 @@ export class PartsTableComponent implements OnInit {
     return !(filter.isDate || filter.isTextSearch);
   }
 
-  private readonly displayedColumnsAsBuilt: string[] = [
-    'Filter',
-    'filterId',
-    'filterIdShort',
-    'filterName', // nameAtManufacturer
-    'filterManufacturer',
-    'filterManufacturerPartId',
-    'filterCustomerPartId', // --> semanticModel.customerPartId
-    'filterClassification',
-    'filterNameAtCustomer', // --> semanticModel.nameAtCustomer
-    'filterSemanticModelId',
-    'filterSemanticDataModel',
-    'filterManufacturingDate',
-    'filterManufacturingCountry',
-    'filterActiveAlerts',
-    'filterActiveInvestigations',
-  ];
-
-  private readonly displayedColumnsAsPlanned: string[] = [
-    'Filter',
-    'filterId',
-    'filterIdShort',
-    'filterName',
-    'filterManufacturer',
-    'filterManufacturerPartId',
-    'filterClassification',
-    'filterSemanticDataModel',
-    'filterSemanticModelId',
-    'filterValidityPeriodFrom',
-    'filterValidityPeriodTo',
-    'filterPsFunction',
-    'filterCatenaXSiteId',
-    'filterFunctionValidFrom',
-    'filterFunctionValidUntil',
-  ];
-
   private readonly displayedColumnsAsBuiltForTable: string[] = [
     '!',
     'id',
@@ -216,141 +180,6 @@ export class PartsTableComponent implements OnInit {
     'menu',
   ];
 
-  private readonly displayedColumnsAsPlannedForTable: string[] = [
-    'id',
-    'idShort',
-    'name',
-    'manufacturer',
-    'manufacturerPartId',
-    'classification',
-    'semanticDataModel',
-    'semanticModelId',
-    'validityPeriodFrom',
-    'validityPeriodTo',
-    'psFunction',
-    'catenaXSiteId',
-    'functionValidFrom',
-    'functionValidUntil',
-    'menu',
-  ];
-
-  private readonly sortableColumnsAsBuilt: Record<string, boolean> = {
-    id: true,
-    idShort: true,
-    name: true,
-    manufacturer: true,
-    manufacturerPartId: true,
-    customerPartId: true,
-    classification: true,
-    nameAtCustomer: true,
-    semanticModelId: true,
-    semanticDataModel: true,
-    manufacturingDate: true,
-    manufacturingCountry: true,
-    activeAlerts: true,
-    activeInvestigations: true,
-  };
-
-  private readonly sortableColumnsAsPlanned: Record<string, boolean> = {
-    id: true,
-    idShort: true,
-    name: true,
-    manufacturer: true,
-    manufacturerPartId: true,
-    classification: true,
-    semanticDataModel: true,
-    semanticModelId: true,
-    validityPeriodFrom: true,
-    validityPeriodTo: true,
-    psFunction: true,
-    catenaXSiteId: true,
-    functionValidFrom: true,
-    functionValidUntil: true,
-  };
-
-  private readonly displayedColumnsAsPlannedCustomer: string[] = [
-    'Filter',
-    'filterSemanticDataModel',
-    'filterName',
-    'filterManufacturer',
-    'filterManufacturerPartId',
-    'filterSemanticModelId',
-  ];
-
-  private readonly displayedColumnsAsPlannedSupplier: string[] = [
-    'Filter',
-    'filterSemanticDataModel',
-    'filterName',
-    'filterManufacturer',
-    'filterManufacturerPartId',
-    'filterSemanticModelId',
-  ];
-
-  private readonly displayedColumnsAsBuiltCustomer: string[] = [
-    'Filter',
-    'filterSemanticDataModel',
-    'filterName',
-    'filterManufacturer',
-    'filterManufacturerPartId',
-    'filterSemanticModelId',
-    'filterManufacturingDate',
-    'filterActiveAlerts',
-    'filterActiveInvestigations',
-  ];
-
-  private readonly displayedColumnsAsBuiltSupplier: string[] = [
-    'Filter',
-    'filterSemanticDataModel',
-    'filterName',
-    'filterManufacturer',
-    'filterManufacturerPartId',
-    'filterSemanticModelId',
-    'filterManufacturingDate',
-    'filterActiveAlerts',
-    'filterActiveInvestigations',
-  ];
-
-  private readonly displayedColumnsAsBuiltCustomerForTable: string[] = [
-    'semanticDataModel',
-    'name',
-    'manufacturer',
-    'manufacturerPartId',
-    'semanticModelId',
-    'manufacturingDate',
-    'activeAlerts',
-    'activeInvestigations',
-    'menu'
-  ];
-
-  private readonly sortableColumnsAsBuiltCustomer: Record<string, boolean> = {
-    semanticDataModel: true,
-    name: true,
-    manufacturer: true,
-    manufacturerPartId: true,
-    semanticModelId: true,
-    manufacturingDate: true,
-    activeAlerts: true,
-    activeInvestigations: true,
-  };
-
-  private readonly displayedColumnsAsPlannedCustomerForTable: string[] = [
-    'semanticDataModel',
-    'name',
-    'manufacturer',
-    'manufacturerPartId',
-    'semanticModelId',
-    'menu'
-  ];
-
-  private readonly sortableColumnsAsPlannedCustomer: Record<string, boolean> = {
-    semanticDataModel: true,
-    name: true,
-    manufacturer: true,
-    manufacturerPartId: true,
-    semanticModelId: true,
-    manufacturingDate: true,
-  };
-
   private readonly displayedColumnsAsBuiltSupplierForTable: string[] = [
     'semanticDataModel',
     'name',
@@ -363,34 +192,6 @@ export class PartsTableComponent implements OnInit {
     'menu'
   ];
 
-  private readonly sortableColumnsAsBuiltSupplier: Record<string, boolean> = {
-    semanticDataModel: true,
-    name: true,
-    manufacturer: true,
-    manufacturerPartId: true,
-    semanticModelId: true,
-    manufacturingDate: true,
-    activeAlerts: true,
-    activeInvestigations: true,
-  };
-
-  private readonly displayedColumnsAsPlannedSupplierForTable: string[] = [
-    'semanticDataModel',
-    'name',
-    'manufacturer',
-    'manufacturerPartId',
-    'semanticModelId',
-    'menu'
-  ];
-
-  private readonly sortableColumnsAsPlannedSupplier: Record<string, boolean> = {
-    semanticDataModel: true,
-    name: true,
-    manufacturer: true,
-    manufacturerPartId: true,
-    semanticModelId: true,
-  };
-
   private sorting: TableHeaderSort;
 
   protected readonly Role = Role;
@@ -400,6 +201,8 @@ export class PartsTableComponent implements OnInit {
   }
 
   public triggerFilterAdding(): void {
+    // TODO: might need this
+
     // const filterValues: any = { ...this.filterFormGroup.value };
     // const selectedSemanticDataModelOptions: string[] = [];
     // for (const option of this.semanticDataModelOptions) {
@@ -431,11 +234,12 @@ export class PartsTableComponent implements OnInit {
     private toastService: ToastService,
   ) {
 
-    if (this.roleService.hasAccess([Role.USER])) {
-      const selectColumn = 'select';
-      this.displayedColumnsAsBuiltSupplierForTable.splice(0, 0, selectColumn);
-      this.displayedColumnsAsBuiltForTable.splice(0, 0, selectColumn);
-    }
+    //TODO: Need to update role based features 
+    // if (this.roleService.hasAccess([Role.USER])) {
+    //   const selectColumn = 'select';
+    //   this.displayedColumnsAsBuiltSupplierForTable.splice(0, 0, selectColumn);
+    //   this.displayedColumnsAsBuiltForTable.splice(0, 0, selectColumn);
+    // }
   }
 
   public defaultColumns: string[];
