@@ -32,12 +32,11 @@ import {
   TableHeaderSort,
   TableFilter,
   FilterMethod,
-  FilterInfo,
 } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { SearchHelper } from '@shared/helper/search-helper';
 import { ToastService } from '@shared/components/toasts/toast.service';
-import { FilterCongigOptions } from '@shared/model/filter-config';
+import { FilterConfigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationFilter, NotificationStatusGroup, NotificationType } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
@@ -70,7 +69,7 @@ export class AlertsComponent {
   public alertQueuedAndRequestedSortList: TableHeaderSort[] = [];
   public filterReceived: TableFilter = { filterMethod: FilterMethod.AND };
   public filterQueuedAndRequested: TableFilter = { filterMethod: FilterMethod.AND };
-  public readonly filterConfigOptions = new FilterCongigOptions();
+  public readonly filterConfigOptions = new FilterConfigOptions();
 
   public alertsReceivedFilterConfiguration: any[];
 
@@ -142,25 +141,6 @@ export class AlertsComponent {
     this.paramSubscription?.unsubscribe();
   }
 
-  private setupFilterConfig() {
-    const { createdDate, description, status, severity, createdBy, sendTo } =
-      this.filterConfigOptions.filterKeyOptionsNotifications;
-    this.alertsReceivedFilterConfiguration = [
-      createdDate,
-      description,
-      status(TranslationContext.COMMONALERT, true),
-      severity,
-      createdBy,
-    ];
-    this.alertsQueuedAndRequestedFilterConfiguration = [
-      createdDate,
-      description,
-      status(TranslationContext.COMMONALERT, false),
-      severity,
-      sendTo,
-    ];
-  }
-
   public onReceivedTableConfigChange(pagination: TableEventConfig) {
     this.pagination = pagination;
     if (this.pagination.pageSize === 0) {
@@ -222,15 +202,14 @@ export class AlertsComponent {
     this.searchHelper.resetFilterAndShowToast(false, this.notificationComponent, this.toastService);
     const searchValue = this.searchControl.value;
 
-    const receivedFilter = { filterMethod: FilterMethod.OR, description: searchValue, createdBy: searchValue };
-    const queuedAndRequestedFilter = { filterMethod: FilterMethod.OR, description: searchValue, sendTo: searchValue };
+    const receivedFilter = { description: searchValue, createdBy: searchValue };
+    const queuedAndRequestedFilter = { description: searchValue, sendTo: searchValue };
 
-    this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, null, receivedFilter);
-    this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, null, queuedAndRequestedFilter);
+    this.alertsFacade.setReceivedAlerts(this.pagination.page, this.pagination.pageSize, this.alertReceivedSortList, null, receivedFilter, FilterMethod.OR);
+    this.alertsFacade.setQueuedAndRequestedAlerts(this.pagination.page, this.pagination.pageSize, this.alertQueuedAndRequestedSortList, null, queuedAndRequestedFilter, FilterMethod.OR);
   }
 
   public filterNotifications(filterContext: any) {
-    console.log(filterContext);
     if (filterContext.channel === NotificationChannel.RECEIVER) {
       this.receivedFilter = filterContext.filter;
     } else {

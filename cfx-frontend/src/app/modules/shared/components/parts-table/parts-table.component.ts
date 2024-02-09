@@ -48,7 +48,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableSettingsService } from '@core/user/table-settings.service';
 import { TableViewConfig } from './table-view-config.model';
 import { TableSettingsComponent } from '../table-settings/table-settings.component';
-import { FilterCongigOptions } from '@shared/model/filter-config';
+import { FilterConfigOptions } from '@shared/model/filter-config';
 import { RoleService } from '@core/user/role.service';
 import { Role } from '@core/user/role.model';
 import { DeeplinkService } from '@shared/service/deeplink.service';
@@ -137,7 +137,7 @@ export class PartsTableComponent implements OnInit {
 
   public readonly dataSource = new MatTableDataSource<unknown>();
   public readonly selection = new SelectionModel<unknown>(true, []);
-  public readonly filterConfigOptions = new FilterCongigOptions();
+  public readonly filterConfigOptions = new FilterConfigOptions();
   public semanticDataModelOptions = [...this.filterConfigOptions.filterKeyOptionsAssets.semanticDataModel.option];
   public totalItems: number;
   public pageIndex: number;

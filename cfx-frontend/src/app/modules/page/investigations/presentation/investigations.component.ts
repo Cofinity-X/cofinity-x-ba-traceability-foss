@@ -34,7 +34,7 @@ import {
   FilterMethod,
 } from '@shared/components/table/table.model';
 import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
-import { FilterCongigOptions } from '@shared/model/filter-config';
+import { FilterConfigOptions } from '@shared/model/filter-config';
 import { NotificationTabInformation } from '@shared/model/notification-tab-information';
 import { Notification, NotificationFilter, NotificationStatusGroup } from '@shared/model/notification.model';
 import { TranslationContext } from '@shared/model/translation-context.model';
@@ -72,7 +72,7 @@ export class InvestigationsComponent {
 
   public filterReceived: TableFilter = { filterMethod: FilterMethod.AND };
   public filterQueuedAndRequested: TableFilter = { filterMethod: FilterMethod.AND };
-  public readonly filterConfigOptions = new FilterCongigOptions();
+  public readonly filterConfigOptions = new FilterConfigOptions();
   public investigationsReceivedFilterConfiguration: any[];
   public investigationsQueuedAndRequestedFilterConfiguration: any[];
   private paramSubscription: Subscription;
@@ -218,16 +218,16 @@ export class InvestigationsComponent {
     this.ngOnInit();
   }
 
-  // public triggerSearch(): void {
-  //   this.searchHelper.resetFilterAndShowToast(false, this.notificationComponent, this.toastService);
-  //   const searchValue = this.searchControl.value;
-  //   const filterInfo: FilterInfo = { filterValue: searchValue, filterOperator: FilterOperator.STARTS_WITH };
-  //   this.filterReceived = { filterMethod: FilterMethod.OR, description: filterInfo, createdBy: filterInfo };
-  //   this.filterQueuedAndRequested = { filterMethod: FilterMethod.OR, description: filterInfo, sendTo: filterInfo };
+  public triggerSearch(): void {
+    this.searchHelper.resetFilterAndShowToast(false, this.notificationComponent, this.toastService);
+    const searchValue = this.searchControl.value;
 
-  //   this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, this.filterReceived);
-  //   this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, this.filterQueuedAndRequested);
-  // }
+    const receivedFilter = { description: searchValue, createdBy: searchValue };
+    const queuedAndRequestedFilter = { description: searchValue, sendTo: searchValue };
+
+    this.investigationsFacade.setReceivedInvestigation(this.pagination.page, this.pagination.pageSize, this.investigationReceivedSortList, null, receivedFilter, FilterMethod.OR);
+    this.investigationsFacade.setQueuedAndRequestedInvestigations(this.pagination.page, this.pagination.pageSize, this.investigationQueuedAndRequestedSortList, null, queuedAndRequestedFilter, FilterMethod.OR);
+  }
 
   public filterNotifications(filterContext: any) {
     if (filterContext.channel === NotificationChannel.RECEIVER) {
