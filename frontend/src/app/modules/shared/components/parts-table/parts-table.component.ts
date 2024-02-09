@@ -143,6 +143,7 @@ export class PartsTableComponent implements OnInit {
   ) {
   }
 
+
   public readonly dataSource = new MatTableDataSource<unknown>();
   public readonly selection = new SelectionModel<unknown>(true, []);
 
@@ -159,6 +160,7 @@ export class PartsTableComponent implements OnInit {
   filterFormGroup = new FormGroup({});
 
   public tableViewConfig: TableViewConfig;
+
 
   public deeplinkToNotification(column: any, notificationId: string[]) {
     const deeplinkModel = this.deeplinkService.getDeeplink(column, notificationId);
@@ -216,6 +218,7 @@ export class PartsTableComponent implements OnInit {
     this.filterFormGroup.valueChanges.subscribe((formValues) => {
       this.filterActivated.emit(formValues);
     });
+
   }
 
 
@@ -265,6 +268,7 @@ export class PartsTableComponent implements OnInit {
     return initialColumnMap;
   }
 
+
   private setupTableConfigurations(displayedColumnsForTable: string[], displayedColumns: string[], sortableColumns: Record<string, boolean>, filterConfiguration: any[], filterFormGroup: any): any {
     const headerKey = 'table.column';
     this.tableConfig = {
@@ -284,6 +288,7 @@ export class PartsTableComponent implements OnInit {
         this.filterFormGroup.addControl(controlName, filterFormGroup[controlName]);
       }
     }
+
   }
 
   public areAllRowsSelected(): boolean {
