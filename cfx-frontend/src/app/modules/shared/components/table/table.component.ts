@@ -108,6 +108,7 @@ export class TableComponent {
   @Input() tableHeader: string;
   @Input() enableScroll: boolean;
   @Input() multiSortList: TableHeaderSort[];
+  @Input() autocompleteEnabled = false;
 
   @Input() set paginationData({ page, pageSize, totalItems, content, pageCount }: Pagination<unknown>) {
     this.totalItems = totalItems;
@@ -181,7 +182,7 @@ export class TableComponent {
 
   ngOnInit() {
     this.tableViewConfig = {
-      displayedColumns: Object.keys(this.tableConfig.sortableColumns),
+      displayedColumns: Object.keys(this.tableConfig?.sortableColumns),
       filterFormGroup: PartsTableConfigUtils.createFormGroup(this.tableConfig?.displayedColumns),
       filterColumns: PartsTableConfigUtils.createFilterColumns(this.tableConfig?.displayedColumns, false, true),
       sortableColumns: this.tableConfig?.sortableColumns,

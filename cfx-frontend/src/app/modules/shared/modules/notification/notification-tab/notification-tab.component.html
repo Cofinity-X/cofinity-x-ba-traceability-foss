@@ -27,6 +27,7 @@ SPDX-License-Identifier: Apache-2.0
   <div *ngIf="notifications.data.totalItems > 0 || filteredContent; else displayMessage">
     <app-table [tableType]="tableType"
       class="notifications-tab"
+      [autocompleteEnabled]="autocompleteEnabled"
       [paginationData]="notifications.data"
       [tableConfig]="tableConfig"
       [noShadow]="true"

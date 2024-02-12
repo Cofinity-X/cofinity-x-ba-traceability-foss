@@ -50,6 +50,7 @@ import { RequestStepperComponent } from '@shared/components/request-notification
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationChannel, TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
 import { createDeeplinkNotificationFilter } from '@shared/helper/notification-helper';
+import { NotificationActionHelperService } from '@shared/assembler/notification-action-helper.service';
 
 @Component({
   selector: 'app-investigations',
@@ -95,6 +96,7 @@ export class InvestigationsComponent {
   constructor(
     public readonly helperService: InvestigationHelperService,
     public readonly investigationsFacade: InvestigationsFacade,
+    private readonly actionHelperService: NotificationActionHelperService,
     private readonly investigationDetailFacade: InvestigationDetailFacade,
     private readonly router: Router,
     public dialog: MatDialog,
@@ -129,7 +131,7 @@ export class InvestigationsComponent {
 
   public ngAfterViewInit(): void {
     this.menuActionsConfig = NotificationMenuActionsAssembler.getMenuActions(
-      this.helperService,
+      this.actionHelperService,
       this.notificationCommonModalComponent,
     );
     this.cd.detectChanges();

@@ -234,7 +234,7 @@ SPDX-License-Identifier: Apache-2.0
                 </div>
               </div>
               <div
-                *ngIf="tableViewConfig.displayFilterColumnMappings && tableViewConfig.displayFilterColumnMappings.length > 0"
+                *ngIf="autocompleteEnabled && tableViewConfig.displayFilterColumnMappings && tableViewConfig.displayFilterColumnMappings.length > 0"
                 (click)="$event.stopPropagation()"
                 class="notification-table--header--cell--filter"
                 [matMenuTriggerFor]="selectMenu"

@@ -161,37 +161,6 @@ export class PartsTableComponent implements OnInit {
     return !(filter.isDate || filter.isTextSearch);
   }
 
-  private readonly displayedColumnsAsBuiltForTable: string[] = [
-    '!',
-    'id',
-    'idShort',
-    'name',
-    'manufacturer',
-    'manufacturerPartId',
-    'customerPartId',
-    'classification',
-    'nameAtCustomer',
-    'semanticModelId',
-    'semanticDataModel',
-    'manufacturingDate',
-    'manufacturingCountry',
-    'activeAlerts',
-    'activeInvestigations',
-    'menu',
-  ];
-
-  private readonly displayedColumnsAsBuiltSupplierForTable: string[] = [
-    'semanticDataModel',
-    'name',
-    'manufacturer',
-    'manufacturerPartId',
-    'semanticModelId',
-    'manufacturingDate',
-    'activeAlerts',
-    'activeInvestigations',
-    'menu'
-  ];
-
   private sorting: TableHeaderSort;
 
   protected readonly Role = Role;

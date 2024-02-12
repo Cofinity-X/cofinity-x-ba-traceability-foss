@@ -52,6 +52,7 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() notificationType = NotificationType.INVESTIGATION;
   @Input() tableType: TableType;
   @Input() filterConfig: any[] = [];
+  @Input() autocompleteEnabled = true;
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
@@ -73,6 +74,7 @@ export class NotificationTabComponent implements AfterViewInit {
   public filteredContent = false;
 
   public notificationFilter: NotificationFilter;
+
 
   protected readonly TableType = TableType;
 

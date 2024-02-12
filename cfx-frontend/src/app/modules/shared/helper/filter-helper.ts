@@ -94,10 +94,10 @@ export function enrichDeeplinkFilterAndGetUpdatedFilter(filter: any): string[] {
 
     if (Array.isArray(filter.notificationIds)) {
       filter.notificationIds.forEach(notificationId => {
-        filterList.push('id,EQUAL,' + notificationId + ',OR');
+        filterList.push('status,EQUAL,' + notificationId + ',OR');
       });
     } else {
-      filterList.push('id,EQUAL,' + filter.notificationIds + ',OR');
+      filterList.push('status,EQUAL,' + filter.notificationIds + ',OR');
     }
 
   }
@@ -193,7 +193,6 @@ export function provideFilterListForNotifications(filter?: NotificationFilter, f
       filterParams.forEach(filter => { filterList.push(filter); });
     }
   }
-
   return filterList;
 }
 
