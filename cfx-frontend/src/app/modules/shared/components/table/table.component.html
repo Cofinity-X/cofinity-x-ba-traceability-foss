@@ -233,8 +233,7 @@ SPDX-License-Identifier: Apache-2.0
                   </ng-container>
                 </div>
               </div>
-              <div
-                *ngIf="autocompleteEnabled && tableViewConfig.displayFilterColumnMappings && tableViewConfig.displayFilterColumnMappings.length > 0"
+              <div *ngIf="tableConfig.filterConfig && tableConfig.filterConfig.length > 0"
                 (click)="$event.stopPropagation()"
                 class="notification-table--header--cell--filter"
                 [matMenuTriggerFor]="selectMenu"
@@ -254,18 +253,16 @@ SPDX-License-Identifier: Apache-2.0
                 <mat-menu #selectMenu="matMenu"
                   xPosition="before"
                   class="menu-input-field">
-                  <ng-container *ngFor="let filter of tableViewConfig.displayFilterColumnMappings">
+                  <ng-container *ngFor="let filter of tableConfig.filterConfig">
                     <div (click)="$event.stopPropagation()"
                       *ngIf="filter.filterKey === column">
-                      <app-multiselect *ngIf="filter.headerKey!=='Filter' && filter.headerKey !== 'Menu'"
-                        [placeholder]="'multiSelect.placeholder' | i18n"
+                      <app-multiselect *ngIf="filter.filterKey === column"
                         [options]="filter.option"
+                        [multiple]="isMultipleSearch(filter)"
+                        [textSearch]="filter.isTextSearch"
                         [isDate]="filter.isDate"
-                        [singleSearch]="filter.singleSearch"
-                        [filterColumn]="filter.filterKey"
-                        (onFilterValueChanged)="onFilterValueChanged($event)"
-                        [placeholderMultiple]="('multiSelect.multipleResults' | i18n)"
-                        [tableType]="tableType"
+                        [maxDate]="filter.maxDate"
+                        (triggerFilter)="triggerFilterAdding(filter.filterKey, filter.isDate)"
                         ngDefaultControl
                         [formControl]="filterFormGroup.controls[filter.filterKey]"></app-multiselect>
                     </div>
@@ -292,7 +289,8 @@ SPDX-License-Identifier: Apache-2.0
 
 <ng-container *ngIf="tableConfig?.hasPagination">
   <mat-paginator class="notification-table-paginator-menu"
-    [length]="totalItems"
+    [length]="pageCount"
+    [pageSize]="pageSize"
     [pageIndex]="pageIndex"
     [pageSizeOptions]="[50, 100, 200]"
     [attr.aria-label]="'table.selectPageSize' | i18n"

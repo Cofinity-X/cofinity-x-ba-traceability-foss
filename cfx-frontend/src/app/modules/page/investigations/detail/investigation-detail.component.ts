@@ -26,7 +26,6 @@ import { InvestigationDetailFacade } from '@page/investigations/core/investigati
 import { InvestigationHelperService } from '@page/investigations/core/investigation-helper.service';
 import { InvestigationsFacade } from '@page/investigations/core/investigations.facade';
 import { Part } from '@page/parts/model/parts.model';
-import { NotificationActionHelperService } from '@shared/assembler/notification-action-helper.service';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
 import { CreateHeaderFromColumns, TableConfig, TableEventConfig } from '@shared/components/table/table.model';
 import { ToastService } from '@shared/components/toasts/toast.service';
@@ -73,7 +72,6 @@ export class InvestigationDetailComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     public readonly helperService: InvestigationHelperService,
-    public readonly actionHelperService: NotificationActionHelperService,
     public readonly investigationDetailFacade: InvestigationDetailFacade,
     private readonly staticIdService: StaticIdService,
     public readonly investigationsFacade: InvestigationsFacade,

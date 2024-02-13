@@ -20,7 +20,7 @@
  ********************************************************************************/
 
 import type { PaginationResponse } from '@core/model/pagination.model';
-import { SemanticModel, TractionBatteryCode } from '@page/parts/model/aspectModels.model';
+import { SemanticModel } from '@page/parts/model/aspectModels.model';
 import { DetailAspectModel } from '@page/parts/model/detailAspectModel.model';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { Owner } from '@page/parts/model/owner.enum';
@@ -39,8 +39,7 @@ export enum SemanticDataModel {
   SERIALPART = 'SERIALPART',
   PARTASPLANNED = 'PARTASPLANNED',
   JUSTINSEQUENCE = 'JUSTINSEQUENCE',
-  TRACTIONBATTERYCODE = 'TRACTIONBATTERYCODE',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
 }
 
 export enum SemanticDataModelInCamelCase {
@@ -48,8 +47,7 @@ export enum SemanticDataModelInCamelCase {
   SERIALPART = 'SerialPart',
   PARTASPLANNED = 'PartAsPlanned',
   JUSTINSEQUENCE = 'JustInSequence',
-  TRACTIONBATTERYCODE = 'TractionBatteryCode',
-  UNKNOWN = 'Unknown'
+  UNKNOWN = 'Unknown',
 }
 
 export interface Relation {
@@ -57,66 +55,38 @@ export interface Relation {
   idShort: string;
 }
 
-export enum ImportState {
-  TRANSIENT = "TRANSIENT",
-  PERSISTENT = "PERSISTENT",
-  IN_SYNCHRONIZATION = "IN_SYNCHRONIZATION",
-  ERROR = "ERROR",
-  UNSET = "UNSET"
-}
-
-export enum ImportStateInCamelCase {
-  TRANSIENT = "Transient",
-  PERSISTENT = "Persistent",
-  IN_SYNCHRONIZATION = "In Synchronization",
-  ERROR = "Error",
-  UNSET = "Unset"
-}
-
-export enum FilterOperator {
-  EQUAL = 'EQUAL',
-  AT_LOCAL_DATE = 'AT_LOCAL_DATE',
-  STARTS_WITH = 'STARTS_WITH',
-  BEFORE_LOCAL_DATE = 'BEFORE_LOCAL_DATE',
-  AFTER_LOCAL_DATE = 'AFTER_LOCAL_DATE',
-  NOTIFICATION_COUNT_EQUAL = 'NOTIFICATION_COUNT_EQUAL'
-}
-
-export function getFilterOperatorValue(operator: FilterOperator) {
-  return operator as string;
-}
-
 export interface AssetAsBuiltFilter {
-  id?: string,
-  idShort?: string,
-  name?: string,
-  manufacturerName?: string,
-  partId?: string,
-  manufacturerPartId?: string,
-  customerPartId?: string,
-  classification?: string,
-  nameAtCustomer?: string,
-  semanticModelId?: string,
-  semanticDataModel?: string[],
-  manufacturingDate?: string,
-  manufacturingCountry?: string
+  id?: string;
+  idShort?: string;
+  nameAtManufacturer?: string;
+  manufacturerName?: string;
+  manufacturerPartId?: string;
+  customerPartId?: string;
+  classification?: string;
+  nameAtCustomer?: string;
+  semanticModelId?: string;
+  semanticDataModel?: string[];
+  manufacturingDate?: string;
+  manufacturingCountry?: string;
+  qualityAlertsInStatusActive?: string;
+  qualityInvestigationsInStatusActive?: string;
 }
 
 export interface AssetAsPlannedFilter {
-  id?: string,
-  idShort?: string,
-  name?: string,
-  manufacturer?: string,
-  manufacturerPartId?: string,
-  classification?: string,
-  semanticDataModel?: string[],
-  semanticModelId?: string,
-  validityPeriodFrom?: string,
-  validityPeriodTo?: string,
-  psFunction?: string,
-  catenaXSiteId?: string,
-  functionValidFrom?: string,
-  functionValidUntil?: string,
+  id?: string;
+  idShort?: string;
+  name?: string;
+  manufacturer?: string;
+  manufacturerPartId?: string;
+  classification?: string;
+  semanticDataModel?: string[];
+  semanticModelId?: string;
+  validityPeriodFrom?: string;
+  validityPeriodTo?: string;
+  psFunction?: string;
+  catenaXSiteId?: string;
+  functionValidFrom?: string;
+  functionValidUntil?: string;
 }
 
 export interface AssetAsDesignedFilter {
@@ -135,10 +105,21 @@ export interface AssetAsRecycledFilter {
   id?: string;
 }
 
+export enum FilterOperator {
+  EQUAL = 'EQUAL',
+  AT_LOCAL_DATE = 'AT_LOCAL_DATE',
+  STARTS_WITH = 'STARTS_WITH',
+}
+
+export function getFilterOperatorValue(operator: FilterOperator) {
+  return operator as string;
+}
+
 export interface Part {
   id: string;
   idShort: string;
-  manufacturerName: string;
+  name: string;
+  manufacturer: string;
   manufacturerPartId: string;
   nameAtManufacturer: string;
   businessPartner: string;
@@ -148,9 +129,11 @@ export interface Part {
   children: string[];
   parents?: string[];
   error?: boolean;
+  activeInvestigation?: boolean;
+  activeAlert: boolean;
   van: string;
-  owner: Owner;
   semanticDataModel: SemanticDataModel;
+  semanticDataModelInCamelCase?: SemanticDataModelInCamelCase;
   classification: string;
 
   mainAspectType: MainAspectType;
@@ -163,10 +146,6 @@ export interface Part {
   manufacturingDate?: string;
   manufacturingCountry?: string;
 
-  productType?: string;
-  tractionBatteryCode?: string;
-  subcomponents: TractionBatteryCode[];
-
   // as planned
   validityPeriodFrom?: string;
   validityPeriodTo?: string;
@@ -177,13 +156,8 @@ export interface Part {
   functionValidUntil?: string;
 
   // count of notifications
-  sentActiveAlerts: string[];
-  sentActiveInvestigations: string[];
-  receivedActiveAlerts: string[];
-  receivedActiveInvestigations: string[];
-
-  importNote?: string;
-  importState?: ImportState;
+  activeAlerts: number;
+  activeInvestigations: number;
 }
 
 export interface PartResponse {
@@ -197,18 +171,17 @@ export interface PartResponse {
   owner: Owner;
   childRelations: Relation[];
   parentRelations: Relation[];
+  activeAlert: boolean;
+  underInvestigation: boolean;
   qualityType: QualityType;
   van: string;
   semanticDataModel: SemanticDataModel;
   classification: string;
   detailAspectModels: DetailAspectModel[];
+
   // TODO: Delete ? flag when AsPlanned Parts do not return the props anymore
-  sentQualityAlertIdsInStatusActive: string[],
-  receivedQualityAlertIdsInStatusActive: string[],
-  sentQualityInvestigationIdsInStatusActive: string[],
-  receivedQualityInvestigationIdsInStatusActive: string[]
-  importNote?: string,
-  importState?: ImportState
+  qualityAlertsInStatusActive?: number;
+  qualityInvestigationsInStatusActive?: number;
 }
 
 export type PartsResponse = PaginationResponse<PartResponse>;

@@ -30,14 +30,13 @@ import { AssetAsBuiltFilter, AssetAsDesignedFilter, AssetAsOrderedFilter, AssetA
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
 import { RequestStepperComponent } from '@shared/components/request-notification/request-stepper/request-stepper.component';
-import { TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
+import { PartTableType, TableEventConfig, TableHeaderSort } from '@shared/components/table/table.model';
 import { toAssetFilter, toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { View } from '@shared/model/view.model';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { StaticIdService } from '@shared/service/staticId.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
 
 @Component({
   selector: 'app-own-parts',
@@ -46,7 +45,7 @@ import { TableType } from '@shared/components/multi-select-autocomplete/table-ty
 })
 export class OwnPartsComponent implements OnInit, OnDestroy {
   protected readonly MainAspectType = MainAspectType;
-  protected readonly TableType = TableType;
+  protected readonly PartTableType = PartTableType;
 
   public readonly titleId = this.staticIdService.generateId('PartsComponent.title');
 
@@ -87,6 +86,9 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
   public assetAsSupportedFilter: AssetAsSupportedFilter;
   public assetAsOrderedFilter: AssetAsOrderedFilter;
 
+  public readonly searchListAsBuilt: string[];
+  public readonly searchListAsPlanned: string[];
+
   public DEFAULT_PAGE_SIZE = 50;
   public ctrlKeyState = false;
   public globalSearchActive = false;
@@ -120,6 +122,36 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
     this.tableAsOrderedSortList = [];
     this.tableAsSupportedSortList = [];
     this.tableAsRecycledSortList = [];
+    this.searchListAsBuilt = [
+      'id',
+      'idShort',
+      'nameAtManufacturer',
+      'manufacturerName',
+      'manufacturerPartId',
+      'customerPartId',
+      'classification',
+      'nameAtCustomer',
+      'semanticDataModel',
+      'semanticModelId',
+      'manufacturingDate',
+      'manufacturingCountry',
+    ];
+    this.searchListAsPlanned = [
+      'id',
+      'idShort',
+      'nameAtManufacturer',
+      'manufacturerName',
+      'manufacturerPartId',
+      'classification',
+      'semanticDataModel',
+      'semanticModelId',
+      'validityPeriodFrom',
+      'validityPeriodTo',
+      'function',
+      'catenaXSiteId',
+      'functionValidFrom',
+      'functionValidUntil',
+    ];
 
     this.assetAsBuiltFilter = {};
     this.assetAsDesignedFilter = {};
@@ -146,11 +178,29 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
 
   public updateOwnParts(searchValue?: string) {
     if (searchValue && searchValue !== '') {
-      this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, this.tableAsPlannedSortList, toGlobalSearchAssetFilter(searchValue, false), true);
-      this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, this.tableAsBuiltSortList, toGlobalSearchAssetFilter(searchValue, true), true);
+      this.globalSearchActive = true;
+      this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsBuilt, this.datePipe);
+      this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsPlanned, this.datePipe);
+      this.partsFacade.setPartsAsBuilt(
+        0,
+        this.DEFAULT_PAGE_SIZE,
+        this.tableAsPlannedSortList,
+        this.assetAsBuiltFilter,
+        this.globalSearchActive,
+      );
+      this.partsFacade.setPartsAsPlanned(
+        0,
+        this.DEFAULT_PAGE_SIZE,
+        this.tableAsBuiltSortList,
+        this.assetAsPlannedFilter,
+        this.globalSearchActive,
+      );
     } else {
-      this.partsFacade.setPartsAsBuilt();
-      this.partsFacade.setPartsAsPlanned();
+      this.globalSearchActive = false;
+      this.assetAsBuiltFilter = {};
+      this.assetAsPlannedFilter = {};
+      this.partsFacade.setPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
+      this.partsFacade.setPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
     }
   }
 
@@ -175,6 +225,7 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
         dialogRef.componentInstance.deselectPart.unsubscribe();
       });
     }
+
   }
 
   filterActivated(type: MainAspectType, assetFilter: any): void {

@@ -20,7 +20,6 @@
  ********************************************************************************/
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MetricData } from '@page/dashboard/presentation/dashboard.model';
 import { StaticIdService } from '@shared/service/staticId.service';
 
 @Component({
@@ -37,8 +36,6 @@ export class CardIconComponent {
   @Input() label: string;
   @Input() stats: number | string;
   @Input() icon: string;
-  @Input() metricData: MetricData[];
-
 
   constructor(staticIdService: StaticIdService) {
     this.htmlId = staticIdService.generateId(this.htmlIdBase);

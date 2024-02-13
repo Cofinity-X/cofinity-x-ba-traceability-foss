@@ -23,16 +23,16 @@ import { Component, EventEmitter, Input, Output, QueryList, ViewChildren } from 
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   MenuActionConfig,
+  PartTableType,
   TableEventConfig,
   TableHeaderSort,
 } from '@shared/components/table/table.model';
-import { Notification, NotificationType, Notifications } from '@shared/model/notification.model';
+import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { StaticIdService } from '@shared/service/staticId.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NotificationTabComponent } from '../notification-tab/notification-tab.component';
-import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
 
 @Component({
   selector: 'app-notification',
@@ -51,8 +51,7 @@ export class NotificationComponent {
   @Input() queuedAndRequestedSortableColumns: Record<string, boolean> = {};
   @Input() receivedMultiSortList: TableHeaderSort[] = [];
   @Input() queuedAndRequestedMultiSortList: TableHeaderSort[] = [];
-  @Input() tablesType: TableType[];
-  @Input() notificationType = NotificationType.INVESTIGATION;
+  @Input() tablesType: PartTableType[];
   @Input() receivedFilterConfig: any[] = [];
   @Input() queuedAndRequestedFilterConfig: any[] = [];
 
@@ -60,8 +59,6 @@ export class NotificationComponent {
   @Output() onQueuedAndRequestedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
   @Output() onPaginationPageSizeChange = new EventEmitter<number>();
-  @Output() investigationFilterChanged = new EventEmitter<any>();
-  @Output() alertFilterChanged = new EventEmitter<any>();
 
   public readonly tabIndex$ = this.route.queryParams.pipe(map(params => parseInt(params.tabIndex, 10) || 0));
 
@@ -70,13 +67,13 @@ export class NotificationComponent {
 
   public itemCount: number[] = [];
 
-  protected readonly TableType = TableType;
+  protected readonly PartTableType = PartTableType;
 
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly staticIdService: StaticIdService,
-  ) { }
+  ) {}
 
   public onTabChange(tabIndex: number): void {
     void this.router.navigate([], { queryParams: { tabIndex }, replaceUrl: true });

@@ -27,8 +27,7 @@ import {
   NotificationResponse,
   Notifications,
   NotificationsResponse,
-  NotificationStatus,
-  NotificationType,
+  NotificationStatus, NotificationType,
 } from '../model/notification.model';
 
 export class NotificationAssembler {
@@ -49,7 +48,6 @@ export class NotificationAssembler {
       severity: _severity,
       createdDate: _createdDate = '',
       createdBy: _createdBy = '',
-      createdByName: _createdByName = '',
       sendTo: _sendTo = '',
       sendToName: _sendToName = '',
       targetDate: _targetDate = '',
@@ -61,10 +59,8 @@ export class NotificationAssembler {
     const severity = Object.values(Severity).find(element => element == _severity) ?? null;
     const createdDate = new CalendarDateModel(_createdDate);
     const targetDate = new CalendarDateModel(_targetDate);
-    const createdBy = _createdBy;
-    const createdByName = _createdByName;
-    const sendTo = _sendTo;
-    const sendToName = _sendToName;
+    const createdBy = { bpn: _createdBy, name: '' };
+    const sendTo = { bpn: _sendTo, name: _sendToName };
     const errorMessage = _errorMessage || undefined;
     const notificationType = myNotificationType || undefined;
 
@@ -72,9 +68,7 @@ export class NotificationAssembler {
       id,
       description,
       createdBy,
-      createdByName,
       sendTo,
-      sendToName,
       reason,
       assetIds,
       isFromSender,
@@ -83,7 +77,7 @@ export class NotificationAssembler {
       createdDate,
       targetDate,
       bpn,
-      notificationType,
+      notificationType
     };
 
     return errorMessage ? { ...assembled, errorMessage: errorMessage } : assembled;

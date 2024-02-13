@@ -55,27 +55,9 @@ export interface NotificationUser {
   name?: string;
 }
 
-export interface NotificationFilter {
-  id?: string;
-  description?: string;
-  status?: NotificationStatus;
-  severity?: Severity;
-  createdDate?: string;
-  createdBy?: string;
-  createdByName?: string;
-  sendTo?: string;
-  sendToName?: string;
-  reason?: NotificationReason;
-  assetIds?: string[];
-  channel?: 'SENDER' | 'RECEIVER';
-  targetDate?: string;
-  bpn?: string;
-  errorMessage?: string;
-}
-
 export enum NotificationType {
-  INVESTIGATION = 'Investigation',
-  ALERT = 'Alert'
+  INVESTIGATION = "Investigation",
+  ALERT = "Alert"
 }
 
 export interface NotificationResponse {
@@ -94,7 +76,7 @@ export interface NotificationResponse {
   channel: 'SENDER' | 'RECEIVER';
   targetDate?: string;
   bpn?: string;
-  errorMessage?: string;
+  errorMessage?: string
 }
 
 export interface Notification {
@@ -104,10 +86,8 @@ export interface Notification {
   severity: Severity | null;
 
   createdDate: CalendarDateModel;
-  createdBy: string;
-  createdByName: string;
-  sendTo: string;
-  sendToName: string;
+  createdBy: NotificationUser;
+  sendTo: NotificationUser;
   reason: NotificationReason;
   assetIds: string[];
   isFromSender: boolean;
@@ -116,13 +96,6 @@ export interface Notification {
   errorMessage?: string;
 
   notificationType?: NotificationType;
-}
-
-export enum NotificationColumn {
-  RECEIVED_ALERT = 'receivedActiveAlerts',
-  SENT_ALERT = 'sentActiveAlerts',
-  RECEIVED_INVESTIGATION = 'receivedActiveInvestigations',
-  SENT_INVESTIGATION = 'sentActiveInvestigations'
 }
 
 export type NotificationsResponse = PaginationResponse<NotificationResponse>;

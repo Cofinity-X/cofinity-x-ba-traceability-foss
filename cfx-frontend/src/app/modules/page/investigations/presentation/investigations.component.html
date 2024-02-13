@@ -36,9 +36,9 @@ SPDX-License-Identifier: Apache-2.0
         <app-input color="accent"
           [label]="'parts.input.global-search.placeholderAlertsAndInvestigations' | i18n"
           [prefixIconHover]="true"
+          (prefixIconClick)="triggerSearch()"
           [onEnterActive]="true"
           [prefixIcon]="'search'"
-          (prefixIconClick)="triggerSearch()"
           formControlName="investigationSearch"
           [isSearchBar]="true"
           [parentFormGroup]="searchFormGroup"
@@ -47,7 +47,7 @@ SPDX-License-Identifier: Apache-2.0
           prefixIconColor="accent"></app-input>
       </div>
       <div *appHasRole="[Role.USER]">
-        <app-button class="button-large pl-5"
+        <app-button class="button-large pl-5 request-action-button"
           (click)="openRequestDialog()"
           [color]="'primary'"
           variant="flat">
@@ -70,7 +70,7 @@ SPDX-License-Identifier: Apache-2.0
     <app-notification [queuedAndRequestedNotifications$]="investigationsQueuedAndRequested$"
       [receivedNotifications$]="investigationsReceived$"
       [translationContext]="TranslationContext.COMMONINVESTIGATION"
-      [tablesType]="[TableType.RECEIVED_INVESTIGATION, TableType.CREATED_INVESTIGATION]"
+      [tablesType]="[PartTableType.INVESTIGATIONS_RECEIVED, PartTableType.INVESTIGATIONS_SENT]"
       [receivedOptionalColumns]="['targetDate', 'severity', 'createdBy']"
       [receivedSortableColumns]="{
         description: true,
@@ -97,7 +97,6 @@ SPDX-License-Identifier: Apache-2.0
       (onReceivedTableConfigChanged)="onReceivedTableConfigChanged($event)"
       (onQueuedAndRequestedTableConfigChanged)="onQueuedAndRequestedTableConfigChanged($event)"
       (selected)="openDetailPage($event)"
-      (investigationFilterChanged)="filterNotifications($event)"
       [menuActionsConfig]="menuActionsConfig">
       <div emptyContent>
         <img src="/assets/images/icons/noQualityInvestigations.svg"

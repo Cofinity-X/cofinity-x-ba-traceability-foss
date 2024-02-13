@@ -27,11 +27,11 @@ import { View } from '@shared/model/view.model';
 import { CloseNotificationModalComponent } from '@shared/modules/notification/modal/close/close-notification-modal.component';
 import { Observable } from 'rxjs';
 import { DashboardFacade } from '../abstraction/dashboard.facade';
+import { PartTableType } from '@shared/components/table/table.model';
 import { Role } from '@core/user/role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestStepperComponent } from '@shared/components/request-notification/request-stepper/request-stepper.component';
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
-import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public readonly alertsLink: string;
   public readonly alertsParams: Record<string, string>;
 
-  protected readonly TableType = TableType;
+  protected readonly PartTableType = PartTableType;
   protected readonly Role = Role;
 
   constructor(private readonly dashboardFacade: DashboardFacade,
@@ -94,6 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public openRequestDialog(isInvestigation: boolean): void {
     this.dialog.open(RequestStepperComponent, {
       autoFocus: false,
+      disableClose: true,
       data: {
         context: isInvestigation ? RequestContext.REQUEST_INVESTIGATION : RequestContext.REQUEST_ALERT,
       }

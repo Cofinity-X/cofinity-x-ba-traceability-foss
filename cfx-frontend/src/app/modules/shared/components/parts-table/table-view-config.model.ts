@@ -17,15 +17,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 export interface TableViewConfig {
-  // displayedColumnsForTable: string[],
-  // displayedColumns: string[],
-  // sortableColumns: Record<string,boolean>,
-  // filterConfiguration: any[],
-  // filterFormGroup: any
-
+  displayedColumnsForTable: string[],
   displayedColumns: string[],
-  filterColumns: string[],
-  sortableColumns: Record<string, boolean>,
-  displayFilterColumnMappings: any[],
+  sortableColumns: Record<string,boolean>,
+  filterConfiguration: any[],
   filterFormGroup: any
 }

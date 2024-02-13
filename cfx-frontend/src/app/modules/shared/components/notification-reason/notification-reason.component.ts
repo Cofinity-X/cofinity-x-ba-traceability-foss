@@ -21,19 +21,17 @@
 
 import { Component, Input } from '@angular/core';
 import { CalendarDateModel } from '@core/model/calendar-date.model';
-import { Notification, NotificationStatus } from '@shared/model/notification.model';
+import { Notification, NotificationUser, NotificationStatus } from '@shared/model/notification.model';
 
-// type TextMessageDirection = 'left' | 'right' | 'none';
-type TextMessageDirection = 'left' | 'right';
-
+type TextMessageDirection = 'left' | 'right' | 'none';
 interface TextMessage {
   reason: string;
   direction: TextMessageDirection;
-  user: string;
-  bpn: string;
+  user: NotificationUser;
   status: NotificationStatus;
   date?: CalendarDateModel;
 }
+
 @Component({
   selector: 'app-notification-reason',
   templateUrl: './notification-reason.component.html',
@@ -42,35 +40,6 @@ interface TextMessage {
 export class NotificationReasonComponent {
   public textMessages: TextMessage[];
 
-  // @Input() set notification({
-  //   description,
-  //   reason,
-  //   status,
-  //   isFromSender,
-  //   createdDate,
-  //   createdBy,
-  //   sendTo,
-  // }: Notification) {
-  //   const { ACCEPTED, SENT, CLOSED, CREATED, DECLINED } = NotificationStatus;
-  //   const { accept, close, decline } = reason;
-
-  //   const senderDirection: TextMessageDirection = 'none';
-  //   const receiverDirection: TextMessageDirection = 'none';
-
-  //   const createdMessage = {
-  //     reason: description,
-  //     direction: senderDirection,
-  //     user: createdBy,
-  //     status: [CREATED, SENT].includes(status) ? status : SENT,
-  //     date: createdDate,
-  //   };
-
-  //   const acceptedMessage = { reason: accept, direction: receiverDirection, user: sendTo, status: ACCEPTED };
-  //   const declinedMessage = { reason: decline, direction: receiverDirection, user: sendTo, status: DECLINED };
-  //   const closedMessage = { reason: close, direction: senderDirection, user: createdBy, status: CLOSED };
-  //   this.textMessages = [createdMessage, acceptedMessage, declinedMessage, closedMessage];
-  // }
-
   @Input() set notification({
     description,
     reason,
@@ -78,44 +47,25 @@ export class NotificationReasonComponent {
     isFromSender,
     createdDate,
     createdBy,
-    createdByName,
     sendTo,
-    sendToName,
   }: Notification) {
     const { ACCEPTED, SENT, CLOSED, CREATED, DECLINED } = NotificationStatus;
     const { accept, close, decline } = reason;
 
-    const senderDirection: TextMessageDirection = isFromSender ? 'right' : 'left';
-    const receiverDirection: TextMessageDirection = !isFromSender ? 'right' : 'left';
+    const senderDirection: TextMessageDirection = 'none';
+    const receiverDirection: TextMessageDirection = 'none';
 
     const createdMessage = {
       reason: description,
       direction: senderDirection,
-      user: createdByName,
-      bpn: createdBy,
+      user: createdBy,
       status: [CREATED, SENT].includes(status) ? status : SENT,
       date: createdDate,
     };
 
-    const acceptedMessage = {
-      reason: accept, direction: receiverDirection, user: sendToName, bpn: sendTo, status:
-        ACCEPTED,
-    }
-      ;
-    const declinedMessage = {
-      reason: decline,
-      direction: receiverDirection,
-      user: sendToName,
-      bpn: sendTo,
-      status: DECLINED,
-    };
-    const closedMessage = {
-      reason: close,
-      direction: senderDirection,
-      user: createdByName,
-      bpn: createdBy,
-      status: CLOSED,
-    };
+    const acceptedMessage = { reason: accept, direction: receiverDirection, user: sendTo, status: ACCEPTED };
+    const declinedMessage = { reason: decline, direction: receiverDirection, user: sendTo, status: DECLINED };
+    const closedMessage = { reason: close, direction: senderDirection, user: createdBy, status: CLOSED };
     this.textMessages = [createdMessage, acceptedMessage, declinedMessage, closedMessage];
   }
 }

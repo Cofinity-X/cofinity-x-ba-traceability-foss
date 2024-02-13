@@ -8,7 +8,9 @@ export class SearchHelper {
 
   private resetFilterSelector(multiSelectAutocompleteComponents: QueryList<MultiSelectAutocompleteComponent>, oneFilterSet): boolean {
     for (const multiSelectAutocompleteComponent of multiSelectAutocompleteComponents) {
-      multiSelectAutocompleteComponent.clickClear();
+      let wasSet = false;
+      wasSet = multiSelectAutocompleteComponent.clickClear(true);
+      oneFilterSet = wasSet || oneFilterSet;
     }
     return oneFilterSet;
   };

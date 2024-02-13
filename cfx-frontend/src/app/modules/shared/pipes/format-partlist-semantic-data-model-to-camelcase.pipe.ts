@@ -23,40 +23,35 @@ import { Part, SemanticDataModelInCamelCase } from '@page/parts/model/parts.mode
   name: 'formatPartlistSemanticDataModelToCamelCase',
 })
 export class FormatPartlistSemanticDataModelToCamelCasePipe implements PipeTransform {
-
   transform(partList: Part[] | any[]): Part[] | any[] {
-
     partList.forEach(part => {
       switch (part.semanticDataModel.toString().toLowerCase()) {
-
         case 'batch': {
-          part.semanticDataModel = SemanticDataModelInCamelCase.BATCH;
+          part.semanticDataModelInCamelCase = SemanticDataModelInCamelCase.BATCH;
           break;
         }
         case 'serialpart': {
-          part.semanticDataModel = SemanticDataModelInCamelCase.SERIALPART;
+          part.semanticDataModelInCamelCase = SemanticDataModelInCamelCase.SERIALPART;
           break;
         }
         case 'partasplanned': {
-          part.semanticDataModel = SemanticDataModelInCamelCase.PARTASPLANNED;
+          part.semanticDataModelInCamelCase = SemanticDataModelInCamelCase.PARTASPLANNED;
           break;
         }
         case 'justinsequence': {
-          part.semanticDataModel = SemanticDataModelInCamelCase.JUSTINSEQUENCE;
+          part.semanticDataModelInCamelCase = SemanticDataModelInCamelCase.JUSTINSEQUENCE;
           break;
         }
         default: {
-          part.semanticDataModel = SemanticDataModelInCamelCase.UNKNOWN;
+          part.semanticDataModelInCamelCase = SemanticDataModelInCamelCase.UNKNOWN;
           break;
         }
-
       }
       return {
         ...part,
-        semanticDataModel: part.semanticDataModel,
+        semanticDataModelInCamelCase: part.semanticDataModelInCamelCase,
       };
     });
     return partList;
-
   }
 }

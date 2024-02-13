@@ -32,14 +32,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash-es';
 import { RequestComponentData } from './request.componenet.model';
 import { By } from '@angular/platform-browser';
-import { Part } from '@page/parts/model/parts.model';
 
 describe('requestInvestigationComponent', () => {
   let deselectPartMock: jasmine.Spy<jasmine.Func>;
   let clearSelectedMock: jasmine.Spy<jasmine.Func>;
   let submittedMock: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
 
-  const currentSelectedItems = [{ nameAtManufacturer: 'part_1' }, { nameAtManufacturer: 'part_2' }, { nameAtManufacturer: 'part_3' }];
+  const currentSelectedItems = [{ name: 'part_1' }, { name: 'part_2' }, { name: 'part_3' }];
 
   const requestDataDefault = {
     showHeadline: true,
@@ -123,11 +122,10 @@ describe('requestInvestigationComponent', () => {
       await renderRequestInvestigationComponent();
     });
 
-    // TODO: fix test
-    // it('should render parts in chips', async () => {
-    //   await renderRequestInvestigationComponent();
-    //   await shouldRenderPartsInChips();
-    // });
+    it('should render parts in chips', async () => {
+      await renderRequestInvestigationComponent();
+      await shouldRenderPartsInChips();
+    });
 
     it('should render textarea', async () => {
       await renderRequestInvestigationComponent();
@@ -183,11 +181,10 @@ describe('requestInvestigationComponent', () => {
       await renderRequestAlertComponent();
     });
 
-    // TODO: fix test
-    // it('should render parts in chips', async () => {
-    //   await renderRequestAlertComponent();
-    //   await shouldRenderPartsInChips();
-    // });
+    it('should render parts in chips', async () => {
+      await renderRequestAlertComponent();
+      await shouldRenderPartsInChips();
+    });
 
     it('should render textarea', async () => {
       await renderRequestAlertComponent();

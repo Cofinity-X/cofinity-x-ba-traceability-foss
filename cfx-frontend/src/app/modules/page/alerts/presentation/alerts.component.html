@@ -34,9 +34,9 @@ SPDX-License-Identifier: Apache-2.0
         <app-input color="accent"
           [label]="'parts.input.global-search.placeholderAlertsAndInvestigations' | i18n"
           [prefixIconHover]="true"
+          (prefixIconClick)="triggerSearch()"
           [onEnterActive]="true"
           [prefixIcon]="'search'"
-          (prefixIconClick)="triggerSearch()"
           formControlName="alertSearch"
           [isSearchBar]="true"
           [parentFormGroup]="searchFormGroup"
@@ -45,7 +45,7 @@ SPDX-License-Identifier: Apache-2.0
           prefixIconColor="accent"></app-input>
       </div>
       <div *appHasRole="[Role.USER]">
-        <app-button class="button-large pl-5"
+        <app-button class="button-large pl-5 request-action-button"
           (click)="openRequestDialog()"
           [color]="'primary'"
           variant="flat">
@@ -66,10 +66,9 @@ SPDX-License-Identifier: Apache-2.0
       [helperService]="helperService"
       [translationContext]="TranslationContext.COMMONALERT">
     </app-notification-common-modal>
-    <app-notification [notificationType]="NotificationType.ALERT"
-      [queuedAndRequestedNotifications$]="alertsQueuedAndRequested$"
+    <app-notification [queuedAndRequestedNotifications$]="alertsQueuedAndRequested$"
       [receivedNotifications$]="alertsReceived$"
-      [tablesType]="[TableType.RECEIVED_ALERT, TableType.CREATED_ALERT]"
+      [tablesType]="[PartTableType.ALERTS_RECEIVED, PartTableType.ALERTS_SENT]"
       [translationContext]="TranslationContext.COMMONALERT"
       [receivedOptionalColumns]="['severity', 'createdBy']"
       [receivedMultiSortList]="alertReceivedSortList"
@@ -95,7 +94,6 @@ SPDX-License-Identifier: Apache-2.0
       (onReceivedTableConfigChanged)="onReceivedTableConfigChange($event)"
       (onQueuedAndRequestedTableConfigChanged)="onQueuedAndRequestedTableConfigChange($event)"
       (selected)="openDetailPage($event)"
-      (alertFilterChanged)="filterNotifications($event)"
       [menuActionsConfig]="menuActionsConfig">
       <div emptyContent>
         <img src="/assets/images/icons/noAlert.svg"

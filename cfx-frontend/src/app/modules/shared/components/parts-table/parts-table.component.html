@@ -72,11 +72,11 @@ SPDX-License-Identifier: Apache-2.0
       mat-row
       data-testid="table-component--body-row"></tr>
 
-    <!--<ng-container *ngIf="!!tableConfig.menuActionsConfig">
+    <ng-container *ngIf="!!tableConfig.menuActionsConfig">
       <tr *matRowDef="let row; columns: ['expandMenuActions']"
         class="expand-row no-hover table--menu__mobile"
         mat-row></tr>
-    </ng-container>-->
+    </ng-container>
 
     <tr *matNoDataRow
       class="mat-row no-hover"
@@ -158,7 +158,7 @@ SPDX-License-Identifier: Apache-2.0
       <ng-container matColumnDef="{{ column }}">
         <th class="table--header"
           *matHeaderCellDef
-          matTooltip="{{ column === 'hasAlerts' ? ('parts.openInvestigations' |i18n) : '' }}"
+          matTooltip="{{ column === '!' ? ('parts.openInvestigations' |i18n) : '' }}"
           matTooltipClass="table--header--tooltip"
           matTooltipPosition="above"
           [class.mdc-tooltip--multiline]="true"
@@ -166,7 +166,7 @@ SPDX-License-Identifier: Apache-2.0
           [mat-sort-header]="tableConfig.sortableColumns?.[column] ? '' : null"
           [disabled]="!tableConfig.sortableColumns?.[column]"
           mat-header-cell
-          [ngClass]="{ hasQualityAlertsHeader: column === 'hasAlerts' }"
+          [ngClass]="{ hasQualityAlertsHeader: column === '!' }"
           class="table--header--id: column === 'id'">
           <ng-container *ngIf="tableConfig?.header?.[column]; else pureColumn">
             <div class="table--header--cell">
@@ -176,7 +176,7 @@ SPDX-License-Identifier: Apache-2.0
                   tableConfig?.header?.[column] | i18n }}
                 </div>
                 <div class="table--header--cell--content--sort"
-                  *ngIf="column !== 'hasAlerts'">
+                  *ngIf="column !== '!'">
                   <ng-container *ngIf="multiSortList && multiSortList.length > 0">
                     <ng-container *ngFor="let item of multiSortList; let i = index">
                       <!-- Display the array entry when it matches the column name -->
@@ -196,7 +196,7 @@ SPDX-License-Identifier: Apache-2.0
                   </ng-container>
                 </div>
               </div>
-              <div *ngIf="column !== 'hasAlerts'"
+              <div *ngIf="column !== '!'"
                 (click)="$event.stopPropagation()"
                 class="table--header--row__filter"
                 [matMenuTriggerFor]="selectMenu">
@@ -215,22 +215,17 @@ SPDX-License-Identifier: Apache-2.0
               <mat-menu #selectMenu="matMenu"
                 xPosition="before"
                 class="menu-input-field">
-                <ng-container *ngFor="let filter of tableViewConfig.displayFilterColumnMappings">
+                <ng-container *ngFor="let filter of filterConfiguration">
                   <div (click)="$event.stopPropagation()"
                     *ngIf="filter.filterKey === column || filter.column === column">
-
-                    <app-multiselect [placeholder]="'multiSelect.placeholder' | i18n"
-                      [options]="filter.option"
+                    <app-multiselect [options]="filter.option"
+                      [multiple]="isMultipleSearch(filter)"
+                      [textSearch]="filter.isTextSearch"
                       [isDate]="filter.isDate"
-                      [singleSearch]="filter.singleSearch"
-                      [filterColumn]="filter.filterKey"
-                      [tableType]="tableType"
+                      [maxDate]="filter.maxDate"
                       (triggerFilter)="triggerFilterAdding()"
-                      (onFilterValueChanged)="onFilterValueChanged($event)"
-                      [placeholderMultiple]="('multiSelect.multipleResults' | i18n)"
                       ngDefaultControl
-                      [formControl]="filterFormGroup.controls[filter.filterKey]">
-                    </app-multiselect>
+                      [formControl]="filterFormGroup.controls[filter.filterKey]"></app-multiselect>
                   </div>
                 </ng-container>
               </mat-menu>
@@ -249,14 +244,15 @@ SPDX-License-Identifier: Apache-2.0
 
               <ng-template #autoFormatRef>
                 <ng-container ng-container
-                  *ngIf="column !== 'hasAlerts'"
+                  *ngIf="column !== '!'"
+                  ;
                   [ngTemplateOutlet]="tableConfig?.cellRenderers?.[column] ? tableConfig?.cellRenderers?.[column] : autoFormat"
                   [ngTemplateOutletContext]="{ value: element[column], row: element }">
                 </ng-container>
               </ng-template>
             </span>
             <ng-container [ngSwitch]="column">
-              <ng-container *ngSwitchCase="'hasAlerts'">
+              <ng-container *ngSwitchCase="'!'">
                 <span class="hasQualityAlerts"
                   *ngIf="element['activeAlerts'] > 0">
                   <div class="alert-text">!</div>

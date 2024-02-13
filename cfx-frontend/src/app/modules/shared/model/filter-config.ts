@@ -2,7 +2,7 @@ import { SemanticDataModel } from '@page/parts/model/parts.model';
 import { NotificationStatus } from './notification.model';
 import { Severity } from './severity.model';
 
-export class FilterConfigOptions {
+export class FilterCongigOptions {
   private optionTextSearch = [];
   private severityOptions = [
     {

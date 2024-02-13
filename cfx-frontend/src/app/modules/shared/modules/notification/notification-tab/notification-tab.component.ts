@@ -20,17 +20,17 @@
  ********************************************************************************/
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { NotificationChannel, TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
 import { TableComponent } from '@shared/components/table/table.component';
 import {
   CreateHeaderFromColumns,
   DisplayColumns,
   MenuActionConfig,
+  PartTableType,
   TableConfig,
   TableEventConfig,
   TableHeaderSort,
 } from '@shared/components/table/table.model';
-import { Notification, NotificationFilter, NotificationType, Notifications } from '@shared/model/notification.model';
+import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { Observable } from 'rxjs';
 
@@ -49,17 +49,13 @@ export class NotificationTabComponent implements AfterViewInit {
   @Input() sortableColumns: Record<string, boolean> = {};
   @Input() multiSortList: TableHeaderSort[] = [];
   @Input() enableScroll = true;
-  @Input() notificationType = NotificationType.INVESTIGATION;
-  @Input() tableType: TableType;
+  @Input() tableType: PartTableType;
   @Input() filterConfig: any[] = [];
-  @Input() autocompleteEnabled = true;
 
   @Output() tableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
   @Output() itemCount = new EventEmitter<number>();
   @Output() onPaginationPageSizeChange = new EventEmitter<number>();
-  @Output() investigationsFilterChanged = new EventEmitter<any>();
-  @Output() alertsFilterChanged = new EventEmitter<any>();
 
   @ViewChild('idTmp') idTemplate: TemplateRef<unknown>;
   @ViewChild('statusTmp') statusTemplate: TemplateRef<unknown>;
@@ -67,16 +63,12 @@ export class NotificationTabComponent implements AfterViewInit {
   @ViewChild('descriptionTmp') descriptionTemplate: TemplateRef<unknown>;
   @ViewChild('targetDateTmp') targetDateTemplate: TemplateRef<unknown>;
   @ViewChild('userTmp') userTemplate: TemplateRef<unknown>;
-  @ViewChild('bpnTmp') bpnTemplate: TemplateRef<unknown>;
   @ViewChild(TableComponent) tableComponent: TableComponent;
 
   public tableConfig: TableConfig<keyof Notification>;
   public filteredContent = false;
 
-  public notificationFilter: NotificationFilter;
-
-
-  protected readonly TableType = TableType;
+  protected readonly PartTableType = PartTableType;
 
   public ngAfterViewInit(): void {
     const defaultColumns: DisplayColumns<keyof Notification>[] = ['createdDate', 'description', 'status'];
@@ -87,21 +79,22 @@ export class NotificationTabComponent implements AfterViewInit {
       'settings',
     ];
     const sortableColumns: Record<string, boolean> = this.sortableColumns;
+    const filterConfig: any[] = this.filterConfig;
     this.tableConfig = {
       displayedColumns,
       sortableColumns,
+      filterConfig,
       header: CreateHeaderFromColumns(displayedColumns, 'table.column'),
       hasPagination: this.hasPagination,
       menuActionsConfig: this.menuActionsConfig || [],
       cellRenderers: {
+        id: this.idTemplate,
         status: this.statusTemplate,
         severity: this.severityTemplate,
         description: this.descriptionTemplate,
         targetDate: this.targetDateTemplate,
-        createdBy: this.bpnTemplate,
-        sendToName: this.userTemplate,
-        createdByName: this.userTemplate,
-        sendTo: this.bpnTemplate,
+        createdBy: this.userTemplate,
+        sendTo: this.userTemplate,
       },
     };
   }
@@ -120,22 +113,5 @@ export class NotificationTabComponent implements AfterViewInit {
 
   public onFilterChange(): void {
     this.filteredContent = true;
-  }
-
-  public filterActivated(notificationFilter: any): void {
-    this.notificationFilter = notificationFilter;
-    const channel = notificationFilter['createdBy'] ? NotificationChannel.RECEIVER : NotificationChannel.SENDER;
-    if (this.notificationType === NotificationType.INVESTIGATION) {
-      this.investigationsFilterChanged.emit({
-        channel: channel,
-        filter: notificationFilter,
-      });
-    }
-    if (this.notificationType === NotificationType.ALERT) {
-      this.alertsFilterChanged.emit({
-        channel: channel,
-        filter: notificationFilter,
-      });
-    }
   }
 }
