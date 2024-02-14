@@ -69,7 +69,7 @@ jobs:
       - name: Build and push to GHCR Registry ${{ env.GHCR_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-cfx-frontend:${{ github.sha }}
         env:
           DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-          trying to fix
+          DOCKER_BUILDKIT: 0
         if: env.DOCKER_HUB_USER == ''
         uses: docker/build-push-action@v5
         with:
