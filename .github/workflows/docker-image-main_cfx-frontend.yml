@@ -75,6 +75,7 @@ jobs:
           context: .
           file: ./cfx-frontend/Dockerfile
           push: true
+          no-cache: true
           tags: |
             ${{ env.GHCR_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-cfx-frontend:${{ github.sha }}
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-cfx-frontend:${{ github.sha }}
