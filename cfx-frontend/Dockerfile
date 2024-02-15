@@ -71,6 +71,4 @@ USER root
 RUN chown nginx:nginx /etc/nginx/nginx.conf
 RUN chown nginx:nginx /etc/nginx/security-headers.conf
 
-RUN chown -R nginx:nginx /usr/share/nginx/html/
-
 USER 10100
