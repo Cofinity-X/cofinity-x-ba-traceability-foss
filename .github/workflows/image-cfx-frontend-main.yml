@@ -37,12 +37,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: "Cofinity-X"
+          - image: cfx
             working-directory: cfx-frontend
-            image-prefix: cfx
             dockerfile-path: ./cfx-frontend/Dockerfile
-#          - name: "Tractus-X"
-#            working-directory: "site-b"
+          - image: tractusx
+            working-directory: frontend
+            dockerfile-path: ./frontend/Dockerfile
     defaults:
       run:
 #        working-directory: cfx-frontend
