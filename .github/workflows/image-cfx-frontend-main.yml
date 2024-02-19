@@ -37,10 +37,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - image: cfx
+          - image-prefix: "cfx"
             working-directory: cfx-frontend
             dockerfile-path: ./cfx-frontend/Dockerfile
-          - image: tractusx
+          - image-prefix: "tractusx"
             working-directory: frontend
             dockerfile-path: ./frontend/Dockerfile
     defaults:
