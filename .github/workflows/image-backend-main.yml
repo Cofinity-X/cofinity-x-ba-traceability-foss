@@ -19,9 +19,9 @@ name: "[BE][BUILT][RELEASE] Docker Cofinity-X Image on Main"
 
 on:
   push:
-    branches:
-      - main
-      - dev
+#    branches:
+#      - main
+#      - dev
 
 env:
   JAVA_VERSION: 17
