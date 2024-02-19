@@ -65,10 +65,11 @@ jobs:
         with:
           images: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend
+          flavor: |
+            prefix=${{ env.IMAGE_PREFIX }},onlatest=true
           tags: |
-            type=raw,value=${{ env.IMAGE_PREFIX }}-latest
-            type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
-            type=sha,format=long,prefix=${{ env.IMAGE_PREFIX }}-
+            type=sha,format=short
+            type=sha,format=long
 
       - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ github.sha }}
         uses: docker/build-push-action@v5

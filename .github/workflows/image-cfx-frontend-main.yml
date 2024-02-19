@@ -26,27 +26,17 @@ on:
 #      - 'cfx-frontend/**'
 
 env:
-#  IMAGE_PREFIX: cfx
-#  DOCKERFILE_PATH: ./cfx-frontend/Dockerfile
+  IMAGE_PREFIX: cfx
+  DOCKERFILE_PATH: ./cfx-frontend/Dockerfile
   IMAGE_REGISTRY: acrcfxsharedservices.azurecr.io
 
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: acr-shared-env
-    strategy:
-      matrix:
-        include:
-          - image-prefix: "cfx"
-            working-directory: cfx-frontend
-            dockerfile-path: ./cfx-frontend/Dockerfile
-          - image-prefix: "tractusx"
-            working-directory: frontend
-            dockerfile-path: ./frontend/Dockerfile
     defaults:
       run:
-#        working-directory: cfx-frontend
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: cfx-frontend
     permissions:
       contents: read
       packages: write
@@ -76,18 +66,14 @@ jobs:
           images: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend
           tags: |
-            type=raw,value=${{ matrix.image-prefix }}-latest
-            type=sha,format=short,prefix=${{ matrix.image-prefix }}-
-            type=sha,format=long,prefix=${{ matrix.image-prefix }}-
-#            type=raw,value=${{ env.IMAGE_PREFIX }}-latest
-#            type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
-#            type=sha,format=long,prefix=${{ env.IMAGE_PREFIX }}-
+            type=raw,value=${{ env.IMAGE_PREFIX }}-latest
+            type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
+            type=sha,format=long,prefix=${{ env.IMAGE_PREFIX }}-
 
       - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ github.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-#          file: ${{ env.DOCKERFILE_PATH }}
-          file: ${{ matrix.dockerfile-path }}
+          file: ${{ env.DOCKERFILE_PATH }}
           tags:  ${{ steps.docker_meta.outputs.tags }}
