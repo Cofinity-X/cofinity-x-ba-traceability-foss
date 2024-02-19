@@ -37,6 +37,7 @@ jobs:
     defaults:
       run:
         working-directory: cfx-frontend
+
     permissions:
       contents: read
       packages: write
