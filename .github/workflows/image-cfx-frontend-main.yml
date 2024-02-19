@@ -15,7 +15,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on Main"
+name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on main & dev"
 
 on:
   push:
@@ -26,17 +26,27 @@ on:
 #      - 'cfx-frontend/**'
 
 env:
-  IMAGE_PREFIX: cfx
+#  IMAGE_PREFIX: cfx
+#  DOCKERFILE_PATH: ./cfx-frontend/Dockerfile
   IMAGE_REGISTRY: acrcfxsharedservices.azurecr.io
-  DOCKERFILE_PATH: ./cfx-frontend/Dockerfile
 
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: acr-shared-env
+    strategy:
+      matrix:
+        include:
+          - name: "Cofinity-X"
+            working-directory: cfx-frontend
+            image-prefix: cfx
+            dockerfile-path: ./cfx-frontend/Dockerfile
+#          - name: "Tractus-X"
+#            working-directory: "site-b"
     defaults:
       run:
-        working-directory: cfx-frontend
+#        working-directory: cfx-frontend
+        working-directory: ${{ matrix.working-directory }}
     permissions:
       contents: read
       packages: write
@@ -66,14 +76,18 @@ jobs:
           images: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend
           tags: |
-            type=raw,value=${{ env.IMAGE_PREFIX }}-latest
-            type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
-            type=sha,format=long,prefix=${{ env.IMAGE_PREFIX }}-
+            type=raw,value=${{ matrix.image-prefix }}-latest
+            type=sha,format=short,prefix=${{ matrix.image-prefix }}-
+            type=sha,format=long,prefix=${{ matrix.image-prefix }}-
+#            type=raw,value=${{ env.IMAGE_PREFIX }}-latest
+#            type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
+#            type=sha,format=long,prefix=${{ env.IMAGE_PREFIX }}-
 
       - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ github.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          file: ${{ env.DOCKERFILE_PATH }}
+#          file: ${{ env.DOCKERFILE_PATH }}
+          file: ${{ matrix.dockerfile-path }}
           tags:  ${{ steps.docker_meta.outputs.tags }}
