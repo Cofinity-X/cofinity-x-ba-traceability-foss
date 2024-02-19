@@ -1,4 +1,4 @@
-#    Copyright (c) 2023, 2024 Contributors to the Eclipse Foundation
+#    Copyright (c) 2024 Contributors to the Eclipse Foundation
 #
 #    See the NOTICE file(s) distributed with this work for additional
 #    information regarding copyright ownership.
@@ -15,14 +15,13 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[BE][BUILT][RELEASE] Docker CFX Image on Main"
+name: "[BE][BUILT][RELEASE] Docker Cofinity-X Image on Main"
 
 on:
   push:
-#    branches:
-#      - main
-#      - dev
-#  workflow_dispatch:
+    branches:
+      - main
+      - dev
 
 env:
   JAVA_VERSION: 17
@@ -48,7 +47,6 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      # Establish authentication with azure account
       - name: Azure CLI auth
         uses: azure/login@v1
         with:
@@ -62,7 +60,7 @@ jobs:
       - name: Make organization and repository name lowercase
         run: echo "GITHUB_REPOSITORY_LOWERCASE=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: Build & Push docker image for image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ github.sha }}
+      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ github.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .
