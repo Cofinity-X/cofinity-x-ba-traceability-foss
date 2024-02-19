@@ -15,22 +15,20 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on dev"
+name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on Main"
 
 on:
   push:
     branches:
       - main
       - dev
-#todo: doe we need it every time?
     paths:
       - 'cfx-frontend/**'
 
 env:
-#  GHCR_REGISTRY: ghcr.io
-  DOCKER_HUB_REGISTRY_NAMESPACE: tractusx
-#  FRONTEND_IMAGE_DOCKER_HUB: traceability-cofinityx-frontend
+  IMAGE_PREFIX: cfx
   IMAGE_REGISTRY: acrcfxsharedservices.azurecr.io
+  DOCKERFILE_PATH: ./cfx-frontend/Dockerfile
 
 jobs:
   build:
@@ -39,7 +37,6 @@ jobs:
     defaults:
       run:
         working-directory: cfx-frontend
-
     permissions:
       contents: read
       packages: write
@@ -48,16 +45,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-#      - name: Login to GHCR Registry
-#        env:
-#          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-#        if: env.DOCKER_HUB_USER == ''
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ${{ env.GHCR_REGISTRY }}
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Azure CLI auth
         uses: azure/login@v1
@@ -72,49 +59,20 @@ jobs:
       - name: Make organization and repository name lowercase
         run: echo "GITHUB_REPOSITORY_LOWERCASE=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: Build and push to GHCR Registry ${{ env.GHCR_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:latest for ${{ github.sha }}
-        env:
-          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-        if: env.DOCKER_HUB_USER == ''
-        uses: docker/build-push-action@v5
+      - name: Extract metadata (tags, labels) for Docker based on trigger event
+        id: docker_meta
+        uses: docker/metadata-action@v5
         with:
-          context: .
-          file: ./cfx-frontend/Dockerfile
-          push: true
-          # ATTENTION: This creates a tag latest on the `frontend`-image for the CFX-frontent! This is to avoid the creation of an own chart!
+          images: |
+            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend
           tags: |
-            ${{ env.GHCR_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-cfx-frontend:${{ github.sha }}
-            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-cfx-frontend:${{ github.sha }}
-            ${{ env.GHCR_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:latest
-            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:latest
+            type=raw,value=${{IMAGE_PREFIX}}-latest
+            type=sha,prefix={{IMAGE_PREFIX}}-
 
-      - name: Login to Docker Hub
-        env:
-          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-        if: env.DOCKER_HUB_USER != ''
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
-      - name: Build and push for Docker Hub ${{ env.DOCKER_HUB_REGISTRY_NAMESPACE }}/${{ env.FRONTEND_IMAGE_DOCKER_HUB }}:${{ github.sha }}
-        env:
-          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-        if: env.DOCKER_HUB_USER != ''
+      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ github.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./cfx-frontend/Dockerfile
           push: true
-          tags: ${{ env.DOCKER_HUB_REGISTRY_NAMESPACE }}/${{ env.FRONTEND_IMAGE_DOCKER_HUB }}:${{ github.sha }}
-
-      - name: Update Docker Hub description
-        uses: peter-evans/dockerhub-description@v3
-        env:
-          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-        if: env.DOCKER_HUB_USER != ''
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: ${{ env.DOCKER_HUB_REGISTRY_NAMESPACE }}/${{ env.FRONTEND_IMAGE_DOCKER_HUB }}
-          readme-filepath: README.md
+          file: ${{ env.DOCKERFILE_PATH }}
+          tags:  ${{ steps.docker_meta.outputs.tags }}
