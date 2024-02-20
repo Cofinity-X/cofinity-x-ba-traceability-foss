@@ -16,7 +16,6 @@ https://cofinity-x.atlassian.net/wiki/spaces/CXO/pages/156205057/Github+Advance+
 | [cfx_image-cfx-frontend-main.yml](cfx_image-cfx-frontend-main.yml)                               | CFX        | yes             |
 | [cfx_image-tractusx-frontend-build-and-push.yml](cfx_image-tractusx-frontend-build-and-push.yml) | CFX        | yes             |
 | [cfx_sonar-scan-frontend.yml](cfx_sonar-scan-frontend.yml)                                       | CFX        | yes             |
-| [cfx_unit-test_frontend.yml](cfx_unit-test_frontend.yml)                                         | CFX        | yes             |
 | [dependencies.yaml](dependencies.yaml)                                                           |            | yes             |
 | [dependency-check.yml](dependency-check.yml)                                                     |            | no              |
 | [docker-image-branch_frontend.yml](docker-image-branch_frontend.yml)                             | Tractus-X  | no              |

@@ -15,16 +15,19 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[FE][SECURITY] Cofinity-X Sonar"
+name: "[FE][TEST] Cofinity-X Sonar"
 
 on:
   push:
     branches:
       - main
       - dev
+    paths:
+      - 'cfx-frontend/**'
+  pull_request:
+    paths:
+      - 'cfx-frontend/**'
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *"
 
 jobs:
   build:
