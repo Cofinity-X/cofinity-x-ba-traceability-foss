@@ -22,6 +22,7 @@ on:
 #    branches:
 #      - main
 #      - dev
+  workflow_dispatch:
 
 env:
   JAVA_VERSION: 17
@@ -70,9 +71,9 @@ jobs:
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}
           tags: |
             type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'dev') }}
-            type=sha,format=short
+            type=sha,format=short,prefix=""
 
-      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ steps.short-sha.outputs.sha }}
+      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ steps.short-sha.outputs.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .
