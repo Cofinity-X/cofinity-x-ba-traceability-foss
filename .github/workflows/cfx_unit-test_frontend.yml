@@ -19,9 +19,9 @@ name: "[FE][TEST] CFX Unit Tests"
 
 on:
   push:
-#    branches:
-#      - main
-#      - dev
+    branches:
+      - main
+      - dev
     paths:
       - 'cfx-frontend/**'
   pull_request:
