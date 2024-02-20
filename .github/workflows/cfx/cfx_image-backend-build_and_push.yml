@@ -15,37 +15,38 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on main & dev"
+name: "[BE][BUILT][RELEASE] Docker Cofinity-X Image on main & dev"
 
 on:
   push:
-    branches:
-      - main
-      - dev
-    paths:
-      - 'cfx-frontend/**'
+#    branches:
+#      - main
+#      - dev
+  workflow_dispatch:
 
 env:
-  IMAGE_PREFIX: cfx
-  DOCKERFILE_PATH: ./cfx-frontend/Dockerfile
+  JAVA_VERSION: 17
   IMAGE_REGISTRY: acrcfxsharedservices.azurecr.io
 
 jobs:
-  build:
+  Publish-docker-image:
     runs-on: ubuntu-latest
     environment: acr-shared-env
     defaults:
       run:
-        working-directory: cfx-frontend
-
+        working-directory: tx-backend
     permissions:
       contents: read
       packages: write
       id-token: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '${{ env.JAVA_VERSION }}'
+          distribution: 'temurin'
+          cache: 'maven'
       - uses: benjlevesque/short-sha@v3.0
         id: short-sha
 
@@ -67,16 +68,14 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend
+            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}
           tags: |
-            type=raw,value=${{ env.IMAGE_PREFIX }}-latest,enable=${{ endsWith(GitHub.ref, 'dev') }}
-            type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
-            type=ref,event=pr
+            type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'dev') }}
+            type=sha,format=short,prefix=
 
-      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ steps.short-sha.outputs.sha }}
+      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ steps.short-sha.outputs.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          file: ${{ env.DOCKERFILE_PATH }}
           tags:  ${{ steps.docker_meta.outputs.tags }}

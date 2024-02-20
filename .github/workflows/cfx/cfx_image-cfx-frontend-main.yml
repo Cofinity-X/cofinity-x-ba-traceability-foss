@@ -15,19 +15,19 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[FE][BUILT][RELEASE] Docker Tractus-X Image on main & dev"
+name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on main & dev"
 
 on:
   push:
-    branches:
-      - main
-      - dev
+#    branches:
+#      - main
+#      - dev
     paths:
-      - 'frontend/**'
+      - 'cfx-frontend/**'
 
 env:
-  IMAGE_PREFIX: tractusx
-  DOCKERFILE_PATH: ./frontend/Dockerfile
+  IMAGE_PREFIX: cfx
+  DOCKERFILE_PATH: ./cfx-frontend/Dockerfile
   IMAGE_REGISTRY: acrcfxsharedservices.azurecr.io
 
 jobs:
@@ -36,7 +36,8 @@ jobs:
     environment: acr-shared-env
     defaults:
       run:
-        working-directory: frontend
+        working-directory: cfx-frontend
+
     permissions:
       contents: read
       packages: write
