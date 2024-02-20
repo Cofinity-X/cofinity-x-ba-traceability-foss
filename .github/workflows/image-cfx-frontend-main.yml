@@ -45,6 +45,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - uses: benjlevesque/short-sha@v3.0
+        id: short-sha
 
       - name: Azure CLI auth
         uses: azure/login@v1
@@ -66,11 +68,11 @@ jobs:
           images: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend
           tags: |
-            type=raw,value=${{ env.IMAGE_PREFIX }}-latest
+            type=raw,value=${{ env.IMAGE_PREFIX }}-latest,enable=${{ endsWith(GitHub.ref, 'dev') }}
             type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
-            type=sha,format=long,prefix=${{ env.IMAGE_PREFIX }}-
+            type=ref,event=pr
 
-      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ github.sha }}
+      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ steps.short-sha.outputs.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .

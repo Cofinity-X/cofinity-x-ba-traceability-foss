@@ -15,37 +15,38 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[BE][BUILT][RELEASE] Docker Cofinity-X Image on Main"
+name: "[FE][BUILT][RELEASE] Docker Tractus-X Image on main & dev"
 
 on:
   push:
 #    branches:
 #      - main
 #      - dev
+#    paths:
+#      - 'frontend/**'
 
 env:
-  JAVA_VERSION: 17
+  IMAGE_PREFIX: tractusx
+  DOCKERFILE_PATH: ./frontend/Dockerfile
   IMAGE_REGISTRY: acrcfxsharedservices.azurecr.io
 
 jobs:
-  Publish-docker-image:
+  build:
     runs-on: ubuntu-latest
     environment: acr-shared-env
     defaults:
       run:
-        working-directory: tx-backend
+        working-directory: frontend
     permissions:
       contents: read
       packages: write
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: '${{ env.JAVA_VERSION }}'
-          distribution: 'temurin'
-          cache: 'maven'
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: benjlevesque/short-sha@v3.0
+        id: short-sha
 
       - name: Azure CLI auth
         uses: azure/login@v1
@@ -60,11 +61,21 @@ jobs:
       - name: Make organization and repository name lowercase
         run: echo "GITHUB_REPOSITORY_LOWERCASE=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ github.sha }}
+      - name: Extract metadata (tags, labels) for Docker based on trigger event
+        id: docker_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend
+          tags: |
+            type=raw,value=${{ env.IMAGE_PREFIX }}-latest,enable=${{ endsWith(GitHub.ref, 'dev') }}
+            type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
+            type=ref,event=pr
+
+      - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ steps.short-sha.outputs.sha }}
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: |
-            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ github.sha }}
-            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:latest
+          file: ${{ env.DOCKERFILE_PATH }}
+          tags:  ${{ steps.docker_meta.outputs.tags }}

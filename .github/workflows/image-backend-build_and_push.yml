@@ -19,9 +19,9 @@ name: "[BE][BUILT][RELEASE] Docker Cofinity-X Image on main & dev"
 
 on:
   push:
-    branches:
-      - main
-      - dev
+#    branches:
+#      - main
+#      - dev
 
 env:
   JAVA_VERSION: 17
@@ -69,7 +69,7 @@ jobs:
           images: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}
           tags: |
-            type=raw,value=${{ env.IMAGE_PREFIX }}-latest
+            type=raw,value=${{ env.IMAGE_PREFIX }}-latest,enable=${{ endsWith(GitHub.ref, 'dev') }}
             type=sha,format=short,prefix=${{ env.IMAGE_PREFIX }}-
 
       - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}-frontend:${{ steps.short-sha.outputs.sha }}
