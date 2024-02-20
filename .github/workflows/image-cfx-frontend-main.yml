@@ -19,11 +19,11 @@ name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on main & dev"
 
 on:
   push:
-#    branches:
-#      - main
-#      - dev
-#    paths:
-#      - 'cfx-frontend/**'
+    branches:
+      - main
+      - dev
+    paths:
+      - 'cfx-frontend/**'
 
 env:
   IMAGE_PREFIX: cfx

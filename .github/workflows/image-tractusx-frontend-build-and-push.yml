@@ -19,11 +19,11 @@ name: "[FE][BUILT][RELEASE] Docker Tractus-X Image on main & dev"
 
 on:
   push:
-#    branches:
-#      - main
-#      - dev
-#    paths:
-#      - 'frontend/**'
+    branches:
+      - main
+      - dev
+    paths:
+      - 'frontend/**'
 
 env:
   IMAGE_PREFIX: tractusx
