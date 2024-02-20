@@ -23,7 +23,7 @@ on:
       - main
       - dev
     paths:
-      - 'frontend/**'
+      - 'cfx-frontend/**'
   pull_request:
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend
+        working-directory: cfx-frontend
 
     steps:
     - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
       with:
-        projectBaseDir: frontend
+        projectBaseDir: cfx-frontend
         args: >
           -Dsonar.organization=${{ vars.SONAR_ORGANIZATION }}
           -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY_FRONTEND }}
