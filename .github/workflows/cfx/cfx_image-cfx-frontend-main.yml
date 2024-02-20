@@ -19,9 +19,9 @@ name: "[FE][BUILT][RELEASE] Docker Cofinity-X Image on main & dev"
 
 on:
   push:
-    branches:
-      - main
-      - dev
+#    branches:
+#      - main
+#      - dev
     paths:
       - 'cfx-frontend/**'
 
