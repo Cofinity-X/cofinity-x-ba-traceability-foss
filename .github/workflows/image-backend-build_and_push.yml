@@ -71,7 +71,7 @@ jobs:
             ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}
           tags: |
             type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'dev') }}
-            type=sha,format=short,prefix=""
+            type=sha,format=short,prefix=
 
       - name: Build & Push to image registry ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ steps.short-sha.outputs.sha }}
         uses: docker/build-push-action@v5
