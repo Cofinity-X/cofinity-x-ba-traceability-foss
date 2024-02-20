@@ -15,7 +15,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-name: "[FE][SECURITY] CFX Sonar"
+name: "[FE][SECURITY] Cofinity-X Sonar"
 
 on:
   push:
