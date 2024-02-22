@@ -137,5 +137,7 @@ export class NotificationTabComponent implements AfterViewInit {
         filter: notificationFilter,
       });
     }
+
+    this.filteredContent = true;
   }
 }

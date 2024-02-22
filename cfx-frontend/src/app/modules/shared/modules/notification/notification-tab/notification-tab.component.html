@@ -24,7 +24,7 @@ SPDX-License-Identifier: Apache-2.0
 <ng-template #mainTmp
   let-notifications="view">
   {{ onItemCountChange(notifications.data.totalItems) }}
-  <div>
+  <div *ngIf="notifications.data.totalItems > 0 || filteredContent; else displayMessage">
     <app-table [tableType]="tableType"
       class="notifications-tab"
       [autocompleteEnabled]="autocompleteEnabled"
