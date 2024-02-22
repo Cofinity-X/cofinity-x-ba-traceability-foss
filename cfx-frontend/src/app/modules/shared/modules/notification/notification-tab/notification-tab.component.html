@@ -24,7 +24,7 @@ SPDX-License-Identifier: Apache-2.0
 <ng-template #mainTmp
   let-notifications="view">
   {{ onItemCountChange(notifications.data.totalItems) }}
-  <div *ngIf="notifications.data.totalItems > 0 || filteredContent; else displayMessage">
+  <div>
     <app-table [tableType]="tableType"
       class="notifications-tab"
       [autocompleteEnabled]="autocompleteEnabled"
@@ -41,6 +41,7 @@ SPDX-License-Identifier: Apache-2.0
       (onPaginationPageSizeChange)="onPaginationPageSizeChange.emit($event)">
     </app-table>
   </div>
+
   <ng-template #displayMessage>
     <ng-content select="[emptyContent]"></ng-content>
   </ng-template>
