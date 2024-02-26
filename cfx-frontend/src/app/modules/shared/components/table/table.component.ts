@@ -197,10 +197,6 @@ export class TableComponent {
       }
     }
 
-    this.filterFormGroup.valueChanges.subscribe((formValues) => {
-      this.filterActivated.emit(formValues);
-    });
-
     this.tableSettingsService.getEvent().subscribe(() => {
       this.setupTableViewSettings();
     });
