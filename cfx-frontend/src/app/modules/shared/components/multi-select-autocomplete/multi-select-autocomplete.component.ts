@@ -47,7 +47,7 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-multiselect',
   templateUrl: 'multi-select-autocomplete.component.html',
-  styleUrls: [ 'multi-select-autocomplete.component.scss' ],
+  styleUrls: ['multi-select-autocomplete.component.scss'],
 })
 
 export class MultiSelectAutocompleteComponent implements OnChanges {
@@ -121,9 +121,9 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   private cleared = false;
 
   constructor(public datePipe: DatePipe, public _adapter: DateAdapter<any>,
-              @Inject(MAT_DATE_LOCALE) public _locale: string, @Inject(LOCALE_ID) private locale: string, public partsService: PartsService,
-              private readonly formatPartSemanticDataModelToCamelCasePipe: FormatPartSemanticDataModelToCamelCasePipe,
-              private injector: Injector) {
+    @Inject(MAT_DATE_LOCALE) public _locale: string, @Inject(LOCALE_ID) private locale: string, public partsService: PartsService,
+    private readonly formatPartSemanticDataModelToCamelCasePipe: FormatPartSemanticDataModelToCamelCasePipe,
+    private injector: Injector) {
     registerLocaleData(localeDe, 'de', localeDeExtra);
     this._adapter.setLocale(locale);
   }
@@ -137,6 +137,12 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
         this.filterItem(value);
       }
     });
+
+    if (this.isDate) {
+      this.filterName = 'filterLabelDate';
+    } else if (this.filterColumn === 'semanticDataModel' || this.filterColumn === 'status' || this.filterColumn === 'severity') {
+      this.filterName = 'filterLabelSelect';
+    }
   }
 
   ngOnChanges(): void {
@@ -154,7 +160,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       } else {
         this.searchedOptions.forEach(option => {
           if (!this.selectedValue.includes(option[this.value])) {
-            this.selectedValue = this.selectedValue.concat([ option[this.value] ]);
+            this.selectedValue = this.selectedValue.concat([option[this.value]]);
           }
         });
       }
@@ -186,14 +192,14 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
     // apply CamelCase to semanticDataModel labels
     if (this.filterColumn === 'semanticDataModel') {
-      displayValue = [ this.formatPartSemanticDataModelToCamelCasePipe.transformModel(this.selectedValue[0]), suffix ];
+      displayValue = [this.formatPartSemanticDataModelToCamelCasePipe.transformModel(this.selectedValue[0]), suffix];
     } else {
-      displayValue = [ this.selectedValue[0], suffix ];
+      displayValue = [this.selectedValue[0], suffix];
     }
 
     // if no value selected, return empty string
     if (!this.selectedValue.length) {
-      displayValue = [ '' ];
+      displayValue = [''];
     }
 
     return displayValue;
