@@ -171,7 +171,7 @@ SPDX-License-Identifier: Apache-2.0
 </mat-option>
 
 <div class="p-3 selected-values-text"
-  *ngIf="selectedValue?.length > 1">
+  *ngIf="selectedValue?.length > 1 && filterName === 'filterLabel'">
   <mat-select-trigger>
     <div>
       <ng-container *ngFor="let value of displayValue()">
