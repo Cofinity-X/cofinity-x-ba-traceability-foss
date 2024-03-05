@@ -33,7 +33,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DatepickerDropdownPositionY, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import {
   AutocompleteStrategy,
   AutocompleteStrategyMap,

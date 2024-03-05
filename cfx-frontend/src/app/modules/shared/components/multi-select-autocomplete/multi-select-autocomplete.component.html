@@ -80,7 +80,8 @@ SPDX-License-Identifier: Apache-2.0
     </mat-datepicker-toggle>
     <mat-date-range-picker #picker
       (opened)="onFilterChanged(true)"
-      (closed)="onFilterChanged(false)">
+      (closed)="onFilterChanged(false)"
+      yPosition='below'>
       <mat-datepicker-actions>
         <app-button [variant]="'stroked'"
           (click)="clickClear()"
