@@ -117,8 +117,12 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   isLoadingSuggestions: boolean;
 
   filterName = 'filterLabel';
+  iconSource = './assets/images/icons/calendar.svg';
+  activeIconSource = './assets/images/icons/calendar_active.svg';
+  isOpen = false;
 
   private cleared = false;
+
 
   constructor(public datePipe: DatePipe, public _adapter: DateAdapter<any>,
     @Inject(MAT_DATE_LOCALE) public _locale: string, @Inject(LOCALE_ID) private locale: string, public partsService: PartsService,
@@ -281,6 +285,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       return;
     }
     this.searchElement += ',' + this.datePipe.transform(this.endDate, 'yyyy-MM-dd');
+  }
+
+  onFilterChanged(isOpen: boolean) {
+    this.isOpen = isOpen;
   }
 
   clickClear(): void {
