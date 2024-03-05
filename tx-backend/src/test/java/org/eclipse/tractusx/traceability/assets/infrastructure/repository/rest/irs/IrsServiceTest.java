@@ -48,9 +48,9 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class IrsServiceTest {
-    public static final String EXAMPLE_TIMESTAMP_PAST_FIRST = "2023-07-03T16:01:05.309Z";
-    public static final String POLICY_MOCK_ID = "test";
-    public static final String EXAMPLE_TIMESTAMP_PAST_SECOND = "2023-07-04T16:01:05.309Z";
+    private static final String POLICY_MOCK_ID = "test";
+    private static final String EXAMPLE_TIMESTAMP_PAST_FIRST = "2023-07-03T16:01:05.309Z";
+    private static final String EXAMPLE_TIMESTAMP_PAST_SECOND = "2023-07-04T16:01:05.309Z";
     private IrsService irsService;
 
     @Mock
@@ -73,9 +73,7 @@ class IrsServiceTest {
     @BeforeEach
     void setUp() {
         irsService = new IrsService(irsClient, bpnRepository, traceabilityProperties, objectMapper, assetAsBuiltCallbackRepository, assetAsPlannedCallbackRepository);
-
     }
-
 
     @Test
     void givenNoPolicyExist_whenCreateIrsPolicyIfMissing_thenCreateIt() {
