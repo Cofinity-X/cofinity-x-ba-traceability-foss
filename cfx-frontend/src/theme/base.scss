@@ -818,7 +818,7 @@ app-multiselect {
 }
 
 .mat-date-range-input-mirror {
-  min-width: 68px !important
+  padding-left: 16px;
 }
 
 .mat-date-range-input-container {
@@ -842,7 +842,7 @@ mat-date-range-input .mat-date-range-input-container .mat-date-range-input-wrapp
   padding-top: 10px;
 
   .mdc-text-field--outlined {
-    padding-left: 12px;
+    padding-left: 10px;
   }
 }
 

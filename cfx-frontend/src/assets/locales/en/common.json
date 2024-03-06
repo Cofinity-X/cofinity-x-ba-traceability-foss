@@ -339,8 +339,8 @@
     "cancel": "Cancel",
     "filter": "Filter",
     "reset": "Reset",
-    "startDate": "Start",
-    "endDate": "End"
+    "startDate": "Start Date",
+    "endDate": "End Date"
   },
   "semanticDataModels": {
     "BATCH": "Batch",
