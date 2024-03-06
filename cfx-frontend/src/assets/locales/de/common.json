@@ -335,7 +335,9 @@
     "apply": "Anwenden",
     "cancel": "Abbrechen",
     "filter": "Filter",
-    "reset": "Zurücksetzen"
+    "reset": "Zurücksetzen",
+    "startDate": "Start",
+    "endDate": "End"
   },
   "semanticDataModels": {
     "BATCH": "Batch",
