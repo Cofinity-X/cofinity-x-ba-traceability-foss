@@ -42,8 +42,7 @@ class AssetAsBuiltControllerSyncIT extends IntegrationTestSpecification {
     @Autowired
     AssetsSupport assetsSupport;
 
-    // TODO Pooja
-    // removed testcase from Upstream
+    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
     // @Test
     void givenSyncRequestWithOneAsset_whenSyncTriggered_thenShouldIrsApiOnve() throws JoseException, InterruptedException {
        // Given
@@ -70,7 +69,7 @@ class AssetAsBuiltControllerSyncIT extends IntegrationTestSpecification {
         });
     }
 
-    // TODO Pooja
+    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
     // removed testcase from Upstream
     // @Test
     void shouldSynchronizeAssetsUsingRetry() throws JoseException, InterruptedException {

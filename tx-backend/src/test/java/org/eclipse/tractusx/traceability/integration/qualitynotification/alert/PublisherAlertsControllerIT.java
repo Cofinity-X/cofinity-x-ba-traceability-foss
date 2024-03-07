@@ -172,8 +172,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .body("content", Matchers.hasSize(1));
     }
 
-    // TODO Pooja
-    // Failing testcase reason :dropped table of assets_as_planned_alerts and assets_as_planned_investigations
+    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
     //Test
     void shouldStartAlertForAsPlanned() throws JsonProcessingException, JoseException {
        // Given

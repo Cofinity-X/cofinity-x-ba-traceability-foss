@@ -74,8 +74,8 @@ class AssetAsPlannedControllerByIdIT extends IntegrationTestSpecification {
         );
     }
 
-    // TODO Pooja
-    // Failing testcase reason : dropped table of assets_as_planned_alerts
+
+    // TODO: [Pooja] Investigate failing test case due to dropped table of assets_as_planned_alerts.
     // Test
     void givenAlertsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
        // Given
@@ -103,8 +103,7 @@ class AssetAsPlannedControllerByIdIT extends IntegrationTestSpecification {
                 .body("receivedQualityAlertIdsInStatusActive", hasSize(6));
     }
 
-    // TODO Pooja
-    // Failing testcase reason : dropped table of assets_as_planned_investigations
+    // TODO: [Pooja] Investigate failing test case due to dropped table of assets_as_planned_investigations.
     // Test
     void givenInvestigationsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
        // Given
