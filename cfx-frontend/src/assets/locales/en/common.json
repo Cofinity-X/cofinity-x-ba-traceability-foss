@@ -340,7 +340,9 @@
     "apply": "Apply",
     "cancel": "Cancel",
     "filter": "Filter",
-    "reset": "Reset"
+    "reset": "Reset",
+    "startDate": "Start Date",
+    "endDate": "End Date"
   },
   "semanticDataModels": {
     "BATCH": "Batch",

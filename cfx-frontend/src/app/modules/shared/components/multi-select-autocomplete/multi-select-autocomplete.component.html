@@ -22,7 +22,7 @@ SPDX-License-Identifier: Apache-2.0
     <div class="filter-input__label">
       {{ 'multiSelect.' + filterName | i18n }}
       <button (click)="clickClear();">
-        <img src="/assets/images/icons/refresh_icon.svg"
+        <img src="/assets/images/icons/reset_icon.svg"
           alt="refresh" />
       </button>
     </div>
@@ -59,8 +59,7 @@ SPDX-License-Identifier: Apache-2.0
     class="filter-input__textarea date-search"
     data-testid="multi-select-autocomplete--date-search-form">
     <mat-label>{{ 'multiSelect.inputLabelDate' | i18n }}</mat-label>
-    <mat-date-range-input [rangePicker]="picker"
-      disabled>
+    <mat-date-range-input [rangePicker]="picker">
       <input matStartDate
         [value]="startDate"
         [placeholder]="'datepicker.startDate' | i18n"
@@ -71,17 +70,31 @@ SPDX-License-Identifier: Apache-2.0
         (dateChange)="endDateSelected($event)">
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix
-      [for]="picker"></mat-datepicker-toggle>
+      [disableRipple]="true"
+      [for]="picker">
+      <mat-icon matDatepickerToggleIcon>
+        <img class="calendar-icon"
+          [src]='isOpen ? activeIconSource : iconSource'
+          alt="calendar icon">
+      </mat-icon>
+    </mat-datepicker-toggle>
     <mat-date-range-picker #picker
-      disabled="false">
+      (opened)="onFilterChanged(true)"
+      (closed)="onFilterChanged(false)"
+      yPosition='below'>
       <mat-datepicker-actions>
-        <button (click)="clickClear()"
-          mat-button
-          matDatepickerCancel>{{ 'datepicker.cancel' | i18n }}</button>
-        <button (click)="dateFilter()"
-          mat-raised-button
-          color="primary"
-          matDatepickerApply>{{ 'datepicker.apply' | i18n }}</button>
+        <app-button [variant]="'stroked'"
+          (click)="clickClear()"
+          matDatepickerCancel>
+          <div class="cancel-button-text">{{ 'datepicker.cancel' | i18n }}</div>
+        </app-button>
+        <app-button class="pl-2"
+          [variant]="'flat'"
+          [color]="'primary'"
+          matDatepickerApply
+          (click)="dateFilter()">
+          <div class="accept-button-text">{{ 'datepicker.apply' | i18n }}</div>
+        </app-button>
       </mat-datepicker-actions>
     </mat-date-range-picker>
   </mat-form-field>

@@ -69,6 +69,12 @@
   }
 }
 
+.calendar-icon {
+  width: 22px;
+  height: 24px;
+  padding-left: 2px;
+}
+
 .option {
   display: flex;
   flex-direction: row;
@@ -120,7 +126,7 @@ input {
 }
 
 .date-box {
-  width: 275px;
+  width: 280px;
 }
 
 .text-box {
@@ -141,4 +147,28 @@ input {
 
 .selected-values-text {
   max-width: 230px;
+}
+
+.date-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-text {
+  @extend .label-medium;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  padding: 0 5px 0 5px;
+}
+
+.accept-button-text {
+  @extend .button-text;
+  @apply text-white;
+}
+
+.cancel-button-text {
+  @extend .button-text;
+  @apply text-black;
 }

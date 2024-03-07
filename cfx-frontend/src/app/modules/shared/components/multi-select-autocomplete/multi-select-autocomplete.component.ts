@@ -33,7 +33,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DatepickerDropdownPositionY, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import {
   AutocompleteStrategy,
   AutocompleteStrategyMap,
@@ -117,6 +117,9 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   isLoadingSuggestions: boolean;
 
   filterName = 'filterLabel';
+  iconSource = './assets/images/icons/calendar.svg';
+  activeIconSource = './assets/images/icons/calendar_active.svg';
+  isOpen = false;
 
   private cleared = false;
 
@@ -281,6 +284,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       return;
     }
     this.searchElement += ',' + this.datePipe.transform(this.endDate, 'yyyy-MM-dd');
+  }
+
+  onFilterChanged(isOpen: boolean) {
+    this.isOpen = isOpen;
   }
 
   clickClear(): void {

@@ -804,7 +804,53 @@ app-multiselect {
   max-width: unset !important;
 }
 
-.mat-datepicker-content,
+.mat-calendar-body-selected {
+  @apply bg-primary !important;
+}
+
+.mat-datepicker-content.mat-accent .mat-calendar-body-in-range::before {
+  @apply bg-secondary !important;
+  opacity: 0.1;
+}
+
+.mat-calendar-header .mat-calendar-period-button .mdc-button__label>span {
+  @extend .title-medium;
+}
+
+.mat-date-range-input-mirror {
+  padding-left: 16px;
+}
+
+.mat-date-range-input-container {
+  flex-grow: 1;
+  max-width: 195px;
+}
+
+.mat-mdc-form-field-type-mat-date-range-input .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+mat-date-range-input .mat-date-range-input-container .mat-date-range-input-wrapper .mat-date-range-input-inner {
+  @apply font-regular m-0 p-0 !important;
+  font-size: 20px !important;
+  letter-spacing: 0 !important;
+  line-height: 28px !important;
+  font-weight: 400px !important;
+}
+
+.date-search {
+  padding-top: 10px;
+
+  .mdc-text-field--outlined {
+    padding-left: 10px;
+  }
+}
+
+.mat-calendar-header .mat-calendar-arrow {
+  margin-bottom: 4px;
+  margin-left: 20px;
+}
+
 .mdc-menu-surface {
   border-radius: 15px !important;
 }
