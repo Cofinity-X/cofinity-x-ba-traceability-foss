@@ -43,8 +43,9 @@ class JobDetailResponseTest {
 
     @Test
     void testAssetConverterAddsParentAssets() throws IOException {
-        InputStream file = JobDetailResponseTest.class.getResourceAsStream("/data/irs_assets_v3_singleUsageAsBuilt.json");
+        InputStream file = JobDetailResponseTest.class.getResourceAsStream("/testdata/irs_assets_v3_singleUsageAsBuilt.json");
         JobDetailResponse response = mapper.readValue(file, JobDetailResponse.class);
+
         // when
         List<AssetBase> assets = response.convertAssets(mapper);
         AssetBase ownAsset = assets.get(0);
@@ -67,7 +68,7 @@ class JobDetailResponseTest {
 
     @Test
     void testAssetConverterWithNullManufacturerNames() throws IOException {
-        InputStream file = JobDetailResponseTest.class.getResourceAsStream("/data/irs_job_response_with_null_manufacturer_names.json");
+        InputStream file = JobDetailResponseTest.class.getResourceAsStream("/testdata/irs_job_response_with_null_manufacturer_names.json");
 
         // when
         JobDetailResponse response = mapper.readValue(file, JobDetailResponse.class);
