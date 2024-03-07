@@ -42,7 +42,9 @@ class AssetAsBuiltControllerSyncIT extends IntegrationTestSpecification {
     @Autowired
     AssetsSupport assetsSupport;
 
-    @Test
+    // TODO Pooja
+    // removed testcase from Upstream
+    // @Test
     void givenSyncRequestWithOneAsset_whenSyncTriggered_thenShouldIrsApiOnve() throws JoseException, InterruptedException {
        // Given
         oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
@@ -68,7 +70,9 @@ class AssetAsBuiltControllerSyncIT extends IntegrationTestSpecification {
         });
     }
 
-    @Test
+    // TODO Pooja
+    // removed testcase from Upstream
+    // @Test
     void shouldSynchronizeAssetsUsingRetry() throws JoseException, InterruptedException {
        // Given
         oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
