@@ -398,6 +398,8 @@ export class TableComponent {
     for (const multiSelect of this.multiSelectAutocompleteComponents) {
       multiSelect.clickClear();
     }
+    this.multiSortList = [];
+    this.updateSortingOfData({ active: null, direction: null });
   }
 
   public menuOpened(state: boolean): void {
