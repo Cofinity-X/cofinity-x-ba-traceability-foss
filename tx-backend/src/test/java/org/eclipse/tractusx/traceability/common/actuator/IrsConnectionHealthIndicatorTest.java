@@ -19,14 +19,12 @@
 package org.eclipse.tractusx.traceability.common.actuator;
 
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.IrsClient;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
@@ -42,12 +40,6 @@ class IrsConnectionHealthIndicatorTest {
 
     @InjectMocks
     private IrsConnectionHealthIndicator testee;
-
-
-    @BeforeEach
-    public void setUp() {
-        ReflectionTestUtils.setField(testee, "adminApiKey", API_KEY);
-    }
 
 
     @Test
