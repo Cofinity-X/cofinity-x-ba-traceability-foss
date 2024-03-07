@@ -75,6 +75,8 @@
       "endDate": "Enddatum"
     },
     "tableSettings": {
+      "titleSettings": "Einstellungen am Tisch",
+      "resetAllFilters": "Alle Filter zurücksetzen",
       "title": "Einstellungen der Spalten",
       "selectAll": "Alle",
       "refreshTooltip": "Zurücksetzen der individuellen Einstellung der Tabellenspalten auf die Standardeinstellung",

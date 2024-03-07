@@ -131,10 +131,11 @@ SPDX-License-Identifier: Apache-2.0
         <th *matHeaderCellDef
           class="notification-table--menu notification-table--header--sticky"
           mat-header-cell>
-          <button (click)="openDialog()"
+          <button [matMenuTriggerFor]="menu"
+            (click)="menuOpened(true)"
             mat-icon-button>
-            <img class="settings-icon"
-              src="/assets/images/icons/settings_icon.svg"
+            <img [class]="isMenuOpen ? 'close-settings-icon' : 'settings-icon'"
+              [src]="isMenuOpen ? '/assets/images/icons/closeDialog_icon.svg' : '/assets/images/icons/settings_icon.svg'"
               alt="*" />
           </button>
         </th>
@@ -237,7 +238,7 @@ SPDX-License-Identifier: Apache-2.0
                 *ngIf="autocompleteEnabled && tableViewConfig.displayFilterColumnMappings && tableViewConfig.displayFilterColumnMappings.length > 0"
                 (click)="$event.stopPropagation()"
                 class="notification-table--header--cell--filter"
-                [ngClass]="filterFormGroup.value[column].length > 0 ? 'filter-active' : 'filter-inactive'"
+                [ngClass]="filterFormGroup.value[column]?.length > 0 ? 'filter-active' : 'filter-inactive'"
                 [matMenuTriggerFor]="selectMenu"
                 (menuOpened)="isMenuOpen = true"
                 (menuClosed)="isMenuOpen = false">
@@ -316,3 +317,11 @@ SPDX-License-Identifier: Apache-2.0
   let-value="value">
   {{ value | autoFormat | i18n }}
 </ng-template>
+
+<mat-menu #menu="matMenu"
+  (closed)="menuOpened(false)">
+  <app-table-settings [tableType]="tableType"
+    (filtersReset)="onFiltersReset()"
+    [defaultColumns]="tableViewConfig.displayedColumns"
+    [defaultFilterColumns]="tableViewConfig.displayedColumns"></app-table-settings>
+</mat-menu>

@@ -73,6 +73,8 @@
       "endDate": "End date"
     },
     "tableSettings": {
+      "titleSettings": "Table settings",
+      "resetAllFilters": "Reset all filters",
       "title": "Column settings",
       "selectAll": "All",
       "refreshTooltip": "Reset individual table column settings to default",
