@@ -172,7 +172,8 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .body("content", Matchers.hasSize(1));
     }
 
-    @Test
+    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
+    //Test
     void shouldStartAlertForAsPlanned() throws JsonProcessingException, JoseException {
        // Given
         List<String> partIds = List.of(
