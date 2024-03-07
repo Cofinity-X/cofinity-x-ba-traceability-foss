@@ -110,10 +110,11 @@ SPDX-License-Identifier: Apache-2.0
         <th *matHeaderCellDef
           mat-header-cell
           class="table--header--sticky">
-          <button (click)="openDialog()"
+          <button [matMenuTriggerFor]="menu"
+            (click)="menuOpened(true)"
             mat-icon-button>
-            <img class="settings-icon"
-              src="/assets/images/icons/settings_icon.svg"
+            <img [class]="isMenuOpen ? 'close-settings-icon' : 'settings-icon'"
+              [src]="isMenuOpen ? '/assets/images/icons/closeDialog_icon.svg' : '/assets/images/icons/settings_icon.svg'"
               alt="*" />
           </button>
         </th>
@@ -200,7 +201,7 @@ SPDX-License-Identifier: Apache-2.0
                 (click)="$event.stopPropagation()"
                 class="table--header--row__filter"
                 [matMenuTriggerFor]="selectMenu"
-                [ngClass]="filterFormGroup.value[column].length > 0 ? 'filter-active' : 'filter-inactive'">
+                [ngClass]="filterFormGroup.value[column]?.length > 0 ? 'filter-active' : 'filter-inactive'">
                 <div class="table--header--row__filter--border--top"></div>
                 <div class="table--header--row__filter--content">
                   <img src="\assets\images\icons\filterAltIcon.svg"
@@ -299,3 +300,11 @@ SPDX-License-Identifier: Apache-2.0
   let-value="value">
   {{ value | autoFormat | i18n }}
 </ng-template>
+
+<mat-menu #menu="matMenu"
+  (closed)="menuOpened(false)">
+  <app-table-settings (filtersReset)="onFiltersReset()"
+    [tableType]="tableType"
+    [defaultColumns]="tableViewConfig.displayedColumns"
+    [defaultFilterColumns]="tableViewConfig.displayedColumns"></app-table-settings>
+</mat-menu>

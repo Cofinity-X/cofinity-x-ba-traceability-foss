@@ -32,8 +32,6 @@
       (configChanged)="onAsBuiltTableConfigChange($event)"
       (multiSelect)="onMultiSelect($event)"
       (clickSelectAction)="openDialog()"
-      [multiSortList]="tableAsBuiltSortList"
-      [multiSelectActive]="true"
       (filterActivated)="filterActivated(MainAspectType.AS_BUILT, $event )"
       (onPaginationPageSizeChange)="onDefaultPaginationSizeChange($event)"></app-parts-table>
   </ng-template>
@@ -59,7 +57,6 @@
       [addTrigger]="addPartTrigger$ | async"
       [noShadow]="true"
       [labelId]="customContext.labelId"
-      [multiSortList]="tableAsPlannedSortList"
       [multiSelectActive]="true"
       [tableType]="TableType.AS_PLANNED_OWN"
       (selected)="onSelectItem($event)"
@@ -67,7 +64,6 @@
       (multiSelect)="onMultiSelect($event)"
       (clickSelectAction)="openDialog()"
       [multiSortList]="tableAsPlannedSortList"
-      [multiSelectActive]="true"
       (filterActivated)="filterActivated(MainAspectType.AS_PLANNED, $event)"
       (onPaginationPageSizeChange)="onDefaultPaginationSizeChange($event)"></app-parts-table>
   </ng-template>

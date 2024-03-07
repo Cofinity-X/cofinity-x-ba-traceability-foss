@@ -847,8 +847,13 @@ app-multiselect {
   }
 }
 
-//parts-table-component
+.table-column-settings-dialog {
+  .mat-mdc-dialog-container .mdc-dialog__container .mdc-dialog__surface {
+    padding: 10px !important;
+  }
+}
 
+//parts-table-component
 .menu-input-field .mat-mdc-menu-content {
   padding: 0;
 }
@@ -1017,6 +1022,10 @@ app-input {
       pointer-events: none !important;
     }
   }
+}
+
+.reset-button:hover {
+  cursor: pointer;
 }
 
 .close-button:hover {
