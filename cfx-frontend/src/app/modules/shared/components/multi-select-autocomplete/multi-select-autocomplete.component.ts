@@ -123,7 +123,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   private cleared = false;
 
-
   constructor(public datePipe: DatePipe, public _adapter: DateAdapter<any>,
     @Inject(MAT_DATE_LOCALE) public _locale: string, @Inject(LOCALE_ID) private locale: string, public partsService: PartsService,
     private readonly formatPartSemanticDataModelToCamelCasePipe: FormatPartSemanticDataModelToCamelCasePipe,
