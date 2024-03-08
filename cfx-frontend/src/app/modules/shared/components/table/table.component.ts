@@ -21,7 +21,6 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren, } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -38,7 +37,6 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, clearAllRows, clearCurrentRows, removeSelectedValues } from '@shared/helper/table-helper';
 import { TableViewConfig } from '../parts-table/table-view-config.model';
-import { TableSettingsComponent } from '../table-settings/table-settings.component';
 import { MultiSelectAutocompleteComponent } from '../multi-select-autocomplete/multi-select-autocomplete.component';
 import { Role } from '@core/user/role.model';
 import { TableType } from '../multi-select-autocomplete/table-type.model';
@@ -179,7 +177,6 @@ export class TableComponent {
   constructor(
     private readonly roleService: RoleService,
     private readonly tableSettingsService: TableSettingsService,
-    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -390,23 +387,22 @@ export class TableComponent {
 
   protected readonly MainAspectType = MainAspectType;
 
-  openDialog(): void {
-    const config = new MatDialogConfig();
-    config.autoFocus = false;
-    config.data = {
-      title: 'table.tableSettings.title',
-      panelClass: 'custom',
-      tableType: this.tableType,
-      defaultColumns: this.tableViewConfig.displayedColumns,
-      defaultFilterColumns: this.tableViewConfig.displayedColumns,
-    };
-    this.dialog.open(TableSettingsComponent, config);
-  }
-
   public resetFilter(): void {
     const filterNames = Object.keys(this.filterActive);
     for (const filterName of filterNames) {
       this.filterActive[filterName] = false;
     }
+  }
+
+  public onFiltersReset() {
+    for (const multiSelect of this.multiSelectAutocompleteComponents) {
+      multiSelect.clickClear();
+    }
+    this.multiSortList = [];
+    this.updateSortingOfData({ active: null, direction: null });
+  }
+
+  public menuOpened(state: boolean): void {
+    this.isMenuOpen = state;
   }
 }

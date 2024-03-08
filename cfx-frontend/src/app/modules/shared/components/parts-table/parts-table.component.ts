@@ -44,14 +44,11 @@ import {
 } from '@shared/components/table/table.model';
 import { addSelectedValues, removeSelectedValues } from '@shared/helper/table-helper';
 import { isDateFilter } from '@shared/helper/filter-helper';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableSettingsService } from '@core/user/table-settings.service';
 import { TableViewConfig } from './table-view-config.model';
-import { TableSettingsComponent } from '../table-settings/table-settings.component';
 import { FilterConfigOptions } from '@shared/model/filter-config';
 import { RoleService } from '@core/user/role.service';
 import { Role } from '@core/user/role.model';
-import { DeeplinkService } from '@shared/service/deeplink.service';
 import { ToastService } from '../toasts/toast.service';
 import { TableType } from '../multi-select-autocomplete/table-type.model';
 import { PartsAsBuiltConfigurationModel } from './parts-as-built-configuration.model';
@@ -91,6 +88,8 @@ export class PartsTableComponent implements OnInit {
   @Input() tableType: TableType;
 
   public tableConfig: TableConfig;
+
+  @ViewChildren(MultiSelectAutocompleteComponent) multiSelectAutocomplete: QueryList<MultiSelectAutocompleteComponent>;
 
   filterKey = 'Filter';
 
@@ -169,9 +168,7 @@ export class PartsTableComponent implements OnInit {
   }
 
   constructor(private readonly tableSettingsService: TableSettingsService,
-    private dialog: MatDialog,
     private readonly roleService: RoleService,
-    private deeplinkService: DeeplinkService,
     private toastService: ToastService,
   ) {
 
@@ -293,19 +290,6 @@ export class PartsTableComponent implements OnInit {
     }
   }
 
-  openDialog(): void {
-    const config = new MatDialogConfig();
-    config.autoFocus = false;
-    config.data = {
-      title: 'table.tableSettings.title',
-      panelClass: 'custom',
-      tableType: this.tableType,
-      defaultColumns: this.tableViewConfig.displayedColumns,
-      defaultFilterColumns: this.tableViewConfig.displayedColumns,
-    };
-    this.dialog.open(TableSettingsComponent, config);
-  }
-
   public areAllRowsSelected(): boolean {
     return this.dataSource.data.every(data => this.isSelected(data));
   }
@@ -383,4 +367,17 @@ export class PartsTableComponent implements OnInit {
       }
     });
   }
+
+  public onFiltersReset(): void {
+    for (const multiSelect of this.multiSelectAutocompleteComponents) {
+      multiSelect.clickClear();
+    }
+    this.multiSortList = [];
+    this.updateSortingOfData({ active: null, direction: null });
+  }
+
+  public menuOpened(state: boolean): void {
+    this.isMenuOpen = state;
+  }
+
 }

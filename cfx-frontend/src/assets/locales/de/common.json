@@ -75,7 +75,9 @@
       "endDate": "Enddatum"
     },
     "tableSettings": {
-      "title": "Einstellungen der Spalten",
+      "titleSettings": "Tabelleneinstellung",
+      "resetAllFilters": "Alle Filter zurücksetzen",
+      "title": "Spalteneinstellungen",
       "selectAll": "Alle",
       "refreshTooltip": "Zurücksetzen der individuellen Einstellung der Tabellenspalten auf die Standardeinstellung",
       "saveAction": "Speichern"
@@ -335,7 +337,9 @@
     "apply": "Anwenden",
     "cancel": "Abbrechen",
     "filter": "Filter",
-    "reset": "Zurücksetzen"
+    "reset": "Zurücksetzen",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum"
   },
   "semanticDataModels": {
     "BATCH": "Batch",
