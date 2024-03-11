@@ -28,6 +28,7 @@ SPDX-License-Identifier: Apache-2.0
     </div>
   </mat-label>
   <mat-form-field class="filter-input__textarea"
+    [ngClass]="('multiSelect.inputTextHint' | i18n).length > 50 ? 'extended-subscript' : ''"
     appearance="outline"
     color="accent"
     [floatLabel]="'auto'"
@@ -103,11 +104,10 @@ SPDX-License-Identifier: Apache-2.0
     [diameter]="20"></mat-spinner>
 </div>
 
-<!-- hidden element just so that the mat-select dropdown opens -->
 <mat-option [style.display]="'none'"></mat-option>
 
-<!-- <div class="pl-2"
-  *ngIf="suggestionError">{{'multiSelect.suggestionError' | i18n}}</div> -->
+<div class="p-3 selected-values-text"
+  *ngIf="suggestionError">{{'multiSelect.noResults' | i18n}}</div>
 
 <div class="filter-input__option-list p-3"
   *ngIf="!isDate && filterName !== 'filterLabel'">
@@ -135,65 +135,64 @@ SPDX-License-Identifier: Apache-2.0
   </div>
 </div>
 
-<div *ngIf="(optionsSelected?.length || options?.length) && filterName === 'filterLabel'"
-  class="p-2 option-container">
-  <ng-container *ngFor="let option of optionsSelected">
-    <div (click)="onSelectValue(false, option)"
-      class="option">
-      <mat-checkbox *ngIf="!singleSearch"
-        [checked]="true"
-        [class]="optionClasses[option['display']]"
-        color="primary">
-        <img *ngIf="filterColumn === 'severity'"
-          [src]="option.iconURL"
-          alt="{{ option[display] | i18n}}"
-          class="pr-3.5">
-        {{option.display | i18n}}
-      </mat-checkbox>
-    </div>
-  </ng-container>
-
-  <mat-divider class="divider"
-    *ngIf="optionsSelected?.length > 0 && filterName === 'filterLabel'"></mat-divider>
-
-  <div *ngIf="options?.length && filterName === 'filterLabel'">
-    <ng-container>
-      <ng-container *ngFor="let option of options">
-        <div (click)="onSelectValue(true, option)"
-          class="option">
-          <mat-checkbox *ngIf="!singleSearch"
-            [class]="optionClasses[option['display']]"
-            color="primary">
-            <img *ngIf="filterColumn === 'severity'"
-              [src]="option.iconURL"
-              alt="{{ option[display] | i18n}}"
-              class="pr-3.5">
-            {{option.display | i18n}}
-          </mat-checkbox>
-        </div>
-      </ng-container>
+<div *ngIf="(optionsSelected?.length || options?.length) && filterName === 'filterLabel'">
+  <div class="p-2 option-container">
+    <ng-container *ngFor="let option of optionsSelected">
+      <div (click)="onSelectValue(false, option)"
+        class="option">
+        <mat-checkbox *ngIf="!singleSearch"
+          [checked]="true"
+          [class]="optionClasses[option['display']]"
+          color="primary">
+          <img *ngIf="filterColumn === 'severity'"
+            [src]="option.iconURL"
+            alt="{{ option[display] | i18n}}"
+            class="pr-3.5">
+          {{option.display | i18n}}
+        </mat-checkbox>
+      </div>
     </ng-container>
-  </div>
-</div>
 
-<mat-option *ngIf="singleSearch"
-  (click)="changeSearchTextOptionSingleSearch()"
-  [value]=this.searchElement
-  [style.display]="this.shouldHideTextSearchOptionFieldSingleSearch() ? 'none': 'flex'">{{this.searchElement}}
-</mat-option>
+    <div [ngClass]="optionsSelected?.length > 0 ? 'border-bottom' : ''"></div>
 
-<div class="p-3 selected-values-text"
-  *ngIf="selectedValue?.length > 1 && filterName === 'filterLabel'">
-  <mat-select-trigger>
-    <div>
-      <ng-container *ngFor="let value of displayValue()">
-        <ng-container *ngIf="containsIllegalCharactersForI18nKey(value); else i18nKeyDisplay">
-          {{ value }}
+    <div *ngIf="options?.length">
+      <ng-container>
+        <ng-container *ngFor="let option of options">
+          <div (click)="onSelectValue(true, option)"
+            class="option">
+            <mat-checkbox *ngIf="!singleSearch"
+              [class]="optionClasses[option['display']]"
+              color="primary">
+              <img *ngIf="filterColumn === 'severity'"
+                [src]="option.iconURL"
+                alt="{{ option[display] | i18n}}"
+                class="pr-3.5">
+              {{option.display | i18n}}
+            </mat-checkbox>
+          </div>
         </ng-container>
-        <ng-template #i18nKeyDisplay>
-          {{ 'multiSelect.mappedText.' + value | i18n: {defaultValue: value} }}
-        </ng-template>
       </ng-container>
     </div>
-  </mat-select-trigger>
+  </div>
+  <mat-option *ngIf="singleSearch"
+    (click)="changeSearchTextOptionSingleSearch()"
+    [value]=this.searchElement
+    [style.display]="shouldHideTextSearchOptionFieldSingleSearch() ? 'none': 'flex'">{{searchElement}}
+  </mat-option>
+
+  <div class="p-3 selected-values-text"
+    *ngIf="selectedValue?.length > 1 && filterName === 'filterLabel'">
+    <mat-select-trigger>
+      <div>
+        <ng-container *ngFor="let value of displayValue()">
+          <ng-container *ngIf="containsIllegalCharactersForI18nKey(value); else i18nKeyDisplay">
+            {{ value }}
+          </ng-container>
+          <ng-template #i18nKeyDisplay>
+            {{ 'multiSelect.mappedText.' + value | i18n: {defaultValue: value} }}
+          </ng-template>
+        </ng-container>
+      </div>
+    </mat-select-trigger>
+  </div>
 </div>

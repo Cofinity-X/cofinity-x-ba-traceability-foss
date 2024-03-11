@@ -314,7 +314,8 @@
     "filterLabelSelect": "Wähle",
     "inputLabelText": "Suchen...",
     "inputLabelDate": "TT/MM/JJJJ",
-    "inputTextHint": "Filtert vom Anfang des Werts."
+    "inputTextHint": "Geben Sie die Anfangszeichen ein, die den Listeneinträgen entsprechen",
+    "noResults": "Keine Resultate gefunden."
   },
   "parts": {
     "input": {
