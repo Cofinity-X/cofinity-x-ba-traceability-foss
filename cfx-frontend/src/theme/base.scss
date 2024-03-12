@@ -783,11 +783,19 @@ app-multiselect {
     }
   }
 
+  .extended-subscript .mat-mdc-form-field-subscript-wrapper {
+    margin-bottom: 20px !important;
+  }
+
   .filter-input__textarea .mat-mdc-form-field-subscript-wrapper {
     display: block;
 
     .mat-mdc-form-field-hint-wrapper {
       padding: 0;
+
+      .mat-mdc-form-field-hint-spacer {
+        display: none;
+      }
     }
   }
 
@@ -802,6 +810,7 @@ app-multiselect {
 
 .mat-mdc-menu-panel.mat-mdc-menu-panel {
   max-width: unset !important;
+  overflow-y: hidden !important;
 }
 
 .mat-calendar-body-selected {
@@ -839,8 +848,6 @@ mat-date-range-input .mat-date-range-input-container .mat-date-range-input-wrapp
 }
 
 .date-search {
-  padding-top: 10px;
-
   .mdc-text-field--outlined {
     padding-left: 10px;
   }

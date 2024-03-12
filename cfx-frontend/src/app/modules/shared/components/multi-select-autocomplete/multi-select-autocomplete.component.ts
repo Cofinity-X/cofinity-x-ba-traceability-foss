@@ -33,7 +33,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { DatepickerDropdownPositionY, MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import {
   AutocompleteStrategy,
   AutocompleteStrategyMap,
@@ -299,7 +299,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     this.endDate = null;
     this.searchedOptions = [];
 
-    if (!this.singleSearch && this.allOptions?.length > 0) {
+    if (!this.singleSearch && this.allOptions?.length > 0 && this.filterName !== 'filterLabel') {
       this.options?.forEach(option => {
         option.checked = false;
       });

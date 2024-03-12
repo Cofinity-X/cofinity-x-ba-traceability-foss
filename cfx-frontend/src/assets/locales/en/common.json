@@ -317,7 +317,8 @@
     "filterLabelSelect": "Choose",
     "inputLabelText": "Search...",
     "inputLabelDate": "DD/MM/YYYY",
-    "inputTextHint": "Checks if value starts with the filter."
+    "inputTextHint": "Enter starting characters matching the list items",
+    "noResults": "No results found."
   },
   "parts": {
     "input": {

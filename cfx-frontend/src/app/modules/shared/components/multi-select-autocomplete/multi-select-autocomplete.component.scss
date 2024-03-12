@@ -26,7 +26,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 10px 15px 15px 15px;
-  gap: 10px;
+  gap: 16px;
   border-radius: 10px;
   box-shadow: 0px 15px 25px 0px #3333330d, -10px -10px 15px 0px #ffffff1a, 0px 0px 25px 0px #33333308;
 
@@ -69,6 +69,10 @@
   }
 }
 
+.border-bottom {
+  border-bottom: 1px solid #d2d2d2;
+}
+
 .calendar-icon {
   width: 22px;
   height: 24px;
@@ -78,10 +82,14 @@
 .option {
   display: flex;
   flex-direction: row;
+  max-height: 36px;
+  font-size: 16px;
 }
 
 .option-container {
-  max-width: 250px;
+  max-width: 300px;
+  max-height: 359px;
+  overflow-y: scroll;
 }
 
 .option-text {
@@ -130,7 +138,7 @@ input {
 }
 
 .text-box {
-  width: 250px;
+  width: 300px;
 }
 
 .search-wrapper {
@@ -138,6 +146,7 @@ input {
   flex-direction: row;
   position: fixed;
   bottom: 5px;
+  margin-left: -40px;
 }
 
 .hide-select-all {
@@ -146,7 +155,11 @@ input {
 }
 
 .selected-values-text {
-  max-width: 230px;
+  @extend .body-small-emphasis;
+  max-width: 256px;
+  font-weight: 500;
+  line-height: 22.4px;
+  padding: 10px 19px 15px 20px;
 }
 
 .date-search {
