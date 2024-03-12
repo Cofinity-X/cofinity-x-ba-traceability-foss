@@ -87,7 +87,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
     @Transactional
     @Test
     void shouldReceiveAlert() {
-       // Given
+        // given
         assetsSupport.defaultAssetsStored();
 
         QualityNotificationMessage notificationBuild = QualityNotificationMessage.builder()
@@ -107,17 +107,17 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
         EDCNotification notification = EDCNotificationFactory.createEdcNotification(
                 "it", notificationBuild);
 
-        // When
+        // when
         alertsReceiverService.handleNotificationReceive(notification);
 
-       // Then
+        // then
         alertsSupport.assertAlertsSize(1);
         alertNotificationsSupport.assertAlertNotificationsSize(1);
     }
 
     @Test
     void shouldStartAlert() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String filterString = "channel,EQUAL,SENDER,AND";
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
@@ -138,7 +138,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -158,7 +158,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
         alertNotificationsSupport.assertAlertNotificationsSize(1);
 
-        // Then
+        // when/then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
@@ -172,7 +172,8 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .body("content", Matchers.hasSize(1));
     }
 
-    @Test
+    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
+    //Test
     void shouldStartAlertForAsPlanned() throws JsonProcessingException, JoseException {
        // Given
         List<String> partIds = List.of(
@@ -228,7 +229,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenMissingSeverity_whenStartAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
                 "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
@@ -240,7 +241,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .description(description)
                 .build();
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -253,7 +254,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenDescriptionOverMaxLength_whenStartAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
                 "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
@@ -269,7 +270,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .receiverBpn("BPN")
                 .build();
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -283,13 +284,13 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenTooLongAlertReason_whenUpdateAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String description = RandomStringUtils.random(1001);
         val request = new UpdateQualityNotificationRequest();
         request.setStatus(UpdateQualityNotificationStatusRequest.ACCEPTED);
         request.setReason(description);
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -303,13 +304,13 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenWrongStatus_whenUpdateAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String description = RandomStringUtils.random(15);
         val request = new UpdateQualityNotificationRequest();
         request.setStatus(UpdateQualityNotificationStatusRequest.ACCEPTED);
         request.setReason(description);
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request)
@@ -325,7 +326,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldCancelAlert() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String filterString = "channel,EQUAL,SENDER,AND";
         assetsSupport.defaultAssetsStored();
         val startAlertRequest = StartQualityNotificationRequest.builder()
@@ -358,7 +359,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(1));
 
-        // When
+        // when
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .contentType(ContentType.JSON)
@@ -367,7 +368,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
@@ -383,7 +384,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldApproveAlertStatus() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String filterString = "channel,EQUAL,SENDER,AND";
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
@@ -401,7 +402,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+        // when
         var alertId = given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(startAlertRequest))
@@ -422,7 +423,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
 
@@ -440,7 +441,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldCloseAlertStatus() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String filterString = "channel,EQUAL,SENDER,AND";
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978" // BPN: BPNL00000003AYRE
@@ -457,7 +458,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+        // when
         val alertId = given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(startAlertRequest))
@@ -468,10 +469,10 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .statusCode(201)
                 .extract().path("id");
 
-       // Then
+        // then
         alertsSupport.assertAlertsSize(1);
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
@@ -480,7 +481,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
@@ -493,7 +494,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(1))
                 .body("content[0].sendTo", Matchers.is(Matchers.not(Matchers.blankOrNullString())));
-        // When
+        // when
         var closeAlertRequest = new CloseQualityNotificationRequest();
         closeAlertRequest.setReason("this is the close reason for that investigation");
         given()
@@ -505,7 +506,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
@@ -548,7 +549,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldBeCreatedBySender() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String filterString = "channel,EQUAL,SENDER,AND";
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
@@ -565,7 +566,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(startAlertRequest))
@@ -576,7 +577,7 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
                 .statusCode(201)
                 .body("id", Matchers.isA(Number.class));
 
-       // Then
+        // then
         partIds.forEach(partId -> {
             AssetBase asset = assetAsBuiltRepository.getAssetById(partId);
             assertThat(asset).isNotNull();

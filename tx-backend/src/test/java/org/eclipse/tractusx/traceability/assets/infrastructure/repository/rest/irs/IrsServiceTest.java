@@ -20,32 +20,13 @@
 package org.eclipse.tractusx.traceability.assets.infrastructure.repository.rest.irs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.eclipse.tractusx.irs.edc.client.policy.Constraint;
-import org.eclipse.tractusx.irs.edc.client.policy.Constraints;
-import org.eclipse.tractusx.irs.edc.client.policy.OperatorType;
-import org.eclipse.tractusx.irs.edc.client.policy.Permission;
-import org.eclipse.tractusx.irs.edc.client.policy.PolicyType;
+import org.eclipse.tractusx.irs.edc.client.policy.*;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.AssetCallbackRepository;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.IRSApiClient;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.IrsClient;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.IrsService;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.request.BomLifecycle;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Direction;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.JobDetailResponse;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.JobStatus;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Parameter;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.PolicyResponse;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.RegisterJobResponse;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Shell;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.*;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.relationship.Aspect;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.relationship.LinkedItem;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.relationship.Relationship;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel.ManufacturingInformation;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel.MeasurementUnit;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel.PartTypeInformation;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel.Quantity;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel.SemanticDataModel;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel.Site;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.semanticdatamodel.ValidityPeriod;
 import org.eclipse.tractusx.traceability.bpn.domain.service.BpnRepository;
 import org.eclipse.tractusx.traceability.common.model.BPN;
 import org.eclipse.tractusx.traceability.common.properties.TraceabilityProperties;
@@ -58,31 +39,22 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.eclipse.tractusx.traceability.common.date.DateUtil.toOffsetDateTime;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class IrsServiceTest {
+    private static final String POLICY_MOCK_ID = "test";
+    private static final String EXAMPLE_TIMESTAMP_PAST_FIRST = "2023-07-03T16:01:05.309Z";
+    private static final String EXAMPLE_TIMESTAMP_PAST_SECOND = "2023-07-04T16:01:05.309Z";
     private IrsService irsService;
 
     @Mock
-    private IRSApiClient irsClient;
+    private IrsClient irsClient;
 
     @Mock
     TraceabilityProperties traceabilityProperties;
@@ -100,34 +72,38 @@ class IrsServiceTest {
 
     @BeforeEach
     void setUp() {
-        irsService = new IrsService(irsClient, bpnRepository, traceabilityProperties, objectMapper, assetAsBuiltCallbackRepository, assetAsPlannedCallbackRepository, "test", "test2");
+        irsService = new IrsService(irsClient, bpnRepository, traceabilityProperties, objectMapper, assetAsBuiltCallbackRepository, assetAsPlannedCallbackRepository);
     }
-
 
     @Test
     void givenNoPolicyExist_whenCreateIrsPolicyIfMissing_thenCreateIt() {
       // Given
-        when(irsClient.getPolicies(anyString())).thenReturn(List.of());
-        when(traceabilityProperties.getRightOperand()).thenReturn("test");
-        when(traceabilityProperties.getOperatorType()).thenReturn("eq");
-        when(traceabilityProperties.getLeftOperand()).thenReturn("PURPOSE");
-        when(traceabilityProperties.getValidUntil()).thenReturn(OffsetDateTime.parse("2023-07-02T16:01:05.309Z"));
+        when(irsClient.getPolicies()).thenReturn(List.of());
+        when(traceabilityProperties.getRightOperand()).thenReturn(POLICY_MOCK_ID);
 
         // When
         irsService.createIrsPolicyIfMissing();
 
        // Then
         verify(irsClient, times(1))
-                .registerPolicy(anyString(), any());
+                .registerPolicy();
     }
 
     @Test
     void givenPolicyExist_whenCreateIrsPolicyIfMissing_thenDoNotCreateIt() {
       // Given
-        final PolicyResponse existingPolicy = new PolicyResponse("test", OffsetDateTime.parse("2023-07-03T16:01:05.309Z"), OffsetDateTime.now(), List.of());
-        when(irsClient.getPolicies(anyString())).thenReturn(List.of(existingPolicy));
-        when(traceabilityProperties.getRightOperand()).thenReturn("test");
-        when(traceabilityProperties.getValidUntil()).thenReturn(OffsetDateTime.parse("2023-07-02T16:01:05.309Z"));
+        Policy policyMock = Policy.builder()
+                .policyId(POLICY_MOCK_ID)
+                .createdOn(OffsetDateTime.parse(EXAMPLE_TIMESTAMP_PAST_FIRST))
+                .validUntil(OffsetDateTime.now())
+                .permissions(prepareMockPermissions())
+                .build();
+        Payload policyResponsePayload = new Payload(Context.getDefault(), POLICY_MOCK_ID, policyMock);
+        final PolicyResponse existingPolicy = new PolicyResponse( OffsetDateTime.now(), policyResponsePayload);
+
+        when(irsClient.getPolicies()).thenReturn(List.of(existingPolicy));
+        when(traceabilityProperties.getRightOperand()).thenReturn(POLICY_MOCK_ID);
+        when(traceabilityProperties.getValidUntil()).thenReturn(OffsetDateTime.parse(EXAMPLE_TIMESTAMP_PAST_FIRST));
 
         // When
         irsService.createIrsPolicyIfMissing();
@@ -139,26 +115,29 @@ class IrsServiceTest {
     @Test
     void givenOutdatedPolicyExist_whenCreateIrsPolicyIfMissing_thenUpdateIt() {
       // Given
-        final PolicyResponse existingPolicy = new PolicyResponse("test", OffsetDateTime.parse("2023-07-03T16:01:05.309Z"), OffsetDateTime.parse("2023-07-03T16:01:05.309Z"), List.of());
-        when(irsClient.getPolicies(anyString())).thenReturn(List.of(existingPolicy));
-        when(traceabilityProperties.getRightOperand()).thenReturn("test");
-        when(traceabilityProperties.getOperatorType()).thenReturn("eq");
-        when(traceabilityProperties.getLeftOperand()).thenReturn("PURPOSE");
-        when(traceabilityProperties.getValidUntil()).thenReturn(OffsetDateTime.parse("2023-07-04T16:01:05.309Z"));
+        Policy policyMock = Policy.builder()
+                .policyId(POLICY_MOCK_ID)
+                .createdOn(OffsetDateTime.parse(EXAMPLE_TIMESTAMP_PAST_FIRST))
+                .validUntil(OffsetDateTime.now())
+                .permissions(prepareMockPermissions())
+                .build();
+        Payload policyResponsePayload = new Payload(Context.getDefault(), POLICY_MOCK_ID, policyMock);
+        final PolicyResponse existingPolicy = new PolicyResponse(OffsetDateTime.parse(EXAMPLE_TIMESTAMP_PAST_FIRST), policyResponsePayload);
+        when(irsClient.getPolicies()).thenReturn(List.of(existingPolicy));
+        when(traceabilityProperties.getRightOperand()).thenReturn(POLICY_MOCK_ID);
+        when(traceabilityProperties.getValidUntil()).thenReturn(OffsetDateTime.parse(EXAMPLE_TIMESTAMP_PAST_SECOND));
 
         // When
         irsService.createIrsPolicyIfMissing();
 
        // Then
-        verify(irsClient, times(1)).deletePolicy(anyString(), any());
-        verify(irsClient, times(1)).registerPolicy(anyString(), any());
+        verify(irsClient, times(1)).deletePolicy();
+        verify(irsClient, times(1)).registerPolicy();
     }
 
     @ParameterizedTest
     @MethodSource("provideDirections")
     void testFindAssets_completedJob_returnsConvertedAssets(Direction direction) {
-
-        RegisterJobResponse jobId = new RegisterJobResponse("123");
       // Given
         when(traceabilityProperties.getBpn()).thenReturn(BPN.of("test"));
 
@@ -166,7 +145,7 @@ class IrsServiceTest {
         irsService.createJobToResolveAssets("1", direction, Aspect.downwardAspectsForAssetsAsBuilt(), BomLifecycle.AS_BUILT);
 
        // Then
-        verify(irsClient, times(1)).registerJob(anyString(), any());
+        verify(irsClient, times(1)).registerJob(any());
     }
 
     private static Stream<Arguments> provideDirections() {
@@ -176,79 +155,42 @@ class IrsServiceTest {
         );
     }
 
-    private JobDetailResponse provideTestJobResponse(String direction) {
-        JobStatus jobStatus = new JobStatus(
-                "id",
-                "COMPLETED",
-                new Date(),
-                new Date(),
-                "globalAsset123",
-                new Parameter(direction, "asBuilt", "BPN0000X")
-        );
-
-        List<Shell> shells = Arrays.asList(
-                new Shell("shell1", "Identification 1", "globalAssetId"),
-                new Shell("shell2", "Identification 2", "globalAssetId")
-        );
-
-        ValidityPeriod validityPeriod = new ValidityPeriod(null, toOffsetDateTime(Instant.now()));
-        Site site = new Site(toOffsetDateTime(Instant.now()), OffsetDateTime.now(), "function", "cxid");
-        List<SemanticDataModel> semanticDataModels = Collections.singletonList(
-                new SemanticDataModel(
-                        "catenaXId123",
-                        new PartTypeInformation("classification", "Name at Manufacturer", "Name at Customer",
-                                "ManufacturerPartId123", "CustomerPartId123"),
-                        new ManufacturingInformation("Country", toOffsetDateTime(Instant.now())),
-                        Collections.emptyList(), validityPeriod, List.of(site), "urn:bamm:io.catenax.serial_part:1.0.0#SerialPart"
-
-                )
-        );
-        List<Relationship> relationships;
-
-        MeasurementUnit measurementUnit = new MeasurementUnit("uri", "unit:abc");
-        Quantity quantity = new Quantity(1.5, measurementUnit);
-        if (direction.equals(Direction.DOWNWARD.name())) {
-            relationships = Arrays.asList(
-                    new Relationship("catenaXId123", new LinkedItem("childCatenaXId123", new Date(), new Date(), validityPeriod, quantity), Aspect.SINGLE_LEVEL_BOM_AS_BUILT),
-                    new Relationship("catenaXId456", new LinkedItem("childCatenaXId456", new Date(), new Date(), validityPeriod, quantity), Aspect.SINGLE_LEVEL_BOM_AS_BUILT)
-            );
-        } else {
-            relationships = Arrays.asList(
-                    new Relationship("catenaXId123", new LinkedItem("childCatenaXId123", new Date(), new Date(), validityPeriod, quantity), Aspect.SINGLE_LEVEL_USAGE_AS_BUILT),
-                    new Relationship("catenaXId456", new LinkedItem("childCatenaXId456", new Date(), new Date(), validityPeriod, quantity), Aspect.SINGLE_LEVEL_USAGE_AS_BUILT)
-            );
-        }
-
-
-        Map<String, String> bpns = new HashMap<>();
-        bpns.put("key1", "value1");
-        bpns.put("key2", "value2");
-
-        return new JobDetailResponse(
-                jobStatus,
-                shells,
-                semanticDataModels,
-                relationships,
-                bpns
-        );
-    }
-
     @Test
     void test_getPolicyConstraints() {
        // Given
-        List<Constraint> andConstraints = List.of(new Constraint("leftOperand", OperatorType.EQ, List.of("rightOperand")));
-        List<Constraint> orConstraints = List.of(new Constraint("leftOperand", OperatorType.EQ, List.of("rightOperand")));
+        Operator eqOperator = new Operator(OperatorType.EQ);
+        List<Constraint> andConstraints = List.of(new Constraint("leftOperand", eqOperator, "rightOperand"));
+        List<Constraint> orConstraints = List.of(new Constraint("leftOperand", eqOperator, "rightOperand"));
         Constraints constraints = new Constraints(andConstraints, orConstraints);
 
-        Permission permission = new Permission(PolicyType.USE, List.of(constraints));
-        PolicyResponse policyResponseMock = new PolicyResponse("", OffsetDateTime.now(), OffsetDateTime.now(), List.of(permission));
+        Permission permission = new Permission(PolicyType.USE, constraints);
+        String policyIdMock = "policyId1";
+        Policy policyMock = Policy.builder()
+                .policyId(policyIdMock)
+                .createdOn(OffsetDateTime.now())
+                .validUntil(OffsetDateTime.now())
+                .permissions(List.of(permission))
+                .build();
+        Payload policyResponsePayload = new Payload(Context.getDefault(), policyIdMock, policyMock);
+        PolicyResponse policyResponseMock = new PolicyResponse(OffsetDateTime.now(), policyResponsePayload);
 
-        when(irsClient.getPolicies(anyString())).thenReturn(List.of(policyResponseMock));
+        when(irsClient.getPolicies()).thenReturn(List.of(policyResponseMock));
 
        // When
         List<PolicyResponse> policyResponse = irsService.getPolicies();
 
        // Then
         assertThat(1).isEqualTo(policyResponse.size());
+    }
+
+    private static List<Permission> prepareMockPermissions() {
+        List<Constraint> constraintList = List.of(new Constraint("", new Operator(OperatorType.EQ), POLICY_MOCK_ID));
+        Permission mockPermission = Permission.builder()
+                .constraint(Constraints.builder()
+                        .or(constraintList)
+                        .and(constraintList)
+                        .build())
+                .action(PolicyType.USE).build();
+        return List.of(mockPermission);
     }
 }

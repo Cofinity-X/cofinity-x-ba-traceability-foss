@@ -1,106 +1,130 @@
 [
   {
-    "policyId": "ID 3.0 Trace",
-    "createdOn": "2023-10-13T14:48:18.402213+02:00",
     "validUntil": "2123-10-13T14:48:18.402234+02:00",
-    "permissions": [
-      {
-        "action": "USE",
-        "constraints": [
+    "payload": {
+      "@context": {
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+      },
+      "@id": "ID 3.0 Trace",
+      "policy": {
+        "odrl:permission": [
           {
-            "and": [
-              {
-                "leftOperand": "PURPOSE",
-                "operator": "eq",
-                "rightOperand": [
-                  "ID 3.0 Trace"
-                ]
-              }
-            ],
-            "or": [
-              {
-                "leftOperand": "PURPOSE",
-                "operator": "eq",
-                "rightOperand": [
-                  "ID 3.0 Trace"
-                ]
-              }
-            ]
+            "odrl:action": "USE",
+            "odrl:constraint": {
+              "odrl:and": [
+                {
+                  "odrl:leftOperand": "PURPOSE",
+                  "odrl:operator": {
+                    "@id": "odrl:eq"
+                  },
+                  "odrl:rightOperand": "ID 3.0 Trace"
+                }
+              ],
+              "odrl:or": [
+                {
+                  "odrl:leftOperand": "PURPOSE",
+                  "odrl:operator": {
+                    "@id": "odrl:eq"
+                  },
+                  "odrl:rightOperand": "ID 3.0 Trace"
+                }
+              ]
+            }
           }
-        ]
+        ],
+        "odrl:createdOn": "2023-10-13T14:48:18.402213+02:00",
+        "odrl:validUntil": "2123-10-13T14:48:18.402234+02:00"
       }
-    ]
+    }
   },
   {
-    "policyId": "ID 3.1 Trace",
-    "createdOn": "2023-10-13T14:48:18.40276+02:00",
     "validUntil": "2123-10-13T14:48:18.402772+02:00",
-    "permissions": [
-      {
-        "action": "USE",
-        "constraints": [
+    "payload": {
+      "@context": {
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+      },
+      "@id": "ID 3.1 Trace",
+      "policy": {
+        "odrl:permission": [
           {
-            "and": [
-              {
-                "leftOperand": "PURPOSE",
-                "operator": "eq",
-                "rightOperand": [
-                  "ID 3.1 Trace"
-                ]
-              }
-            ],
-            "or": []
+            "odrl:action": "USE",
+            "odrl:constraint": {
+              "odrl:and": [
+                {
+                  "odrl:leftOperand": "PURPOSE",
+                  "odrl:operator": {
+                    "@id": "odrl:eq"
+                  },
+                  "odrl:rightOperand": "ID 3.1 Trace"
+                }
+              ],
+              "odrl:or": []
+            }
           }
-        ]
+        ],
+        "odrl:createdOn": "2023-10-13T14:48:18.40276+02:00",
+        "odrl:validUntil": "2123-10-13T14:48:18.402772+02:00"
       }
-    ]
+    }
   },
   {
-    "policyId": "R2_Traceability",
-    "createdOn": "2023-10-13T14:48:18.402777+02:00",
     "validUntil": "2123-10-13T14:48:18.402779+02:00",
-    "permissions": [
-      {
-        "action": "USE",
-        "constraints": [
+    "payload": {
+      "@context": {
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+      },
+      "@id": "R2_Traceability",
+      "policy": {
+        "odrl:permission": [
           {
-            "and": [
-              {
-                "leftOperand": "PURPOSE",
-                "operator": "eq",
-                "rightOperand": [
-                  "R2_Traceability"
-                ]
-              }
-            ],
-            "or": []
+            "odrl:action": "USE",
+            "odrl:constraint": {
+              "odrl:and": [
+                {
+                  "odrl:leftOperand": "PURPOSE",
+                  "odrl:operator": {
+                    "@id": "odrl:eq"
+                  },
+                  "odrl:rightOperand": "R2_Traceability"
+                }
+              ],
+              "odrl:or": []
+            }
           }
-        ]
+        ],
+        "odrl:createdOn": "2023-10-13T14:48:18.402777+02:00",
+        "odrl:validUntil": "2123-10-13T14:48:18.402779+02:00"
       }
-    ]
+    }
   },
   {
-    "policyId": "FrameworkAgreement.traceability",
-    "createdOn": "2023-10-13T14:48:18.402782+02:00",
     "validUntil": "2123-10-13T14:48:18.402784+02:00",
-    "permissions": [
-      {
-        "action": "USE",
-        "constraints": [
+    "payload": {
+      "@context": {
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+      },
+      "@id": "FrameworkAgreement.traceability",
+      "policy": {
+        "odrl:permission": [
           {
-            "and": [
-              {
-                "leftOperand": "PURPOSE",
-                "operator": "eq",
-                "rightOperand": [
-                  "FrameworkAgreement.traceability"
-                ]
-              }
-            ],
-            "or": []
+            "odrl:action": "USE",
+            "odrl:constraint": {
+              "odrl:and": [
+                {
+                  "odrl:leftOperand": "PURPOSE",
+                  "odrl:operator": {
+                    "@id": "odrl:eq"
+                  },
+                  "odrl:rightOperand": "FrameworkAgreement.traceability"
+                }
+              ],
+              "odrl:or": []
+            }
           }
-        ]
+        ],
+        "odrl:createdOn": "2023-10-13T14:48:18.402782+02:00",
+        "odrl:validUntil": "2123-10-13T14:48:18.402784+02:00"
       }
-    ]
+    }
   }
 ]

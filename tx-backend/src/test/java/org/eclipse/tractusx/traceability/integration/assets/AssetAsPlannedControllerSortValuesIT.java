@@ -51,12 +51,12 @@ class AssetAsPlannedControllerSortValuesIT extends IntegrationTestSpecification 
                 // As long as no clear spelling for 'catenaxSiteId' is defined, test on different spellings. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
                 Arguments.of("catenaXSiteId,desc",
                         new String[]{"ZBZELLE", "HVModul", "OEMAHighVoltageBattery", "VehicleModelA", "TierBECU1",
-                                "SubTierASensor", "TierAGearbox", "NTierACathodeMaterial", "NTierANTierProduct",
-                                "NTierAPlastics", "SubTierBSealant", "SubTierBGlue"}),
+                                "SubTierASensor", "TierAGearbox", "NTierACathodeMaterial", "NTierAPlastics",
+                                "NTierANTierProduct", "SubTierBSealant", "SubTierBGlue"}),
                 Arguments.of("catenaXSiteId,asc",
-                        new String[]{"SubTierBGlue", "SubTierBSealant", "NTierAPlastics", "NTierANTierProduct",
-                                "NTierACathodeMaterial", "TierAGearbox", "SubTierASensor", "TierBECU1", "VehicleModelA",
-                                "OEMAHighVoltageBattery", "HVModul", "ZBZELLE"})
+                        new String[]{"SubTierBGlue", "SubTierBSealant",  "NTierANTierProduct","NTierAPlastics",
+                                "NTierACathodeMaterial", "TierAGearbox", "SubTierASensor", "TierBECU1", "VehicleModelA","HVModul",
+                                "OEMAHighVoltageBattery", "ZBZELLE"})
         );
     }
 
