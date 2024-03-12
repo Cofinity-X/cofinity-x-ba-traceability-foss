@@ -38,6 +38,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-customer-parts',
   templateUrl: './customer-parts.component.html',
+  styleUrls: ['../other-parts.component.scss'],
 })
 export class CustomerPartsComponent implements OnInit, OnDestroy {
   @ViewChildren(PartsTableComponent) partsTableComponents: QueryList<PartsTableComponent>;
