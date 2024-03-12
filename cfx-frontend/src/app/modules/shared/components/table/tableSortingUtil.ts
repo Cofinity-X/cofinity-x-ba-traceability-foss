@@ -33,8 +33,8 @@ export class TableSortingUtil {
       return;
     }
 
-    const [ columnName ] = sorting;
-    const index = tableSortList.findIndex(([ itemColumnName ]) => itemColumnName === columnName);
+    const [columnName] = sorting;
+    const index = tableSortList.findIndex(([itemColumnName]) => itemColumnName === columnName);
 
     if (index !== -1) {
       // Replace the existing entry
@@ -43,6 +43,13 @@ export class TableSortingUtil {
       // Add the new entry if it doesn't exist
       tableSortList.push(sorting);
     }
+  }
+
+  static isSorted(tableSortList: TableHeaderSort[], column: string): boolean {
+    if (tableSortList?.length > 0) {
+      return tableSortList.find(sort => sort[0] === column) !== undefined;
+    }
+    return false;
   }
 
 }

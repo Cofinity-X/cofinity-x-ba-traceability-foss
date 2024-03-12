@@ -185,7 +185,7 @@ SPDX-License-Identifier: Apache-2.0
                         class="table--header--cell--content--sort--indicator">
                         {{ i + 1 + '.' }}
                       </div>
-                      <img *ngIf="item[0] === column; else sortIcon"
+                      <img *ngIf="item[0] === column"
                         src="/assets/images/icons/sortingArrowDown.svg"
                         alt="sorting arrow"
                         [ngClass]="
@@ -193,6 +193,10 @@ SPDX-License-Identifier: Apache-2.0
                             ? 'table--header--cell--content--sort--asc'
                             : 'table--header--cell--content--sort--dsc'
                         " />
+                      <img *ngIf="i === 0 && isSorted(multiSortList, column) === false"
+                        src="/assets/images/icons/sortingArrowDown.svg"
+                        alt="sorting arrow"
+                        [ngClass]="'table--header--cell--content--sort--asc sort-icon'" />
                     </ng-container>
                   </ng-container>
                 </div>

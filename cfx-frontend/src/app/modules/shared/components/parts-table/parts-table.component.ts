@@ -50,6 +50,7 @@ import { FilterConfigOptions } from '@shared/model/filter-config';
 import { RoleService } from '@core/user/role.service';
 import { Role } from '@core/user/role.model';
 import { ToastService } from '../toasts/toast.service';
+import { TableSortingUtil } from '@shared/components/table/tableSortingUtil';
 import { TableType } from '../multi-select-autocomplete/table-type.model';
 import { PartsAsBuiltConfigurationModel } from './parts-as-built-configuration.model';
 import { PartsAsBuiltCustomerConfigurationModel } from './parts-as-built-customer-configuration.model';
@@ -88,6 +89,8 @@ export class PartsTableComponent implements OnInit {
   @Input() tableType: TableType;
 
   public tableConfig: TableConfig;
+
+  isSorted = TableSortingUtil.isSorted;
 
   @ViewChildren(MultiSelectAutocompleteComponent) multiSelectAutocomplete: QueryList<MultiSelectAutocompleteComponent>;
 

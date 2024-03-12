@@ -222,7 +222,7 @@ SPDX-License-Identifier: Apache-2.0
                         class="notification-table--header--cell--content--sort--indicator">
                         {{ i + 1 + '.' }}
                       </div>
-                      <img *ngIf="item[0] === column; else sortIcon"
+                      <img *ngIf="item[0] === column"
                         src="/assets/images/icons/sortingArrowDown.svg"
                         alt="sorting arrow"
                         [ngClass]="
@@ -230,6 +230,10 @@ SPDX-License-Identifier: Apache-2.0
                             ? 'notification-table--header--cell--content--sort--asc'
                             : 'notification-table--header--cell--content--sort--dsc'
                         " />
+                      <img *ngIf="i === 0 && isSorted(multiSortList, column) === false"
+                        src="/assets/images/icons/sortingArrowDown.svg"
+                        alt="sorting arrow"
+                        [ngClass]="'notification-table--header--cell--content--sort--asc sort-icon'" />
                     </ng-container>
                   </ng-container>
                 </div>
