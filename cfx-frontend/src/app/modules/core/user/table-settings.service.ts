@@ -33,11 +33,11 @@ export class TableSettingsService {
   constructor(private keycloakService: KeycloakService) { }
 
   async storeTableSettings(tableSettingsList: any): Promise<void> {
-    if (this.keycloakService.getUserRoles().length === 0) {
-      return;
-    }
+    // if (this.keycloakService.getUserRoles().length === 0) {
+    //   return;
+    // }
 
-    const profile = await this.keycloakService.loadUserProfile();
+    // const profile = await this.keycloakService.loadUserProfile();
 
     // before setting anything, all maps in new tableSettingList should be stringified
     Object.keys(tableSettingsList).forEach(tableSetting => {
@@ -45,17 +45,17 @@ export class TableSettingsService {
       tableSettingsList[tableSetting].columnSettingsOptions = JSON.stringify(Array.from(newMap.entries()));
     });
 
-    localStorage.setItem(`${this.settingsKey}_${profile.username}`, JSON.stringify(tableSettingsList));
+    localStorage.setItem(`${this.settingsKey}_${'test'}`, JSON.stringify(tableSettingsList));
   }
 
   // this returns whole settings whether empty / not for part / etc.
   async getStoredTableSettings(): Promise<any> {
-    if (this.keycloakService.getUserRoles().length === 0) {
-      return;
-    }
+    // if (this.keycloakService.getUserRoles().length === 0) {
+    //   return;
+    // }
 
-    const profile = await this.keycloakService.loadUserProfile();
-    const settingsJson = localStorage.getItem(`${this.settingsKey}_${profile.username}`);
+    // const profile = await this.keycloakService.loadUserProfile();
+    const settingsJson = localStorage.getItem(`${this.settingsKey}_${'test'}`);
     const settingsObject = settingsJson ? JSON.parse(settingsJson) : null;
     if (!settingsObject) {
       return;
