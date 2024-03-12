@@ -43,6 +43,7 @@ import { TableType } from '../multi-select-autocomplete/table-type.model';
 import { PartsTableConfigUtils } from '../parts-table/parts-table-config.utils';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { TranslationContext } from '@shared/model/translation-context.model';
+import { TableSortingUtil } from './tableSortingUtil';
 
 @Component({
   selector: 'app-table',
@@ -171,6 +172,8 @@ export class TableComponent {
 
   private _tableConfig: TableConfig;
   public tableViewConfig: TableViewConfig;
+
+  isSorted = TableSortingUtil.isSorted;
 
   protected readonly Role = Role;
 

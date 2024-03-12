@@ -307,7 +307,7 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // if CTRL is pressed at to sortList
+    // if CTRL is pressed add to sortList
     if (this.ctrlKeyState) {
       const [columnName] = sorting;
       let tableSortList: TableHeaderSort[] = [];
