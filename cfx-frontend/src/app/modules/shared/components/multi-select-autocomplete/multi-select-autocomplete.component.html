@@ -177,7 +177,8 @@ SPDX-License-Identifier: Apache-2.0
   <mat-option *ngIf="singleSearch"
     (click)="changeSearchTextOptionSingleSearch()"
     [value]=this.searchElement
-    [style.display]="shouldHideTextSearchOptionFieldSingleSearch() ? 'none': 'flex'">{{searchElement}}
+    [style.display]="shouldHideTextSearchOptionFieldSingleSearch() ? 'none': 'flex'">
+    {{searchElement}}
   </mat-option>
 
   <div class="p-3 selected-values-text"
