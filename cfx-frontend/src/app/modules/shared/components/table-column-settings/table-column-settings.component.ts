@@ -74,8 +74,8 @@ export class TableColumnSettingsComponent {
       });
   }
 
-  async loadSettings(tableSettingsService: TableSettingsService, data: any) {
-    const storedSettings = await tableSettingsService.getStoredTableSettings();
+  loadSettings(tableSettingsService: TableSettingsService, data: any): void {
+    const storedSettings = tableSettingsService.getStoredTableSettings();
     const tableSettings = storedSettings?.[this.tableType];
 
     if (tableSettings) {
@@ -95,7 +95,7 @@ export class TableColumnSettingsComponent {
     this.selectAllSelected = this.dialogColumns.length === this.tableColumns.length;
   }
 
-  async save() {
+  save() {
     // build new tableColumns how they should be displayed
     const newTableColumns: string[] = [];
     const newTableFilterColumns: string[] = [];
@@ -114,7 +114,7 @@ export class TableColumnSettingsComponent {
     }
 
     // get Settingslist
-    const tableSettingsList = await this.tableSettingsService.getStoredTableSettings();
+    const tableSettingsList = this.tableSettingsService.getStoredTableSettings();
 
     // set this tableType Settings from SettingsList to the new one
     tableSettingsList[this.tableType] = {
