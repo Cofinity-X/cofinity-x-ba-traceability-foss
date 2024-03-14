@@ -105,10 +105,10 @@ SPDX-License-Identifier: Apache-2.0
           mat-header-cell
           class="table--header--sticky">
           <button [matMenuTriggerFor]="menu"
-            (click)="menuOpened(true)"
+            (click)="settingsOpened(true)"
             mat-icon-button>
-            <img [class]="isMenuOpen ? 'close-settings-icon' : 'settings-icon'"
-              [src]="isMenuOpen ? '/assets/images/icons/closeDialog_icon.svg' : '/assets/images/icons/settings_icon.svg'"
+            <img [class]="isSettingsOpen ? 'close-settings-icon' : 'settings-icon'"
+              [src]="isSettingsOpen ? '/assets/images/icons/closeDialog_icon.svg' : '/assets/images/icons/settings_icon.svg'"
               alt="*" />
           </button>
         </th>
@@ -300,7 +300,7 @@ SPDX-License-Identifier: Apache-2.0
 </ng-template>
 
 <mat-menu #menu="matMenu"
-  (closed)="menuOpened(false)">
+  (closed)="settingsOpened(false)">
   <app-table-settings (filtersReset)="onFiltersReset()"
     [tableType]="tableType"
     [defaultColumns]="tableViewConfig.displayedColumns"

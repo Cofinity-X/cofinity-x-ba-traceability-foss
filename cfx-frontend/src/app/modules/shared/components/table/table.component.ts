@@ -160,6 +160,7 @@ export class TableComponent {
   public isDataLoading: boolean;
   public selectedRow: Record<string, unknown>;
   public isMenuOpen: boolean;
+  public isSettingsOpen = false;
 
   public filterConfiguration: any[];
   public displayedColumns: string[];
@@ -335,6 +336,8 @@ export class TableComponent {
       : this.addSelectedValues(this.dataSource.data);
 
     this.emitMultiSelect();
+
+    this.removeFocus();
   }
 
   public onFilterValueChanged(formValues: { filterKey: string, values: any[] }) {
@@ -364,6 +367,8 @@ export class TableComponent {
   public toggleSelection(row: unknown): void {
     this.isSelected(row) ? this.removeSelectedValues([row]) : this.addSelectedValues([row]);
     this.emitMultiSelect();
+
+    this.removeFocus();
   }
 
   public selectElement(row: Record<string, unknown>) {
@@ -405,7 +410,11 @@ export class TableComponent {
     this.updateSortingOfData({ active: null, direction: null });
   }
 
-  public menuOpened(state: boolean): void {
-    this.isMenuOpen = state;
+  public settingsOpened(state: boolean): void {
+    this.isSettingsOpen = state;
+  }
+
+  private removeFocus() {
+    (document.activeElement as HTMLElement).blur();
   }
 }

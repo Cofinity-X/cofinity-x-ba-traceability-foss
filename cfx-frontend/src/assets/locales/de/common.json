@@ -313,7 +313,7 @@
     "filterLabelDate": "Nach Datum filtern",
     "filterLabelSelect": "Wähle",
     "inputLabelText": "Suchen...",
-    "inputLabelDate": "TT/MM/JJJJ",
+    "inputLabelDate": "TT.MM.JJJJ",
     "inputTextHint": "Geben Sie die Anfangszeichen ein, die den Listeneinträgen entsprechen",
     "noResults": "Keine Resultate gefunden."
   },
