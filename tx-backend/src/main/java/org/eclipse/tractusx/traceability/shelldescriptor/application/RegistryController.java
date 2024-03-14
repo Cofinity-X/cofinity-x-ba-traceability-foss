@@ -38,7 +38,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "Registry")
 @RequestMapping(path = "/registry", produces = "application/json")
-@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+// TODO HGO@2024-03-14_11:36 just for testing purposes! DO NOT USE THIS FOR PRODUCTION!!!
+//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 @RequiredArgsConstructor
 public class RegistryController {
 

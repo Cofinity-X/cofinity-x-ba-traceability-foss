@@ -37,7 +37,8 @@ class RegistryControllerAuthorizationIT extends IntegrationTestSpecification {
     private static final String ROOT = "/api/registry";
 
     @ParameterizedTest
-    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#adminRoleAllowed")
+    // TODO HGO@2024-03-14_11:36 just for testing purposes! DO NOT USE THIS FOR PRODUCTION!!!
+    @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#noRoleRequired")
     void shouldAllowGetEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException {
         given()
                 .header(oAuth2Support.jwtAuthorizationWithOptionalRole(role))
