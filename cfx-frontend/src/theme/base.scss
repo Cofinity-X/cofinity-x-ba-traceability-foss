@@ -502,12 +502,27 @@
     padding-bottom: 20px !important;
   }
 
-  .mat-datepicker-toggle .mat-icon-button {
-    /* Disable pointer events */
-    pointer-events: none;
-    /* Disable ripple effect */
-    --mat-ripple-fg-opacity: 0 !important;
-    /* Use !important to ensure overriding */
+  .mat-datepicker-toggle {
+    padding-right: 7px;
+
+    .mat-icon-button {
+      /* Disable pointer events */
+      pointer-events: none;
+      /* Disable ripple effect */
+      --mat-ripple-fg-opacity: 0 !important;
+      /* Use !important to ensure overriding */
+    }
+
+    .mat-mdc-button-base {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+
+      .mat-mdc-button-touch-target {
+        width: 40px;
+        height: 40px;
+      }
+    }
   }
 
   .mat-mdc-card-header {
@@ -850,6 +865,10 @@ mat-date-range-input .mat-date-range-input-container .mat-date-range-input-wrapp
 .date-search {
   .mdc-text-field--outlined {
     padding-left: 10px;
+  }
+
+  .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-icon-suffix {
+    padding: 0;
   }
 }
 
