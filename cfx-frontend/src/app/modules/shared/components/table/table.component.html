@@ -327,5 +327,6 @@ SPDX-License-Identifier: Apache-2.0
   <app-table-settings [tableType]="tableType"
     (filtersReset)="onFiltersReset()"
     [defaultColumns]="tableViewConfig.displayedColumns"
-    [defaultFilterColumns]="tableViewConfig.displayedColumns"></app-table-settings>
+    [defaultFilterColumns]="tableViewConfig.displayedColumns"
+    [hideResetButton]="!autocompleteEnabled"></app-table-settings>
 </mat-menu>

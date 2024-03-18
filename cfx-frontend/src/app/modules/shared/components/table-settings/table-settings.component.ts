@@ -13,6 +13,7 @@ export class TableSettingsComponent {
   @Input() tableType: TableType;
   @Input() defaultColumns: string[];
   @Input() defaultFilterColumns: string[];
+  @Input() hideResetButton = false;
 
   @Output() filtersReset = new EventEmitter<void>();
 

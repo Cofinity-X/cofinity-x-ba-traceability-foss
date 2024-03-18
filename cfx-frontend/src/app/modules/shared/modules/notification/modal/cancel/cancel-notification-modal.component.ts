@@ -55,11 +55,11 @@ export class CancelNotificationModalComponent {
 
       this.cancelCall(notification.id).subscribe({
         next: () => {
-          this.toastService.success(this.translationContext + '.modal.successfullyCanceled');
+          this.toastService.success(this.translationContext + '.modal.successfullyCanceledTitle', this.translationContext + '.modal.successfullyCanceled');
           this.confirmActionCompleted.emit();
         },
         error: () => {
-          this.toastService.error(this.translationContext + '.modal.failedCancel');
+          this.toastService.error(this.translationContext + '.modal.failedCancelTitle', this.translationContext + '.modal.failedCancel');
         },
       });
     };
