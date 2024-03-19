@@ -19,10 +19,6 @@
 # SPDX-License-Identifier: Apache-2.0
 ################################################################################
 
-# own BPN
-traceability:
-  bpn: BPNL00000000J3NC
-
 spring:
   flyway:
     locations: /db/migration,/db/testdata-hella
@@ -175,3 +171,7 @@ spring:
       investigationNotificationReceivedId4b: "'829f95f4-38a8-4678-b761-ff66346a047e'"
       investigationNotificationReceivedId5a: "'55781066-d7ae-41f2-8adb-133983f18c2a'"
       investigationNotificationReceivedId5b: "'a9c8fa69-5e6b-4adc-99a2-307bf3a83f5d'"
+
+# own BPN
+traceability:
+  bpn: {bpnOwn}

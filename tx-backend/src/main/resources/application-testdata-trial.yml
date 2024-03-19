@@ -69,5 +69,6 @@ spring:
       assetAsBuiltId21: "'urn:uuid:1a0c64ea-a7b2-40fe-2e6b-0ad49e85f88a'"
       assetAsBuiltId22: "'urn:uuid:a4b7ef5c-ac34-4f47-0cbe-d6ffb69cb0d1'"
 
+# own BPN
 traceability:
   bpn: {bpnOwn}
