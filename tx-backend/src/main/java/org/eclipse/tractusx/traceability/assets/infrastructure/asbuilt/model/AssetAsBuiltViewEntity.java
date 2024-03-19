@@ -109,10 +109,10 @@ public class AssetAsBuiltViewEntity extends AssetBaseEntity {
                 .manufacturerPartId(this.getManufacturerPartId())
                 .owner(this.getOwner())
                 .childRelations(this.getChildDescriptors().stream()
-                        .map(child -> new Descriptions(child.getId(), child.getIdShort()))
+                        .map(child -> new Descriptions(child.getId(), child.getIdShort(), null, null))
                         .toList())
                 .parentRelations(this.getParentDescriptors().stream()
-                        .map(parent -> new Descriptions(parent.getId(), parent.getIdShort()))
+                        .map(parent -> new Descriptions(parent.getId(), parent.getIdShort(), null, null))
                         .toList())
                 .qualityType(this.getQualityType())
                 .van(this.getVan())
@@ -125,6 +125,8 @@ public class AssetAsBuiltViewEntity extends AssetBaseEntity {
                 .receivedQualityAlerts(emptyIfNull(this.alerts).stream().filter(alert -> NotificationSideBaseEntity.RECEIVER.equals(alert.getSide())).map(AlertEntity::toDomain).toList())
                 .sentQualityInvestigations(emptyIfNull(this.investigations).stream().filter(alert -> NotificationSideBaseEntity.SENDER.equals(alert.getSide())).map(InvestigationEntity::toDomain).toList())
                 .receivedQualityInvestigations(emptyIfNull(this.investigations).stream().filter(alert -> NotificationSideBaseEntity.RECEIVER.equals(alert.getSide())).map(InvestigationEntity::toDomain).toList())
+                .tombstone(this.getTombstone())
+                .contractAgreementId(this.getContractAgreementId())
                 .build();
     }
 

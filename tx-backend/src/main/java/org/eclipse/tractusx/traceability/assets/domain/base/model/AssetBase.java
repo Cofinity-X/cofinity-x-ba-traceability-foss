@@ -32,19 +32,15 @@ import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.Q
 
 import java.util.List;
 
-import static org.eclipse.tractusx.traceability.assets.domain.base.model.SemanticDataModel.BATCH;
-import static org.eclipse.tractusx.traceability.assets.domain.base.model.SemanticDataModel.JUSTINSEQUENCE;
-import static org.eclipse.tractusx.traceability.assets.domain.base.model.SemanticDataModel.SERIALPART;
-
 @Slf4j
 @AllArgsConstructor
 @Data
 @Builder
 public class AssetBase {
-    private final String id;
-    private final String idShort;
+    private String id;
+    private String idShort;
     private String semanticModelId;
-    private final String manufacturerId;
+    private String manufacturerId;
     private String manufacturerName;
     private String nameAtManufacturer;
     private String manufacturerPartId;
@@ -65,15 +61,19 @@ public class AssetBase {
     private ImportState importState;
     private String importNote;
     private String policyId;
+    private String tombstone;
+    private String contractAgreementId;
 
     public BomLifecycle getBomLifecycle() {
-        if(semanticDataModel.equals(SERIALPART) || semanticDataModel.equals(BATCH) || semanticDataModel.equals(JUSTINSEQUENCE)){
+        if (semanticDataModel.isAsBuilt()) {
             return BomLifecycle.AS_BUILT;
         } else {
             return BomLifecycle.AS_PLANNED;
         }
     }
-    public boolean isOwnAsset(final String bpn){
+
+    public boolean isOwnAsset(final String bpn) {
         return bpn.equals(manufacturerId);
     }
+
 }

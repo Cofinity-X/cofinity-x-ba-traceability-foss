@@ -30,6 +30,8 @@ SPDX-License-Identifier: Apache-2.0
   <ng-template #mainTmp let-parts="view" let-customContext="customContext">
     <app-parts-table
       [paginationData]="parts.data | formatPaginationSemanticDataModelToCamelCase"
+      [selectedPartsInfoLabel]="'page.selectedParts.info'"
+      [selectedPartsActionLabel]="'page.selectedParts.action'"
       [noShadow]="true"
       [labelId]="customContext.labelId"
       (selected)="onSelectItem($event)"
@@ -38,6 +40,7 @@ SPDX-License-Identifier: Apache-2.0
       [tableHeader]='"page.asBuiltParts" | i18n'
       (filterActivated)="filterActivated(true, $event )"
       [tableType]="TableType.AS_BUILT_CUSTOMER"
+      [mainAspectType]="bomLifecycle"
     ></app-parts-table>
   </ng-template>
 </div>
@@ -64,6 +67,7 @@ SPDX-License-Identifier: Apache-2.0
       [multiSortList]="tableCustomerAsPlannedSortList"
       (filterActivated)="filterActivated(false, $event )"
       [tableType]="TableType.AS_PLANNED_CUSTOMER"
+      [mainAspectType]="bomLifecycle"
     ></app-parts-table>
   </ng-template>
 </div>

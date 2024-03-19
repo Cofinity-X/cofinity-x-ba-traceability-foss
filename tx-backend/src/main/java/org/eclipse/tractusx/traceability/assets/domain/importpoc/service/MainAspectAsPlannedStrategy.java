@@ -80,9 +80,8 @@ public class MainAspectAsPlannedStrategy implements MappingStrategy {
                 .map(SingleLevelBomAsPlannedRequest::childItems)
                 .orElse(Collections.emptyList())
                 .stream()
-                .map(childItem -> new Descriptions(childItem.catenaXId(), null))
+                .map(childItem -> new Descriptions(childItem.catenaXId(), null, null, null))
                 .toList();
-
 
 
         List<Descriptions> childRelations = submodels.stream()
@@ -94,7 +93,7 @@ public class MainAspectAsPlannedStrategy implements MappingStrategy {
                 .map(SingleLevelUsageAsPlannedRequest::parentParts)
                 .orElse(Collections.emptyList())
                 .stream()
-                .map(parentPart -> new Descriptions(parentPart.parentCatenaXId(), null))
+                .map(parentPart -> new Descriptions(parentPart.parentCatenaXId(), null, null, null))
                 .toList();
 
         List<DetailAspectModel> detailAspectModels = new ArrayList<>();
@@ -102,15 +101,11 @@ public class MainAspectAsPlannedStrategy implements MappingStrategy {
             detailAspectModels.addAll(extractDetailAspectModelsPartSiteInformationAsPlanned(emptyIfNull(partSiteInformationAsPlannedRequest.sites())));
         }
 
-        if(partAsPlannedV2 != null) {
-            DetailAspectModel asPlannedDetailAspect = extractDetailAspectModelsAsPlanned(
-                    partAsPlannedV2.validityPeriod());
-            detailAspectModels.add(asPlannedDetailAspect);
-        }
-
-
         AssetBase.AssetBaseBuilder assetBaseBuilder = AssetBase.builder();
         if (partAsPlannedV2 != null) {
+            DetailAspectModel asPlannedDetailAspect = extractDetailAspectModelsAsPlanned(partAsPlannedV2.validityPeriod());
+            detailAspectModels.add(asPlannedDetailAspect);
+
             assetBaseBuilder
                     .id(assetImportRequestV2.assetMetaInfoRequest().catenaXId())
                     .manufacturerId(traceabilityProperties.getBpn().value())

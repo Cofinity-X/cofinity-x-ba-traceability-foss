@@ -35,6 +35,7 @@ import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.Q
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.exception.QualityNotificationIllegalUpdate;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.service.EdcNotificationService;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.service.NotificationPublisherService;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.investigation.model.exception.NotificationNotSupportedException;
 import org.eclipse.tractusx.traceability.testdata.AssetTestDataFactory;
 import org.eclipse.tractusx.traceability.testdata.InvestigationTestDataFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -51,13 +52,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -88,12 +87,11 @@ class NotificationPublisherServiceTest {
         // Given
         String description = "Test investigation";
         when(assetRepository.getAssetsById(Arrays.asList("asset-1", "asset-2"))).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
-        when(bpnRepository.findManufacturerName(anyString())).thenReturn(Optional.empty());
         when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
         String receiverBpn = "someReceiverBpn";
 
         // When
-        QualityNotification result = notificationPublisherService.startInvestigation(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBpn, true);
+        QualityNotification result = notificationPublisherService.startQualityNotification(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBpn, true);
 
         // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.CREATED);
@@ -105,6 +103,16 @@ class NotificationPublisherServiceTest {
     }
 
     @Test
+    void testThrowNotificationNotSupportedException() {
+        // Given
+        String description = "Test investigation";
+        String receiverBpn = "someReceiverBpn";
+
+        // Then
+        assertThrows(NotificationNotSupportedException.class, () -> notificationPublisherService.startQualityNotification(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBpn, false));
+    }
+
+    @Test
     void testStartAlertSuccessful() {
         // Given
         String description = "Test investigation";
@@ -113,7 +121,7 @@ class NotificationPublisherServiceTest {
         when(assetRepository.getAssetsById(Arrays.asList("asset-1", "asset-2"))).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
 
         // When
-        QualityNotification result = notificationPublisherService.startAlert(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBPN, true);
+        QualityNotification result = notificationPublisherService.startQualityNotification(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBPN, true);
 
         // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.CREATED);
@@ -195,7 +203,7 @@ class NotificationPublisherServiceTest {
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now().plusSeconds(10))
                 .targetDate(Instant.now())
-                .isInitial(false)
+                .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
                 .build();
 
         List<QualityNotificationMessage> notifications = new ArrayList<>();
@@ -241,7 +249,7 @@ class NotificationPublisherServiceTest {
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now().plusSeconds(10))
                 .targetDate(Instant.now())
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.ACCEPTED)
                 .affectedParts(affectedParts)
                 .build();
 
@@ -277,14 +285,14 @@ class NotificationPublisherServiceTest {
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now())
                 .targetDate(Instant.now())
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
                 .affectedParts(affectedParts)
                 .build();
 
         QualityNotificationMessage notification2 = QualityNotificationMessage.builder()
                 .id("456")
                 .notificationReferenceId("id123")
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.DECLINED)
                 .affectedParts(affectedParts)
                 .created(LocalDateTime.now().plusSeconds(10))
                 .targetDate(Instant.now())
@@ -329,7 +337,7 @@ class NotificationPublisherServiceTest {
                 .id("456")
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now().plusSeconds(10))
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.CLOSED)
                 .affectedParts(affectedParts)
                 .build();
 

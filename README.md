@@ -1,12 +1,10 @@
 <h1><img src="https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/frontend/src/assets/images/logo.svg" alt="Trace-X - Product Traceability FOSS Frontend (TRACE-FOSS)" style="width:200px;"/>Traceability FOSS</h1>
 
 [![Apache 2 License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/eclipse-tractusx/traceability-foss/LICENSE)
-[![Quality Gate Backend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-backend)
-[![Quality Gate Frontend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-frontend)
+[![QG Backend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-backend)
+[![QG Frontend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-frontend)
 [![Kics](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/kics.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/kics.yml)
 [![Trivy](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/trivy.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/trivy.yml)
-[![VeraCode Backend](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/veracode_backend.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/veracode_backend.yml)
-[![VeraCode Frontend](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/veracode_frontend.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/veracode_frontend.yml)
 [![Eclipse DASH IP Check](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/eclipse-dash.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/eclipse-dash.yml)
 [![[BE] Dependency check](https://github.com/catenax-ng/tx-traceability-foss/actions/workflows/dependency-check.yml/badge.svg)](https://github.com/catenax-ng/tx-traceability-foss/actions/workflows/dependency-check.yml)
 
@@ -25,14 +23,12 @@
     - [Getting started](https://github.com/eclipse-tractusx/traceability-foss/#getting-started)
     - [Application authentication](https://github.com/eclipse-tractusx/traceability-foss/#application-authentication)
     - [Application architecture & patterns](https://github.com/eclipse-tractusx/traceability-foss/#application-architecture--patterns)
-    - [User guide](https://github.com/eclipse-tractusx/traceability-foss/#user-guide)
+    - [User guide](#user-guide)
+    - [Frontend Testing strategy](#frontend-testing-strategy)
   - [The backend application](https://github.com/eclipse-tractusx/traceability-foss/#the-backend-application)
     - [Prerequisites](https://github.com/eclipse-tractusx/traceability-foss/#backend-prerequisites)
     - [Installation](https://github.com/eclipse-tractusx/traceability-foss/#backend-installation)
-    - [Running tests](https://github.com/eclipse-tractusx/traceability-foss/#running-tests)
-      - [Unit tests](https://github.com/eclipse-tractusx/traceability-foss/#unit-tests)
-      - [Integration tests](https://github.com/eclipse-tractusx/traceability-foss/#integration-tests)
-      - [Running all tests](https://github.com/eclipse-tractusx/traceability-foss/#running-all-tests)
+    - [Backend Testing strategy](#backend-testing-strategy)
   - [API documentation](https://github.com/eclipse-tractusx/traceability-foss/#api-documentation)
   - [Container Image](https://github.com/eclipse-tractusx/traceability-foss/#container-image)
   - [License](https://github.com/eclipse-tractusx/traceability-foss/#license)
@@ -106,6 +102,9 @@ so that you end up with a well-structured app.
 
 A detailed [explanation](https://github.com/eclipse-tractusx/traceability-foss/blob/main/docs/src/docs/user/user-manual.adoc) of how to use the application.
 
+### Frontend Testing Strategy
+See [TESTING](frontend/TESTING.md).
+
 ## The backend application
 
 ### Backend Prerequisites
@@ -117,36 +116,8 @@ A detailed [explanation](https://github.com/eclipse-tractusx/traceability-foss/b
 
 * see [Installation guide](https://github.com/eclipse-tractusx/traceability-foss/blob/main/tx-backend/INSTALL.md)
 
-### Running tests
-
-#### Unit tests
-
-To run unit tests invoke following command:
-
-```sh
-mvn clean test
-```
-
-#### Integration tests
-
-Product Traceability FOSS Backend relies on [Testcontainers library](https://www.testcontainers.org/) in order to provide
-persistence layer, thus [Docker Engine](https://docs.docker.com/engine/) is required to be running.
-
-To run integration tests via command line, invoke following command:
-
-```sh
-mvn -pl tx-models,tx-backend,tx-coverage -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B verify
-```
-
-#### Running all tests
-
-To run all tests invoke following command:
-
-```sh
-mvn -DskipTests=false clean verify
-```
-
-*Please note that this task depends on `integrationTest` task, so it's required to have [Docker Engine](https://docs.docker.com/engine/) running.*
+### Backend Testing Strategy
+See [TESTING](tx-backend/TESTING.md).
 
 ## API documentation
 The project follows [OpenAPI Specification](https://swagger.io/specification/) in order to document implemented REST Endpoints. The documentation can be found under [/openapi directory](https://github.com/eclipse-tractusx/traceability-foss/blob/main/tx-backend/openapi/traceability-foss-backend.json)
@@ -158,25 +129,17 @@ or can be viewed in the Swagger UI accessing the url: `{projectBasePath}/api/swa
 
 ## Notice for Docker image
 
-This application provides container images for demonstration purposes.
+Below you can find the information regarding Docker Notice for this application.
 
-Eclipse Tractus-X product(s) installed within the image:
+- [Traceability Backend Docker Notice](https://github.com/eclipse-tractusx/traceability-foss/blob/main/DOCKER_NOTICE.md)
+- [Traceability Frontend Docker Notice](https://github.com/eclipse-tractusx/traceability-foss/blob/main/frontend/DOCKER_NOTICE.md)
 
-DockerHub Backend: https://hub.docker.com/r/tractusx/traceability-foss
-DockerHub Frontend: https://hub.docker.com/r/tractusx/traceability-foss-frontend
+## Contact
 
-- GitHub: https://github.com/eclipse-tractusx/traceability-foss
-- Project home: https://projects.eclipse.org/projects/automotive.tractusx
-- Dockerfile Backend: https://github.com/eclipse-tractusx/traceability-foss/blob/main/Dockerfile
-- Dockerfile Frontend: https://github.com/eclipse-tractusx/traceability-foss/blob/main/frontend/Dockerfile
-- Project license: [Apache License, Version 2.0](https://github.com/eclipse-tractusx/traceability-foss/blob/main/LICENSE)
+Contact the Eclipse Tractus-X developers via the developer mailing list.
 
-**Used base image**
-- [eclipse-temurin:20-jre-alpine](https://github.com/adoptium/containers)
-- Official Eclipse Temurin DockerHub page: https://hub.docker.com/_/eclipse-temurin
-- Eclipse Temurin Project: https://projects.eclipse.org/projects/adoptium.temurin
-- Additional information about the Eclipse Temurin images: https://github.com/docker-library/repo-info/tree/master/repos/eclipse-temurin
+* https://accounts.eclipse.org/mailing-list/tractusx-dev
 
-As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
+Contact the project developers via eclipse matrix chat.
 
-As for any pre-built image usage, it is the image user's responsibility to ensure that any use of this image complies with any relevant licenses for all software contained within.
+* Eclipse Matrix Chat https://chat.eclipse.org/#/room/#tractusx-trace-x:matrix.eclipse.org

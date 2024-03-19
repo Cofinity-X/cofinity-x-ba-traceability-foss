@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,11 +54,11 @@ public class InvestigationsSupport {
         return jpaInvestigationRepository.save(entity).getId();
     }
 
-    public Long storeInvestigationWithStatusAndAssets(NotificationStatusBaseEntity status, List<AssetAsBuiltEntity> assetsAsBuilt, List<AssetAsPlannedEntity> assetsAsPlanned) {
-        return storeInvestigationWithStatusAndAssets(status, assetsAsBuilt, assetsAsPlanned, NotificationSideBaseEntity.RECEIVER);
+    public Long storeInvestigationWithStatusAndAssets(NotificationStatusBaseEntity status, List<AssetAsBuiltEntity> assetsAsBuilt) {
+        return storeInvestigationWithStatusAndAssets(status, assetsAsBuilt, NotificationSideBaseEntity.RECEIVER);
     }
 
-    public Long storeInvestigationWithStatusAndAssets(NotificationStatusBaseEntity status, List<AssetAsBuiltEntity> assetsAsBuilt, List<AssetAsPlannedEntity> assetsAsPlanned, NotificationSideBaseEntity side) {
+    public Long storeInvestigationWithStatusAndAssets(NotificationStatusBaseEntity status, List<AssetAsBuiltEntity> assetsAsBuilt, NotificationSideBaseEntity side) {
         InvestigationEntity entity = InvestigationEntity.builder()
                 .assets(Collections.emptyList())
                 .bpn("BPNL00000003AXS3")
@@ -70,7 +69,6 @@ public class InvestigationsSupport {
         Long alertId = storedInvestigation(entity);
         InvestigationEntity savedInvestigation = jpaInvestigationRepository.findById(alertId).get();
         savedInvestigation.setAssets(assetsAsBuilt);
-        savedInvestigation.setAssetsAsPlanned(assetsAsPlanned);
         jpaInvestigationRepository.save(savedInvestigation);
         return alertId;
     }

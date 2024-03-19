@@ -19,12 +19,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { ToastService } from 'src/app/modules/shared/components/toasts/toast.service';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError, retry} from 'rxjs/operators';
+import {ToastService} from 'src/app/modules/shared/components/toasts/toast.service';
 
 export class HttpErrorInterceptor implements HttpInterceptor {
+
+  // List of request.url that should not automatically display a toast but are handled custom (Can be extended later by METHOD)
+  private avoidList = ['/api/alerts', '/api/investigations', '/api/alerts/*/approve', '/api/investigations/*/approve']
   constructor(private readonly toastService: ToastService) {
   }
 
@@ -42,9 +45,26 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         const { error, message } = errorResponse;
         const errorMessage = !error.message ? message : `Backend returned code ${ error.status }: ${ error.message }`;
 
-        this.toastService.error(errorMessage);
+        // Check if the request URL matches any pattern in the avoidList
+        if (!this.isOnAlreadyHandledUrlList(request.url)) {
+          this.toastService.error(errorMessage);
+        }
+
         return throwError(() => errorResponse);
       }),
     );
   }
+
+// Helper method to check if the URL matches any pattern in the avoidList
+  private isOnAlreadyHandledUrlList(url: string): boolean {
+    return !this.avoidList.some(pattern => this.urlMatchesPattern(url, pattern));
+  }
+
+// Helper method to check if the URL matches a wildcard pattern
+  private urlMatchesPattern(url: string, pattern: string): boolean {
+    const regexPattern = pattern.replace(/\*/g, '.*');
+    const regex = new RegExp(`^${regexPattern}$`);
+    return regex.test(url);
+  }
+
 }

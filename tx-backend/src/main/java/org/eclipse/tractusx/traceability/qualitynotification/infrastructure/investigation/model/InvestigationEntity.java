@@ -23,6 +23,7 @@ package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.inv
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -33,7 +34,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
-import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.model.AssetAsPlannedEntity;
 import org.eclipse.tractusx.traceability.common.model.BPN;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
@@ -64,13 +64,6 @@ public class InvestigationEntity extends NotificationBaseEntity {
     )
     private List<AssetAsBuiltEntity> assets;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "assets_as_planned_investigations",
-            joinColumns = @JoinColumn(name = "investigation_id"),
-            inverseJoinColumns = @JoinColumn(name = "asset_id")
-    )
-    private List<AssetAsPlannedEntity> assetsAsPlanned;
 
     @OneToMany(mappedBy = "investigation")
     private List<InvestigationNotificationEntity> notifications;
@@ -97,21 +90,17 @@ public class InvestigationEntity extends NotificationBaseEntity {
                 .description(investigationEntity.getDescription())
                 .assetIds(assetIds)
                 .notifications(notifications)
-                .errorMessage(investigationEntity.getErrorMessage())
                 .build();
     }
 
     public static InvestigationEntity from(QualityNotification qualityNotification, List<AssetAsBuiltEntity> assetEntities) {
         return InvestigationEntity.builder()
                 .assets(assetEntities)
-                // TODO clarify how to handle assetsAsPlanned
-                .assetsAsPlanned(null)
                 .bpn(qualityNotification.getBpn())
                 .description(qualityNotification.getDescription())
                 .status(NotificationStatusBaseEntity.fromStringValue(qualityNotification.getNotificationStatus().name()))
                 .side(NotificationSideBaseEntity.valueOf(qualityNotification.getNotificationSide().name()))
                 .createdDate(qualityNotification.getCreatedAt())
-                .errorMessage(qualityNotification.getErrorMessage())
                 .build();
     }
 

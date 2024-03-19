@@ -13,7 +13,12 @@
     "adminRegistry": "Registry lookups",
     "adminBpn": "BPN - EDC configuration",
     "adminImport": "Data provisioning",
-    "unauthorized": "Functionality is disabled because of missing role. Ask your administrator to provide the required role for the functionality."
+    "unauthorized": "Functionality is disabled because of missing role. Ask your administrator to provide the required role for the functionality.",
+    "notAllowedForAsPlanned": "This function is not available for Parts in the Lifecycle \"AsPlanned\".",
+    "noChildPartsForInvestigation": "This function is not available for Parts without components.",
+    "noCustomerAsPlannedParts": "Customer parts in lifecycle \"AsPlanned\" are not available.",
+    "illegalAssetStateToPublish": "One or more selected parts are not in the required import state \"TRANSIENT\" or \"ERROR\".",
+    "adminContract": "Contracts"
   },
   "pageTitle": {
     "dashboard": "Dashboard",
@@ -61,6 +66,7 @@
     "publish": "Publish"
   },
   "table": {
+    "tombStone": "Tombstone",
     "noResultFound": "NO RESULTS FOUND.",
     "tryAgain": "Please try again later.",
     "selectPageSize": "Select page of periodic elements",
@@ -136,7 +142,8 @@
     "TRANSIENT": "TRANSIENT",
     "IN_SYNCHRONIZATION": "IN SYNCHRONIZATION",
     "ERROR": "ERROR",
-    "UNSET": "UNSET"
+    "UNSET": "UNSET",
+    "PUBLISHED_TO_CORE_SERVICES": "PUBLISHED"
   },
   "severity": {
     "MINOR": "Minor",
@@ -174,13 +181,16 @@
     "headline": "Create quality alert",
     "textAreaDescription": "Add a description about the alert.",
     "success_one": "You queued an alert for {{count}} part",
-    "success_other": "You queued an alert for {{count}} parts"
+    "success_other": "You queued an alert for {{count}} parts",
+    "serverError": "Server error:"
   },
   "requestInvestigations": {
     "headline": "Request quality investigation",
     "textAreaDescription": "Add a description about the investigation.",
     "success_one": "You queued an investigation for {{count}} part",
-    "success_other": "You queued an investigation for {{count}} parts"
+    "success_other": "You queued an investigation for {{count}} parts",
+    "serverError": "Server error:"
+
   },
   "requestNotification": {
     "partDescription": "You selected the following parts:",
@@ -193,7 +203,12 @@
     "cancel": "CANCEL",
     "submit": "ADD TO QUEUE",
     "severity": "Severity",
-    "severityDescription": "Select the severity for the problem at hand"
+    "severityDescription": "Select the severity for the problem at hand",
+    "serverError": "Server error:"
+  },
+  "requestPublishAssets": {
+    "success": "Request to publish assets was successful",
+    "error": ""
   },
   "pagination": {
     "itemsPerPageLabel": "Items per page:",
@@ -240,7 +255,7 @@
       "successfullyDeclined": "Investigation was declined successfully.",
       "failedAccept": "Investigation failed to accept, please try again.",
       "failedAcknowledge": "Investigation failed to acknowledge, please try again.",
-      "failedApprove": "Investigation failed to approve, please try again.",
+      "failedApprove": "Investigation failed to send, please try again.",
       "failedCancel": "Investigation failed to cancel, please try again.",
       "failedClose": "Investigation failed to close, please try again.",
       "failedDecline": "Investigation failed to decline, please try again."
@@ -282,7 +297,7 @@
       "successfullyDeclined": "Alert was declined successfully.",
       "failedAccept": "Alert failed to accept, please try again.",
       "failedAcknowledge": "Alert failed to acknowledge, please try again.",
-      "failedApprove": "Alert failed to approve, please try again.",
+      "failedApprove": "Alert failed to send, please try again.",
       "failedCancel": "Alert failed to cancel, please try again.",
       "failedClose": "Alert failed to close, please try again.",
       "failedDecline": "Alert failed to decline, please try again."
@@ -322,7 +337,8 @@
       "PERSISTENT": "Persistent",
       "IN_SYNCHRONIZATION": "In Synchronization",
       "ERROR": "Error",
-      "UNSET": "Unset"
+      "UNSET": "Unset",
+      "PUBLISHED_TO_CORE_SERVICES": "Veröffentlicht"
 
     }
   },
@@ -339,5 +355,6 @@
     "cancel": "Reset",
     "startDate": "Start Date",
     "endDate": "End Date"
-  }
+  },
+  "retry": "Try again"
 }

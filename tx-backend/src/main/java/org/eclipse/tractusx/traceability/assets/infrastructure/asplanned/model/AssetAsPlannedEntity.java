@@ -24,7 +24,6 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -38,16 +37,11 @@ import org.eclipse.tractusx.traceability.assets.domain.base.model.Descriptions;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.aspect.DetailAspectModel;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.model.AssetBaseEntity;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.model.SemanticDataModelEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.submodel.infrastructure.model.SubmodelPayloadEntity;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.eclipse.tractusx.traceability.common.date.DateUtil.toInstant;
 
 @Getter
@@ -69,15 +63,6 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
     @CollectionTable(name = "assets_as_planned_childs", joinColumns = {@JoinColumn(name = "asset_as_planned_id")})
     private List<AssetAsPlannedEntity.ChildDescription> childDescriptors;
 
-    @ManyToMany(mappedBy = "assetsAsPlanned")
-    private List<InvestigationEntity> investigations = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "assetsAsPlanned")
-    private List<AlertEntity> alerts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "assetAsPlanned", fetch = FetchType.EAGER)
-    private List<SubmodelPayloadEntity> submodels;
-
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -87,6 +72,10 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
         private String id;
         private String idShort;
     }
+
+    @OneToMany(mappedBy = "assetAsPlanned", fetch = FetchType.EAGER)
+    private List<SubmodelPayloadEntity> submodels;
+
 
     public static AssetAsPlannedEntity from(AssetBase asset) {
         List<DetailAspectModel> detailAspectModels = asset.getDetailAspectModels();
@@ -117,6 +106,8 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
                 .importState(asset.getImportState())
                 .importNote(asset.getImportNote())
                 .policyId(asset.getPolicyId())
+                .tombstone(asset.getTombstone())
+                .contractAgreementId(asset.getContractAgreementId())
                 .build();
     }
 
@@ -134,17 +125,15 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
                 .semanticModelId(entity.getSemanticModelId())
                 .owner(entity.getOwner())
                 .childRelations(entity.getChildDescriptors().stream()
-                        .map(child -> new Descriptions(child.getId(), child.getIdShort()))
+                        .map(child -> new Descriptions(child.getId(), child.getIdShort(), null, null))
                         .toList())
                 .qualityType(entity.getQualityType())
                 .detailAspectModels(DetailAspectModel.from(entity))
-                .sentQualityAlerts(emptyIfNull(entity.alerts).stream().filter(alert -> NotificationSideBaseEntity.SENDER.equals(alert.getSide())).map(AlertEntity::toDomain).toList())
-                .receivedQualityAlerts(emptyIfNull(entity.alerts).stream().filter(alert -> NotificationSideBaseEntity.RECEIVER.equals(alert.getSide())).map(AlertEntity::toDomain).toList())
-                .sentQualityInvestigations(emptyIfNull(entity.investigations).stream().filter(alert -> NotificationSideBaseEntity.SENDER.equals(alert.getSide())).map(InvestigationEntity::toDomain).toList())
-                .receivedQualityInvestigations(emptyIfNull(entity.investigations).stream().filter(alert -> NotificationSideBaseEntity.RECEIVER.equals(alert.getSide())).map(InvestigationEntity::toDomain).toList())
                 .importState(entity.getImportState())
                 .importNote(entity.getImportNote())
                 .policyId(entity.getPolicyId())
+                .tombstone(entity.getTombstone())
+                .contractAgreementId(entity.getContractAgreementId())
                 .build();
     }
 

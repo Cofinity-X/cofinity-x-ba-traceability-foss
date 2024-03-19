@@ -62,7 +62,7 @@ import java.util.List;
 
 import static org.eclipse.tractusx.traceability.common.model.SecurityUtils.sanitize;
 import static org.eclipse.tractusx.traceability.qualitynotification.application.validation.UpdateQualityNotificationValidator.validate;
-import static org.eclipse.tractusx.traceability.qualitynotification.domain.alert.model.exception.StartQualityNotificationDomain.from;
+import static org.eclipse.tractusx.traceability.qualitynotification.domain.alert.model.StartQualityNotification.from;
 import static org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus.from;
 
 
@@ -75,6 +75,8 @@ import static org.eclipse.tractusx.traceability.qualitynotification.domain.base.
 public class AlertController {
 
     private final QualityNotificationService alertService;
+
+    // TODO move to QualityNotificationService
     private final BaseRequestFieldMapper fieldMapper;
 
     public AlertController(
@@ -150,7 +152,8 @@ public class AlertController {
             security = @SecurityRequirement(name = "oAuth2", scopes = "profile email"))
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Returns the paged result found for Asset", content = @Content(
             mediaType = "application/json",
-            array = @ArraySchema(arraySchema = @Schema(description = "AlertData", implementation = AlertResponse.class, additionalProperties = Schema.AdditionalPropertiesValue.FALSE), maxItems = Integer.MAX_VALUE)
+            array = @ArraySchema(arraySchema = @Schema(description = "AlertData", implementation = AlertResponse.class, additionalProperties = Schema.AdditionalPropertiesValue.FALSE), maxItems = Integer.MAX_VALUE),
+            schema = @Schema(implementation = AlertResponse.class)
     )),
             @ApiResponse(
                     responseCode = "400",
@@ -529,7 +532,7 @@ public class AlertController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Returns a distinct filter values for given fieldName.", content = @Content(
             mediaType = "application/json",
             array = @ArraySchema(
-                    arraySchema = @Schema(
+                    schema = @Schema(
                             description = "FilterValues",
                             implementation = String.class,
                             additionalProperties = Schema.AdditionalPropertiesValue.FALSE

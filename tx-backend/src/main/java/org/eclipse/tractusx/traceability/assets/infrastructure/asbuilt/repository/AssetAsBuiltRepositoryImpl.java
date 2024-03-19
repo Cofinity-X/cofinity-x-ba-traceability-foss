@@ -23,7 +23,6 @@ package org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.reposito
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.exception.AssetNotFoundException;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.repository.AssetAsBuiltRepository;
@@ -36,6 +35,7 @@ import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.AssetCal
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.model.AssetBaseEntity;
 import org.eclipse.tractusx.traceability.common.repository.CriteriaUtility;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.AbstractMap;
 import java.util.List;
@@ -57,6 +57,12 @@ public class AssetAsBuiltRepositoryImpl implements AssetAsBuiltRepository, Asset
         return jpaAssetAsBuiltRepository.findById(assetId)
                 .map(AssetAsBuiltEntity::toDomain)
                 .orElseThrow(() -> new AssetNotFoundException("Asset with id %s was not found.".formatted(assetId)));
+    }
+
+    @Override
+    @Transactional
+    public boolean existsById(String assetId) {
+        return jpaAssetAsBuiltRepository.existsById(assetId);
     }
 
     @Override
@@ -87,6 +93,7 @@ public class AssetAsBuiltRepositoryImpl implements AssetAsBuiltRepository, Asset
     }
 
     @Override
+    @Transactional
     public AssetBase save(AssetBase asset) {
         return jpaAssetAsBuiltRepository.save(AssetAsBuiltEntity.from(asset)).toDomain();
     }
@@ -102,7 +109,7 @@ public class AssetAsBuiltRepositoryImpl implements AssetAsBuiltRepository, Asset
     @Override
     @Transactional
     public List<AssetBase> saveAllIfNotInIRSSyncAndUpdateImportStateAndNote(List<AssetBase> assets) {
-        if(Objects.isNull(assets)) {
+        if (Objects.isNull(assets)) {
             return List.of();
         }
         List<AssetAsBuiltEntity> toPersist = assets.stream().map(assetToPersist -> new AbstractMap.SimpleEntry<AssetBase, AssetBaseEntity>(assetToPersist, jpaAssetAsBuiltRepository.findById(assetToPersist.getId()).orElse(null)))
@@ -123,6 +130,23 @@ public class AssetAsBuiltRepositoryImpl implements AssetAsBuiltRepository, Asset
             return true;
         }
         return assetBaseAssetBaseEntitySimpleEntry.getValue().getImportState() == ImportState.TRANSIENT;
+    }
+
+    @Transactional
+    @Override
+    public List<AssetBase> findByImportStateIn(ImportState... importStates) {
+        return jpaAssetAsBuiltRepository.findByImportStateIn(importStates).stream()
+                .map(AssetAsBuiltEntity::toDomain).toList();
+    }
+
+    @Override
+    public void updateImportStateAndNoteForAssets(ImportState importState, String importNote, List<String> assetIds) {
+        List<AssetAsBuiltEntity> assets = jpaAssetAsBuiltRepository.findByIdIn(assetIds);
+        assets.forEach(assetAsBuilt -> {
+            assetAsBuilt.setImportState(importState);
+            assetAsBuilt.setImportNote(importNote);
+        });
+        jpaAssetAsBuiltRepository.saveAll(assets);
     }
 
     @Override

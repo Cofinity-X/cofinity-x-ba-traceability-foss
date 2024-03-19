@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,11 +23,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.application.importpoc.PublishService;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.repository.AssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.assets.domain.asplanned.repository.AssetAsPlannedRepository;
+import org.eclipse.tractusx.traceability.assets.domain.base.AssetRepository;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.AssetBase;
+import org.eclipse.tractusx.traceability.assets.domain.base.model.ImportNote;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.ImportState;
+import org.eclipse.tractusx.traceability.assets.domain.importpoc.exception.PublishAssetException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.eclipse.tractusx.traceability.assets.domain.base.model.ImportState.ERROR;
+import static org.eclipse.tractusx.traceability.assets.domain.base.model.ImportState.TRANSIENT;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,22 +46,57 @@ public class PublishServiceImpl implements PublishService {
 
     private final AssetAsPlannedRepository assetAsPlannedRepository;
     private final AssetAsBuiltRepository assetAsBuiltRepository;
+    private final AsyncPublishService asyncPublishService;
 
     @Override
-    public void publishAssets(String policyId, List<String> assetIds) {
-        //Update assets with policy id
-        List<AssetBase> assetAsPlannedList = assetAsPlannedRepository.getAssetsById(assetIds).stream()
-                .filter(assetAsPlanned -> ImportState.TRANSIENT.equals(assetAsPlanned.getImportState()))
-                .peek(assetAsPlanned -> assetAsPlanned.setImportState(ImportState.IN_SYNCHRONIZATION))
-                .peek(assetAsPlanned -> assetAsPlanned.setPolicyId(policyId))
-                .toList();
-        assetAsPlannedRepository.saveAll(assetAsPlannedList);
+    @Transactional
+    public void publishAssets(String policyId, List<String> assetIds, boolean triggerSynchronizeAssets) {
+        assetIds.forEach(this::throwIfNotExists);
 
-        List<AssetBase> assetAsBuiltList = assetAsBuiltRepository.getAssetsById(assetIds).stream()
-                .filter(assetAsBuilt -> ImportState.TRANSIENT.equals(assetAsBuilt.getImportState()))
-                .peek(assetAsBuilt -> assetAsBuilt.setImportState(ImportState.IN_SYNCHRONIZATION))
-                .peek(assetAsBuilt -> assetAsBuilt.setPolicyId(policyId))
-                .toList();
-        assetAsBuiltRepository.saveAll(assetAsBuiltList);
+        //Update assets with policy id
+        log.info("Updating status of asPlannedAssets.");
+        List<AssetBase> updatedAsPlannedAssets = updateAssetWithStatusAndPolicy(policyId, assetIds, assetAsPlannedRepository);
+        log.info("Updating status of asBuiltAssets.");
+        List<AssetBase> updatedAsBuiltAssets = updateAssetWithStatusAndPolicy(policyId, assetIds, assetAsBuiltRepository);
+
+        publishAssetsToCoreServices(
+                Stream.concat(updatedAsPlannedAssets.stream(), updatedAsBuiltAssets.stream()).toList(),
+                triggerSynchronizeAssets
+        );
+    }
+
+    @Override
+    public void publishAssetsToCoreServices(List<AssetBase> assets, boolean triggerSynchronizeAssets) {
+        asyncPublishService.publishAssetsToCoreServices(assets, triggerSynchronizeAssets);
+    }
+
+    private void throwIfNotExists(String assetId) {
+        if (!(assetAsBuiltRepository.existsById(assetId) || assetAsPlannedRepository.existsById(assetId))) {
+            throw new PublishAssetException("No asset found with the provided ID: " + assetId);
+        }
+    }
+
+    private List<AssetBase> updateAssetWithStatusAndPolicy(String policyId, List<String> assetIds, AssetRepository repository) {
+        List<AssetBase> assetList = repository.getAssetsById(assetIds);
+        List<AssetBase> saveList = assetList.stream()
+                .filter(this::validTransientOrErrorState)
+                .map(asset -> {
+                    asset.setImportState(ImportState.IN_SYNCHRONIZATION);
+                    asset.setImportNote(ImportNote.IN_SYNCHRONIZATION);
+                    asset.setPolicyId(policyId);
+                    return asset;
+                }).toList();
+
+        List<AssetBase> assetBases = repository.saveAll(saveList);
+
+        log.info("Successfully set {} in status IN_SYNCHRONIZATION", assetBases.stream().map(AssetBase::getId).collect(Collectors.joining(", ")));
+        return assetBases;
+    }
+
+    private boolean validTransientOrErrorState(AssetBase assetBase) {
+        if (TRANSIENT.equals(assetBase.getImportState()) || ERROR.equals(assetBase.getImportState())) {
+            return true;
+        }
+        throw new PublishAssetException("Asset with ID " + assetBase.getId() + " is not in TRANSIENT state.");
     }
 }

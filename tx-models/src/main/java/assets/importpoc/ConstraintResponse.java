@@ -18,15 +18,16 @@
  ********************************************************************************/
 package assets.importpoc;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
-import java.util.List;
-
+@Builder
 public record ConstraintResponse(
-        @ApiModelProperty("PURPOSE")
+        @Schema(example = "PURPOSE")
         String leftOperand,
 
+        @Schema
         OperatorTypeResponse operatorTypeResponse,
-        @ApiModelProperty("ID Trace 3.1")
-        List<String> rightOperands) {
+        @Schema(example = "ID Trace 3.1")
+        String rightOperand) {
 }

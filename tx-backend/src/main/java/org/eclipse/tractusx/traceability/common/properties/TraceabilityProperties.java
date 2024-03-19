@@ -37,7 +37,6 @@ import java.time.OffsetDateTime;
 public class TraceabilityProperties {
 
     private BPN bpn;
-
     private String url;
 
     private String leftOperand;
@@ -46,7 +45,12 @@ public class TraceabilityProperties {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime validUntil;
 
-    private SupportedAspectTypes supportedAspectTypes;
+    private String adminApiKey;
+
+    private String regularApiKey;
+
+    private String irsBase;
+    private String submodelBase;
 
     public String getIrsJobCallbackUrl() {
         return url+"/irs/job/callback?id={id}&state={state}";

@@ -218,6 +218,7 @@ class AssetAsPlannedControllerFilterValuesIT extends IntegrationTestSpecificatio
                 .assertThat()
                 .body("size()", is(1));
     }
+
     @Test
     void givenEnumTypeFieldNameImportState_whenCallDistinctFilterValues_thenProperResponse() throws JoseException {
         // given
@@ -240,7 +241,7 @@ class AssetAsPlannedControllerFilterValuesIT extends IntegrationTestSpecificatio
                 .log().all()
                 .statusCode(200)
                 .assertThat()
-                .body("size()", is(5));
+                .body("size()", is(6));
     }
 
     private static Stream<Arguments> fieldNameTestProvider() {
@@ -248,7 +249,7 @@ class AssetAsPlannedControllerFilterValuesIT extends IntegrationTestSpecificatio
                 Arguments.of("id", 10L, 2),
                 Arguments.of("id", 1L, 1),
                 Arguments.of("owner", 10L, 4),
-                Arguments.of("semanticDataModel", 10L, 5),
+                Arguments.of("semanticDataModel", 10L, 7),
                 Arguments.of("qualityType", 10L, 5)
         );
     }

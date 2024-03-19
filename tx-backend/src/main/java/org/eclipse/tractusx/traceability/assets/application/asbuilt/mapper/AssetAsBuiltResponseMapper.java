@@ -58,6 +58,8 @@ public class AssetAsBuiltResponseMapper extends AssetBaseResponseMapper {
                 .receivedQualityInvestigationIdsInStatusActive(getNotificationIdsInActiveState(asset.getReceivedQualityInvestigations()))
                 .importState(toImportStateResponse(asset.getImportState()))
                 .importNote(asset.getImportNote())
+                .tombstone(asset.getTombstone())
+                .contractAgreementId(asset.getContractAgreementId())
                 .build();
     }
 

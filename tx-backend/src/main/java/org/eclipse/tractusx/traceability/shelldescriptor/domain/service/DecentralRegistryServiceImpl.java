@@ -23,9 +23,11 @@ package org.eclipse.tractusx.traceability.shelldescriptor.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.tractusx.irs.component.Shell;
 import org.eclipse.tractusx.irs.component.assetadministrationshell.AssetAdministrationShellDescriptor;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.service.AssetAsBuiltServiceImpl;
 import org.eclipse.tractusx.traceability.assets.domain.asplanned.service.AssetAsPlannedServiceImpl;
+import org.eclipse.tractusx.traceability.assets.domain.base.model.ImportState;
 import org.eclipse.tractusx.traceability.common.config.AssetsAsyncConfig;
 import org.eclipse.tractusx.traceability.common.properties.TraceabilityProperties;
 import org.eclipse.tractusx.traceability.shelldescriptor.application.DecentralRegistryService;
@@ -34,6 +36,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.eclipse.tractusx.traceability.assets.domain.base.model.SemanticDataModel.BATCH;
+import static org.eclipse.tractusx.traceability.assets.domain.base.model.SemanticDataModel.JUSTINSEQUENCE;
+import static org.eclipse.tractusx.traceability.assets.domain.base.model.SemanticDataModel.PARTASPLANNED;
+import static org.eclipse.tractusx.traceability.assets.domain.base.model.SemanticDataModel.SERIALPART;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -45,41 +52,35 @@ public class DecentralRegistryServiceImpl implements DecentralRegistryService {
     private final TraceabilityProperties traceabilityProperties;
     private final DecentralRegistryRepository decentralRegistryRepository;
 
+    private static final List<String> AS_BUILT_ASPECT_TYPES = List.of(SERIALPART.getValue(), BATCH.getValue(), JUSTINSEQUENCE.getValue());
+    private static final List<String> AS_PLANNED_ASPECT_TYPES = List.of(PARTASPLANNED.getValue());
+
     @Override
     @Async(value = AssetsAsyncConfig.LOAD_SHELL_DESCRIPTORS_EXECUTOR)
     public void synchronizeAssets() {
+        List<Shell> shellDescriptors = decentralRegistryRepository.retrieveShellDescriptorsByBpn(traceabilityProperties.getBpn().toString());
+        List<String> asBuiltAssetIds = shellDescriptors.stream().map(Shell::payload).filter(this::isAsBuilt).map(AssetAdministrationShellDescriptor::getGlobalAssetId).toList();
+        List<String> asPlannedAssetIds = shellDescriptors.stream().map(Shell::payload).filter(this::isAsPlanned).map(AssetAdministrationShellDescriptor::getGlobalAssetId).toList();
 
-        // TODO we will retrieve Collections<AssetAdministrationShellDescriptor> and need to filter for each semanticModelIdKey
-        // Example of response: 	"idShort": "SingleLevelUsageAsBuilt",
-        //					"id": "urn:uuid:3fa9cf02-1064-459f-a17e-1cbc819c2f2e",
-        //					"semanticId": {
-        //						"type": "ExternalReference",
-        //						"keys": [
-        //							{
-        //								"type": "GlobalReference",
-        //								"value": "urn:bamm:io.catenax.single_level_usage_as_built:2.0.0#SingleLevelUsageAsBuilt"
-        //							}
-        //						]
-        //					},
-        //					"supplementalSemanticId": [],
-        //					"description": [],
-        //					"displayName": []
-        //				}
-        //			]
-        //		},
-        // https://irs-aas-registry.dev.demo.catena-x.net/semantics/registry/api/v3.0/shell-descriptors
-        // Result should be a list of globalAssetIds associcated with asBuilt and another list asPlanned
+        List<String> existingAsBuiltInSyncAndTransientStates = assetAsBuiltService.getAssetIdsInImportState(ImportState.TRANSIENT, ImportState.IN_SYNCHRONIZATION);
+        List<String> existingAsPlannedInSyncAndTransientStates = assetAsPlannedService.getAssetIdsInImportState(ImportState.TRANSIENT, ImportState.IN_SYNCHRONIZATION);
+
+        List<String> asBuiltAssetsToSync = asBuiltAssetIds.stream().filter(assetId -> !existingAsBuiltInSyncAndTransientStates.contains(assetId)).toList();
+        List<String> asPlannedAssetsToSync = asPlannedAssetIds.stream().filter(assetId -> !existingAsPlannedInSyncAndTransientStates.contains(assetId)).toList();
+
+        asBuiltAssetsToSync.forEach(assetAsBuiltService::synchronizeAssetsAsync);
+        asPlannedAssetsToSync.forEach(assetAsPlannedService::synchronizeAssetsAsync);
+    }
 
 
+    // TODO: consider creating support method on AssetAdministrationShellDescriptor.is(BomLifecycle lifecycle) that will be usable on our code
+    // IRS already have BomLifecycle in their domain so we can use it there also
+    private boolean isAsBuilt(AssetAdministrationShellDescriptor shellDescriptor) {
+        return !shellDescriptor.filterDescriptorsByAspectTypes(AS_BUILT_ASPECT_TYPES).isEmpty();
+    }
 
-        List<String> globalAssetIdsForApplicationBpn = decentralRegistryRepository.retrieveShellDescriptorsByBpn(traceabilityProperties.getBpn().toString());
-        globalAssetIdsForApplicationBpn
-                .forEach(globalAssetId -> {
-                    //TODO: differentiate if this is either as-planned or as-built. Otherwise we have twice the load here.
-                    // DT-Library offers methods to requests additional info to get the bomlifecycle
-                    assetAsPlannedService.synchronizeAssetsAsync(globalAssetId);
-                    assetAsBuiltService.synchronizeAssetsAsync(globalAssetId);
-                });
+    private boolean isAsPlanned(AssetAdministrationShellDescriptor shellDescriptor) {
+        return !shellDescriptor.filterDescriptorsByAspectTypes(AS_PLANNED_ASPECT_TYPES).isEmpty();
     }
 }
 
