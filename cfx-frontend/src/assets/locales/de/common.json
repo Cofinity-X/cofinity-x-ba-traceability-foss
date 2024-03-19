@@ -262,7 +262,7 @@
       "failedApprove": "Die Untersuchung konnte nicht genehmigt werden, bitte versuchen Sie es erneut.",
       "failedApproveTitle": "Genehmigung der Untersuchung gescheitert",
       "failedCancel": "Die Untersuchung konnte nicht gelöscht werden, bitte versuchen Sie es erneut.",
-      "failedCancelTitle": "Untersuchung abbrechen gescheitert",
+      "failedCancelTitle": "Untersuchung abbrechen fehlgeschlagen",
       "failedClose": "Die Untersuchung konnte nicht abgeschlossen werden, bitte versuchen Sie es erneut.",
       "failedCloseTitle": "Enge Untersuchung fehlgeschlagen",
       "failedDecline": "Untersuchung konnte nicht abgelehnt werden, bitte versuchen Sie es erneut.",
