@@ -26,6 +26,7 @@ import {
   ADMIN_BASE_ROUTE,
   ALERT_BASE_ROUTE,
   DASHBOARD_BASE_ROUTE,
+  IMPRINT_BASE_ROUTE,
   INVESTIGATION_BASE_ROUTE,
   NO_PERMISSION_BASE_ROUTE,
   OTHER_PARTS_BASE_ROUTE,
@@ -35,6 +36,7 @@ import { RoleGuard } from '@core/user/role.guard';
 import { Role } from '@core/user/role.model';
 import { AdminComponent } from '@page/admin/presentation/admin.component';
 import { ErrorPageType } from '@page/error-page/model/error-page.model';
+import { IMPRINT_ROUTING } from '@page/imprint/imprint.routing';
 import { I18NEXT_NAMESPACE_RESOLVER } from 'angular-i18next';
 
 export /** @type {*} */
@@ -105,6 +107,15 @@ export /** @type {*} */
       loadChildren: () => import('../../page/about/about.module').then(m => m.AboutModule),
       data: {
         breadcrumb: 'about',
+        roles: [Role.USER, Role.ADMIN],
+      },
+      canActivate: [RoleGuard],
+    },
+    {
+      path: IMPRINT_BASE_ROUTE,
+      loadChildren: () => import('../../page/imprint/imprint.module').then(m => m.ImprintModule),
+      data: {
+        breadcrumb: 'imprint',
         roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],
