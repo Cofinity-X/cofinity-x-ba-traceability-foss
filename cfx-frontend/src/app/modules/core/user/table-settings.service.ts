@@ -20,8 +20,8 @@
 import { Injectable } from '@angular/core';
 import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
 import { TableViewConfig } from '@shared/components/parts-table/table-view-config.model';
-import { KeycloakService } from 'keycloak-angular';
 import { Subject } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,14 +30,10 @@ export class TableSettingsService {
   private settingsKey = 'TableViewSettings';
   private changeEvent = new Subject<void>();
 
-  constructor(private keycloakService: KeycloakService) { }
+  constructor(private userService: UserService) { }
 
-  async storeTableSettings(tableSettingsList: any): Promise<void> {
-    // if (this.keycloakService.getUserRoles().length === 0) {
-    //   return;
-    // }
-
-    // const profile = await this.keycloakService.loadUserProfile();
+  storeTableSettings(tableSettingsList: any): void {
+    const { username } = this.userService;
 
     // before setting anything, all maps in new tableSettingList should be stringified
     Object.keys(tableSettingsList).forEach(tableSetting => {
@@ -45,17 +41,14 @@ export class TableSettingsService {
       tableSettingsList[tableSetting].columnSettingsOptions = JSON.stringify(Array.from(newMap.entries()));
     });
 
-    localStorage.setItem(`${this.settingsKey}_${'test'}`, JSON.stringify(tableSettingsList));
+    localStorage.setItem(`${this.settingsKey}_${username}`, JSON.stringify(tableSettingsList));
   }
 
   // this returns whole settings whether empty / not for part / etc.
-  async getStoredTableSettings(): Promise<any> {
-    // if (this.keycloakService.getUserRoles().length === 0) {
-    //   return;
-    // }
+  getStoredTableSettings(): any {
+    const { username } = this.userService;
 
-    // const profile = await this.keycloakService.loadUserProfile();
-    const settingsJson = localStorage.getItem(`${this.settingsKey}_${'test'}`);
+    const settingsJson = localStorage.getItem(`${this.settingsKey}_${username}`);
     const settingsObject = settingsJson ? JSON.parse(settingsJson) : null;
     if (!settingsObject) {
       return;
@@ -69,10 +62,11 @@ export class TableSettingsService {
     return settingsObject;
   }
 
-  async storedTableSettingsInvalid(tableViewConfig: TableViewConfig, tableType: TableType): Promise<boolean> {
+  storedTableSettingsInvalid(tableViewConfig: TableViewConfig, tableType: TableType): boolean {
     let isInvalid = false;
 
-    const storage = await this.getStoredTableSettings();
+    const storage = this.getStoredTableSettings();
+
     if (!storage?.[tableType]) {
       return false;
     }

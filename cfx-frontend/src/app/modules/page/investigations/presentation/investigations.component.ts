@@ -176,6 +176,7 @@ export class InvestigationsComponent {
       this.pagination.page,
       this.pagination.pageSize,
       this.investigationReceivedSortList,
+      null, this.receivedFilter
     );
   }
 
@@ -192,6 +193,7 @@ export class InvestigationsComponent {
       this.pagination.page,
       this.pagination.pageSize,
       this.investigationQueuedAndRequestedSortList,
+      null, this.requestedFilter
     );
   }
 

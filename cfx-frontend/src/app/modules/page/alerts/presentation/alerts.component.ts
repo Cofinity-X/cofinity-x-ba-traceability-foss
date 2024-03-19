@@ -58,7 +58,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
-  styleUrls: [ './alerts.component.scss' ],
+  styleUrls: ['./alerts.component.scss'],
 })
 export class AlertsComponent {
   @ViewChild(NotificationCommonModalComponent) notificationCommonModalComponent: NotificationCommonModalComponent;
@@ -93,7 +93,7 @@ export class AlertsComponent {
   private pagination: TableEventConfig = {
     page: 0,
     pageSize: this.DEFAULT_PAGE_SIZE,
-    sorting: [ 'createdDate', 'desc' ],
+    sorting: ['createdDate', 'desc'],
   };
 
   protected readonly TableType = TableType;
@@ -160,6 +160,8 @@ export class AlertsComponent {
       this.pagination.page,
       this.pagination.pageSize,
       this.alertReceivedSortList,
+      null,
+      this.receivedFilter,
     );
   }
 
@@ -176,6 +178,8 @@ export class AlertsComponent {
       this.pagination.page,
       this.pagination.pageSize,
       this.alertQueuedAndRequestedSortList,
+      null,
+      this.requestedFilter,
     );
   }
 
@@ -188,7 +192,7 @@ export class AlertsComponent {
     const { link } = getRoute(ALERT_BASE_ROUTE);
     const tabIndex = this.route.snapshot.queryParamMap.get('tabIndex');
     const tabInformation: NotificationTabInformation = { tabIndex: tabIndex, pageNumber: this.pagination.page };
-    this.router.navigate([ `/${ link }/${ notification.id }` ], { queryParams: tabInformation });
+    this.router.navigate([`/${link}/${notification.id}`], { queryParams: tabInformation });
   }
 
   public openRequestDialog(): void {
