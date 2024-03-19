@@ -76,7 +76,7 @@ SPDX-License-Identifier: Apache-2.0
       class="mat-row no-hover"
       data-testid="table-component--body-row">
       <td class="mat-cell"
-        [attr.colspan]="tableConfig?.displayedColumns.length">
+        [attr.colspan]="tableConfig?.displayedColumns?.length">
         <div class="table--no-data">
           <mat-icon color="primary"
             class="table--no-data__icon">build</mat-icon>
@@ -172,7 +172,7 @@ SPDX-License-Identifier: Apache-2.0
                 </div>
                 <div class="table--header--cell--content--sort"
                   *ngIf="column !== 'hasAlerts'">
-                  <ng-container *ngIf="multiSortList && multiSortList.length > 0; else sortIcon">
+                  <ng-container *ngIf="multiSortList && multiSortList?.length > 0; else sortIcon">
                     <ng-container *ngFor="let item of multiSortList; let i = index">
                       <!-- Display the array entry when it matches the column name -->
                       <div *ngIf="item[0] === column && multiSortList.length > 1"
