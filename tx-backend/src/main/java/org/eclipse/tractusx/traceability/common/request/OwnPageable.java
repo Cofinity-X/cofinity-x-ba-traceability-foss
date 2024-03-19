@@ -89,8 +89,8 @@ public class OwnPageable {
 
     private static String handleEnumColumns(final String column) {
         return switch(column) {
-            case "status" -> "statusrank";
-            case "notifications_severity" -> "severityrank";
+            case "status" -> "statusRank";
+            case "notifications_severity" -> "severityRank";
             default -> column;
         };
     }

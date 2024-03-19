@@ -68,7 +68,7 @@ public class AlertEntity extends NotificationBaseEntity {
             "WHEN A.severity = 'CRITICAL' THEN 2 " +
             "WHEN A.severity = 'LIFE_THREATENING' THEN 3 " +
             "ELSE -1 END FROM alert_notification A WHERE A.alert_id = id LIMIT 1)")
-    private Integer severityrank;
+    private Integer severityRank;
 
     @OneToMany(mappedBy = "alert")
     private List<AlertNotificationEntity> notifications;
