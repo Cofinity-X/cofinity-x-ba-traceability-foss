@@ -64,7 +64,7 @@ public class NotificationBaseEntity {
             + "when 'CLOSED' then 7 "
             + "else -1 "
             + "end")
-    private Integer statusrank;
+    private Integer statusRank;
 
     @Enumerated(EnumType.STRING)
     private NotificationStatusBaseEntity status;
