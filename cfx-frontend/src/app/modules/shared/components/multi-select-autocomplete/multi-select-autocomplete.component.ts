@@ -128,7 +128,7 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     private readonly formatPartSemanticDataModelToCamelCasePipe: FormatPartSemanticDataModelToCamelCasePipe,
     private injector: Injector) {
     registerLocaleData(localeDe, 'de', localeDeExtra);
-    this._adapter.setLocale(locale);
+    this._adapter.setLocale(locale === 'en' ? 'en-GB' : 'de-DE',);
   }
 
   ngOnInit(): void {
@@ -152,6 +152,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.selectedValue = this.formControl.value;
+  }
+
+  removeFocus() {
+    (document.activeElement as HTMLElement).blur();
   }
 
   toggleSelectAll(selectCheckbox: any): void {
@@ -288,6 +292,10 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
 
   onFilterChanged(isOpen: boolean) {
     this.isOpen = isOpen;
+
+    setTimeout(() => {
+      this.removeFocus();
+    }, 500);
   }
 
   clickClear(): void {

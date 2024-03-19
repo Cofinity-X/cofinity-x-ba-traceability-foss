@@ -146,6 +146,7 @@ export class PartsTableComponent implements OnInit {
   public isDataLoading: boolean;
   public selectedRow: Record<string, unknown>;
   public isMenuOpen: boolean;
+  public isSettingsOpen: boolean;
   public displayedFilter: boolean;
   public filterActive: any = {};
   public filterConfiguration: FilterConfig[];
@@ -313,6 +314,8 @@ export class PartsTableComponent implements OnInit {
       : this.addSelectedValues(this.dataSource.data);
 
     this.emitMultiSelect();
+
+    this.removeFocus();
   }
 
   public onPaginationChange({ pageIndex, pageSize }: PageEvent): void {
@@ -333,6 +336,8 @@ export class PartsTableComponent implements OnInit {
   public toggleSelection(row: unknown): void {
     this.isSelected(row) ? this.removeSelectedValues([row]) : this.addSelectedValues([row]);
     this.emitMultiSelect();
+
+    this.removeFocus();
   }
 
   public selectElement(row: Record<string, unknown>) {
@@ -361,6 +366,10 @@ export class PartsTableComponent implements OnInit {
     removeSelectedValues(this.selection, itemsToRemove);
   }
 
+  private removeFocus() {
+    (document.activeElement as HTMLElement).blur();
+  }
+
   public resetFilterActive(): void {
     this.filterConfiguration.forEach(filter => {
       if (filter.column) {
@@ -379,8 +388,8 @@ export class PartsTableComponent implements OnInit {
     this.updateSortingOfData({ active: null, direction: null });
   }
 
-  public menuOpened(state: boolean): void {
-    this.isMenuOpen = state;
+  public settingsOpened(state: boolean): void {
+    this.isSettingsOpen = state;
   }
 
 }
