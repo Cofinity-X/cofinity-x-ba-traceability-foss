@@ -244,7 +244,7 @@
       "declineTitle": "Untersuchung ablehnen",
       "declineReasonHint": "Geben Sie den Grund für die Ablehnung dieser Untersuchung ein",
       "successfullyAccepted": "Untersuchung wurde erfolgreich angenommen.",
-      "successfullyAcceptedTitle": "Untersuchung erfolgreich akzeptieren",
+      "successfullyAcceptedTitle": "Untersuchung akzeptiert",
       "successfullyAcknowledged": "Untersuchung wurde erfolgreich bestätigt",
       "successfullyAcknowledgedTitle": "Untersuchung als erfolgreich bestätigen",
       "successfullyApproved": "Untersuchung wurde erfolgreich genehmigt.",
