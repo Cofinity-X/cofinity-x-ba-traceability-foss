@@ -66,7 +66,7 @@ public class QualityNotificationMessageBaseEntity {
             + "when 'CLOSED' then 7 "
             + "else -1 "
             + "end")
-    private Integer statusRank;
+    private Integer statusrank;
 
     @Enumerated(EnumType.STRING)
     private NotificationStatusBaseEntity status;
