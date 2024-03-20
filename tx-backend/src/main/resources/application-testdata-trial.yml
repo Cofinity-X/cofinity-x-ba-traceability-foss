@@ -41,7 +41,7 @@ spring:
       bpnSupplier6    : "'BPNL000SUPPLIER6'"
       bpnSupplier6Name: "'CaseFactory'"
 
-      bpnCustomer1    : "'BPNL00000000GNDU'"
+      bpnCustomer1    : "'BPNL000CUSTOMER1'"
       bpnCustomer1Name: "'Manu'"
       bpnCustomer2    : "'BPNL000CUSTOMER2'"
       bpnCustomer2Name: "'Mecury'"

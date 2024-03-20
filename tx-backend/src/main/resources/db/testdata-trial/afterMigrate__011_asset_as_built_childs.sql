@@ -11,22 +11,22 @@ values
     (${assetAsBuiltId02}, ${assetAsBuiltId04}, 'RightHeadLight'), -- Xenon Headlight right right has child Right Headbulb
     (${assetAsBuiltId02}, ${assetAsBuiltId06}, 'RightHeadLight'), -- Xenon Headlight right has child Right Xenon Gland
 
-    (${assetAsBuiltId15}, ${assetAsBuiltId07}, 'Control Unit'), -- Control Unit small has child Electric Fuse small
-    (${assetAsBuiltId15}, ${assetAsBuiltId09}, 'Control Unit small'), -- Control Unit small has child Electric Controller s
-    (${assetAsBuiltId16}, ${assetAsBuiltId08}, 'Control Unit big'), -- Control Unit big has child Electric Fuse big
-    (${assetAsBuiltId16}, ${assetAsBuiltId10}, 'Control Unit big'), -- Control Unit big has child Electric Controller b
+    (${assetAsBuiltId15}, ${assetAsBuiltId07}, 'SO-ControlUnitSmall'), -- Control Unit small has child Electric Fuse small
+    (${assetAsBuiltId15}, ${assetAsBuiltId09}, 'SO-ControlUnitSmall'), -- Control Unit small has child Electric Controller s
+    (${assetAsBuiltId16}, ${assetAsBuiltId08}, 'SO-ControlUnitBig'), -- Control Unit big has child Electric Fuse big
+    (${assetAsBuiltId16}, ${assetAsBuiltId10}, 'SO-ControlUnitBig'), -- Control Unit big has child Electric Controller b
 
-    (${assetAsBuiltId17}, ${assetAsBuiltId12}, 'Turn Lights'), -- Turn Light has child LED Orange Turn
-    (${assetAsBuiltId17}, ${assetAsBuiltId13}, 'Turn Lights'), -- Turn Light has child Case Orange
-    (${assetAsBuiltId18}, ${assetAsBuiltId11}, 'Break Lights'), -- Break Light has child LED Red Break
-    (${assetAsBuiltId18}, ${assetAsBuiltId14}, 'Break Lights'), -- Break Light has child Case Orange Turn
+    (${assetAsBuiltId17}, ${assetAsBuiltId12}, 'SO-TurnLight'), -- Turn Light has child LED Orange Turn
+    (${assetAsBuiltId17}, ${assetAsBuiltId13}, 'SO-TurnLight'), -- Turn Light has child Case Orange
+    (${assetAsBuiltId18}, ${assetAsBuiltId11}, 'SO-BreakLight'), -- Break Light has child LED Red Break
+    (${assetAsBuiltId18}, ${assetAsBuiltId14}, 'SO-BreakLight'), -- Break Light has child Case Orange Turn
 
     -- customer has child owner
-    (${assetAsBuiltId19}, ${assetAsBuiltId01}, 'C4'), -- C4 has child Xenon Headlight left
-    (${assetAsBuiltId19}, ${assetAsBuiltId02}, 'C4'), -- C4 has child Xenon Headlight right
+    (${assetAsBuiltId19}, ${assetAsBuiltId01}, 'MA-C4'), -- C4 has child Xenon Headlight left
+    (${assetAsBuiltId19}, ${assetAsBuiltId02}, 'MA-C4'), -- C4 has child Xenon Headlight right
 
-    (${assetAsBuiltId20}, ${assetAsBuiltId15}, 'S1'), -- S1 has child Control Unit small
-    (${assetAsBuiltId21}, ${assetAsBuiltId16}, 'S1'), -- S1 has child Control Unit big
+    (${assetAsBuiltId20}, ${assetAsBuiltId15}, 'ME-S1'), -- S1 has child Control Unit small
+    (${assetAsBuiltId21}, ${assetAsBuiltId16}, 'ME-S1'), -- S1 has child Control Unit big
 
-    (${assetAsBuiltId22}, ${assetAsBuiltId17}, 'C5'), -- C5 has child Turn Lights
-    (${assetAsBuiltId22}, ${assetAsBuiltId18}, 'C5'); -- C5 has child Break Lights
+    (${assetAsBuiltId22}, ${assetAsBuiltId17}, 'MA-C5'), -- C5 has child Turn Lights
+    (${assetAsBuiltId22}, ${assetAsBuiltId18}, 'MA-C5'); -- C5 has child Break Lights
