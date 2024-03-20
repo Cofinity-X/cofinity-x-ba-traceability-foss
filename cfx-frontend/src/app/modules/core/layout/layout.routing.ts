@@ -36,7 +36,6 @@ import { RoleGuard } from '@core/user/role.guard';
 import { Role } from '@core/user/role.model';
 import { AdminComponent } from '@page/admin/presentation/admin.component';
 import { ErrorPageType } from '@page/error-page/model/error-page.model';
-import { IMPRINT_ROUTING } from '@page/imprint/imprint.routing';
 import { I18NEXT_NAMESPACE_RESOLVER } from 'angular-i18next';
 
 export /** @type {*} */
