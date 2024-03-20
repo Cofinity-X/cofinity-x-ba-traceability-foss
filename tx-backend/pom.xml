@@ -52,6 +52,11 @@ SPDX-License-Identifier: Apache-2.0
 
     <dependencies>
         <dependency>
+            <groupId>org.jsonschema2pojo</groupId>
+            <artifactId>jsonschema2pojo-core</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>${json-schema-validator.version}</version>
@@ -96,17 +101,11 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <!-- Still necessary 18.09.2023 -->
-        <!--Fix CVE-2023-24998 - can be removed once org.springframework.cloud:spring-cloud-openfeign-core:jar:4.0.1 is updated-->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.5</version>
         </dependency>
 
         <!-- EDC Client -->
@@ -170,11 +169,13 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
+
+
+
         <!-- Fixes CVE-2023-34035  -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring-security-config.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -408,6 +409,12 @@ SPDX-License-Identifier: Apache-2.0
             <version>${testcontainer-postgresql.version}</version>
             <scope>test</scope>
         </dependency>
+<!-- Fixes Vulnerability CVE-2024-26308 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.26.1</version>
+        </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
@@ -452,6 +459,24 @@ SPDX-License-Identifier: Apache-2.0
     <build>
         <finalName>traceability-app-${project.version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <sourceDirectory>${basedir}/src/main/resources/schema/semantichub</sourceDirectory>
+                    <targetPackage>org.eclipse.tractusx.traceability.generated</targetPackage>
+                    <sourceType>JSONSCHEMA</sourceType>
+                    <refFragmentPathDelimiters>#/</refFragmentPathDelimiters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

@@ -21,6 +21,7 @@ package org.eclipse.tractusx.traceability.qualitynotification.infrastructure.ale
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -94,7 +95,6 @@ public class AlertEntity extends NotificationBaseEntity {
                 .description(alertNotificationEntity.getDescription())
                 .assetIds(assetIds)
                 .notifications(notifications)
-                .errorMessage(alertNotificationEntity.getErrorMessage())
                 .build();
     }
 
@@ -106,7 +106,6 @@ public class AlertEntity extends NotificationBaseEntity {
                 .status(NotificationStatusBaseEntity.fromStringValue(qualityNotification.getNotificationStatus().name()))
                 .side(NotificationSideBaseEntity.valueOf(qualityNotification.getNotificationSide().name()))
                 .createdDate(qualityNotification.getCreatedAt())
-                .errorMessage(qualityNotification.getErrorMessage())
                 .build();
     }
 

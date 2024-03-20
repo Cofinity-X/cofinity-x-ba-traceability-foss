@@ -32,7 +32,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
-import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.model.AssetAsPlannedEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationAffectedPart;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
@@ -72,7 +71,6 @@ public class InvestigationNotificationEntity extends QualityNotificationMessageB
                 .sendTo(investigationNotificationEntity.getSendTo())
                 .sendToName(investigationNotificationEntity.getSendToName())
                 .description(investigationNotificationEntity.getInvestigation().getDescription())
-                .edcUrl(investigationNotificationEntity.getEdcUrl())
                 .contractAgreementId(investigationNotificationEntity.getContractAgreementId())
                 .notificationStatus(QualityNotificationStatus.fromStringValue(investigationNotificationEntity.getStatus().name()))
                 .affectedParts(investigationNotificationEntity.getAssets().stream()
@@ -84,7 +82,6 @@ public class InvestigationNotificationEntity extends QualityNotificationMessageB
                 .messageId(investigationNotificationEntity.getMessageId())
                 .created(investigationNotificationEntity.getCreated())
                 .updated(investigationNotificationEntity.getUpdated())
-                .isInitial(investigationNotificationEntity.getIsInitial())
                 .type(QualityNotificationType.INVESTIGATION)
                 .build();
     }
@@ -96,6 +93,8 @@ public class InvestigationNotificationEntity extends QualityNotificationMessageB
                 .builder()
                 .id(qualityNotificationMessage.getId())
                 .investigation(investigationEntity)
+                .errorMessage(qualityNotificationMessage.getErrorMessage())
+                .contractAgreementId(qualityNotificationMessage.getContractAgreementId())
                 .created(qualityNotificationMessage.getCreated())
                 .createdBy(qualityNotificationMessage.getCreatedBy())
                 .createdByName(qualityNotificationMessage.getCreatedByName())
@@ -108,7 +107,6 @@ public class InvestigationNotificationEntity extends QualityNotificationMessageB
                 .edcNotificationId(qualityNotificationMessage.getEdcNotificationId())
                 .status(NotificationStatusBaseEntity.fromStringValue(qualityNotificationMessage.getNotificationStatus().name()))
                 .messageId(qualityNotificationMessage.getMessageId())
-                .isInitial(qualityNotificationMessage.getIsInitial())
                 .build();
     }
 

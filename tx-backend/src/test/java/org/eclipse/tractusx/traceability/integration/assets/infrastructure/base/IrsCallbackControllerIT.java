@@ -52,14 +52,15 @@ class IrsCallbackControllerIT extends IntegrationTestSpecification {
 
 
     @Test
-    void givenNoAssets_whenCallbackReceived_thenSaveThem() {
-        // Given
+    void givenNoAssets_whenCallbackReceived_thenSaveThem() throws JoseException {
+        // given
+
         oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
         irsApiSupport.irsApiReturnsJobDetails();
         String jobId = "ebb79c45-7bba-4169-bf17-3e719989ab54";
         String jobState = "COMPLETED";
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .log().all()
@@ -71,21 +72,33 @@ class IrsCallbackControllerIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(200);
 
-        // Then
+        // then
         assertThat(bpnSupportRepository.findAll()).hasSize(6);
         assetsSupport.assertAssetAsBuiltSize(16);
         assetsSupport.assertAssetAsPlannedSize(0);
+        String contractAgreementId = given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when()
+                .pathParam("assetId", "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")
+                .get("/api/assets/as-built/{assetId}")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract().path("contractAgreementId");
+        assertThat(contractAgreementId).isNotEmpty();
     }
 
     @Test
     void givenNoAssets_whenCallbackReceivedForAsPlanned_thenSaveThem() {
-        // Given
+        // given
         oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
         irsApiSupport.irsJobDetailsAsPlanned();
         String jobId = "ebb79c45-7bba-4169-bf17-SUCCESSFUL_AS_PLANNED";
         String jobState = "COMPLETED";
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .log().all()
@@ -97,7 +110,7 @@ class IrsCallbackControllerIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(200);
 
-        // Then
+        // then
         assertThat(bpnSupportRepository.findAll()).hasSize(2);
         assetsSupport.assertAssetAsBuiltSize(0);
         assetsSupport.assertAssetAsPlannedSize(3);
@@ -131,13 +144,13 @@ class IrsCallbackControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenAssetExist_whenCallbackReceived_thenUpdateIt() {
-        // Given
+        // given
         oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
         irsApiSupport.irsApiReturnsJobDetails();
         String jobId = "ebb79c45-7bba-4169-bf17-3e719989ab54";
         String jobState = "COMPLETED";
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .log().all()
@@ -160,7 +173,7 @@ class IrsCallbackControllerIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(200);
 
-        // Then
+        // then
         assertThat(bpnSupportRepository.findAll()).hasSize(6);
         assetsSupport.assertAssetAsBuiltSize(16);
         assetsSupport.assertAssetAsPlannedSize(0);
