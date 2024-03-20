@@ -43,7 +43,6 @@ public class QualityNotificationMessageBaseEntity {
     private String createdByName;
     private String sendTo;
     private String sendToName;
-    private String edcUrl;
     private String contractAgreementId;
     private String notificationReferenceId;
     private Instant targetDate;
@@ -53,23 +52,9 @@ public class QualityNotificationMessageBaseEntity {
     private LocalDateTime created;
     private LocalDateTime updated;
     private String messageId;
-    private Boolean isInitial;
-
-    @Formula("case status "
-            + "when 'CREATED' then 0 "
-            + "when 'SENT' then 1 "
-            + "when 'RECEIVED' then 2 "
-            + "when 'ACKNOWLEDGED' then 3 "
-            + "when 'CANCELED' then 4 "
-            + "when 'ACCEPTED' then 5 "
-            + "when 'DECLINED' then 6 "
-            + "when 'CLOSED' then 7 "
-            + "else -1 "
-            + "end")
-    private Integer statusRank;
-
     @Enumerated(EnumType.STRING)
     private NotificationStatusBaseEntity status;
+    private String errorMessage;
 
     @PreUpdate
     public void preUpdate() {
