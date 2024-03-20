@@ -50,7 +50,7 @@ export class AcceptNotificationModalComponent {
     this.notification = notification;
 
 
-    this.textAreaControl.setValidators([ Validators.required, Validators.maxLength(1000), Validators.minLength(15) ]);
+    this.textAreaControl.setValidators([Validators.required, Validators.maxLength(1000), Validators.minLength(15)]);
 
     const onConfirm = (isConfirmed: boolean) => {
       const reason = this.formGroup.get('reason').value;
@@ -60,11 +60,11 @@ export class AcceptNotificationModalComponent {
 
       this.acceptCall(notification.id, reason).subscribe({
         next: () => {
-          this.toastService.success(this.translationContext + '.modal.successfullyAccepted');
+          this.toastService.success(this.translationContext + '.modal.successfullyAcceptedTitle', this.translationContext + '.modal.successfullyAccepted');
           this.confirmActionCompleted.emit();
         },
         error: () => {
-          this.toastService.error(this.translationContext + '.modal.failedAccept');
+          this.toastService.error(this.translationContext + '.modal.failedAcceptTitle', this.translationContext + '.modal.failedAccept');
         },
       });
     };
