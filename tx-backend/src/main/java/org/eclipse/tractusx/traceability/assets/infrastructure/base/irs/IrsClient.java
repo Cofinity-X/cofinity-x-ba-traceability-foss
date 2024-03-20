@@ -29,11 +29,12 @@ import org.eclipse.tractusx.irs.edc.client.policy.PolicyType;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.request.RegisterJobRequest;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.request.RegisterPolicyRequest;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Context;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.JobDetailResponse;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.IRSResponse;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.IrsPolicyResponse;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Payload;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.PolicyResponse;
 import org.eclipse.tractusx.traceability.common.properties.TraceabilityProperties;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -56,7 +57,8 @@ public class IrsClient {
 
     private final TraceabilityProperties traceabilityProperties;
 
-    private static final String POLICY_PATH = "/irs/policies";
+    @Value("${traceability.irsPoliciesPath}")
+    String policiesPath = null;
 
     public IrsClient(RestTemplate irsAdminTemplate,
                      RestTemplate irsRegularTemplate,
@@ -66,13 +68,13 @@ public class IrsClient {
         this.traceabilityProperties = traceabilityProperties;
     }
 
-    public List<PolicyResponse> getPolicies() {
-        return irsAdminTemplate.exchange(POLICY_PATH, HttpMethod.GET, null, new ParameterizedTypeReference<List<PolicyResponse>>() {
+    public List<IrsPolicyResponse> getPolicies() {
+        return irsAdminTemplate.exchange(policiesPath, HttpMethod.GET, null, new ParameterizedTypeReference<List<IrsPolicyResponse>>() {
         }).getBody();
     }
 
     public void deletePolicy() {
-        irsAdminTemplate.exchange(POLICY_PATH + "/" + traceabilityProperties.getRightOperand(), HttpMethod.DELETE, null, new ParameterizedTypeReference<>() {
+        irsAdminTemplate.exchange(policiesPath + "/" + traceabilityProperties.getRightOperand(), HttpMethod.DELETE, null, new ParameterizedTypeReference<>() {
         });
     }
 
@@ -97,17 +99,16 @@ public class IrsClient {
 
         Payload payload = new Payload(context, policyId, policy);
         RegisterPolicyRequest registerPolicyRequest = new RegisterPolicyRequest(validUntil.toInstant(), payload);
-        irsAdminTemplate.exchange(POLICY_PATH, HttpMethod.POST, new HttpEntity<>(registerPolicyRequest), Void.class);
+        irsAdminTemplate.exchange(policiesPath, HttpMethod.POST, new HttpEntity<>(registerPolicyRequest), Void.class);
     }
 
     public void registerJob(RegisterJobRequest registerJobRequest) {
         irsRegularTemplate.exchange("/irs/jobs", HttpMethod.POST, new HttpEntity<>(registerJobRequest), Void.class);
     }
 
-
     @Nullable
-    public JobDetailResponse getJobDetailResponse(String jobId) {
-        return irsRegularTemplate.exchange("/irs/jobs/" + jobId, HttpMethod.GET, null, new ParameterizedTypeReference<JobDetailResponse>() {
+    public IRSResponse getIrsJobDetailResponse(String jobId) {
+        return irsRegularTemplate.exchange("/irs/jobs/" + jobId, HttpMethod.GET, null, new ParameterizedTypeReference<IRSResponse>() {
         }).getBody();
     }
 

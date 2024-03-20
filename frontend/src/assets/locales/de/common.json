@@ -17,7 +17,8 @@
     "notAllowedForAsPlanned": "Diese Funktion ist für Produkte im Lebenszyklus \"AsPlanned\" nicht verfügbar.",
     "noChildPartsForInvestigation": "Diese Funktion ist für Produkte ohne Bauteile nicht verfügbar.",
     "noCustomerAsPlannedParts": "Produkte von Kunden im Lebenszyklus \"AsPlanned\" sind nicht verfügbar.",
-    "nonTransientPart": "Ein oder mehrere ausgewählte Produkte befinden sich nicht im erforderlichen Importstatus \"TRANSIENT\"."
+    "illegalAssetStateToPublish": "Ein oder mehrere ausgewählte Produkte befinden sich nicht im erforderlichen Importstatus \"TRANSIENT\" oder \"ERROR\".",
+    "adminContract": "Verträge"
   },
   "pageTitle": {
     "dashboard": "Dashboard",
@@ -143,7 +144,8 @@
     "TRANSIENT": "TRANSIENT",
     "IN_SYNCHRONIZATION": "IN SYNCHRONISATION",
     "ERROR": "FEHLER",
-    "UNSET": "UNDEFINIERT"
+    "UNSET": "UNDEFINIERT",
+    "PUBLISHED_TO_CORE_SERVICES": "VERÖFFENTLICHT"
   },
   "severity": {
     "MINOR": "Gering",
@@ -177,13 +179,16 @@
     "headline": "Qualitätswarnung erstellen",
     "textAreaDescription": "Fügen sie eine Beschreibung hinzu.",
     "success_one": "Sie haben eine Qualitätswarnung für {{count}} Produkt erstellt.",
-    "success_other": "Sie haben eine Qualitätswarnung für {{count}} Produkte erstellt."
+    "success_other": "Sie haben eine Qualitätswarnung für {{count}} Produkte erstellt.",
+    "serverError": "Serverfehler:"
+
   },
   "requestInvestigations": {
     "headline": "Qualitätsprüfung anfordern",
     "textAreaDescription": "Fügen sie eine Beschreibung hinzu.",
     "success_one": "Sie haben eine Untersuchung für {{count}} Produkt gestartet.",
-    "success_other": "Sie haben eine Untersuchung für {{count}} Produkte gestartet."
+    "success_other": "Sie haben eine Untersuchung für {{count}} Produkte gestartet.",
+    "serverError": "Serverfehler:"
   },
   "requestNotification": {
     "partDescription": "Sie haben folgende Produkte ausgewählt:",
@@ -196,7 +201,8 @@
     "cancel": "ABBRUCH",
     "submit": "ZUR WARTESCHLANGE HINZUFÜGEN",
     "severity": "Gefahrenstufe",
-    "severityDescription": "Wählen Sie die Gefahrenstufe für das vorliegende Problem"
+    "severityDescription": "Wählen Sie die Gefahrenstufe für das vorliegende Problem",
+    "serverError": "Serverfehler:"
   },
   "requestPublishAssets": {
     "success": "Anfrage zur Veröffentlichung der Produkte war erfolgreich",
@@ -247,7 +253,7 @@
       "successfullyDeclined": "Untersuchung wurde erfolgreich abgelehnt.",
       "failedAccept": "Untersuchung konnte nicht akzeptiert werden, bitte versuchen Sie es erneut.",
       "failedAcknowledge": "Untersuchung konnte nicht bestätigt werden, bitte versuchen Sie es erneut.",
-      "failedApprove": "Die Untersuchung konnte nicht genehmigt werden, bitte versuchen Sie es erneut.",
+      "failedApprove": "Die Qualitätsuntersuchung konnte nicht gesendet werden, bitte versuchen Sie es erneut.",
       "failedCancel": "Die Untersuchung konnte nicht gelöscht werden, bitte versuchen Sie es erneut.",
       "failedClose": "Die Untersuchung konnte nicht abgeschlossen werden, bitte versuchen Sie es erneut.",
       "failedDecline": "Untersuchung konnte nicht abgelehnt werden, bitte versuchen Sie es erneut."
@@ -289,7 +295,7 @@
       "successfullyDeclined": "Qualitätswarnung wurde erfolgreich abgelehnt.",
       "failedAccept": "Qualitätswarnung konnte nicht akzeptiert werden, bitte versuchen Sie es erneut.",
       "failedAcknowledge": "Qualitätswarnung konnte nicht bestätigt werden, bitte versuchen Sie es erneut.",
-      "failedApprove": "Die Qualitätswarnung konnte nicht genehmigt werden, bitte versuchen Sie es erneut.",
+      "failedApprove": "Die Qualitätswarnung konnte nicht gesendet werden, bitte versuchen Sie es erneut.",
       "failedCancel": "Die Qualitätswarnung konnte nicht gelöscht werden, bitte versuchen Sie es erneut.",
       "failedClose": "Die Qualitätswarnung konnte nicht abgeschlossen werden, bitte versuchen Sie es erneut.",
       "failedDecline": "Qualitätswarnung konnte nicht abgelehnt werden, bitte versuchen Sie es erneut."
@@ -329,7 +335,8 @@
       "PERSISTENT": "Persistent",
       "IN_SYNCHRONIZATION": "In Synchronisation",
       "ERROR": "Fehler",
-      "UNSET": "Undefiniert"
+      "UNSET": "Undefiniert",
+      "PUBLISHED_TO_CORE_SERVICES": "Veröffentlicht"
     }
   },
   "parts": {
@@ -345,5 +352,6 @@
     "cancel": "Zurücksetzen",
     "startDate": "Startdatum",
     "endDate": "Enddatum"
-  }
+  },
+  "retry": "Erneut versuchen"
 }

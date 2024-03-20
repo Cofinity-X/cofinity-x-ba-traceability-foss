@@ -126,6 +126,7 @@ public class AssetAsBuiltEntity extends AssetBaseEntity {
                 .importNote(asset.getImportNote())
                 .policyId(asset.getPolicyId())
                 .tombstone(asset.getTombstone())
+                .contractAgreementId(asset.getContractAgreementId())
                 .build();
     }
 
@@ -141,10 +142,10 @@ public class AssetAsBuiltEntity extends AssetBaseEntity {
                 .manufacturerPartId(this.getManufacturerPartId())
                 .owner(this.getOwner())
                 .childRelations(this.getChildDescriptors().stream()
-                        .map(child -> new Descriptions(child.getId(), child.getIdShort()))
+                        .map(child -> new Descriptions(child.getId(), child.getIdShort(), null, null))
                         .toList())
                 .parentRelations(this.getParentDescriptors().stream()
-                        .map(parent -> new Descriptions(parent.getId(), parent.getIdShort()))
+                        .map(parent -> new Descriptions(parent.getId(), parent.getIdShort(), null, null))
                         .toList())
                 .qualityType(this.getQualityType())
                 .van(this.getVan())
@@ -158,6 +159,7 @@ public class AssetAsBuiltEntity extends AssetBaseEntity {
                 .importNote(this.getImportNote())
                 .policyId(this.getPolicyId())
                 .tombstone(this.getTombstone())
+                .contractAgreementId(this.getContractAgreementId())
                 .build();
     }
 
