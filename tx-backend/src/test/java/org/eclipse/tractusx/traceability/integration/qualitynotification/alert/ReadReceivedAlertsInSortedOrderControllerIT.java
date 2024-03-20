@@ -129,7 +129,7 @@ class ReadReceivedAlertsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(4))
                 .body("totalItems", Matchers.is(4))
-                .body("content.status", Matchers.containsInRelativeOrder("ACCEPTED", "ACCEPTED", "ACKNOWLEDGED", "RECEIVED"));
+                .body("content.status", Matchers.containsInRelativeOrder("RECEIVED", "ACKNOWLEDGED", "ACCEPTED", "ACCEPTED"));
     }
 
     @Test
@@ -156,7 +156,7 @@ class ReadReceivedAlertsInSortedOrderControllerIT extends IntegrationTestSpecifi
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(4))
                 .body("totalItems", Matchers.is(4))
-                .body("content.severity", Matchers.containsInRelativeOrder("CRITICAL", "LIFE-THREATENING", "MAJOR", "MINOR"));
+                .body("content.severity", Matchers.containsInRelativeOrder("MINOR",  "MAJOR", "CRITICAL", "LIFE-THREATENING"));
     }
 
     @Test

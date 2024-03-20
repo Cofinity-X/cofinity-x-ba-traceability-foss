@@ -93,7 +93,7 @@ export class PartsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (filterIsSet) {
-      this.toastService.info('parts.input.global-search.toastInfo');
+      this.toastService.info('parts.input.global-search.toastInfoTitle', 'parts.input.global-search.toastInfo');
     }
   }
 

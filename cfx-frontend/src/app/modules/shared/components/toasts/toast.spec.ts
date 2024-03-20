@@ -33,7 +33,7 @@ describe('toasts', () => {
 
   it('should render success toast', async () => {
     const toastService = await renderToastLayout();
-    toastService.success('some success');
+    toastService.success('title', 'some success');
 
     const toast = await screen.findByTestId('toast-container');
     expect(toast).toHaveClass('toast-icon-check');
@@ -41,7 +41,7 @@ describe('toasts', () => {
 
   it('should render info toast', async () => {
     const toastService = await renderToastLayout();
-    toastService.info('some info');
+    toastService.info('title', 'some info');
 
     const toast = await screen.findByTestId('toast-container');
 
@@ -50,7 +50,7 @@ describe('toasts', () => {
 
   it('should render warning toast', async () => {
     const toastService = await renderToastLayout();
-    toastService.warning('some warning');
+    toastService.warning('title', 'some warning');
 
     const toast = await screen.findByTestId('toast-container');
 
@@ -59,7 +59,7 @@ describe('toasts', () => {
 
   it('should render error toast', async () => {
     const toastService = await renderToastLayout();
-    toastService.error('some error');
+    toastService.error('title', 'some error');
 
     const toast = await screen.findByTestId('toast-container');
 

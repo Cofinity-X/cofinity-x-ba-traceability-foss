@@ -145,7 +145,7 @@ export class InvestigationDetailComponent implements AfterViewInit, OnDestroy {
 
   public copyToClipboard(semanticModelId: string): void {
     const text = { id: 'clipboard', values: { value: semanticModelId } };
-    navigator.clipboard.writeText(semanticModelId).then(_ => this.toastService.info(text));
+    navigator.clipboard.writeText(semanticModelId).then(_ => this.toastService.info('clipboardTitle', text));
   }
 
   public navigateBackToInvestigations(): void {

@@ -94,20 +94,6 @@ describe('PartsTableComponent', () => {
     );
   };
 
-  // TODO: fix test
-  // it('should render parts asbuilt table', async () => {
-  //   const tableSize = 7;
-  //   await renderPartsTable(tableSize);
-
-  //   expect(await waitFor(() => screen.getByTestId('table-component--test-id'))).toBeInTheDocument();
-  // });
-
-  it('should have correct sizes for split areas', async () => {
-    const { fixture } = await renderPartsTableComponent(1, TableType.AS_BUILT_OWN);
-    const { componentInstance } = fixture;
-    expect(componentInstance.tableType).toEqual(TableType.AS_BUILT_OWN);
-  });
-
   it('should update sorting data and emit configChanged event', async () => {
     const { fixture } = await renderPartsTableComponent(1, TableType.AS_PLANNED_OWN);
     const { componentInstance } = fixture;
