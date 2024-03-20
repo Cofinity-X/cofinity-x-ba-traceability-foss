@@ -29,6 +29,10 @@
   line-height: 25.2px;
 }
 
+.imprint-link:hover {
+  text-decoration: underline
+}
+
 .imprint-note-title {
   @extend .title-small;
   font-size: 16px;
@@ -39,6 +43,10 @@
   @extend .imprint-content;
   font-size: 16px;
   line-height: 22.6px;
+}
+
+.imprint-note-content1 {
+  padding-bottom: 22px;
 }
 
 .imprint-divider {

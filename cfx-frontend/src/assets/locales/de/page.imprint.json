@@ -14,7 +14,8 @@
     },
     "note": {
       "title": "Notiz",
-      "content": "Aufgrund einer gesetzlichen Verpflichtung sind wir verpflichtet, Sie unabhängig von unserer Teilnahme zur alternativen Streitbeilegung darüber zu informieren, dass die Europäische Kommission zur außergerichtlichen Streitbeilegung von verbraucherrechtlichen Streitigkeiten eine Plattform zur Online-Streitbeilegung (OS) eingerichtet hat. Die Plattform finden Sie unter: <a href=\"http://ec.europa.eu/consumers/odr\" target=\"_blank\">http://ec.europa.eu/consumers/odr</a>.\n\nDie Cofinity-X GmbH wird nicht an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilnehmen und ist hierzu auch nicht verpflichtet. Unsere E-Mail-Adresse ist: <a href=\"mailto:info@cofinity-x.com\" target=\"_blank\">info@cofinity-x.com</a>."
+      "content1": "Aufgrund einer gesetzlichen Verpflichtung sind wir verpflichtet, Sie unabhängig von unserer Teilnahme zur alternativen Streitbeilegung darüber zu informieren, dass die Europäische Kommission zur außergerichtlichen Streitbeilegung von verbraucherrechtlichen Streitigkeiten eine Plattform zur Online-Streitbeilegung (OS) eingerichtet hat. Die Plattform finden Sie unter: ",
+      "content2": "Die Cofinity-X GmbH wird nicht an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilnehmen und ist hierzu auch nicht verpflichtet. Unsere E-Mail-Adresse ist: "
     }
   }
 }

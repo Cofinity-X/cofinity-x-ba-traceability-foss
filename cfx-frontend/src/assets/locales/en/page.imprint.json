@@ -14,7 +14,8 @@
     },
     "note": {
       "title": "Note",
-      "content": "Due to a legal obligation, we are obliged to inform you, independently of our participation in alternative dispute resolution, that the European Commission has set up an online dispute resolution platform (OS) for the out-of-court settlement of consumer disputes. You can find the platform at: <a href=\"http://ec.europa.eu/consumers/odr\" target=\"_blank\">http://ec.europa.eu/consumers/odr</a>.\n\nCofinity-X GmbH will not participate in dispute resolution proceedings before a consumer arbitration board and is not obliged to do so. Our email address is: <a href=\"mailto:info@cofinity-x.com\" target=\"_blank\">info@cofinity-x.com</a>."
+      "content1": "Due to a legal obligation, we are obliged to inform you, independently of our participation in alternative dispute resolution, that the European Commission has set up an online dispute resolution platform (OS) for the out-of-court settlement of consumer disputes. You can find the platform at: ",
+      "content2": "Cofinity-X GmbH will not participate in dispute resolution proceedings before a consumer arbitration board and is not obliged to do so. Our email address is: "
     }
   }
 }
