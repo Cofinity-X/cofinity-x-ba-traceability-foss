@@ -78,10 +78,6 @@ export class NotificationComponent {
     private readonly staticIdService: StaticIdService,
   ) { }
 
-  public onTabChange(tabIndex: number): void {
-    void this.router.navigate([], { queryParams: { tabIndex }, replaceUrl: true });
-  }
-
   public onItemCountChanged(itemCount: number, tabIndex: number): void {
     this.itemCount[tabIndex] = itemCount;
   }
