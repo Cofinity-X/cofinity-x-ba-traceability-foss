@@ -40,7 +40,6 @@ public class NotificationTestDataFactory {
                 .createdByName("senderManufacturerName")
                 .sendTo("recipientBPN")
                 .sendToName("receiverManufacturerName")
-                .edcUrl("senderAddress")
                 .contractAgreementId("agreement")
                 .description("123")
                 .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)

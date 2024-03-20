@@ -41,9 +41,9 @@ class TraceabilityPropertiesTest {
 
     @Test
     void test_traceabilityProperties() {
-       // Given
-       // When
-       // Then
+        //GIVEN
+        //WHEN
+        //THEN
         assertThat(traceabilityProperties.getUrl()).isNotEmpty();
         assertThat(traceabilityProperties.getBpn().toString()).isNotEmpty();
 

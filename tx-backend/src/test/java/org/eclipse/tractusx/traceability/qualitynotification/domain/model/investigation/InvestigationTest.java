@@ -234,7 +234,7 @@ class InvestigationTest {
     @DisplayName("Forbid Acknowledge Investigation with invalid status")
     @MethodSource("provideInvalidStatusForAcknowledgeInvestigation")
     void forbidAcknowledgeInvestigationWithStatusClosed(QualityNotificationStatus status) {
-       // Given
+        // Given
         investigation = receiverInvestigationWithStatus(status);
 
         assertThrows(InvestigationStatusTransitionNotAllowed.class, () -> investigation.acknowledge());
@@ -337,12 +337,6 @@ class InvestigationTest {
                 .notificationStatus(status)
                 .notificationSide(side)
                 .build();
-        // todo check if we need empty lists
-        //   return new Investigation(new InvestigationId(1L), bpn, status, side, "", "", "", "", Instant.now(), new ArrayList<>(), new ArrayList<>());
-    }
-
-    private QualityNotificationMessage testNotification() {
-        return NotificationTestDataFactory.createQualityNotificationMessageTestData();
     }
 }
 

@@ -38,13 +38,13 @@ class QualityNotificationSeverityResponseTest {
 
     @Test
     void givenSeverityResponse_whenCreateJson_thenSerializeProperly() throws JsonProcessingException {
-       // Given
+        // given
         QualityNotificationSeverityResponse input = QualityNotificationSeverityResponse.LIFE_THREATENING;
 
-        // When
+        // when
         String result = objectMapper.writeValueAsString(input);
 
-       // Then
+        // then
         assertThat(result).isEqualTo("\"LIFE-THREATENING\"");
     }
 

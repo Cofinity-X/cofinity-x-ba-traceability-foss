@@ -194,7 +194,7 @@ class ErrorHandlingConfigTest {
 
     @Test
     void givenAuthenticationException_handler_respondsUnauthorized() throws Exception {
-      // Given
+        // given
         final HttpServletRequest request = mock(HttpServletRequest.class);
         final HttpServletResponse response = mock(HttpServletResponse.class);
         final ServletOutputStream os = mock(ServletOutputStream.class);
@@ -203,11 +203,11 @@ class ErrorHandlingConfigTest {
                 new ErrorResponse("msg")
         );
 
-        // When
+        // when
         new ErrorHandlingConfig(objectMapper)
                 .onAuthenticationFailure(request, response, new AuthenticationExceptionTest());
 
-       // Then
+        // then
         verify(response, times(1))
                 .setStatus(HttpStatus.UNAUTHORIZED.value());
         verify(response, times(1))

@@ -91,7 +91,7 @@ class InvestigationsEDCFacadeTest {
         when(endpointDataReference.getEndpoint()).thenReturn(dataReferenceEndpoint);
         when(endpointDataReferenceStorage.get(agreementId)).thenReturn(Optional.ofNullable(endpointDataReference));
         when(objectMapper.writeValueAsString(any())).thenReturn("{body}");
-        doThrow(new RuntimeException()).when(httpCallService).sendRequest(any());
+
 
         // when/then
         assertThrows(SendNotificationException.class, () -> investigationsEDCFacade.startEdcTransfer(notificationMessage, receiverEdcUrl, senderEdcUrl));
