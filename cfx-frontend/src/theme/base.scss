@@ -234,10 +234,14 @@
   }
 
   a {
-    @apply font-light text-sm text-blueBayouxShadeLynch cursor-pointer hover:text-blueBayouxShadePigeonPost;
+    @apply font-light text-sm text-textLink cursor-pointer hover:text-blueBayouxShadePigeonPost;
     text-decoration: none;
     white-space: pre-wrap;
     -webkit-font-smoothing: antialiased;
+  }
+
+  a:hover {
+    color: #2484C6;
   }
 
   // Style fixes for material library
