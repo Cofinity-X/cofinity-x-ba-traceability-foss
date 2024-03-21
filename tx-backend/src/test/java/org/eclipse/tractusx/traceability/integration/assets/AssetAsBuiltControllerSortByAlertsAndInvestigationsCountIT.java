@@ -23,7 +23,7 @@ import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.Ass
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.repository.JpaAssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.eclipse.tractusx.traceability.integration.common.support.InvestigationsSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
@@ -69,16 +69,16 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveDesc_thenReturnAssetsWithActiveAlertsCountInDesc() throws JoseException {
        // Given
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), null, SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), SENDER);
 
         AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), null, SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), SENDER);
 
         // When
         List<List<Integer>> notificationIdLists = given()
@@ -111,16 +111,16 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveAsc_thenReturnAssetsWithActiveAlertsCountInAsc() throws JoseException {
        // Given
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), null, SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), SENDER);
 
         AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), null, SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), SENDER);
 
         // When
         List<List<Integer>> notificationIdLists = given()
@@ -155,14 +155,14 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
        // Given
         assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), null, RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), RECEIVER);
 
         AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), null, RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), RECEIVER);
 
         // When
         List<List<Integer>> notificationIdLists = given()
@@ -195,16 +195,16 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
     void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveAsc_thenReturnAssetsWithActiveInvestigationsCountInAsc() throws JoseException {
        // Given
         assetsSupport.defaultMultipleAssetsAsBuiltStored();
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
-        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), null, RECEIVER);
 
-        AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), null, RECEIVER);
+        final AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), RECEIVER);
+
+        final AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), RECEIVER);
 
         // When
         List<List<Integer>> notificationIdLists = given()
@@ -266,37 +266,34 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
         final AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978").orElseThrow();
 
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt2), SENDER);
+        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), SENDER);
         IntStream
                 .rangeClosed(1, 20)
-                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3),
-                        null, SENDER));
+                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), SENDER));
 
-        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
+        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), RECEIVER);
+        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), RECEIVER);
+        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), RECEIVER);
         IntStream
                 .rangeClosed(1, 20)
-                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3),
-                        null, RECEIVER));
+                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3), RECEIVER));
 
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt1), SENDER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), SENDER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), SENDER);
         IntStream
                 .rangeClosed(1, 20)
-                .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt3),
-                        null, SENDER));
+                .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt3), SENDER));
 
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), RECEIVER);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), RECEIVER);
         IntStream
                 .rangeClosed(1, 20)
                 .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3),
-                        null, RECEIVER));
+                         RECEIVER));
 
         // When
         List<List<Integer>> notificationIdLists = given()

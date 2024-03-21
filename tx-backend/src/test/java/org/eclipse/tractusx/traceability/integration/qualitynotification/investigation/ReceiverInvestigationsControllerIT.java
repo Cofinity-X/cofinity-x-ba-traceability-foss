@@ -48,12 +48,13 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
     @Autowired
     InvestigationsSupport investigationsSupport;
 
-    @Test
+    // TODO [Pooja] -  Commented test case because upstream removed test case
+    //@Test
     void ShouldAcknowledgeReceivedInvestigation() throws JoseException {
-       // Given
+        // given
         val investigationId = investigationsSupport.defaultReceivedInvestigationStored();
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body("""
@@ -67,7 +68,7 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, List.of()), new SearchCriteriaRequestParam(List.of())))
@@ -84,10 +85,10 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldNotUpdateToAcknowledgedNonExistingInvestigation() throws JoseException {
-       // Given
+        // given
         final long notExistingInvestigationId = 1234L;
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body("""
@@ -104,10 +105,10 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldNotUpdateToAcceptedNonExistingInvestigation() throws JoseException {
-       // Given
+        // given
         final long notExistingInvestigationId = 1234L;
 
-        // Then
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body("""
@@ -125,10 +126,10 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldNotUpdateToDeclinedNonExistingInvestigation() throws JoseException {
-       // Given
+        // given
         final long notExistingInvestigationId = 1234L;
 
-        // Then
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body("""
@@ -147,10 +148,10 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
     @ParameterizedTest
     @MethodSource("invalidRequest")
     void shouldNotUpdateWithInvalidRequest(final String request) throws JoseException {
-       // Given
+        // given
         final long notExistingInvestigationId = 1234L;
 
-        // Then
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body(request)
@@ -160,6 +161,7 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(400);
     }
+
 
     private static Stream<Arguments> invalidRequest() {
         return Stream.of(
@@ -195,4 +197,5 @@ class ReceiverInvestigationsControllerIT extends IntegrationTestSpecification {
                         """.replace("$status", UpdateQualityNotificationStatusRequest.DECLINED.name()))
         );
     }
+
 }

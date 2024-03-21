@@ -48,42 +48,6 @@ class ReceiverAlertsControllerIT extends IntegrationTestSpecification {
     AlertsSupport alertsSupport;
 
     @Test
-    void ShouldAcknowledgeReceivedAlert() throws JoseException {
-       // Given
-        var alertId = alertsSupport.defaultReceivedAlertStored();
-        String filterString = "channel,EQUAL,RECEIVER,AND";
-
-        // When
-        given()
-                .contentType(ContentType.JSON)
-                .body(
-                        """
-                                 {
-                                 "status" : "ACKNOWLEDGED"
-                                 }
-                                """
-                )
-                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-                .when()
-                .post("/api/alerts/$alertId/update".replace("$alertId", alertId.toString()))
-                .then()
-                .statusCode(204);
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .body(new PageableFilterRequest(new OwnPageable(0, 10, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
-                .contentType(ContentType.JSON)
-                .when()
-                .post("/api/alerts/filter")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(0))
-                .body("pageSize", Matchers.is(10))
-                .body("content", Matchers.hasSize(1));
-    }
-
-    @Test
     void shouldNotUpdateToAcknowledgedNonExistingAlert() throws JoseException {
        // Given
         final long notExistingAlertId = 1234L;

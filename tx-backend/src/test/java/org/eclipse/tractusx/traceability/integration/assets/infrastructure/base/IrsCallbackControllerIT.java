@@ -23,7 +23,7 @@ import assets.importpoc.ImportResponse;
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.common.security.JwtRole;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.eclipse.tractusx.traceability.integration.common.support.IrsApiSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.repository.AssetAsBuiltSupportRepository;
 import org.eclipse.tractusx.traceability.integration.common.support.repository.BpnSupportRepository;

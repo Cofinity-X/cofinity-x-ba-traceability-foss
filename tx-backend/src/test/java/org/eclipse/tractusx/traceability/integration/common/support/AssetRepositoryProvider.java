@@ -47,7 +47,8 @@ public class AssetRepositoryProvider {
     public AssetAsPlannedRepository assetAsPlannedRepository() {
         return assetAsPlannedRepository;
     }
-        public AssetTestData testdataProvider() {
+
+    public AssetTestData testdataProvider() {
         return assetTestData;
     }
 }

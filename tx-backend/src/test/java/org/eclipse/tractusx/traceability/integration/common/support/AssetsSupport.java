@@ -39,30 +39,43 @@ public class AssetsSupport {
     }
 
     public void defaultAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
     }
 
     public AssetAsBuiltEntity findById(String id) {
         return AssetAsBuiltEntity.from(assetRepositoryProvider.assetAsBuiltRepository.getAssetById(id));
     }
 
+    public void defaultMultipleAssetsAsBuiltStored() {
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertMultipleAssetsAsBuiltForTests());
+    }
+
     public void tractionBatteryCodeAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
     }
 
     public void defaultAssetsAsPlannedStored() {
-        assetRepositoryProvider.assetAsPlannedRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
+        assetRepositoryProvider.assetAsPlannedRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
     }
 
-    public void assertAssetAsBuiltSize(int size) {
-        long assetCount = assetRepositoryProvider.assetAsBuiltRepository().countAssets();
+    public void assetsAsPlannedStored(final String resourceName) {
+        assetRepositoryProvider.assetAsPlannedRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests(resourceName));
+    }
+
+    public void assertAssetAsBuiltSize(final int size) {
+        final long assetCount = assetRepositoryProvider.assetAsBuiltRepository().countAssets();
         log.info("AsBuiltRepository asset count: {}, expected: {}", assetCount, size);
         assert assetCount == size;
     }
 
-    public void assertAssetAsPlannedSize(int size) {
-        long assetCount = assetRepositoryProvider.assetAsPlannedRepository().countAssets();
-        log.info("AsPlannedRepository asset count: {}", assetCount);
+    public void assertAssetAsPlannedSize(final int size) {
+        final long assetCount = assetRepositoryProvider.assetAsPlannedRepository().countAssets();
+        log.info("AsPlannedRepository asset count: {}, expected: {}", assetCount, size);
         assert assetCount == size;
     }
 
