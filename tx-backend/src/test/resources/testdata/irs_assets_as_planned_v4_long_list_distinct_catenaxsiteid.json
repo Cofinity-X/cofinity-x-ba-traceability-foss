@@ -1677,7 +1677,7 @@
         "sites": [
           {
             "functionValidUntil": "2025-04-04T04:14:11.000Z",
-            "catenaXsiteId": "BPNS000004711DMW",
+            "catenaXSiteId": "BPNS000004711DMW",
             "function": "production",
             "functionValidFrom": "2018-03-24T13:38:32.000Z"
           }
@@ -1710,7 +1710,7 @@
         "sites": [
           {
             "functionValidUntil": "2028-09-29T13:56:09.000Z",
-            "catenaXsiteId": "BPNS00000003B5MJ",
+            "catenaXSiteId": "BPNS00000003B5MJ",
             "function": "production",
             "functionValidFrom": "2017-01-30T12:55:30.000Z"
           }
@@ -1743,7 +1743,7 @@
         "sites": [
           {
             "functionValidUntil": "2027-05-23T09:16:30.000Z",
-            "catenaXsiteId": "BPNS000004711DMY",
+            "catenaXSiteId": "BPNS000004711DMY",
             "function": "production",
             "functionValidFrom": "2013-11-17T23:59:54.000Z"
           }
@@ -1793,7 +1793,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-10-27T21:24:04.000Z",
-            "catenaXsiteId": "BPNS00000003B2OM",
+            "catenaXSiteId": "BPNS00000003B2OM",
             "function": "production",
             "functionValidFrom": "2016-01-29T21:44:37.000Z"
           }
@@ -1826,7 +1826,7 @@
         "sites": [
           {
             "functionValidUntil": "2032-01-21T11:22:57.000Z",
-            "catenaXsiteId": "BPNS00000003AXS3",
+            "catenaXSiteId": "BPNS00000003AXS3",
             "function": "production",
             "functionValidFrom": "2017-05-27T13:54:13.000Z"
           }
@@ -1859,7 +1859,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-04-16T11:07:09.000Z",
-            "catenaXsiteId": "BPNS00000003B3NX",
+            "catenaXSiteId": "BPNS00000003B3NX",
             "function": "production",
             "functionValidFrom": "2013-12-07T09:33:50.000Z"
           }
@@ -1892,7 +1892,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-11-21T03:24:27.000Z",
-            "catenaXsiteId": "BPNS000004711DMY",
+            "catenaXSiteId": "BPNS000004711DMY",
             "function": "production",
             "functionValidFrom": "2020-06-07T07:30:47.000Z"
           }
@@ -1925,7 +1925,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-04-16T11:07:09.000Z",
-            "catenaXsiteId": "BPNS00000003B3NX",
+            "catenaXSiteId": "BPNS00000003B3NX",
             "function": "production",
             "functionValidFrom": "2013-12-07T09:33:50.000Z"
           }
@@ -1958,7 +1958,7 @@
         "sites": [
           {
             "functionValidUntil": "2030-01-29T19:43:54.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q1",
+            "catenaXSiteId": "BPNS00000003B0Q1",
             "function": "production",
             "functionValidFrom": "2015-11-17T18:35:23.000Z"
           }
@@ -1974,7 +1974,7 @@
         "sites": [
           {
             "functionValidUntil": "2024-09-23T14:45:04.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q0",
+            "catenaXSiteId": "BPNS00000003B0Q0",
             "function": "production",
             "functionValidFrom": "2020-06-20T01:19:36.000Z"
           }
@@ -2024,7 +2024,7 @@
         "sites": [
           {
             "functionValidUntil": "2024-09-23T14:45:04.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q0",
+            "catenaXSiteId": "BPNS00000003B0Q0",
             "function": "production",
             "functionValidFrom": "2020-06-20T01:19:36.000Z"
           }
@@ -2040,7 +2040,7 @@
         "sites": [
           {
             "functionValidUntil": "2028-04-27T13:34:20.000Z",
-            "catenaXsiteId": "BPNS000004711DN",
+            "catenaXSiteId": "BPNS000004711DN",
             "function": "production",
             "functionValidFrom": "2017-05-03T09:10:04.000Z"
           }
@@ -2090,7 +2090,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-10-20T22:34:48.000Z",
-            "catenaXsiteId": "BPNS00000003AXS4",
+            "catenaXSiteId": "BPNS00000003AXS4",
             "function": "production",
             "functionValidFrom": "2013-12-05T14:02:28.000Z"
           }
@@ -2106,7 +2106,7 @@
         "sites": [
           {
             "functionValidUntil": "2025-03-05T00:33:55.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q4",
+            "catenaXSiteId": "BPNS00000003B0Q4",
             "function": "production",
             "functionValidFrom": "2019-09-10T14:41:50.000Z"
           }
