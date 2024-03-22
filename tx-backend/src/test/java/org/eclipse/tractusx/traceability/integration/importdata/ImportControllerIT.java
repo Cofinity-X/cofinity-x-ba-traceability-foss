@@ -397,7 +397,6 @@ class ImportControllerIT extends IntegrationTestSpecification {
     void givenValidFile_whenPublishData_thenStatusShouldChangeToInPublishedToCX() throws JoseException, InterruptedException {
         // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
-        System.out.println("tesr Pooja:"+path);
         File file = new File(path);
 
         given()
@@ -432,7 +431,7 @@ class ImportControllerIT extends IntegrationTestSpecification {
         eventually(() -> {
             AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
             assertThat(asset.getPolicyId()).isEqualTo("default-policy");
-            assertThat(asset.getImportState()).isEqualTo(ImportState.IN_SYNCHRONIZATION);
+            assertThat(asset.getImportState()).isEqualTo(ImportState.PUBLISHED_TO_CORE_SERVICES);
             dtrApiSupport.verifyDtrCreateShellCalledTimes(1);
             return true;
         });
@@ -834,5 +833,4 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(404);
     }
-
 }

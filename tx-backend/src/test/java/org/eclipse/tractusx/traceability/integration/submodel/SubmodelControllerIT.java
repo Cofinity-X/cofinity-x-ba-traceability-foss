@@ -61,14 +61,14 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(204);
 
-       // Then
+        // then
         List<SubmodelEntity> submodelsAfterDeletion = jpaSubmodelRepository.findAll();
         assertThat(submodelsAfterDeletion).isEmpty();
     }
 
     @Test
     void givenSubmodel_whenGetById_thenGetIt() throws JoseException {
-       // Given
+        // given
         String submodelId = "UUID:Xa123123";
         String payload = "Payload string";
         jpaSubmodelRepository.save(SubmodelEntity.builder()
@@ -76,7 +76,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
                 .submodel(payload)
                 .build());
 
-        // When
+        // when
         String responseBody = given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -89,7 +89,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
                 .extract()
                 .asString();
 
-       // Then
+        // then
         assertThat(responseBody).isEqualTo(payload);
     }
 
@@ -98,7 +98,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
        // Given
         String submodelId = "UUID:Xa123123";
 
-        // Then
+        // when/then
         given()
                 .header(oAuth2Support.jwtAuthorization(USER))
                 .contentType(ContentType.JSON)
@@ -112,11 +112,11 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenSubmodel_whenSave_thenSaveIntoDatabase() throws JoseException {
-       // Given
+        // given
         String submodelId = "submodelId";
         String requestContent = "test request";
 
-        // When
+        // when
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -128,7 +128,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+       // then
         SubmodelEntity entity = jpaSubmodelRepository.findById(submodelId).get();
         assertThat(entity.getId()).isEqualTo(submodelId);
         assertThat(entity.getSubmodel()).isEqualTo(requestContent);

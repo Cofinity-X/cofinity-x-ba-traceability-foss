@@ -59,11 +59,11 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
     @Test
     void shouldReturnAssetsWithManufacturerName() throws JoseException {
-       // Given
+        //GIVEN
         bpnSupport.cachedBpnsForDefaultAssets();
         assetsSupport.defaultAssetsStored();
 
-        // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -78,11 +78,10 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
     @Test
     void shoulReturnSupplierAssets() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
         final String filter = "owner,EQUAL,SUPPLIER,AND";
-
-        // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -96,11 +95,10 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
     @Test
     void shouldReturnOwnAssets() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
         final String filter = "owner,EQUAL,OWN,AND";
-
-        // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -114,10 +112,10 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
     @Test
     void shouldReturnAllAssets() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
 
-        // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -139,16 +137,16 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
                 .body("content[0].detailAspectModels[0].data", hasEntry("partId", assetsSupport.emptyText()))
                 .body("content[0].detailAspectModels[0].data", hasEntry("nameAtCustomer", assetsSupport.emptyText()))
                 .body("content[0].detailAspectModels[0].data", hasEntry("customerPartId", assetsSupport.emptyText()));
+
     }
 
     @ParameterizedTest
     @MethodSource("owners")
     void shouldReturnAssetsByOwnerFiltering(String ownerValue, int totalItemsValue) throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
         final String filter = "owner,EQUAL," + ownerValue + ",AND";
-
-        // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -162,10 +160,10 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
     @Test
     void shouldGetPageOfAssets() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
 
-        // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -181,10 +179,10 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
     @Test
     void shouldGetTractionBatteryCodeAsset() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.tractionBatteryCodeAssetsStored();
 
-        // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -203,6 +201,7 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
     @Test
     void givenNonExistingSortField_whenGetAssetsAsBuilt_thenBadRequest() throws JoseException {
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)

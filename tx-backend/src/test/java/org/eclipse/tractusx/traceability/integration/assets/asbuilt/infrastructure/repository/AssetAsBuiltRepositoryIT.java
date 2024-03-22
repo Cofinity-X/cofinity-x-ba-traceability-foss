@@ -25,7 +25,7 @@ import org.eclipse.tractusx.traceability.assets.domain.base.model.ImportState;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.repository.JpaAssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -56,13 +56,13 @@ class AssetAsBuiltRepositoryIT extends IntegrationTestSpecification {
             Integer resultLimit,
             Integer expectedSize
     ) {
-       // Given
+        // given
         assetsSupport.defaultAssetsStored();
 
-        // When
+        // when
         List<String> result = assetAsBuiltRepository.getFieldValues(fieldName, startWith, resultLimit, null);
 
-       // Then
+        // then
         assertThat(result)
                 .isSortedAccordingTo(String::compareTo)
                 .hasSize(expectedSize);
