@@ -301,9 +301,6 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   }
 
   clickClear(): void {
-    this.toastService.error('test error title', 'this is an error!');
-
-
     this.selectAllChecked = false;
 
     this.searchElement = '';
