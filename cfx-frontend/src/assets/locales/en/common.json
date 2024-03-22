@@ -204,6 +204,14 @@
     "severity": "Severity",
     "severityDescription": "Select the severity for the problem at hand"
   },
+  "forwardNotification": {
+    "requestAlert": {
+      "headline": "Forward alert"
+    },
+    "requestInvestigations": {
+      "headline": "Forward investigation"
+    }
+  },
   "pagination": {
     "itemsPerPageLabel": "Show",
     "nextPageLabel": "Next page",

@@ -86,11 +86,15 @@
         <app-request-investigation *ngIf="context === RequestContext.REQUEST_INVESTIGATION"
           (onBackClicked)="onBackClicked()"
           (deselectPart)="onPartDeselected($event)"
-          [selectedItems]="selectedParts"></app-request-investigation>
+          [selectedItems]="selectedParts"
+          [closeButtonText]="'requestNotification.back'"
+          [submitButtonText]="'requestNotification.submit'"></app-request-investigation>
         <app-request-alert *ngIf="context === RequestContext.REQUEST_ALERT"
           (onBackClicked)="onBackClicked()"
           (deselectPart)="onPartDeselected($event)"
-          [selectedItems]="selectedParts"></app-request-alert>
+          [selectedItems]="selectedParts"
+          [closeButtonText]="'requestNotification.back'"
+          [submitButtonText]="'requestNotification.submit'"></app-request-alert>
       </mat-tab>
     </mat-tab-group>
   </div>

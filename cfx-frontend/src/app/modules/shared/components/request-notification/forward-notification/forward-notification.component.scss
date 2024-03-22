@@ -1,0 +1,46 @@
+@import '../../../../../../theme/base.scss';
+@tailwind base;
+
+.container {
+  width: 850px;
+  overflow-y: hidden;
+  margin-right: 0.5px;
+}
+
+.header {
+  @extend .headline-medium;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 35.2px;
+  color: #333333;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-header {
+  @extend .title-medium;
+}
+
+[override] .button-container .buttons-wrapper {
+  display: flex;
+  justify-content: right !important;
+  margin-top: 20px;
+}
+
+.parts-tab-wrapper {
+  height: 500px !important;
+  overflow-y: auto !important;
+}
+
+.other-parts-mat-tab-group {
+  width: 100%;
+  overflow-y: hidden !important;
+}
+
+.select-parts-tab {
+  @extend .title-large;
+  color: #333333;
+  padding-left: 10px !important;
+}
+

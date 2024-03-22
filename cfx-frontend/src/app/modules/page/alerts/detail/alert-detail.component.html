@@ -168,7 +168,12 @@ SPDX-License-Identifier: Apache-2.0
       </div>
     </app-button>
   </div>
-
+  <a class="forward-link"
+       *ngIf="actionHelperService.showAcceptButton(selectedAlert)"
+        (click)="openForwardDialog(selectedAlert)">
+      <img src="/assets/images/icons/forward_icon.svg" alt="forward_icon"/>
+      {{ 'pageAlert.forward' | i18n }}
+  </a>
   <ng-template #semanticModelIdTmp
     let-row="row">
     <app-button class="pl-2 alert-copy-button"

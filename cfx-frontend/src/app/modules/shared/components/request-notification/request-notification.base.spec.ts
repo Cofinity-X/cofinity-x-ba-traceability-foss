@@ -30,7 +30,7 @@ import { RequestAlertComponent } from '@shared/components/request-notification/r
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash-es';
-import { RequestComponentData } from './request.componenet.model';
+import { RequestComponentData } from './request.component.model';
 import { By } from '@angular/platform-browser';
 import { Part } from '@page/parts/model/parts.model';
 
@@ -48,7 +48,7 @@ describe('requestInvestigationComponent', () => {
 
   let requestData = requestDataDefault;
 
-  const renderRequestInvestigationComponent = (component = `<app-request-investigation 
+  const renderRequestInvestigationComponent = (component = `<app-request-investigation
     [selectedItems]="currentSelectedItems"
     (submitted)='submittedMock($event)'>
   </app-request-investigation>` as any) => {
@@ -88,7 +88,7 @@ describe('requestInvestigationComponent', () => {
   };
 
   // by default we use component as a string, but when need to use spyOn we pass component class
-  const renderRequestAlertComponent = (component = `<app-request-alert 
+  const renderRequestAlertComponent = (component = `<app-request-alert
     [selectedItems]="currentSelectedItems"
     (submitted)='submittedMock($event)'>
   </app-request-alert>` as any) => {
