@@ -59,18 +59,13 @@ SPDX-License-Identifier: Apache-2.0
             alt="Open in new icon" />
         </div>
         <div *ngIf="sourcePath"
-          class="link-text"
-          [ngClass]="!commitId ? 'link-text-bottom' : ''"
+          class="link-text link-text-bottom"
           (click)="openLink(sourcePath)">
           {{"pageAbout.source" | i18n}}
           <img src="/assets/images/icons/open_in_new.svg"
             height="15px"
             width="15px"
             alt="Open in new icon" />
-        </div>
-        <div *ngIf="commitId"
-          class="commit-id">
-          {{"pageAbout.commitId" | i18n}}: {{ commitId }}
         </div>
       </div>
     </div>
