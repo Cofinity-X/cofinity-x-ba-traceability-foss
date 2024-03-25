@@ -167,10 +167,6 @@ export class PartsTableComponent implements OnInit {
 
   protected readonly Role = Role;
 
-  ngAfterViewInit() {
-    this.paginator._intl.itemsPerPageLabel = 'Show';
-  }
-
   constructor(private readonly tableSettingsService: TableSettingsService,
     private readonly roleService: RoleService,
     private toastService: ToastService,
