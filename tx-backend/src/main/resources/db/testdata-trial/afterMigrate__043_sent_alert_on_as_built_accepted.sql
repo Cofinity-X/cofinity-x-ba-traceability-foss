@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state ACCEPTED in Severity Minor for asBuilt asset Turning lights left which is sent from BPNL000000000001 to BPNL000CUSTOMER2
+-- This creates an alert in state ACCEPTED in Severity Minor for asBuilt asset Control Unit big which is sent from BPNL000000000001 to BPNL000CUSTOMER2
 
 ---
 insert into alert
     (id             , bpn      , close_reason, created                              , description                      , status    , side    , accept_reason                             , decline_reason, updated, error_message)
 values
-    (${alertSentId4}, ${bpnOwn}, null        , current_timestamp - interval '5 days', 'Alert about Turning lights left', 'ACCEPTED', 'SENDER', 'Thanks for letting us know. We''ll check', null          , null   , null);
+    (${alertSentId4}, ${bpnOwn}, null        , current_timestamp - interval '5 days', 'Alert about Control Unit Big', 'ACCEPTED', 'SENDER', 'Thanks for letting us know. We''ll check', null          , null   , null);
 
 ---
 -- reset sequence to highest next-val
@@ -26,14 +26,14 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id       , asset_id)
 values
-    (${alertNotificationSentId4a}, ${assetAsBuiltId13});
+    (${alertNotificationSentId4a}, ${assetAsBuiltId16});
 
 ---
 -- join alert to asset
 insert into assets_as_built_alerts
     (alert_id       , asset_id)
 values
-    (${alertSentId4}, ${assetAsBuiltId13});
+    (${alertSentId4}, ${assetAsBuiltId16});
 
 ---
 -- ACCEPTED by receiver notification message
@@ -47,4 +47,4 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id       , asset_id)
 values
-    (${alertNotificationSentId4b}, ${assetAsBuiltId13});
+    (${alertNotificationSentId4b}, ${assetAsBuiltId16});

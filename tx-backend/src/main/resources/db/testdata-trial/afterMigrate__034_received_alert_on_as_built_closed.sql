@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state CLOSED in Severity Critical for asBuilt asset Philips P-BrakeLight which is sent from BPNL000SUPPLIER2 to BPNL000000000001
+-- This creates an alert in state CLOSED in Severity Critical for asBuilt asset Electric Fuse big which is sent from BPNL000SUPPLIER2 to BPNL000000000001
 
 ---
 insert into alert
     (id                 , bpn            , close_reason             , created                              , description               , status  , side      , accept_reason, decline_reason, updated, error_message)
 values
-    (${alertReceivedId5}, ${bpnSupplier2}, 'Issue has been resolved', current_timestamp - interval '6 days', 'Alert about P-BrakeLight', 'CLOSED', 'RECEIVER', null         , null          , null   , null);
+    (${alertReceivedId5}, ${bpnSupplier2}, 'Issue has been resolved', current_timestamp - interval '6 days', 'Alert about Electric Fuse Big', 'CLOSED', 'RECEIVER', null         , null          , null   , null);
 
 ---
 -- reset sequence to highest next-val
@@ -26,14 +26,14 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id           , asset_id)
 values
-    (${alertNotificationReceivedId5a}, ${assetAsBuiltId22});
+    (${alertNotificationReceivedId5a}, ${assetAsBuiltId08});
 
 ---
 -- join alert to asset
 insert into assets_as_built_alerts
     (alert_id           , asset_id)
 values
-    (${alertReceivedId5}, ${assetAsBuiltId22});
+    (${alertReceivedId5}, ${assetAsBuiltId08});
 
 ---
 ---
@@ -48,4 +48,4 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id           , asset_id)
 values
-    (${alertNotificationReceivedId5b}, ${assetAsBuiltId22});
+    (${alertNotificationReceivedId5b}, ${assetAsBuiltId08});

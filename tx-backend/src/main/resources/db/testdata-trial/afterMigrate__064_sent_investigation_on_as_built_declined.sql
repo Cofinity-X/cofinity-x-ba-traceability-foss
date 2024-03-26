@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state DECLINED in Severity Major for asBuilt asset Würth W-HighBeam which is sent from BPNL000000000001 to BPNL000SUPPLIER3
+-- This creates an investigation in state DECLINED in Severity Major for asBuilt asset Electric Fuse Big which is sent from BPNL000000000001 to BPNL000SUPPLIER3
 
 ---
 insert into investigation
     (id                     , bpn      , close_reason, created                              , description                                             , status    , side    , accept_reason, decline_reason    , updated                              , error_message)
 values
-    (${investigationSentId5}, ${bpnOwn}, null        , current_timestamp - interval '5 days', 'Investigation on Würth W-HighBeam due to broken glass.', 'DECLINED', 'SENDER', null         , 'It''s not broken', current_timestamp - interval '1 hour', null);
+    (${investigationSentId5}, ${bpnOwn}, null        , current_timestamp - interval '5 days', 'Investigation on Electric Fuse Big due to broken wire.', 'DECLINED', 'SENDER', null         , 'It''s not broken', current_timestamp - interval '1 hour', null);
 
 ---
 -- reset sequence to highest next-val
@@ -25,14 +25,14 @@ values
 insert into assets_as_built_notifications
     (notification_id                     , asset_id)
 values
-    (${investigationNotificationSentId5a}, ${assetAsBuiltId22});
+    (${investigationNotificationSentId5a}, ${assetAsBuiltId08});
 
 ---
 -- join investigation to asset
 insert into assets_as_built_investigations
     (investigation_id       , asset_id)
 values
-    (${investigationSentId5}, ${assetAsBuiltId22});
+    (${investigationSentId5}, ${assetAsBuiltId08});
 
 ---
 -- DECLINED by receiver notification message
@@ -46,4 +46,4 @@ values
 insert into assets_as_built_notifications
     (notification_id                     , asset_id)
 values
-    (${investigationNotificationSentId5b}, ${assetAsBuiltId22});
+    (${investigationNotificationSentId5b}, ${assetAsBuiltId08});

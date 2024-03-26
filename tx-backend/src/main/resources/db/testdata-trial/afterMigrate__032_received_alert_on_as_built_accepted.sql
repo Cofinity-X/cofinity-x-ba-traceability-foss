@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state ACCEPTED in Severity Minor for asBuilt asset Philips P-TurningLight which is sent from BPNL000SUPPLIER2 to BPNL000000000001
+-- This creates an alert in state ACCEPTED in Severity Minor for asBuilt asset Left Xenon Gland which is sent from BPNL000SUPPLIER2 to BPNL000000000001
 
 ---
 insert into alert
     (id                 , bpn            , close_reason, created                              , description                 , status    , side      , accept_reason           , decline_reason, updated, error_message)
 values
-    (${alertReceivedId3}, ${bpnSupplier2}, null        , current_timestamp - interval '4 days', 'Alert about P-TurningLight', 'ACCEPTED', 'RECEIVER', 'Part has been replaced', null          , null   , null);
+    (${alertReceivedId3}, ${bpnSupplier2}, null        , current_timestamp - interval '4 days', 'Alert about Left Gland', 'ACCEPTED', 'RECEIVER', 'Part has been replaced', null          , null   , null);
 
 ---
 -- reset sequence to highest next-val
@@ -26,14 +26,14 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id           , asset_id)
 values
-    (${alertNotificationReceivedId3a}, ${assetAsBuiltId21});
+    (${alertNotificationReceivedId3a}, ${assetAsBuiltId05});
 
 ---
 -- join alert to asset
 insert into assets_as_built_alerts
     (alert_id           , asset_id)
 values
-    (${alertReceivedId3}, ${assetAsBuiltId21});
+    (${alertReceivedId3}, ${assetAsBuiltId05});
 
 ---
 ---
@@ -48,4 +48,4 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id           , asset_id)
 values
-    (${alertNotificationReceivedId3b}, ${assetAsBuiltId21});
+    (${alertNotificationReceivedId3b}, ${assetAsBuiltId05});

@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state DECLINED in Severity Major for asBuilt asset Würth W-FogLight which is sent from BPNL000SUPPLIER3 to BPNL000000000001
+-- This creates an alert in state DECLINED in Severity Major for asBuilt asset Electric Fuse small which is sent from BPNL000SUPPLIER3 to BPNL000000000001
 
 ---
 insert into alert
     (id                 , bpn            , close_reason, created                              , description             , status    , side      , accept_reason, decline_reason       , updated, error_message)
 values
-    (${alertReceivedId4}, ${bpnSupplier3}, null        , current_timestamp - interval '5 days', 'Alert about W-FogLight', 'DECLINED', 'RECEIVER', null         , 'Not relevant for us', null   , null);
+    (${alertReceivedId4}, ${bpnSupplier3}, null        , current_timestamp - interval '5 days', 'Alert about Electric Fuse Small', 'DECLINED', 'RECEIVER', null         , 'Not relevant for us', null   , null);
 
 ---
 -- reset sequence to highest next-val
@@ -26,14 +26,14 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id           , asset_id)
 values
-    (${alertNotificationReceivedId4a}, ${assetAsBuiltId22});
+    (${alertNotificationReceivedId4a}, ${assetAsBuiltId07});
 
 ---
 -- join alert to asset
 insert into assets_as_built_alerts
     (alert_id           , asset_id)
 values
-    (${alertReceivedId4}, ${assetAsBuiltId22});
+    (${alertReceivedId4}, ${assetAsBuiltId07});
 
 ---
 ---
@@ -48,4 +48,4 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id           , asset_id)
 values
-    (${alertNotificationReceivedId4b}, ${assetAsBuiltId22});
+    (${alertNotificationReceivedId4b}, ${assetAsBuiltId07});

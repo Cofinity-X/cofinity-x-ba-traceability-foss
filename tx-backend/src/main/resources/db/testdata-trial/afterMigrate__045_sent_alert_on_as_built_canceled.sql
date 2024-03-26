@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state CANCELED in Severity Minor for asBuilt asset Fog lights left which is sent from BPNL000000000001 to BPNL000CUSTOMER1
+-- This creates an alert in state CANCELED in Severity Minor for asBuilt asset Break Light which is sent from BPNL000000000001 to BPNL000CUSTOMER1
 
 ---
 insert into alert
     (id             , bpn      , close_reason, created                              , description                            , status    , side    , accept_reason, decline_reason, updated          , error_message)
 values
-    (${alertSentId6}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Cancelled Alert about Fog lights left', 'CANCELED', 'SENDER', null         , null          , current_timestamp, null);
+    (${alertSentId6}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Cancelled Alert about Break Lights', 'CANCELED', 'SENDER', null         , null          , current_timestamp, null);
 
 ---
 -- reset sequence to highest next-val
@@ -26,11 +26,11 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id      , asset_id)
 values
-    (${alertNotificationSentId6}, ${assetAsBuiltId15});
+    (${alertNotificationSentId6}, ${assetAsBuiltId18});
 
 ---
 -- join alert to asset
 insert into assets_as_built_alerts
     (alert_id       , asset_id)
 values
-    (${alertSentId6}, ${assetAsBuiltId15});
+    (${alertSentId6}, ${assetAsBuiltId18});

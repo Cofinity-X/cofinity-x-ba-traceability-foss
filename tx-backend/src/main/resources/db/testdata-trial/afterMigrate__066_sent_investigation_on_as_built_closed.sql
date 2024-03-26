@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state CLOSED in Severity Critical for asBuilt asset Philips P-RightHeadBulb which is sent from BPNL000000000001 to BPNL000SUPPLIER2
+-- This creates an investigation in state CLOSED in Severity Critical for asBuilt asset Xenon Right Gland which is sent from BPNL000000000001 to BPNL000SUPPLIER2
 
 ---
 insert into investigation
     (id                     , bpn      , close_reason      , created                              , description                                                 , status  , side    , accept_reason, decline_reason, updated                              , error_message)
 values
-    (${investigationSentId7}, ${bpnOwn}, 'Problem is fixed', current_timestamp - interval '6 days', 'Investigation on Philips RightHeadBulb due to broken fuse.', 'CLOSED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
+    (${investigationSentId7}, ${bpnOwn}, 'Problem is fixed', current_timestamp - interval '6 days', 'Investigation on Right Gland due to damaged package.', 'CLOSED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
 
 ---
 -- reset sequence to highest next-val

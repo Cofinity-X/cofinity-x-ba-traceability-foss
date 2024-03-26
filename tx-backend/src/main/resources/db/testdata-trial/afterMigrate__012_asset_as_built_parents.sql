@@ -22,9 +22,9 @@ values
     (${assetAsBuiltId06}, ${assetAsBuiltId02}, 'BS-RightXenonGland'), -- Right Xenon Gland has parent Xenon Headlight right
 
     (${assetAsBuiltId07}, ${assetAsBuiltId15}, 'CC-SmallElectricFuse'), -- Electric Fuse small has parent Control Unit small
-    (${assetAsBuiltId09}, ${assetAsBuiltId15}, 'LT-SmallElectricController'), -- Electric Controller s has parent Control Unit small
+    (${assetAsBuiltId09}, ${assetAsBuiltId15}, 'LT-SmallElectricController'), -- Electric Controller small has parent Control Unit small
     (${assetAsBuiltId08}, ${assetAsBuiltId16}, 'CC-BigElectricFuse'), -- Electric Fuse big has parent Control Unit big
-    (${assetAsBuiltId10}, ${assetAsBuiltId16}, 'LT-BigElectricController'), -- Electric Controller b has parent Control Unit big
+    (${assetAsBuiltId10}, ${assetAsBuiltId16}, 'LT-BigElectricController'), -- Electric Controller big has parent Control Unit big
 
     (${assetAsBuiltId11}, ${assetAsBuiltId18}, 'LL-RedBreakLED'), -- LED Red Break has parent Break Light
     (${assetAsBuiltId12}, ${assetAsBuiltId17}, 'LL-OrangeTurnLED'), -- LED Orange Turn has parent Turn Light

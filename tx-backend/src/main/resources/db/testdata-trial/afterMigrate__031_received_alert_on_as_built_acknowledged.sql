@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset Philips Front Right-D3H which is sent from BPNL000SUPPLIER2 to BPNL000000000001
+-- This creates an alert in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset Right Xenon Gland which is sent from BPNL000SUPPLIER2 to BPNL000000000001
 
 ---
 insert into alert
     (id                 , bpn            , close_reason, created                              , description                      , status        , side      , accept_reason, decline_reason, updated, error_message)
 values
-    (${alertReceivedId2}, ${bpnSupplier2}, null        , current_timestamp - interval '3 days', 'Alert about Right P Light Bulbs', 'ACKNOWLEDGED', 'RECEIVER', null         , null          , null   , null);
+    (${alertReceivedId2}, ${bpnSupplier2}, null        , current_timestamp - interval '3 days', 'Alert about Right Gland', 'ACKNOWLEDGED', 'RECEIVER', null         , null          , null   , null);
 
 ---
 -- reset sequence to highest next-val

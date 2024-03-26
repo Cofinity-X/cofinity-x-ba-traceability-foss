@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state RECEIVED in Severity Critical for asBuilt asset Osram Front Left-AX400 which is sent from BPNL000SUPPLIER1 to BPNL000000000001
+-- This creates an alert in state RECEIVED in Severity Critical for asBuilt asset Left Headbulb which is sent from BPNL000SUPPLIER1 to BPNL000000000001
 
 ---
 insert into alert
     (id                 , bpn            , close_reason, created                              , description                     , status    , side      , accept_reason, decline_reason, updated, error_message)
 values
-    (${alertReceivedId1}, ${bpnSupplier1}, null        , current_timestamp - interval '2 days', 'Alert about Left O Light Bulbs', 'RECEIVED', 'RECEIVER', null         , null          , null   , null);
+    (${alertReceivedId1}, ${bpnSupplier1}, null        , current_timestamp - interval '2 days', 'Alert about Left Headbulb', 'RECEIVED', 'RECEIVER', null         , null          , null   , null);
 
 ---`
 -- reset sequence to highest next-val

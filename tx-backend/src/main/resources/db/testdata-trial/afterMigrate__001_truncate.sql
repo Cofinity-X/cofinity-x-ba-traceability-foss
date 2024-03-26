@@ -1,8 +1,8 @@
 -- this script is executed by flyway as part of a lifecycle hook after all migrations have been applied
--- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
+-- (see https:                                                                                                       //documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- truncate all tables, except for the "technical" ones (flyway_schema_history and shedlock)
+-- truncate all tables                , except for the "technical" ones (flyway_schema_history and shedlock)
 truncate table
     alert,
     alert_notification,
@@ -29,5 +29,5 @@ truncate table
 
 ---
 -- reset sequences
-select setval('alert_id_seq1'        , 1, true);
-select setval('investigation_id_seq1', 1, true);
+select setval('alert_id_seq1'         , 1                                                                   , true);
+select setval('investigation_id_seq1' , 1                                                                   , true);

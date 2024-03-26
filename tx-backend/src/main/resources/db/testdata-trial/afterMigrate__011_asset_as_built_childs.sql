@@ -12,9 +12,9 @@ values
     (${assetAsBuiltId02}, ${assetAsBuiltId06}, 'RightHeadLight'), -- Xenon Headlight right has child Right Xenon Gland
 
     (${assetAsBuiltId15}, ${assetAsBuiltId07}, 'SO-ControlUnitSmall'), -- Control Unit small has child Electric Fuse small
-    (${assetAsBuiltId15}, ${assetAsBuiltId09}, 'SO-ControlUnitSmall'), -- Control Unit small has child Electric Controller s
+    (${assetAsBuiltId15}, ${assetAsBuiltId09}, 'SO-ControlUnitSmall'), -- Control Unit small has child Electric Controller small
     (${assetAsBuiltId16}, ${assetAsBuiltId08}, 'SO-ControlUnitBig'), -- Control Unit big has child Electric Fuse big
-    (${assetAsBuiltId16}, ${assetAsBuiltId10}, 'SO-ControlUnitBig'), -- Control Unit big has child Electric Controller b
+    (${assetAsBuiltId16}, ${assetAsBuiltId10}, 'SO-ControlUnitBig'), -- Control Unit big has child Electric Controller big
 
     (${assetAsBuiltId17}, ${assetAsBuiltId12}, 'SO-TurnLight'), -- Turn Light has child LED Orange Turn
     (${assetAsBuiltId17}, ${assetAsBuiltId13}, 'SO-TurnLight'), -- Turn Light has child Case Orange

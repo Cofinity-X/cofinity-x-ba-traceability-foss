@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state ACKNOWLEDGED in Severity Minor for asBuilt asset Xenon Right-Headlights which is sent from BPNL000CUSTOMER1 to BPNL000000000001
+-- This creates an investigation in state ACKNOWLEDGED in Severity Minor for asBuilt asset Xenon Right-Headlight which is sent from BPNL000CUSTOMER1 to BPNL000000000001
 
 ---
 insert into investigation
     (id                         , bpn            , close_reason, created                              , description                                                  , status        , side      , accept_reason, decline_reason, updated                               , error_message)
 values
-    (${investigationReceivedId2}, ${bpnCustomer1}, null        , current_timestamp - interval '2 days', 'Investigation on Xenon Right-Headlights due to malfunction.', 'ACKNOWLEDGED', 'RECEIVER', null         , null          , current_timestamp - interval '1 hours', null);
+    (${investigationReceivedId2}, ${bpnCustomer1}, null        , current_timestamp - interval '2 days', 'Investigation on Right Headlight due to malfunction.', 'ACKNOWLEDGED', 'RECEIVER', null         , null          , current_timestamp - interval '1 hours', null);
 
 ---
 -- reset sequence to highest next-val

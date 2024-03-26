@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state SENT in Severity Major for asBuilt asset Xenon Left-Headlights which is sent from BPNL000000000001 to BPNL000CUSTOMER1
+-- This creates an alert in state SENT in Severity Major for asBuilt asset Xenon Left-Headlight which is sent from BPNL000000000001 to BPNL000CUSTOMER1
 
 ---
 insert into alert
     (id             , bpn      , close_reason, created                             , description                        , status, side    , accept_reason, decline_reason, updated          , error_message)
 values
-    (${alertSentId2}, ${bpnOwn}, null        , current_timestamp - interval '1 day', 'First Alert about Left Headlights', 'SENT', 'SENDER', null         , null          , current_timestamp, null);
+    (${alertSentId2}, ${bpnOwn}, null        , current_timestamp - interval '1 day', 'First Alert about Left Headlight', 'SENT', 'SENDER', null         , null          , current_timestamp, null);
 
 ---
 -- reset sequence to highest next-val

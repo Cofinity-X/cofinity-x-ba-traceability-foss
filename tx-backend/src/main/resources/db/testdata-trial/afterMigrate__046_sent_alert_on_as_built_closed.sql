@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state CLOSED in Severity Critical for asBuilt asset Fog lights left which is sent from BPNL000000000001 to BPNL000CUSTOMER1
+-- This creates an alert in state CLOSED in Severity Critical for asBuilt asset Xenon Right-Headlight which is sent from BPNL000000000001 to BPNL000CUSTOMER1
 
 ---
 insert into alert
     (id             , bpn      , close_reason            , created                              , description                         , status  , side    , accept_reason, decline_reason, updated          , error_message)
 values
-    (${alertSentId7}, ${bpnOwn}, 'This was a false alarm', current_timestamp - interval '2 days', 'Closed Alert about Fog lights left', 'CLOSED', 'SENDER', null         , null          , current_timestamp, null);
+    (${alertSentId7}, ${bpnOwn}, 'This was a false alarm', current_timestamp - interval '2 days', 'Closed Alert about Right Headlight', 'CLOSED', 'SENDER', null         , null          , current_timestamp, null);
 
 ---
 -- reset sequence to highest next-val
@@ -26,14 +26,14 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id       , asset_id)
 values
-    (${alertNotificationSentId7a}, ${assetAsBuiltId15});
+    (${alertNotificationSentId7a}, ${assetAsBuiltId02});
 
 ---
 -- join alert to asset
 insert into assets_as_built_alerts
     (alert_id       , asset_id)
 values
-    (${alertSentId7}, ${assetAsBuiltId15});
+    (${alertSentId7}, ${assetAsBuiltId02});
 
 ---
 -- CLOSED by sender notification message
@@ -47,4 +47,4 @@ values
 insert into asset_as_built_alert_notifications
     (alert_notification_id       , asset_id)
 values
-    (${alertNotificationSentId7b}, ${assetAsBuiltId15});
+    (${alertNotificationSentId7b}, ${assetAsBuiltId02});

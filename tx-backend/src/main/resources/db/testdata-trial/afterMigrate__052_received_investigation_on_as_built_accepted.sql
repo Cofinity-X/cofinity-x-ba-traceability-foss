@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state ACCEPTED in Severity Critical for asBuilt asset H-LeftTurningLight which is sent from BPNL000CUSTOMER2 to BPNL000000000001
+-- This creates an investigation in state ACCEPTED in Severity Critical for asBuilt asset Control Unit small which is sent from BPNL000CUSTOMER2 to BPNL000000000001
 
 ---
 insert into investigation
     (id                         , bpn            , close_reason, created                              , description                                              , status    , side      , accept_reason           , decline_reason, updated                               , error_message)
 values
-    (${investigationReceivedId3}, ${bpnCustomer2}, null        , current_timestamp - interval '3 days', 'Investigation on H-LeftTurningLight due to malfunction.', 'ACCEPTED', 'RECEIVER', 'True, it doesn''t work', null          , current_timestamp - interval '1 hours', null);
+    (${investigationReceivedId3}, ${bpnCustomer2}, null        , current_timestamp - interval '3 days', 'Investigation on Control Unit Small due to malfunction.', 'ACCEPTED', 'RECEIVER', 'True, it doesn''t work', null          , current_timestamp - interval '1 hours', null);
 
 ---
 -- reset sequence to highest next-val
@@ -25,14 +25,14 @@ values
 insert into assets_as_built_notifications
     (notification_id                         , asset_id)
 values
-    (${investigationNotificationReceivedId3a}, ${assetAsBuiltId11});
+    (${investigationNotificationReceivedId3a}, ${assetAsBuiltId15});
 
 ---
 -- join investigation to asset
 insert into assets_as_built_investigations
     (investigation_id           , asset_id)
 values
-    (${investigationReceivedId3}, ${assetAsBuiltId11});
+    (${investigationReceivedId3}, ${assetAsBuiltId15});
 
 ---
 ---
@@ -47,4 +47,4 @@ values
 insert into assets_as_built_notifications
     (notification_id                         , asset_id)
 values
-    (${investigationNotificationReceivedId3b}, ${assetAsBuiltId11});
+    (${investigationNotificationReceivedId3b}, ${assetAsBuiltId15});

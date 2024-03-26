@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset Philips P-LeftHeadBulb which is sent from BPNL000000000001 to BPNL000SUPPLIER2
+-- This creates an investigation in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset Xenon Left Gland which is sent from BPNL000000000001 to BPNL000SUPPLIER2
 
 ---
 insert into investigation
     (id                     , bpn      , close_reason, created                              , description                                                         , status        , side    , accept_reason, decline_reason, updated                              , error_message)
 values
-    (${investigationSentId3}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Investigation on Philips P-LeftHeadBulb due to occasional outages.', 'ACKNOWLEDGED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
+    (${investigationSentId3}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Investigation on Left Gland due to occasional outages.', 'ACKNOWLEDGED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
 
 ---
 -- reset sequence to highest next-val
