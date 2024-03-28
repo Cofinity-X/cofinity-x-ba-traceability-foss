@@ -22,6 +22,8 @@
 .container {
   overflow-y: hidden;
   height: 450px;
+  overflow-x: auto;
+  padding-right: 0.5px;
 }
 
 .chip-container-wrapper {
@@ -74,6 +76,10 @@
   bottom: 0;
   width: 850px;
   overflow: hidden;
+
+  @media (max-width: 1100px) {
+    padding-right: 20px;
+  }
 }
 
 .buttons-wrapper {

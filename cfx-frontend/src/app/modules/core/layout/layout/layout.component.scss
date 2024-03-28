@@ -41,6 +41,10 @@
     @apply min-w-0;
     flex: 1 0;
     padding: 0 136px;
+
+    @media (max-width: 1200px) {
+      padding: 0;
+    }
   }
 }
 
@@ -58,4 +62,17 @@
   width: 100%;
   z-index: 99;
   box-shadow: 0px 15px 25px 0px #3333330D, -10px -10px 15px 0px #FFFFFF1A, 0px 0px 25px 0px #33333308;
+  background-color: white;
+
+  @media (max-width: 1200px) {
+    min-width: 1200px;
+  }
+}
+
+.layout-footer {
+  @apply bg-surfaceDim;
+
+  @media (max-width: 1200px) {
+    min-width: 1200px;
+  }
 }

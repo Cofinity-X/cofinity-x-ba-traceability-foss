@@ -401,6 +401,26 @@
     padding-left: 16px;
   }
 
+  @media (max-width: 1200px) {
+
+    .card-container {
+      max-width: 1200px;
+      min-width: 1200px;
+      overflow-x: auto;
+    }
+  }
+
+  .parts-section .ng-star-inserted .mat-mdc-card .card-container {
+    @media (max-width: 1200px) {
+      min-width: 0;
+    }
+
+    @media (max-width: 1000px) {
+      min-width: 1200px;
+    }
+  }
+
+
   .mat-mdc-form-field.mat-accent .mdc-text-field--invalid .mdc-text-field__input {
     caret-color: var(--mdc-theme-error, #b62100);
     @extend .body-large-emphasis;
