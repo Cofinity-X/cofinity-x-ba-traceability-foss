@@ -1,7 +1,7 @@
 {
   "request" : {
     "method" : "GET",
-    "urlPathPattern" : "/dtr/shell-descriptors/.*"
+    "urlPathPattern" : "/dtr/registry/shell-descriptors/.*"
   },
   "response" : {
     "status": 200,
