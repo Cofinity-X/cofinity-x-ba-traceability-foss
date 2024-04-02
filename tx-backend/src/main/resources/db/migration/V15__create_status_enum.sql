@@ -1,6 +1,6 @@
 DROP VIEW IF EXISTS assets_as_built_view;
 
-CREATE TYPE status AS ENUM ('CREATED', 'SENT', 'RECEIVED', 'ACKNOWLEDGED', 'ACCEPTED', 'DECLINED' , 'CANCELED', 'CLOSED');
+CREATE TYPE status AS ENUM ('CREATED', 'SENT', 'RECEIVED', 'ACKNOWLEDGED', 'CANCELED', 'ACCEPTED', 'DECLINED', 'CLOSED');
 
 ALTER TABLE alert_notification ALTER COLUMN "status" TYPE status USING ("status"::status);
 ALTER TABLE alert ALTER COLUMN "status" TYPE status USING ("status"::status);
