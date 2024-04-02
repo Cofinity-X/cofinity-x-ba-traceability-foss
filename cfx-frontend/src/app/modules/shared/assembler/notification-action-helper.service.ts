@@ -32,34 +32,35 @@ export class NotificationActionHelperService {
   }
 
   public showApproveButton({ status, isFromSender } = {} as Notification): boolean {
-    return isFromSender && status === NotificationStatus.CREATED;
+    return this.roleService.isAtLeastSupervisor() && isFromSender && status === NotificationStatus.CREATED;
   }
 
   public showCancelButton({ status, isFromSender } = {} as Notification): boolean {
-    return isFromSender && status === NotificationStatus.CREATED;
+    return this.roleService.isAtLeastUser() && isFromSender && status === NotificationStatus.CREATED;
   }
 
   public showCloseButton({ status, isFromSender } = {} as Notification): boolean {
-    const disallowedStatus = [ NotificationStatus.CREATED, NotificationStatus.CLOSED, NotificationStatus.CANCELED ];
-    return isFromSender && !disallowedStatus.includes(status);
+    const disallowedStatus = [NotificationStatus.CREATED, NotificationStatus.CLOSED, NotificationStatus.CANCELED];
+    return this.roleService.isAtLeastSupervisor() && isFromSender && !disallowedStatus.includes(status);
   }
 
   public showAcknowledgeButton({ status, isFromSender } = {} as Notification): boolean {
-    return !isFromSender && status === NotificationStatus.RECEIVED;
+    return this.roleService.isAtLeastUser() && !isFromSender && status === NotificationStatus.RECEIVED;
   }
 
   public showAcceptButton({ status, isFromSender } = {} as Notification): boolean {
-    return !isFromSender && status === NotificationStatus.ACKNOWLEDGED;
+    return this.roleService.isAtLeastUser() && !isFromSender && status === NotificationStatus.ACKNOWLEDGED;
   }
 
   public showDeclineButton({ status, isFromSender } = {} as Notification): boolean {
-    return !isFromSender && status === NotificationStatus.ACKNOWLEDGED;
+    return this.roleService.isAtLeastUser() && !isFromSender && status === NotificationStatus.ACKNOWLEDGED;
   }
 
   public isAuthorizedForButton(action: NotificationAction): boolean {
-    if(action === NotificationAction.APPROVE || action === NotificationAction.CLOSE) {
+    if (action === NotificationAction.APPROVE || action === NotificationAction.CLOSE) {
       return this.roleService.isAtLeastSupervisor();
     } else {
       return this.roleService.isAtLeastUser();
-    }}
+    }
+  }
 }
