@@ -77,7 +77,7 @@
     },
     "tableSettings": {
       "titleSettings": "Table settings",
-      "resetAllFilters": "Reset all",
+      "resetAllFilters": "Reset filters and sorting",
       "title": "Column settings",
       "selectAll": "All",
       "refreshTooltip": "Reset individual table column settings to default",

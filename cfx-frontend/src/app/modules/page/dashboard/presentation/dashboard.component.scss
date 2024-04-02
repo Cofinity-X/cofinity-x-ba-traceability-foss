@@ -22,7 +22,7 @@
 @tailwind base;
 
 .dashboard-grid {
-  @apply grid grid-cols-1 lg:grid-cols-12 gap-6;
+  @apply grid grid-cols-12 gap-6;
 }
 
 .parts-section {
@@ -52,6 +52,10 @@
 
 .dashboard--section {
   @apply col-span-12;
+
+  @media (max-width: 1200px) {
+    min-width: 1200px;
+  }
 }
 
 .center {

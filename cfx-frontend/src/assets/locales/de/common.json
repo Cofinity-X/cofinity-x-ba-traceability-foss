@@ -79,7 +79,7 @@
       "invalid": "Auf Grund eines Fehlers werden die Tabelleneinstellungen zurückgesetzt",
       "invalidTitle": "Ungültige Tabelleneinstellungen",
       "titleSettings": "Tabelleneinstellung",
-      "resetAllFilters": "Alle zurücksetzen",
+      "resetAllFilters": "Filter und Sortierung zurücksetzen",
       "title": "Spalteneinstellungen",
       "selectAll": "Alle",
       "refreshTooltip": "Zurücksetzen der individuellen Einstellung der Tabellenspalten auf die Standardeinstellung",
