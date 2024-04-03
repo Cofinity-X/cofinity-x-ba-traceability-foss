@@ -24,7 +24,8 @@ SPDX-License-Identifier: Apache-2.0
 
   <form [formGroup]="formGroup"
     class="mt-4">
-    <app-textarea [label]="translationContext + '.modal.closeReasonHint' | i18n"
+    <app-textarea class="modal-notification"
+      [label]="translationContext + '.modal.closeReasonHint' | i18n"
       formControlName="reason"></app-textarea>
   </form>
 </ng-template>
