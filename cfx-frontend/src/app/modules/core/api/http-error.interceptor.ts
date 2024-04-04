@@ -41,7 +41,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         const { error, message } = errorResponse;
         const errorMessage = !error.message ? message : `Backend returned code ${error.status}: ${error.message}`;
 
-        this.toastService.error(errorMessage);
+        this.toastService.error('Error', errorMessage);
         return throwError(() => errorResponse);
       }),
     );

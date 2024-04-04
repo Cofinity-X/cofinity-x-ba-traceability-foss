@@ -35,23 +35,23 @@ export class ToastService {
     return this.toastStore.asObservable();
   }
 
-  public success(message: I18nMessage | string, timeout = 5000, actions?: CallAction[]): void {
-    if(actions) {
-      this.toastStore.next(new ToastMessage(this.idx++, message, ToastStatus.Success, timeout, actions));
+  public success(title: I18nMessage, message: I18nMessage | string, timeout = 5000, actions?: CallAction[]): void {
+    if (actions) {
+      this.toastStore.next(new ToastMessage(this.idx++, title, message, ToastStatus.Success, timeout, actions));
     } else {
-      this.toastStore.next(new ToastMessage(this.idx++, message, ToastStatus.Success, timeout));
+      this.toastStore.next(new ToastMessage(this.idx++, title, message, ToastStatus.Success, timeout));
     }
   }
 
-  public info(message: I18nMessage, timeout = 5000): void {
-    this.toastStore.next(new ToastMessage(this.idx++, message, ToastStatus.Informative, timeout));
+  public info(title: I18nMessage, message: I18nMessage, timeout = 5000): void {
+    this.toastStore.next(new ToastMessage(this.idx++, title, message, ToastStatus.Informative, timeout));
   }
 
-  public error(message: I18nMessage, timeout = 5000): void {
-    this.toastStore.next(new ToastMessage(this.idx++, message, ToastStatus.Error, timeout));
+  public error(title: I18nMessage, message: I18nMessage, timeout = 5000): void {
+    this.toastStore.next(new ToastMessage(this.idx++, title, message, ToastStatus.Error, timeout));
   }
 
-  public warning(message: I18nMessage, timeout = 5000): void {
-    this.toastStore.next(new ToastMessage(this.idx++, message, ToastStatus.Warning, timeout));
+  public warning(title: I18nMessage, message: I18nMessage, timeout = 5000): void {
+    this.toastStore.next(new ToastMessage(this.idx++, title, message, ToastStatus.Warning, timeout));
   }
 }

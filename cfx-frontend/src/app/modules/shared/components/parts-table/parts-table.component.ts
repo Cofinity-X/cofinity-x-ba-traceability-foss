@@ -167,10 +167,6 @@ export class PartsTableComponent implements OnInit {
 
   protected readonly Role = Role;
 
-  ngAfterViewInit() {
-    this.paginator._intl.itemsPerPageLabel = 'Show';
-  }
-
   constructor(private readonly tableSettingsService: TableSettingsService,
     private readonly roleService: RoleService,
     private toastService: ToastService,
@@ -205,7 +201,7 @@ export class PartsTableComponent implements OnInit {
   private setupTableViewSettings() {
 
     if (this.tableSettingsService.storedTableSettingsInvalid(this.tableViewConfig, this.tableType)) {
-      this.toastService.warning('table.tableSettings.invalid', 10000);
+      this.toastService.warning('table.tableSettings.invalidTitle', 'table.tableSettings.invalid', 10000);
     }
     const tableSettingsList = this.tableSettingsService.getStoredTableSettings();
     // check if there are table settings list

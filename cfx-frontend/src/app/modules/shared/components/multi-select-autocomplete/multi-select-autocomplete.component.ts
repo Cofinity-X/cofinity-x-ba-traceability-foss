@@ -42,6 +42,7 @@ import { TableType } from '@shared/components/multi-select-autocomplete/table-ty
 import { FormatPartSemanticDataModelToCamelCasePipe } from '@shared/pipes/format-part-semantic-data-model-to-camelcase.pipe';
 import { PartsService } from '@shared/service/parts.service';
 import { firstValueFrom } from 'rxjs';
+import { ToastService } from '../toasts/toast.service';
 
 @Component({
   selector: 'app-multiselect',
@@ -126,7 +127,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   constructor(public datePipe: DatePipe, public _adapter: DateAdapter<any>,
     @Inject(MAT_DATE_LOCALE) public _locale: string, @Inject(LOCALE_ID) private locale: string, public partsService: PartsService,
     private readonly formatPartSemanticDataModelToCamelCasePipe: FormatPartSemanticDataModelToCamelCasePipe,
-    private injector: Injector) {
+    private injector: Injector,
+    private toastService: ToastService) {
     registerLocaleData(localeDe, 'de', localeDeExtra);
     this._adapter.setLocale(locale === 'en' ? 'en-GB' : 'de-DE',);
   }

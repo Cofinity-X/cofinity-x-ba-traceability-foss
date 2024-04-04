@@ -20,6 +20,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <div class="dashboard-grid">
+
   <section class="parts-section">
     <ng-container *viewContainer="
         this.numberOfMyParts$ | async;
@@ -93,7 +94,7 @@ SPDX-License-Identifier: Apache-2.0
               <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
             </h3>
             <div *appHasRole="[Role.USER]">
-            <app-button class="button-small request-action-button"
+              <app-button class="button-small request-action-button"
                 (click)="openRequestDialog(true)"
                 [color]="'primary'"
                 variant="flat">

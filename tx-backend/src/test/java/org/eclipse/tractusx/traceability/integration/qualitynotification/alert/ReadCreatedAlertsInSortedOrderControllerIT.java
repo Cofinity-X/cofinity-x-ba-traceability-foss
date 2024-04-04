@@ -155,7 +155,7 @@ class ReadCreatedAlertsInSortedOrderControllerIT extends IntegrationTestSpecific
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(4))
                 .body("totalItems", Matchers.is(4))
-                .body("content.severity", Matchers.containsInRelativeOrder("CRITICAL", "LIFE-THREATENING", "MAJOR", "MINOR"));
+                .body("content.severity", Matchers.containsInRelativeOrder("MINOR",  "MAJOR", "CRITICAL", "LIFE-THREATENING"));
     }
 
     @Test
