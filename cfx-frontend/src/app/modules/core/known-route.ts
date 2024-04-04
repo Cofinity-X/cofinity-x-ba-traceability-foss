@@ -27,6 +27,7 @@ export const OTHER_PARTS_BASE_ROUTE = 'otherParts';
 export const DASHBOARD_BASE_ROUTE = 'dashboard';
 export const ADMIN_BASE_ROUTE = 'admin';
 export const ABOUT_BASE_ROUTE = 'about';
+export const IMPRINT_BASE_ROUTE = 'imprint';
 export const INVESTIGATION_BASE_ROUTE = 'investigations';
 export const ALERT_BASE_ROUTE = 'alerts';
 export const NO_PERMISSION_BASE_ROUTE = 'no-permissions';
@@ -37,6 +38,7 @@ export const NavigableUrls = [
   DASHBOARD_BASE_ROUTE,
   ADMIN_BASE_ROUTE,
   ABOUT_BASE_ROUTE,
+  IMPRINT_BASE_ROUTE,
   INVESTIGATION_BASE_ROUTE,
   ALERT_BASE_ROUTE,
 ] as const;
@@ -50,8 +52,8 @@ const getNotificationInboxRoute = (
   link: urlType,
   queryParams: investigationStatusGroup
     ? {
-        tabIndex: String(Object.values(NotificationStatusGroup).indexOf(investigationStatusGroup)),
-      }
+      tabIndex: String(Object.values(NotificationStatusGroup).indexOf(investigationStatusGroup)),
+    }
     : undefined,
 });
 

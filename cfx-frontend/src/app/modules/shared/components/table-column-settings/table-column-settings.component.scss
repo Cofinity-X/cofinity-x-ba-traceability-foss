@@ -22,6 +22,7 @@
 .container {
   width: 200px;
   overflow: hidden !important;
+  max-height: 80vh;
 }
 
 .dialog--item--container {
@@ -36,6 +37,11 @@
 
 .dialog--item--container_static {
   @extend .dialog--item--container;
+}
+
+.dialog--item--list {
+  overflow-y: auto;
+  padding-bottom: 9px;
 }
 
 .dialog--content {
@@ -91,6 +97,8 @@
 
   .dialog--columns--container {
     font-size: 18px;
+    max-height: 70vh;
+    overflow-y: auto;
   }
 
   .drag-icon {
