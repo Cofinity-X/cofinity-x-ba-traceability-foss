@@ -5,6 +5,7 @@
   width: 850px;
   overflow-y: hidden;
   margin-right: 0.5px;
+  padding: 20px;
 }
 
 .header {
@@ -18,29 +19,10 @@
   justify-content: space-between;
 }
 
-.table-header {
-  @extend .title-medium;
-}
-
-[override] .button-container .buttons-wrapper {
-  display: flex;
-  justify-content: right !important;
-  margin-top: 20px;
-}
-
-.parts-tab-wrapper {
-  height: 500px !important;
+.investigation-parts-table {
+  height: 420px !important;
   overflow-y: auto !important;
 }
-
-.other-parts-mat-tab-group {
-  width: 100%;
-  overflow-y: hidden !important;
+.investigation-wrapper {
+  height: 700px !important;
 }
-
-.select-parts-tab {
-  @extend .title-large;
-  color: #333333;
-  padding-left: 10px !important;
-}
-

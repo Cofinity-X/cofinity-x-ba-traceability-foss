@@ -11,7 +11,10 @@
   </div>
 
   <div class="pt-5">
-        <div *ngIf="context === RequestContext.REQUEST_INVESTIGATION" [formGroup]="searchFormGroup" class="flex justify-between items-center pt-5">
+    <div *ngIf="context === RequestContext.REQUEST_INVESTIGATION" class="investigation-wrapper" >
+      <div class="investigation-parts-table">
+        <div [formGroup]="searchFormGroup"
+             class="flex justify-between items-center pt-5">
           <div class="flex items-center table-header">
             {{ 'requestNotification.otherPartsList' | i18n }}
             ({{ totalItems }})
@@ -32,9 +35,7 @@
                        prefixIconColor="accent"></app-input>
           </div>
         </div>
-
-        <app-supplier-parts *ngIf="context === RequestContext.REQUEST_INVESTIGATION"
-                            [bomLifecycle]="MainAspectType.AS_BUILT"
+        <app-supplier-parts [bomLifecycle]="MainAspectType.AS_BUILT"
                             [showActionButton]="false"
                             [showHeader]="false"
                             [compactSize]="true"
@@ -43,13 +44,19 @@
                             (onTotalItemsChanged)="onTotalItemsChanged($event)"
                             (onPartsSelected)="onPartsSelected($event)"></app-supplier-parts>
 
-
-        <app-request-alert *ngIf="context === RequestContext.REQUEST_ALERT"
-                           (onBackClicked)="closeAction()"
-                           (deselectPart)="onPartDeselected($event)"
-                           [forwardedNotification]="forwardedNotification"
-                           [closeButtonText]="'requestNotification.cancel'"
-                           [submitButtonText]="'requestNotification.submit'"></app-request-alert>
-
+      </div>
+      <app-request-investigation (onBackClicked)="closeAction()"
+                                 (deselectPart)="onPartDeselected($event)"
+                                 [forwardedNotification]="forwardedNotification"
+                                 [selectedItems]="selectedParts"
+                                 [closeButtonText]="'requestNotification.cancel'"
+                                 [submitButtonText]="'requestNotification.submit'"></app-request-investigation>
+    </div>
+    <app-request-alert *ngIf="context === RequestContext.REQUEST_ALERT"
+                       (onBackClicked)="closeAction()"
+                       (deselectPart)="onPartDeselected($event)"
+                       [forwardedNotification]="forwardedNotification"
+                       [closeButtonText]="'requestNotification.cancel'"
+                       [submitButtonText]="'requestNotification.submit'"></app-request-alert>
   </div>
 </div>
