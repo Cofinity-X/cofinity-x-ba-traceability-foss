@@ -31,9 +31,9 @@ import { AlertsComponent } from './alerts.component';
 describe('AlertsComponent', () => {
   const renderAlerts = async () => {
     return await renderComponent(AlertsComponent, {
-      imports: [ AlertsModule ],
+      imports: [AlertsModule],
       // providers: [AlertsService],
-      translations: [ 'page.alert' ],
+      translations: ['page.alert'],
     });
   };
 
@@ -47,12 +47,12 @@ describe('AlertsComponent', () => {
     const { fixture } = await renderAlerts();
     const alertsComponent = fixture.componentInstance;
 
-    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'description', 'asc' ] };
-    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'status', 'asc' ] };
-    const paginationThree: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'status', 'desc' ] };
+    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: ['description', 'asc'] };
+    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'asc'] };
+    const paginationThree: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'desc'] };
     alertsComponent.onReceivedTableConfigChange(paginationOne);
 
-    expect(alertsComponent.alertReceivedSortList).toEqual([ [ 'description', 'asc' ] ]);
+    expect(alertsComponent.alertReceivedSortList).toEqual([['description', 'asc']]);
 
     const alertsHeader = screen.getByText('pageTitle.alerts');
     fireEvent.keyDown(alertsHeader, {
@@ -62,26 +62,26 @@ describe('AlertsComponent', () => {
     alertsComponent.onReceivedTableConfigChange(paginationTwo);
 
     expect(alertsComponent.alertReceivedSortList).toEqual([
-      [ 'description', 'asc' ],
-      [ 'status', 'asc' ],
+      ['description', 'asc'],
+      ['status', 'asc'],
     ]);
     alertsComponent.onReceivedTableConfigChange(paginationThree);
 
     expect(alertsComponent.alertReceivedSortList).toEqual([
-      [ 'description', 'asc' ],
-      [ 'status', 'desc' ],
+      ['description', 'asc'],
+      ['status', 'desc'],
     ]);
   });
   it('should reset the multisortList if a selection is done and the ctrl key is not pressed.', async () => {
     const { fixture } = await renderAlerts();
     const alertsComponent = fixture.componentInstance;
 
-    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'description', 'asc' ] };
-    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'status', 'asc' ] };
+    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: ['description', 'asc'] };
+    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'asc'] };
 
     alertsComponent.onReceivedTableConfigChange(paginationOne);
 
-    expect(alertsComponent.alertReceivedSortList).toEqual([ [ 'description', 'asc' ] ]);
+    expect(alertsComponent.alertReceivedSortList).toEqual([['description', 'asc']]);
 
     const alertsHeader = screen.getByText('pageTitle.alerts');
     fireEvent.keyDown(alertsHeader, {
@@ -92,8 +92,8 @@ describe('AlertsComponent', () => {
     alertsComponent.onReceivedTableConfigChange(paginationTwo);
 
     expect(alertsComponent.alertReceivedSortList).toEqual([
-      [ 'description', 'asc' ],
-      [ 'status', 'asc' ],
+      ['description', 'asc'],
+      ['status', 'asc'],
     ]);
 
     fireEvent.keyUp(alertsHeader, {
@@ -103,7 +103,7 @@ describe('AlertsComponent', () => {
 
     alertsComponent.onReceivedTableConfigChange(paginationOne);
 
-    expect(alertsComponent.alertReceivedSortList).toEqual([ [ 'description', 'asc' ] ]);
+    expect(alertsComponent.alertReceivedSortList).toEqual([['description', 'asc']]);
   });
 
   it('should set the default Pagination by recieving a size change event', async () => {
@@ -119,11 +119,11 @@ describe('AlertsComponent', () => {
     const { fixture } = await renderAlerts();
     const alertsComponent = fixture.componentInstance;
 
-    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: [ 'description', 'asc' ] };
+    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: ['description', 'asc'] };
     spyOn(alertsComponent.alertsFacade, 'setReceivedAlerts');
     alertsComponent.onReceivedTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(alertsComponent.alertsFacade.setReceivedAlerts).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(alertsComponent.alertsFacade.setReceivedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
 
   });
 
@@ -132,12 +132,12 @@ describe('AlertsComponent', () => {
     const { fixture } = await renderAlerts();
     const alertsComponent = fixture.componentInstance;
 
-    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: [ 'description', 'asc' ] };
+    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: ['description', 'asc'] };
     spyOn(alertsComponent.alertsFacade, 'setQueuedAndRequestedAlerts');
 
     alertsComponent.onQueuedAndRequestedTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(alertsComponent.alertsFacade.setQueuedAndRequestedAlerts).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(alertsComponent.alertsFacade.setQueuedAndRequestedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
   });
 
 
@@ -148,7 +148,7 @@ describe('AlertsComponent', () => {
     const pagination: TableEventConfig = {
       page: 0,
       pageSize: 50,
-      sorting: [ 'description', 'asc' ],
+      sorting: ['description', 'asc'],
       filtering: {
         filterMethod: FilterMethod.AND,
         description: { filterOperator: FilterOperator.STARTS_WITH, filterValue: 'value1' },
@@ -158,13 +158,13 @@ describe('AlertsComponent', () => {
 
     alertsComponent.onQueuedAndRequestedTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(alertsComponent.alertsFacade.setQueuedAndRequestedAlerts).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(alertsComponent.alertsFacade.setQueuedAndRequestedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
 
     spyOn(alertsComponent.alertsFacade, 'setReceivedAlerts');
 
     alertsComponent.onReceivedTableConfigChange(pagination);
     fixture.detectChanges();
-    expect(alertsComponent.alertsFacade.setReceivedAlerts).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(alertsComponent.alertsFacade.setReceivedAlerts).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
   });
 
   it('should set the correct filters on triggering the global search', async () => {

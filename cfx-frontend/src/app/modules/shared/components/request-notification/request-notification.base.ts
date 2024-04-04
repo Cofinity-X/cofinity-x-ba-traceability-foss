@@ -93,10 +93,12 @@ export abstract class RequestNotificationBase {
   }
 
   protected openToast(count: number, link: string, linkQueryParams: Record<string, string>): void {
-    this.toastService.success({
-      id: `${this.context}.success`,
-      values: { count }
-    },
+    this.toastService.success(
+      `${this.context}.successTitle`,
+      {
+        id: `${this.context}.success`,
+        values: { count }
+      },
       5000,
       [
         {

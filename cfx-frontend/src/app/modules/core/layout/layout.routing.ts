@@ -26,6 +26,7 @@ import {
   ADMIN_BASE_ROUTE,
   ALERT_BASE_ROUTE,
   DASHBOARD_BASE_ROUTE,
+  IMPRINT_BASE_ROUTE,
   INVESTIGATION_BASE_ROUTE,
   NO_PERMISSION_BASE_ROUTE,
   OTHER_PARTS_BASE_ROUTE,
@@ -105,6 +106,15 @@ export /** @type {*} */
       loadChildren: () => import('../../page/about/about.module').then(m => m.AboutModule),
       data: {
         breadcrumb: 'about',
+        roles: [Role.USER, Role.ADMIN],
+      },
+      canActivate: [RoleGuard],
+    },
+    {
+      path: IMPRINT_BASE_ROUTE,
+      loadChildren: () => import('../../page/imprint/imprint.module').then(m => m.ImprintModule),
+      data: {
+        breadcrumb: 'imprint',
         roles: [Role.USER, Role.ADMIN],
       },
       canActivate: [RoleGuard],

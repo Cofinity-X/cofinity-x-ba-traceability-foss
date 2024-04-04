@@ -39,7 +39,7 @@ export class AcknowledgeNotificationModalComponent {
 
   public notification: Notification;
 
-  constructor(private readonly toastService: ToastService, private readonly confirmModalService: ModalService) {}
+  constructor(private readonly toastService: ToastService, private readonly confirmModalService: ModalService) { }
 
   public show(notification: Notification): void {
     this.notification = notification;
@@ -48,11 +48,11 @@ export class AcknowledgeNotificationModalComponent {
 
       this.acknowledgeCall(notification.id).subscribe({
         next: () => {
-          this.toastService.success(this.translationContext + '.modal.successfullyAcknowledged');
+          this.toastService.success(this.translationContext + '.modal.successfullyAcknowledgedTitle', this.translationContext + '.modal.successfullyAcknowledged');
           this.confirmActionCompleted.emit();
         },
         error: () => {
-          this.toastService.error(this.translationContext + '.modal.failedAcknowledge');
+          this.toastService.error(this.translationContext + '.modal.failedAcknowledgeTitle', this.translationContext + '.modal.failedAcknowledge');
         },
       });
     };

@@ -1,5 +1,6 @@
 {
   "clipboard": "Copied \"{{value}}\" to clipboard!",
+  "clipboardTitle": "Text copied",
   "routing": {
     "home": "Home",
     "dashboard": "Dashboard",
@@ -56,6 +57,8 @@
     "goBack": "Back"
   },
   "table": {
+    "invalid": "Due to an error table settings have been reset",
+    "invalidTitle": "Invalid table settings",
     "latestFive": "(Latest 5)",
     "noResultFound": "NO RESULTS FOUND.",
     "tryAgain": "Please try again later.",
@@ -74,7 +77,7 @@
     },
     "tableSettings": {
       "titleSettings": "Table settings",
-      "resetAllFilters": "Reset all",
+      "resetAllFilters": "Reset filters and sorting",
       "title": "Column settings",
       "selectAll": "All",
       "refreshTooltip": "Reset individual table column settings to default",
@@ -172,12 +175,14 @@
   "requestAlert": {
     "headline": "Start quality alert",
     "textAreaDescription": "Add a description about the alert.",
+    "successTitle": "Alert queued successfully",
     "success_one": "You queued an alert for {{count}} part",
     "success_other": "You queued an alert for {{count}} parts"
   },
   "requestInvestigations": {
     "headline": "Request quality investigation",
     "textAreaDescription": "Add a description about the investigation.",
+    "successTitle": "Investigation queued successfully",
     "success_one": "You queued an investigation for {{count}} part",
     "success_other": "You queued an investigation for {{count}} parts"
   },
@@ -242,17 +247,29 @@
       "declineTitle": "Decline investigation",
       "declineReasonHint": "Enter the reason for declining this investigation",
       "successfullyAccepted": "Investigation was accepted successfully.",
+      "successfullyAcceptedTitle": "Accept investigation successful",
       "successfullyAcknowledged": "Investigation was acknowledged successfully.",
+      "successfullyAcknowledgedTitle": "Acknowledge investigation successful",
       "successfullyApproved": "Investigation was approved successfully.",
+      "successfullyApprovedTitle": "Aprrove investigation successful",
       "successfullyCanceled": "Investigation was canceled successfully.",
+      "successfullyCanceledTitle": "Cancel investigation successful",
       "successfullyClosed": "Investigation was closed successfully.",
+      "successfullyClosedTitle": "Close investigation successful",
       "successfullyDeclined": "Investigation was declined successfully.",
+      "successfullyDeclinedTitle": "Decline investigation successful",
       "failedAccept": "Investigation failed to accept, please try again.",
+      "failedAcceptTitle": "Accept investigation failed",
       "failedAcknowledge": "Investigation failed to acknowledge, please try again.",
+      "failedAcknowledgeTitle": "Acknowledge investigation failed",
       "failedApprove": "Investigation failed to approve, please try again.",
+      "failedApproveTitle": "Approve investigation failed",
       "failedCancel": "Investigation failed to cancel, please try again.",
+      "failedCancelTitle": "Cancel investigation failed",
       "failedClose": "Investigation failed to close, please try again.",
-      "failedDecline": "Investigation failed to decline, please try again."
+      "failedCloseTitle": "Close investigation failed",
+      "failedDecline": "Investigation failed to decline, please try again.",
+      "failedDeclineTitle": "Decline investigation failed"
     }
   },
   "commonAlert": {
@@ -289,17 +306,29 @@
       "declineTitle": "Decline alert",
       "declineReasonHint": "Enter the reason for declining this alert",
       "successfullyAccepted": "Alert was accepted successfully.",
+      "successfullyAcceptedTitle": "Accept alert successful",
       "successfullyAcknowledged": "Alert was acknowledged successfully.",
+      "successfullyAcknowledgedTitle": "Acknowledge alert successful",
       "successfullyApproved": "Alert was approved successfully.",
+      "successfullyApprovedTitle": "Approve alert successful",
       "successfullyCanceled": "Alert was canceled successfully.",
+      "successfullyCanceledTitle": "Cancel alert successful",
       "successfullyClosed": "Alert was closed successfully.",
+      "successfullyClosedTitle": "Close alert successful",
       "successfullyDeclined": "Alert was declined successfully.",
+      "successfullyDeclinedTitle": "Decline alert successful",
       "failedAccept": "Alert failed to accept, please try again.",
+      "failedAcceptTitle": "Accept alert failed",
       "failedAcknowledge": "Alert failed to acknowledge, please try again.",
+      "failedAcknowledgeTitle": "Acknowledge alert failed",
       "failedApprove": "Alert failed to approve, please try again.",
+      "failedApproveTitle": "Approve alert failed",
       "failedCancel": "Alert failed to cancel, please try again.",
+      "failedCanceTitle": "Cancel alert failed",
       "failedClose": "Alert failed to close, please try again.",
-      "failedDecline": "Alert failed to decline, please try again."
+      "failedCloseTitle": "Close alert failed",
+      "failedDecline": "Alert failed to decline, please try again.",
+      "failedDeclineTitle": "Decline alert failed"
     }
   },
   "bomLifecycleActivator": {
@@ -325,6 +354,7 @@
       "global-search": {
         "placeholderAsset": "Search for IDs, Name, Manufacturer, Customer Part...",
         "placeholderAlertsAndInvestigations": "Search for Description and BPN ",
+        "toastInfoTitle": "Search info",
         "toastInfo": "By using global search on view level, the local filters on table level was removed."
       }
     },

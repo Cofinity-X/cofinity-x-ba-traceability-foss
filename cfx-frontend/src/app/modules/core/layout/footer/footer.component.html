@@ -3,7 +3,7 @@
     <div class="footer--items-container">
       <div class="footer--items">
         <ng-container
-          *ngTemplateOutlet="menuItemExtern; context: { value: 'imprint', roles: [Role.USER, Role.ADMIN], origin: 'layout.footer', link: 'imprintLink' }"></ng-container>
+          *ngTemplateOutlet="menuItem; context: { value: 'imprint', roles: [Role.USER, Role.ADMIN], origin: 'layout.footer' }"></ng-container>
         <ng-container
           *ngTemplateOutlet="menuItem; context: { value: 'about', roles: [Role.USER, Role.ADMIN], origin: 'routing' }"></ng-container>
       </div>

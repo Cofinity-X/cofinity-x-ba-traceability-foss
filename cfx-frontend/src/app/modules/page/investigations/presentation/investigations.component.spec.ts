@@ -33,9 +33,9 @@ import { renderComponent } from '@tests/test-render.utils';
 describe('InvestigationsComponent', () => {
   const renderInvestigations = async () => {
     return await renderComponent(InvestigationsComponent, {
-      imports: [ InvestigationsModule ],
+      imports: [InvestigationsModule],
       // providers: [InvestigationsService],
-      translations: [ 'page.investigation' ],
+      translations: ['page.investigation'],
     });
   };
 
@@ -49,13 +49,13 @@ describe('InvestigationsComponent', () => {
     const { fixture } = await renderInvestigations();
     const investigationsComponent = fixture.componentInstance;
 
-    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'description', 'asc' ] };
-    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'status', 'asc' ] };
-    const paginationThree: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'status', 'desc' ] };
+    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: ['description', 'asc'] };
+    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'asc'] };
+    const paginationThree: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'desc'] };
 
     investigationsComponent.onReceivedTableConfigChanged(paginationOne);
 
-    expect(investigationsComponent.investigationReceivedSortList).toEqual([ [ 'description', 'asc' ] ]);
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([['description', 'asc']]);
 
     const investigationsHeader = screen.getByText('pageTitle.investigations');
     fireEvent.keyDown(investigationsHeader, {
@@ -66,15 +66,15 @@ describe('InvestigationsComponent', () => {
     investigationsComponent.onReceivedTableConfigChanged(paginationTwo);
 
     expect(investigationsComponent.investigationReceivedSortList).toEqual([
-      [ 'description', 'asc' ],
-      [ 'status', 'asc' ],
+      ['description', 'asc'],
+      ['status', 'asc'],
     ]);
 
     investigationsComponent.onReceivedTableConfigChanged(paginationThree);
 
     expect(investigationsComponent.investigationReceivedSortList).toEqual([
-      [ 'description', 'asc' ],
-      [ 'status', 'desc' ],
+      ['description', 'asc'],
+      ['status', 'desc'],
     ]);
   });
 
@@ -82,12 +82,12 @@ describe('InvestigationsComponent', () => {
     const { fixture } = await renderInvestigations();
     const investigationsComponent = fixture.componentInstance;
 
-    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'description', 'asc' ] };
-    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: [ 'status', 'asc' ] };
+    const paginationOne: TableEventConfig = { page: 0, pageSize: 50, sorting: ['description', 'asc'] };
+    const paginationTwo: TableEventConfig = { page: 0, pageSize: 50, sorting: ['status', 'asc'] };
 
     investigationsComponent.onReceivedTableConfigChanged(paginationOne);
 
-    expect(investigationsComponent.investigationReceivedSortList).toEqual([ [ 'description', 'asc' ] ]);
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([['description', 'asc']]);
 
     const investigationsHeader = screen.getByText('pageTitle.investigations');
     fireEvent.keyDown(investigationsHeader, {
@@ -98,8 +98,8 @@ describe('InvestigationsComponent', () => {
     investigationsComponent.onReceivedTableConfigChanged(paginationTwo);
 
     expect(investigationsComponent.investigationReceivedSortList).toEqual([
-      [ 'description', 'asc' ],
-      [ 'status', 'asc' ],
+      ['description', 'asc'],
+      ['status', 'asc'],
     ]);
 
     fireEvent.keyUp(investigationsHeader, {
@@ -109,7 +109,7 @@ describe('InvestigationsComponent', () => {
 
     investigationsComponent.onReceivedTableConfigChanged(paginationOne);
 
-    expect(investigationsComponent.investigationReceivedSortList).toEqual([ [ 'description', 'asc' ] ]);
+    expect(investigationsComponent.investigationReceivedSortList).toEqual([['description', 'asc']]);
   });
 
   it('should set the default Pagination by recieving a size change event', async () => {
@@ -124,24 +124,24 @@ describe('InvestigationsComponent', () => {
     const { fixture } = await renderInvestigations();
     const investigationsComponent = fixture.componentInstance;
 
-    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: [ 'description', 'asc' ] };
+    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: ['description', 'asc'] };
     spyOn(investigationsComponent.investigationsFacade, 'setReceivedInvestigation');
 
     investigationsComponent.onReceivedTableConfigChanged(pagination);
     fixture.detectChanges();
-    expect(investigationsComponent.investigationsFacade.setReceivedInvestigation).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(investigationsComponent.investigationsFacade.setReceivedInvestigation).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
   });
 
   it('should use the default page size if the page size in the queuedAndRequestedConfig is given as 0', async () => {
     const { fixture } = await renderInvestigations();
     const investigationsComponent = fixture.componentInstance;
 
-    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: [ 'description', 'asc' ] };
+    const pagination: TableEventConfig = { page: 0, pageSize: 0, sorting: ['description', 'asc'] };
     spyOn(investigationsComponent.investigationsFacade, 'setQueuedAndRequestedInvestigations');
 
     investigationsComponent.onQueuedAndRequestedTableConfigChanged(pagination);
     fixture.detectChanges();
-    expect(investigationsComponent.investigationsFacade.setQueuedAndRequestedInvestigations).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(investigationsComponent.investigationsFacade.setQueuedAndRequestedInvestigations).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
   });
 
   it('should pass on the filtering to the api services', async () => {
@@ -151,7 +151,7 @@ describe('InvestigationsComponent', () => {
     const pagination: TableEventConfig = {
       page: 0,
       pageSize: 50,
-      sorting: [ 'description', 'asc' ],
+      sorting: ['description', 'asc'],
       filtering: {
         filterMethod: FilterMethod.AND,
         description: { filterOperator: FilterOperator.STARTS_WITH, filterValue: 'value1' },
@@ -161,13 +161,13 @@ describe('InvestigationsComponent', () => {
 
     investigationsComponent.onQueuedAndRequestedTableConfigChanged(pagination);
     fixture.detectChanges();
-    expect(investigationsComponent.investigationsFacade.setQueuedAndRequestedInvestigations).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(investigationsComponent.investigationsFacade.setQueuedAndRequestedInvestigations).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
 
     spyOn(investigationsComponent.investigationsFacade, 'setReceivedInvestigation');
 
     investigationsComponent.onReceivedTableConfigChanged(pagination);
     fixture.detectChanges();
-    expect(investigationsComponent.investigationsFacade.setReceivedInvestigation).toHaveBeenCalledWith(0, 50, [ [ 'description', 'asc' ] ]);
+    expect(investigationsComponent.investigationsFacade.setReceivedInvestigation).toHaveBeenCalledWith(0, 50, [['description', 'asc']], null, undefined);
   });
 
   it('should set the correct filters on triggering the global search', async () => {

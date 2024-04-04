@@ -58,11 +58,11 @@ export class CloseNotificationModalComponent {
 
       this.closeCall(notification.id, reason).subscribe({
         next: () => {
-          this.toastService.success(this.translationContext + '.modal.successfullyClosed');
+          this.toastService.success(this.translationContext + '.modal.successfullyClosedTitle', this.translationContext + '.modal.successfullyClosed');
           this.confirmActionCompleted.emit();
         },
         error: () => {
-          this.toastService.error(this.translationContext + '.modal.failedClose');
+          this.toastService.error(this.translationContext + '.modal.failedCloseTitle', this.translationContext + '.modal.failedClose');
         },
       });
     };
