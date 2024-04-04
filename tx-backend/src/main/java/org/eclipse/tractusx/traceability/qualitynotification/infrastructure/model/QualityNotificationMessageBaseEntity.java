@@ -27,7 +27,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationSeverity;
-import org.hibernate.annotations.Formula;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
