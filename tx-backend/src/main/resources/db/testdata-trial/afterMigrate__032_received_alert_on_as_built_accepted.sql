@@ -2,11 +2,11 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state ACCEPTED in Severity Minor for asBuilt asset Left Xenon Gland which is sent from BPNL000SUPPLIER2 to BPNL000000000001
+-- This creates an alert in state ACCEPTED in Severity Minor for asBuilt asset BrightSolutions Left Xenon Gland which is sent from BPNL000SUPPLIER2 to BPNL000000000001
 
 ---
 insert into alert
-    (id                 , bpn            , close_reason, created                              , description                 , status    , side      , accept_reason           , decline_reason, updated, error_message)
+    (id                 , bpn            , close_reason, created                              , description             , status    , side      , accept_reason           , decline_reason, updated, error_message)
 values
     (${alertReceivedId3}, ${bpnSupplier2}, null        , current_timestamp - interval '4 days', 'Alert about Left Gland', 'ACCEPTED', 'RECEIVER', 'Part has been replaced', null          , null   , null);
 

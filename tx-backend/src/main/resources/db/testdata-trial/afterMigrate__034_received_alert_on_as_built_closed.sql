@@ -2,11 +2,11 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state CLOSED in Severity Critical for asBuilt asset Electric Fuse big which is sent from BPNL000SUPPLIER2 to BPNL000000000001
+-- This creates an alert in state CLOSED in Severity Critical for asBuilt asset CableCraft Electric Fuse big which is sent from BPNL000SUPPLIER2 to BPNL000000000001
 
 ---
 insert into alert
-    (id                 , bpn            , close_reason             , created                              , description               , status  , side      , accept_reason, decline_reason, updated, error_message)
+    (id                 , bpn            , close_reason             , created                              , description                    , status  , side      , accept_reason, decline_reason, updated, error_message)
 values
     (${alertReceivedId5}, ${bpnSupplier2}, 'Issue has been resolved', current_timestamp - interval '6 days', 'Alert about Electric Fuse Big', 'CLOSED', 'RECEIVER', null         , null          , null   , null);
 

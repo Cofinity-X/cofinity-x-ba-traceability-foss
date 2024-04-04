@@ -6,9 +6,9 @@
 
 ---
 insert into investigation
-    (id                         , bpn            , close_reason                                 , created                              , description                                          , status  , side      , accept_reason, decline_reason, updated                               , error_message)
+    (id                         , bpn            , close_reason                                 , created                              , description                                      , status  , side      , accept_reason, decline_reason, updated                               , error_message)
 values
-    (${investigationReceivedId5}, ${bpnCustomer2}, 'We confirm that the problem has been fixed.', current_timestamp - interval '5 days', 'Investigation on Turn Lights due to malfunction.', 'CLOSED', 'RECEIVER', null         , null          , current_timestamp - interval '1 hours', null);
+    (${investigationReceivedId5}, ${bpnCustomer2}, 'We confirm that the problem has been fixed.', current_timestamp - interval '5 days', 'Investigation on Turn Light due to malfunction.', 'CLOSED', 'RECEIVER', null         , null          , current_timestamp - interval '1 hours', null);
 
 ---
 -- reset sequence to highest next-val

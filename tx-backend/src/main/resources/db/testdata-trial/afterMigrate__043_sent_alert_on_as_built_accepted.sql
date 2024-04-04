@@ -6,9 +6,9 @@
 
 ---
 insert into alert
-    (id             , bpn      , close_reason, created                              , description                      , status    , side    , accept_reason                             , decline_reason, updated, error_message)
+    (id             , bpn      , close_reason, created                              , description                   , status    , side    , accept_reason                             , decline_reason, updated, error_message)
 values
-    (${alertSentId4}, ${bpnOwn}, null        , current_timestamp - interval '5 days', 'Alert about Control Unit Big', 'ACCEPTED', 'SENDER', 'Thanks for letting us know. We''ll check', null          , null   , null);
+    (${alertSentId4}, ${bpnOwn}, null        , current_timestamp - interval '5 days', 'Alert about Control Unit big', 'ACCEPTED', 'SENDER', 'Thanks for letting us know. We''ll check', null          , null   , null);
 
 ---
 -- reset sequence to highest next-val

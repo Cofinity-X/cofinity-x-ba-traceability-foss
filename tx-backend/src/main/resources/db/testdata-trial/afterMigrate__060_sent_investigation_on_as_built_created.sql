@@ -2,11 +2,11 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state CREATED in Severity Critical for asBuilt asset Left Headbulb which is sent from BPNL000000000001 to BPNL000SUPPLIER1
+-- This creates an investigation in state CREATED in Severity Critical for asBuilt asset LuminaTech Left Headbulb which is sent from BPNL000000000001 to BPNL000SUPPLIER1
 
 ---
 insert into investigation
-    (id                     , bpn      , close_reason, created                             , description                                                           , status   , side    , accept_reason, decline_reason, updated, error_message)
+    (id                     , bpn      , close_reason, created                             , description                                                  , status   , side    , accept_reason, decline_reason, updated, error_message)
 values
     (${investigationSentId1}, ${bpnOwn}, null        , current_timestamp - interval '1 day', 'Investigation on Left Headbulb due to excessive brightness.', 'CREATED', 'SENDER', null         , null          , null   , null);
 

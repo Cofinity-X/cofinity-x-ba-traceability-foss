@@ -31,11 +31,12 @@ spring:
       bpnSupplier1Name: "'LuminaTech'"
       bpnSupplier2    : "'BPNL000SUPPLIER2'"
       bpnSupplier2Name: "'BrightSolutions'"
+
       bpnSupplier3    : "'BPNL000SUPPLIER3'"
       bpnSupplier3Name: "'CableCraft'"
-
       bpnSupplier4    : "'BPNL000SUPPLIER4'"
       bpnSupplier4Name: "'Linkage'"
+
       bpnSupplier5    : "'BPNL000SUPPLIER5'"
       bpnSupplier5Name: "'LuxLite'"
       bpnSupplier6    : "'BPNL000SUPPLIER6'"
@@ -43,6 +44,7 @@ spring:
 
       bpnCustomer1    : "'BPNL000CUSTOMER1'"
       bpnCustomer1Name: "'Manu'"
+
       bpnCustomer2    : "'BPNL000CUSTOMER2'"
       bpnCustomer2Name: "'Mecury'"
 

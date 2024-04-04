@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state CANCELED in Severity Life-threatening for asBuilt asset LED Orange which is sent from BPNL000000000001 to BPNL000SUPPLIER5
+-- This creates an investigation in state CANCELED in Severity Life-threatening for asBuilt asset LuxLite LED Orange Turn which is sent from BPNL000000000001 to BPNL000SUPPLIER5
 
 ---
 insert into investigation
-    (id                     , bpn      , close_reason, created                              , description                                                , status    , side    , accept_reason, decline_reason, updated                              , error_message)
+    (id                     , bpn      , close_reason, created                              , description                                             , status    , side    , accept_reason, decline_reason, updated                              , error_message)
 values
-    (${investigationSentId6}, ${bpnOwn}, null        , current_timestamp - interval '7 days', 'Investigation on LED Orange due to strange color.', 'CANCELED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
+    (${investigationSentId6}, ${bpnOwn}, null        , current_timestamp - interval '7 days', 'Investigation on LED Orange Turn due to strange color.', 'CANCELED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
 
 ---
 -- reset sequence to highest next-val

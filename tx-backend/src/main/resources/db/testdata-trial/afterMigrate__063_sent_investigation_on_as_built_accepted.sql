@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state ACCEPTED in Severity Minor for asBuilt asset Electric Fuse Small which is sent from BPNL000000000001 to BPNL000SUPPLIER3
+-- This creates an investigation in state ACCEPTED in Severity Minor for asBuilt asset CableCraft Electric Fuse small which is sent from BPNL000000000001 to BPNL000SUPPLIER3
 
 ---
 insert into investigation
-    (id                     , bpn      , close_reason, created                              , description                                                  , status    , side    , accept_reason         , decline_reason, updated                              , error_message)
+    (id                     , bpn      , close_reason, created                              , description                                                     , status    , side    , accept_reason         , decline_reason, updated                              , error_message)
 values
-    (${investigationSentId4}, ${bpnOwn}, null        , current_timestamp - interval '4 days', 'Investigation on Electric Fuse Small due to damaged packaging.', 'ACCEPTED', 'SENDER', 'Damn, it''s damaged!', null          , current_timestamp - interval '1 hour', null);
+    (${investigationSentId4}, ${bpnOwn}, null        , current_timestamp - interval '4 days', 'Investigation on Electric Fuse small due to damaged packaging.', 'ACCEPTED', 'SENDER', 'Damn, it''s damaged!', null          , current_timestamp - interval '1 hour', null);
 
 ---
 -- reset sequence to highest next-val

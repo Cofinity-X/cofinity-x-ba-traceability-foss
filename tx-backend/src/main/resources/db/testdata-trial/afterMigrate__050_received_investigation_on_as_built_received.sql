@@ -2,11 +2,11 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state RECEIVED in Severity Major for asBuilt asset Xenon left-Headlight which is sent from BPNL000CUSTOMER1 to BPNL000000000001
+-- This creates an investigation in state RECEIVED in Severity Major for asBuilt asset Xenon Left-Headlight which is sent from BPNL000CUSTOMER1 to BPNL000000000001
 
 ---
 insert into investigation
-    (id                         , bpn            , close_reason, created                             , description                                                 , status    , side      , accept_reason, decline_reason, updated, error_message)
+    (id                         , bpn            , close_reason, created                             , description                                          , status    , side      , accept_reason, decline_reason, updated, error_message)
 values
     (${investigationReceivedId1}, ${bpnCustomer1}, null        , current_timestamp - interval '1 day', 'Investigation on Left-Headlight due to malfunction.', 'RECEIVED', 'RECEIVER', null         , null          , null   , null);
 

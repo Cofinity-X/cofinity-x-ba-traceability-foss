@@ -6,7 +6,7 @@
 
 ---
 insert into alert
-    (id             , bpn      , close_reason, created          , description                         , status   , side    , accept_reason, decline_reason, updated, error_message)
+    (id             , bpn      , close_reason, created          , description                        , status   , side    , accept_reason, decline_reason, updated, error_message)
 values
     (${alertSentId1}, ${bpnOwn}, null        , current_timestamp, 'Second Alert about Left Headlight', 'CREATED', 'SENDER', null         , null          , null   , null);
 

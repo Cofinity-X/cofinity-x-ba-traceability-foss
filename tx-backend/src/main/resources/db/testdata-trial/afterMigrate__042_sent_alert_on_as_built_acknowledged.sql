@@ -2,11 +2,11 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset EControl Unit small which is sent from BPNL000000000001 to BPNL000CUSTOMER2
+-- This creates an alert in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset Control Unit small which is sent from BPNL000000000001 to BPNL000CUSTOMER2
 
 ---
 insert into alert
-    (id             , bpn      , close_reason, created                             , description                    , status        , side    , accept_reason, decline_reason, updated, error_message)
+    (id             , bpn      , close_reason, created                             , description                     , status        , side    , accept_reason, decline_reason, updated, error_message)
 values
     (${alertSentId3}, ${bpnOwn}, null        , current_timestamp - interval '1 day', 'Alert about Control Unit Small', 'ACKNOWLEDGED', 'SENDER', null         , null          , null   , null);
 

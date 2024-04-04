@@ -8,7 +8,7 @@
 insert into investigation
     (id                         , bpn            , close_reason, created                              , description                                              , status    , side      , accept_reason           , decline_reason, updated                               , error_message)
 values
-    (${investigationReceivedId3}, ${bpnCustomer2}, null        , current_timestamp - interval '3 days', 'Investigation on Control Unit Small due to malfunction.', 'ACCEPTED', 'RECEIVER', 'True, it doesn''t work', null          , current_timestamp - interval '1 hours', null);
+    (${investigationReceivedId3}, ${bpnCustomer2}, null        , current_timestamp - interval '3 days', 'Investigation on Control Unit small due to malfunction.', 'ACCEPTED', 'RECEIVER', 'True, it doesn''t work', null          , current_timestamp - interval '1 hours', null);
 
 ---
 -- reset sequence to highest next-val

@@ -2,13 +2,13 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an investigation in state DECLINED in Severity Life-threatening for asBuilt asset Control Unit Big which is sent from BPNL000CUSTOMER2 to BPNL000000000001
+-- This creates an investigation in state DECLINED in Severity Life-threatening for asBuilt asset Control Unit big which is sent from BPNL000CUSTOMER2 to BPNL000000000001
 
 ---
 insert into investigation
     (id                         , bpn            , close_reason, created                              , description                                            , status    , side      , accept_reason, decline_reason         , updated                               , error_message)
 values
-    (${investigationReceivedId4}, ${bpnCustomer2}, null        , current_timestamp - interval '4 days', 'Investigation on Control Unit Big due to malfunction.', 'DECLINED', 'RECEIVER', null         , 'Everything works fine', current_timestamp - interval '1 hours', null);
+    (${investigationReceivedId4}, ${bpnCustomer2}, null        , current_timestamp - interval '4 days', 'Investigation on Control Unit big due to malfunction.', 'DECLINED', 'RECEIVER', null         , 'Everything works fine', current_timestamp - interval '1 hours', null);
 
 ---
 -- reset sequence to highest next-val

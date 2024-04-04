@@ -6,7 +6,7 @@
 
 ---
 insert into investigation
-    (id                         , bpn            , close_reason, created                              , description                                                  , status        , side      , accept_reason, decline_reason, updated                               , error_message)
+    (id                         , bpn            , close_reason, created                              , description                                           , status        , side      , accept_reason, decline_reason, updated                               , error_message)
 values
     (${investigationReceivedId2}, ${bpnCustomer1}, null        , current_timestamp - interval '2 days', 'Investigation on Right Headlight due to malfunction.', 'ACKNOWLEDGED', 'RECEIVER', null         , null          , current_timestamp - interval '1 hours', null);
 

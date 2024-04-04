@@ -2,11 +2,11 @@
 -- (see https://documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
--- This creates an alert in state DECLINED in Severity Major for asBuilt asset Electric Fuse small which is sent from BPNL000SUPPLIER3 to BPNL000000000001
+-- This creates an alert in state DECLINED in Severity Major for asBuilt asset CableCraft Electric Fuse small which is sent from BPNL000SUPPLIER3 to BPNL000000000001
 
 ---
 insert into alert
-    (id                 , bpn            , close_reason, created                              , description             , status    , side      , accept_reason, decline_reason       , updated, error_message)
+    (id                 , bpn            , close_reason, created                              , description                      , status    , side      , accept_reason, decline_reason       , updated, error_message)
 values
     (${alertReceivedId4}, ${bpnSupplier3}, null        , current_timestamp - interval '5 days', 'Alert about Electric Fuse Small', 'DECLINED', 'RECEIVER', null         , 'Not relevant for us', null   , null);
 
