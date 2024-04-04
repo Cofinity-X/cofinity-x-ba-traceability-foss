@@ -18,11 +18,16 @@
  ********************************************************************************/
 package org.eclipse.tractusx.traceability.qualitynotification.domain.base.model;
 
+import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
 import org.eclipse.tractusx.traceability.common.model.BPN;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.investigation.model.exception.InvestigationIllegalUpdate;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.investigation.model.exception.InvestigationStatusTransitionNotAllowed;
+import org.hibernate.annotations.Type;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -40,6 +45,10 @@ import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 public class QualityNotification {
     private BPN bpn;
     private QualityNotificationId notificationId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "status")
+    @Type(PostgreSQLEnumType.class)
     private QualityNotificationStatus notificationStatus;
     private String description;
     // TODO date
