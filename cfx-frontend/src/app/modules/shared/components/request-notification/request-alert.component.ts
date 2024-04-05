@@ -31,7 +31,7 @@ import {
   RequestNotificationBase,
 } from '@shared/components/request-notification/request-notification.base';
 import { ToastService } from '@shared/components/toasts/toast.service';
-import { Notification, NotificationStatusGroup } from '@shared/model/notification.model';
+import { NotificationStatusGroup } from '@shared/model/notification.model';
 import { Severity } from '@shared/model/severity.model';
 import { NotificationService } from '@shared/service/notification.service';
 

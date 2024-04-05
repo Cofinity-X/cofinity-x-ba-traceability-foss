@@ -222,8 +222,8 @@ describe('requestInvestigationComponent', () => {
   };
 
   const shouldRenderButtons = async () => {
-    const cancelElement = await waitFor(() => screen.getByText('requestNotification.back'));
-    const submitElement = await screen.getByText('requestNotification.submit');
+    const cancelElement = await waitFor(() => screen.getByText('Back'));
+    const submitElement = await screen.getByText('Submit');
 
     expect(cancelElement).toBeInTheDocument();
     expect(submitElement).toBeInTheDocument();
@@ -255,7 +255,7 @@ describe('requestInvestigationComponent', () => {
       fireEvent.input(targetDate, { target: { value: tomorrowString } }); // Set the date
     }
 
-    const submit = await waitFor(() => screen.getByText('requestNotification.submit'));
+    const submit = await waitFor(() => screen.getByText('Submit'));
     expect(submit).toBeInTheDocument();
     expect(textArea.value).toEqual(testText);
     fireEvent.click(submit);
