@@ -25,10 +25,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Part } from '@page/parts/model/parts.model';
 import { DateTimeString } from '@shared/components/dateTime/dateTime.component';
 import { ToastService } from '@shared/components/toasts/toast.service';
-import { Notification } from '@shared/model/notification.model';
+import { Notification, NotificationType } from '@shared/model/notification.model';
 import { Severity } from '@shared/model/severity.model';
-import { BehaviorSubject } from 'rxjs';
 import { ModalComponent } from '@shared/modules/modal/component/modal.component';
+import { BehaviorSubject } from 'rxjs';
 
 export enum RequestContext {
   REQUEST_ALERT = 'requestAlert',
@@ -87,7 +87,10 @@ export abstract class RequestNotificationBase {
 
   protected onSuccessfulSubmit(link: string, linkQueryParams: Record<string, string>): void {
     this.isLoading$.next(false);
-    const amountOfItems = this.forwardedNotification.assetIds.length ?? this.selectedItems.length;
+    let amountOfItems = this.selectedItems.length;
+    if (this.forwardedNotification && this.forwardedNotification.notificationType == NotificationType.ALERT) {
+      amountOfItems = this.forwardedNotification.assetIds.length;
+    }
     this.resetForm();
 
     this.openToast(amountOfItems, link, linkQueryParams);

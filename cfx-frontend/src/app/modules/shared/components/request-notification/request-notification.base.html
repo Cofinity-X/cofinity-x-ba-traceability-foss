@@ -71,6 +71,11 @@ SPDX-License-Identifier: Apache-2.0
     <app-textarea [label]="'requestNotification.textAreaLabel' | i18n"
       formControlName="description"></app-textarea>
 
+    <div *ngIf="forwardedNotification" class="flex items-center label-medium info-text">
+      <img src="/assets/images/icons/info_icon.svg" alt="info_icon"/>
+      {{ 'requestNotification.userInfoDataSovereignty' | i18n }}
+    </div>
+
     <div class="buttons-container">
       <div *ngIf="showButtons"
         class="buttons-wrapper">

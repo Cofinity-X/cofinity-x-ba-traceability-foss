@@ -73,7 +73,7 @@ export class RequestAlertComponent extends RequestNotificationBase {
       return;
     }
 
-    const partIds = this.forwardedNotification.assetIds ?? this.selectedItems.map(part => part.id);
+    const partIds = this.forwardedNotification ? this.forwardedNotification.assetIds : this.selectedItems.map(part => part.id);
     // set asBuilt parameter if one of the selectedItems are a asPlanned Part
     const isAsBuilt = this.forwardedNotification ? true : this.selectedItems.map(part => part.semanticDataModel === SemanticDataModel.PARTASPLANNED).includes(true);
 

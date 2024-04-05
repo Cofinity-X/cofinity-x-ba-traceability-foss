@@ -66,7 +66,6 @@ export class ForwardNotificationComponent {
     this.searchControl = this.searchFormGroup.get('partSearch') as unknown as FormControl;
   }
 
-
   public closeAction(): void {
     this.isOpen = false;
 

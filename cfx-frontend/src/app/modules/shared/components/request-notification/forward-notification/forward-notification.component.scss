@@ -2,8 +2,7 @@
 @tailwind base;
 
 .container {
-  width: 850px;
-  overflow-y: hidden;
+  max-width: 850px;
   margin-right: 0.5px;
   padding: 20px;
 }
@@ -20,9 +19,12 @@
 }
 
 .investigation-parts-table {
-  height: 420px !important;
-  overflow-y: auto !important;
+  height: 420px;
+  overflow-y: auto;
 }
 .investigation-wrapper {
-  height: 700px !important;
+  height: 700px;
+}
+.investigation-form {
+
 }

@@ -66,6 +66,7 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   }
 
   public submit(): void {
+
     this.prepareSubmit();
     if (this.formGroup.invalid) {
       return;
