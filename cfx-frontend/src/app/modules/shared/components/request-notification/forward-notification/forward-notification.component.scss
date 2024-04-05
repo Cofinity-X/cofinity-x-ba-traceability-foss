@@ -3,8 +3,10 @@
 
 .container {
   max-width: 850px;
+  max-height: 775px;
+  overflow-y: auto;
   margin-right: 0.5px;
-  padding: 20px;
+  padding: 10px;
 }
 
 .header {
@@ -19,12 +21,13 @@
 }
 
 .investigation-parts-table {
-  height: 420px;
+  height: 415px;
   overflow-y: auto;
 }
+
+.investigation-form {
+}
+
 .investigation-wrapper {
   height: 700px;
-}
-.investigation-form {
-
 }
