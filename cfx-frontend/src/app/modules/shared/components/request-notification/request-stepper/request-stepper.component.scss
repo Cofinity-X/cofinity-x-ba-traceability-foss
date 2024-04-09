@@ -3,6 +3,7 @@
 
 .container {
   width: 850px;
+  max-height: 800px;
   overflow-y: hidden;
   margin-right: 0.5px;
   min-width: 850px !important;
@@ -15,6 +16,11 @@
     max-width: 850px;
     min-width: 850px;
     overflow-x: auto;
+  }
+  @media (max-height: 800px) {
+    height: 500px;
+    overflow-y: auto;
+    padding-right: 20px;
   }
 }
 
@@ -52,6 +58,7 @@
 }
 
 .buttons-wrapper {
+  max-height: 200px;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
