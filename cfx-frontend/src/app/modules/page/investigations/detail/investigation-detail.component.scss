@@ -120,3 +120,12 @@
   justify-content: flex-end;
   padding: 0 20px 20px 20px;
 }
+
+.forward-link {
+  @extend .label-medium;
+  @apply text-textLink;
+  text-decoration: underline;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 20px 20px;
+}
