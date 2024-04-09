@@ -11,7 +11,7 @@
   </div>
 
   <div class="pt-5">
-    <div *ngIf="context === RequestContext.REQUEST_INVESTIGATION" class="investigation-wrapper" >
+    <div *ngIf="context === RequestContext.REQUEST_INVESTIGATION" class="investigation-wrapper">
       <div class="investigation-parts-table">
         <div [formGroup]="searchFormGroup"
              class="flex justify-between items-center pt-5">
@@ -44,15 +44,14 @@
                             (onPartsSelected)="onPartsSelected($event)"></app-supplier-parts>
 
       </div>
-      <div class="investigation-form">
-        <app-request-investigation
-          (onBackClicked)="closeAction()"
-          (deselectPart)="onPartDeselected($event)"
-          [forwardedNotification]="forwardedNotification"
-          [selectedItems]="selectedParts"
-          [closeButtonText]="'requestNotification.cancel'"
-          [submitButtonText]="'requestNotification.submit'"></app-request-investigation>
-      </div>
+      <app-request-investigation
+        (onBackClicked)="closeAction()"
+        (deselectPart)="onPartDeselected($event)"
+        [forwardedNotification]="forwardedNotification"
+        [selectedItems]="selectedParts"
+        [closeButtonText]="'requestNotification.cancel'"
+        [submitButtonText]="'requestNotification.submit'"></app-request-investigation>
+
     </div>
     <app-request-alert *ngIf="context === RequestContext.REQUEST_ALERT"
                        (onBackClicked)="closeAction()"

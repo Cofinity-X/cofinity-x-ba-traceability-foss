@@ -7,6 +7,10 @@
   overflow-y: auto;
   margin-right: 0.5px;
   padding: 10px;
+  @media (max-height: 800px) {
+    height: 500px;
+    overflow-x: auto;
+  }
 }
 
 .header {
@@ -21,13 +25,10 @@
 }
 
 .investigation-parts-table {
-  height: 415px;
+  height: 420px;
   overflow-y: auto;
 }
 
-.investigation-form {
-}
-
 .investigation-wrapper {
-  height: 700px;
+  height: 720px;
 }

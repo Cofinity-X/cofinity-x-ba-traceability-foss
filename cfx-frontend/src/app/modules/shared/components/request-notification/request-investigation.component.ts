@@ -66,12 +66,13 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   }
 
   public submit(): void {
-
+    if (this.selectedItems.length === 0) {
+      return;
+    }
     this.prepareSubmit();
     if (this.formGroup.invalid) {
       return;
     }
-
     const partIds = this.selectedItems.map(part => part.id);
     const { description, targetDate, severity } = this.formGroup.value;
     const { link, queryParams } = getRoute(INVESTIGATION_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);
