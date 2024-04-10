@@ -9,10 +9,11 @@
     padding: 0px 136px;
     gap: 85px;
     max-width: 1920px;
-    min-width: 1000px;
+    min-width: 1072px;
 
-    @media (max-width: 1000px) {
-      padding: 0;
+    @media (max-width: 1200px) {
+      min-width: 1200px;
+      padding: 0px 24px 0px 24px;
     }
   }
 

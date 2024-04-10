@@ -43,7 +43,8 @@
     padding: 0 136px;
 
     @media (max-width: 1200px) {
-      padding: 0;
+      min-width: 1200px;
+      padding: 0 24px 0 24px;
     }
   }
 }
