@@ -142,12 +142,13 @@ export abstract class RequestNotificationBase {
   }
 
   public onBack(): void {
-    this.showButtons = false;
+    if (!this.forwardedNotification) {
+      this.showButtons = false;
 
-    setTimeout(() => {
-      this.showButtons = true;
-    }, 1000);
-
+      setTimeout(() => {
+        this.showButtons = true;
+      }, 1000);
+    }
     this.onBackClicked.emit();
   }
 

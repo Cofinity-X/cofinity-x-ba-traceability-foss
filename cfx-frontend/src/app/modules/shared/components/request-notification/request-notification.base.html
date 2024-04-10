@@ -87,7 +87,9 @@ SPDX-License-Identifier: Apache-2.0
         </app-button>
 
         <app-button class="button-large request-action-button"
-          [isDisabled]="this.selectedItems.length === 0"
+          [isDisabled]="this.forwardedNotification
+          && this.forwardedNotification.notificationType != 'Alert'
+          && this.selectedItems.length === 0"
           [variant]="'flat'"
           [color]="'primary'"
           (click)="submit()">
