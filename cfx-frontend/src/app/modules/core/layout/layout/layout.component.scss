@@ -24,6 +24,11 @@
   flex: 1;
 }
 
+.background {
+  overflow-x: hidden;
+  min-width: 1200px;
+}
+
 .layout-sidebar {
   @apply bg-white flex;
 }
