@@ -22,6 +22,7 @@
 .layout-container {
   @apply h-screen flex flex-row justify-start overflow-y-auto;
   flex: 1;
+  max-width: 100%;
 }
 
 .background {
@@ -38,9 +39,10 @@
 }
 
 .layout-content {
-  @apply max-w-screen-4xl flex flex-1 flex-col min-w-0 relative;
+  @apply flex flex-1 flex-col min-w-0 relative;
   gap: 40px;
   margin: 0 auto;
+  height: 100%;
 
   &__box-modal {
     @apply min-w-0;
