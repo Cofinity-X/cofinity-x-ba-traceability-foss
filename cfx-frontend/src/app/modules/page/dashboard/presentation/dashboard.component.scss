@@ -27,10 +27,6 @@
 
 .parts-sections {
   @apply grid grid-cols-12 gap-6;
-
-  @media (max-width: 1024px) {
-    min-width: 1000px;
-  }
 }
 
 .parts-section-text {
