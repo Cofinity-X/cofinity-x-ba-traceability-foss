@@ -21,12 +21,12 @@
 @import '../../../../../theme/base.scss';
 @tailwind base;
 
-.dashboard-grid {
-  @apply grid grid-cols-12 gap-6;
+.parts-section {
+  @apply col-span-3 cursor-pointer;
 }
 
-.parts-section {
-  @apply col-span-12 lg:col-span-3 cursor-pointer;
+.parts-sections {
+  @apply grid grid-cols-12 gap-6;
 }
 
 .parts-section-text {
@@ -53,8 +53,8 @@
 .dashboard--section {
   @apply col-span-12;
 
-  @media (max-width: 1200px) {
-    min-width: 1200px;
+  @media (max-width: 1024px) {
+    min-width: 1024px;
   }
 }
 

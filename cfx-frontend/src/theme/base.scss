@@ -218,7 +218,7 @@
   p,
   span,
   .regular-text {
-    @apply font-light lg:text-sm sm:text-xs;
+    @apply font-light text-sm;
   }
 
   .large-text {
@@ -226,7 +226,7 @@
   }
 
   .small-text {
-    @apply font-light lg:text-xs sm:text-tiny text-pendingDark;
+    @apply font-light lg:text-xs sm:text-xs text-pendingDark;
   }
 
   .component-headline {
@@ -404,22 +404,17 @@
   @media (max-width: 1200px) {
 
     .card-container {
-      max-width: 1200px;
-      min-width: 1200px;
+      max-width: 1152px;
+      min-width: 1152px;
       overflow-x: auto;
     }
   }
 
   .parts-section .ng-star-inserted .mat-mdc-card .card-container {
     @media (max-width: 1200px) {
-      min-width: 0;
-    }
-
-    @media (max-width: 1000px) {
-      min-width: 1200px;
+      min-width: auto;
     }
   }
-
 
   .mat-mdc-form-field.mat-accent .mdc-text-field--invalid .mdc-text-field__input {
     caret-color: var(--mdc-theme-error, #b62100);
