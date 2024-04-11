@@ -58,7 +58,7 @@ irs-edc-client:
     request-ttl: PT10M # How long to wait for an async EDC negotiation request to finish, ISO 8601 Duration
     endpoint:
       data: ${EDC_DATA_ENDPOINT_URL}
-      asset: /management/v2/assets
+      asset: /management/v3/assets
       contract-definition: /management/v2/contractdefinitions
       policy-definition: /management/v2/policydefinitions
       catalog: /v2/catalog/request # EDC consumer controlplane catalog path
@@ -99,8 +99,6 @@ management:
       probes:
         enabled: true
   health:
-    irs-connection:
-      enabled: true  # Tests whether IRS is reachable (IrsConnectionHealthIndicator)
     readinessState:
       enabled: true
     livenessState:
@@ -112,8 +110,6 @@ management:
     port: 8081
 
 spring:
-  flyway:
-    locations: /db/migration
   main:
     allow-bean-definition-overriding: true
   datasource:
@@ -128,12 +124,11 @@ spring:
             authorization-grant-type: client_credentials
             client-id: ${OAUTH2_CLIENT_ID}
             client-secret: ${OAUTH2_CLIENT_SECRET}
-            scope: ${OAUTH2_CLIENT_SCOPE}
           OKTA:
             client-id: ${OAUTH2_CLIENT_ID}
             client-secret: ${OAUTH2_CLIENT_SECRET}
             authorization-grant-type: client_credentials
-            scope: ${OAUTH2_CLIENT_SCOPE}
+            scope: openid
         provider:
           keycloak:
             token-uri: ${OAUTH2_PROVIDER_TOKEN_URI}
@@ -176,4 +171,3 @@ digitalTwinRegistryClient:
   discoveryFinderUrl: ${DISCOVERY_FINDER_URL_WITH_PATH}
   descriptorEndpoint: "" # required if type is "central", must contain the placeholder {aasIdentifier}
   shellLookupEndpoint: "" # required if type is "central", must contain the placeholder {assetIds}
-
