@@ -1,5 +1,5 @@
 -- this script is executed by flyway as part of a lifecycle hook after all migrations have been applied
--- (see https:                                                                                                                                                                                                                                                                                                                                                                                                                                                                    //documentation.red-gate.com/fd/callback-concept-184127466.html).
+-- (see https: //documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
 -- This creates an alert in state DECLINED in Severity Major for asBuilt asset Würth W-FogLight which is sent from BPNL000SUPPLIER3 to BPNL000000000001

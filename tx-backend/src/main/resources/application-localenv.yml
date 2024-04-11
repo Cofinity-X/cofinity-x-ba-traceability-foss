@@ -47,7 +47,7 @@ traceability:
 edc:
   api-auth-key: api-key
   provider-edc-url: http://localhost:5001/edc
-  provider-dataplane-edc-url : http://localhost:5001/edc
+  provider-dataplane-edc-url: http://localhost:5001/edc
 
 irs-edc-client:
   callback-url: http://localhost:8082

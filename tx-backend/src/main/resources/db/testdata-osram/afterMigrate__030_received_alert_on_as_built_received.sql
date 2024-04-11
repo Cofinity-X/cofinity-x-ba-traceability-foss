@@ -1,24 +1,24 @@
 -- this script is executed by flyway as part of a lifecycle hook after all migrations have been applied
--- (see https:                                                                                                                                                                                                                                                                                                                                                                                                                                     //documentation.red-gate.com/fd/callback-concept-184127466.html).
+-- (see https: //documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
 -- This creates an alert in state RECEIVED in Severity Critical for asBuilt asset Petersmeier K2367 which is sent from BPNL00SUPPLIER22 to BPNL000SUPPLIER1
 
 ---
 insert into alert
-    (id                             , bpn                            , close_reason         , created                               , description                              , status    , side                                  , accept_reason, decline_reason      , updated)
+    (id                 , bpn             , close_reason, created                              , description                              , status    , side      , accept_reason, decline_reason, updated)
 values
-    (${alertReceivedId1}            , ${bpnSupplier21}               , null                 , current_timestamp - interval '2 days' , 'Alert about Packaging for turning light', 'RECEIVED', 'RECEIVER'                            , null         , null                , null   );
+    (${alertReceivedId1}, ${bpnSupplier21}, null        , current_timestamp - interval '2 days', 'Alert about Packaging for turning light', 'RECEIVED', 'RECEIVER', null         , null          , null   );
 
 ---
 -- reset sequence to highest next-val
-select setval('alert_id_seq1'       , (select max(a.id) from alert a), true);
+select setval('alert_id_seq1', (select max(a.id) from alert a), true);
 
 ---
 insert into alert_notification
-    (id                             , alert_id                       , contract_agreement_id, notification_reference_id             , created_by                               , send_to   , target_date                           , severity     , created_by_name     , send_to_name , edc_notification_id                   , status    , created                             , updated, message_id                            , error_message)
+    (id                             , alert_id           , contract_agreement_id, notification_reference_id             , created_by      , send_to  , target_date                           , severity  , created_by_name     , send_to_name , edc_notification_id                   , status    , created                             , updated, message_id                            , error_message)
 values
-    (${alertNotificationReceivedId1}, ${alertReceivedId1}            , null                 , 'ded38f08-1b9c-497d-b994-6feba92b7f41', ${bpnSupplier22}                         , ${bpnOwn} , current_timestamp + interval '1 month', 'CRITICAL'   , ${bpnSupplier22Name}, ${bpnOwnName}, 'ded38f08-1b9c-497d-b994-6feba92b7f41', 'RECEIVED', current_timestamp - interval '1 day', null   , '7d0891d2-4940-4802-b0bc-cc30f9e94e76', null);
+    (${alertNotificationReceivedId1}, ${alertReceivedId1}, null                 , 'ded38f08-1b9c-497d-b994-6feba92b7f41', ${bpnSupplier22}, ${bpnOwn}, current_timestamp + interval '1 month', 'CRITICAL', ${bpnSupplier22Name}, ${bpnOwnName}, 'ded38f08-1b9c-497d-b994-6feba92b7f41', 'RECEIVED', current_timestamp - interval '1 day', null   , '7d0891d2-4940-4802-b0bc-cc30f9e94e76', null);
 
 ---
 -- join notification to asset
@@ -30,6 +30,6 @@ values
 ---
 -- join alert to asset
 insert into assets_as_built_alerts
-    (alert_id                       , asset_id)
+    (alert_id           , asset_id)
 values
-    (${alertReceivedId1}            , ${assetAsBuiltId10});
+    (${alertReceivedId1}, ${assetAsBuiltId10});

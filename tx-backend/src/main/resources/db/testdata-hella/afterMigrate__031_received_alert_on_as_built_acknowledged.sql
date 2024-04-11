@@ -1,5 +1,5 @@
 -- this script is executed by flyway as part of a lifecycle hook after all migrations have been applied
--- (see https:                                                                                                                                                                                                                                                                                                                                                                                                                                                        //documentation.red-gate.com/fd/callback-concept-184127466.html).
+-- (see https: //documentation.red-gate.com/fd/callback-concept-184127466.html).
 -- it is only intended for usage in local or test environments
 
 -- This creates an alert in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset Philips Front Right-D3H which is sent from BPNL000SUPPLIER2 to BPNL000000000001
