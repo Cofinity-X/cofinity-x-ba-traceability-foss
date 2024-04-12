@@ -73,17 +73,24 @@ export class PartRelationComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    console.log('PartRelationComponent ngOnInit');
+
     const initSubscription = this.route.paramMap
       .pipe(
         switchMap(params => {
           if (this.partDetailsFacade.selectedPart) {
+
+            console.log('>>>PartRelationComponent ngOnInit partId', params.get('partId'), "selectedPartId partID--", this.partDetailsFacade.selectedPart.id);
+
             return this.partDetailsFacade.selectedPart$;
           }
 
           const partId = params.get('partId');
+          console.log('PartRelationComponent ngOnInit partId', partId);
 
           const mainAspectType = this.route?.snapshot?.queryParams?.type as MainAspectType;
           this.partDetailsFacade.mainAspectType = mainAspectType;
+
           return partId ? this.partDetailsFacade.getRootPart(partId) : this.partDetailsFacade.selectedPart$;
         }),
         tap(viewData => {

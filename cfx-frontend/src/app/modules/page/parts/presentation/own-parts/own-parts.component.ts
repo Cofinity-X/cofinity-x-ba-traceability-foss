@@ -262,7 +262,8 @@ export class OwnPartsComponent implements OnInit, OnDestroy {
 
   public openDetailPage(part: Part): void {
     const { link } = getRoute(PARTS_BASE_ROUTE);
-    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
+    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } });
+    console.log('openDetailPage', part);
   }
 
   public onAsBuiltTableConfigChange({ page, pageSize, sorting }: TableEventConfig): void {

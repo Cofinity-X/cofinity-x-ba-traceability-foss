@@ -125,6 +125,7 @@ export class D3RenderHelper {
     const textLength = text.length * 6.81;
 
     let circleNode = el.select(`#${id}--Circle`);
+    console.log('dataTitle', data.title, id);
 
     if (circleNode.empty()) {
       circleNode = el
@@ -158,6 +159,8 @@ export class D3RenderHelper {
         .classed('tree--element__text', true)
         .text(() => text);
     }
+
+    console.log("text", text);
 
     circleNode.attr('transform', () => `translate(${D3RenderHelper.modifyByDirection(direction, x)},${D3RenderHelper.modifyByDirection(direction, y)})`);
   }
