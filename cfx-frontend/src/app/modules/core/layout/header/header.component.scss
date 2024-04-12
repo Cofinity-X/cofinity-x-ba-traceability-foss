@@ -32,7 +32,11 @@
     height: 80px;
     gap: 90px;
     padding: 0px 136px;
-    max-width: 1920px;
+
+    @media (max-width: 1200px) {
+      min-width: 1200px;
+      padding: 0 24px 0 24px;
+    }
   }
 
   &--menu-container {
@@ -125,6 +129,7 @@
 @media (min-width: 1920px) {
   .header {
     margin-left: calc((1920px - 100vw) / 2);
+
     &--container {
       margin-left: calc((100vw - 1920px) / 2);
     }

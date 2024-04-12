@@ -3,8 +3,26 @@
 
 .container {
   width: 850px;
+  max-height: 800px;
   overflow-y: hidden;
   margin-right: 0.5px;
+  min-width: 850px !important;
+
+  @media (max-width: 1024px) {
+    padding-right: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    max-width: 850px;
+    min-width: 850px;
+    overflow-x: auto;
+  }
+  @media (max-height: 800px) {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 .header {
@@ -41,13 +59,13 @@
 }
 
 .buttons-wrapper {
+  max-height: 200px;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
 .parts-tab-wrapper {
-  height: 500px !important;
   overflow-y: auto !important;
 }
 

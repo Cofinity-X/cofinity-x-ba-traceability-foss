@@ -20,8 +20,9 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <div class="dashboard-grid">
-  <section class="parts-section">
-    <ng-container *viewContainer="
+  <div class="parts-sections">
+    <section class="parts-section">
+      <ng-container *viewContainer="
         this.numberOfMyParts$ | async;
         main: numbersMainTmp;
         error: numbersErrorTmp;
@@ -32,11 +33,11 @@ SPDX-License-Identifier: Apache-2.0
           link: 'parts'
         }
       ">
-    </ng-container>
-  </section>
+      </ng-container>
+    </section>
 
-  <section class="parts-section">
-    <ng-container *viewContainer="
+    <section class="parts-section">
+      <ng-container *viewContainer="
         this.numberOfOtherParts$ | async;
         main: numbersMainTmp;
         error: numbersErrorTmp;
@@ -47,11 +48,11 @@ SPDX-License-Identifier: Apache-2.0
           link: 'otherParts'
         }
       ">
-    </ng-container>
-  </section>
+      </ng-container>
+    </section>
 
-  <section class="parts-section">
-    <ng-container *viewContainer="
+    <section class="parts-section">
+      <ng-container *viewContainer="
         this.numberOfInvestigations$ | async;
         main: numbersMainTmp;
         error: numbersErrorTmp;
@@ -62,11 +63,11 @@ SPDX-License-Identifier: Apache-2.0
           link: 'investigations'
         }
       ">
-    </ng-container>
-  </section>
+      </ng-container>
+    </section>
 
-  <section class="parts-section">
-    <ng-container *viewContainer="
+    <section class="parts-section">
+      <ng-container *viewContainer="
         this.numberOfAlerts$ | async;
         main: numbersMainTmp;
         error: numbersErrorTmp;
@@ -77,10 +78,11 @@ SPDX-License-Identifier: Apache-2.0
           link: 'alerts'
         }
       ">
-    </ng-container>
-  </section>
+      </ng-container>
+    </section>
+  </div>
 
-  <section class="dashboard--section mt-4">
+  <section class="dashboard--section mt-10">
     <mat-card>
       <mat-card-header>
         <div class="inline-block w-full">
@@ -93,7 +95,7 @@ SPDX-License-Identifier: Apache-2.0
               <span class="pl-1 latestFiveLabel">{{ 'table.latestFive' | i18n }}</span>
             </h3>
             <div *appHasRole="[Role.USER]">
-            <app-button class="button-small request-action-button"
+              <app-button class="button-small request-action-button"
                 (click)="openRequestDialog(true)"
                 [color]="'primary'"
                 variant="flat">
@@ -147,7 +149,7 @@ SPDX-License-Identifier: Apache-2.0
     </mat-card>
   </section>
 
-  <section class="dashboard--section">
+  <section class="dashboard--section mt-6">
     <mat-card>
       <mat-card-header>
         <div class="inline-block w-full">

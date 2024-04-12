@@ -89,6 +89,7 @@ SPDX-License-Identifier: Apache-2.0
         <testcontainer-postgresql.version>1.19.7</testcontainer-postgresql.version>
         <rest-assured.version>5.4.0</rest-assured.version>
         <postgresql.version>42.6.1</postgresql.version>
+        <hypersistence-utils-hibernate.version>3.7.2</hypersistence-utils-hibernate.version>
         <springdoc.version>2.0.4</springdoc.version>
         <assertj.version>3.24.2</assertj.version>
         <commons-logging.version>1.3.0</commons-logging.version>
@@ -121,6 +122,11 @@ SPDX-License-Identifier: Apache-2.0
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.hypersistence</groupId>
+                <artifactId>hypersistence-utils-hibernate-62</artifactId>
+                <version>${hypersistence-utils-hibernate.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-bom</artifactId>

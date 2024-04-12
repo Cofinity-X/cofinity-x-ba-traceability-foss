@@ -32,6 +32,7 @@ import { NotificationOverviewComponent } from '@shared/components/notification-o
 import { NotificationReasonComponent } from '@shared/components/notification-reason/notification-reason.component';
 import { NotificationUserComponent } from '@shared/components/notification-user/notification-user.component';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
+import { ForwardAlertComponent } from '@shared/components/request-notification/forward-alert.component';
 import { SeveritySelectComponent } from '@shared/components/severity-select/severity-select.component';
 import { SeverityComponent } from '@shared/components/severity/severity.component';
 import { TableSettingsComponent } from '@shared/components/table-settings/table-settings.component';
@@ -95,6 +96,7 @@ import { RequestStepperComponent } from './components/request-notification/reque
 import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-parts/supplier-parts.component';
 import { OwnPartsComponent } from '@page/parts/presentation/own-parts/own-parts.component';
 import { TableColumnSettingsComponent } from './components/table-column-settings/table-column-settings.component';
+import { ForwardNotificationComponent } from '@shared/components/request-notification/forward-notification/forward-notification.component';
 @NgModule({
   declarations: [
     ToastContainerComponent,
@@ -132,6 +134,7 @@ import { TableColumnSettingsComponent } from './components/table-column-settings
     RequestStepperComponent,
     RequestInvestigationComponent,
     RequestAlertComponent,
+    ForwardAlertComponent,
     ScrollWithShadowComponent,
     QualityTypeComponent,
     ValueToLablePipe,
@@ -148,7 +151,8 @@ import { TableColumnSettingsComponent } from './components/table-column-settings
     BomLifecycleActivatorComponent,
     ViewSelectorComponent,
     MultiSelectAutocompleteComponent,
-    CountryFlagGeneratorComponent
+    CountryFlagGeneratorComponent,
+    ForwardNotificationComponent
   ],
   imports: [TemplateModule, RouterModule, I18NextModule, DragDropModule],
   exports: [
@@ -181,6 +185,7 @@ import { TableColumnSettingsComponent } from './components/table-column-settings
     RequestStepperComponent,
     RequestInvestigationComponent,
     RequestAlertComponent,
+    ForwardAlertComponent,
     QualityTypeComponent,
     NotificationOverviewComponent,
     NotificationReasonComponent,

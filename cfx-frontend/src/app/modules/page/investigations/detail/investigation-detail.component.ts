@@ -20,6 +20,7 @@
  ********************************************************************************/
 
 import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getRoute, INVESTIGATION_BASE_ROUTE } from '@core/known-route';
 import { InvestigationDetailFacade } from '@page/investigations/core/investigation-detail.facade';
@@ -28,6 +29,8 @@ import { InvestigationsFacade } from '@page/investigations/core/investigations.f
 import { Part } from '@page/parts/model/parts.model';
 import { NotificationActionHelperService } from '@shared/assembler/notification-action-helper.service';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
+import { ForwardNotificationComponent } from '@shared/components/request-notification/forward-notification/forward-notification.component';
+import { RequestContext } from '@shared/components/request-notification/request-notification.base';
 import { CreateHeaderFromColumns, TableConfig, TableEventConfig } from '@shared/components/table/table.model';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { Notification } from '@shared/model/notification.model';
@@ -80,6 +83,7 @@ export class InvestigationDetailComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private readonly route: ActivatedRoute,
     private readonly toastService: ToastService,
+    public dialog: MatDialog,
   ) {
     this.investigationPartsInformation$ = this.investigationDetailFacade.notificationPartsInformation$;
     this.supplierPartsDetailInformation$ = this.investigationDetailFacade.supplierPartsInformation$;
@@ -145,7 +149,7 @@ export class InvestigationDetailComponent implements AfterViewInit, OnDestroy {
 
   public copyToClipboard(semanticModelId: string): void {
     const text = { id: 'clipboard', values: { value: semanticModelId } };
-    navigator.clipboard.writeText(semanticModelId).then(_ => this.toastService.info(text));
+    navigator.clipboard.writeText(semanticModelId).then(_ => this.toastService.info('clipboardTitle', text));
   }
 
   public navigateBackToInvestigations(): void {
@@ -199,6 +203,17 @@ export class InvestigationDetailComponent implements AfterViewInit, OnDestroy {
         tap(notification => (this.investigationDetailFacade.selected = { data: notification })),
       )
       .subscribe();
+  }
+
+  openForwardDialog(investigation: Notification) {
+    this.dialog.open(ForwardNotificationComponent, {
+      autoFocus: false,
+      disableClose: true,
+      data: {
+        context: RequestContext.REQUEST_INVESTIGATION,
+        forwardedNotification: investigation
+      },
+    });
   }
 
   protected readonly TranslationContext = TranslationContext;

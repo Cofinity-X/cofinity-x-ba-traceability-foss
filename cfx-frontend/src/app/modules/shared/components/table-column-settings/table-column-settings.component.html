@@ -52,7 +52,8 @@ SPDX-License-Identifier: Apache-2.0
         </div>
         <div cdkDropList
           [cdkDropListData]="dialogColumns"
-          (cdkDropListDropped)="drop($event)">
+          (cdkDropListDropped)="drop($event)"
+          class="dialog--item--list">
           <ng-container class="dialog--columns--columns--list"
             *ngFor="let item of dialogColumns; let index=index">
             <div *ngIf="item !== 'select' && item !== 'menu' && item !== 'settings'"

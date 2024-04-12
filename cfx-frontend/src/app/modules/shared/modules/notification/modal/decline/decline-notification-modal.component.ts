@@ -58,11 +58,11 @@ export class DeclineNotificationModalComponent {
 
       this.declineCall(notification.id, reason).subscribe({
         next: () => {
-          this.toastService.success(this.translationContext + '.modal.successfullyDeclined');
+          this.toastService.success(this.translationContext + '.modal.successTitle', this.translationContext + '.modal.successfullyDeclined');
           this.confirmActionCompleted.emit();
         },
         error: () => {
-          this.toastService.error(this.translationContext + '.modal.failedDecline');
+          this.toastService.error(this.translationContext + '.modal.failedTitle', this.translationContext + '.modal.failedDecline');
         },
       });
     };

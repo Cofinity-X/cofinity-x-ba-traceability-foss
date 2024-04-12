@@ -33,7 +33,8 @@ export class SearchHelper {
   public resetFilterAndShowToast(isAsset: boolean, component, toastService: ToastService) {
     const filterIsSet = isAsset ? this.resetFilterForAssetComponents(component, false) : this.resetFilterForNotificationComponents(component, false);
     if (filterIsSet) {
-      toastService.info('parts.input.global-search.toastInfo');
+      toastService.info('parts.input.global-search.toastInfoTitle', 'parts.input.global-search.toastInfo');
+
     }
   };
 }

@@ -218,7 +218,7 @@
   p,
   span,
   .regular-text {
-    @apply font-light lg:text-sm sm:text-xs;
+    @apply font-light text-sm;
   }
 
   .large-text {
@@ -226,7 +226,7 @@
   }
 
   .small-text {
-    @apply font-light lg:text-xs sm:text-tiny text-pendingDark;
+    @apply font-light lg:text-xs sm:text-xs text-pendingDark;
   }
 
   .component-headline {
@@ -234,10 +234,14 @@
   }
 
   a {
-    @apply font-light text-sm text-blueBayouxShadeLynch cursor-pointer hover:text-blueBayouxShadePigeonPost;
+    @apply font-light text-sm text-textLink cursor-pointer hover:text-blueBayouxShadePigeonPost;
     text-decoration: none;
     white-space: pre-wrap;
     -webkit-font-smoothing: antialiased;
+  }
+
+  a:hover {
+    color: #2484C6;
   }
 
   // Style fixes for material library
@@ -395,6 +399,21 @@
     font-size: 20px;
     line-height: 28px;
     padding-left: 16px;
+  }
+
+  @media (max-width: 1200px) {
+
+    .card-container {
+      max-width: 1152px;
+      min-width: 1152px;
+      overflow-x: auto;
+    }
+  }
+
+  .parts-section .ng-star-inserted .mat-mdc-card .card-container {
+    @media (max-width: 1200px) {
+      min-width: auto;
+    }
   }
 
   .mat-mdc-form-field.mat-accent .mdc-text-field--invalid .mdc-text-field__input {
@@ -1482,4 +1501,8 @@ app-part-relation {
   .filter-active {
     opacity: 1;
   }
+}
+
+.modal-notification .textarea--container .textarea-field .mat-mdc-form-field-subscript-wrapper .mat-mdc-form-field-error-wrapper .mat-mdc-form-field-error .error-message {
+  padding-top: 10px;
 }

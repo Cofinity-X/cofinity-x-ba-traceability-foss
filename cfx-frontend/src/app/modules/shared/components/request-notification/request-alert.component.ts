@@ -50,17 +50,22 @@ export class RequestAlertComponent extends RequestNotificationBase {
 
   @Input() selectedItems: Part[] = [];
 
+
   public readonly context: RequestContext = RequestContext.REQUEST_ALERT;
+  public formGroup: FormGroup<{ description: FormControl<string>; severity: FormControl<Severity>; bpn: FormControl<any>; }>;
 
   constructor(toastService: ToastService, private readonly alertsService: NotificationService, public dialog: MatDialog) {
     super(toastService, dialog);
   }
 
-  public readonly formGroup = new FormGroup({
-    description: new FormControl('', [Validators.required, Validators.maxLength(1000), Validators.minLength(15)]),
-    severity: new FormControl(Severity.MINOR),
-    bpn: new FormControl(null, [Validators.required, BaseInputHelper.getCustomPatternValidator(bpnRegex, 'bpn')]),
-  });
+  public ngOnInit(): void {
+    this.formGroup = new FormGroup({
+      description: new FormControl(this.forwardedNotification ? 'FW: ' + this.forwardedNotification.description : '', [ Validators.required, Validators.maxLength(1000), Validators.minLength(15) ]),
+      severity: new FormControl(this.forwardedNotification ? this.forwardedNotification.severity : Severity.MINOR),
+      bpn: new FormControl(null, [ Validators.required, BaseInputHelper.getCustomPatternValidator(bpnRegex, 'bpn') ]),
+    });
+
+  }
 
   public submit(): void {
     this.prepareSubmit();
@@ -68,9 +73,9 @@ export class RequestAlertComponent extends RequestNotificationBase {
       return;
     }
 
-    const partIds = this.selectedItems.map(part => part.id);
+    const partIds = this.forwardedNotification ? this.forwardedNotification.assetIds : this.selectedItems.map(part => part.id);
     // set asBuilt parameter if one of the selectedItems are a asPlanned Part
-    const isAsBuilt = this.selectedItems.map(part => part.semanticDataModel === SemanticDataModel.PARTASPLANNED).includes(true);
+    const isAsBuilt = this.forwardedNotification ? true : this.selectedItems.map(part => part.semanticDataModel === SemanticDataModel.PARTASPLANNED).includes(true);
 
     const { description, bpn, severity } = this.formGroup.value;
     const { link, queryParams } = getRoute(ALERT_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);

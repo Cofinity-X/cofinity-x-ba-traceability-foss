@@ -39,7 +39,7 @@ export class SaveBpnConfigModal {
   public changedInformation$ = new BehaviorSubject<ChangedInformation>(null);
   public originalValues$ = new BehaviorSubject<BpnConfig[]>(null);
 
-  constructor(private readonly toastService: ToastService, private readonly confirmModalService: ModalService) {}
+  constructor(private readonly toastService: ToastService, private readonly confirmModalService: ModalService) { }
 
   public show(changedInformation: ChangedInformation, originalValues: BpnConfig[]): void {
     this.changedInformation$.next(changedInformation);
@@ -50,10 +50,10 @@ export class SaveBpnConfigModal {
 
       this.updateCall(changedInformation).subscribe({
         next: () => {
-          this.toastService.success('pageAdmin.bpnConfig.modal.successfullySaved');
+          this.toastService.success('', 'pageAdmin.bpnConfig.modal.successfullySaved');
         },
         error: () => {
-          this.toastService.error('pageAdmin.bpnConfig.modal.failedSave');
+          this.toastService.error('', 'pageAdmin.bpnConfig.modal.failedSave');
         },
       });
     };

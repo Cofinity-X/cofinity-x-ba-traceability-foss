@@ -19,10 +19,6 @@
 # SPDX-License-Identifier: Apache-2.0
 ################################################################################
 
-# own BPN
-traceability:
-  bpn: BPNL00000000GNDU
-
 spring:
   flyway:
     locations: /db/migration,/db/testdata-osram
@@ -78,3 +74,7 @@ spring:
       investigationNotificationSentId2b: "'b5b4612e-6ed6-47c2-8f52-adefe3d5b99a'"
 
       investigationNotificationReceivedId1: "'0678b9c6-a9c4-4ff9-a5e2-c6cd19c5f8c6'"
+
+# own BPN
+traceability:
+  bpn: {bpnOwn}

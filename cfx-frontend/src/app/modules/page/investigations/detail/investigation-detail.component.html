@@ -18,7 +18,7 @@ under the License.
 
 SPDX-License-Identifier: Apache-2.0
 -->
-<mat-card>
+<mat-card class="card-container">
   <div class="detail--header__title">
     <div class="detail--header">
       <h3 (click)="navigateBackToInvestigations()"
@@ -170,7 +170,12 @@ SPDX-License-Identifier: Apache-2.0
       </div>
     </app-button>
   </div>
-
+  <a class="forward-link"
+     *ngIf="actionHelperService.showAcceptButton(selectedInvestigation)"
+     (click)="openForwardDialog(selectedInvestigation)">
+    <img src="/assets/images/icons/forward_icon.svg" alt="forward_icon"/>
+    {{ 'pageInvestigation.forward' | i18n }}
+  </a>
   <ng-template #semanticModelIdTmp
     let-row="row">
     <app-button class="pl-2 investigation-copy-button"

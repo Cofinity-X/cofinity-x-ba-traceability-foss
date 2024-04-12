@@ -19,8 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import {Component} from '@angular/core';
-import {environment} from '@env';
+import { Component } from '@angular/core';
+import { environment } from '@env';
 
 @Component({
     selector: 'app-about',
@@ -38,7 +38,7 @@ export class AboutComponent {
 
     constructor() {
         this.license = 'Apache-2.0';
-        this.name = "Traceability Foss";
+        this.name = "Traceability FOSS";
         this.commitId = environment.gitTag;
         this.repositoryPath = "https://github.com/eclipse-tractusx/traceability-foss";
         this.licensePath = this.repositoryPath + "/blob/main/LICENSE";

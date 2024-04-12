@@ -15,11 +15,15 @@ truncate table
     assets_as_built_parents,
     assets_as_planned,
     assets_as_planned_childs,
-    assets_as_built_notifications,
     bpn_storage,
+    import_job,
+    import_job_assets_as_built,
+    import_job_assets_as_planned,
     investigation,
     investigation_notification,
+    shedlock,
     submodel,
+    submodel_payload,
     traction_battery_code_subcomponent
     cascade;
 
