@@ -8,8 +8,7 @@
     "about": "About",
     "relations": "Relations",
     "admin": "Administration",
-    "investigations": "Quality investigations",
-    "alerts": "Quality alerts",
+    "inbox": "Inbox",
     "adminRegistry": "Registry lookups",
     "adminBpn": "BPN - EDC configuration",
     "adminImport": "Data provisioning",
@@ -18,7 +17,13 @@
     "noChildPartsForInvestigation": "This function is not available for Parts without components.",
     "noCustomerAsPlannedParts": "Customer parts in lifecycle \"AsPlanned\" are not available.",
     "illegalAssetStateToPublish": "One or more selected parts are not in the required import state \"TRANSIENT\" or \"ERROR\".",
-    "adminContract": "Contracts"
+    "adminContract": "Contracts",
+    "createIncident": "Create quality notification",
+    "startInvestigation": "Start Quality investigation on subcomponents",
+    "notAllowedForNonPersistentPart": "Quality notifications can only be created for parts that are in the import state \"PERSISTENT\".",
+    "onlyAllowedForOwnParts": "This functionality is only possible for own parts.",
+    "publishAssets": "Publish asset",
+    "notAuthorizedOwner": "This functionality is only allowed for own and supplier parts."
   },
   "pageTitle": {
     "dashboard": "Dashboard",
@@ -27,8 +32,7 @@
     "about": "About Catena-X Open-Source Traceability",
     "relations": "Part Relations",
     "admin": "Administration Catena-X",
-    "investigations": "Quality Investigations",
-    "alerts": "Quality Alerts"
+    "alerts": "Quality Topics"
   },
   "layout": {
     "nav": {
@@ -82,8 +86,7 @@
       "orderTooltip": "Table column order can be changed by selecting a column and move it up or down by clicking on the icon ↑ (up) or ↓ (down)",
       "refreshTooltip": "Reset individual table column settings to default",
       "saveAction": "Save",
-      "alert": "Quality Alert",
-      "investigation": "Quality Investigation"
+      "alert": "Quality Alert"
     },
     "column": {
       "id": "ID",
@@ -123,7 +126,9 @@
       "sentActiveInvestigations" : "Created",
       "importState": "Import State",
       "importNote": "Import Note",
-      "importDate": "Import Date"
+      "importDate": "Import Date",
+      "type": "Type",
+      "title": "Title"
     }
   },
   "dataLoading": {
@@ -179,6 +184,7 @@
   },
   "requestAlert": {
     "headline": "Create quality alert",
+    "titleDescription": "Title",
     "textAreaDescription": "Add a description about the alert.",
     "success_one": "You queued an alert for {{count}} part",
     "success_other": "You queued an alert for {{count}} parts",
@@ -195,6 +201,8 @@
   "requestNotification": {
     "partDescription": "You selected the following parts:",
     "targetDateDescription": "Please specify the deadline by which you expect a response.",
+    "titleLabel": "Title",
+    "titleDescription": "Title",
     "targetDateLabel": "Deadline",
     "bpnLabel": "BPN",
     "bpnDescription": "Please specify the receiver BPN.",
@@ -255,7 +263,7 @@
       "successfullyDeclined": "Investigation was declined successfully.",
       "failedAccept": "Investigation failed to accept, please try again.",
       "failedAcknowledge": "Investigation failed to acknowledge, please try again.",
-      "failedApprove": "Investigation failed to send, please try again.",
+      "failedApprove": "Investigation failed to approve, please try again.",
       "failedCancel": "Investigation failed to cancel, please try again.",
       "failedClose": "Investigation failed to close, please try again.",
       "failedDecline": "Investigation failed to decline, please try again."
@@ -264,11 +272,11 @@
   "commonAlert": {
     "viewAll": "View all",
     "tabs": {
-      "received": "Received",
-      "queuedAndRequested": "Queued & Requested"
+      "received": "received",
+      "queuedAndRequested": "sent"
     },
     "status": {
-      "SENT": "Sent",
+      "SENT": "Requested",
       "CANCELED": "Cancelled",
       "CLOSED": "Closed",
       "CREATED": "Queued",

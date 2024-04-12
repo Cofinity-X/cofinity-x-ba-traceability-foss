@@ -8,8 +8,7 @@
     "about": "Über uns",
     "relations": "Beziehungen",
     "admin": "Verwaltung",
-    "investigations": "Qualitätsuntersuchung",
-    "alerts": "Qualitätswarnung",
+    "inbox": "Inbox",
     "adminRegistry": "Registry-Abfragen",
     "adminBpn": "BPN - EDC Konfiguration",
     "adminImport": "Datenbereitstellung",
@@ -18,7 +17,13 @@
     "noChildPartsForInvestigation": "Diese Funktion ist für Produkte ohne Bauteile nicht verfügbar.",
     "noCustomerAsPlannedParts": "Produkte von Kunden im Lebenszyklus \"AsPlanned\" sind nicht verfügbar.",
     "illegalAssetStateToPublish": "Ein oder mehrere ausgewählte Produkte befinden sich nicht im erforderlichen Importstatus \"TRANSIENT\" oder \"ERROR\".",
-    "adminContract": "Verträge"
+    "adminContract": "Verträge",
+    "createIncident": "Mitteilung erstellen",
+    "startInvestigation": "Qualitätsuntersuchung für Bauteile erstellen",
+    "notAllowedForNonPersistentPart": "Qualitätsmitteilungen sind nur für Produkte im Importstatus \"PERSISTENT\" möglich.",
+    "onlyAllowedForOwnParts": "Diese Funktion ist nur für eigene Produkte möglich.",
+    "publishAssets": "Produkt veröffentlichen",
+    "notAuthorizedOwner": "Qualitätsmitteilungen sind nur für Eigene- und Lieferantenprodukte möglich."
   },
   "pageTitle": {
     "dashboard": "Dashboard",
@@ -27,8 +32,7 @@
     "about": "Über Catena-X Open-Source Rückverfolgbarkeit",
     "relations": "Beziehungen",
     "admin": "Verwaltung Catena-X",
-    "investigations": "Qualitätsuntersuchung",
-    "alerts": "Qualitätswarnung"
+    "alerts": "Qualitätsthemen"
   },
   "layout": {
     "nav": {
@@ -124,7 +128,9 @@
       "sentActiveInvestigations" : "Erstellte",
       "importState": "Importstatus",
       "importNote": "Importbemerkung",
-      "importDate": "Importdatum"
+      "importDate": "Importdatum",
+      "type": "Typ",
+      "title": "Titel"
 
     }
   },
@@ -178,6 +184,7 @@
   "requestAlert": {
     "headline": "Qualitätswarnung erstellen",
     "textAreaDescription": "Fügen sie eine Beschreibung hinzu.",
+    "titleDescription": "Titel",
     "success_one": "Sie haben eine Qualitätswarnung für {{count}} Produkt erstellt.",
     "success_other": "Sie haben eine Qualitätswarnung für {{count}} Produkte erstellt.",
     "serverError": "Serverfehler:"
@@ -196,6 +203,8 @@
     "bpnLabel": "BPN",
     "bpnDescription": "Bitte geben Sie die Empfänger BPN an.",
     "restoreItem": "Zuletzt gelöschtes Produkt wiederherstellen?",
+    "titleDescription": "Titel",
+    "titleLabel": "Titel",
     "textAreaLabel": "Beschreibung",
     "targetDateLabel": "Rückmeldedatum",
     "cancel": "ABBRUCH",
@@ -253,7 +262,7 @@
       "successfullyDeclined": "Untersuchung wurde erfolgreich abgelehnt.",
       "failedAccept": "Untersuchung konnte nicht akzeptiert werden, bitte versuchen Sie es erneut.",
       "failedAcknowledge": "Untersuchung konnte nicht bestätigt werden, bitte versuchen Sie es erneut.",
-      "failedApprove": "Die Qualitätsuntersuchung konnte nicht gesendet werden, bitte versuchen Sie es erneut.",
+      "failedApprove": "Die Untersuchung konnte nicht genehmigt werden, bitte versuchen Sie es erneut.",
       "failedCancel": "Die Untersuchung konnte nicht gelöscht werden, bitte versuchen Sie es erneut.",
       "failedClose": "Die Untersuchung konnte nicht abgeschlossen werden, bitte versuchen Sie es erneut.",
       "failedDecline": "Untersuchung konnte nicht abgelehnt werden, bitte versuchen Sie es erneut."
@@ -262,8 +271,8 @@
   "commonAlert": {
     "viewAll": "Alle anzeigen",
     "tabs": {
-      "received": "Zugewiesene",
-      "queuedAndRequested": "Erstellte und Versendete"
+      "received": "Empfangene",
+      "queuedAndRequested": "Versendete"
     },
     "status": {
       "RECEIVED": "Erhalten",

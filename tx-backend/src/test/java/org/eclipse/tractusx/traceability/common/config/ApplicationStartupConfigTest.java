@@ -19,8 +19,9 @@
 
 package org.eclipse.tractusx.traceability.common.config;
 
-import org.eclipse.tractusx.traceability.assets.domain.base.IrsRepository;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.contract.EdcNotificationContractService;
+import org.eclipse.tractusx.traceability.assets.domain.base.JobRepository;
+import org.eclipse.tractusx.traceability.assets.domain.base.PolicyRepository;
+import org.eclipse.tractusx.traceability.notification.domain.contract.EdcNotificationContractService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,7 +44,10 @@ class ApplicationStartupConfigTest {
     @Mock
     private EdcNotificationContractService edcNotificationContractService;
     @Mock
-    private IrsRepository irsRepository;
+    private JobRepository jobRepository;
+
+    @Mock
+    private PolicyRepository policyRepository;
 
     @Test
     void whenCallRegisterIrsPolicy_thenCallRepository() {
@@ -53,7 +57,7 @@ class ApplicationStartupConfigTest {
             applicationStartupConfig.registerIrsPolicy();
 
             // then
-            verify(irsRepository, times(1)).createIrsPolicyIfMissing();
+            verify(policyRepository, times(1)).createIrsPolicyIfMissing();
         });
 
         executor.shutdown();
