@@ -199,7 +199,17 @@
     "continue": "Weiter",
     "submitTooltip": "Sie müssen zunächst alle mit einem * gekennzeichneten Felder ausfüllen",
     "severity": "Gefahrenstufe",
-    "severityDescription": "Wählen Sie die Gefahrenstufe für das vorliegende Problem"
+    "severityDescription": "Wählen Sie die Gefahrenstufe für das vorliegende Problem",
+    "userInfoDataSovereignty": "Respektieren Sie die Datenhoheit und geben Sie keine Informationen weiter, die die Identität des ursprünglichen Verfassers preisgeben."
+  },
+  "forwardNotification": {
+    "requestAlert": {
+      "headline": "Warnung weiterleiten"
+    },
+    "requestInvestigations": {
+      "headline": "Untersuchung weiterleiten",
+      "selectAffectedParts": "Betroffene Produkte auswählen"
+    }
   },
   "pagination": {
     "itemsPerPageLabel": "Artikel pro Seite:",

@@ -202,7 +202,17 @@
     "submit": "Add to queue",
     "continue": "Continue",
     "severity": "Severity",
-    "severityDescription": "Select the severity for the problem at hand"
+    "severityDescription": "Select the severity for the problem at hand",
+    "userInfoDataSovereignty": "Respect data sovereignty, don't share information that reveals the identity of the original contributor."
+  },
+  "forwardNotification": {
+    "requestAlert": {
+      "headline": "Forward alert"
+    },
+    "requestInvestigations": {
+      "headline": "Forward investigation",
+      "selectAffectedParts": "Select the affected Part(s)"
+    }
   },
   "pagination": {
     "itemsPerPageLabel": "Show",

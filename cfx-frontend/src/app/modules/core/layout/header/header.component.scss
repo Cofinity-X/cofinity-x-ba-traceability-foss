@@ -32,10 +32,10 @@
     height: 80px;
     gap: 90px;
     padding: 0px 136px;
-    max-width: 1920px;
 
-    @media (max-width: 1000px) {
-      padding: 0;
+    @media (max-width: 1200px) {
+      min-width: 1200px;
+      padding: 0 24px 0 24px;
     }
   }
 

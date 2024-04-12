@@ -18,6 +18,7 @@
  ********************************************************************************/
 
 import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ALERT_BASE_ROUTE, getRoute } from '@core/known-route';
 import { AlertDetailFacade } from '@page/alerts/core/alert-detail.facade';
@@ -25,7 +26,9 @@ import { AlertHelperService } from '@page/alerts/core/alert-helper.service';
 import { AlertsFacade } from '@page/alerts/core/alerts.facade';
 import { Part } from '@page/parts/model/parts.model';
 import { NotificationActionHelperService } from '@shared/assembler/notification-action-helper.service';
+import { ForwardNotificationComponent } from '@shared/components/request-notification/forward-notification/forward-notification.component';
 import { NotificationCommonModalComponent } from '@shared/components/notification-common-modal/notification-common-modal.component';
+import { RequestContext } from '@shared/components/request-notification/request-notification.base';
 import { CreateHeaderFromColumns, TableConfig, TableEventConfig } from '@shared/components/table/table.model';
 import { ToastService } from '@shared/components/toasts/toast.service';
 import { Notification } from '@shared/model/notification.model';
@@ -78,6 +81,7 @@ export class AlertDetailComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private readonly route: ActivatedRoute,
     private readonly toastService: ToastService,
+    public dialog: MatDialog,
   ) {
     this.alertPartsInformation$ = this.alertDetailFacade.notificationPartsInformation$;
     this.supplierPartsDetailInformation$ = this.alertDetailFacade.supplierPartsInformation$;
@@ -199,4 +203,15 @@ export class AlertDetailComponent implements AfterViewInit, OnDestroy {
   }
 
   protected readonly TranslationContext = TranslationContext;
+
+  openForwardDialog(alert: Notification) {
+    this.dialog.open(ForwardNotificationComponent, {
+      autoFocus: false,
+      disableClose: true,
+      data: {
+        context: RequestContext.REQUEST_ALERT,
+        forwardedNotification: alert
+      },
+    });
+  }
 }
