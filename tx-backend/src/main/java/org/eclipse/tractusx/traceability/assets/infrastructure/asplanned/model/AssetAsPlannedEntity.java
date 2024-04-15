@@ -25,7 +25,6 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,16 +38,11 @@ import org.eclipse.tractusx.traceability.assets.domain.base.model.Descriptions;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.aspect.DetailAspectModel;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.model.AssetBaseEntity;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.model.SemanticDataModelEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.alert.model.AlertEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.model.InvestigationEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.submodel.infrastructure.model.SubmodelPayloadEntity;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.eclipse.tractusx.traceability.common.date.DateUtil.toInstant;
 
 @Getter
@@ -85,7 +79,6 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
     private List<SubmodelPayloadEntity> submodels;
 
 
-
     public static AssetAsPlannedEntity from(AssetBase asset) {
         List<DetailAspectModel> detailAspectModels = asset.getDetailAspectModels();
         AsPlannedInfo asPlannedInfo = AsPlannedInfo.from(detailAspectModels);
@@ -116,6 +109,7 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
                 .importNote(asset.getImportNote())
                 .policyId(asset.getPolicyId())
                 .tombstone(asset.getTombstone())
+                .contractAgreementId(asset.getContractAgreementId())
                 .build();
     }
 
@@ -133,7 +127,7 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
                 .semanticModelId(entity.getSemanticModelId())
                 .owner(entity.getOwner())
                 .childRelations(entity.getChildDescriptors().stream()
-                        .map(child -> new Descriptions(child.getId(), child.getIdShort()))
+                        .map(child -> new Descriptions(child.getId(), child.getIdShort(), null, null))
                         .toList())
                 .qualityType(entity.getQualityType())
                 .detailAspectModels(DetailAspectModel.from(entity))
@@ -141,6 +135,7 @@ public class AssetAsPlannedEntity extends AssetBaseEntity {
                 .importNote(entity.getImportNote())
                 .policyId(entity.getPolicyId())
                 .tombstone(entity.getTombstone())
+                .contractAgreementId(entity.getContractAgreementId())
                 .build();
     }
 

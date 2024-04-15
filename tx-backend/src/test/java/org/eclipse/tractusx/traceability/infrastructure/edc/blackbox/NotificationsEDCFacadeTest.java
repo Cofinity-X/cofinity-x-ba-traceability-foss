@@ -27,14 +27,13 @@ import org.eclipse.tractusx.irs.edc.client.model.CatalogItem;
 import org.eclipse.tractusx.irs.edc.client.model.NegotiationResponse;
 import org.eclipse.tractusx.irs.edc.client.policy.PolicyCheckerService;
 import org.eclipse.tractusx.traceability.common.properties.EdcProperties;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.exception.ContractNegotiationException;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.exception.NoCatalogItemException;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.exception.SendNotificationException;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationType;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.service.HttpCallService;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.service.NotificationsEDCFacade;
+import org.eclipse.tractusx.traceability.notification.domain.base.exception.ContractNegotiationException;
+import org.eclipse.tractusx.traceability.notification.domain.base.exception.NoCatalogItemException;
+import org.eclipse.tractusx.traceability.notification.domain.base.exception.SendNotificationException;
+import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationMessage;
+import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationStatus;
+import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationType;
+import org.eclipse.tractusx.traceability.notification.domain.base.service.NotificationsEDCFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,14 +45,10 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class NotificationsEDCFacadeTest {
-    @Mock
-    HttpCallService httpCallService;
     @Mock
     ObjectMapper objectMapper;
     @Mock
@@ -72,50 +67,15 @@ class NotificationsEDCFacadeTest {
     NotificationsEDCFacade notificationsEDCFacade;
 
     @Test
-    void givenCorrectInvestigationMessage_whenStartEdcTransfer_thenSendIt() throws Exception {
-       // Given
-        final String receiverEdcUrl = "https://receiver.com";
-        final String senderEdcUrl = "https://sender.com";
-        final String agreementId = "negotiationId";
-        final String dataReferenceEndpoint = "https://endpoint.com";
-        final QualityNotificationMessage notificationMessage = QualityNotificationMessage.builder()
-                .type(QualityNotificationType.INVESTIGATION)
-                .notificationStatus(QualityNotificationStatus.CREATED)
-                .isInitial(true)
-                .build();
-        final CatalogItem catalogItem = CatalogItem.builder()
-                .build();
-        final String idsPath = "/api/v1/dsp";
-        when(edcProperties.getIdsPath()).thenReturn(idsPath);
-        when(edcCatalogFacade.fetchCatalogItems(any())).thenReturn(List.of(catalogItem));
-        when(policyCheckerService.isValid(null)).thenReturn(true);
-        when(contractNegotiationService.negotiate(receiverEdcUrl + idsPath, catalogItem, null))
-                .thenReturn(NegotiationResponse.builder().contractAgreementId(agreementId).build());
-        when(endpointDataReference.getEndpoint()).thenReturn("endpoint");
-        when(endpointDataReference.getAuthCode()).thenReturn("authCode");
-        when(endpointDataReference.getAuthKey()).thenReturn("authKey");
-        when(endpointDataReference.getEndpoint()).thenReturn(dataReferenceEndpoint);
-        when(endpointDataReferenceStorage.get(agreementId)).thenReturn(Optional.ofNullable(endpointDataReference));
-        when(objectMapper.writeValueAsString(any())).thenReturn("{body}");
-
-        // When
-        notificationsEDCFacade.startEdcTransfer(notificationMessage, receiverEdcUrl, senderEdcUrl);
-
-       // Then
-        verify(httpCallService).sendRequest(any());
-    }
-
-    @Test
     void givenCorrectInvestigationMessageButSendRequestThrowsException_whenStartEdcTransfer_thenThrowSendNotificationException() throws Exception {
-       // Given
+        // given
         final String receiverEdcUrl = "https://receiver.com";
         final String senderEdcUrl = "https://sender.com";
         final String agreementId = "negotiationId";
         final String dataReferenceEndpoint = "https://endpoint.com";
-        final QualityNotificationMessage notificationMessage = QualityNotificationMessage.builder()
-                .type(QualityNotificationType.INVESTIGATION)
-                .notificationStatus(QualityNotificationStatus.CREATED)
-                .isInitial(true)
+        final NotificationMessage notificationMessage = NotificationMessage.builder()
+                .type(NotificationType.INVESTIGATION)
+                .notificationStatus(NotificationStatus.CREATED)
                 .build();
         final CatalogItem catalogItem = CatalogItem.builder()
                 .build();
@@ -131,21 +91,20 @@ class NotificationsEDCFacadeTest {
         when(endpointDataReference.getEndpoint()).thenReturn(dataReferenceEndpoint);
         when(endpointDataReferenceStorage.get(agreementId)).thenReturn(Optional.ofNullable(endpointDataReference));
         when(objectMapper.writeValueAsString(any())).thenReturn("{body}");
-        doThrow(new RuntimeException()).when(httpCallService).sendRequest(any());
 
-        // Then
+
+        // when/then
         assertThrows(SendNotificationException.class, () -> notificationsEDCFacade.startEdcTransfer(notificationMessage, receiverEdcUrl, senderEdcUrl));
     }
 
     @Test
     void givenCorrectInvestigationMessageButNegotiateContractAgreementHasNoCatalogItem_whenStartEdcTransfer_thenThrowContractNegotiationException() throws Exception {
-       // Given
+        // given
         final String receiverEdcUrl = "https://receiver.com";
         final String senderEdcUrl = "https://sender.com";
-        final QualityNotificationMessage notificationMessage = QualityNotificationMessage.builder()
-                .type(QualityNotificationType.INVESTIGATION)
-                .notificationStatus(QualityNotificationStatus.CREATED)
-                .isInitial(true)
+        final NotificationMessage notificationMessage = NotificationMessage.builder()
+                .type(NotificationType.INVESTIGATION)
+                .notificationStatus(NotificationStatus.CREATED)
                 .build();
         final CatalogItem catalogItem = CatalogItem.builder()
                 .build();
@@ -156,25 +115,24 @@ class NotificationsEDCFacadeTest {
         when(contractNegotiationService.negotiate(receiverEdcUrl + idsPath, catalogItem, null))
                 .thenReturn(null);
 
-        // Then
+        // when/then
         assertThrows(ContractNegotiationException.class, () -> notificationsEDCFacade.startEdcTransfer(notificationMessage, receiverEdcUrl, senderEdcUrl));
     }
 
     @Test
     void givenCorrectInvestigationMessageButCatalogItem_whenStartEdcTransfer_thenThrowSendNotificationException() {
-       // Given
+        // given
         final String receiverEdcUrl = "https://receiver.com";
         final String senderEdcUrl = "https://sender.com";
-        final QualityNotificationMessage notificationMessage = QualityNotificationMessage.builder()
-                .type(QualityNotificationType.INVESTIGATION)
-                .notificationStatus(QualityNotificationStatus.CREATED)
-                .isInitial(true)
+        final NotificationMessage notificationMessage = NotificationMessage.builder()
+                .type(NotificationType.INVESTIGATION)
+                .notificationStatus(NotificationStatus.CREATED)
                 .build();
         final String idsPath = "/api/v1/dsp";
         when(edcProperties.getIdsPath()).thenReturn(idsPath);
         when(edcCatalogFacade.fetchCatalogItems(any())).thenReturn(List.of());
 
-        // Then
+        // when/then
         assertThrows(NoCatalogItemException.class, () -> notificationsEDCFacade.startEdcTransfer(notificationMessage, receiverEdcUrl, senderEdcUrl));
     }
 }

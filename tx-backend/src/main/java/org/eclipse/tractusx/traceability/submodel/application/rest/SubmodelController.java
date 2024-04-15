@@ -20,6 +20,7 @@
 package org.eclipse.tractusx.traceability.submodel.application.rest;
 
 import assets.importpoc.ErrorResponse;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -57,10 +58,14 @@ public class SubmodelController {
             tags = {"Submodel"},
             description = "The endpoint returns Submodel for given id. Used for data providing functionality",
             security = @SecurityRequirement(name = "oAuth2", scopes = "profile email"))
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Returns the paged result found", content = @Content(
-            mediaType = "application/json",
-            schema = @Schema()
-    )),
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Returns submodel payload",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = String.class)
+                    )),
             @ApiResponse(
                     responseCode = "400",
                     description = "Bad request.",
@@ -105,7 +110,7 @@ public class SubmodelController {
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SUPERVISOR','ROLE_USER')")
     @GetMapping("/{submodelId}")
-    public String getSubmodel(@PathVariable String submodelId) {
+    public String getSubmodel(@PathVariable("submodelId") @ApiParam String submodelId) {
         return submodelService.getById(submodelId).getPayload();
     }
 
@@ -115,14 +120,8 @@ public class SubmodelController {
             description = "This endpoint allows you to save a Submodel identified by its ID.",
             security = @SecurityRequirement(name = "oAuth2", scopes = "profile email"))
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ok.", content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema()
-            )),
-            @ApiResponse(responseCode = "204", description = "No Content.", content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema()
-            )),
+            @ApiResponse(responseCode = "200", description = "Ok."),
+            @ApiResponse(responseCode = "204", description = "No Content."),
             @ApiResponse(
                     responseCode = "400",
                     description = "Bad request.",
@@ -167,7 +166,7 @@ public class SubmodelController {
                             schema = @Schema(implementation = ErrorResponse.class)))})
     @PostMapping("/{submodelId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void saveSubmodel(@PathVariable String submodelId, @RequestBody String submodelPayload) {
+    public void saveSubmodel(@PathVariable("submodelId") @ApiParam String submodelId, @RequestBody String submodelPayload) {
         submodelService.save(Submodel.builder()
                 .id(submodelId)
                 .payload(submodelPayload)

@@ -1,47 +1,44 @@
-<h1><img src="/docs/trace-x-logo.svg" alt="Trace-X - Product Traceability FOSS Frontend (TRACE-FOSS)" style="width:200px;"/>Traceability FOSS</h1>
+<h1><img src="https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/frontend/src/assets/images/logo.svg" alt="Trace-X - Product Traceability FOSS Frontend (TRACE-FOSS)" style="width:200px;"/>Traceability FOSS</h1>
 
-[![Apache 2 License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](/LICENSE)
-[![Quality Gate Backend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-backend)
-[![Quality Gate Frontend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-frontend)
-[![Kics](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/kics.yml/badge.svg)](https://github.com/Cofinity-X/cofinity-x-ba-traceability-foss/actions/workflows/kics.yml)
-[![Trivy](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/trivy.yml/badge.svg)](https://github.com/Cofinity-X/cofinity-x-ba-traceability-foss/actions/workflows/trivy.yml)
-[![VeraCode Backend](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/veracode_backend.yml/badge.svg)](https://github.com/Cofinity-X/cofinity-x-ba-traceability-foss/actions/workflows/veracode_backend.yml)
-[![VeraCode Frontend](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/veracode_frontend.yml/badge.svg)](https://github.com/Cofinity-X/cofinity-x-ba-traceability-foss/actions/workflows/veracode_frontend.yml)
-[![Eclipse DASH IP Check](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/eclipse-dash.yml/badge.svg)](https://github.com/Cofinity-X/cofinity-x-ba-traceability-foss/actions/workflows/eclipse-dash.yml)
-[![[BE] Dependency check](https://github.com/catenax-ng/tx-traceability-foss/actions/workflows/dependency-check.yml/badge.svg)](https://github.com/Cofinity-X/cofinity-x-ba-traceability-foss/actions/workflows/dependency-check.yml)
+[![Apache 2 License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/eclipse-tractusx/traceability-foss/LICENSE)
+[![QG Backend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-backend)
+[![QG Frontend](https://sonarcloud.io/api/project_badges/measure?project=eclipse-tractusx_traceability-foss-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=eclipse-tractusx_traceability-foss-frontend)
+[![Kics](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/kics.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/kics.yml)
+[![Trivy](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/trivy.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/trivy.yml)
+[![Eclipse DASH IP Check](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/eclipse-dash.yml/badge.svg)](https://github.com/eclipse-tractusx/traceability-foss/actions/workflows/eclipse-dash.yml)
+[![[BE] Dependency check](https://github.com/catenax-ng/tx-traceability-foss/actions/workflows/dependency-check.yml/badge.svg)](https://github.com/catenax-ng/tx-traceability-foss/actions/workflows/dependency-check.yml)
 
 ## Trace-X is a system for tracking parts along the supply chain.
 #### A high level of transparency across the supplier network enables faster intervention based on a recorded event in the supply chain. This saves costs by seamlessly tracking parts and creates trust through clearly defined and secure data access by the companies and persons involved in the process.
 
 ## Table of Contents
-- [Trace-X](#trace-x-is-a-system-for-tracking-parts-along-the-supply-chain)
-  - [How to contribute](#how-to-contribute)
-  - [Releasing](#releasing)
-  - [The frontend application](#the-frontend-application)
-    - [Challenges and solutions](#challenges-and-solutions)
-    - [Prerequisites](#frontend-prerequisites)
-    - [Installation](#frontend-installation)
-    - [Getting started](#getting-started)
-    - [Application authentication](#application-authentication)
-    - [Application architecture & patterns](#application-architecture--patterns)
+- [Trace-X](https://github.com/eclipse-tractusx/traceability-foss/#trace-x-is-a-system-for-tracking-parts-along-the-supply-chain)
+  - [How to contribute](https://github.com/eclipse-tractusx/traceability-foss/#how-to-contribute)
+  - [Releasing](https://github.com/eclipse-tractusx/traceability-foss/#releasing)
+  - [Environments](https://github.com/eclipse-tractusx/traceability-foss/#environments)
+  - [The frontend application](https://github.com/eclipse-tractusx/traceability-foss/#the-frontend-application)
+    - [Challenges and solutions](https://github.com/eclipse-tractusx/traceability-foss/#challenges-and-solutions)
+    - [Prerequisites](https://github.com/eclipse-tractusx/traceability-foss/#frontend-prerequisites)
+    - [Installation](https://github.com/eclipse-tractusx/traceability-foss/#frontend-installation)
+    - [Getting started](https://github.com/eclipse-tractusx/traceability-foss/#getting-started)
+    - [Application authentication](https://github.com/eclipse-tractusx/traceability-foss/#application-authentication)
+    - [Application architecture & patterns](https://github.com/eclipse-tractusx/traceability-foss/#application-architecture--patterns)
     - [User guide](#user-guide)
-  - [The backend application](#the-backend-application)
-    - [Prerequisites](#backend-prerequisites)
-    - [Installation](#backend-installation)
-    - [Running tests](#running-tests)
-      - [Unit tests](#unit-tests)
-      - [Integration tests](#integration-tests)
-      - [Running all tests](#running-all-tests)
-  - [API documentation](#api-documentation)
-  - [Container Image](#notice-for-docker-image)
-  - [License](#license)
+    - [Frontend Testing strategy](#frontend-testing-strategy)
+  - [The backend application](https://github.com/eclipse-tractusx/traceability-foss/#the-backend-application)
+    - [Prerequisites](https://github.com/eclipse-tractusx/traceability-foss/#backend-prerequisites)
+    - [Installation](https://github.com/eclipse-tractusx/traceability-foss/#backend-installation)
+    - [Backend Testing strategy](#backend-testing-strategy)
+  - [API documentation](https://github.com/eclipse-tractusx/traceability-foss/#api-documentation)
+  - [Container Image](https://github.com/eclipse-tractusx/traceability-foss/#container-image)
+  - [License](https://github.com/eclipse-tractusx/traceability-foss/#license)
 
 ## How to contribute
 
-A detailed guide on how to contribute can be found [here](/CONTRIBUTING.md).
+A detailed guide on how to contribute can be found [here](https://github.com/eclipse-tractusx/traceability-foss/blob/main/CONTRIBUTING.md).
 
 ## Releasing
-Here is our [Releasing guide](/docs/RELEASE.md).
+Here is our [Releasing guide](https://github.com/eclipse-tractusx/traceability-foss/blob/main/docs/RELEASE.md).
 
 ## The frontend application
 
@@ -50,7 +47,7 @@ This application serves as a user entry point to the Catena-X network.
 It's written in Typescript based on the `Angular` framework.
 We decided on using Angular because of two important aspects.
 Firstly, Angular comes with `strict guidelines`, which makes it harder to start working on for new developers, but for established developers it is `easy to start working with`.
-Secondly, Angular `scales` perfectly in the long run. Because of the restricted possibilities and strict guidelines it is hard to implement multiple solutions for the same problem. e.g. Storing data or routing.
+Secondly, Angular `scales` perfectly in the long run. Because of the restricted possibilities and stricted guidelines it is hard to implement multiple solutions for the same problem. e.g. Storing data or routing.
 With that in mind it made sense it chose Angular for an `open source` project.
 
 Source files are exposed statically through the NGINX web server.
@@ -116,6 +113,9 @@ To run unit tests invoke following command:
 ```shell
 yarn test:ci
 ```
+
+### Frontend Testing Strategy
+See [TESTING](frontend/TESTING.md).
 
 ## The backend application
 

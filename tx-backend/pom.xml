@@ -42,15 +42,17 @@ SPDX-License-Identifier: Apache-2.0
             <id>oss-sonatype</id>
             <name>oss-sonatype</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
         </repository>
     </repositories>
     <!-- https://mvnrepository.com/artifact/org.eclipse.jetty.websocket/websocket-parent -->
 
 
     <dependencies>
+        <dependency>
+            <groupId>org.jsonschema2pojo</groupId>
+            <artifactId>jsonschema2pojo-core</artifactId>
+            <version>1.2.1</version>
+        </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
@@ -61,7 +63,6 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>io.hypersistence</groupId>
             <artifactId>hypersistence-utils-hibernate-62</artifactId>
         </dependency>
-
         <!-- IRS Client for decentral registry approach -->
         <dependency>
             <groupId>org.eclipse.tractusx.irs</groupId>
@@ -80,7 +81,6 @@ SPDX-License-Identifier: Apache-2.0
                 </exclusion>
             </exclusions>
         </dependency>
-
         <!-- Remove once org.eclipse.tractusx.irs#irs-registry-client delivers the correct version.-->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -93,6 +93,7 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>tx-models</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <!-- managed by spring boot -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -113,7 +114,6 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>commons-fileupload</artifactId>
             <version>1.5</version>
         </dependency>
-
         <!-- EDC Client -->
         <dependency>
             <groupId>org.eclipse.edc</groupId>
@@ -169,7 +169,6 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
-            <version>${spring-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -200,21 +199,10 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-websocket</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-websocket</artifactId>
-            <version>${tomcat-embed-websocket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -318,10 +306,11 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>jackson-databind-nullable</artifactId>
             <version>${jackson-databind-nullable.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.26.0</version>
         </dependency>
 
         <dependency>
@@ -458,6 +447,25 @@ SPDX-License-Identifier: Apache-2.0
         <finalName>traceability-app-${project.version}</finalName>
         <plugins>
             <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <sourceDirectory>${basedir}/src/main/resources/schema/semantichub</sourceDirectory>
+                    <targetPackage>org.eclipse.tractusx.traceability.generated</targetPackage>
+                    <sourceType>JSONSCHEMA</sourceType>
+                    <refFragmentPathDelimiters>#/</refFragmentPathDelimiters>
+                    <includeHashcodeAndEquals>false</includeHashcodeAndEquals>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.0</version>
@@ -568,6 +576,10 @@ SPDX-License-Identifier: Apache-2.0
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <parameters>true</parameters>
+                </configuration>
             </plugin>
 
             <!-- Spring Boot Plugin-->
