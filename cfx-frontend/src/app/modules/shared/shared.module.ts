@@ -32,7 +32,6 @@ import { NotificationOverviewComponent } from '@shared/components/notification-o
 import { NotificationReasonComponent } from '@shared/components/notification-reason/notification-reason.component';
 import { NotificationUserComponent } from '@shared/components/notification-user/notification-user.component';
 import { PartsTableComponent } from '@shared/components/parts-table/parts-table.component';
-import { ForwardAlertComponent } from '@shared/components/request-notification/forward-alert.component';
 import { SeveritySelectComponent } from '@shared/components/severity-select/severity-select.component';
 import { SeverityComponent } from '@shared/components/severity/severity.component';
 import { TableSettingsComponent } from '@shared/components/table-settings/table-settings.component';
@@ -134,8 +133,6 @@ import { ForwardNotificationComponent } from '@shared/components/request-notific
     RequestStepperComponent,
     RequestInvestigationComponent,
     RequestAlertComponent,
-    ForwardAlertComponent,
-    ScrollWithShadowComponent,
     QualityTypeComponent,
     ValueToLablePipe,
     NotificationOverviewComponent,
@@ -185,7 +182,6 @@ import { ForwardNotificationComponent } from '@shared/components/request-notific
     RequestStepperComponent,
     RequestInvestigationComponent,
     RequestAlertComponent,
-    ForwardAlertComponent,
     QualityTypeComponent,
     NotificationOverviewComponent,
     NotificationReasonComponent,
