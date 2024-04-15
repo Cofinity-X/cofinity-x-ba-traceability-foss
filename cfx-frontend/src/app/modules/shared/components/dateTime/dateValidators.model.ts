@@ -67,7 +67,7 @@ export class DateValidators {
       }
       const currentDate = new Date(control.value);
 
-      const isError = !currentDate || deadline.getTime() < currentDate.getTime();
+      const isError = !currentDate || deadline?.getTime() < currentDate.getTime();
       return isError ? { deadlineExceeded: { date: deadline } } : null;
     };
   }
