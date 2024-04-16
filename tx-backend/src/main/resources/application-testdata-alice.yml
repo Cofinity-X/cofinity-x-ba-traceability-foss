@@ -31,7 +31,7 @@ spring:
       bpnSupplier2Name: "'Philips'"
       bpnSupplier3    : "'BPNL000SUPPLIER3'"
       bpnSupplier3Name: "'Würth'"
-      bpnCustomer1    : "'BPNL000000000002'"
+      bpnCustomer1    : "'BPNL00000000GNDU'"
       bpnCustomer1Name: "'BMW AG'"
       bpnCustomer2    : "'BPNL000CUSTOMER2'"
       bpnCustomer2Name: "'Audi AG'"
