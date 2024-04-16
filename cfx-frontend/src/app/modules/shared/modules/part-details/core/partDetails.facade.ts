@@ -60,7 +60,6 @@ export class PartDetailsFacade {
 
 
   public setPartFromTree(id: string): Observable<View<Part>> {
-    console.log('setPartFromTree', id);
     return this.partsService.getPart(id, this._type).pipe(
       tap((part: Part) => {
         this.partDetailsState.selectedPart = { data: part };

@@ -52,8 +52,6 @@ export class Tree {
   private nextMinimapUpdate = 0;
 
   constructor(treeData: TreeData) {
-    console.log('Tree', treeData.id);
-    console.log('TreeID', treeData.mainId);
     this.id = treeData.id;
     this.mainId = treeData.mainId;
     this.mainElement = d3.select(`#${this.mainId}`);
@@ -71,11 +69,8 @@ export class Tree {
     this.initResizeListener();
   }
 
-
   public renderTree(data: TreeStructure, direction: TreeDirection): TreeSvg {
-    console.log('renderTree', data.id, data.children, data.title, direction, "NodeID: ", this.id);
     const root = d3.hierarchy(data);
-    console.log('root', root);
 
     let svg = d3.select(`#${this.mainId}--camera`) as TreeSvg;
     if (svg.empty()) svg = this.creatMainSvg();

@@ -50,6 +50,5 @@ export class State<T> {
   public reset(): void {
     this.stateValue = this.initialValue;
     this.store$.next(this.stateValue);
-    console.log('State reset', this.store$.value);
   }
 }
