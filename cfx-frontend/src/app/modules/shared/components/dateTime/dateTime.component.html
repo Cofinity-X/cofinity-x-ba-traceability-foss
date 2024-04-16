@@ -38,7 +38,8 @@ SPDX-License-Identifier: Apache-2.0
       class="date-picker-icon"
       [for]="$any(picker)"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #picker
-      color="primary">
+      color="primary"
+      restoreFocus="false">
     </ngx-mat-datetime-picker>
     <mat-hint *ngIf="hint"
       align="start">{{ hint }}</mat-hint>
