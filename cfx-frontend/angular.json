@@ -129,6 +129,22 @@
                 }
               ]
             },
+            "localAlice": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.localAlice.ts"
+                }
+              ]
+            },
+            "localBob": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.localBob.ts"
+                }
+              ]
+            },
             "localBackendNoAuth": {
               "fileReplacements": [
                 {
@@ -203,6 +219,12 @@
             },
             "localBackend": {
               "browserTarget": "trace-x:build:dev,localBackend"
+            },
+            "localAlice": {
+              "browserTarget": "trace-x:build:dev,localAlice"
+            },
+            "localBob": {
+              "browserTarget": "trace-x:build:dev,localBob"
             },
             "localBackendNoAuth": {
               "browserTarget": "trace-x:build:dev,localBackendNoAuth"

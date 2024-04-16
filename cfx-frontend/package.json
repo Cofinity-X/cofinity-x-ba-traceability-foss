@@ -23,6 +23,8 @@
     "start:auth:mock": "ng serve --configuration=authMock",
     "start:auth:local": "ng serve --configuration=authLocal",
     "start:auth:localBe": "ng serve --configuration=localBackend",
+    "start:auth:localAlice": "ng serve --configuration=localAlice --port 4300",
+    "start:auth:localBob": "ng serve --configuration=localBob --port 4400",
     "start:noAuth:localBe": "ng serve --configuration=localBackendNoAuth",
     "env:mock": "docker-compose up",
     "test": "ng test",

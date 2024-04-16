@@ -1,0 +1,29 @@
+{
+  "request" : {
+    "method" : "POST",
+    "urlPath" : "/alice_bob_EDCDiscovery/administration/connectors/discovery"
+  },
+  "response" : {
+    "status" : 200,
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "jsonBody" : [
+      {
+        "bpn" : "BPNL000000000001",
+        "connectorEndpoint" : [
+          "http://alice-controlplane:8084"
+        ]
+      },
+      {
+        "bpn" : "BPNL000000000002",
+        "connectorEndpoint" : [
+          "http://bob-controlplane:8084"
+        ]
+      }
+    ],
+    "transformers" : [
+      "response-template"
+    ]
+  }
+}
