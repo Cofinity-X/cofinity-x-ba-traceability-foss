@@ -19,7 +19,7 @@ under the License.
 SPDX-License-Identifier: Apache-2.0
 -->
 <div class="container">
-  <div class="pt-5">
+  <div *ngIf="!forwardedNotification" class="pt-5">
     <div class="selected-parts">{{ 'requestNotification.partDescription' | i18n }}</div>
     <div class="chip-container-wrapper">
       <mat-chip-listbox class="chip-container"
@@ -71,6 +71,11 @@ SPDX-License-Identifier: Apache-2.0
     <app-textarea [label]="'requestNotification.textAreaLabel' | i18n"
       formControlName="description"></app-textarea>
 
+    <div *ngIf="forwardedNotification" class="flex items-center label-medium info-text">
+      <img src="/assets/images/icons/info_icon.svg" alt="info_icon"/>
+      {{ 'requestNotification.userInfoDataSovereignty' | i18n }}
+    </div>
+
     <div class="buttons-container">
       <div *ngIf="showButtons"
         class="buttons-wrapper">
@@ -78,14 +83,17 @@ SPDX-License-Identifier: Apache-2.0
           [isDisabled]="isLoading$ | async"
           (click)="onBack()"
           class="button-large request-action-button">
-          <div class="cancel-button-text">{{ 'requestNotification.back' | i18n }}</div>
+          <div class="cancel-button-text">{{ closeButtonText | i18n }}</div>
         </app-button>
 
         <app-button class="button-large request-action-button"
+          [isDisabled]="this.forwardedNotification
+          && this.forwardedNotification.notificationType != 'Alert'
+          && this.selectedItems.length === 0"
           [variant]="'flat'"
           [color]="'primary'"
           (click)="submit()">
-          <div class="accept-button-text">{{ 'requestNotification.submit' | i18n }}</div>
+          <div class="accept-button-text">{{ submitButtonText | i18n }}</div>
         </app-button>
       </div>
     </div>

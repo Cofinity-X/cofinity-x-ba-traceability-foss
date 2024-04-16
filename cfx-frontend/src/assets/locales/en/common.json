@@ -166,6 +166,7 @@
     "maxDate": "Please select a date that is before {{- maxDate}}.",
     "minDate": "Please select a date that is after {{- minDate}}.",
     "currentDate": "Please select a date that is after {{- currentDate}}.",
+    "deadlineExceeded": "The deadline exceeds the original deadline ({{- deadlineExceeded}}).",
     "generic": "Please enter valid data."
   },
   "unitTest": {
@@ -202,7 +203,17 @@
     "submit": "Add to queue",
     "continue": "Continue",
     "severity": "Severity",
-    "severityDescription": "Select the severity for the problem at hand"
+    "severityDescription": "Select the severity for the problem at hand",
+    "userInfoDataSovereignty": "Respect data sovereignty, don't share information that reveals the identity of the original contributor."
+  },
+  "forwardNotification": {
+    "requestAlert": {
+      "headline": "Forward alert"
+    },
+    "requestInvestigations": {
+      "headline": "Forward investigation",
+      "selectAffectedParts": "Select the affected Part(s)"
+    }
   },
   "pagination": {
     "itemsPerPageLabel": "Show",

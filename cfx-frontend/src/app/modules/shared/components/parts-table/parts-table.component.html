@@ -241,7 +241,7 @@ SPDX-License-Identifier: Apache-2.0
           class="table--cell"
           data-testid="table-component--cell-data">
           <div class="table--notification--cell">
-            <span class="table--notification--cell--content">
+            <div class="table--notification--cell--content">
               <ng-container *ngIf="isDateElement(column); else autoFormatRef">
                 {{ element[column] | autoFormat | i18n }}
               </ng-container>
@@ -256,7 +256,7 @@ SPDX-License-Identifier: Apache-2.0
                    column === 'sentActiveInvestigations' ? { value: element[column].length, row: element } :{ value: element[column], row: element }">
                 </ng-container>
               </ng-template>
-            </span>
+            </div>
             <ng-container [ngSwitch]="column">
               <ng-container *ngSwitchCase="'hasAlerts'">
                 <span class="hasQualityAlerts"

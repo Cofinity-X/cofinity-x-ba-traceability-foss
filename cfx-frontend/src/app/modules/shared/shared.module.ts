@@ -95,6 +95,7 @@ import { RequestStepperComponent } from './components/request-notification/reque
 import { SupplierPartsComponent } from '@page/other-parts/presentation/supplier-parts/supplier-parts.component';
 import { OwnPartsComponent } from '@page/parts/presentation/own-parts/own-parts.component';
 import { TableColumnSettingsComponent } from './components/table-column-settings/table-column-settings.component';
+import { ForwardNotificationComponent } from '@shared/components/request-notification/forward-notification/forward-notification.component';
 @NgModule({
   declarations: [
     ToastContainerComponent,
@@ -132,7 +133,6 @@ import { TableColumnSettingsComponent } from './components/table-column-settings
     RequestStepperComponent,
     RequestInvestigationComponent,
     RequestAlertComponent,
-    ScrollWithShadowComponent,
     QualityTypeComponent,
     ValueToLablePipe,
     NotificationOverviewComponent,
@@ -148,7 +148,8 @@ import { TableColumnSettingsComponent } from './components/table-column-settings
     BomLifecycleActivatorComponent,
     ViewSelectorComponent,
     MultiSelectAutocompleteComponent,
-    CountryFlagGeneratorComponent
+    CountryFlagGeneratorComponent,
+    ForwardNotificationComponent
   ],
   imports: [TemplateModule, RouterModule, I18NextModule, DragDropModule],
   exports: [

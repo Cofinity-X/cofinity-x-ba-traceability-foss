@@ -47,7 +47,7 @@ describe('DateTimeComponent', () => {
     return { form, fixture };
   };
 
-  const renderDateTimeComponenet = async (maxDate = null) => {
+  const renderDateTimeComponent = async (maxDate = null) => {
     return await renderComponent(DateTimeComponent, {
       imports: [SharedModule],
       componentInputs: {
@@ -89,7 +89,7 @@ describe('DateTimeComponent', () => {
 
     const maxDate = new Date('2022-02-20T12:00');
 
-    const { fixture } = await renderDateTimeComponenet(maxDate);
+    const { fixture } = await renderDateTimeComponent(maxDate);
     expect(fixture.componentInstance.maxDate).toEqual(maxDate);
   });
 

@@ -28,6 +28,21 @@ import { ToastMessage } from './toast-message.model';
   styleUrls: ['./toast-message.component.scss'],
 })
 export class ToastMessageComponent {
+  public widthTarget = '0%';
+
   @Input() toastMessage: ToastMessage;
   @Output() removeToast: EventEmitter<ToastMessage> = new EventEmitter<ToastMessage>();
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.widthTarget = '100%';
+    }, 0);
+  }
+
+  getLineStyle() {
+    return {
+      '--line-duration': this.toastMessage.timeout / 1000 + 's',
+    };
+  }
+
 }

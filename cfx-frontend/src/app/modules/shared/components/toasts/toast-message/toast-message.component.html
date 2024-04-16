@@ -45,6 +45,8 @@ SPDX-License-Identifier: Apache-2.0
         height="15px"
         alt="X" />
     </div>
-    <div [ngClass]="'line--' + toastMessage.status"></div>
+    <div [ngClass]="'line--' + toastMessage.status"
+      [ngStyle]="getLineStyle()"
+      [style.width]="widthTarget"></div>
   </mat-card-content>
 </mat-card>

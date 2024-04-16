@@ -5,7 +5,7 @@
 insert into assets_as_built_childs
     (asset_as_built_id  , id                 , id_short)
 values
-    -- owner has child of supplier
+    -- owner has child supplier
     (${assetAsBuiltId07}, ${assetAsBuiltId09}, 'S-GlassBulb'), -- Turning Light Bulb has child Glass bulb
     (${assetAsBuiltId07}, ${assetAsBuiltId10}, 'P-Packaging'), -- Turning Light Bulb has child Packaging
 

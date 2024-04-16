@@ -50,27 +50,29 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   @Input() selectedItems: Part[] = [];
 
   public readonly context: RequestContext = RequestContext.REQUEST_INVESTIGATION;
+  @Input() public formGroup: FormGroup<{ description: FormControl<string>; targetDate: FormControl<DateTimeString>; severity: FormControl<Severity>; }>;
 
   constructor(toastService: ToastService, private readonly investigationsService: NotificationService, public dialog: MatDialog) {
     super(toastService, dialog);
   }
 
-  @Input() formGroup = new FormGroup<{
-    description: FormControl<string>;
-    targetDate: FormControl<DateTimeString>;
-    severity: FormControl<Severity>;
-  }>({
-    description: new FormControl('', [Validators.required, Validators.maxLength(1000), Validators.minLength(15)]),
-    targetDate: new FormControl(null, [DateValidators.atLeastNow(), Validators.required]),
-    severity: new FormControl(Severity.MINOR),
-  });
+  public ngOnInit(): void {
+    this.formGroup = new FormGroup({
+      description: new FormControl(this.forwardedNotification ? 'FW: ' + this.forwardedNotification.description : '', [ Validators.required, Validators.maxLength(1000), Validators.minLength(15) ]),
+      targetDate: new FormControl(null, [DateValidators.atLeastNow(), DateValidators.maxDeadline(this.forwardedNotification?.targetDate?.valueOf()), Validators.required]),
+      severity: new FormControl(this.forwardedNotification ? this.forwardedNotification.severity : Severity.MINOR)
+    });
+
+  }
 
   public submit(): void {
+    if (this.selectedItems.length === 0) {
+      return;
+    }
     this.prepareSubmit();
     if (this.formGroup.invalid) {
       return;
     }
-
     const partIds = this.selectedItems.map(part => part.id);
     const { description, targetDate, severity } = this.formGroup.value;
     const { link, queryParams } = getRoute(INVESTIGATION_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);

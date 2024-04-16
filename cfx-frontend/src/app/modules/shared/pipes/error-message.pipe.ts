@@ -75,6 +75,7 @@ export class ErrorMessagePipe implements PipeTransform {
       ['maxDate', ({ date }: DateError) => getErrorMapping('maxDate', formatDate(date))],
       ['minDate', ({ date }: DateError) => getErrorMapping('minDate', formatDate(date))],
       ['currentDate', ({ date }: DateError) => getErrorMapping('currentDate', formatDate(date))],
+      ['deadlineExceeded', ({ date }: DateError) => getErrorMapping('deadlineExceeded', formatDate(date))],
 
       ['required', _ => getErrorMapping('required')],
       ['url', _ => getErrorMapping('url')],

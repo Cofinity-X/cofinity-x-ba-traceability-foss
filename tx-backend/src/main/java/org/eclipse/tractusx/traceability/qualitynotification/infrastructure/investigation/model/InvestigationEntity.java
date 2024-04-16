@@ -42,7 +42,6 @@ import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.Q
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity;
 import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity;
-import org.hibernate.annotations.Formula;
 
 import java.util.List;
 
@@ -63,14 +62,6 @@ public class InvestigationEntity extends NotificationBaseEntity {
             inverseJoinColumns = @JoinColumn(name = "asset_id")
     )
     private List<AssetAsBuiltEntity> assets;
-
-    @Formula("(SELECT CASE " +
-            "WHEN A.severity = 'MINOR' THEN 0 " +
-            "WHEN A.severity = 'MAJOR' THEN 1 " +
-            "WHEN A.severity = 'CRITICAL' THEN 2 " +
-            "WHEN A.severity = 'LIFE_THREATENING' THEN 3 " +
-            "ELSE -1 END FROM investigation_notification A WHERE A.investigation_id = id LIMIT 1)")
-    private Integer severityRank;
 
     @OneToMany(mappedBy = "investigation")
     private List<InvestigationNotificationEntity> notifications;
