@@ -39,6 +39,7 @@ import {
   TreeStructure,
 } from '@shared/modules/relations/model/relations.model';
 import { RelationComponentState } from '@shared/modules/relations/core/component.state';
+import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 
 @Component({
   selector: 'app-tree',
@@ -55,12 +56,18 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
   @Input() set direction(_direction: 'UP' | 'DOWN') {
     this.treeDirection = TreeDirection[_direction];
 
-    this.relationsFacade.isParentRelationTree = _direction === 'UP';
-    const sub = this.relationsFacade.initRequestPartDetailQueue().subscribe();
-    this.subscriptions.add(sub);
+    if (this.mainAspectType !== null) {
+      this.relationsFacade.isParentRelationTree = _direction === 'UP';
+      const sub = this.relationsFacade.initRequestPartDetailQueue(this.mainAspectType).subscribe();
+      this.subscriptions.add(sub);
+    }
   }
 
   @Input() set rootPart(data: View<Part>) {
+    if (data) {
+      this.mainAspectType = data.data.mainAspectType;
+      this.direction = this.treeDirection;
+    }
     this.resetTree(data || {});
   }
 
@@ -68,7 +75,6 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
     this.resizeSub?.unsubscribe();
     this.resizeSub = resize$.subscribe(resize => this.tree?.changeSize?.(resize));
   }
-
 
   public readonly subscriptions = new Subscription();
   public readonly rootPart$: Observable<View<Part>>;
@@ -82,6 +88,7 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
   private minimap: Minimap;
   private activatedRoute = inject(ActivatedRoute);
   private context: string;
+  private mainAspectType: MainAspectType = null;
 
   constructor(
     private readonly partDetailsFacade: PartDetailsFacade,

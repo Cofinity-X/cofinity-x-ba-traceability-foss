@@ -86,24 +86,24 @@ export class PartsService {
             .pipe(map(part => PartsAssembler.assemblePart(part, type)));
     }
 
-    public getPartDetailOfIds(assetIds: string[]): Observable<Part[]> {
+    public getPartDetailOfIds(assetIds: string[], type = MainAspectType.AS_BUILT): Observable<Part[]> {
+        if (type === MainAspectType.AS_BUILT) {
+            const resultsAsBuilt = this.apiService
+                .post<PartResponse[]>(`${this.url}/assets/as-built/detail-information`, { assetIds })
+                .pipe(map(parts => PartsAssembler.assemblePartList(parts, MainAspectType.AS_BUILT)));
 
-        const resultsAsBuilt = this.apiService
-            .post<PartResponse[]>(`${this.url}/assets/as-built/detail-information`, { assetIds })
-            .pipe(map(parts => PartsAssembler.assemblePartList(parts, MainAspectType.AS_BUILT)));
+            if (resultsAsBuilt) {
+                return resultsAsBuilt;
+            }
+        }
 
         const resultsAsPlanned = this.apiService
             .post<PartResponse[]>(`${this.url}/assets/as-planned/detail-information`, { assetIds })
             .pipe(map(parts => PartsAssembler.assemblePartList(parts, MainAspectType.AS_PLANNED)));
 
-        if (resultsAsBuilt) {
-            return resultsAsBuilt;
-        }
-
         if (resultsAsPlanned) {
             return resultsAsPlanned;
         }
-
     }
 
     public sortParts(data: Part[], key: string, direction: SortDirection): Part[] {
