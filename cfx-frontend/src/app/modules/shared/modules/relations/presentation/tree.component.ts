@@ -170,14 +170,20 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
 
   private openDetails({ id }: TreeElement): void {
     this.subscriptions.add(this.partDetailsFacade.setPartFromTree(id).subscribe());
-    this.router.navigate([`/${this.context}/${id}`], { queryParams: { type: this.partDetailsFacade.mainAspectType } }).then(_ => window.location.reload());
+    if (this.isStandalone) {
+      this.router.navigate([`/${this.context}/${id}`], { queryParams: { type: this.partDetailsFacade.mainAspectType } }).then(_ => window.location.reload());
+    } else {
+      this.router.navigate([`/${this.context}/${id}`], { queryParams: { type: this.partDetailsFacade.mainAspectType } });
+    }
   }
 
   private renderTreeWithOpenElements(openElements: OpenElements): void {
     if (!openElements) return;
 
     const treeData = this.relationsFacade.formatOpenElementsToTreeData(openElements);
-    if (!treeData?.id) return;
+    if (!treeData?.id || treeData.id !== this.partDetailsFacade.selectedPart.id) {
+      return;
+    }
 
     this.initTree();
     this.renderTree(treeData);

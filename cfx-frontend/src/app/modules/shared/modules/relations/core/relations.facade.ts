@@ -41,7 +41,7 @@ export class RelationsFacade {
     private readonly partsService: PartsService,
     private readonly loadedElementsFacade: LoadedElementsFacade,
     private readonly relationComponentState: RelationComponentState,
-  ) {}
+  ) { }
 
   public get openElements$(): Observable<OpenElements> {
     return this.relationComponentState.openElements$.pipe(debounceTime(100));

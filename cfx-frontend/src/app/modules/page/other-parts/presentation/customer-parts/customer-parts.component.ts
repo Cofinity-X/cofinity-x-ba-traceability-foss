@@ -166,7 +166,7 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
 
   public openDetailPage(part: Part): void {
     const { link } = getRoute(OTHER_PARTS_BASE_ROUTE);
-    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
+    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } });
   }
 
   public onSelectItem($event: Record<string, unknown>): void {

@@ -52,7 +52,6 @@ export class PartRelationComponent implements OnInit, OnDestroy {
   @Input() showMiniMap = true;
   @Input() overwriteContext: string = undefined;
 
-
   public readonly htmlIdBase = 'app-part-relation-';
   public readonly subscriptions = new Subscription();
   public readonly rootPart$: Observable<View<Part>>;
@@ -81,9 +80,9 @@ export class PartRelationComponent implements OnInit, OnDestroy {
           }
 
           const partId = params.get('partId');
-
           const mainAspectType = this.route?.snapshot?.queryParams?.type as MainAspectType;
           this.partDetailsFacade.mainAspectType = mainAspectType;
+
           return partId ? this.partDetailsFacade.getRootPart(partId) : this.partDetailsFacade.selectedPart$;
         }),
         tap(viewData => {
