@@ -866,106 +866,6 @@
       }
     },
     {
-      "contractAgreementId": "MTdjNmNlNmQtNDM5ZS00ODc2LWFmYjgtNGU3ZjM0ZjVmZTQ5:cmVnaXN0cnktYXNzZXQ=:MzEwMjcyMGItYmY3YS00N2M5LTllYzYtMDVmYzc0YjNhZDJi",
-      "payload": {
-        "administration": null,
-        "description": [],
-        "globalAssetId": "urn:uuid:e5c96ab5-896a-482c-8761-efd74777ca97",
-        "idShort": "HVModul",
-        "id": "urn:uuid:b60a2341-e6df-449e-b094-819dbb49d391",
-        "specificAssetIds": [
-          {
-            "name": "manufacturerId",
-            "subjectId": null,
-            "value": "BPNL00000003AYRE",
-            "semanticId": null
-          },
-          {
-            "name": "manufacturerPartId",
-            "subjectId": null,
-            "value": "8840838-04",
-            "semanticId": null
-          }
-        ],
-        "submodelDescriptors": [
-          {
-            "administration": null,
-            "description": [],
-            "idShort": "PartAsPlanned",
-            "id": "urn:uuid:f831a7f4-c3e7-49b6-8201-91bc2342b68f",
-            "semanticId": {
-              "keys": [
-                {
-                  "value": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
-                  "type": "GlobalReference"
-                }
-              ],
-              "type": "ExternalReference"
-            },
-            "endpoints": [
-              {
-                "protocolInformation": {
-                  "href": "https://irs-provider-dataplane.dev.demo.catena-x.net/api/public/data/urn:uuid:f831a7f4-c3e7-49b6-8201-91bc2342b68f",
-                  "endpointProtocol": "HTTP",
-                  "endpointProtocolVersion": [
-                    "1.1"
-                  ],
-                  "subprotocol": "DSP",
-                  "subprotocolBody": "id=urn:uuid:38e6a151-a748-4d26-bbb6-996a3f661dea;dspEndpoint=https://irs-provider-controlplane.dev.demo.catena-x.net",
-                  "subprotocolBodyEncoding": "plain",
-                  "securityAttributes": [
-                    {
-                      "type": "NONE",
-                      "key": "NONE",
-                      "value": "NONE"
-                    }
-                  ]
-                },
-                "interface": "SUBMODEL-3.0"
-              }
-            ]
-          },
-          {
-            "administration": null,
-            "description": [],
-            "idShort": "PartSiteInformationAsPlanned",
-            "id": "urn:uuid:ffdd1a9e-7636-43ca-b313-f62619bf0855",
-            "semanticId": {
-              "keys": [
-                {
-                  "value": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
-                  "type": "GlobalReference"
-                }
-              ],
-              "type": "ExternalReference"
-            },
-            "endpoints": [
-              {
-                "protocolInformation": {
-                  "href": "https://irs-provider-dataplane3.dev.demo.catena-x.net/api/public/data/urn:uuid:ffdd1a9e-7636-43ca-b313-f62619bf0855",
-                  "endpointProtocol": "HTTP",
-                  "endpointProtocolVersion": [
-                    "1.1"
-                  ],
-                  "subprotocol": "DSP",
-                  "subprotocolBody": "id=urn:uuid:66bb91bc-5272-4c1c-9d3e-4c3690f921a1;dspEndpoint=https://irs-provider-controlplane3.dev.demo.catena-x.net",
-                  "subprotocolBodyEncoding": "plain",
-                  "securityAttributes": [
-                    {
-                      "type": "NONE",
-                      "key": "NONE",
-                      "value": "NONE"
-                    }
-                  ]
-                },
-                "interface": "SUBMODEL-3.0"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "contractAgreementId": "YjM1MzNiYWQtZmU0MC00YTY0LTk0MTctYzJiYzVjMTAwZWIy:cmVnaXN0cnktYXNzZXQ=:NGExOTdiMjgtMjYyNi00YzMyLWJlNGQtMTBmNDBkMzM4ZTll",
       "payload": {
         "administration": null,
@@ -1864,23 +1764,6 @@
             "functionValidFrom": "2013-12-07T09:33:50.000Z"
           }
         ]
-      }
-    },
-    {
-      "identification": "urn:uuid:f831a7f4-c3e7-49b6-8201-91bc2342b68f",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
-      "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
-      "payload": {
-        "validityPeriod": {
-          "validFrom": "2018-01-25T08:42:58.000Z",
-          "validTo": "2029-02-10T03:24:30.000Z"
-        },
-        "catenaXId": "urn:uuid:e5c96ab5-896a-482c-8761-efd74777ca97",
-        "partTypeInformation": {
-          "manufacturerPartId": "8840838-04",
-          "classification": "product",
-          "nameAtManufacturer": "HV Modul"
-        }
       }
     },
     {
