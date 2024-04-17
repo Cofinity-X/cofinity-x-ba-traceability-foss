@@ -55,7 +55,7 @@ edc:
     managementUrl: http://localhost:80/alice/management
 
 irs-edc-client:
-  callback-url: http://localhost:8182/api/internal/endpoint-data-reference
+  callback-url: http://<your local IP-Address>:8182/api/internal/endpoint-data-reference
   controlplane:
     endpoint:
       data: http://localhost:80/alice/management

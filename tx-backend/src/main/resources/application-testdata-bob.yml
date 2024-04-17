@@ -21,14 +21,10 @@
 
 spring:
   flyway:
-    locations: /db/migration,/db/testdata-osram
+    locations: /db/migration,/db/testdata-bob
     placeholders:
       bpnOwn           : "'BPNL000000000002'"
       bpnOwnName       : "'Osram'"
-      bpnSupplier21    : "'BPNL00SUPPLIER21'"
-      bpnSupplier21Name: "'Schott'"
-      bpnSupplier22    : "'BPNL00SUPPLIER22'"
-      bpnSupplier22Name: "'Petersmeier'"
       bpnCustomer1     : "'BPNL000000000001'"
       bpnCustomer1Name : "'Hella'"
 

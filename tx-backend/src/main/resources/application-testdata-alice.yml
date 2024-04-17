@@ -21,22 +21,12 @@
 
 spring:
   flyway:
-    locations: /db/migration,/db/testdata-hella
+    locations: /db/migration,/db/testdata-alice
     placeholders:
       bpnOwn          : "'BPNL000000000001'"
       bpnOwnName      : "'Hella'"
       bpnSupplier1    : "'BPNL000000000002'"
       bpnSupplier1Name: "'Osram'"
-      bpnSupplier2    : "'BPNL000SUPPLIER2'"
-      bpnSupplier2Name: "'Philips'"
-      bpnSupplier3    : "'BPNL000SUPPLIER3'"
-      bpnSupplier3Name: "'Würth'"
-      bpnCustomer1    : "'BPNL00000000GNDU'"
-      bpnCustomer1Name: "'BMW AG'"
-      bpnCustomer2    : "'BPNL000CUSTOMER2'"
-      bpnCustomer2Name: "'Audi AG'"
-      bpnCustomer3    : "'BPNL000CUSTOMER3'"
-      bpnCustomer3Name: "'VW AG'"
 
       assetAsBuiltId01: "'urn:uuid:6ec3f1db-2798-454b-a73f-0d21a8966c77'"
       assetAsBuiltId02: "'urn:uuid:132fd82b-caab-476b-b453-b7273a4c7c01'"
