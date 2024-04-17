@@ -46,7 +46,7 @@ describe('Relations facade', () => {
   beforeEach(() => {
     const partsServiceMok = {
       getPart: (id, type) => of(mockAssetList[id]).pipe(map(part => PartsAssembler.assemblePart(part, MainAspectType.AS_BUILT))),
-      getPartDetailOfIds: assetIds =>
+      getPartDetailOfIds: (assetIds, type) =>
         of(assetIds.map(id => mockAssetList[id])).pipe(map(parts => PartsAssembler.assemblePartList(parts, MainAspectType.AS_BUILT))),
     } as PartsService;
 
