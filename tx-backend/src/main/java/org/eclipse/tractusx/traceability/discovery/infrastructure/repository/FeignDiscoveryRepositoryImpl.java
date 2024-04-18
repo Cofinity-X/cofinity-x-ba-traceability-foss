@@ -62,12 +62,11 @@ public class FeignDiscoveryRepositoryImpl implements DiscoveryRepository {
                         .connectorEndpoint().size()
         );
 
-        final Optional<EdcDiscoveryResult> edcDiscoveryResultOptional = discoveryResultByBPN.stream().findFirst();
-
         if (discoveryResultByBPN.size() > 1) {
-            log.warn("Multiple discoveryResults with same bpn {} found, but only the {} will be used!", bpn,
-                    edcDiscoveryResultOptional);
+            log.warn("Multiple discoveryResults with same bpn {} found, but only the edcDiscoveryResultOptional will be used!", bpn);
         }
+
+        Optional<EdcDiscoveryResult> edcDiscoveryResultOptional = discoveryResultByBPN.stream().findFirst();
 
         if (edcDiscoveryResultOptional.isPresent()) {
             return Optional.of(toDiscovery(edcDiscoveryResultOptional.get(), edcProperties.getProviderEdcUrl()));

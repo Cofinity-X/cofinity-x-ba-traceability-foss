@@ -38,6 +38,8 @@ SPDX-License-Identifier: Apache-2.0
 
     <properties>
         <springboot.version>3.2.4</springboot.version>
+        <spring-core.version>6.0.16</spring-core.version>
+        <spring-security-config.version>6.1.5</spring-security-config.version>
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -54,7 +56,7 @@ SPDX-License-Identifier: Apache-2.0
         <jacoco-plugin.version>0.8.11</jacoco-plugin.version>
         <jar-plugin.version>3.3.0</jar-plugin.version>
         <owasp-plugin.version>9.0.9</owasp-plugin.version>
-        <spotbugs-plugin.version>4.8.3.0</spotbugs-plugin.version>
+        <spotbugs-plugin.version>4.8.3</spotbugs-plugin.version>
         <maven-project-info-reports-plugin.version>3.5.0</maven-project-info-reports-plugin.version>
         <sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
@@ -77,7 +79,9 @@ SPDX-License-Identifier: Apache-2.0
         <restito.version>1.1.0</restito.version>
         <testcontainer-postgresql.version>1.19.7</testcontainer-postgresql.version>
         <rest-assured.version>5.4.0</rest-assured.version>
-        <hypersistence-utils-hibernate.version>3.7.2</hypersistence-utils-hibernate.version>
+        <hypersistence-utils-hibernate.version>3.7.3</hypersistence-utils-hibernate.version>
+        <resilience4j.version>2.2.0</resilience4j.version>
+        <schedlock.version>5.10.0</schedlock.version>
         <postgresql.version>42.6.1</postgresql.version>
         <springdoc.version>2.0.4</springdoc.version>
         <assertj.version>3.24.2</assertj.version>
@@ -85,7 +89,14 @@ SPDX-License-Identifier: Apache-2.0
         <commons-collections.version>4.4</commons-collections.version>
         <lombok.version>1.18.30</lombok.version>
         <json-unit-assertj.version>3.2.2</json-unit-assertj.version>
+        <feign.version>12.3</feign.version>
+        <feign-form.version>3.8.0</feign-form.version>
+        <feign-slf4j.version>12.4</feign-slf4j.version>
+        <scribe-java.version>8.3.3</scribe-java.version>
+        <jakarta-ws-rs.version>3.1.0</jakarta-ws-rs.version>
         <cucumber.version>7.15.0</cucumber.version>
+        <org-snakeyaml.version>2.2</org-snakeyaml.version>
+        <jackson.version>2.15.2</jackson.version>
         <junit-bom.version>5.10.2</junit-bom.version>
         <awaitility.version>3.0.0</awaitility.version>
         <irs-client-lib.version>1.6.0</irs-client-lib.version>

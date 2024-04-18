@@ -52,8 +52,12 @@ public class PolicyServiceImpl implements PolicyService {
 
     @Override
     public PolicyResponse getPolicyById(String id) {
+
         return getAcceptedPoliciesOrEmptyList().stream()
-                .filter(policy -> policy.payload().policy().getPolicyId().equals(id)).findFirst()
+                .filter(policy -> policy.payload() != null &&
+                        policy.payload().policyId() != null &&
+                        policy.payload().policyId().equals(id))
+                .findFirst()
                 .map(IrsPolicyResponse::toResponse)
                 .orElseThrow(() -> new PolicyNotFoundException("Policy with id: %s not found.".formatted(id)));
     }
