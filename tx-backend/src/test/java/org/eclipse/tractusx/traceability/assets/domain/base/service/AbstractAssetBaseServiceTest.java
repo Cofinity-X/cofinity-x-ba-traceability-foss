@@ -29,12 +29,12 @@ class AbstractAssetBaseServiceTest {
     @ParameterizedTest
     @MethodSource("enumFieldNamesProvider")
     void givenEnumFieldName(String fieldName, String startWith, List<String> expectedValues) {
-      // Given params
+        // given params
 
-        // When
+        // when
         List<String> result = service.getDistinctFilterValues(fieldName, startWith, 10, null);
 
-       // Then
+        // then
         assertThat(result).containsAll(expectedValues);
     }
 

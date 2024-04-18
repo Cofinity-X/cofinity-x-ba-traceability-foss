@@ -69,14 +69,14 @@ class OAuthClientCredentialsRestTemplateInterceptorTest {
 
     @Test
     void givenNullClient_whenIntercept_thenThrowIllegalStateException() {
-       // Given
+        // given
         final String registrationId = "registrationId";
         final String clientName = "clientName";
         when(clientRegistration.getRegistrationId()).thenReturn(registrationId);
         when(clientRegistration.getClientName()).thenReturn(clientName);
         when(manager.authorize(any())).thenReturn(null);
 
-        // Then
+        // when/then
         assertThrows(
                 IllegalStateException.class,
                 () -> interceptor.intercept(request, new byte[]{}, execution));
@@ -85,7 +85,7 @@ class OAuthClientCredentialsRestTemplateInterceptorTest {
 
     @Test
     void givenClient_whenIntercept_thenExecute() throws IOException {
-       // Given
+        // given
         final String registrationId = "registrationId";
         final String clientName = "clientName";
         OAuth2AccessToken token = new OAuth2AccessToken(
@@ -103,10 +103,10 @@ class OAuthClientCredentialsRestTemplateInterceptorTest {
         when(client.getAccessToken()).thenReturn(token);
         when(execution.execute(any(), any())).thenReturn(response);
 
-        // When
+        // when
         interceptor.intercept(request, new byte[]{}, execution);
 
-       // Then
+        // then
         verify(execution, times(1)).execute(any(), any());
     }
 }
