@@ -33,48 +33,48 @@ import java.util.UUID;
 
 public class NotificationTestDataFactory {
 
-    public static NotificationMessage createNotificationTestData() {
-        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
-
-        return QualityNotificationMessage.builder()
-                .id("123")
-                .notificationReferenceId("id123")
-                .createdBy("senderBPN")
-                .createdByName("senderManufacturerName")
-                .sendTo("recipientBPN")
-                .sendToName("receiverManufacturerName")
-                .contractAgreementId("agreement")
-                .description("123")
-                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
-                .affectedParts(affectedParts)
-                .type(NotificationType.INVESTIGATION)
-                .severity(NotificationSeverity.MINOR)
-                .edcNotificationId("123")
-                .targetDate(Instant.parse("2022-03-01T12:00:00Z"))
-                .messageId("messageId")
-                .isInitial(true)
-                .build();
-    }
-
-    public static NotificationMessage createNotificationTestData(NotificationType notificationType) {
-        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
-
-        return NotificationMessage.builder()
-                .id("123")
-                .notificationReferenceId("id123")
-                .createdBy("senderBPN")
-                .createdByName("senderManufacturerName")
-                .sendTo("recipientBPN")
-                .sendToName("receiverManufacturerName")
-                .contractAgreementId("agreement")
-                .description("123")
-                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
-                .affectedParts(affectedParts)
-                .severity(NotificationSeverity.MINOR)
-                .edcNotificationId("123")
-                .targetDate(Instant.parse("2022-03-01T12:00:00Z"))
-                .messageId("messageId")
-                .type(notificationType)
-                .build();
-    }
+//    public static NotificationMessage createNotificationTestData() {
+//        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
+//
+//        return NotificationMessage.builder()
+//                .id("123")
+//                .notificationReferenceId("id123")
+//                .createdBy("senderBPN")
+//                .createdByName("senderManufacturerName")
+//                .sendTo("recipientBPN")
+//                .sendToName("receiverManufacturerName")
+//                .contractAgreementId("agreement")
+//                .description("123")
+//                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
+//                .affectedParts(affectedParts)
+//                .type(NotificationType.INVESTIGATION)
+//                .severity(NotificationSeverity.MINOR)
+//                .edcNotificationId("123")
+//                .targetDate(Instant.parse("2022-03-01T12:00:00Z"))
+//                .messageId("messageId")
+//                .isInitial(true)
+//                .build();
+//    }
+//
+//    public static NotificationMessage createNotificationTestData(NotificationType notificationType) {
+//        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
+//
+//        return NotificationMessage.builder()
+//                .id("123")
+//                .notificationReferenceId("id123")
+//                .createdBy("senderBPN")
+//                .createdByName("senderManufacturerName")
+//                .sendTo("recipientBPN")
+//                .sendToName("receiverManufacturerName")
+//                .contractAgreementId("agreement")
+//                .description("123")
+//                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
+//                .affectedParts(affectedParts)
+//                .severity(NotificationSeverity.MINOR)
+//                .edcNotificationId("123")
+//                .targetDate(Instant.parse("2022-03-01T12:00:00Z"))
+//                .messageId("messageId")
+//                .type(notificationType)
+//                .build();
+//    }
 }

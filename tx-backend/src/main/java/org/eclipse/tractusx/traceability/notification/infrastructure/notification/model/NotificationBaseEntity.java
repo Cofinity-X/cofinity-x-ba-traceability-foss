@@ -28,8 +28,8 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 
@@ -52,10 +52,9 @@ public class NotificationBaseEntity {
     private Instant updated;
     @Enumerated(EnumType.STRING)
     private NotificationSideBaseEntity side;
-
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "status")
-    @Type(PostgreSQLEnumType.class)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private NotificationStatusBaseEntity status;
 
 }

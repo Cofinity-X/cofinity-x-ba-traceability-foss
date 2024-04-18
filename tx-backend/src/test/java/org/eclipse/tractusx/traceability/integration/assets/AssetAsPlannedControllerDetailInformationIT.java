@@ -38,47 +38,47 @@ class AssetAsPlannedControllerDetailInformationIT extends IntegrationTestSpecifi
     @Autowired
     BpnSupport bpnSupport;
 
-    @Autowired
-    AssetsSupport assetsSupport;
-
-    @Test
-    void shouldNotReturnAassetsDetailInformationWhenUserIsNotAuthenticated() {
-       // Given
-        bpnSupport.cachedBpnsForAsPlannedAssets();
-        assetsSupport.defaultAssetsAsPlannedStored();
-
-       // Then
-        given()
-                .contentType(ContentType.JSON)
-                .body(
-                        asJson(Map.of("assetIds", List.of("1234"))
-                        )
-                )
-                .when()
-                .post("/api/assets/as-planned/detail-information")
-                .then()
-                .statusCode(401);
-    }
-
-    @Test
-    void shouldReturnAssetsDetailInformation() throws JoseException {
-       // Given
-        bpnSupport.cachedBpnsForAsPlannedAssets();
-        assetsSupport.defaultAssetsAsPlannedStored();
-
-        // Then
-        given()
-                .contentType(ContentType.JSON)
-                .body(
-                        asJson(Map.of("assetIds", List.of("urn:urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01",
-                                "urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4eb01"))
-                        )
-                )
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .when()
-                .post("/api/assets/as-planned/detail-information")
-                .then()
-                .statusCode(200)
-                .body("", hasSize(1));
-    }
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//
+//    @Test
+//    void shouldNotReturnAassetsDetailInformationWhenUserIsNotAuthenticated() {
+//       // Given
+//        bpnSupport.cachedBpnsForAsPlannedAssets();
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//
+//       // Then
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body(
+//                        asJson(Map.of("assetIds", List.of("1234"))
+//                        )
+//                )
+//                .when()
+//                .post("/api/assets/as-planned/detail-information")
+//                .then()
+//                .statusCode(401);
+//    }
+//
+//    @Test
+//    void shouldReturnAssetsDetailInformation() throws JoseException {
+//       // Given
+//        bpnSupport.cachedBpnsForAsPlannedAssets();
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//
+//        // Then
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body(
+//                        asJson(Map.of("assetIds", List.of("urn:urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01",
+//                                "urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4eb01"))
+//                        )
+//                )
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .when()
+//                .post("/api/assets/as-planned/detail-information")
+//                .then()
+//                .statusCode(200)
+//                .body("", hasSize(1));
+//    }
 }

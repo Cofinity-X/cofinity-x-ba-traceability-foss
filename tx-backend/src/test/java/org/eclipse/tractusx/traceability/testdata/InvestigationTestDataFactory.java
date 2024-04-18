@@ -15,7 +15,8 @@
  * under the License.
  *
  * SPDX-License-Identifier: Apache-2.0
- ********************************************************************************/
+ ********************************************************************************//*
+
 
 package org.eclipse.tractusx.traceability.testdata;
 
@@ -28,6 +29,7 @@ import org.eclipse.tractusx.traceability.notification.domain.base.model.Notifica
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSide;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationStatus;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationType;
+import org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationEntity;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -251,7 +253,7 @@ public class InvestigationTestDataFactory {
         return InvestigationEntities;
     }
 
-    public static InvestigationNotificationEntity[] createSenderMajorityInvestigationNotificationEntitiesTestData(String senderBpn) {
+    public static NotificationEntity[] createSenderMajorityInvestigationNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString1 = "12:00 PM, Sun 11/9/2025";
         String targetDateInNovString2 = "12:00 PM, Mon 11/10/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
@@ -717,3 +719,4 @@ public class InvestigationTestDataFactory {
         return new InvestigationEntity[]{firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
     }
 }
+*/

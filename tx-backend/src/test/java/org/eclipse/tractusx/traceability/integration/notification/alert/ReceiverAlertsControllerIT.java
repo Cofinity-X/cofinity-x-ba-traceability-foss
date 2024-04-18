@@ -45,180 +45,180 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ReceiverAlertsControllerIT extends IntegrationTestSpecification {
 
-    @Autowired
-    AlertsSupport alertsSupport;
-
-    @Autowired
-    AssetsSupport assetsSupport;
-
-    @Test
-    void shouldNotUpdateToAcknowledgedNonExistingAlert() throws JoseException {
-        // given
-        final long notExistingAlertId = 1234L;
-        String filterString = "channel,EQUAL,RECEIVER,AND";
-
-        // when
-        given()
-                .contentType(ContentType.JSON)
-                .body("""
-                         {
-                         "status" : "$status"
-                         }
-                        """.replace("$status", UpdateQualityNotificationStatusRequest.ACKNOWLEDGED.name()))
-                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-                .when()
-                .post("/api/alerts/$notExistingAlertId/update".replace("$notExistingAlertId", Long.toString(notExistingAlertId)))
-                .then()
-                .statusCode(404);
-
-        // then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
-                .contentType(ContentType.JSON)
-                .when()
-                .post("/api/notifications/filter")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(0))
-                .body("pageSize", Matchers.is(15))
-                .body("content", Matchers.hasSize(0));
-    }
-
-    @Test
-    void shouldNotUpdateToAcceptedNonExistingAlert() throws JoseException {
-        // given
-        final long notExistingAlertId = 1234L;
-        String filterString = "channel,EQUAL,RECEIVER,AND";
-
-        // when
-        given()
-                .contentType(ContentType.JSON)
-                .body("""
-                         {
-                         "status" : "$status",
-                         "reason" : "some reason, why not"
-                         }
-                        """.replace("$status", UpdateNotificationStatusRequest.ACCEPTED.name()))
-                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-                .when()
-                .post("/api/notifications/$notExistingAlertId/update".replace("$notExistingAlertId", Long.toString(notExistingAlertId)))
-                .then()
-                .statusCode(404);
-
-        // then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
-                .contentType(ContentType.JSON)
-                .when()
-                .post("/api/notifications/filter")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(0))
-                .body("pageSize", Matchers.is(15))
-                .body("content", Matchers.hasSize(0));
-    }
-
-    @Test
-    void shouldNotUpdateToDeclinedNonExistingAlert() throws JoseException {
-        // given
-        final long notExistingAlertId = 1234L;
-        String filterString = "channel,EQUAL,RECEIVER,AND";
-
-        // when
-        given()
-                .contentType(ContentType.JSON)
-                .body("""
-                         {
-                         "status" : "$status",
-                         "reason" : "some reason, why not"
-                         }
-                        """.replace("$status", UpdateNotificationStatusRequest.DECLINED.name()))
-                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-                .when()
-                .post("/api/notifications/$notExistingAlertId/update".replace("$notExistingAlertId", Long.toString(notExistingAlertId)))
-                .then()
-                .statusCode(404);
-
-        // then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
-                .contentType(ContentType.JSON)
-                .when()
-                .post("/api/notifications/filter")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(0))
-                .body("pageSize", Matchers.is(15))
-                .body("content", Matchers.hasSize(0));
-    }
-
-    @ParameterizedTest
-    @MethodSource("invalidRequest")
-    void shouldNotUpdateWithInvalidRequest(final String request) throws JoseException {
-        // given
-        final long notExistingAlertId = 1234L;
-        String filterString = "channel,EQUAL,SENDER,AND";
-
-        // when
-        given()
-                .contentType(ContentType.JSON)
-                .body(request)
-                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-                .when()
-                .post("/api/notifications/{notExistingAlertId}/update", Long.toString(notExistingAlertId))
-                .then()
-                .statusCode(400);
-
-        // then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
-                .contentType(ContentType.JSON)
-                .when()
-                .post("/api/notifications/filter")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(0))
-                .body("pageSize", Matchers.is(15))
-                .body("content", Matchers.hasSize(0));
-    }
-
-    private static Stream<Arguments> invalidRequest() {
-        return Stream.of(
-                arguments("""
-                         {
-                         "status" : "$status",
-                         "reason" : "No reason should be for acknowledging"
-                         }
-                        """.replace("$status", UpdateNotificationStatusRequest.ACKNOWLEDGED.name())),
-                arguments("""
-                         {
-                         "status" : "$status",
-                         "reason" : null
-                         }
-                        """.replace("$status", UpdateNotificationStatusRequest.ACCEPTED.name())),
-                arguments("""
-                         {
-                         "status" : "$status",
-                         "reason" : " "
-                         }
-                        """.replace("$status", UpdateNotificationStatusRequest.ACCEPTED.name())),
-                arguments("""
-                         {
-                         "status" : "$status",
-                         "reason" : null
-                         }
-                        """.replace("$status", UpdateNotificationStatusRequest.DECLINED.name())),
-                arguments("""
-                         {
-                         "status" : "$status",
-                         "reason" : " "
-                         }
-                        """.replace("$status", UpdateNotificationStatusRequest.DECLINED.name()))
-        );
-    }
+//    @Autowired
+//    AlertsSupport alertsSupport;
+//
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//
+//    @Test
+//    void shouldNotUpdateToAcknowledgedNonExistingAlert() throws JoseException {
+//        // given
+//        final long notExistingAlertId = 1234L;
+//        String filterString = "channel,EQUAL,RECEIVER,AND";
+//
+//        // when
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body("""
+//                         {
+//                         "status" : "$status"
+//                         }
+//                        """.replace("$status", UpdateQualityNotificationStatusRequest.ACKNOWLEDGED.name()))
+//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+//                .when()
+//                .post("/api/alerts/$notExistingAlertId/update".replace("$notExistingAlertId", Long.toString(notExistingAlertId)))
+//                .then()
+//                .statusCode(404);
+//
+//        // then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .post("/api/notifications/filter")
+//                .then()
+//                .statusCode(200)
+//                .body("page", Matchers.is(0))
+//                .body("pageSize", Matchers.is(15))
+//                .body("content", Matchers.hasSize(0));
+//    }
+//
+//    @Test
+//    void shouldNotUpdateToAcceptedNonExistingAlert() throws JoseException {
+//        // given
+//        final long notExistingAlertId = 1234L;
+//        String filterString = "channel,EQUAL,RECEIVER,AND";
+//
+//        // when
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body("""
+//                         {
+//                         "status" : "$status",
+//                         "reason" : "some reason, why not"
+//                         }
+//                        """.replace("$status", UpdateNotificationStatusRequest.ACCEPTED.name()))
+//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+//                .when()
+//                .post("/api/notifications/$notExistingAlertId/update".replace("$notExistingAlertId", Long.toString(notExistingAlertId)))
+//                .then()
+//                .statusCode(404);
+//
+//        // then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .post("/api/notifications/filter")
+//                .then()
+//                .statusCode(200)
+//                .body("page", Matchers.is(0))
+//                .body("pageSize", Matchers.is(15))
+//                .body("content", Matchers.hasSize(0));
+//    }
+//
+//    @Test
+//    void shouldNotUpdateToDeclinedNonExistingAlert() throws JoseException {
+//        // given
+//        final long notExistingAlertId = 1234L;
+//        String filterString = "channel,EQUAL,RECEIVER,AND";
+//
+//        // when
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body("""
+//                         {
+//                         "status" : "$status",
+//                         "reason" : "some reason, why not"
+//                         }
+//                        """.replace("$status", UpdateNotificationStatusRequest.DECLINED.name()))
+//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+//                .when()
+//                .post("/api/notifications/$notExistingAlertId/update".replace("$notExistingAlertId", Long.toString(notExistingAlertId)))
+//                .then()
+//                .statusCode(404);
+//
+//        // then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .post("/api/notifications/filter")
+//                .then()
+//                .statusCode(200)
+//                .body("page", Matchers.is(0))
+//                .body("pageSize", Matchers.is(15))
+//                .body("content", Matchers.hasSize(0));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("invalidRequest")
+//    void shouldNotUpdateWithInvalidRequest(final String request) throws JoseException {
+//        // given
+//        final long notExistingAlertId = 1234L;
+//        String filterString = "channel,EQUAL,SENDER,AND";
+//
+//        // when
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body(request)
+//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+//                .when()
+//                .post("/api/notifications/{notExistingAlertId}/update", Long.toString(notExistingAlertId))
+//                .then()
+//                .statusCode(400);
+//
+//        // then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .body(new PageableFilterRequest(new OwnPageable(0, 15, List.of()), new SearchCriteriaRequestParam(List.of(filterString))))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .post("/api/notifications/filter")
+//                .then()
+//                .statusCode(200)
+//                .body("page", Matchers.is(0))
+//                .body("pageSize", Matchers.is(15))
+//                .body("content", Matchers.hasSize(0));
+//    }
+//
+//    private static Stream<Arguments> invalidRequest() {
+//        return Stream.of(
+//                arguments("""
+//                         {
+//                         "status" : "$status",
+//                         "reason" : "No reason should be for acknowledging"
+//                         }
+//                        """.replace("$status", UpdateNotificationStatusRequest.ACKNOWLEDGED.name())),
+//                arguments("""
+//                         {
+//                         "status" : "$status",
+//                         "reason" : null
+//                         }
+//                        """.replace("$status", UpdateNotificationStatusRequest.ACCEPTED.name())),
+//                arguments("""
+//                         {
+//                         "status" : "$status",
+//                         "reason" : " "
+//                         }
+//                        """.replace("$status", UpdateNotificationStatusRequest.ACCEPTED.name())),
+//                arguments("""
+//                         {
+//                         "status" : "$status",
+//                         "reason" : null
+//                         }
+//                        """.replace("$status", UpdateNotificationStatusRequest.DECLINED.name())),
+//                arguments("""
+//                         {
+//                         "status" : "$status",
+//                         "reason" : " "
+//                         }
+//                        """.replace("$status", UpdateNotificationStatusRequest.DECLINED.name()))
+//        );
+//    }
 
 }

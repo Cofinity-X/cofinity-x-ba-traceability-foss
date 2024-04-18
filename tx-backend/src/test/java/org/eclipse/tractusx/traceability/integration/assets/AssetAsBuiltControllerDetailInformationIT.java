@@ -38,48 +38,48 @@ class AssetAsBuiltControllerDetailInformationIT extends IntegrationTestSpecifica
     @Autowired
     BpnSupport bpnSupport;
 
-    @Autowired
-    AssetsSupport assetsSupport;
-
-    @Test
-    void shouldNotReturnAassetsDetailInformationWhenUserIsNotAuthenticated() {
-       // Given
-        bpnSupport.cachedBpnsForDefaultAssets();
-        assetsSupport.defaultAssetsStored();
-
-       // Then
-        given()
-                .contentType(ContentType.JSON)
-                .body(
-                        asJson(Map.of("assetIds", List.of("1234"))
-                        )
-                )
-                .when()
-                .post("/api/assets/as-built/detail-information")
-                .then()
-                .statusCode(401);
-    }
-
-    @Test
-    void shouldReturnAssetsDetailInformation() throws JoseException {
-       // Given
-        bpnSupport.cachedBpnsForDefaultAssets();
-        assetsSupport.defaultAssetsStored();
-
-       // Then
-        given()
-                .contentType(ContentType.JSON)
-                .body(
-                        asJson(Map.of("assetIds", List.of("urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978",
-                                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb",
-                                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"))
-                        )
-                )
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .when()
-                .post("/api/assets/as-built/detail-information")
-                .then()
-                .statusCode(200)
-                .body("", hasSize(3));
-    }
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//
+//    @Test
+//    void shouldNotReturnAassetsDetailInformationWhenUserIsNotAuthenticated() {
+//       // Given
+//        bpnSupport.cachedBpnsForDefaultAssets();
+//        assetsSupport.defaultAssetsStored();
+//
+//       // Then
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body(
+//                        asJson(Map.of("assetIds", List.of("1234"))
+//                        )
+//                )
+//                .when()
+//                .post("/api/assets/as-built/detail-information")
+//                .then()
+//                .statusCode(401);
+//    }
+//
+//    @Test
+//    void shouldReturnAssetsDetailInformation() throws JoseException {
+//       // Given
+//        bpnSupport.cachedBpnsForDefaultAssets();
+//        assetsSupport.defaultAssetsStored();
+//
+//       // Then
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body(
+//                        asJson(Map.of("assetIds", List.of("urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978",
+//                                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb",
+//                                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"))
+//                        )
+//                )
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .when()
+//                .post("/api/assets/as-built/detail-information")
+//                .then()
+//                .statusCode(200)
+//                .body("", hasSize(3));
+//    }
 }

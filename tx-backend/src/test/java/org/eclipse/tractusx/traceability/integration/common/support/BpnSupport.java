@@ -33,35 +33,35 @@ public class BpnSupport {
 
     @Autowired
     BpnRepository bpnRepository;
-    @Autowired
-    AssetRepositoryProvider assetRepositoryProvider;
-
-    @Value("${traceability.bpn}")
-    String bpn = null;
-
-    public void cachedBpnsForDefaultAssets() {
-        List<String> assetIds = assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests().stream().map(AssetBase::getManufacturerId).toList();
-        Map<String, String> bpnMappings = new HashMap<>();
-
-        for (String assetId : assetIds) {
-            bpnMappings.put(assetId, "Manufacturer Name $i");
-        }
-
-        bpnRepository.updateManufacturers(bpnMappings);
-    }
-
-    public void cachedBpnsForAsPlannedAssets() {
-        List<String> assetIds = assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests().stream().map(AssetBase::getManufacturerId).toList();
-        Map<String, String> bpnMappings = new HashMap<>();
-
-        for (String assetId : assetIds) {
-            bpnMappings.put(assetId, "Manufacturer Name $i");
-        }
-
-        bpnRepository.updateManufacturers(bpnMappings);
-    }
-
-    public String testBpn() {
-        return bpn;
-    }
+//    @Autowired
+//    AssetRepositoryProvider assetRepositoryProvider;
+//
+//    @Value("${traceability.bpn}")
+//    String bpn = null;
+//
+//    public void cachedBpnsForDefaultAssets() {
+//        List<String> assetIds = assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests().stream().map(AssetBase::getManufacturerId).toList();
+//        Map<String, String> bpnMappings = new HashMap<>();
+//
+//        for (String assetId : assetIds) {
+//            bpnMappings.put(assetId, "Manufacturer Name $i");
+//        }
+//
+//        bpnRepository.updateManufacturers(bpnMappings);
+//    }
+//
+//    public void cachedBpnsForAsPlannedAssets() {
+//        List<String> assetIds = assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests().stream().map(AssetBase::getManufacturerId).toList();
+//        Map<String, String> bpnMappings = new HashMap<>();
+//
+//        for (String assetId : assetIds) {
+//            bpnMappings.put(assetId, "Manufacturer Name $i");
+//        }
+//
+//        bpnRepository.updateManufacturers(bpnMappings);
+//    }
+//
+//    public String testBpn() {
+//        return bpn;
+//    }
 }

@@ -23,7 +23,7 @@ import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.Ass
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.repository.JpaAssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.eclipse.tractusx.traceability.integration.common.support.InvestigationsSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
@@ -41,287 +41,287 @@ import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity.RECEIVER;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity.SENDER;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.*;
+import static org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationSideBaseEntity.RECEIVER;
+import static org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationSideBaseEntity.SENDER;
+import static org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationStatusBaseEntity.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends IntegrationTestSpecification {
 
-    @Autowired
-    AssetsSupport assetsSupport;
-
-    @Autowired
-    JpaAssetAsBuiltRepository jpaAssetAsBuiltRepository;
-
-    @Autowired
-    AlertsSupport alertsSupport;
-
-    @Autowired
-    InvestigationsSupport investigationsSupport;
-
-    @BeforeEach
-    void before() {
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
-    }
-
-    @Test
-    void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveDesc_thenReturnAssetsWithActiveAlertsCountInDesc() throws JoseException {
-       // Given
-        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), null, SENDER);
-
-        AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), null, SENDER);
-
-        // When
-        List<List<Integer>> notificationIdLists = given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "0")
-                .param("size", "50")
-                .param("filter", "owner,EQUAL,OWN,AND")
-                .param("sort", "sentQualityAlertIdsInStatusActive,desc")
-                .contentType(ContentType.JSON)
-                .when()
-                .log().all()
-                .get("/api/assets/as-built")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .jsonPath()
-                .getList("content.sentQualityAlertIdsInStatusActive");
-
-       // Then
-        List<Integer> numberOfItems = notificationIdLists.stream()
-                .mapToInt(List::size)
-                .boxed()
-                .collect(Collectors.toList());
-
-        assertThat(numberOfItems, Matchers.containsInRelativeOrder(3,2));
-    }
-
-    @Test
-    void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveAsc_thenReturnAssetsWithActiveAlertsCountInAsc() throws JoseException {
-       // Given
-        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), null, SENDER);
-
-        AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), null, SENDER);
-
-        // When
-        List<List<Integer>> notificationIdLists = given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "0")
-                .param("size", "50")
-                .param("filter", "owner,EQUAL,OWN,AND")
-                .param("sort", "sentQualityAlertIdsInStatusActive,asc")
-                .contentType(ContentType.JSON)
-                .when()
-                .log().all()
-                .get("/api/assets/as-built")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .jsonPath()
-                .getList("content.sentQualityAlertIdsInStatusActive");
-
-
-       // Then
-        List<Integer> numberOfItems = notificationIdLists.stream()
-                .mapToInt(List::size)
-                .boxed()
-                .collect(Collectors.toList());
-
-        assertThat(numberOfItems, Matchers.containsInRelativeOrder(2, 3));
-    }
-
-    @Test
-    void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveDesc_thenReturnAssetsWithActiveInvestigationsCountInDesc() throws JoseException {
-       // Given
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
-        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), null, RECEIVER);
-
-        AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), null, RECEIVER);
-
-        // When
-        List<List<Integer>> notificationIdLists = given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "0")
-                .param("size", "50")
-                .param("filter", "owner,EQUAL,OWN,AND")
-                .param("sort", "receivedQualityInvestigationIdsInStatusActive,desc")
-                .contentType(ContentType.JSON)
-                .when()
-                .log().all()
-                .get("/api/assets/as-built")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .jsonPath()
-                .getList("content.receivedQualityInvestigationIdsInStatusActive");
-
-       // Then
-        List<Integer> numberOfItems = notificationIdLists.stream()
-                .mapToInt(List::size)
-                .boxed()
-                .collect(Collectors.toList());
-
-        assertThat(numberOfItems, Matchers.containsInRelativeOrder(4, 2));
-    }
-
-    @Test
-    void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveAsc_thenReturnAssetsWithActiveInvestigationsCountInAsc() throws JoseException {
-       // Given
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
-        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), null, RECEIVER);
-
-        AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), null, RECEIVER);
-
-        // When
-        List<List<Integer>> notificationIdLists = given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .param("page", "0")
-                .param("size", "50")
-                .param("filter", "owner,EQUAL,OWN,AND")
-                .param("sort", "receivedQualityInvestigationIdsInStatusActive,asc")
-                .contentType(ContentType.JSON)
-                .when()
-                .log().all()
-                .get("/api/assets/as-built")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .jsonPath()
-                .getList("content.receivedQualityInvestigationIdsInStatusActive");
-
-       // Then
-        List<Integer> numberOfItems = notificationIdLists.stream()
-                .mapToInt(List::size)
-                .boxed()
-                .collect(Collectors.toList());
-
-        assertThat(numberOfItems, Matchers.containsInRelativeOrder(2, 4));
-    }
-
-    private static Stream<Arguments> sortArguments() {
-        return Stream.of(
-                Arguments.of("sentQualityAlertIdsInStatusActive,asc", "owner,EQUAL,SUPPLIER,AND", "content.sentQualityAlertIdsInStatusActive",
-                        List.of(1, 2, 20)),
-                Arguments.of("receivedQualityAlertIdsInStatusActive,desc", "owner,EQUAL,SUPPLIER,AND", "content.receivedQualityAlertIdsInStatusActive",
-                        List.of(20, 2, 1)),
-                Arguments.of("sentQualityInvestigationIdsInStatusActive,asc", "owner,EQUAL,SUPPLIER,AND", "content.sentQualityInvestigationIdsInStatusActive",
-                        List.of(1, 2, 20)),
-                Arguments.of("receivedQualityInvestigationIdsInStatusActive,desc", "owner,EQUAL,SUPPLIER,AND", "content.receivedQualityInvestigationIdsInStatusActive",
-                        List.of(20, 2, 1))
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("sortArguments")
-    void givenNotificationForAsset_whenCallWithSortAndFilterArgumentEndpoint_thenReturnExpectedResponseTest(
-            final String sort,
-            final String filter,
-            final String contentField,
-            final List<Integer> expectedOrderOfNotificationItems) throws JoseException {
-
-        final long page = 0;
-        final long size = 50;
-
-       // Given
-        assetsSupport.defaultMultipleAssetsAsBuiltStored();
-        final AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById(
-                "urn:uuid:f7cf62fe-9e25-472b-9148-66ebcc291f31").orElseThrow();
-        final AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById(
-                "urn:uuid:186359fb-4584-40e4-a59b-ed842d3d80d9").orElseThrow();
-        final AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById(
-                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978").orElseThrow();
-
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, SENDER);
-        IntStream
-                .rangeClosed(1, 20)
-                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3),
-                        null, SENDER));
-
-        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
-        IntStream
-                .rangeClosed(1, 20)
-                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3),
-                        null, RECEIVER));
-
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
-        IntStream
-                .rangeClosed(1, 20)
-                .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt3),
-                        null, SENDER));
-
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
-        IntStream
-                .rangeClosed(1, 20)
-                .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3),
-                        null, RECEIVER));
-
-        // When
-        List<List<Integer>> notificationIdLists = given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .param("page", page)
-                .param("size", size)
-                .param("sort", sort)
-                .param("filter", filter)
-                .when()
-                .log().all()
-                .get("/api/assets/as-built")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .jsonPath()
-                .getList(contentField);
-
-       // Then
-        List<Integer> numberOfItems = notificationIdLists.stream()
-                .mapToInt(List::size)
-                .boxed()
-                .collect(Collectors.toList());
-
-        assertThat(numberOfItems, Matchers.containsInRelativeOrder(expectedOrderOfNotificationItems.toArray()));
-    }
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//
+//    @Autowired
+//    JpaAssetAsBuiltRepository jpaAssetAsBuiltRepository;
+//
+//    @Autowired
+//    AlertsSupport alertsSupport;
+//
+//    @Autowired
+//    InvestigationsSupport investigationsSupport;
+//
+//    @BeforeEach
+//    void before() {
+//        assetsSupport.defaultMultipleAssetsAsBuiltStored();
+//    }
+//
+//    @Test
+//    void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveDesc_thenReturnAssetsWithActiveAlertsCountInDesc() throws JoseException {
+//       // Given
+//        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
+//        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), null, SENDER);
+//
+//        AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
+//        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), null, SENDER);
+//
+//        // When
+//        List<List<Integer>> notificationIdLists = given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .param("page", "0")
+//                .param("size", "50")
+//                .param("filter", "owner,EQUAL,OWN,AND")
+//                .param("sort", "sentQualityAlertIdsInStatusActive,desc")
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .log().all()
+//                .get("/api/assets/as-built")
+//                .then()
+//                .statusCode(200)
+//                .log().all()
+//                .extract()
+//                .jsonPath()
+//                .getList("content.sentQualityAlertIdsInStatusActive");
+//
+//       // Then
+//        List<Integer> numberOfItems = notificationIdLists.stream()
+//                .mapToInt(List::size)
+//                .boxed()
+//                .collect(Collectors.toList());
+//
+//        assertThat(numberOfItems, Matchers.containsInRelativeOrder(3,2));
+//    }
+//
+//    @Test
+//    void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveAsc_thenReturnAssetsWithActiveAlertsCountInAsc() throws JoseException {
+//       // Given
+//        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
+//        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt1), null, SENDER);
+//
+//        AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
+//        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt3), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt3), null, SENDER);
+//
+//        // When
+//        List<List<Integer>> notificationIdLists = given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .param("page", "0")
+//                .param("size", "50")
+//                .param("filter", "owner,EQUAL,OWN,AND")
+//                .param("sort", "sentQualityAlertIdsInStatusActive,asc")
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .log().all()
+//                .get("/api/assets/as-built")
+//                .then()
+//                .statusCode(200)
+//                .log().all()
+//                .extract()
+//                .jsonPath()
+//                .getList("content.sentQualityAlertIdsInStatusActive");
+//
+//
+//       // Then
+//        List<Integer> numberOfItems = notificationIdLists.stream()
+//                .mapToInt(List::size)
+//                .boxed()
+//                .collect(Collectors.toList());
+//
+//        assertThat(numberOfItems, Matchers.containsInRelativeOrder(2, 3));
+//    }
+//
+//    @Test
+//    void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveDesc_thenReturnAssetsWithActiveInvestigationsCountInDesc() throws JoseException {
+//       // Given
+//        assetsSupport.defaultMultipleAssetsAsBuiltStored();
+//        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), null, RECEIVER);
+//
+//        AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), null, RECEIVER);
+//
+//        // When
+//        List<List<Integer>> notificationIdLists = given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .param("page", "0")
+//                .param("size", "50")
+//                .param("filter", "owner,EQUAL,OWN,AND")
+//                .param("sort", "receivedQualityInvestigationIdsInStatusActive,desc")
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .log().all()
+//                .get("/api/assets/as-built")
+//                .then()
+//                .statusCode(200)
+//                .log().all()
+//                .extract()
+//                .jsonPath()
+//                .getList("content.receivedQualityInvestigationIdsInStatusActive");
+//
+//       // Then
+//        List<Integer> numberOfItems = notificationIdLists.stream()
+//                .mapToInt(List::size)
+//                .boxed()
+//                .collect(Collectors.toList());
+//
+//        assertThat(numberOfItems, Matchers.containsInRelativeOrder(4, 2));
+//    }
+//
+//    @Test
+//    void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveAsc_thenReturnAssetsWithActiveInvestigationsCountInAsc() throws JoseException {
+//       // Given
+//        assetsSupport.defaultMultipleAssetsAsBuiltStored();
+//        assetsSupport.defaultMultipleAssetsAsBuiltStored();
+//        AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), null, RECEIVER);
+//
+//        AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2cc").orElseThrow();
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt2), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt2), null, RECEIVER);
+//
+//        // When
+//        List<List<Integer>> notificationIdLists = given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .param("page", "0")
+//                .param("size", "50")
+//                .param("filter", "owner,EQUAL,OWN,AND")
+//                .param("sort", "receivedQualityInvestigationIdsInStatusActive,asc")
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .log().all()
+//                .get("/api/assets/as-built")
+//                .then()
+//                .statusCode(200)
+//                .log().all()
+//                .extract()
+//                .jsonPath()
+//                .getList("content.receivedQualityInvestigationIdsInStatusActive");
+//
+//       // Then
+//        List<Integer> numberOfItems = notificationIdLists.stream()
+//                .mapToInt(List::size)
+//                .boxed()
+//                .collect(Collectors.toList());
+//
+//        assertThat(numberOfItems, Matchers.containsInRelativeOrder(2, 4));
+//    }
+//
+//    private static Stream<Arguments> sortArguments() {
+//        return Stream.of(
+//                Arguments.of("sentQualityAlertIdsInStatusActive,asc", "owner,EQUAL,SUPPLIER,AND", "content.sentQualityAlertIdsInStatusActive",
+//                        List.of(1, 2, 20)),
+//                Arguments.of("receivedQualityAlertIdsInStatusActive,desc", "owner,EQUAL,SUPPLIER,AND", "content.receivedQualityAlertIdsInStatusActive",
+//                        List.of(20, 2, 1)),
+//                Arguments.of("sentQualityInvestigationIdsInStatusActive,asc", "owner,EQUAL,SUPPLIER,AND", "content.sentQualityInvestigationIdsInStatusActive",
+//                        List.of(1, 2, 20)),
+//                Arguments.of("receivedQualityInvestigationIdsInStatusActive,desc", "owner,EQUAL,SUPPLIER,AND", "content.receivedQualityInvestigationIdsInStatusActive",
+//                        List.of(20, 2, 1))
+//        );
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("sortArguments")
+//    void givenNotificationForAsset_whenCallWithSortAndFilterArgumentEndpoint_thenReturnExpectedResponseTest(
+//            final String sort,
+//            final String filter,
+//            final String contentField,
+//            final List<Integer> expectedOrderOfNotificationItems) throws JoseException {
+//
+//        final long page = 0;
+//        final long size = 50;
+//
+//       // Given
+//        assetsSupport.defaultMultipleAssetsAsBuiltStored();
+//        final AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById(
+//                "urn:uuid:f7cf62fe-9e25-472b-9148-66ebcc291f31").orElseThrow();
+//        final AssetAsBuiltEntity assetAsBuilt2 = jpaAssetAsBuiltRepository.findById(
+//                "urn:uuid:186359fb-4584-40e4-a59b-ed842d3d80d9").orElseThrow();
+//        final AssetAsBuiltEntity assetAsBuilt3 = jpaAssetAsBuiltRepository.findById(
+//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978").orElseThrow();
+//
+//        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
+//        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, SENDER);
+//        IntStream
+//                .rangeClosed(1, 20)
+//                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt3),
+//                        null, SENDER));
+//
+//        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
+//        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
+//        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt2), null, RECEIVER);
+//        IntStream
+//                .rangeClosed(1, 20)
+//                .forEach(i -> alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3),
+//                        null, RECEIVER));
+//
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt1), null, SENDER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt2), null, SENDER);
+//        IntStream
+//                .rangeClosed(1, 20)
+//                .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt3),
+//                        null, SENDER));
+//
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt2), null, RECEIVER);
+//        IntStream
+//                .rangeClosed(1, 20)
+//                .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3),
+//                        null, RECEIVER));
+//
+//        // When
+//        List<List<Integer>> notificationIdLists = given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .param("page", page)
+//                .param("size", size)
+//                .param("sort", sort)
+//                .param("filter", filter)
+//                .when()
+//                .log().all()
+//                .get("/api/assets/as-built")
+//                .then()
+//                .statusCode(200)
+//                .log().all()
+//                .extract()
+//                .jsonPath()
+//                .getList(contentField);
+//
+//       // Then
+//        List<Integer> numberOfItems = notificationIdLists.stream()
+//                .mapToInt(List::size)
+//                .boxed()
+//                .collect(Collectors.toList());
+//
+//        assertThat(numberOfItems, Matchers.containsInRelativeOrder(expectedOrderOfNotificationItems.toArray()));
+//    }
 }

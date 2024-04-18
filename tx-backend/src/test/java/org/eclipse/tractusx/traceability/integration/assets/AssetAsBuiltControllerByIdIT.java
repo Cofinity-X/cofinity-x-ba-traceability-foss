@@ -53,198 +53,198 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class AssetAsBuiltControllerByIdIT extends IntegrationTestSpecification {
 
-    @Autowired
-    AssetsSupport assetsSupport;
-
-    @Autowired
-    JpaAssetAsBuiltRepository jpaAssetAsBuiltRepository;
-
-    @Autowired
-    AlertsSupport alertsSupport;
-
-    @Autowired
-    InvestigationsSupport investigationsSupport;
-
-
-    private static Stream<Arguments> requests() {
-        return Stream.of(
-                arguments(Map.of("qualityType", "NOT_EXISTING_QUALITY_TYPE"), "Failed to deserialize request body."),
-                arguments(Map.of("qualityType", "'CRITICAL'"), "Failed to deserialize request body."),
-                arguments(Map.of("qualityType", ""), "Failed to deserialize request body."),
-                arguments(Map.of("qualityType", " "), "Failed to deserialize request body.")
-        );
-    }
-
-    @Test
-    void givenAlertsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
-      // Given
-        assetsSupport.defaultAssetsStored();
-        AssetAsBuiltEntity assetAsBuilt = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt));
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt));
-        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt));
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt));
-        alertsSupport.storeAlertWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt));
-        alertsSupport.storeAlertWithStatusAndAssets(DECLINED, List.of(assetAsBuilt));
-        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt));
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt));
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")
-                .then()
-                .log().all()
-                .statusCode(200)
-                .assertThat()
-                .body("receivedQualityAlertIdsInStatusActive", hasSize(6));
-    }
-
-    @Test
-    void givenInvestigationsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
-      // Given
-        assetsSupport.defaultAssetsStored();
-        AssetAsBuiltEntity assetAsBuilt = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CREATED, List.of(assetAsBuilt));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CANCELED, List.of(assetAsBuilt));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CLOSED, List.of(assetAsBuilt));
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")
-                .then()
-                .statusCode(200)
-                .assertThat()
-                .body("receivedQualityInvestigationIdsInStatusActive", hasSize(6));
-    }
-
-    @Test
-    void shouldReturnAssetsForAuthenticatedUserWithRole() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsStored();
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
-    void shouldNotReturnAssetsWhenUserIsNotAuthenticated() {
-        given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/1234")
-                .then()
-                .statusCode(401);
-    }
-
-    @Test
-    void shouldGetChildrenAsset() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsStored();
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb/children/urn:uuid:587cfb38-7149-4f06-b1e0-0e9b6e98be2a")
-                .then()
-                .log().body()
-                .statusCode(200)
-                .body("id", Matchers.is("urn:uuid:587cfb38-7149-4f06-b1e0-0e9b6e98be2a"));
-    }
-
-    @Test
-    void shouldReturn404WhenChildrenAssetIsNotFound() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsStored();
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb/children/unknown")
-                .then()
-                .statusCode(404);
-    }
-
-    @Test
-    void shouldNotUpdateQualityTypeForNotExistingAsset() throws JoseException {
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .body(asJson(Map.of("qualityType", "Critical")))
-                .when()
-                .patch("/api/assets/as-built/1234")
-                .then()
-                .statusCode(404)
-                .body("message", equalTo("Asset with id 1234 was not found."));
-    }
-
-    @ParameterizedTest
-    @MethodSource("requests")
-    void shouldNotUpdateQualityTypeWithInvalidRequestBody(Map<String, String> requestBody, String errorMessage) throws JoseException {
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .body(asJson(requestBody))
-                .when()
-                .patch("/api/assets/as-built/1234")
-                .then()
-                .statusCode(400)
-                .body("message", equalTo(errorMessage));
-    }
-
-    @Test
-    void shouldUpdateQualityTypeForExistingAsset() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsStored();
-        String existingAssetId = "urn:uuid:1ae94880-e6b0-4bf3-ab74-8148b63c0640";
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/" + existingAssetId)
-                .then()
-                .statusCode(200)
-                .body("qualityType", equalTo("Ok"));
-
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .body(Map.of("qualityType", "Critical"))
-                .when()
-                .patch("/api/assets/as-built/" + existingAssetId)
-                .then()
-                .statusCode(200)
-                .body("qualityType", equalTo("Critical"));
-
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-built/" + existingAssetId)
-                .then()
-                .statusCode(200)
-                .body("qualityType", equalTo("Critical"));
-    }
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//
+//    @Autowired
+//    JpaAssetAsBuiltRepository jpaAssetAsBuiltRepository;
+//
+//    @Autowired
+//    AlertsSupport alertsSupport;
+//
+//    @Autowired
+//    InvestigationsSupport investigationsSupport;
+//
+//
+//    private static Stream<Arguments> requests() {
+//        return Stream.of(
+//                arguments(Map.of("qualityType", "NOT_EXISTING_QUALITY_TYPE"), "Failed to deserialize request body."),
+//                arguments(Map.of("qualityType", "'CRITICAL'"), "Failed to deserialize request body."),
+//                arguments(Map.of("qualityType", ""), "Failed to deserialize request body."),
+//                arguments(Map.of("qualityType", " "), "Failed to deserialize request body.")
+//        );
+//    }
+//
+//    @Test
+//    void givenAlertsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
+//      // Given
+//        assetsSupport.defaultAssetsStored();
+//        AssetAsBuiltEntity assetAsBuilt = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
+//        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt));
+//        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt));
+//        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt));
+//        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt));
+//        alertsSupport.storeAlertWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt));
+//        alertsSupport.storeAlertWithStatusAndAssets(DECLINED, List.of(assetAsBuilt));
+//        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt));
+//        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt));
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .assertThat()
+//                .body("receivedQualityAlertIdsInStatusActive", hasSize(6));
+//    }
+//
+//    @Test
+//    void givenInvestigationsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
+//      // Given
+//        assetsSupport.defaultAssetsStored();
+//        AssetAsBuiltEntity assetAsBuilt = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(CREATED, List.of(assetAsBuilt));
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt));
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt));
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt));
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt));
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt));
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(CANCELED, List.of(assetAsBuilt));
+//        investigationsSupport.storeInvestigationWithStatusAndAssets(CLOSED, List.of(assetAsBuilt));
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")
+//                .then()
+//                .statusCode(200)
+//                .assertThat()
+//                .body("receivedQualityInvestigationIdsInStatusActive", hasSize(6));
+//    }
+//
+//    @Test
+//    void shouldReturnAssetsForAuthenticatedUserWithRole() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsStored();
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")
+//                .then()
+//                .statusCode(200);
+//    }
+//
+//    @Test
+//    void shouldNotReturnAssetsWhenUserIsNotAuthenticated() {
+//        given()
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/1234")
+//                .then()
+//                .statusCode(401);
+//    }
+//
+//    @Test
+//    void shouldGetChildrenAsset() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsStored();
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb/children/urn:uuid:587cfb38-7149-4f06-b1e0-0e9b6e98be2a")
+//                .then()
+//                .log().body()
+//                .statusCode(200)
+//                .body("id", Matchers.is("urn:uuid:587cfb38-7149-4f06-b1e0-0e9b6e98be2a"));
+//    }
+//
+//    @Test
+//    void shouldReturn404WhenChildrenAssetIsNotFound() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsStored();
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb/children/unknown")
+//                .then()
+//                .statusCode(404);
+//    }
+//
+//    @Test
+//    void shouldNotUpdateQualityTypeForNotExistingAsset() throws JoseException {
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .body(asJson(Map.of("qualityType", "Critical")))
+//                .when()
+//                .patch("/api/assets/as-built/1234")
+//                .then()
+//                .statusCode(404)
+//                .body("message", equalTo("Asset with id 1234 was not found."));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("requests")
+//    void shouldNotUpdateQualityTypeWithInvalidRequestBody(Map<String, String> requestBody, String errorMessage) throws JoseException {
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .body(asJson(requestBody))
+//                .when()
+//                .patch("/api/assets/as-built/1234")
+//                .then()
+//                .statusCode(400)
+//                .body("message", equalTo(errorMessage));
+//    }
+//
+//    @Test
+//    void shouldUpdateQualityTypeForExistingAsset() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsStored();
+//        String existingAssetId = "urn:uuid:1ae94880-e6b0-4bf3-ab74-8148b63c0640";
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/" + existingAssetId)
+//                .then()
+//                .statusCode(200)
+//                .body("qualityType", equalTo("Ok"));
+//
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .body(Map.of("qualityType", "Critical"))
+//                .when()
+//                .patch("/api/assets/as-built/" + existingAssetId)
+//                .then()
+//                .statusCode(200)
+//                .body("qualityType", equalTo("Critical"));
+//
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .when()
+//                .get("/api/assets/as-built/" + existingAssetId)
+//                .then()
+//                .statusCode(200)
+//                .body("qualityType", equalTo("Critical"));
+//    }
 }

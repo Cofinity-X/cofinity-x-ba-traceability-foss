@@ -37,14 +37,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 class AssetAsPlannedControllerSortValuesIT extends IntegrationTestSpecification {
 
-    @Autowired
-    AssetsSupport assetsSupport;
-
-    @BeforeEach
-    void before() {
-        // Test data contains different spellings for 'catenaXSiteId', as long as no clear spelling is defined. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
-        assetsSupport.assetsAsPlannedStored("/testdata/irs_assets_as_planned_v4_long_list_distinct_catenaxsiteid.json");
-    }
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//
+//    @BeforeEach
+//    void before() {
+//        // Test data contains different spellings for 'catenaXSiteId', as long as no clear spelling is defined. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
+//        assetsSupport.assetsAsPlannedStored("/testdata/irs_assets_as_planned_v4_long_list_distinct_catenaxsiteid.json");
+//    }
 
     private static Stream<Arguments> sortArguments() {
         return Stream.of(

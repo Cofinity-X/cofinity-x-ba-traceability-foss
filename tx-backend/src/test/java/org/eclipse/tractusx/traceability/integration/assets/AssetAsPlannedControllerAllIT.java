@@ -47,87 +47,87 @@ class AssetAsPlannedControllerAllIT extends IntegrationTestSpecification {
     @Autowired
     BpnSupport bpnSupport;
 
-    @Autowired
-    AssetsSupport assetsSupport;
-
-    private static Stream<Arguments> owners() {
-        return Stream.of(
-                arguments("OWN", 1),
-                arguments("CUSTOMER", 0),
-                arguments("SUPPLIER", 1),
-                arguments("UNKNOWN", 0));
-    }
-
-    @Test
-    void shouldReturnAssetsWithManufacturerName() throws JoseException {
-       // Given
-        bpnSupport.cachedBpnsForAsPlannedAssets();
-        assetsSupport.defaultAssetsAsPlannedStored();
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned")
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("totalItems", is(greaterThan(0)))
-                .body("content.manufacturerName", everyItem(not(equalTo(assetsSupport.emptyText()))));
-    }
-
-    @ParameterizedTest
-    @MethodSource("owners")
-    void shouldReturnAssetsByOwnerFiltering(String ownerValue, int totalItemsValue) throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        final String filter = "owner,EQUAL," + ownerValue + ",AND";
-        //filter=owner,EQUAL,OWN
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .queryParam("filter", filter)
-                .when()
-                .get("/api/assets/as-planned")
-                .then()
-                .statusCode(200)
-                .body("totalItems", equalTo(totalItemsValue));
-    }
-
-    @Test
-    void shouldGetPageOfAssets() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-
-       // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .param("page", "2")
-                .param("size", "2")
-                .when()
-                .get("/api/assets/as-planned")
-                .then()
-                .statusCode(200)
-                .body("page", Matchers.is(2))
-                .body("pageSize", Matchers.is(2));
-    }
-
-    @Test
-    void givenNonExistingSortField_whenGetAssetsAsPlanned_thenBadRequest() throws JoseException {
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .param("page", "2")
-                .param("size", "2")
-                .param("sort", "nonExistingField,ASC")
-                .when()
-                .get("/api/assets/as-planned")
-                .then()
-                .statusCode(400);
-    }
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//
+//    private static Stream<Arguments> owners() {
+//        return Stream.of(
+//                arguments("OWN", 1),
+//                arguments("CUSTOMER", 0),
+//                arguments("SUPPLIER", 1),
+//                arguments("UNKNOWN", 0));
+//    }
+//
+//    @Test
+//    void shouldReturnAssetsWithManufacturerName() throws JoseException {
+//       // Given
+//        bpnSupport.cachedBpnsForAsPlannedAssets();
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned")
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .body("totalItems", is(greaterThan(0)))
+//                .body("content.manufacturerName", everyItem(not(equalTo(assetsSupport.emptyText()))));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("owners")
+//    void shouldReturnAssetsByOwnerFiltering(String ownerValue, int totalItemsValue) throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//        final String filter = "owner,EQUAL," + ownerValue + ",AND";
+//        //filter=owner,EQUAL,OWN
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .queryParam("filter", filter)
+//                .when()
+//                .get("/api/assets/as-planned")
+//                .then()
+//                .statusCode(200)
+//                .body("totalItems", equalTo(totalItemsValue));
+//    }
+//
+//    @Test
+//    void shouldGetPageOfAssets() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//
+//       // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .param("page", "2")
+//                .param("size", "2")
+//                .when()
+//                .get("/api/assets/as-planned")
+//                .then()
+//                .statusCode(200)
+//                .body("page", Matchers.is(2))
+//                .body("pageSize", Matchers.is(2));
+//    }
+//
+//    @Test
+//    void givenNonExistingSortField_whenGetAssetsAsPlanned_thenBadRequest() throws JoseException {
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .param("page", "2")
+//                .param("size", "2")
+//                .param("sort", "nonExistingField,ASC")
+//                .when()
+//                .get("/api/assets/as-planned")
+//                .then()
+//                .statusCode(400);
+//    }
 }

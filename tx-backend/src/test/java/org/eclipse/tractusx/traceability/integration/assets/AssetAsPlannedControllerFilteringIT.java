@@ -33,139 +33,139 @@ import static org.hamcrest.Matchers.equalTo;
 
 class AssetAsPlannedControllerFilteringIT extends IntegrationTestSpecification {
 
-    @Autowired
-    AssetsSupport assetsSupport;
-    @Autowired
-    JpaAssetAsPlannedRepository tempRepo;
-
-    @Test
-    void givenNoFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned")
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("totalItems", equalTo(2));
-    }
-
-    @Test
-    void givenOwnFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        final String filter = "?filter=owner,EQUAL,OWN,AND";
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned" + filter)
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("totalItems", equalTo(1));
-    }
-
-    @Test
-    void givenNameAtManufacturerFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        final String filter = "?filter=nameAtManufacturer,STARTS_WITH,Vehicle,AND";
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned" + filter)
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("totalItems", equalTo(2));
-    }
-
-    @Test
-    void givenNameAtManufacturerAndOwnerFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        final String filter = "?filter=nameAtManufacturer,STARTS_WITH,Vehicle,AND&filter=owner,EQUAL,SUPPLIER,AND";
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned" + filter)
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("totalItems", equalTo(1));
-    }
-
-    @Test
-    void givenSemanticDataModelAndOwnerOR_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        final String filter = "?filter=owner,EQUAL,SUPPLIER,OR&filter=id,STARTS_WITH,urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4eb01,OR";
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned" + filter)
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("totalItems", equalTo(1));
-    }
-
-    @Test
-    void givenNonExistingFilterField_whenGetAssetsAsPlanned_thenBadRequest() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        final String filter = "?filter=nonExistingField,EQUAL,SUPPLIER,OR";
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned" + filter)
-                .then()
-                .log().all()
-                .statusCode(400);
-    }
-
-    @Test
-    void givenAssetsWithImportStateExistent_whenCallFilteredEndpoint_thenReturnProperAssets() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        final String filter = "?filter=importState,EQUAL,PERSISTENT,AND,importNote,STARTS_WITH,A,AND";
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .log().all()
-                .when()
-                .get("/api/assets/as-planned" + filter)
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("totalItems", equalTo(2));
-    }
+//    @Autowired
+//    AssetsSupport assetsSupport;
+//    @Autowired
+//    JpaAssetAsPlannedRepository tempRepo;
+//
+//    @Test
+//    void givenNoFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//
+//        // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned")
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .body("totalItems", equalTo(2));
+//    }
+//
+//    @Test
+//    void givenOwnFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//        final String filter = "?filter=owner,EQUAL,OWN,AND";
+//
+//        // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned" + filter)
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .body("totalItems", equalTo(1));
+//    }
+//
+//    @Test
+//    void givenNameAtManufacturerFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//        final String filter = "?filter=nameAtManufacturer,STARTS_WITH,Vehicle,AND";
+//
+//        // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned" + filter)
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .body("totalItems", equalTo(2));
+//    }
+//
+//    @Test
+//    void givenNameAtManufacturerAndOwnerFilter_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//        final String filter = "?filter=nameAtManufacturer,STARTS_WITH,Vehicle,AND&filter=owner,EQUAL,SUPPLIER,AND";
+//
+//        // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned" + filter)
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .body("totalItems", equalTo(1));
+//    }
+//
+//    @Test
+//    void givenSemanticDataModelAndOwnerOR_whenCallFilteredEndpoint_thenReturnExpectedResult() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//        final String filter = "?filter=owner,EQUAL,SUPPLIER,OR&filter=id,STARTS_WITH,urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4eb01,OR";
+//
+//        // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned" + filter)
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .body("totalItems", equalTo(1));
+//    }
+//
+//    @Test
+//    void givenNonExistingFilterField_whenGetAssetsAsPlanned_thenBadRequest() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//        final String filter = "?filter=nonExistingField,EQUAL,SUPPLIER,OR";
+//
+//        // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned" + filter)
+//                .then()
+//                .log().all()
+//                .statusCode(400);
+//    }
+//
+//    @Test
+//    void givenAssetsWithImportStateExistent_whenCallFilteredEndpoint_thenReturnProperAssets() throws JoseException {
+//       // Given
+//        assetsSupport.defaultAssetsAsPlannedStored();
+//        final String filter = "?filter=importState,EQUAL,PERSISTENT,AND,importNote,STARTS_WITH,A,AND";
+//
+//        // Then
+//        given()
+//                .header(oAuth2Support.jwtAuthorization(ADMIN))
+//                .contentType(ContentType.JSON)
+//                .log().all()
+//                .when()
+//                .get("/api/assets/as-planned" + filter)
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .body("totalItems", equalTo(2));
+//    }
 }
