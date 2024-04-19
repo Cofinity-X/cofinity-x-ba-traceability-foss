@@ -95,14 +95,14 @@ export class PartsService {
             if (resultsAsBuilt) {
                 return resultsAsBuilt;
             }
-        }
+        } else {
+            const resultsAsPlanned = this.apiService
+                .post<PartResponse[]>(`${this.url}/assets/as-planned/detail-information`, { assetIds })
+                .pipe(map(parts => PartsAssembler.assemblePartList(parts, MainAspectType.AS_PLANNED)));
 
-        const resultsAsPlanned = this.apiService
-            .post<PartResponse[]>(`${this.url}/assets/as-planned/detail-information`, { assetIds })
-            .pipe(map(parts => PartsAssembler.assemblePartList(parts, MainAspectType.AS_PLANNED)));
-
-        if (resultsAsPlanned) {
-            return resultsAsPlanned;
+            if (resultsAsPlanned) {
+                return resultsAsPlanned;
+            }
         }
     }
 
