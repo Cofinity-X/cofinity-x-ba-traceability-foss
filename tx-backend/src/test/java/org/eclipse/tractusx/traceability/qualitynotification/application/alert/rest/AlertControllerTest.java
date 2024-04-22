@@ -47,7 +47,7 @@ import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.eclipse.tractusx.traceability.qualitynotification.domain.alert.model.exception.StartQualityNotificationDomain.from;
+import static org.eclipse.tractusx.traceability.qualitynotification.domain.alert.model.StartQualityNotification.from;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -58,12 +58,13 @@ class AlertControllerTest {
     @Mock
     private QualityNotificationService alertService;
 
+
     @InjectMocks
     private AlertController controller;
 
     @Test
     void givenRequestBody_whenAlertAssets_thenResponse() {
-       // Given
+        // given
         final List<String> partIds = List.of("partId1", "partId2");
         final Instant targetDate = Instant.parse("2099-03-11T22:44:06.333826952Z");
         final QualityNotificationId notificationId = new QualityNotificationId(666L);
@@ -76,16 +77,16 @@ class AlertControllerTest {
                 .build();
         when(alertService.start(Mockito.eq(from(request)))).thenReturn(notificationId);
 
-        // When
+        // when
         final QualityNotificationIdResponse result = controller.alertAssets(request);
 
-       // Then
+        // then
         assertThat(result).hasFieldOrPropertyWithValue("id", notificationId.value());
     }
 
     @Test
     void givenRequest_whenGetAlert_thenProperResponse() {
-       // Given
+        // given
         final Long request = 69L;
         final QualityNotification notification = InvestigationTestDataFactory.createInvestigationTestData(
                 QualityNotificationStatus.ACCEPTED,
@@ -93,10 +94,10 @@ class AlertControllerTest {
         );
         when(alertService.find(request)).thenReturn(notification);
 
-        // When
+        // when
         final AlertResponse result = controller.getAlert(request);
 
-       // Then
+        // then
         assertThat(result)
                 .hasFieldOrPropertyWithValue("id", notification.getNotificationId().value())
                 .hasFieldOrPropertyWithValue("status", QualityNotificationStatusResponse.ACCEPTED)
@@ -124,54 +125,54 @@ class AlertControllerTest {
 
     @Test
     void givenRequest_whenApproveAlert_thenProcessCorrectly() {
-       // Given
+        // given
         final Long request = 1L;
 
-        // When
+        // when
         controller.approveAlert(request);
 
-       // Then
+        // then
         verify(alertService, times(1)).approve(request);
     }
 
     @Test
     void givenRequest_whenCancelAlert_thenProcessCorrectly() {
-       // Given
+        // given
         final Long request = 1L;
 
-        // When
+        // when
         controller.cancelAlert(request);
 
-       // Then
+        // then
         verify(alertService, times(1)).cancel(request);
     }
 
     @Test
     void givenRequest_whenCloseAlert_thenProcessCorrectly() {
-       // Given
+        // given
         final Long param = 1L;
         final CloseQualityNotificationRequest request = new CloseQualityNotificationRequest();
         request.setReason("just because");
 
-        // When
+        // when
         controller.closeAlert(param, request);
 
-       // Then
+        // then
         verify(alertService, times(1)).update(param, QualityNotificationStatus.CLOSED, "just because");
     }
 
     @Test
     void givenRequest_whenUpdateAlert_thenProcessCorrectly() {
-       // Given
+        // given
         final Long param = 1L;
         final UpdateQualityNotificationRequest request = new UpdateQualityNotificationRequest();
         request.setReason("just because I say so");
         request.setStatus(UpdateQualityNotificationStatusRequest.ACCEPTED);
 
-        // When
+        // when
         controller.updateAlert(param, request);
 
-       // Then
+        // then
         verify(alertService, times(1)).update(param, QualityNotificationStatus.ACCEPTED, "just because I say so");
     }
 

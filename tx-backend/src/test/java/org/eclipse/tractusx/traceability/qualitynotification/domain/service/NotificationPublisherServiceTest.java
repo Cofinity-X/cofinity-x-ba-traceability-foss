@@ -52,13 +52,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -86,17 +84,16 @@ class NotificationPublisherServiceTest {
 
     @Test
     void testStartInvestigationSuccessful() {
-       // Given
+        // Given
         String description = "Test investigation";
         when(assetRepository.getAssetsById(Arrays.asList("asset-1", "asset-2"))).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
-        when(bpnRepository.findManufacturerName(anyString())).thenReturn(Optional.empty());
         when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
         String receiverBpn = "someReceiverBpn";
 
         // When
-        QualityNotification result = notificationPublisherService.startInvestigation(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBpn, true);
+        QualityNotification result = notificationPublisherService.startQualityNotification(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBpn, true);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.CREATED);
         assertThat(result.getDescription()).isEqualTo(description);
         assertThat(result.getNotificationSide()).isEqualTo(QualityNotificationSide.SENDER);
@@ -112,21 +109,21 @@ class NotificationPublisherServiceTest {
         String receiverBpn = "someReceiverBpn";
 
         // Then
-        assertThrows(NotificationNotSupportedException.class, () -> notificationPublisherService.startInvestigation(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBpn, false));
+        assertThrows(NotificationNotSupportedException.class, () -> notificationPublisherService.startQualityNotification(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBpn, false));
     }
 
     @Test
     void testStartAlertSuccessful() {
-       // Given
+        // Given
         String description = "Test investigation";
         String receiverBPN = "BPN00001";
         when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
         when(assetRepository.getAssetsById(Arrays.asList("asset-1", "asset-2"))).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
 
         // When
-        QualityNotification result = notificationPublisherService.startAlert(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBPN, true);
+        QualityNotification result = notificationPublisherService.startQualityNotification(Arrays.asList("asset-1", "asset-2"), description, Instant.parse("2022-03-01T12:00:00Z"), QualityNotificationSeverity.MINOR, receiverBPN, true);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.CREATED);
         assertThat(result.getDescription()).isEqualTo(description);
         assertThat(result.getNotificationSide()).isEqualTo(QualityNotificationSide.SENDER);
@@ -141,20 +138,20 @@ class NotificationPublisherServiceTest {
 
     @Test
     void testCancelInvestigationSuccessful() {
-       // Given
+        // Given
         BPN bpn = new BPN("bpn123");
         QualityNotification investigation = InvestigationTestDataFactory.createInvestigationTestData(QualityNotificationStatus.CREATED, QualityNotificationStatus.CREATED);
         when(traceabilityProperties.getBpn()).thenReturn(bpn);
         // When
         QualityNotification result = notificationPublisherService.cancelNotification(investigation);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.CANCELED);
     }
 
     @Test
     void testSendInvestigationSuccessful() {
-       // Given
+        // Given
         final BPN bpn = new BPN("bpn123");
         QualityNotification investigation = InvestigationTestDataFactory.createInvestigationTestData(QualityNotificationStatus.CREATED, QualityNotificationStatus.CREATED);
         QualityNotificationMessage notificationMessage = investigation.getNotifications().stream().findFirst().get();
@@ -164,20 +161,20 @@ class NotificationPublisherServiceTest {
         // When
         QualityNotification result = notificationPublisherService.approveNotification(investigation);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.SENT);
         verify(notificationsService).asyncNotificationMessageExecutor(any());
     }
 
     @Test
     void testSendInvestigationFailed() {
-       // Given
+        // Given
         final BPN bpn = new BPN("bpn123");
         QualityNotification investigation = InvestigationTestDataFactory.createInvestigationTestData(QualityNotificationStatus.CREATED, QualityNotificationStatus.CREATED);
         when(traceabilityProperties.getBpn()).thenReturn(bpn);
         when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(null));
 
-        // Then
+        // When/Then
         assertThrows(SendNotificationException.class, () -> notificationPublisherService.approveNotification(investigation));
         verify(notificationsService).asyncNotificationMessageExecutor(any());
     }
@@ -186,7 +183,7 @@ class NotificationPublisherServiceTest {
     @DisplayName("Test updateInvestigation is valid")
     void testUpdateInvestigation() {
 
-       // Given
+        // Given
         BPN bpn = BPN.of("senderBPN");
         QualityNotificationStatus status = QualityNotificationStatus.ACKNOWLEDGED;
         String reason = "the update reason";
@@ -206,7 +203,7 @@ class NotificationPublisherServiceTest {
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now().plusSeconds(10))
                 .targetDate(Instant.now())
-                .isInitial(false)
+                .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
                 .build();
 
         List<QualityNotificationMessage> notifications = new ArrayList<>();
@@ -220,7 +217,7 @@ class NotificationPublisherServiceTest {
         // When
         QualityNotification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.ACKNOWLEDGED);
         assertThat(result.getDeclineReason()).isNull();
         assertThat(result.getCloseReason()).isNull();
@@ -232,7 +229,7 @@ class NotificationPublisherServiceTest {
     @DisplayName("Test updateInvestigation accepted is valid")
     void testUpdateInvestigationAccepted() {
 
-       // Given
+        // Given
         BPN bpn = BPN.of("senderBPN");
         QualityNotificationStatus status = QualityNotificationStatus.ACCEPTED;
         String reason = "the update reason";
@@ -252,7 +249,7 @@ class NotificationPublisherServiceTest {
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now().plusSeconds(10))
                 .targetDate(Instant.now())
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.ACCEPTED)
                 .affectedParts(affectedParts)
                 .build();
 
@@ -267,7 +264,7 @@ class NotificationPublisherServiceTest {
         // When
         QualityNotification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.ACCEPTED);
         assertThat(result.getAcceptReason()).isEqualTo(reason);
         Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(QualityNotificationMessage.class));
@@ -277,7 +274,7 @@ class NotificationPublisherServiceTest {
     @DisplayName("Test updateInvestigation declined is valid")
     void testUpdateInvestigationDeclined() {
 
-       // Given
+        // Given
         BPN bpn = BPN.of("senderBPN");
         QualityNotificationStatus status = QualityNotificationStatus.DECLINED;
         String reason = "the update reason";
@@ -288,14 +285,14 @@ class NotificationPublisherServiceTest {
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now())
                 .targetDate(Instant.now())
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
                 .affectedParts(affectedParts)
                 .build();
 
         QualityNotificationMessage notification2 = QualityNotificationMessage.builder()
                 .id("456")
                 .notificationReferenceId("id123")
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.DECLINED)
                 .affectedParts(affectedParts)
                 .created(LocalDateTime.now().plusSeconds(10))
                 .targetDate(Instant.now())
@@ -312,7 +309,7 @@ class NotificationPublisherServiceTest {
         // When
         QualityNotification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.DECLINED);
         assertThat(result.getDeclineReason()).isEqualTo(reason);
         Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(QualityNotificationMessage.class));
@@ -322,7 +319,7 @@ class NotificationPublisherServiceTest {
     @DisplayName("Test updateInvestigation close is valid")
     void testUpdateInvestigationClose() {
 
-       // Given
+        // Given
         BPN bpn = BPN.of("senderBPN");
         QualityNotificationStatus status = QualityNotificationStatus.CLOSED;
         String reason = "the update reason";
@@ -340,7 +337,7 @@ class NotificationPublisherServiceTest {
                 .id("456")
                 .notificationReferenceId("id123")
                 .created(LocalDateTime.now().plusSeconds(10))
-                .notificationStatus(QualityNotificationStatus.CREATED)
+                .notificationStatus(QualityNotificationStatus.CLOSED)
                 .affectedParts(affectedParts)
                 .build();
 
@@ -355,7 +352,7 @@ class NotificationPublisherServiceTest {
         // When
         QualityNotification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
 
-       // Then
+        // Then
         assertThat(result.getNotificationStatus()).isEqualTo(QualityNotificationStatus.CLOSED);
         assertThat(result.getCloseReason()).isEqualTo(reason);
         Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(QualityNotificationMessage.class));
@@ -365,7 +362,7 @@ class NotificationPublisherServiceTest {
     @DisplayName("Test updateInvestigation is invalid because investigation status transition not allowed")
     void testUpdateInvestigationInvalid() {
 
-       // Given
+        // Given
         BPN bpn = BPN.of("recipientBPN");
         QualityNotificationStatus status = QualityNotificationStatus.CREATED;
         String reason = "the update reason";
@@ -386,7 +383,7 @@ class NotificationPublisherServiceTest {
         // When
         assertThrows(QualityNotificationIllegalUpdate.class, () -> notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason));
 
-       // Then
+        // Then
         Mockito.verify(repository, never()).updateQualityNotificationEntity(investigationTestData);
         Mockito.verify(notificationsService, never()).asyncNotificationMessageExecutor(any(QualityNotificationMessage.class));
     }

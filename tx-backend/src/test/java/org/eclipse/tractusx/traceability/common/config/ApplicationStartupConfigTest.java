@@ -31,7 +31,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -49,11 +48,11 @@ class ApplicationStartupConfigTest {
     @Test
     void whenCallRegisterIrsPolicy_thenCallRepository() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        // When
+        // when
         executor.execute(() -> {
             applicationStartupConfig.registerIrsPolicy();
 
-           // Then
+            // then
             verify(irsRepository, times(1)).createIrsPolicyIfMissing();
         });
 
@@ -63,11 +62,11 @@ class ApplicationStartupConfigTest {
     @Test
     void whenCallCreateNotificationContracts_thenCallContractService() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        // When
+        // when
         executor.execute(() -> {
             applicationStartupConfig.registerIrsPolicy();
 
-           // Then
+            // then
             verify(edcNotificationContractService, times(4)).handle(any());
         });
 

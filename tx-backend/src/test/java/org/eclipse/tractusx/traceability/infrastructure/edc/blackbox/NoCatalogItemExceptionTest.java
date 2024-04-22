@@ -28,22 +28,22 @@ class NoCatalogItemExceptionTest {
 
     @Test
     void givenNoCatalogItemException_thenShouldHaveProperMessage() {
-       // Given
+        // given
         final String message = NoCatalogItemException.MESSAGE;
         NoCatalogItemException exception = new NoCatalogItemException();
 
-       // Then
+        // then
         assertThat(exception.getMessage()).isEqualTo(message);
     }
 
     @Test
     void givenNoCatalogItemExceptionWithThrowable_thenShouldHaveProperMessageAndThrowable() {
-       // Given
+        // given
         final String message = NoCatalogItemException.MESSAGE;
         final Throwable exceptionParam = new RuntimeException("test");
         NoCatalogItemException exception = new NoCatalogItemException(exceptionParam);
 
-       // Then
+        // then
         assertThat(exception.getMessage()).isEqualTo(message);
         assertThat(exception.getCause()).isEqualTo(exceptionParam);
     }

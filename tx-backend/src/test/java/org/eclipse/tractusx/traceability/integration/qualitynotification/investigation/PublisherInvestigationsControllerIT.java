@@ -85,7 +85,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
     @Transactional
     @Test
     void shouldReceiveNotification() {
-       // Given
+        // given
         assetsSupport.defaultAssetsStored();
 
         QualityNotificationMessage notificationBuild = QualityNotificationMessage.builder()
@@ -97,26 +97,25 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .sendTo("BPNL00000003AXS3")
                 .sendToName("Receiver manufacturer name")
                 .severity(QualityNotificationSeverity.MINOR)
-                .isInitial(false)
                 .targetDate(Instant.parse("2018-11-30T18:35:24.00Z"))
-                .isInitial(false)
                 .type(QualityNotificationType.INVESTIGATION)
+                .severity(QualityNotificationSeverity.MINOR)
                 .messageId("messageId")
                 .build();
         EDCNotification notification = EDCNotificationFactory.createEdcNotification(
                 "it", notificationBuild);
 
-        // When
-        investigationsReceiverService.handleNotificationReceive(notification);
+        // when
+        investigationsReceiverService.handleReceive(notification);
 
-       // Then
+        // then
         investigationsSupport.assertInvestigationsSize(1);
         investigationNotificationsSupport.assertNotificationsSize(1);
     }
 
     @Test
     void shouldStartInvestigation() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
                 "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
@@ -133,7 +132,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -144,7 +143,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .statusCode(201)
                 .body("id", Matchers.isA(Number.class));
 
-       // Then
+        // then
         partIds.forEach(partId -> {
             AssetBase asset = assetAsBuiltRepository.getAssetById(partId);
             assertThat(asset).isNotNull();
@@ -167,7 +166,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenMissingSeverity_whenStartInvestigation_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
                 "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
@@ -179,7 +178,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .partIds(partIds)
                 .description(description)
                 .build();
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -192,7 +191,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenDescriptionExceedsMaxLength_whenStartInvestigation_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
                 "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
@@ -207,7 +206,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .severity(QualityNotificationSeverityRequest.MINOR)
                 .build();
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -221,13 +220,13 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenInvestigationReasonTooLong_whenUpdate_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String description = RandomStringUtils.random(1001);
         val request = new UpdateQualityNotificationRequest();
         request.setReason(description);
         request.setStatus(UpdateQualityNotificationStatusRequest.ACCEPTED);
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -241,13 +240,13 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenWrongStatus_whenUpdateInvestigation_thenBadRequest() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         String description = RandomStringUtils.random(15);
         val request = new UpdateQualityNotificationRequest();
         request.setStatus(UpdateQualityNotificationStatusRequest.ACCEPTED);
         request.setReason(description);
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request)
@@ -262,7 +261,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldCancelInvestigation() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         assetsSupport.defaultAssetsStored();
         val startInvestigationRequest = StartQualityNotificationRequest.builder()
                 .partIds(List.of("urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978"))
@@ -292,7 +291,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .body("page", Matchers.is(0))
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(1));
-        // Then
+        // when/then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .contentType(ContentType.JSON)
@@ -316,7 +315,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldApproveInvestigationStatus() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
                 "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
@@ -331,7 +330,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+        // when
         val investigationId = given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(startInvestigationRequest))
@@ -352,7 +351,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of("channel,EQUAL,SENDER,AND"))))
@@ -366,11 +365,13 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(1))
                 .body("content[0].sendTo", Matchers.is(Matchers.not(Matchers.blankOrNullString())));
+
+        investigationNotificationsSupport.assertNotificationsSize(4);
     }
 
     @Test
     void shouldCloseInvestigationStatus() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978" // BPN: BPNL00000003AYRE
         );
@@ -385,7 +386,8 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+
+        // when
         val investigationId = given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(startInvestigationRequest))
@@ -396,10 +398,10 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .statusCode(201)
                 .extract().path("id");
 
-       // Then
+        // then
         investigationsSupport.assertInvestigationsSize(1);
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
@@ -407,7 +409,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .post("/api/investigations/{investigationId}/approve", investigationId)
                 .then()
                 .statusCode(204);
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of("channel,EQUAL,SENDER,AND"))))
@@ -421,7 +423,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .body("content", Matchers.hasSize(1))
                 .body("content[0].sendTo", Matchers.is(Matchers.not(Matchers.blankOrNullString())));
 
-        // When
+        // when
         val closeInvestigationRequest = new CloseQualityNotificationRequest();
         closeInvestigationRequest.setReason("this is the close reason for that investigation");
         given()
@@ -433,7 +435,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of("channel,EQUAL,SENDER,AND"))))
@@ -451,7 +453,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
     }
 
     @Test
-    void givenNonExistingAlert_whenCancel_thenReturnNotFound() throws JoseException {
+    void givenNonExistingInvestigation_whenCancel_thenReturnNotFound() throws JoseException {
         given()
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
                 .contentType(ContentType.JSON)
@@ -459,7 +461,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .post("/api/investigations/1/cancel")
                 .then()
                 .statusCode(404)
-                .body("message", Matchers.is("Investigation not found for 1 id"));
+                .body("message", Matchers.is("Investigation not found for 1 notification id"));
     }
 
     @Test
@@ -476,7 +478,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
 
     @Test
     void shouldBeCreatedBySender() throws JsonProcessingException, JoseException {
-       // Given
+        // given
         List<String> partIds = List.of(
                 "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
                 "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
@@ -491,7 +493,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .isAsBuilt(true)
                 .build();
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(startInvestigationRequest))
@@ -502,7 +504,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .statusCode(201)
                 .body("id", Matchers.isA(Number.class));
 
-       // Then
+        // then
         partIds.forEach(partId -> {
             AssetBase asset = assetAsBuiltRepository.getAssetById(partId);
             assertThat(asset).isNotNull();
@@ -521,4 +523,5 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .body("pageSize", Matchers.is(10))
                 .body("content", Matchers.hasSize(1));
     }
+
 }

@@ -19,9 +19,8 @@
 
 package org.eclipse.tractusx.traceability.testdata;
 
-import java.util.UUID;
-import org.eclipse.tractusx.traceability.common.model.*;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotification;
+import org.eclipse.tractusx.traceability.common.model.BPN;
+import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.*;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationAffectedPart;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationId;
 import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationMessage;
@@ -37,38 +36,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 public class InvestigationTestDataFactory {
-
-//    public static InvestigationNotificationEntity createInvestigationTestData(
-//            final NotificationSideBaseEntity notificationSide,
-//            final NotificationStatusBaseEntity investigationStatus,
-//            final String receiverBpn) {
-//
-//        final InvestigationEntity investigation = InvestigationEntity.builder()
-//                .assets(Collections.emptyList())
-//                .bpn(receiverBpn)
-//                .status(investigationStatus)
-//                .description("This is a description")
-//                .side(notificationSide)
-//                .createdDate(Instant.now())
-//                .build();
-//
-//        return InvestigationNotificationEntity.builder()
-//                .id(UUID.randomUUID().toString())
-//                .investigation(investigation)
-//                .status(investigationStatus)
-//                .edcNotificationId(UUID.randomUUID().toString())
-//                .createdBy(investigation.getCreatedBy())
-//                .sendTo(receiverBpn)
-//                .targetDate(Instant.now())
-//                .severity(QualityNotificationSeverity.MAJOR)
-//                .build();
-//    }
-
     public static QualityNotification createInvestigationTestData(QualityNotificationStatus investigationStatus, final String bpnString) {
         QualityNotificationId investigationId = new QualityNotificationId(1L);
         BPN bpn = new BPN(bpnString);
@@ -84,7 +57,6 @@ public class InvestigationTestDataFactory {
                 .createdByName("senderManufacturerName")
                 .sendTo("recipientBPN")
                 .sendToName("receiverManufacturerName")
-                .edcUrl("senderAddress")
                 .contractAgreementId("agreement")
                 .description(description)
                 .notificationStatus(investigationStatus)
@@ -93,7 +65,6 @@ public class InvestigationTestDataFactory {
                 .severity(QualityNotificationSeverity.MINOR)
                 .edcNotificationId("1")
                 .messageId("messageId")
-                .isInitial(true)
                 .build();
         List<QualityNotificationMessage> notifications = List.of(notification);
 
@@ -108,6 +79,7 @@ public class InvestigationTestDataFactory {
                 .notifications(notifications)
                 .build();
     }
+
 
     public static QualityNotification createInvestigationTestDataWithNotificationList(QualityNotificationStatus investigationStatus, String bpnString, List<QualityNotificationMessage> notifications) {
         QualityNotificationId investigationId = new QualityNotificationId(1L);
@@ -144,7 +116,6 @@ public class InvestigationTestDataFactory {
                 .createdByName("senderManufacturerName")
                 .sendTo("recipientBPN")
                 .sendToName("receiverManufacturerName")
-                .edcUrl("senderAddress")
                 .contractAgreementId("agreement")
                 .description(description)
                 .notificationStatus(notificationInvestigationStatus)
@@ -152,9 +123,26 @@ public class InvestigationTestDataFactory {
                 .severity(QualityNotificationSeverity.MINOR)
                 .edcNotificationId("123")
                 .messageId("messageId")
-                .isInitial(true)
                 .build();
-        List<QualityNotificationMessage> notifications = List.of(notification);
+
+        QualityNotificationMessage notification2 = QualityNotificationMessage.builder()
+                .id("1")
+                .notificationReferenceId("notificationId")
+                .createdBy("senderBPN")
+                .createdByName("senderManufacturerName")
+                .sendTo("recipientBPN")
+                .sendToName("receiverManufacturerName")
+                .contractAgreementId("agreement")
+                .description(description)
+                .notificationStatus(QualityNotificationStatus.SENT)
+                .affectedParts(List.of(new QualityNotificationAffectedPart("part123")))
+                .severity(QualityNotificationSeverity.MINOR)
+                .edcNotificationId("123")
+                .messageId("messageId")
+                .build();
+        List<QualityNotificationMessage> notifications = new ArrayList<>();
+        notifications.add(notification);
+        notifications.add(notification2);
 
         return QualityNotification.builder()
                 .notificationId(investigationId)
@@ -183,7 +171,6 @@ public class InvestigationTestDataFactory {
                 .createdByName("senderManufacturerName")
                 .sendTo("recipientBPN")
                 .sendToName("receiverManufacturerName")
-                .edcUrl("senderAddress")
                 .contractAgreementId("agreement")
                 .description(description)
                 .notificationStatus(QualityNotificationStatus.ACKNOWLEDGED)
@@ -191,7 +178,6 @@ public class InvestigationTestDataFactory {
                 .severity(QualityNotificationSeverity.MINOR)
                 .edcNotificationId("123")
                 .messageId("messageId")
-                .isInitial(true)
                 .build();
         List<QualityNotificationMessage> notifications = List.of(notification);
 
@@ -206,21 +192,6 @@ public class InvestigationTestDataFactory {
                 .notifications(notifications)
                 .build();
     }
-
-//    public static SearchCriteria createSearchCriteria() {
-//        SearchCriteriaFilter searchCriteriaFilter = SearchCriteriaFilter.builder()
-//                                                    .key("sendToName")
-//                                                    .strategy(SearchStrategy.EQUAL)
-//                                                    .value("receiverManufacturerName")
-//                                                    .build();
-//        SearchCriteria searchCriteria = SearchCriteria.builder()
-//                                        .searchCriteriaFilterList(List.of(searchCriteriaFilter))
-//                                        .searchCriteriaOperator(SearchCriteriaOperator.AND)
-//                                        .build();
-//
-//        return searchCriteria;
-//    }
-
     private static InvestigationEntity[] createSenderMajorityInvestigationEntitiesTestData(String senderBpn) {
         Instant now = Instant.now();
 

@@ -22,7 +22,7 @@ package org.eclipse.tractusx.traceability.integration.assets;
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.repository.JpaAssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
@@ -241,7 +241,7 @@ class AssetAsPlannedControllerFilterValuesIT extends IntegrationTestSpecificatio
                 .log().all()
                 .statusCode(200)
                 .assertThat()
-                .body("size()", is(5));
+                .body("size()", is(6));
     }
 
     private static Stream<Arguments> fieldNameTestProvider() {

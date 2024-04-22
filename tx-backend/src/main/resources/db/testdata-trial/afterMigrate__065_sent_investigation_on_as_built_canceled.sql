@@ -6,9 +6,9 @@
 
 ---
 insert into investigation
-    (id                     , bpn      , close_reason, created                              , description                                             , status    , side    , accept_reason, decline_reason, updated                              , error_message)
+    (id                     , bpn      , close_reason, created                              , description                                             , status    , side    , accept_reason, decline_reason, updated                              )
 values
-    (${investigationSentId6}, ${bpnOwn}, null        , current_timestamp - interval '7 days', 'Investigation on LED Orange Turn due to strange color.', 'CANCELED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
+    (${investigationSentId6}, ${bpnOwn}, null        , current_timestamp - interval '7 days', 'Investigation on LED Orange Turn due to strange color.', 'CANCELED', 'SENDER', null         , null          , current_timestamp - interval '1 hour');
 
 ---
 -- reset sequence to highest next-val
@@ -16,9 +16,9 @@ select setval('investigation_id_seq1', (select max(i.id) from investigation i), 
 
 ---
 insert into investigation_notification
-    (id                                 , contract_agreement_id, edc_url                    , notification_reference_id, created_by, send_to        , investigation_id       , target_date                          , severity          , created_by_name, send_to_name       , edc_notification_id                   , status  , created                              , updated                              , message_id                            , is_initial)
+    (id                                 , contract_agreement_id, notification_reference_id, created_by, send_to        , investigation_id       , target_date                          , severity          , created_by_name, send_to_name       , edc_notification_id                   , status  , created                              , updated                              , message_id                            , error_message)
 values
-    (${investigationNotificationSentId6}, 'contractAgreementId', 'http://localhost:5001/edc', null                     , ${bpnOwn} , ${bpnSupplier5}, ${investigationSentId6}, current_timestamp + interval '2 days', 'LIFE_THREATENING', ${bpnOwnName}  , ${bpnSupplier5Name}, '3ac2239a-e63f-4c19-b3b3-e6a2e5a240da', 'CLOSED', current_timestamp - interval '7 days', current_timestamp - interval '1 hour', '749b31e9-9e73-4699-9470-dbee67ebc7a7', true);
+    (${investigationNotificationSentId6}, 'contractAgreementId', null                     , ${bpnOwn} , ${bpnSupplier5}, ${investigationSentId6}, current_timestamp + interval '2 days', 'LIFE_THREATENING', ${bpnOwnName}  , ${bpnSupplier5Name}, '3ac2239a-e63f-4c19-b3b3-e6a2e5a240da', 'CLOSED', current_timestamp - interval '7 days', current_timestamp - interval '1 hour', '749b31e9-9e73-4699-9470-dbee67ebc7a7', null);
 
 ---
 -- join investigation to asset

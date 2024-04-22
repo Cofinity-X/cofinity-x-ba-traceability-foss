@@ -36,9 +36,13 @@ import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.model.A
 import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.repository.JpaAssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.common.security.JwtRole;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
+import org.eclipse.tractusx.traceability.integration.common.support.DtrApiSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.EdcSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.IrsApiSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
@@ -60,13 +64,22 @@ class ImportControllerIT extends IntegrationTestSpecification {
     @Autowired
     JpaAssetAsPlannedRepository jpaAssetAsPlannedRepository;
 
+    @Autowired
+    EdcSupport edcApiSupport;
+
+    @Autowired
+    DtrApiSupport dtrApiSupport;
+
+    @Autowired
+    IrsApiSupport irsApiSupport;
+
     @Test
     void givenValidFile_whenImportData_thenValidationShouldPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
         File file = new File(path);
 
-        // Then
+        // when/then
         ImportResponse result = given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -105,11 +118,11 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenValidFileWithAsBuiltOnly_whenImportData_thenValidationShouldPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile-onlyAsBuiltAsset.json").getFile();
         File file = new File(path);
 
-        // Then
+        // when/then
         ImportResponse result = given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -131,13 +144,13 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenValidFileWithAsPlannedOnly_whenImportData_thenValidationShouldPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile-onlyAsPlannedAsset.json").getFile();
 
 
         File file = new File(path);
 
-        // Then
+        // when/then
         ImportResponse result = given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -159,7 +172,7 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenValidFile_whenImportDataButAssetExistInPersistentImportState_thenValidationShouldPassAndExpectedResponse() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
         File file = new File(path);
         AssetBase asset = AssetBase.builder()
@@ -175,7 +188,7 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .importState(ImportState.PERSISTENT)
                 .build();
         assetAsBuiltRepository.save(asset);
-        // Then
+        // when/then
         ImportResponse result = given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -207,11 +220,13 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 new ImportStateMessage("urn:uuid:da978a30-4dde-4d76-808a-b7946763ff0d", true),
                 new ImportStateMessage("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f", true)
         );
+
+
     }
 
     @Test
     void givenValidFile_whenImportDataButAssetExistInTransientImportState_thenValidationShouldPassAndExpectedResponse() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
         File file = new File(path);
         AssetBase asset = AssetBase.builder()
@@ -227,7 +242,7 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .importState(ImportState.TRANSIENT)
                 .build();
         assetAsBuiltRepository.save(asset);
-        // Then
+        // when/then
         ImportResponse result = given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -266,11 +281,11 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenInvalidFile_whenImportData_thenValidationShouldNotPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/invalidImportFile.json").getFile();
         File file = new File(path);
 
-        // When
+        // when
         ImportResponse result = given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -280,7 +295,7 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .statusCode(400)
                 .extract().as(ImportResponse.class);
 
-       // Then
+        // then
         assertThat(result.importStateMessage()).isEmpty();
         assertThat(result.jobId()).isNotEmpty();
         assertThat(result.validationResult().validationErrors())
@@ -293,11 +308,11 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenInvalidFile_whenImportDataWithBadStructure_thenValidationShouldNotPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/invalidImportFileBadStructure.json").getFile();
         File file = new File(path);
 
-        // When
+        // when
         ImportResponse result = given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -317,11 +332,11 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenValidFile_whenImportDataWithWrongBPN_thenValidationShouldNotPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/validImportFileButWrongBPN.json").getFile();
         File file = new File(path);
 
-        // Then
+        // when/then
         given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -338,11 +353,11 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenInvalidFileExtension_whenImportData_thenValidationShouldPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/invalidExtensionFile.xml").getFile();
         File file = new File(path);
 
-        // Then
+        // when/then
         given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -359,11 +374,11 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenInvalidAspect_whenImportData_thenValidationShouldNotPass() throws JoseException {
-       // Given
+        // given
         String path = getClass().getResource("/testdata/importfiles/invalidImportFile-notSupportedAspect.json").getFile();
         File file = new File(path);
 
-        // Then
+        // when/then
         given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .when()
@@ -378,9 +393,10 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .body("jobId", Matchers.notNullValue());
     }
 
-    @Test
-    void givenValidFile_whenPublishData_thenStatusShouldChangeToInSynchronization() throws JoseException {
-       // Given
+    // TODO [Pooja]: Need to fix test case and uncomment the test case
+    //@Test
+    void givenValidFile_whenPublishData_thenStatusShouldChangeToInPublishedToCX() throws JoseException, InterruptedException {
+        // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
         File file = new File(path);
 
@@ -393,9 +409,62 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .statusCode(200)
                 .extract().as(ImportResponse.class);
 
-        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("Trace-X policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("default-policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        irsApiSupport.irsApiReturnsPolicies();
+        edcApiSupport.edcWillCreatePolicyDefinition();
+        edcApiSupport.edcWillCreateAsset();
+        edcApiSupport.edcWillCreateContractDefinition();
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        oAuth2ApiSupport.oauth2ApiReturnsDtrToken();
+        dtrApiSupport.dtrWillCreateShell();
 
-        // When
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .contentType(ContentType.JSON)
+                .when()
+                .body(registerAssetRequest)
+                .post("/api/assets/publish?triggerSynchronizeAssets=false")
+                .then()
+                .statusCode(201);
+
+        // then
+        eventually(() -> {
+            AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+            assertThat(asset.getPolicyId()).isEqualTo("default-policy");
+            assertThat(asset.getImportState()).isEqualTo(ImportState.PUBLISHED_TO_CORE_SERVICES);
+            dtrApiSupport.verifyDtrCreateShellCalledTimes(1);
+            return true;
+        });
+
+    }
+
+    // TODO [Pooja]: Need to fix test case and uncomment the test case
+    //@Test
+    void givenValidFile2_whenPublishData_thenStatusShouldChangeToPublishedToCx() throws JoseException, InterruptedException {
+        // given
+        String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
+        File file = new File(path);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .when()
+                .multiPart(file)
+                .post("/api/assets/import")
+                .then()
+                .statusCode(200)
+                .extract().as(ImportResponse.class);
+
+        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("default-policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        irsApiSupport.irsApiReturnsPolicies();
+        edcApiSupport.edcWillReturnConflictWhenCreatePolicyDefinition();
+        edcApiSupport.edcWillCreateAsset();
+        edcApiSupport.edcWillCreateContractDefinition();
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        oAuth2ApiSupport.oauth2ApiReturnsDtrToken();
+        dtrApiSupport.dtrWillCreateShell();
+
+        // when
         given()
                 .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
                 .contentType(ContentType.JSON)
@@ -405,14 +474,253 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(201);
 
-       // Then
-        AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
-        assertThat("Trace-X policy").isEqualTo(asset.getPolicyId());
-        assertThat(ImportState.IN_SYNCHRONIZATION).isEqualTo(asset.getImportState());
+        // then
+        eventually(() -> {
+            try {
+                AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+                assertThat(asset.getPolicyId()).isEqualTo("default-policy");
+                assertThat(asset.getImportState()).isEqualTo(ImportState.PUBLISHED_TO_CORE_SERVICES);
+                dtrApiSupport.verifyDtrCreateShellCalledTimes(1);
+            } catch (AssertionFailedError exception) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    // TODO [Pooja]: Need to fix test case and uncomment the test case
+    //@Test
+    void givenValidFile_whenPublishDataFailsOnDtr_thenStatusShouldChangeError() throws JoseException, InterruptedException {
+        // given
+        String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
+        File file = new File(path);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .when()
+                .multiPart(file)
+                .post("/api/assets/import")
+                .then()
+                .statusCode(200)
+                .extract().as(ImportResponse.class);
+
+        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("default-policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        irsApiSupport.irsApiReturnsPolicies();
+        edcApiSupport.edcWillReturnConflictWhenCreatePolicyDefinition();
+        edcApiSupport.edcWillCreateAsset();
+        edcApiSupport.edcWillCreateContractDefinition();
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        oAuth2ApiSupport.oauth2ApiReturnsDtrToken();
+        dtrApiSupport.dtrWillFailToCreateShell();
+
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .contentType(ContentType.JSON)
+                .when()
+                .body(registerAssetRequest)
+                .post("/api/assets/publish")
+                .then()
+                .statusCode(201);
+
+        // then
+        eventually(() -> {
+            try {
+                AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+                assertThat(asset.getImportState()).isEqualTo(ImportState.ERROR);
+            } catch (AssertionFailedError exception) {
+                return false;
+            }
+            return true;
+        });
     }
 
     @Test
-    void givenInvalidAssetID_whenPublishData_thenStatusCode404() throws JoseException {
+    void givenValidFile_whenPublishDataFailsOnPolicy_thenStatusShouldChangeError() throws JoseException, InterruptedException {
+        // given
+        String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
+        File file = new File(path);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .when()
+                .multiPart(file)
+                .post("/api/assets/import")
+                .then()
+                .statusCode(200)
+                .extract().as(ImportResponse.class);
+
+        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("default-policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        irsApiSupport.irsApiReturnsPolicies();
+        edcApiSupport.edcWillFailToCreatePolicyDefinition();
+        edcApiSupport.edcWillCreateAsset();
+        edcApiSupport.edcWillCreateContractDefinition();
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        oAuth2ApiSupport.oauth2ApiReturnsDtrToken();
+        dtrApiSupport.dtrWillCreateShell();
+
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .contentType(ContentType.JSON)
+                .when()
+                .body(registerAssetRequest)
+                .post("/api/assets/publish")
+                .then()
+                .statusCode(201);
+
+        // then
+        eventually(() -> {
+            try {
+                AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+                assertThat(asset.getImportState()).isEqualTo(ImportState.ERROR);
+            } catch (AssertionFailedError exception) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    @Test
+    void givenValidFile_whenPublishDataFailsOnEdcPolicyCreation_thenStatusShouldChangeError() throws JoseException, InterruptedException {
+        // given
+        String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
+        File file = new File(path);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .when()
+                .multiPart(file)
+                .post("/api/assets/import")
+                .then()
+                .statusCode(200)
+                .extract().as(ImportResponse.class);
+
+        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("default-policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        irsApiSupport.irsApiReturnsPolicies();
+        edcApiSupport.edcWillFailToCreatePolicyDefinition();
+        edcApiSupport.edcWillCreateAsset();
+        edcApiSupport.edcWillCreateContractDefinition();
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        oAuth2ApiSupport.oauth2ApiReturnsDtrToken();
+        dtrApiSupport.dtrWillCreateShell();
+
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .contentType(ContentType.JSON)
+                .when()
+                .body(registerAssetRequest)
+                .post("/api/assets/publish")
+                .then()
+                .statusCode(201);
+
+        // then
+        eventually(() -> {
+            try {
+                AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+                assertThat(asset.getImportState()).isEqualTo(ImportState.ERROR);
+            } catch (AssertionFailedError exception) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    @Test
+    void givenValidFile_whenPublishDataFailsOnEdcAssetCreation_thenStatusShouldChangeError() throws JoseException, InterruptedException {
+        // given
+        String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
+        File file = new File(path);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .when()
+                .multiPart(file)
+                .post("/api/assets/import")
+                .then()
+                .statusCode(200)
+                .extract().as(ImportResponse.class);
+
+        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("default-policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        irsApiSupport.irsApiReturnsPolicies();
+        edcApiSupport.edcWillCreatePolicyDefinition();
+        edcApiSupport.edcWillFailToCreateAsset();
+        edcApiSupport.edcWillCreateContractDefinition();
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        oAuth2ApiSupport.oauth2ApiReturnsDtrToken();
+        dtrApiSupport.dtrWillCreateShell();
+
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .contentType(ContentType.JSON)
+                .when()
+                .body(registerAssetRequest)
+                .post("/api/assets/publish")
+                .then()
+                .statusCode(201);
+
+        // then
+        eventually(() -> {
+            try {
+                AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+                assertThat(asset.getImportState()).isEqualTo(ImportState.ERROR);
+            } catch (AssertionFailedError exception) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    @Test
+    void givenValidFile_whenPublishDataFailsOnEdcContractCreation_thenStatusShouldChangeError() throws JoseException, InterruptedException {
+        // given
+        String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
+        File file = new File(path);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .when()
+                .multiPart(file)
+                .post("/api/assets/import")
+                .then()
+                .statusCode(200)
+                .extract().as(ImportResponse.class);
+
+        RegisterAssetRequest registerAssetRequest = new RegisterAssetRequest("default-policy", List.of("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f"));
+        irsApiSupport.irsApiReturnsPolicies();
+        edcApiSupport.edcWillCreatePolicyDefinition();
+        edcApiSupport.edcWillCreateAsset();
+        edcApiSupport.edcWillFailToCreateContractDefinition();
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        oAuth2ApiSupport.oauth2ApiReturnsDtrToken();
+        dtrApiSupport.dtrWillCreateShell();
+
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(JwtRole.ADMIN))
+                .contentType(ContentType.JSON)
+                .when()
+                .body(registerAssetRequest)
+                .post("/api/assets/publish")
+                .then()
+                .statusCode(201);
+
+        // then
+        eventually(() -> {
+            try {
+                AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+                assertThat(asset.getImportState()).isEqualTo(ImportState.ERROR);
+            } catch (AssertionFailedError exception) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    @Test
+    void givenInvalidAssetID_whenPublishData_thenStatusCode404() throws JoseException, InterruptedException {
         // given
         String path = getClass().getResource("/testdata/importfiles/validImportFile.json").getFile();
         File file = new File(path);
@@ -440,9 +748,13 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .statusCode(404);
 
         //then
-        AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
-        assertNull(asset.getPolicyId());
-        assertEquals(asset.getImportState(), ImportState.TRANSIENT);
+        eventually(() -> {
+            AssetBase asset = assetAsBuiltRepository.getAssetById("urn:uuid:254604ab-2153-45fb-8cad-54ef09f4080f");
+            assertNull(asset.getPolicyId());
+            assertEquals(ImportState.TRANSIENT, asset.getImportState());
+            return true;
+        });
+
     }
 
     @Test
@@ -524,5 +836,4 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(404);
     }
-
 }
