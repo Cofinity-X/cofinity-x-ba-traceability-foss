@@ -86,4 +86,5 @@ public class CatalogTestDataFactory {
 
         return Catalog.Builder.newInstance().dataset(dataset).properties(Collections.emptyMap()).build();
     }
+
 }

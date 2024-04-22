@@ -15,25 +15,22 @@
  * under the License.
  *
  * SPDX-License-Identifier: Apache-2.0
- ********************************************************************************//*
-
+ ********************************************************************************/
 
 package org.eclipse.tractusx.traceability.testdata;
 
 import org.eclipse.tractusx.traceability.common.model.BPN;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.Notification;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationAffectedPart;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationId;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationMessage;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSeverity;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSide;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationStatus;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationType;
-import org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationEntity;
+import org.eclipse.tractusx.traceability.notification.domain.base.model.*;
+import org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class InvestigationTestDataFactory {
     public static Notification createInvestigationTestData(NotificationStatus investigationStatus, final String bpnString) {
@@ -137,6 +134,7 @@ public class InvestigationTestDataFactory {
                 .edcNotificationId("123")
                 .messageId("messageId")
                 .build();
+
         List<NotificationMessage> notifications = new ArrayList<>();
         notifications.add(notification);
         notifications.add(notification2);
@@ -190,25 +188,13 @@ public class InvestigationTestDataFactory {
                 .notifications(notifications)
                 .build();
     }
+    //Pooja
 
-//    public static SearchCriteria createSearchCriteria() {
-//        SearchCriteriaFilter searchCriteriaFilter = SearchCriteriaFilter.builder()
-//                                                    .key("sendToName")
-//                                                    .strategy(SearchStrategy.EQUAL)
-//                                                    .value("receiverManufacturerName")
-//                                                    .build();
-//        SearchCriteria searchCriteria = SearchCriteria.builder()
-//                                        .searchCriteriaFilterList(List.of(searchCriteriaFilter))
-//                                        .searchCriteriaOperator(SearchCriteriaOperator.AND)
-//                                        .build();
-//
-//        return searchCriteria;
-//    }
-
-    private static InvestigationEntity[] createSenderMajorityInvestigationEntitiesTestData(String senderBpn) {
+    private static NotificationEntity[] createSenderMajorityInvestigationEntitiesTestData(String senderBpn) {
         Instant now = Instant.now();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
+        NotificationEntity firstInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CREATED)
@@ -216,7 +202,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.minusSeconds(10L))
                 .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
+        NotificationEntity secondInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.SENT)
@@ -224,7 +211,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(21L))
                 .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
+        NotificationEntity thirdInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
@@ -232,7 +220,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now)
                 .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fourthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
@@ -240,7 +229,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(20L))
                 .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fifthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CANCELED)
@@ -249,11 +239,11 @@ public class InvestigationTestDataFactory {
                 .createdDate(now.plusSeconds(40L))
                 .build();
 
-        InvestigationEntity[] InvestigationEntities = {firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
+        NotificationEntity[] InvestigationEntities = {firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
         return InvestigationEntities;
     }
 
-    public static NotificationEntity[] createSenderMajorityInvestigationNotificationEntitiesTestData(String senderBpn) {
+    public static NotificationMessageEntity[] createSenderMajorityInvestigationNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString1 = "12:00 PM, Sun 11/9/2025";
         String targetDateInNovString2 = "12:00 PM, Mon 11/10/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
@@ -268,78 +258,79 @@ public class InvestigationTestDataFactory {
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
 
-        InvestigationEntity[] investigationEntities = createSenderMajorityInvestigationEntitiesTestData(senderBpn);
+        NotificationEntity[] investigationEntities = createSenderMajorityInvestigationEntitiesTestData(senderBpn);
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = {
-                InvestigationNotificationEntity
+        NotificationMessageEntity[] investigationNotificationEntities = {
+                NotificationMessageEntity
                         .builder()
                         .id("1")
-                        .investigation(investigationEntities[0])
+                        .notification(investigationEntities[0])
                         .status(NotificationStatusBaseEntity.CREATED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov1)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(NotificationSeverity.MAJOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("2")
-                        .investigation(investigationEntities[1])
+                        .notification(investigationEntities[1])
                         .status(NotificationStatusBaseEntity.SENT)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.CRITICAL)
+                        .severity(NotificationSeverity.CRITICAL)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("3")
-                        .investigation(investigationEntities[2])
+                        .notification(investigationEntities[2])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov2)
                         .sendToName("OEM2")
-                        .severity(QualityNotificationSeverity.LIFE_THREATENING)
+                        .severity(NotificationSeverity.LIFE_THREATENING)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("4")
-                        .investigation(investigationEntities[3])
+                        .notification(investigationEntities[3])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM3")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("5")
-                        .investigation(investigationEntities[4])
+                        .notification(investigationEntities[4])
                         .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov1)
                         .sendToName("OEM4")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build()
         };
 
         return investigationNotificationEntities;
     }
 
-    private static InvestigationEntity[] createReceiverMajorityInvestigationEntitiesTestData(String senderBpn) {
+    private static NotificationEntity[] createReceiverMajorityInvestigationEntitiesTestData(String senderBpn) {
         Instant now = Instant.now();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
+        NotificationEntity firstInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.RECEIVED)
@@ -347,7 +338,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.minusSeconds(10L))
                 .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
+        NotificationEntity secondInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
@@ -355,7 +347,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(21L))
                 .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
+        NotificationEntity thirdInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
@@ -363,7 +356,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now)
                 .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fourthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CLOSED)
@@ -371,7 +365,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(20L))
                 .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fifthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CANCELED)
@@ -380,11 +375,11 @@ public class InvestigationTestDataFactory {
                 .createdDate(now.plusSeconds(40L))
                 .build();
 
-        InvestigationEntity[] InvestigationEntities = {firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
+        NotificationEntity[] InvestigationEntities = {firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
         return InvestigationEntities;
     }
 
-    public static InvestigationNotificationEntity[] createReceiverMajorityInvestigationNotificationEntitiesTestData(String senderBpn) {
+    public static NotificationMessageEntity[] createReceiverMajorityInvestigationNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString1 = "12:00 PM, Sun 11/9/2025";
         String targetDateInNovString2 = "12:00 PM, Mon 11/10/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
@@ -399,75 +394,75 @@ public class InvestigationTestDataFactory {
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
 
-        InvestigationEntity[] investigationEntities = createReceiverMajorityInvestigationEntitiesTestData(senderBpn);
+        NotificationEntity[] investigationEntities = createReceiverMajorityInvestigationEntitiesTestData(senderBpn);
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = {
-                InvestigationNotificationEntity
+        NotificationMessageEntity[] investigationNotificationEntities = {
+                NotificationMessageEntity
                         .builder()
                         .id("1")
-                        .investigation(investigationEntities[0])
+                        .notification(investigationEntities[0])
                         .status(NotificationStatusBaseEntity.CREATED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov1)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(NotificationSeverity.MAJOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("2")
-                        .investigation(investigationEntities[1])
+                        .notification(investigationEntities[1])
                         .status(NotificationStatusBaseEntity.RECEIVED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.CRITICAL)
+                        .severity(NotificationSeverity.CRITICAL)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("3")
-                        .investigation(investigationEntities[2])
+                        .notification(investigationEntities[2])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov2)
                         .sendToName("OEM2")
-                        .severity(QualityNotificationSeverity.LIFE_THREATENING)
+                        .severity(NotificationSeverity.LIFE_THREATENING)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("4")
-                        .investigation(investigationEntities[3])
+                        .notification(investigationEntities[3])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM3")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("5")
-                        .investigation(investigationEntities[4])
+                        .notification(investigationEntities[4])
                         .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov1)
                         .sendToName("OEM4")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build()
         };
 
         return investigationNotificationEntities;
     }
 
-    public static InvestigationNotificationEntity[] createExtendedReceiverInvestigationNotificationEntitiesTestData(String senderBpn) {
+    public static NotificationMessageEntity[] createExtendedReceiverInvestigationNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -478,78 +473,79 @@ public class InvestigationTestDataFactory {
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
 
-        InvestigationEntity[] investigationEntities = createExtendedReceiverInvestigationEntitiesTestData(senderBpn);
+        NotificationEntity[] investigationEntities = createExtendedReceiverInvestigationEntitiesTestData(senderBpn);
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = {
-                InvestigationNotificationEntity
+        NotificationMessageEntity[] investigationNotificationEntities = {
+                NotificationMessageEntity
                         .builder()
                         .id("6")
-                        .investigation(investigationEntities[0])
+                        .notification(investigationEntities[0])
                         .status(NotificationStatusBaseEntity.RECEIVED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(NotificationSeverity.MAJOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("7")
-                        .investigation(investigationEntities[1])
+                        .notification(investigationEntities[1])
                         .status(NotificationStatusBaseEntity.RECEIVED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.CRITICAL)
+                        .severity(NotificationSeverity.CRITICAL)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("8")
-                        .investigation(investigationEntities[2])
+                        .notification(investigationEntities[2])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov)
                         .sendToName("OEM2")
-                        .severity(QualityNotificationSeverity.LIFE_THREATENING)
+                        .severity(NotificationSeverity.LIFE_THREATENING)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("9")
-                        .investigation(investigationEntities[3])
+                        .notification(investigationEntities[3])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM3")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("10")
-                        .investigation(investigationEntities[4])
+                        .notification(investigationEntities[4])
                         .status(NotificationStatusBaseEntity.CANCELED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov)
                         .sendToName("OEM4")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build()
         };
 
         return investigationNotificationEntities;
     }
 
-    private static InvestigationEntity[] createExtendedReceiverInvestigationEntitiesTestData(String senderBpn) {
+    private static NotificationEntity[] createExtendedReceiverInvestigationEntitiesTestData(String senderBpn) {
         Instant now = Instant.now();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
+        NotificationEntity firstInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.RECEIVED)
@@ -557,7 +553,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.minusSeconds(100L))
                 .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
+        NotificationEntity secondInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.RECEIVED)
@@ -565,7 +562,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(210L))
                 .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
+        NotificationEntity thirdInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
@@ -573,7 +571,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.RECEIVER)
                 .createdDate(now.plusSeconds(1L))
                 .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fourthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
@@ -581,7 +580,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(25L))
                 .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fifthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CANCELED)
@@ -590,10 +590,10 @@ public class InvestigationTestDataFactory {
                 .createdDate(now.plusSeconds(80L))
                 .build();
 
-        return new InvestigationEntity[]{firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
+        return new NotificationEntity[]{firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
     }
 
-    public static InvestigationNotificationEntity[] createExtendedSenderInvestigationNotificationEntitiesTestData(String senderBpn) {
+    public static NotificationMessageEntity[] createExtendedSenderInvestigationNotificationEntitiesTestData(String senderBpn) {
         String targetDateInNovString = "12:00 PM, Sun 11/9/2025";
         String targetDateInDecString = "12:00 PM, Tue 12/9/2025";
         String dateFormatter = "hh:mm a, EEE M/d/uuuu";
@@ -604,78 +604,78 @@ public class InvestigationTestDataFactory {
                 .atZone(ZoneId.of("Europe/Berlin"))
                 .toInstant();
 
-        InvestigationEntity[] investigationEntities = createExtendedSenderInvestigationEntitiesTestData(senderBpn);
+        NotificationEntity[] investigationEntities = createExtendedSenderInvestigationEntitiesTestData(senderBpn);
 
-        InvestigationNotificationEntity[] investigationNotificationEntities = {
-                InvestigationNotificationEntity
+        NotificationMessageEntity[] investigationNotificationEntities = {
+                NotificationMessageEntity
                         .builder()
                         .id("6")
-                        .investigation(investigationEntities[0])
+                        .notification(investigationEntities[0])
                         .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.MAJOR)
+                        .severity(NotificationSeverity.MAJOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("7")
-                        .investigation(investigationEntities[1])
+                        .notification(investigationEntities[1])
                         .status(NotificationStatusBaseEntity.SENT)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000001")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM1")
-                        .severity(QualityNotificationSeverity.CRITICAL)
+                        .severity(NotificationSeverity.CRITICAL)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("8")
-                        .investigation(investigationEntities[2])
+                        .notification(investigationEntities[2])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000002")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov)
                         .sendToName("OEM2")
-                        .severity(QualityNotificationSeverity.LIFE_THREATENING)
+                        .severity(NotificationSeverity.LIFE_THREATENING)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("9")
-                        .investigation(investigationEntities[3])
+                        .notification(investigationEntities[3])
                         .status(NotificationStatusBaseEntity.ACCEPTED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000003")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInDec)
                         .sendToName("OEM3")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build(),
-                InvestigationNotificationEntity
+                NotificationMessageEntity
                         .builder()
                         .id("10")
-                        .investigation(investigationEntities[4])
+                        .notification(investigationEntities[4])
                         .status(NotificationStatusBaseEntity.CANCELED)
                         .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a")
                         .sendTo("BPNL000000000004")
                         .createdBy("BPNL00000000000A")
                         .targetDate(targetDateInNov)
                         .sendToName("OEM4")
-                        .severity(QualityNotificationSeverity.MINOR)
+                        .severity(NotificationSeverity.MINOR)
                         .build()
         };
 
         return investigationNotificationEntities;
     }
-
-    private static InvestigationEntity[] createExtendedSenderInvestigationEntitiesTestData(String senderBpn) {
+    private static NotificationEntity[] createExtendedSenderInvestigationEntitiesTestData(String senderBpn) {
         Instant now = Instant.now();
 
-        InvestigationEntity firstInvestigation = InvestigationEntity.builder()
+        NotificationEntity firstInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACKNOWLEDGED)
@@ -683,7 +683,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.minusSeconds(100L))
                 .build();
-        InvestigationEntity secondInvestigation = InvestigationEntity.builder()
+        NotificationEntity secondInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.SENT)
@@ -691,7 +692,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(210L))
                 .build();
-        InvestigationEntity thirdInvestigation = InvestigationEntity.builder()
+        NotificationEntity thirdInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
@@ -699,7 +701,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(1L))
                 .build();
-        InvestigationEntity fourthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fourthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.ACCEPTED)
@@ -707,7 +710,8 @@ public class InvestigationTestDataFactory {
                 .side(NotificationSideBaseEntity.SENDER)
                 .createdDate(now.plusSeconds(25L))
                 .build();
-        InvestigationEntity fifthInvestigation = InvestigationEntity.builder()
+        NotificationEntity fifthInvestigation = NotificationEntity.builder()
+                .type(NotificationTypeEntity.INVESTIGATION)
                 .assets(Collections.emptyList())
                 .bpn(senderBpn)
                 .status(NotificationStatusBaseEntity.CANCELED)
@@ -716,7 +720,6 @@ public class InvestigationTestDataFactory {
                 .createdDate(now.plusSeconds(80L))
                 .build();
 
-        return new InvestigationEntity[]{firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
+        return new NotificationEntity[]{firstInvestigation, secondInvestigation, thirdInvestigation, fourthInvestigation, fifthInvestigation};
     }
 }
-*/

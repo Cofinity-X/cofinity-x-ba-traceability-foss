@@ -39,7 +39,7 @@ import org.eclipse.tractusx.traceability.notification.domain.notification.except
 import org.eclipse.tractusx.traceability.notification.domain.notification.model.StartNotification;
 import org.eclipse.tractusx.traceability.notification.domain.notification.repository.NotificationRepository;
 import org.eclipse.tractusx.traceability.testdata.AssetTestDataFactory;
-//import org.eclipse.tractusx.traceability.testdata.InvestigationTestDataFactory;
+import org.eclipse.tractusx.traceability.testdata.InvestigationTestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,367 +66,367 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class NotificationPublisherServiceTest {
-//    @InjectMocks
-//    private NotificationPublisherService notificationPublisherService;
-//
-//    @Mock
-//    private NotificationRepository repository;
-//    @Mock
-//    private AssetAsBuiltRepository assetRepository;
-//    @Mock
-//    private AssetAsBuiltServiceImpl assetsService;
-//    @Mock
-//    private Clock clock;
-//    @Mock
-//    private EdcNotificationService notificationsService;
-//    @Mock
-//    private BpnRepository bpnRepository;
-//    @Mock
-//    private TraceabilityProperties traceabilityProperties;
-//
-//    @Test
-//    void testStartInvestigationSuccessful() {
-//        // Given
-//        String title = "title";
-//        String description = "Test investigation";
-//        List<String> assets = Arrays.asList("asset-1", "asset-2");
-//        Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
-//        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
-//        when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
-//        String receiverBpn = "someReceiverBpn";
-//        StartNotification startNotification = StartNotification.builder()
-//                .title(title)
-//                .partIds(assets)
-//                .description(description)
-//                .targetDate(targetDate)
-//                .severity(NotificationSeverity.MINOR)
-//                .type(NotificationType.INVESTIGATION)
-//                .receiverBpn(receiverBpn)
-//                .isAsBuilt(true)
-//                .build();
-//
-//        // When
-//        Notification result = notificationPublisherService.startNotification(startNotification);
-//
-//        // Then
-//        assertThat(result.getTitle()).isEqualTo(title);
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CREATED);
-//        assertThat(result.getDescription()).isEqualTo(description);
-//        assertThat(result.getNotificationSide()).isEqualTo(NotificationSide.SENDER);
-//        assertThat(result.getNotifications()).extracting("severity")
-//                .containsExactly(NotificationSeverity.MINOR);
-//        verify(assetRepository).getAssetsById(Arrays.asList("asset-1", "asset-2"));
-//    }
-//
-//    @Test
-//    void testThrowNotificationNotSupportedException() {
-//        // Given
-//        String title = "Title";
-//        String description = "Test investigation";
-//        String receiverBpn = "someReceiverBpn";
-//        Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
-//        List<String> assets = Arrays.asList("asset-1", "asset-2");
-//        StartNotification startNotification = StartNotification.builder()
-//                .title(title)
-//                .partIds(assets)
-//                .description(description)
-//                .targetDate(targetDate)
-//                .severity(NotificationSeverity.MINOR)
-//                .type(NotificationType.INVESTIGATION)
-//                .receiverBpn(receiverBpn)
-//                .isAsBuilt(false)
-//                .build();
-//
-//        // Then
-//        assertThrows(NotificationNotSupportedException.class, () -> notificationPublisherService.startNotification(startNotification));
-//    }
-//
-//    @Test
-//    void testStartAlertSuccessful() {
-//        // Given
-//        String title = "Title";
-//        String description = "Test investigation";
-//        String receiverBpn = "BPN00001";
-//        Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
-//        List<String> assets = Arrays.asList("asset-1", "asset-2");
-//        when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
-//        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
-//        StartNotification startNotification = StartNotification.builder()
-//                .title(title)
-//                .partIds(assets)
-//                .description(description)
-//                .targetDate(targetDate)
-//                .severity(NotificationSeverity.MINOR)
-//                .type(NotificationType.INVESTIGATION)
-//                .receiverBpn(receiverBpn)
-//                .isAsBuilt(true)
-//                .build();
-//        // When
-//        Notification result = notificationPublisherService.startNotification(startNotification);
-//
-//        // Then
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CREATED);
-//        assertThat(result.getDescription()).isEqualTo(description);
-//        assertThat(result.getNotificationSide()).isEqualTo(NotificationSide.SENDER);
-//        assertThat(result.getNotifications()).extracting("severity")
-//                .containsExactly(NotificationSeverity.MINOR);
-//        assertThat(result.getNotifications()).hasSize(1)
-//                .first()
-//                .hasFieldOrPropertyWithValue("sendTo", receiverBpn);
-//        verify(assetRepository).getAssetsById(Arrays.asList("asset-1", "asset-2"));
-//
-//    }
-//
-//    @Test
-//    void testCancelInvestigationSuccessful() {
-//        // Given
-//        BPN bpn = new BPN("bpn123");
-//        Notification investigation = InvestigationTestDataFactory.createInvestigationTestData(NotificationStatus.CREATED, NotificationStatus.CREATED);
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        // When
-//        Notification result = notificationPublisherService.cancelNotification(investigation);
-//
-//        // Then
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CANCELED);
-//    }
-//
-//    @Test
-//    void testSendInvestigationSuccessful() {
-//        // Given
-//        final BPN bpn = new BPN("bpn123");
-//        Notification investigation = InvestigationTestDataFactory.createInvestigationTestData(NotificationStatus.CREATED, NotificationStatus.CREATED);
-//        NotificationMessage notificationMessage = investigation.getNotifications().stream().findFirst().get();
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notificationMessage));
-//
-//        // When
-//        Notification result = notificationPublisherService.approveNotification(investigation);
-//
-//        // Then
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.SENT);
-//        verify(notificationsService).asyncNotificationMessageExecutor(any());
-//    }
-//
-//    @Test
-//    void testSendInvestigationFailed() {
-//        // Given
-//        final BPN bpn = new BPN("bpn123");
-//        Notification investigation = InvestigationTestDataFactory.createInvestigationTestData(NotificationStatus.CREATED, NotificationStatus.CREATED);
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(null));
-//
-//        // When/Then
-//        assertThrows(SendNotificationException.class, () -> notificationPublisherService.approveNotification(investigation));
-//        verify(notificationsService).asyncNotificationMessageExecutor(any());
-//    }
-//
-//    @Test
-//    @DisplayName("Test updateInvestigation is valid")
-//    void testUpdateInvestigation() {
-//
-//        // Given
-//        BPN bpn = BPN.of("senderBPN");
-//        NotificationStatus status = NotificationStatus.ACKNOWLEDGED;
-//        String reason = "the update reason";
-//
-//        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
-//        NotificationMessage notification = NotificationMessage.builder()
-//                .id("123")
-//                .notificationReferenceId("id123")
-//                .created(LocalDateTime.now())
-//                .targetDate(Instant.now())
-//                .notificationStatus(NotificationStatus.CREATED)
-//                .affectedParts(affectedParts)
-//                .build();
-//
-//        NotificationMessage notification2 = NotificationMessage.builder()
-//                .id("456")
-//                .notificationReferenceId("id123")
-//                .created(LocalDateTime.now().plusSeconds(10))
-//                .targetDate(Instant.now())
-//                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
-//                .build();
-//
-//        List<NotificationMessage> notifications = new ArrayList<>();
-//        notifications.add(notification);
-//        notifications.add(notification2);
-//
-//        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.RECEIVED, "recipientBPN", notifications);
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
-//
-//        // When
-//        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
-//
-//        // Then
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.ACKNOWLEDGED);
-//        assertThat(result.getDeclineReason()).isNull();
-//        assertThat(result.getCloseReason()).isNull();
-//        assertThat(result.getDeclineReason()).isNull();
-//        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
-//    }
-//
-//    @Test
-//    @DisplayName("Test updateInvestigation accepted is valid")
-//    void testUpdateInvestigationAccepted() {
-//
-//        // Given
-//        BPN bpn = BPN.of("senderBPN");
-//        NotificationStatus status = NotificationStatus.ACCEPTED;
-//        String reason = "the update reason";
-//
-//        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
-//        NotificationMessage notification = NotificationMessage.builder()
-//                .id("123")
-//                .notificationReferenceId("id123")
-//                .created(LocalDateTime.now())
-//                .targetDate(Instant.now())
-//                .notificationStatus(NotificationStatus.CREATED)
-//                .affectedParts(affectedParts)
-//                .build();
-//
-//        NotificationMessage notification2 = NotificationMessage.builder()
-//                .id("456")
-//                .notificationReferenceId("id123")
-//                .created(LocalDateTime.now().plusSeconds(10))
-//                .targetDate(Instant.now())
-//                .notificationStatus(NotificationStatus.ACCEPTED)
-//                .affectedParts(affectedParts)
-//                .build();
-//
-//        List<NotificationMessage> notifications = new ArrayList<>();
-//        notifications.add(notification);
-//        notifications.add(notification2);
-//
-//        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.ACKNOWLEDGED, "recipientBPN", notifications);
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
-//
-//        // When
-//        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
-//
-//        // Then
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.ACCEPTED);
-//        assertThat(result.getAcceptReason()).isEqualTo(reason);
-//        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
-//    }
-//
-//    @Test
-//    @DisplayName("Test updateInvestigation declined is valid")
-//    void testUpdateInvestigationDeclined() {
-//
-//        // Given
-//        BPN bpn = BPN.of("senderBPN");
-//        NotificationStatus status = NotificationStatus.DECLINED;
-//        String reason = "the update reason";
-//
-//        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
-//        NotificationMessage notification = NotificationMessage.builder()
-//                .id("123")
-//                .notificationReferenceId("id123")
-//                .created(LocalDateTime.now())
-//                .targetDate(Instant.now())
-//                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
-//                .affectedParts(affectedParts)
-//                .build();
-//
-//        NotificationMessage notification2 = NotificationMessage.builder()
-//                .id("456")
-//                .notificationReferenceId("id123")
-//                .notificationStatus(NotificationStatus.DECLINED)
-//                .affectedParts(affectedParts)
-//                .created(LocalDateTime.now().plusSeconds(10))
-//                .targetDate(Instant.now())
-//                .build();
-//
-//        List<NotificationMessage> notifications = new ArrayList<>();
-//        notifications.add(notification);
-//        notifications.add(notification2);
-//
-//        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.ACKNOWLEDGED, "recipientBPN", notifications);
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
-//
-//        // When
-//        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
-//
-//        // Then
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.DECLINED);
-//        assertThat(result.getDeclineReason()).isEqualTo(reason);
-//        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
-//    }
-//
-//    @Test
-//    @DisplayName("Test updateInvestigation close is valid")
-//    void testUpdateInvestigationClose() {
-//
-//        // Given
-//        BPN bpn = BPN.of("senderBPN");
-//        NotificationStatus status = NotificationStatus.CLOSED;
-//        String reason = "the update reason";
-//
-//        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
-//        NotificationMessage notification = NotificationMessage.builder()
-//                .id("123")
-//                .notificationReferenceId("id123")
-//                .created(LocalDateTime.now())
-//                .notificationStatus(NotificationStatus.CREATED)
-//                .affectedParts(affectedParts)
-//                .build();
-//
-//        NotificationMessage notification2 = NotificationMessage.builder()
-//                .id("456")
-//                .notificationReferenceId("id123")
-//                .created(LocalDateTime.now().plusSeconds(10))
-//                .notificationStatus(NotificationStatus.CLOSED)
-//                .affectedParts(affectedParts)
-//                .build();
-//
-//        List<NotificationMessage> notifications = new ArrayList<>();
-//        notifications.add(notification);
-//        notifications.add(notification2);
-//
-//        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.ACCEPTED, "senderBPN", notifications);
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
-//
-//        // When
-//        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
-//
-//        // Then
-//        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CLOSED);
-//        assertThat(result.getCloseReason()).isEqualTo(reason);
-//        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
-//    }
-//
-//    @Test
-//    @DisplayName("Test updateInvestigation is invalid because investigation status transition not allowed")
-//    void testUpdateInvestigationInvalid() {
-//
-//        // Given
-//        BPN bpn = BPN.of("recipientBPN");
-//        NotificationStatus status = NotificationStatus.CREATED;
-//        String reason = "the update reason";
-//
-//        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
-//        NotificationMessage notification = NotificationMessage.builder()
-//                .id("123")
-//                .notificationReferenceId("id123")
-//                .notificationStatus(NotificationStatus.CREATED)
-//                .affectedParts(affectedParts)
-//                .build();
-//
-//        List<NotificationMessage> notifications = new ArrayList<>();
-//        notifications.add(notification);
-//
-//        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.SENT, "recipientBPN", notifications);
-//        when(traceabilityProperties.getBpn()).thenReturn(bpn);
-//        // When
-//        assertThrows(NotificationIllegalUpdate.class, () -> notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason));
-//
-//        // Then
-//        Mockito.verify(repository, never()).updateNotification(investigationTestData);
-//        Mockito.verify(notificationsService, never()).asyncNotificationMessageExecutor(any(NotificationMessage.class));
-//    }
+    @InjectMocks
+    private NotificationPublisherService notificationPublisherService;
+
+    @Mock
+    private NotificationRepository repository;
+    @Mock
+    private AssetAsBuiltRepository assetRepository;
+    @Mock
+    private AssetAsBuiltServiceImpl assetsService;
+    @Mock
+    private Clock clock;
+    @Mock
+    private EdcNotificationService notificationsService;
+    @Mock
+    private BpnRepository bpnRepository;
+    @Mock
+    private TraceabilityProperties traceabilityProperties;
+
+    @Test
+    void testStartInvestigationSuccessful() {
+        // Given
+        String title = "title";
+        String description = "Test investigation";
+        List<String> assets = Arrays.asList("asset-1", "asset-2");
+        Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
+        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
+        when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
+        String receiverBpn = "someReceiverBpn";
+        StartNotification startNotification = StartNotification.builder()
+                .title(title)
+                .partIds(assets)
+                .description(description)
+                .targetDate(targetDate)
+                .severity(NotificationSeverity.MINOR)
+                .type(NotificationType.INVESTIGATION)
+                .receiverBpn(receiverBpn)
+                .isAsBuilt(true)
+                .build();
+
+        // When
+        Notification result = notificationPublisherService.startNotification(startNotification);
+
+        // Then
+        assertThat(result.getTitle()).isEqualTo(title);
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CREATED);
+        assertThat(result.getDescription()).isEqualTo(description);
+        assertThat(result.getNotificationSide()).isEqualTo(NotificationSide.SENDER);
+        assertThat(result.getNotifications()).extracting("severity")
+                .containsExactly(NotificationSeverity.MINOR);
+        verify(assetRepository).getAssetsById(Arrays.asList("asset-1", "asset-2"));
+    }
+
+    @Test
+    void testThrowNotificationNotSupportedException() {
+        // Given
+        String title = "Title";
+        String description = "Test investigation";
+        String receiverBpn = "someReceiverBpn";
+        Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
+        List<String> assets = Arrays.asList("asset-1", "asset-2");
+        StartNotification startNotification = StartNotification.builder()
+                .title(title)
+                .partIds(assets)
+                .description(description)
+                .targetDate(targetDate)
+                .severity(NotificationSeverity.MINOR)
+                .type(NotificationType.INVESTIGATION)
+                .receiverBpn(receiverBpn)
+                .isAsBuilt(false)
+                .build();
+
+        // Then
+        assertThrows(NotificationNotSupportedException.class, () -> notificationPublisherService.startNotification(startNotification));
+    }
+
+    @Test
+    void testStartAlertSuccessful() {
+        // Given
+        String title = "Title";
+        String description = "Test investigation";
+        String receiverBpn = "BPN00001";
+        Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
+        List<String> assets = Arrays.asList("asset-1", "asset-2");
+        when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
+        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
+        StartNotification startNotification = StartNotification.builder()
+                .title(title)
+                .partIds(assets)
+                .description(description)
+                .targetDate(targetDate)
+                .severity(NotificationSeverity.MINOR)
+                .type(NotificationType.INVESTIGATION)
+                .receiverBpn(receiverBpn)
+                .isAsBuilt(true)
+                .build();
+        // When
+        Notification result = notificationPublisherService.startNotification(startNotification);
+
+        // Then
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CREATED);
+        assertThat(result.getDescription()).isEqualTo(description);
+        assertThat(result.getNotificationSide()).isEqualTo(NotificationSide.SENDER);
+        assertThat(result.getNotifications()).extracting("severity")
+                .containsExactly(NotificationSeverity.MINOR);
+        assertThat(result.getNotifications()).hasSize(1)
+                .first()
+                .hasFieldOrPropertyWithValue("sendTo", receiverBpn);
+        verify(assetRepository).getAssetsById(Arrays.asList("asset-1", "asset-2"));
+
+    }
+
+    @Test
+    void testCancelInvestigationSuccessful() {
+        // Given
+        BPN bpn = new BPN("bpn123");
+        Notification investigation = InvestigationTestDataFactory.createInvestigationTestData(NotificationStatus.CREATED, NotificationStatus.CREATED);
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        // When
+        Notification result = notificationPublisherService.cancelNotification(investigation);
+
+        // Then
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CANCELED);
+    }
+
+    @Test
+    void testSendInvestigationSuccessful() {
+        // Given
+        final BPN bpn = new BPN("bpn123");
+        Notification investigation = InvestigationTestDataFactory.createInvestigationTestData(NotificationStatus.CREATED, NotificationStatus.CREATED);
+        NotificationMessage notificationMessage = investigation.getNotifications().stream().findFirst().get();
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notificationMessage));
+
+        // When
+        Notification result = notificationPublisherService.approveNotification(investigation);
+
+        // Then
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.SENT);
+        verify(notificationsService).asyncNotificationMessageExecutor(any());
+    }
+
+    @Test
+    void testSendInvestigationFailed() {
+        // Given
+        final BPN bpn = new BPN("bpn123");
+        Notification investigation = InvestigationTestDataFactory.createInvestigationTestData(NotificationStatus.CREATED, NotificationStatus.CREATED);
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(null));
+
+        // When/Then
+        assertThrows(SendNotificationException.class, () -> notificationPublisherService.approveNotification(investigation));
+        verify(notificationsService).asyncNotificationMessageExecutor(any());
+    }
+
+    @Test
+    @DisplayName("Test updateInvestigation is valid")
+    void testUpdateInvestigation() {
+
+        // Given
+        BPN bpn = BPN.of("senderBPN");
+        NotificationStatus status = NotificationStatus.ACKNOWLEDGED;
+        String reason = "the update reason";
+
+        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
+        NotificationMessage notification = NotificationMessage.builder()
+                .id("123")
+                .notificationReferenceId("id123")
+                .created(LocalDateTime.now())
+                .targetDate(Instant.now())
+                .notificationStatus(NotificationStatus.CREATED)
+                .affectedParts(affectedParts)
+                .build();
+
+        NotificationMessage notification2 = NotificationMessage.builder()
+                .id("456")
+                .notificationReferenceId("id123")
+                .created(LocalDateTime.now().plusSeconds(10))
+                .targetDate(Instant.now())
+                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
+                .build();
+
+        List<NotificationMessage> notifications = new ArrayList<>();
+        notifications.add(notification);
+        notifications.add(notification2);
+
+        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.RECEIVED, "recipientBPN", notifications);
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
+
+        // When
+        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
+
+        // Then
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.ACKNOWLEDGED);
+        assertThat(result.getDeclineReason()).isNull();
+        assertThat(result.getCloseReason()).isNull();
+        assertThat(result.getDeclineReason()).isNull();
+        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
+    }
+
+    @Test
+    @DisplayName("Test updateInvestigation accepted is valid")
+    void testUpdateInvestigationAccepted() {
+
+        // Given
+        BPN bpn = BPN.of("senderBPN");
+        NotificationStatus status = NotificationStatus.ACCEPTED;
+        String reason = "the update reason";
+
+        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
+        NotificationMessage notification = NotificationMessage.builder()
+                .id("123")
+                .notificationReferenceId("id123")
+                .created(LocalDateTime.now())
+                .targetDate(Instant.now())
+                .notificationStatus(NotificationStatus.CREATED)
+                .affectedParts(affectedParts)
+                .build();
+
+        NotificationMessage notification2 = NotificationMessage.builder()
+                .id("456")
+                .notificationReferenceId("id123")
+                .created(LocalDateTime.now().plusSeconds(10))
+                .targetDate(Instant.now())
+                .notificationStatus(NotificationStatus.ACCEPTED)
+                .affectedParts(affectedParts)
+                .build();
+
+        List<NotificationMessage> notifications = new ArrayList<>();
+        notifications.add(notification);
+        notifications.add(notification2);
+
+        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.ACKNOWLEDGED, "recipientBPN", notifications);
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
+
+        // When
+        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
+
+        // Then
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.ACCEPTED);
+        assertThat(result.getAcceptReason()).isEqualTo(reason);
+        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
+    }
+
+    @Test
+    @DisplayName("Test updateInvestigation declined is valid")
+    void testUpdateInvestigationDeclined() {
+
+        // Given
+        BPN bpn = BPN.of("senderBPN");
+        NotificationStatus status = NotificationStatus.DECLINED;
+        String reason = "the update reason";
+
+        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
+        NotificationMessage notification = NotificationMessage.builder()
+                .id("123")
+                .notificationReferenceId("id123")
+                .created(LocalDateTime.now())
+                .targetDate(Instant.now())
+                .notificationStatus(NotificationStatus.ACKNOWLEDGED)
+                .affectedParts(affectedParts)
+                .build();
+
+        NotificationMessage notification2 = NotificationMessage.builder()
+                .id("456")
+                .notificationReferenceId("id123")
+                .notificationStatus(NotificationStatus.DECLINED)
+                .affectedParts(affectedParts)
+                .created(LocalDateTime.now().plusSeconds(10))
+                .targetDate(Instant.now())
+                .build();
+
+        List<NotificationMessage> notifications = new ArrayList<>();
+        notifications.add(notification);
+        notifications.add(notification2);
+
+        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.ACKNOWLEDGED, "recipientBPN", notifications);
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
+
+        // When
+        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
+
+        // Then
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.DECLINED);
+        assertThat(result.getDeclineReason()).isEqualTo(reason);
+        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
+    }
+
+    @Test
+    @DisplayName("Test updateInvestigation close is valid")
+    void testUpdateInvestigationClose() {
+
+        // Given
+        BPN bpn = BPN.of("senderBPN");
+        NotificationStatus status = NotificationStatus.CLOSED;
+        String reason = "the update reason";
+
+        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
+        NotificationMessage notification = NotificationMessage.builder()
+                .id("123")
+                .notificationReferenceId("id123")
+                .created(LocalDateTime.now())
+                .notificationStatus(NotificationStatus.CREATED)
+                .affectedParts(affectedParts)
+                .build();
+
+        NotificationMessage notification2 = NotificationMessage.builder()
+                .id("456")
+                .notificationReferenceId("id123")
+                .created(LocalDateTime.now().plusSeconds(10))
+                .notificationStatus(NotificationStatus.CLOSED)
+                .affectedParts(affectedParts)
+                .build();
+
+        List<NotificationMessage> notifications = new ArrayList<>();
+        notifications.add(notification);
+        notifications.add(notification2);
+
+        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.ACCEPTED, "senderBPN", notifications);
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        when(notificationsService.asyncNotificationMessageExecutor(any())).thenReturn(CompletableFuture.completedFuture(notification2));
+
+        // When
+        Notification result = notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason);
+
+        // Then
+        assertThat(result.getNotificationStatus()).isEqualTo(NotificationStatus.CLOSED);
+        assertThat(result.getCloseReason()).isEqualTo(reason);
+        Mockito.verify(notificationsService, times(1)).asyncNotificationMessageExecutor(any(NotificationMessage.class));
+    }
+
+    @Test
+    @DisplayName("Test updateInvestigation is invalid because investigation status transition not allowed")
+    void testUpdateInvestigationInvalid() {
+
+        // Given
+        BPN bpn = BPN.of("recipientBPN");
+        NotificationStatus status = NotificationStatus.CREATED;
+        String reason = "the update reason";
+
+        List<NotificationAffectedPart> affectedParts = List.of(new NotificationAffectedPart("partId"));
+        NotificationMessage notification = NotificationMessage.builder()
+                .id("123")
+                .notificationReferenceId("id123")
+                .notificationStatus(NotificationStatus.CREATED)
+                .affectedParts(affectedParts)
+                .build();
+
+        List<NotificationMessage> notifications = new ArrayList<>();
+        notifications.add(notification);
+
+        Notification investigationTestData = InvestigationTestDataFactory.createInvestigationTestDataWithNotificationList(NotificationStatus.SENT, "recipientBPN", notifications);
+        when(traceabilityProperties.getBpn()).thenReturn(bpn);
+        // When
+        assertThrows(NotificationIllegalUpdate.class, () -> notificationPublisherService.updateNotificationPublisher(investigationTestData, status, reason));
+
+        // Then
+        Mockito.verify(repository, never()).updateNotification(investigationTestData);
+        Mockito.verify(notificationsService, never()).asyncNotificationMessageExecutor(any(NotificationMessage.class));
+    }
 
 }
