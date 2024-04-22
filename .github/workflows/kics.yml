@@ -58,7 +58,7 @@ jobs:
           # Excluded paths:
           # - docker-compose.yml - used only on local env
           # - in cypress dir docker related files used only on local env
-          exclude_paths: "docker-compose.yml,cypress/docker-compose.yml,cypress/Dockerfile"
+          exclude_paths: "cfx-frontend/docker-compose.yml,cfx-frontend/cypress/docker-compose.yml,cfx-frontend/cypress/Dockerfile"
           exclude_severities: "info,low"
           # Fail on HIGH severity results
           fail_on: high
