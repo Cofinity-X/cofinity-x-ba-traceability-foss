@@ -37,124 +37,33 @@ class AssetAsPlannedControllerSyncIT extends IntegrationTestSpecification {
     @Autowired
     IrsApiSupport irsApiSupport;
 
-//    @Autowired
-//    AssetsSupport assetsSupport;
+    @Autowired
+    AssetsSupport assetsSupport;
 
-//    @Test
-//    void shouldSynchronizeAssets() throws JoseException, InterruptedException {
-//       // Given
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//        irsApiSupport.irsApiTriggerJobAsPlanned();
-//        irsApiSupport.irsApiReturnsJobDetailsAsPlannedDownward();
-//
-//       // When
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-planned/sync")
-//                .then()
-//                .statusCode(200);
-//
-//       // Then
-//        eventually(() -> {
-//            try {
-//                irsApiSupport.verifyIrsApiTriggerJobCalledTimes(1);
-//                return true;
-//            } catch (Throwable e) {
-//                e.printStackTrace();
-//                return false;
-//            }
-//        });
-//    }
+    @Test
+    void shouldNotSynchronizeAssetsWhenIrsKeepsReturningJobInRunningState() throws JoseException, InterruptedException {
+        //GIVEN
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        irsApiSupport.irsApiTriggerJob();
+        irsApiSupport.irsApiReturnsJobInRunningState();
 
-//    @Test
-//    void shouldSynchronizeAssetsUsingRetry() throws JoseException, InterruptedException {
-//       // Given
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//        irsApiSupport.irsApiTriggerJobAsPlanned();
-//        irsApiSupport.irsApiReturnsJobDetailsAsPlannedDownwardEmptyFirst();
-//
-//       // When
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-planned/sync")
-//                .then()
-//                .statusCode(200);
-//
-//       // Then
-//        eventually(() -> {
-//            try {
-//                irsApiSupport.verifyIrsApiTriggerJobCalledTimes(1);
-//                return true;
-//            } catch (Throwable e) {
-//                e.printStackTrace();
-//                return false;
-//            }
-//        });
-//    }
+        //WHEN
+        given()
+                .contentType(ContentType.JSON)
+                .body(
+                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
+                        )
+                )
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .when()
+                .post("/api/assets/as-planned/sync")
+                .then()
+                .statusCode(200);
 
-//    @Test
-//    void shouldNotSynchronizeAssetsWhenIrsFailedToReturnJobDetails() throws JoseException, InterruptedException {
-//       // Given
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//        irsApiSupport.irsApiTriggerJob();
-//        irsApiSupport.irsJobDetailsApiFailed();
-//
-//        // When
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-planned/sync")
-//                .then()
-//                .statusCode(200);
-//
-//       // Then
-//        eventually(() -> {
-//            assetsSupport.assertNoAssetsStored();
-//            return true;
-//        });
-//    }
-
-//    @Test
-//    void shouldNotSynchronizeAssetsWhenIrsKeepsReturningJobInRunningState() throws JoseException, InterruptedException {
-//        //GIVEN
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//        irsApiSupport.irsApiTriggerJob();
-//        irsApiSupport.irsApiReturnsJobInRunningState();
-//
-//        //WHEN
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-planned/sync")
-//                .then()
-//                .statusCode(200);
-//
-//        //THEN
-//        eventually(() -> {
-//            assetsSupport.assertNoAssetsStored();
-//            return true;
-//        });
-//    }
+        //THEN
+        eventually(() -> {
+            assetsSupport.assertNoAssetsStored();
+            return true;
+        });
+    }
 }

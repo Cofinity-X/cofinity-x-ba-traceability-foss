@@ -866,106 +866,6 @@
       }
     },
     {
-      "contractAgreementId": "MTdjNmNlNmQtNDM5ZS00ODc2LWFmYjgtNGU3ZjM0ZjVmZTQ5:cmVnaXN0cnktYXNzZXQ=:MzEwMjcyMGItYmY3YS00N2M5LTllYzYtMDVmYzc0YjNhZDJi",
-      "payload": {
-        "administration": null,
-        "description": [],
-        "globalAssetId": "urn:uuid:e5c96ab5-896a-482c-8761-efd74777ca97",
-        "idShort": "HVModul",
-        "id": "urn:uuid:b60a2341-e6df-449e-b094-819dbb49d391",
-        "specificAssetIds": [
-          {
-            "name": "manufacturerId",
-            "subjectId": null,
-            "value": "BPNL00000003AYRE",
-            "semanticId": null
-          },
-          {
-            "name": "manufacturerPartId",
-            "subjectId": null,
-            "value": "8840838-04",
-            "semanticId": null
-          }
-        ],
-        "submodelDescriptors": [
-          {
-            "administration": null,
-            "description": [],
-            "idShort": "PartAsPlanned",
-            "id": "urn:uuid:f831a7f4-c3e7-49b6-8201-91bc2342b68f",
-            "semanticId": {
-              "keys": [
-                {
-                  "value": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
-                  "type": "GlobalReference"
-                }
-              ],
-              "type": "ExternalReference"
-            },
-            "endpoints": [
-              {
-                "protocolInformation": {
-                  "href": "https://irs-provider-dataplane.dev.demo.catena-x.net/api/public/data/urn:uuid:f831a7f4-c3e7-49b6-8201-91bc2342b68f",
-                  "endpointProtocol": "HTTP",
-                  "endpointProtocolVersion": [
-                    "1.1"
-                  ],
-                  "subprotocol": "DSP",
-                  "subprotocolBody": "id=urn:uuid:38e6a151-a748-4d26-bbb6-996a3f661dea;dspEndpoint=https://irs-provider-controlplane.dev.demo.catena-x.net",
-                  "subprotocolBodyEncoding": "plain",
-                  "securityAttributes": [
-                    {
-                      "type": "NONE",
-                      "key": "NONE",
-                      "value": "NONE"
-                    }
-                  ]
-                },
-                "interface": "SUBMODEL-3.0"
-              }
-            ]
-          },
-          {
-            "administration": null,
-            "description": [],
-            "idShort": "PartSiteInformationAsPlanned",
-            "id": "urn:uuid:ffdd1a9e-7636-43ca-b313-f62619bf0855",
-            "semanticId": {
-              "keys": [
-                {
-                  "value": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
-                  "type": "GlobalReference"
-                }
-              ],
-              "type": "ExternalReference"
-            },
-            "endpoints": [
-              {
-                "protocolInformation": {
-                  "href": "https://irs-provider-dataplane3.dev.demo.catena-x.net/api/public/data/urn:uuid:ffdd1a9e-7636-43ca-b313-f62619bf0855",
-                  "endpointProtocol": "HTTP",
-                  "endpointProtocolVersion": [
-                    "1.1"
-                  ],
-                  "subprotocol": "DSP",
-                  "subprotocolBody": "id=urn:uuid:66bb91bc-5272-4c1c-9d3e-4c3690f921a1;dspEndpoint=https://irs-provider-controlplane3.dev.demo.catena-x.net",
-                  "subprotocolBodyEncoding": "plain",
-                  "securityAttributes": [
-                    {
-                      "type": "NONE",
-                      "key": "NONE",
-                      "value": "NONE"
-                    }
-                  ]
-                },
-                "interface": "SUBMODEL-3.0"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "contractAgreementId": "YjM1MzNiYWQtZmU0MC00YTY0LTk0MTctYzJiYzVjMTAwZWIy:cmVnaXN0cnktYXNzZXQ=:NGExOTdiMjgtMjYyNi00YzMyLWJlNGQtMTBmNDBkMzM4ZTll",
       "payload": {
         "administration": null,
@@ -1677,7 +1577,7 @@
         "sites": [
           {
             "functionValidUntil": "2025-04-04T04:14:11.000Z",
-            "catenaXsiteId": "BPNS000004711DMW",
+            "catenaXSiteId": "BPNS000004711DMW",
             "function": "production",
             "functionValidFrom": "2018-03-24T13:38:32.000Z"
           }
@@ -1710,7 +1610,7 @@
         "sites": [
           {
             "functionValidUntil": "2028-09-29T13:56:09.000Z",
-            "catenaXsiteId": "BPNS00000003B5MJ",
+            "catenaXSiteId": "BPNS00000003B5MJ",
             "function": "production",
             "functionValidFrom": "2017-01-30T12:55:30.000Z"
           }
@@ -1743,7 +1643,7 @@
         "sites": [
           {
             "functionValidUntil": "2027-05-23T09:16:30.000Z",
-            "catenaXsiteId": "BPNS000004711DMY",
+            "catenaXSiteId": "BPNS000004711DMY",
             "function": "production",
             "functionValidFrom": "2013-11-17T23:59:54.000Z"
           }
@@ -1793,7 +1693,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-10-27T21:24:04.000Z",
-            "catenaXsiteId": "BPNS00000003B2OM",
+            "catenaXSiteId": "BPNS00000003B2OM",
             "function": "production",
             "functionValidFrom": "2016-01-29T21:44:37.000Z"
           }
@@ -1826,7 +1726,7 @@
         "sites": [
           {
             "functionValidUntil": "2032-01-21T11:22:57.000Z",
-            "catenaXsiteId": "BPNS00000003AXS3",
+            "catenaXSiteId": "BPNS00000003AXS3",
             "function": "production",
             "functionValidFrom": "2017-05-27T13:54:13.000Z"
           }
@@ -1859,28 +1759,11 @@
         "sites": [
           {
             "functionValidUntil": "2031-04-16T11:07:09.000Z",
-            "catenaXsiteId": "BPNS00000003B3NX",
+            "catenaXSiteId": "BPNS00000003B3NX",
             "function": "production",
             "functionValidFrom": "2013-12-07T09:33:50.000Z"
           }
         ]
-      }
-    },
-    {
-      "identification": "urn:uuid:f831a7f4-c3e7-49b6-8201-91bc2342b68f",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
-      "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
-      "payload": {
-        "validityPeriod": {
-          "validFrom": "2018-01-25T08:42:58.000Z",
-          "validTo": "2029-02-10T03:24:30.000Z"
-        },
-        "catenaXId": "urn:uuid:e5c96ab5-896a-482c-8761-efd74777ca97",
-        "partTypeInformation": {
-          "manufacturerPartId": "8840838-04",
-          "classification": "product",
-          "nameAtManufacturer": "HV Modul"
-        }
       }
     },
     {
@@ -1892,7 +1775,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-11-21T03:24:27.000Z",
-            "catenaXsiteId": "BPNS000004711DMY",
+            "catenaXSiteId": "BPNS000004711DMY",
             "function": "production",
             "functionValidFrom": "2020-06-07T07:30:47.000Z"
           }
@@ -1925,7 +1808,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-04-16T11:07:09.000Z",
-            "catenaXsiteId": "BPNS00000003B3NX",
+            "catenaXSiteId": "BPNS00000003B3NX",
             "function": "production",
             "functionValidFrom": "2013-12-07T09:33:50.000Z"
           }
@@ -1958,7 +1841,7 @@
         "sites": [
           {
             "functionValidUntil": "2030-01-29T19:43:54.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q1",
+            "catenaXSiteId": "BPNS00000003B0Q1",
             "function": "production",
             "functionValidFrom": "2015-11-17T18:35:23.000Z"
           }
@@ -1974,7 +1857,7 @@
         "sites": [
           {
             "functionValidUntil": "2024-09-23T14:45:04.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q0",
+            "catenaXSiteId": "BPNS00000003B0Q0",
             "function": "production",
             "functionValidFrom": "2020-06-20T01:19:36.000Z"
           }
@@ -2024,7 +1907,7 @@
         "sites": [
           {
             "functionValidUntil": "2024-09-23T14:45:04.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q0",
+            "catenaXSiteId": "BPNS00000003B0Q0",
             "function": "production",
             "functionValidFrom": "2020-06-20T01:19:36.000Z"
           }
@@ -2040,7 +1923,7 @@
         "sites": [
           {
             "functionValidUntil": "2028-04-27T13:34:20.000Z",
-            "catenaXsiteId": "BPNS000004711DN",
+            "catenaXSiteId": "BPNS000004711DN",
             "function": "production",
             "functionValidFrom": "2017-05-03T09:10:04.000Z"
           }
@@ -2090,7 +1973,7 @@
         "sites": [
           {
             "functionValidUntil": "2031-10-20T22:34:48.000Z",
-            "catenaXsiteId": "BPNS00000003AXS4",
+            "catenaXSiteId": "BPNS00000003AXS4",
             "function": "production",
             "functionValidFrom": "2013-12-05T14:02:28.000Z"
           }
@@ -2106,7 +1989,7 @@
         "sites": [
           {
             "functionValidUntil": "2025-03-05T00:33:55.000Z",
-            "catenaXsiteId": "BPNS00000003B0Q4",
+            "catenaXSiteId": "BPNS00000003B0Q4",
             "function": "production",
             "functionValidFrom": "2019-09-10T14:41:50.000Z"
           }

@@ -58,6 +58,7 @@ class AssetAsBuiltControllerCountriesIT extends IntegrationTestSpecification {
                 .get("/api/assets/as-built/countries")
                 .then()
                 .statusCode(200);
+
     }
 
     @Test
@@ -69,4 +70,5 @@ class AssetAsBuiltControllerCountriesIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(401);
     }
+
 }

@@ -54,163 +54,163 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class DashboardControllerIT extends IntegrationTestSpecification {
 
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//
-//    @Autowired
-//    NotificationSupport notificationSupport;
-//
-//    @Autowired
-//    JpaAssetAsBuiltRepository assetAsBuiltRepository;
-//
-//    ObjectMapper objectMapper;
-//
-//    @BeforeEach
-//    void setUp() {
-//        objectMapper = new ObjectMapper();
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("roles")
-//    void givenRoles_whenGetDashboard_thenReturnResponse(final List<JwtRole> roles) throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(roles.toArray(new JwtRole[0])))
-//                .contentType(ContentType.JSON)
-//                .log().all()
-//                .when().get("/api/dashboard")
-//                .then().statusCode(200)
-//                .log().all()
-//                .body("asBuiltCustomerParts", equalTo(0))
-//                .body("asPlannedCustomerParts", equalTo(0))
-//                .body("asBuiltSupplierParts", equalTo(12))
-//                .body("asPlannedSupplierParts", equalTo(0))
-//                .body("asBuiltOwnParts", equalTo(1))
-//                .body("asPlannedOwnParts", equalTo(0))
-//                .body("myPartsWithOpenAlerts", equalTo(0))
-//                .body("myPartsWithOpenInvestigations", equalTo(0))
-//                .body("supplierPartsWithOpenAlerts", equalTo(0))
-//                .body("customerPartsWithOpenAlerts", equalTo(0))
-//                .body("supplierPartsWithOpenInvestigations", equalTo(0))
-//                .body("customerPartsWithOpenInvestigations", equalTo(0))
-//                .body("receivedActiveAlerts", equalTo(0))
-//                .body("receivedActiveInvestigations", equalTo(0))
-//                .body("sentActiveAlerts", equalTo(0))
-//                .body("sentActiveInvestigations", equalTo(0));
-//    }
-//
-//    @Test
-//    void givenAlertsWithAssets_whenGetDashboard_thenReturnResponse() throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//        List<AssetAsBuiltEntity> assets = assetAsBuiltRepository.findAll();
-//        List<AssetAsBuiltEntity> ownAssets = assets.stream()
-//                .filter(asset -> asset.getOwner().equals(Owner.OWN))
-//                .toList();
-//        List<AssetAsBuiltEntity> supplierAssets = assets.stream()
-//                .filter(asset -> asset.getOwner().equals(Owner.SUPPLIER))
-//                .toList();
-//        notificationSupport.storeAlertWithStatusAndAssets(RECEIVED, supplierAssets);
-//        notificationSupport.storeAlertWithStatusAndAssets(SENT, ownAssets);
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .log().all()
-//                .when().get("/api/dashboard")
-//                .then().statusCode(200)
-//                .log().all()
-//                .body("asBuiltCustomerParts", equalTo(0))
-//                .body("asPlannedCustomerParts", equalTo(0))
-//                .body("asBuiltSupplierParts", equalTo(12))
-//                .body("asPlannedSupplierParts", equalTo(0))
-//                .body("asBuiltOwnParts", equalTo(1))
-//                .body("asPlannedOwnParts", equalTo(0))
-//                .body("myPartsWithOpenAlerts", equalTo(1))
-//                .body("myPartsWithOpenInvestigations", equalTo(0))
-//                .body("supplierPartsWithOpenAlerts", equalTo(12))
-//                .body("customerPartsWithOpenAlerts", equalTo(0))
-//                .body("supplierPartsWithOpenInvestigations", equalTo(0))
-//                .body("customerPartsWithOpenInvestigations", equalTo(0))
-//                .body("receivedActiveAlerts", equalTo(2))
-//                .body("receivedActiveInvestigations", equalTo(0))
-//                .body("sentActiveAlerts", equalTo(0))
-//                .body("sentActiveInvestigations", equalTo(0));
-//    }
-//
-//    @Test
-//    void givenNoRoles_whenGetDashboard_thenReturn401() throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//
-//        // Then
-//        given()
-//                .contentType(ContentType.JSON)
-//                .log().all()
-//                .when().get("/api/dashboard")
-//                .then().statusCode(401);
-//    }
-//
-//    @Test
-//    void givenPendingInvestigation_whenGetDashboard_thenReturnPendingInvestigation() throws JoseException, JsonProcessingException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//        notificationSupport.defaultReceivedInvestigationStored();
-//        String assetId = "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978";
-//        var notificationRequest = StartNotificationRequest.builder()
-//                .partIds(List.of(assetId))
-//                .description("at least 15 characters long investigation description")
-//                .severity(NotificationSeverityRequest.MINOR)
-//                .type(NotificationTypeRequest.INVESTIGATION)
-//                //.isAsBuilt(true)
-//                .build();
-//
-//        // When
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(notificationRequest))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(201);
-//
-//       // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .contentType(ContentType.JSON)
-//                .log().all()
-//                .when().get("/api/dashboard")
-//                .then().statusCode(200)
-//                .log().all()
-//                .body("asBuiltCustomerParts", equalTo(0))
-//                .body("asPlannedCustomerParts", equalTo(0))
-//                .body("asBuiltSupplierParts", equalTo(12))
-//                .body("asPlannedSupplierParts", equalTo(0))
-//                .body("asBuiltOwnParts", equalTo(1))
-//                .body("asPlannedOwnParts", equalTo(0))
-//                .body("myPartsWithOpenAlerts", equalTo(0))
-//                .body("myPartsWithOpenInvestigations", equalTo(0))
-//                .body("supplierPartsWithOpenAlerts", equalTo(0))
-//                .body("customerPartsWithOpenAlerts", equalTo(0))
-//                .body("supplierPartsWithOpenInvestigations", equalTo(1))
-//                .body("customerPartsWithOpenInvestigations", equalTo(0))
-//                .body("receivedActiveAlerts", equalTo(0))
-//                .body("receivedActiveInvestigations", equalTo(1))
-//                .body("sentActiveAlerts", equalTo(0))
-//                .body("sentActiveInvestigations", equalTo(1));
-//    }
-//
-//    private static Stream<Arguments> roles() {
-//        return Stream.of(
-//                arguments(List.of(USER)),
-//                arguments(List.of(ADMIN)),
-//                arguments(List.of(SUPERVISOR)),
-//                arguments(List.of(USER, ADMIN))
-//        );
-//    }
+    @Autowired
+    AssetsSupport assetsSupport;
+
+    @Autowired
+    NotificationSupport notificationSupport;
+
+    @Autowired
+    JpaAssetAsBuiltRepository assetAsBuiltRepository;
+
+    ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+    }
+
+    @ParameterizedTest
+    @MethodSource("roles")
+    void givenRoles_whenGetDashboard_thenReturnResponse(final List<JwtRole> roles) throws JoseException {
+        // given
+        assetsSupport.defaultAssetsStored();
+
+        // when/then
+        given()
+                .header(oAuth2Support.jwtAuthorization(roles.toArray(new JwtRole[0])))
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when().get("/api/dashboard")
+                .then().statusCode(200)
+                .log().all()
+                .body("asBuiltCustomerParts", equalTo(0))
+                .body("asPlannedCustomerParts", equalTo(0))
+                .body("asBuiltSupplierParts", equalTo(12))
+                .body("asPlannedSupplierParts", equalTo(0))
+                .body("asBuiltOwnParts", equalTo(1))
+                .body("asPlannedOwnParts", equalTo(0))
+                .body("myPartsWithOpenAlerts", equalTo(0))
+                .body("myPartsWithOpenInvestigations", equalTo(0))
+                .body("supplierPartsWithOpenAlerts", equalTo(0))
+                .body("customerPartsWithOpenAlerts", equalTo(0))
+                .body("supplierPartsWithOpenInvestigations", equalTo(0))
+                .body("customerPartsWithOpenInvestigations", equalTo(0))
+                .body("receivedActiveAlerts", equalTo(0))
+                .body("receivedActiveInvestigations", equalTo(0))
+                .body("sentActiveAlerts", equalTo(0))
+                .body("sentActiveInvestigations", equalTo(0));
+    }
+
+    @Test
+    void givenAlertsWithAssets_whenGetDashboard_thenReturnResponse() throws JoseException {
+        // given
+        assetsSupport.defaultAssetsStored();
+        List<AssetAsBuiltEntity> assets = assetAsBuiltRepository.findAll();
+        List<AssetAsBuiltEntity> ownAssets = assets.stream()
+                .filter(asset -> asset.getOwner().equals(Owner.OWN))
+                .toList();
+        List<AssetAsBuiltEntity> supplierAssets = assets.stream()
+                .filter(asset -> asset.getOwner().equals(Owner.SUPPLIER))
+                .toList();
+        notificationSupport.storeAlertWithStatusAndAssets(RECEIVED, supplierAssets);
+        notificationSupport.storeAlertWithStatusAndAssets(SENT, ownAssets);
+
+        // when/then
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when().get("/api/dashboard")
+                .then().statusCode(200)
+                .log().all()
+                .body("asBuiltCustomerParts", equalTo(0))
+                .body("asPlannedCustomerParts", equalTo(0))
+                .body("asBuiltSupplierParts", equalTo(12))
+                .body("asPlannedSupplierParts", equalTo(0))
+                .body("asBuiltOwnParts", equalTo(1))
+                .body("asPlannedOwnParts", equalTo(0))
+                .body("myPartsWithOpenAlerts", equalTo(1))
+                .body("myPartsWithOpenInvestigations", equalTo(0))
+                .body("supplierPartsWithOpenAlerts", equalTo(12))
+                .body("customerPartsWithOpenAlerts", equalTo(0))
+                .body("supplierPartsWithOpenInvestigations", equalTo(0))
+                .body("customerPartsWithOpenInvestigations", equalTo(0))
+                .body("receivedActiveAlerts", equalTo(2))
+                .body("receivedActiveInvestigations", equalTo(0))
+                .body("sentActiveAlerts", equalTo(0))
+                .body("sentActiveInvestigations", equalTo(0));
+    }
+
+    @Test
+    void givenNoRoles_whenGetDashboard_thenReturn401() throws JoseException {
+        // given
+        assetsSupport.defaultAssetsStored();
+
+        // when/then
+        given()
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when().get("/api/dashboard")
+                .then().statusCode(401);
+    }
+
+    @Test
+    void givenPendingInvestigation_whenGetDashboard_thenReturnPendingInvestigation() throws JoseException, JsonProcessingException {
+        // given
+        assetsSupport.defaultAssetsStored();
+        notificationSupport.defaultReceivedInvestigationStored();
+        String assetId = "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978";
+        var notificationRequest = StartNotificationRequest.builder()
+                .partIds(List.of(assetId))
+                .description("at least 15 characters long investigation description")
+                .severity(NotificationSeverityRequest.MINOR)
+                .type(NotificationTypeRequest.INVESTIGATION)
+                .isAsBuilt(true)
+                .build();
+
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(notificationRequest))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(201);
+
+        // then
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when().get("/api/dashboard")
+                .then().statusCode(200)
+                .log().all()
+                .body("asBuiltCustomerParts", equalTo(0))
+                .body("asPlannedCustomerParts", equalTo(0))
+                .body("asBuiltSupplierParts", equalTo(12))
+                .body("asPlannedSupplierParts", equalTo(0))
+                .body("asBuiltOwnParts", equalTo(1))
+                .body("asPlannedOwnParts", equalTo(0))
+                .body("myPartsWithOpenAlerts", equalTo(0))
+                .body("myPartsWithOpenInvestigations", equalTo(0))
+                .body("supplierPartsWithOpenAlerts", equalTo(0))
+                .body("customerPartsWithOpenAlerts", equalTo(0))
+                .body("supplierPartsWithOpenInvestigations", equalTo(1))
+                .body("customerPartsWithOpenInvestigations", equalTo(0))
+                .body("receivedActiveAlerts", equalTo(0))
+                .body("receivedActiveInvestigations", equalTo(1))
+                .body("sentActiveAlerts", equalTo(0))
+                .body("sentActiveInvestigations", equalTo(1));
+    }
+
+    private static Stream<Arguments> roles() {
+        return Stream.of(
+                arguments(List.of(USER)),
+                arguments(List.of(ADMIN)),
+                arguments(List.of(SUPERVISOR)),
+                arguments(List.of(USER, ADMIN))
+        );
+    }
 }

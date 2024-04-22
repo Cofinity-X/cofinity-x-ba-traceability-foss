@@ -20,7 +20,6 @@
 package org.eclipse.tractusx.traceability.testdata;
 
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSeverity;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationType;
 import org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.*;
 
 import java.time.Instant;

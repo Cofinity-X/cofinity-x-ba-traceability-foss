@@ -29,7 +29,7 @@ import org.eclipse.tractusx.traceability.common.request.PageableFilterRequest;
 import org.eclipse.tractusx.traceability.common.request.SearchCriteriaRequestParam;
 import org.eclipse.tractusx.traceability.common.security.JwtRole;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.*;
+import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.NotificationMessageSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.NotificationSupport;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationAffectedPart;
@@ -134,7 +134,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .description(description)
                 .type(NotificationTypeRequest.INVESTIGATION)
                 .severity(NotificationSeverityRequest.MINOR)
-                //.isAsBuilt(true)
+                .isAsBuilt(true)
                 .build();
 
         // when
@@ -234,7 +234,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                         .reason(description)
                         .status(UpdateNotificationStatusRequest.ACCEPTED)
                         .build();
-           // when/then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(objectMapper.writeValueAsString(request))
@@ -280,7 +280,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .description("at least 15 characters long investigation description")
                 .type(NotificationTypeRequest.INVESTIGATION)
                 .severity(NotificationSeverityRequest.MAJOR)
-                //.isAsBuilt(true)
+                .isAsBuilt(true)
                 .build();
 
         val investigationId = given()
@@ -341,7 +341,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .description(description)
                 .severity(NotificationSeverityRequest.MINOR)
                 .type(NotificationTypeRequest.INVESTIGATION)
-                //.isAsBuilt(true)
+                .isAsBuilt(true)
                 .build();
 
         // when
@@ -398,7 +398,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .description(description)
                 .type(NotificationTypeRequest.INVESTIGATION)
                 .severity(NotificationSeverityRequest.MINOR)
-                //.isAsBuilt(true)
+                .isAsBuilt(true)
                 .build();
 
 
@@ -510,7 +510,7 @@ class PublisherInvestigationsControllerIT extends IntegrationTestSpecification {
                 .description(description)
                 .severity(NotificationSeverityRequest.MINOR)
                 .type(NotificationTypeRequest.INVESTIGATION)
-                //.isAsBuilt(true)
+                .isAsBuilt(true)
                 .build();
 
         // when

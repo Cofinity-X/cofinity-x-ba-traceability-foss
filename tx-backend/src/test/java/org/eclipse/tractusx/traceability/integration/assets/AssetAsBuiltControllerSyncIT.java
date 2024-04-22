@@ -36,124 +36,66 @@ import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 @DirtiesContext
 class AssetAsBuiltControllerSyncIT extends IntegrationTestSpecification {
 
-//    @Autowired
-//    IrsApiSupport irsApiSupport;
-//
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//
-//    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
-//    // @Test
-//    void givenSyncRequestWithOneAsset_whenSyncTriggered_thenShouldIrsApiOnve() throws JoseException, InterruptedException {
-//       // Given
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//        irsApiSupport.irsApiTriggerJob();
-//
-//        // Then
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-built/sync")
-//                .then()
-//                .statusCode(200);
-//
-//
-//        eventually(() -> {
-//            irsApiSupport.verifyIrsApiTriggerJobCalledTimes(2);
-//            return true;
-//        });
-//    }
-//
-//    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
-//    // removed testcase from Upstream
-//    // @Test
-//    void shouldSynchronizeAssetsUsingRetry() throws JoseException, InterruptedException {
-//       // Given
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//
-//        irsApiSupport.irsApiTriggerJob();
-//
-//        irsApiSupport.irsApiReturnsJobInRunningAndCompleted();
-//
-//       // When
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-built/sync")
-//                .then()
-//                .statusCode(200);
-//
-//       // Then
-//        eventually(() -> {
-//            irsApiSupport.verifyIrsApiTriggerJobCalledTimes(2);
-//            return true;
-//        });
-//    }
-//
-//    @Test
-//    void shouldNotSynchronizeAssetsWhenIrsFailedToReturnJobDetails() throws JoseException, InterruptedException {
-//        //GIVEN
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//        irsApiSupport.irsApiTriggerJob();
-//
-//        irsApiSupport.irsJobDetailsApiFailed();
-//
-//        //WHEN
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-built/sync")
-//                .then()
-//                .statusCode(200);
-//
-//        //THEN
-//        eventually(() -> {
-//            assetsSupport.assertNoAssetsStored();
-//            return true;
-//        });
-//    }
-//
-//    @Test
-//    void shouldNotSynchronizeAssetsWhenIrsKeepsReturningJobInRunningState() throws JoseException, InterruptedException {
-//        //GIVEN
-//        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
-//        irsApiSupport.irsApiTriggerJob();
-//
-//
-//        irsApiSupport.irsApiReturnsJobInRunningState();
-//
-//        //WHEN
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(
-//                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
-//                        )
-//                )
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .when()
-//                .post("/api/assets/as-built/sync")
-//                .then()
-//                .statusCode(200);
-//
-//        //THEN
-//        eventually(() -> {
-//            assetsSupport.assertNoAssetsStored();
-//            return true;
-//        });
-//    }
+    @Autowired
+    IrsApiSupport irsApiSupport;
+
+    @Autowired
+    AssetsSupport assetsSupport;
+
+    @Test
+    void shouldNotSynchronizeAssetsWhenIrsFailedToReturnJobDetails() throws JoseException, InterruptedException {
+        //GIVEN
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        irsApiSupport.irsApiTriggerJob();
+
+        irsApiSupport.irsJobDetailsApiFailed();
+
+        //WHEN
+        given()
+                .contentType(ContentType.JSON)
+                .body(
+                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
+                        )
+                )
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .when()
+                .post("/api/assets/as-built/sync")
+                .then()
+                .statusCode(200);
+
+        //THEN
+        eventually(() -> {
+            assetsSupport.assertNoAssetsStored();
+            return true;
+        });
+    }
+
+    @Test
+    void shouldNotSynchronizeAssetsWhenIrsKeepsReturningJobInRunningState() throws JoseException, InterruptedException {
+        //GIVEN
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        irsApiSupport.irsApiTriggerJob();
+
+
+        irsApiSupport.irsApiReturnsJobInRunningState();
+
+        //WHEN
+        given()
+                .contentType(ContentType.JSON)
+                .body(
+                        asJson(Map.of("globalAssetIds", List.of("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
+                        )
+                )
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .when()
+                .post("/api/assets/as-built/sync")
+                .then()
+                .statusCode(200);
+
+        //THEN
+        eventually(() -> {
+            assetsSupport.assertNoAssetsStored();
+            return true;
+        });
+    }
 }

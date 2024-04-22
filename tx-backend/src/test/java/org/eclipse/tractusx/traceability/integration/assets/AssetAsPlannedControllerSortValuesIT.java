@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.equalTo;
 import io.restassured.http.ContentType;
 import java.util.stream.Stream;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,25 +37,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 class AssetAsPlannedControllerSortValuesIT extends IntegrationTestSpecification {
 
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//
-//    @BeforeEach
-//    void before() {
-//        // Test data contains different spellings for 'catenaXSiteId', as long as no clear spelling is defined. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
-//        assetsSupport.assetsAsPlannedStored("/testdata/irs_assets_as_planned_v4_long_list_distinct_catenaxsiteid.json");
-//    }
+    @Autowired
+    AssetsSupport assetsSupport;
+
+    @BeforeEach
+    void before() {
+        // Test data contains different spellings for 'catenaXSiteId', as long as no clear spelling is defined. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
+        assetsSupport.assetsAsPlannedStored("/testdata/irs_assets_as_planned_v4_long_list_distinct_catenaxsiteid.json");
+    }
 
     private static Stream<Arguments> sortArguments() {
         return Stream.of(
                 // As long as no clear spelling for 'catenaxSiteId' is defined, test on different spellings. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
                 Arguments.of("catenaXSiteId,desc",
-                        new String[]{"ZBZELLE", "HVModul", "OEMAHighVoltageBattery", "VehicleModelA", "TierBECU1",
+                        new String[]{"ZBZELLE", "OEMAHighVoltageBattery", "VehicleModelA", "TierBECU1",
                                 "SubTierASensor", "TierAGearbox", "NTierACathodeMaterial", "NTierAPlastics",
                                 "NTierANTierProduct", "SubTierBSealant", "SubTierBGlue"}),
                 Arguments.of("catenaXSiteId,asc",
                         new String[]{"SubTierBGlue", "SubTierBSealant",  "NTierANTierProduct","NTierAPlastics",
-                                "NTierACathodeMaterial", "TierAGearbox", "SubTierASensor", "TierBECU1", "VehicleModelA","HVModul",
+                                "NTierACathodeMaterial", "TierAGearbox", "SubTierASensor", "TierBECU1", "VehicleModelA",
                                 "OEMAHighVoltageBattery", "ZBZELLE"})
         );
     }

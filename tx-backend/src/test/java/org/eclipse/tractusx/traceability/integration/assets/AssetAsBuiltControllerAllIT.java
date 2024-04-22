@@ -43,177 +43,177 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
 
-//    @Autowired
-//    BpnSupport bpnSupport;
-//
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//
-//    private static Stream<Arguments> owners() {
-//        return Stream.of(
-//                arguments("OWN", 1),
-//                arguments("CUSTOMER", 0),
-//                arguments("SUPPLIER", 12),
-//                arguments("UNKNOWN", 0));
-//    }
-//
-//    @Test
-//    void shouldReturnAssetsWithManufacturerName() throws JoseException {
-//       // Given
-//        bpnSupport.cachedBpnsForDefaultAssets();
-//        assetsSupport.defaultAssetsStored();
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .log().all()
-//                .when()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .log().all()
-//                .statusCode(200)
-//                .body("content.manufacturerName", everyItem(not(equalTo(assetsSupport.emptyText()))));
-//    }
-//
-//    @Test
-//    void shoulReturnSupplierAssets() throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//        final String filter = "owner,EQUAL,SUPPLIER,AND";
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .queryParam("filter", filter)
-//                .when()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .statusCode(200)
-//                .body("totalItems", equalTo(12));
-//    }
-//
-//    @Test
-//    void shouldReturnOwnAssets() throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//        final String filter = "owner,EQUAL,OWN,AND";
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .queryParam("filter", filter)
-//                .when()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .statusCode(200)
-//                .body("totalItems", equalTo(1));
-//    }
-//
-//    @Test
-//    void shouldReturnAllAssets() throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .log().body() // T
-//                .statusCode(200)
-//                .body("totalItems", equalTo(13))
-//                .body("content[0]", hasEntry("id", "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
-//                .body("content[0]", hasEntry("idShort", "vehicle_hybrid.asm"))
-//                .body("content[0]", hasEntry("semanticModelId", "OMA-TGFAYUHXFLHHUQQMPLTE"))
-//                .body("content[0]", hasEntry("businessPartner", "BPNL00000003AYRE"))
-//                .body("content[0]", hasEntry("manufacturerName", "Manufacturer Name 1"))
-//                .body("content[0]", hasEntry("qualityType", "Ok"))
-//                .body("content[0]", hasEntry("van", "OMA-TGFAYUHXFLHHUQQMPLTE"))
-//                .body("content[0].detailAspectModels[0].data", hasEntry("manufacturingCountry", "DEU"))
-//                .body("content[0].detailAspectModels[0].data", hasEntry("manufacturingDate", "2014-11-18T09:23:55Z"))
-//                .body("content[0].detailAspectModels[0].data", hasEntry("partId", assetsSupport.emptyText()))
-//                .body("content[0].detailAspectModels[0].data", hasEntry("nameAtCustomer", assetsSupport.emptyText()))
-//                .body("content[0].detailAspectModels[0].data", hasEntry("customerPartId", assetsSupport.emptyText()));
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("owners")
-//    void shouldReturnAssetsByOwnerFiltering(String ownerValue, int totalItemsValue) throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//        final String filter = "owner,EQUAL," + ownerValue + ",AND";
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .queryParam("filter", filter)
-//                .when()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .statusCode(200)
-//                .body("totalItems", equalTo(totalItemsValue));
-//    }
-//
-//    @Test
-//    void shouldGetPageOfAssets() throws JoseException {
-//       // Given
-//        assetsSupport.defaultAssetsStored();
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .param("page", "2")
-//                .param("size", "2")
-//                .when()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(2))
-//                .body("pageSize", Matchers.is(2));
-//    }
-//
-//    @Test
-//    void shouldGetTractionBatteryCodeAsset() throws JoseException {
-//       // Given
-//        assetsSupport.tractionBatteryCodeAssetsStored();
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .param("page", "0")
-//                .param("size", "10")
-//                .when()
-//                .log().all()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .log().all()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content[0].detailAspectModels[1]", hasEntry("type", "TRACTION_BATTERY_CODE"));
-//    }
-//
-//    @Test
-//    void givenNonExistingSortField_whenGetAssetsAsBuilt_thenBadRequest() throws JoseException {
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .param("page", "0")
-//                .param("size", "10")
-//                .param("sort", "nonExistingField,ASC")
-//                .when()
-//                .log().all()
-//                .get("/api/assets/as-built")
-//                .then()
-//                .log().all()
-//                .statusCode(400);
-//    }
+    @Autowired
+    BpnSupport bpnSupport;
+
+    @Autowired
+    AssetsSupport assetsSupport;
+
+    private static Stream<Arguments> owners() {
+        return Stream.of(
+                arguments("OWN", 1),
+                arguments("CUSTOMER", 0),
+                arguments("SUPPLIER", 12),
+                arguments("UNKNOWN", 0));
+    }
+
+    @Test
+    void shouldReturnAssetsWithManufacturerName() throws JoseException {
+        //GIVEN
+        bpnSupport.cachedBpnsForDefaultAssets();
+        assetsSupport.defaultAssetsStored();
+
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when()
+                .get("/api/assets/as-built")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("content.manufacturerName", everyItem(not(equalTo(assetsSupport.emptyText()))));
+    }
+
+    @Test
+    void shoulReturnSupplierAssets() throws JoseException {
+        //GIVEN
+        assetsSupport.defaultAssetsStored();
+        final String filter = "owner,EQUAL,SUPPLIER,AND";
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .queryParam("filter", filter)
+                .when()
+                .get("/api/assets/as-built")
+                .then()
+                .statusCode(200)
+                .body("totalItems", equalTo(12));
+    }
+
+    @Test
+    void shouldReturnOwnAssets() throws JoseException {
+        //GIVEN
+        assetsSupport.defaultAssetsStored();
+        final String filter = "owner,EQUAL,OWN,AND";
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .queryParam("filter", filter)
+                .when()
+                .get("/api/assets/as-built")
+                .then()
+                .statusCode(200)
+                .body("totalItems", equalTo(1));
+    }
+
+    @Test
+    void shouldReturnAllAssets() throws JoseException {
+        //GIVEN
+        assetsSupport.defaultAssetsStored();
+
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/assets/as-built")
+                .then()
+                .log().body() // T
+                .statusCode(200)
+                .body("totalItems", equalTo(13))
+                .body("content[0]", hasEntry("id", "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb"))
+                .body("content[0]", hasEntry("idShort", "vehicle_hybrid.asm"))
+                .body("content[0]", hasEntry("semanticModelId", "OMA-TGFAYUHXFLHHUQQMPLTE"))
+                .body("content[0]", hasEntry("businessPartner", "BPNL00000003AYRE"))
+                .body("content[0]", hasEntry("manufacturerName", "Manufacturer Name 1"))
+                .body("content[0]", hasEntry("qualityType", "Ok"))
+                .body("content[0]", hasEntry("van", "OMA-TGFAYUHXFLHHUQQMPLTE"))
+                .body("content[0].detailAspectModels[0].data", hasEntry("manufacturingCountry", "DEU"))
+                .body("content[0].detailAspectModels[0].data", hasEntry("manufacturingDate", "2014-11-18T09:23:55Z"))
+                .body("content[0].detailAspectModels[0].data", hasEntry("partId", assetsSupport.emptyText()))
+                .body("content[0].detailAspectModels[0].data", hasEntry("nameAtCustomer", assetsSupport.emptyText()))
+                .body("content[0].detailAspectModels[0].data", hasEntry("customerPartId", assetsSupport.emptyText()));
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("owners")
+    void shouldReturnAssetsByOwnerFiltering(String ownerValue, int totalItemsValue) throws JoseException {
+        //GIVEN
+        assetsSupport.defaultAssetsStored();
+        final String filter = "owner,EQUAL," + ownerValue + ",AND";
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .queryParam("filter", filter)
+                .when()
+                .get("/api/assets/as-built")
+                .then()
+                .statusCode(200)
+                .body("totalItems", equalTo(totalItemsValue));
+    }
+
+    @Test
+    void shouldGetPageOfAssets() throws JoseException {
+        //GIVEN
+        assetsSupport.defaultAssetsStored();
+
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .param("page", "2")
+                .param("size", "2")
+                .when()
+                .get("/api/assets/as-built")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(2))
+                .body("pageSize", Matchers.is(2));
+    }
+
+    @Test
+    void shouldGetTractionBatteryCodeAsset() throws JoseException {
+        //GIVEN
+        assetsSupport.tractionBatteryCodeAssetsStored();
+
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .param("page", "0")
+                .param("size", "10")
+                .when()
+                .log().all()
+                .get("/api/assets/as-built")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content[0].detailAspectModels[1]", hasEntry("type", "TRACTION_BATTERY_CODE"));
+    }
+
+    @Test
+    void givenNonExistingSortField_whenGetAssetsAsBuilt_thenBadRequest() throws JoseException {
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .param("page", "0")
+                .param("size", "10")
+                .param("sort", "nonExistingField,ASC")
+                .when()
+                .log().all()
+                .get("/api/assets/as-built")
+                .then()
+                .log().all()
+                .statusCode(400);
+    }
+
 }

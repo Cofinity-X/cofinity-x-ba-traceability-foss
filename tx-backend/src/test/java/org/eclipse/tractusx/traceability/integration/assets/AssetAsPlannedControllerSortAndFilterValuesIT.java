@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.equalTo;
 import io.restassured.http.ContentType;
 import java.util.stream.Stream;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,50 +37,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 class AssetAsPlannedControllerSortAndFilterValuesIT extends IntegrationTestSpecification {
 
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//
-//    @BeforeEach
-//    void before() {
-//        // Test data contains different spellings for 'catenaXSiteId', as long as no clear spelling is defined. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
-//        assetsSupport.assetsAsPlannedStored("/testdata/irs_assets_as_planned_v4_long_list.json");
-//    }
-//
-//    private static Stream<Arguments> sortAndFilterArguments() {
-//        return Stream.of(
-//                // As long as no clear spelling for 'catenaxSiteId' is defined, test on different spellings. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
-//                Arguments.of("nameAtManufacturer,asc", "catenaXSiteId,EQUAL,BPNS000004711DMY,AND",
-//                        new String[]{"HVModul", "OEMAHighVoltageBattery", "VehicleModelA", "ZBZELLE"}),
-//                Arguments.of("nameAtManufacturer,asc", "catenaXSiteId,EQUAL,BPNS000004711DMY,AND",
-//                        new String[]{"HVModul", "OEMAHighVoltageBattery", "VehicleModelA", "ZBZELLE"})
-//        );
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("sortAndFilterArguments")
-//    void givenSortArguments_whenCallSortAndFilterEndpoint_thenReturnExpectedResponse(
-//            final String sort,
-//            final String filter,
-//            final String[] expectedOrderOfIdShortItems
-//    ) throws JoseException {
-//
-//        final long page = 0;
-//        final long size = 20;
-//
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(ADMIN))
-//                .contentType(ContentType.JSON)
-//                .param("page", page)
-//                .param("size", size)
-//                .param("sort", sort)
-//                .param("filter", filter)
-//                .log().all()
-//                .when()
-//                .get("/api/assets/as-planned")
-//                .then()
-//                .log().all()
-//                .statusCode(200)
-//                .body("totalItems", equalTo(expectedOrderOfIdShortItems.length))
-//                .body("content.idShort", Matchers.containsInRelativeOrder(expectedOrderOfIdShortItems));
-//    }
+    @Autowired
+    AssetsSupport assetsSupport;
+
+    @BeforeEach
+    void before() {
+        // Test data contains different spellings for 'catenaXSiteId', as long as no clear spelling is defined. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
+        assetsSupport.assetsAsPlannedStored("/testdata/irs_assets_as_planned_v4_long_list.json");
+    }
+
+    private static Stream<Arguments> sortAndFilterArguments() {
+        return Stream.of(
+                // As long as no clear spelling for 'catenaxSiteId' is defined, test on different spellings. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
+                Arguments.of("nameAtManufacturer,asc", "catenaXSiteId,EQUAL,BPNS000004711DMY,AND",
+                        new String[]{"HVModul", "OEMAHighVoltageBattery", "VehicleModelA", "ZBZELLE"}),
+                Arguments.of("nameAtManufacturer,asc", "catenaXSiteId,EQUAL,BPNS000004711DMY,AND",
+                        new String[]{"HVModul", "OEMAHighVoltageBattery", "VehicleModelA", "ZBZELLE"})
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("sortAndFilterArguments")
+    void givenSortArguments_whenCallSortAndFilterEndpoint_thenReturnExpectedResponse(
+            final String sort,
+            final String filter,
+            final String[] expectedOrderOfIdShortItems
+    ) throws JoseException {
+
+        final long page = 0;
+        final long size = 20;
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .param("page", page)
+                .param("size", size)
+                .param("sort", sort)
+                .param("filter", filter)
+                .log().all()
+                .when()
+                .get("/api/assets/as-planned")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("totalItems", equalTo(expectedOrderOfIdShortItems.length))
+                .body("content.idShort", Matchers.containsInRelativeOrder(expectedOrderOfIdShortItems));
+    }
 }

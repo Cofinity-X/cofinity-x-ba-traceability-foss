@@ -21,7 +21,7 @@ package org.eclipse.tractusx.traceability.integration.assets.asplanned.infrastru
 
 import org.eclipse.tractusx.traceability.assets.domain.asplanned.repository.AssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,37 +37,37 @@ class AssetAsPlannedRepositoryIT extends IntegrationTestSpecification {
     @Autowired
     AssetAsPlannedRepository assetAsPlannedRepository;
 
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//
-//    @ParameterizedTest
-//    @MethodSource("fieldNameTestProvider")
-//    void givenFieldNameAndResultLimit_whenGetFieldValues_thenSorted(
-//            String fieldName,
-//            String startWith,
-//            Integer resultLimit,
-//            Integer expectedSize
-//    ) {
-//       // Given
-//        assetsSupport.defaultAssetsAsPlannedStored();
-//
-//        // When
-//        List<String> result = assetAsPlannedRepository.getFieldValues(fieldName, startWith, resultLimit, null);
-//
-//       // Then
-//        assertThat(result)
-//                .isSortedAccordingTo(String::compareTo)
-//                .hasSize(expectedSize);
-//    }
-//
-//    private static Stream<Arguments> fieldNameTestProvider() {
-//        return Stream.of(
-//                Arguments.of("id", null, 10, 2),
-//                Arguments.of("id", "urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4d", 10, 1),
-//                Arguments.of("id", null, 1, 1),
-//                Arguments.of("owner", null, 10, 2),
-//                Arguments.of("semanticDataModel", null, 10, 1),
-//                Arguments.of("qualityType", null, 10, 1)
-//        );
-//    }
+    @Autowired
+    AssetsSupport assetsSupport;
+
+    @ParameterizedTest
+    @MethodSource("fieldNameTestProvider")
+    void givenFieldNameAndResultLimit_whenGetFieldValues_thenSorted(
+            String fieldName,
+            String startWith,
+            Integer resultLimit,
+            Integer expectedSize
+    ) {
+        // given
+        assetsSupport.defaultAssetsAsPlannedStored();
+
+        // when
+        List<String> result = assetAsPlannedRepository.getFieldValues(fieldName, startWith, resultLimit, null);
+
+        // then
+        assertThat(result)
+                .isSortedAccordingTo(String::compareTo)
+                .hasSize(expectedSize);
+    }
+
+    private static Stream<Arguments> fieldNameTestProvider() {
+        return Stream.of(
+                Arguments.of("id", null, 10, 2),
+                Arguments.of("id", "urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4d", 10, 1),
+                Arguments.of("id", null, 1, 1),
+                Arguments.of("owner", null, 10, 2),
+                Arguments.of("semanticDataModel", null, 10, 1),
+                Arguments.of("qualityType", null, 10, 1)
+        );
+    }
 }

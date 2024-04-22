@@ -20,6 +20,7 @@ package org.eclipse.tractusx.traceability.integration.common.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
+import org.eclipse.tractusx.traceability.notification.infrastructure.notification.repository.JpaNotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,36 +31,51 @@ public class AssetsSupport {
     @Autowired
     AssetRepositoryProvider assetRepositoryProvider;
 
+    @Autowired
+    JpaNotificationRepository jpaInvestigationRepository;
 
     public String emptyText() {
         return "";
     }
 
     public void defaultAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
     }
 
     public AssetAsBuiltEntity findById(String id) {
         return AssetAsBuiltEntity.from(assetRepositoryProvider.assetAsBuiltRepository.getAssetById(id));
     }
 
+    public void defaultMultipleAssetsAsBuiltStored() {
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertMultipleAssetsAsBuiltForTests());
+    }
+
     public void tractionBatteryCodeAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
     }
 
     public void defaultAssetsAsPlannedStored() {
-        assetRepositoryProvider.assetAsPlannedRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
+        assetRepositoryProvider.assetAsPlannedRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
     }
 
-    public void assertAssetAsBuiltSize(int size) {
-        long assetCount = assetRepositoryProvider.assetAsBuiltRepository().countAssets();
+    public void assetsAsPlannedStored(final String resourceName) {
+        assetRepositoryProvider.assetAsPlannedRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests(resourceName));
+    }
+
+    public void assertAssetAsBuiltSize(final int size) {
+        final long assetCount = assetRepositoryProvider.assetAsBuiltRepository().countAssets();
         log.info("AsBuiltRepository asset count: {}, expected: {}", assetCount, size);
         assert assetCount == size;
     }
 
-    public void assertAssetAsPlannedSize(int size) {
-        long assetCount = assetRepositoryProvider.assetAsPlannedRepository().countAssets();
-        log.info("AsPlannedRepository asset count: {}", assetCount);
+    public void assertAssetAsPlannedSize(final int size) {
+        final long assetCount = assetRepositoryProvider.assetAsPlannedRepository().countAssets();
+        log.info("AsPlannedRepository asset count: {}, expected: {}", assetCount, size);
         assert assetCount == size;
     }
 

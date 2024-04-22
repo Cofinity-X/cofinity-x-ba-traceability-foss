@@ -23,49 +23,49 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SubmodelPayloadRepositoryIT extends IntegrationTestSpecification {
 
-//    @Autowired
-//    JpaAssetAsBuiltRepository assetAsBuiltRepository;
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//
-//    @Autowired
-//    SubmodelPayloadRepository submodelPayloadRepository;
-//    @Autowired
-//    JpaAssetAsBuiltRepository jpaAssetAsBuiltRepository;
-//
-//    ObjectMapper objectMapper;
-//
-//    @BeforeEach
-//    @Transactional
-//    void setUp() {
-//        objectMapper = new ObjectMapper();
-//        objectMapper.registerModule(new JavaTimeModule());
-//    }
-//
-//    @Test
-//    void givenAssetAsBuilt_when() throws IOException {
-//        // given
-//        String filePath = "src/test/resources/testdata/import-request.json";
-//
-//        String jsonString = Files.readString(Path.of(filePath));
-//        String assetId = "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb";
-//        ImportRequest importRequest = objectMapper.readValue(jsonString, ImportRequest.class);
-//        List<GenericSubmodel> submodels = importRequest.assets().stream()
-//                .filter(asset -> Objects.equals(asset.assetMetaInfoRequest().catenaXId(), assetId)).findFirst()
-//                .map(ImportRequest.AssetImportRequest::submodels).get();
-//
-//
-//        assetsSupport.defaultAssetsStored();
-//        jpaAssetAsBuiltRepository.findAll();
-//        submodelPayloadRepository.savePayloadForAssetAsBuilt(assetId, submodels);
-//        importRequest.assets().stream().map(it -> it.assetMetaInfoRequest().catenaXId()).toList();
-//
-//
-//        // when
-//        Map<String, String> result = submodelPayloadRepository.getAspectTypesAndPayloadsByAssetId(assetId);
-//
-//        // then
-//        assertThat(result).isNotNull();
-//    }
+    @Autowired
+    JpaAssetAsBuiltRepository assetAsBuiltRepository;
+    @Autowired
+    AssetsSupport assetsSupport;
+
+    @Autowired
+    SubmodelPayloadRepository submodelPayloadRepository;
+    @Autowired
+    JpaAssetAsBuiltRepository jpaAssetAsBuiltRepository;
+
+    ObjectMapper objectMapper;
+
+    @BeforeEach
+    @Transactional
+    void setUp() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+    }
+
+    @Test
+    void givenAssetAsBuilt_when() throws IOException {
+        // given
+        String filePath = "src/test/resources/testdata/import-request.json";
+
+        String jsonString = Files.readString(Path.of(filePath));
+        String assetId = "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb";
+        ImportRequest importRequest = objectMapper.readValue(jsonString, ImportRequest.class);
+        List<GenericSubmodel> submodels = importRequest.assets().stream()
+                .filter(asset -> Objects.equals(asset.assetMetaInfoRequest().catenaXId(), assetId)).findFirst()
+                .map(ImportRequest.AssetImportRequest::submodels).get();
+
+
+        assetsSupport.defaultAssetsStored();
+        jpaAssetAsBuiltRepository.findAll();
+        submodelPayloadRepository.savePayloadForAssetAsBuilt(assetId, submodels);
+        importRequest.assets().stream().map(it -> it.assetMetaInfoRequest().catenaXId()).toList();
+
+
+        // when
+        Map<String, String> result = submodelPayloadRepository.getAspectTypesAndPayloadsByAssetId(assetId);
+
+        // then
+        assertThat(result).isNotNull();
+    }
 
 }
