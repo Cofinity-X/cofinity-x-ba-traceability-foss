@@ -73,576 +73,521 @@ class PublisherAlertsControllerIT extends IntegrationTestSpecification {
     AlertsSupport alertsSupport;
     @Autowired
     AlertNotificationsSupport alertNotificationsSupport;
-//    @Autowired
-//    AssetsSupport assetsSupport;
-//    @Autowired
-//    AssetAsBuiltRepository assetAsBuiltRepository;
-//    @Autowired
-//    AssetAsPlannedRepository assetAsPlannedRepository;
-//
-//    @BeforeEach
-//    void setUp() {
-//        objectMapper = new ObjectMapper();
-//    }
-//
-//    @Transactional
-//    @Test
-//    void shouldReceiveAlert() {
-//        // given
-//        assetsSupport.defaultAssetsStored();
-//        NotificationType notificationType = NotificationType.ALERT;
-//        NotificationMessage notificationBuild = NotificationMessage.builder()
-//                .id("some-id")
-//                .notificationStatus(NotificationStatus.SENT)
-//                .affectedParts(List.of(new NotificationAffectedPart("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")))
-//                .createdByName("bpn-a")
-//                .createdBy("Sender Manufacturer name")
-//                .sendTo("BPNL00000003AXS3")
-//                .sendToName("Receiver manufacturer name")
-//                .severity(NotificationSeverity.MINOR)
-//                .targetDate(Instant.parse("2018-11-30T18:35:24.00Z"))
-//                .type(notificationType)
-//                .severity(NotificationSeverity.MINOR)
-//                .messageId("messageId")
-//                .build();
-//        EDCNotification notification = EDCNotificationFactory.createEdcNotification(
-//                "it", notificationBuild);
-//
-//
-//        // when
-//        notificationReceiverService.handleReceive(notification, notificationType);
-//
-//        // then
-//        alertsSupport.assertAlertsSize(1);
-//        alertNotificationsSupport.assertAlertNotificationsSize(1);
-//    }
-//
-//    @Test
-//    void shouldStartAlert() throws JsonProcessingException, JoseException {
-//        // given
-//        String filterString = "channel,EQUAL,SENDER,AND";
-//        List<String> partIds = List.of(
-//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
-//                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
-//                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
-//        );
-//        String description = "at least 15 characters long investigation description";
-//        NotificationSeverityRequest severity = NotificationSeverityRequest.MINOR;
-//        String receiverBpn = "BPN";
-//
-//        assetsSupport.defaultAssetsStored();
-//
-//        val request = StartNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .severity(severity)
-//                .type(NotificationTypeRequest.ALERT)
-//                .receiverBpn(receiverBpn)
-//                .isAsBuilt(true)
-//                .build();
-//
-//        // when
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(request))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(201)
-//                .body("id", Matchers.isA(Number.class));
-//
-//        partIds.forEach(
-//                partId -> {
-//                    AssetBase asset = assetAsBuiltRepository.getAssetById(partId);
-//                    assertThat(asset).isNotNull();
-//                }
-//        );
-//
-//        alertNotificationsSupport.assertAlertNotificationsSize(2);
-//
-//        // when/then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1));
-//    }
-//
-//    // TODO: [Pooja]  - This test case was removed from the upstream, so it's currently commented out.
-//    //Test
-//    void shouldStartAlertForAsPlanned() throws JsonProcessingException, JoseException {
-//       // Given
-//        List<String> partIds = List.of(
-//                "urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01"  // BPN: BPNL00000003CML1
-//        );
-//        String description = "at least 15 characters long investigation description";
-//        QualityNotificationSeverityRequest severity = QualityNotificationSeverityRequest.MINOR;
-//        String receiverBpn = "BPN";
-//
-//        assetsSupport.defaultAssetsAsPlannedStored();
-//
-//        val request = StartQualityNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .severity(severity)
-//                .receiverBpn(receiverBpn)
-//                .isAsBuilt(false)
-//                .build();
-//
-//        // When
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(request))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/alerts")
-//                .then()
-//                .statusCode(201)
-//                .body("id", Matchers.isA(Number.class));
-//
-//        partIds.forEach(
-//                partId -> {
-//                    AssetBase asset = assetAsPlannedRepository.getAssetById(partId);
-//                    assertThat(asset).isNotNull();
-//                }
-//        );
-//
-//        alertNotificationsSupport.assertAlertNotificationsSize(1);
-//
-//        // Then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), null))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/alerts/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1));
-//    }
-//
-//    @Test
-//    void givenMissingSeverity_whenStartAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-//        // given
-//        List<String> partIds = List.of(
-//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
-//                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
-//                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
-//        );
-//        String description = "at least 15 characters long investigation description";
-//        val request = StartNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .build();
-//
-//        // when/then
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(request))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(400);
-//    }
-//
-//    @Test
-//    void givenDescriptionOverMaxLength_whenStartAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-//        // given
-//        List<String> partIds = List.of(
-//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
-//                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
-//                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
-//        );
-//
-//        String description = RandomStringUtils.random(1001);
-//
-//        val request = StartNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .severity(NotificationSeverityRequest.MINOR)
-//                .receiverBpn("BPN")
-//                .build();
-//
-//        // when/then
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(request))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(400)
-//                .body(Matchers.containsString("Description should have at least 15 characters and at most 1000 characters"));
-//    }
-//
-//    @Test
-//    void givenTooLongAlertReason_whenUpdateAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-//        // given
-//        String description = RandomStringUtils.random(1001);
-//
-//        UpdateNotificationRequest request = UpdateNotificationRequest
-//                .builder()
-//                .status(UpdateNotificationStatusRequest.ACCEPTED)
-//                .reason(description)
-//                .build();
-//
-//        // when/then
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(request))
-//                .header(oAuth2Support.jwtAuthorization(JwtRole.SUPERVISOR))
-//                .when()
-//                .post("/api/notifications/1/update")
-//                .then()
-//                .statusCode(400)
-//                .body(Matchers.containsString("Reason should have at least 15 characters and at most 1000 characters"));
-//    }
-//
-//    @Test
-//    void givenWrongStatus_whenUpdateAlert_thenBadRequest() throws JsonProcessingException, JoseException {
-//        // given
-//        String description = RandomStringUtils.random(15);
-//
-//
-//        UpdateNotificationRequest request = UpdateNotificationRequest
-//                .builder()
-//                .status(UpdateNotificationStatusRequest.ACCEPTED)
-//                .reason(description)
-//                .build();
-//
-//        // when/then
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(request)
-//                        .replace("ACCEPTED", "wrongStatus")
-//                )
-//                .header(oAuth2Support.jwtAuthorization(JwtRole.SUPERVISOR))
-//                .when()
-//                .post("/api/notifications/1/update")
-//                .then()
-//                .statusCode(400)
-//                .body(Matchers.containsString("message\":\"NoSuchElementException: Unsupported UpdateInvestigationStatus: wrongStatus. Must be one of: ACKNOWLEDGED, ACCEPTED, DECLINED"));
-//    }
-//
-//    @Test
-//    void shouldCancelAlert() throws JsonProcessingException, JoseException {
-//        // given
-//        String filterString = "channel,EQUAL,SENDER,AND";
-//        assetsSupport.defaultAssetsStored();
-//        val startAlertRequest = StartNotificationRequest.builder()
-//                .partIds(List.of("urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978"))
-//                .description("at least 15 characters long investigation description")
-//                .severity(NotificationSeverityRequest.MAJOR)
-//                .type(NotificationTypeRequest.ALERT)
-//                .receiverBpn("BPN")
-//                .isAsBuilt(true)
-//                .build();
-//
-//        val alertId = given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(startAlertRequest))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(201)
-//                .extract().path("id");
-//
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1));
-//
-//        // when
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/$alertId/cancel".replace("$alertId", alertId.toString()))
-//                .then()
-//                .statusCode(204);
-//
-//        // then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1));
-//    }
-//
-//    @Test
-//    void shouldApproveAlertStatus() throws JsonProcessingException, JoseException {
-//        // given
-//        String filterString = "channel,EQUAL,SENDER,AND";
-//        List<String> partIds = List.of(
-//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
-//                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
-//        );
-//        String description = "at least 15 characters long investigation description";
-//
-//        assetsSupport.defaultAssetsStored();
-//
-//        val startAlertRequest = StartNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .severity(NotificationSeverityRequest.MINOR)
-//                .type(NotificationTypeRequest.ALERT)
-//                .receiverBpn("BPN")
-//                .isAsBuilt(true)
-//                .build();
-//
-//        // when
-//        var alertId = given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(startAlertRequest))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(201)
-//                .extract().path("id");
-//
-//        alertsSupport.assertAlertsSize(1);
-//
-//        given()
-//                .contentType(ContentType.JSON)
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications/$alertId/approve".replace("$alertId", alertId.toString()))
-//                .then()
-//                .statusCode(204);
-//
-//        // then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1))
-//                .body("content[0].sendTo", Matchers.is(Matchers.not(Matchers.blankOrNullString())));
-//    }
-//
-//    @Test
-//    void shouldCloseAlertStatus() throws JsonProcessingException, JoseException {
-//        // given
-//        String filterString = "channel,EQUAL,SENDER,AND";
-//        List<String> partIds = List.of(
-//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978" // BPN: BPNL00000003AYRE
-//        );
-//        String description = "at least 15 characters long investigation description";
-//
-//        assetsSupport.defaultAssetsStored();
-//
-//        val startAlertRequest = StartNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .severity(NotificationSeverityRequest.MINOR)
-//                .type(NotificationTypeRequest.ALERT)
-//                .receiverBpn("BPN")
-//                .isAsBuilt(true)
-//                .build();
-//
-//        // when
-//        val alertId = given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(startAlertRequest))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(201)
-//                .extract().path("id");
-//
-//        // then
-//        alertsSupport.assertAlertsSize(1);
-//
-//        // when
-//        given()
-//                .contentType(ContentType.JSON)
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications/$alertId/approve".replace("$alertId", alertId.toString()))
-//                .then()
-//                .statusCode(204);
-//
-//        // then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1))
-//                .body("content[0].sendTo", Matchers.is(Matchers.not(Matchers.blankOrNullString())));
-//        // when
-//
-//        CloseNotificationRequest closeAlertRequest = CloseNotificationRequest
-//                .builder()
-//                .reason("this is the close reason for that investigation")
-//                .build();
-//
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(closeAlertRequest))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications/$alertId/close".replace("$alertId", alertId.toString()))
-//                .then()
-//                .statusCode(204);
-//
-//        // then
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1));
-//
-//        alertsSupport.assertAlertsSize(1);
-//        alertsSupport.assertAlertStatus(NotificationStatus.CLOSED);
-//    }
-//
-//    @Test
-//    void givenNonExistingAlert_whenCancel_thenReturnNotFound() throws JoseException {
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/1/cancel")
-//                .then()
-//                .statusCode(404)
-//                .body("message", Matchers.is("Notification with id: 1 not found"));
-//    }
-//
-//    @Test
-//    void givenNoAuthorization_whenCancel_thenReturn401() {
-//        given()
-//                .param("page", "0")
-//                .param("size", "10")
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/1/cancel")
-//                .then()
-//                .statusCode(401);
-//    }
-//
-//    @Test
-//    void shouldBeCreatedBySender() throws JsonProcessingException, JoseException {
-//        // given
-//        String filterString = "channel,EQUAL,SENDER,AND";
-//        List<String> partIds = List.of(
-//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
-//                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
-//                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
-//        );
-//        String description = "at least 15 characters long investigation description";
-//        assetsSupport.defaultAssetsStored();
-//        val startAlertRequest = StartNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .severity(NotificationSeverityRequest.MINOR)
-//                .type(NotificationTypeRequest.ALERT)
-//                .receiverBpn("BPN")
-//                .isAsBuilt(true)
-//                .build();
-//
-//        // when
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(startAlertRequest))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(201)
-//                .body("id", Matchers.isA(Number.class));
-//
-//        // then
-//        partIds.forEach(partId -> {
-//            AssetBase asset = assetAsBuiltRepository.getAssetById(partId);
-//            assertThat(asset).isNotNull();
-//        });
-//
-//        alertNotificationsSupport.assertAlertNotificationsSize(2);
-//
-//        given()
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .post("/api/notifications/filter")
-//                .then()
-//                .statusCode(200)
-//                .body("page", Matchers.is(0))
-//                .body("pageSize", Matchers.is(10))
-//                .body("content", Matchers.hasSize(1));
-//    }
-//
-//    @Test
-//    void shouldReturn404WhenNoNotificationTypeSpecified() throws JsonProcessingException, JoseException {
-//        // given
-//        List<String> partIds = List.of(
-//                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
-//                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
-//        );
-//        String description = "at least 15 characters long investigation description";
-//
-//        assetsSupport.defaultAssetsStored();
-//
-//        val startAlertRequest = StartNotificationRequest.builder()
-//                .partIds(partIds)
-//                .description(description)
-//                .severity(NotificationSeverityRequest.MINOR)
-//                .receiverBpn("BPN")
-//                .isAsBuilt(true)
-//                .build();
-//
-//        // when
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body(objectMapper.writeValueAsString(startAlertRequest))
-//                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
-//                .when()
-//                .post("/api/notifications")
-//                .then()
-//                .statusCode(400);
-//    }
+    @Autowired
+    AssetsSupport assetsSupport;
+    @Autowired
+    AssetAsBuiltRepository assetAsBuiltRepository;
+    @Autowired
+    AssetAsPlannedRepository assetAsPlannedRepository;
+
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+    }
+
+    @Transactional
+    @Test
+    void shouldReceiveAlert() {
+        // given
+        assetsSupport.defaultAssetsStored();
+        NotificationType notificationType = NotificationType.ALERT;
+        NotificationMessage notificationBuild = NotificationMessage.builder()
+                .id("some-id")
+                .notificationStatus(NotificationStatus.SENT)
+                .affectedParts(List.of(new NotificationAffectedPart("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb")))
+                .createdByName("bpn-a")
+                .createdBy("Sender Manufacturer name")
+                .sendTo("BPNL00000003AXS3")
+                .sendToName("Receiver manufacturer name")
+                .severity(NotificationSeverity.MINOR)
+                .targetDate(Instant.parse("2018-11-30T18:35:24.00Z"))
+                .type(notificationType)
+                .severity(NotificationSeverity.MINOR)
+                .messageId("messageId")
+                .build();
+        EDCNotification notification = EDCNotificationFactory.createEdcNotification(
+                "it", notificationBuild);
+
+
+        // when
+        notificationReceiverService.handleReceive(notification, notificationType);
+
+        // then
+        alertsSupport.assertAlertsSize(1);
+        alertNotificationsSupport.assertAlertNotificationsSize(1);
+    }
+
+    @Test
+    void shouldStartAlert() throws JsonProcessingException, JoseException {
+        // given
+        String filterString = "channel,EQUAL,SENDER,AND";
+        List<String> partIds = List.of(
+                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
+                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
+                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
+        );
+        String description = "at least 15 characters long investigation description";
+        NotificationSeverityRequest severity = NotificationSeverityRequest.MINOR;
+        String receiverBpn = "BPN";
+
+        assetsSupport.defaultAssetsStored();
+
+        val request = StartNotificationRequest.builder()
+                .partIds(partIds)
+                .description(description)
+                .severity(severity)
+                .type(NotificationTypeRequest.ALERT)
+                .receiverBpn(receiverBpn)
+                .isAsBuilt(true)
+                .build();
+
+        // when
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(request))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(201)
+                .body("id", Matchers.isA(Number.class));
+
+        partIds.forEach(
+                partId -> {
+                    AssetBase asset = assetAsBuiltRepository.getAssetById(partId);
+                    assertThat(asset).isNotNull();
+                }
+        );
+
+        alertNotificationsSupport.assertAlertNotificationsSize(2);
+
+        // when/then
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/filter")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(1));
+    }
+
+    @Test
+    void givenMissingSeverity_whenStartAlert_thenBadRequest() throws JsonProcessingException, JoseException {
+        // given
+        List<String> partIds = List.of(
+                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
+                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
+                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
+        );
+        String description = "at least 15 characters long investigation description";
+        val request = StartNotificationRequest.builder()
+                .partIds(partIds)
+                .description(description)
+                .build();
+
+        // when/then
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(request))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    void givenDescriptionOverMaxLength_whenStartAlert_thenBadRequest() throws JsonProcessingException, JoseException {
+        // given
+        List<String> partIds = List.of(
+                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
+                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
+                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
+        );
+
+        String description = RandomStringUtils.random(1001);
+
+        val request = StartNotificationRequest.builder()
+                .partIds(partIds)
+                .description(description)
+                .severity(NotificationSeverityRequest.MINOR)
+                .receiverBpn("BPN")
+                .build();
+
+        // when/then
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(request))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(400)
+                .body(Matchers.containsString("Description should have at least 15 characters and at most 1000 characters"));
+    }
+
+    @Test
+    void givenTooLongAlertReason_whenUpdateAlert_thenBadRequest() throws JsonProcessingException, JoseException {
+        // given
+        String description = RandomStringUtils.random(1001);
+
+        UpdateNotificationRequest request = UpdateNotificationRequest
+                .builder()
+                .status(UpdateNotificationStatusRequest.ACCEPTED)
+                .reason(description)
+                .build();
+
+        // when/then
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(request))
+                .header(oAuth2Support.jwtAuthorization(JwtRole.SUPERVISOR))
+                .when()
+                .post("/api/notifications/1/update")
+                .then()
+                .statusCode(400)
+                .body(Matchers.containsString("Reason should have at least 15 characters and at most 1000 characters"));
+    }
+
+    @Test
+    void givenWrongStatus_whenUpdateAlert_thenBadRequest() throws JsonProcessingException, JoseException {
+        // given
+        String description = RandomStringUtils.random(15);
+
+
+        UpdateNotificationRequest request = UpdateNotificationRequest
+                .builder()
+                .status(UpdateNotificationStatusRequest.ACCEPTED)
+                .reason(description)
+                .build();
+
+        // when/then
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(request)
+                        .replace("ACCEPTED", "wrongStatus")
+                )
+                .header(oAuth2Support.jwtAuthorization(JwtRole.SUPERVISOR))
+                .when()
+                .post("/api/notifications/1/update")
+                .then()
+                .statusCode(400)
+                .body(Matchers.containsString("message\":\"NoSuchElementException: Unsupported UpdateInvestigationStatus: wrongStatus. Must be one of: ACKNOWLEDGED, ACCEPTED, DECLINED"));
+    }
+
+    @Test
+    void shouldCancelAlert() throws JsonProcessingException, JoseException {
+        // given
+        String filterString = "channel,EQUAL,SENDER,AND";
+        assetsSupport.defaultAssetsStored();
+        val startAlertRequest = StartNotificationRequest.builder()
+                .partIds(List.of("urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978"))
+                .description("at least 15 characters long investigation description")
+                .severity(NotificationSeverityRequest.MAJOR)
+                .type(NotificationTypeRequest.ALERT)
+                .receiverBpn("BPN")
+                .isAsBuilt(true)
+                .build();
+
+        val alertId = given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(startAlertRequest))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(201)
+                .extract().path("id");
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/filter")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(1));
+
+        // when
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/$alertId/cancel".replace("$alertId", alertId.toString()))
+                .then()
+                .statusCode(204);
+
+        // then
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/filter")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(1));
+    }
+
+    @Test
+    void shouldApproveAlertStatus() throws JsonProcessingException, JoseException {
+        // given
+        String filterString = "channel,EQUAL,SENDER,AND";
+        List<String> partIds = List.of(
+                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
+                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
+        );
+        String description = "at least 15 characters long investigation description";
+
+        assetsSupport.defaultAssetsStored();
+
+        val startAlertRequest = StartNotificationRequest.builder()
+                .partIds(partIds)
+                .description(description)
+                .severity(NotificationSeverityRequest.MINOR)
+                .type(NotificationTypeRequest.ALERT)
+                .receiverBpn("BPN")
+                .isAsBuilt(true)
+                .build();
+
+        // when
+        var alertId = given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(startAlertRequest))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(201)
+                .extract().path("id");
+
+        alertsSupport.assertAlertsSize(1);
+
+        given()
+                .contentType(ContentType.JSON)
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications/$alertId/approve".replace("$alertId", alertId.toString()))
+                .then()
+                .statusCode(204);
+
+        // then
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+
+                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/filter")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(1))
+                .body("content[0].sendTo", Matchers.is(Matchers.not(Matchers.blankOrNullString())));
+    }
+
+    @Test
+    void shouldCloseAlertStatus() throws JsonProcessingException, JoseException {
+        // given
+        String filterString = "channel,EQUAL,SENDER,AND";
+        List<String> partIds = List.of(
+                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978" // BPN: BPNL00000003AYRE
+        );
+        String description = "at least 15 characters long investigation description";
+
+        assetsSupport.defaultAssetsStored();
+
+        val startAlertRequest = StartNotificationRequest.builder()
+                .partIds(partIds)
+                .description(description)
+                .severity(NotificationSeverityRequest.MINOR)
+                .type(NotificationTypeRequest.ALERT)
+                .receiverBpn("BPN")
+                .isAsBuilt(true)
+                .build();
+
+        // when
+        val alertId = given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(startAlertRequest))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(201)
+                .extract().path("id");
+
+        // then
+        alertsSupport.assertAlertsSize(1);
+
+        // when
+        given()
+                .contentType(ContentType.JSON)
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications/$alertId/approve".replace("$alertId", alertId.toString()))
+                .then()
+                .statusCode(204);
+
+        // then
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/filter")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(1))
+                .body("content[0].sendTo", Matchers.is(Matchers.not(Matchers.blankOrNullString())));
+        // when
+
+        CloseNotificationRequest closeAlertRequest = CloseNotificationRequest
+                .builder()
+                .reason("this is the close reason for that investigation")
+                .build();
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(closeAlertRequest))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications/$alertId/close".replace("$alertId", alertId.toString()))
+                .then()
+                .statusCode(204);
+
+        // then
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/filter")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(1));
+
+        alertsSupport.assertAlertsSize(1);
+        alertsSupport.assertAlertStatus(NotificationStatus.CLOSED);
+    }
+
+    @Test
+    void givenNonExistingAlert_whenCancel_thenReturnNotFound() throws JoseException {
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/1/cancel")
+                .then()
+                .statusCode(404)
+                .body("message", Matchers.is("Notification with id: 1 not found"));
+    }
+
+    @Test
+    void givenNoAuthorization_whenCancel_thenReturn401() {
+        given()
+                .param("page", "0")
+                .param("size", "10")
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/1/cancel")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
+    void shouldBeCreatedBySender() throws JsonProcessingException, JoseException {
+        // given
+        String filterString = "channel,EQUAL,SENDER,AND";
+        List<String> partIds = List.of(
+                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
+                "urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb", // BPN: BPNL00000003AYRE
+                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
+        );
+        String description = "at least 15 characters long investigation description";
+        assetsSupport.defaultAssetsStored();
+        val startAlertRequest = StartNotificationRequest.builder()
+                .partIds(partIds)
+                .description(description)
+                .severity(NotificationSeverityRequest.MINOR)
+                .type(NotificationTypeRequest.ALERT)
+                .receiverBpn("BPN")
+                .isAsBuilt(true)
+                .build();
+
+        // when
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(startAlertRequest))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(201)
+                .body("id", Matchers.isA(Number.class));
+
+        // then
+        partIds.forEach(partId -> {
+            AssetBase asset = assetAsBuiltRepository.getAssetById(partId);
+            assertThat(asset).isNotNull();
+        });
+
+        alertNotificationsSupport.assertAlertNotificationsSize(2);
+
+        given()
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .body(new PageableFilterRequest(new OwnPageable(0, 10, Collections.emptyList()), new SearchCriteriaRequestParam(List.of(filterString))))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/notifications/filter")
+                .then()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content", Matchers.hasSize(1));
+    }
+
+    @Test
+    void shouldReturn404WhenNoNotificationTypeSpecified() throws JsonProcessingException, JoseException {
+        // given
+        List<String> partIds = List.of(
+                "urn:uuid:fe99da3d-b0de-4e80-81da-882aebcca978", // BPN: BPNL00000003AYRE
+                "urn:uuid:0ce83951-bc18-4e8f-892d-48bad4eb67ef"  // BPN: BPNL00000003AXS3
+        );
+        String description = "at least 15 characters long investigation description";
+
+        assetsSupport.defaultAssetsStored();
+
+        val startAlertRequest = StartNotificationRequest.builder()
+                .partIds(partIds)
+                .description(description)
+                .severity(NotificationSeverityRequest.MINOR)
+                .receiverBpn("BPN")
+                .isAsBuilt(true)
+                .build();
+
+        // when
+        given()
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(startAlertRequest))
+                .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
+                .when()
+                .post("/api/notifications")
+                .then()
+                .statusCode(400);
+    }
 }

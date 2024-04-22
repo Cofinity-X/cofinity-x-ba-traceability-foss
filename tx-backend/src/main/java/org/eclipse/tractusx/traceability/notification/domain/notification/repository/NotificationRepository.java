@@ -24,10 +24,7 @@ package org.eclipse.tractusx.traceability.notification.domain.notification.repos
 import org.eclipse.tractusx.traceability.assets.domain.base.model.Owner;
 import org.eclipse.tractusx.traceability.common.model.PageResult;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.Notification;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationId;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSide;
-import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationType;
+import org.eclipse.tractusx.traceability.notification.domain.base.model.*;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -53,4 +50,5 @@ public interface NotificationRepository {
 
     void updateErrorMessage(Notification investigation);
 
+    long countPartsByStatusAndOwnershipAndTypeAndNotificationType(List<NotificationStatus> received, Owner owner,NotificationType notificationType);
 }

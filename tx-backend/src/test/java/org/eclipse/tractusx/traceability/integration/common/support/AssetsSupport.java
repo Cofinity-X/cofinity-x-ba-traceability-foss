@@ -20,115 +20,50 @@ package org.eclipse.tractusx.traceability.integration.common.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
-import org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationEntity;
-import org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationSideBaseEntity;
-import org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationStatusBaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
-import java.util.List;
 
 @Slf4j
 @Component
 public class AssetsSupport {
 
-//    @Autowired
-//    AssetRepositoryProvider assetRepositoryProvider;
-//
-//
-//    public String emptyText() {
-//        return "";
-//    }
-//
-//    public void defaultAssetsStored() {
-//        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
-//    }
-//
-//    public AssetAsBuiltEntity findById(String id) {
-//        return AssetAsBuiltEntity.from(assetRepositoryProvider.assetAsBuiltRepository.getAssetById(id));
-//    }
-//
-//    public void tractionBatteryCodeAssetsStored() {
-//        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
-//    }
-//
-//    public void defaultAssetsAsPlannedStored() {
-//        assetRepositoryProvider.assetAsPlannedRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
-//    }
-//
-//    public void assetsAsPlannedStored(final String resourceName) {
-//        assetRepositoryProvider.assetAsPlannedRepository()
-//                .saveAll(assetRepositoryProvider.assetsConverter().readAndConvertAssetsAsPlannedForTests(resourceName));
-//    }
-//
-//    public void defaultAssetsStoredWithOnGoingInvestigation(NotificationStatusBaseEntity investigationStatus) {
-//        List<AssetAsBuiltEntity> assetEntities = assetRepositoryProvider.assetsConverter().readAndConvertAssetsForTests().stream().map(asset -> {
-//            AssetAsBuiltEntity assetEntity = AssetAsBuiltEntity.from(asset);
-//            return assetEntity;
-//        }).toList();
-//
-//        assetEntities.stream().map(it ->
-//                NotificationEntity.builder()
-//                        .assets(List.of(it))
-//                        .bpn(it.getManufacturerId())
-//                        .status(investigationStatus)
-//                        .side(NotificationSideBaseEntity.SENDER)
-//                        .description("some long description")
-//                        .createdDate(Instant.now())
-//                        .build()
-//        ).toList().forEach(it -> jpaInvestigationRepository.save(it));
-//    }
-//
-//    public void assertAssetAsBuiltSize(int size) {
-//        long assetCount = assetRepositoryProvider.assetAsBuiltRepository().countAssets();
-//        log.info("AsBuiltRepository asset count: {}, expected: {}", assetCount, size);
-//        assert assetCount == size;
-//    }
-//
-//    public void assertAssetAsPlannedSize(int size) {
-//        long assetCount = assetRepositoryProvider.assetAsPlannedRepository().countAssets();
-//        log.info("AsPlannedRepository asset count: {}", assetCount);
-//        assert assetCount == size;
-//    }
-//
-//    public void assertHasRequiredIdentifiers() {
-//        assetRepositoryProvider.assetAsBuiltRepository().getAssets().forEach(asset -> {
-//            log.info("!asset.getManufacturerId().equals(\"--\"): {}", !asset.getManufacturerId().equals("--"));
-//            log.info("!asset.getSemanticModelId().equals(\"--\"): {}", !asset.getSemanticModelId().equals("--"));
-//            log.info("!Objects.isNull(asset.getIdShort()): {}", !Objects.isNull(asset.getIdShort()));
-//
-//            assert !asset.getManufacturerId().equals("--");
-//            assert !asset.getSemanticModelId().equals("--");
-//            assert !Objects.isNull(asset.getIdShort());
-//        });
-//    }
-//
-//    public void assertAsPlannedHasRequiredIdentifiers() {
-//        assetRepositoryProvider.assetAsPlannedRepository().getAssets().forEach(asset -> {
-//            assert Objects.nonNull(asset.getManufacturerId()) && !asset.getManufacturerId().equals("--");
-//            assert Objects.nonNull(asset.getSemanticModelId()) && !asset.getSemanticModelId().equals("--");
-//            assert !Objects.isNull(asset.getIdShort());
-//
-//            log.info("!asset.getManufacturerId().equals(\"--\"): {}", !asset.getManufacturerId().equals("--"));
-//            log.info("!asset.getSemanticModelId().equals(\"--\"): {}", !asset.getSemanticModelId().equals("--"));
-//            log.info("!Objects.isNull(asset.getIdShort()): {}", !Objects.isNull(asset.getIdShort()));
-//        });
-//    }
-//
-//    public void assertHasChildCount(String assetId, int count) {
-//        List<Descriptions> childRelations = assetRepositoryProvider.assetAsBuiltRepository().getAssetById(assetId).getChildRelations();
-//        log.info("childCount: {}", childRelations.size());
-//        assert childRelations.size() == count;
-//    }
-//
-//    public void assertHasAsPlannedChildCount(String assetId, int count) {
-//        List<Descriptions> childRelations = assetRepositoryProvider.assetAsPlannedRepository().getAssetById(assetId).getChildRelations();
-//        log.info("childCount: {}", childRelations.size());
-//        assert childRelations.size() == count;
-//    }
-//
-//    public void assertNoAssetsStored() {
-//        assertAssetAsBuiltSize(0);
-//    }
+    @Autowired
+    AssetRepositoryProvider assetRepositoryProvider;
+
+
+    public String emptyText() {
+        return "";
+    }
+
+    public void defaultAssetsStored() {
+        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
+    }
+
+    public AssetAsBuiltEntity findById(String id) {
+        return AssetAsBuiltEntity.from(assetRepositoryProvider.assetAsBuiltRepository.getAssetById(id));
+    }
+
+    public void tractionBatteryCodeAssetsStored() {
+        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
+    }
+
+    public void defaultAssetsAsPlannedStored() {
+        assetRepositoryProvider.assetAsPlannedRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
+    }
+
+    public void assertAssetAsBuiltSize(int size) {
+        long assetCount = assetRepositoryProvider.assetAsBuiltRepository().countAssets();
+        log.info("AsBuiltRepository asset count: {}, expected: {}", assetCount, size);
+        assert assetCount == size;
+    }
+
+    public void assertAssetAsPlannedSize(int size) {
+        long assetCount = assetRepositoryProvider.assetAsPlannedRepository().countAssets();
+        log.info("AsPlannedRepository asset count: {}", assetCount);
+        assert assetCount == size;
+    }
+
+    public void assertNoAssetsStored() {
+        assertAssetAsBuiltSize(0);
+    }
 }
