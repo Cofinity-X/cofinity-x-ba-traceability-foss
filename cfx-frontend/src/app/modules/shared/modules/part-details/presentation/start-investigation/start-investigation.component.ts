@@ -21,6 +21,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Owner } from '@page/parts/model/owner.enum';
 import { Part } from '@page/parts/model/parts.model';
 import { RequestContext } from '@shared/components/request-notification/request-notification.base';
 import { RequestStepperComponent } from '@shared/components/request-notification/request-stepper/request-stepper.component';
@@ -51,7 +52,10 @@ export class StartInvestigationComponent {
 
     this.childPartListSubscription?.unsubscribe();
     this.childPartListSubscription = this.partDetailsFacade.getChildPartDetails(this._part.data).subscribe({
-      next: data => this.childPartsState.update({ data }),
+      next: data => {
+        const otherChildren = data.filter((part) => part.owner !== Owner.OWN);
+        this.childPartsState.update({ data: otherChildren });
+      },
       error: error => this.childPartsState.update({ error }),
     });
   }

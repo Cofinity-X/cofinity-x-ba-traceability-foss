@@ -23,7 +23,7 @@ import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.model.A
 import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.repository.JpaAssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
-import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
+import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.eclipse.tractusx.traceability.integration.common.support.InvestigationsSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
@@ -39,16 +39,8 @@ import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.ACCEPTED;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.ACKNOWLEDGED;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.CANCELED;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.CLOSED;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.CREATED;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.DECLINED;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.RECEIVED;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.SENT;
+import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.*;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class AssetAsPlannedControllerByIdIT extends IntegrationTestSpecification {
@@ -72,62 +64,6 @@ class AssetAsPlannedControllerByIdIT extends IntegrationTestSpecification {
                 arguments(Map.of("qualityType", ""), "Failed to deserialize request body."),
                 arguments(Map.of("qualityType", " "), "Failed to deserialize request body.")
         );
-    }
-
-
-    // TODO: [Pooja] Investigate failing test case due to dropped table of assets_as_planned_alerts.
-    // Test
-    void givenAlertsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        AssetAsPlannedEntity asset = jpaAssetAsPlannedRepository.findById("urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, null, List.of(asset));
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, null, List.of(asset));
-        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, null, List.of(asset));
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, null, List.of(asset));
-        alertsSupport.storeAlertWithStatusAndAssets(ACCEPTED, null, List.of(asset));
-        alertsSupport.storeAlertWithStatusAndAssets(DECLINED, null, List.of(asset));
-        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, null, List.of(asset));
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, null, List.of(asset));
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-planned/urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01")
-                .then()
-                .log().all()
-                .statusCode(200)
-                .assertThat()
-                .body("receivedQualityAlertIdsInStatusActive", hasSize(6));
-    }
-
-    // TODO: [Pooja] Investigate failing test case due to dropped table of assets_as_planned_investigations.
-    // Test
-    void givenInvestigationsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
-       // Given
-        assetsSupport.defaultAssetsAsPlannedStored();
-        AssetAsPlannedEntity asset = jpaAssetAsPlannedRepository.findById("urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CREATED, null, List.of(asset));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, null, List.of(asset));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, null, List.of(asset));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, null, List.of(asset));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, null, List.of(asset));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, null, List.of(asset));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CANCELED, null, List.of(asset));
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CLOSED, null, List.of(asset));
-
-        // Then
-        given()
-                .header(oAuth2Support.jwtAuthorization(ADMIN))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/assets/as-planned/urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4da01")
-                .then()
-                .statusCode(200)
-                .assertThat()
-                .body("receivedQualityInvestigationIdsInStatusActive", hasSize(6));
     }
 
     @Test

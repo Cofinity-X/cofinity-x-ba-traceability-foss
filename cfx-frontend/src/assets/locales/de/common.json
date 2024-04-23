@@ -167,6 +167,7 @@
     "maxDate": "Bitte wählen Sie ein Datum vor dem {{- maxDate}}.",
     "minDate": "Bitte wählen Sie ein Datum nach dem {{- minDate}}.",
     "currentDate": "Bitte wählen Sie ein Datum nach dem {{- currentDate}}.",
+    "deadlineExceeded": "Das Rückmeldetdatum überschreitet die ursprüngliche Frist. ({{- deadlineExceeded}})" ,
     "generic": "Die Eingabe ist ungültig."
   },
   "requestAlert": {

@@ -6,9 +6,9 @@
 
 ---
 insert into investigation
-    (id                     , bpn      , close_reason      , created                              , description                                                 , status  , side    , accept_reason, decline_reason, updated                              , error_message)
+    (id                     , bpn      , close_reason      , created                              , description                                                 , status  , side    , accept_reason, decline_reason, updated                              )
 values
-    (${investigationSentId7}, ${bpnOwn}, 'Problem is fixed', current_timestamp - interval '6 days', 'Investigation on Right Xenon Gland due to damaged package.', 'CLOSED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', null);
+    (${investigationSentId7}, ${bpnOwn}, 'Problem is fixed', current_timestamp - interval '6 days', 'Investigation on Right Xenon Gland due to damaged package.', 'CLOSED', 'SENDER', null         , null          , current_timestamp - interval '1 hour');
 
 ---
 -- reset sequence to highest next-val
@@ -16,9 +16,9 @@ select setval('investigation_id_seq1', (select max(i.id) from investigation i), 
 
 ---
 insert into investigation_notification
-    (id                                  , contract_agreement_id, edc_url                    , notification_reference_id, created_by, send_to        , investigation_id       , target_date                          , severity  , created_by_name, send_to_name       , edc_notification_id                   , status    , created                              , updated                              , message_id                            , is_initial)
+    (id                                  , contract_agreement_id, notification_reference_id, created_by, send_to        , investigation_id       , target_date                          , severity  , created_by_name, send_to_name       , edc_notification_id                   , status    , created                              , updated                              , message_id                            , error_message)
 values
-    (${investigationNotificationSentId7a}, 'contractAgreementId', 'http://localhost:5001/edc', null                     , ${bpnOwn} , ${bpnSupplier2}, ${investigationSentId7}, current_timestamp + interval '1 week', 'CRITICAL', ${bpnOwnName}  , ${bpnSupplier2Name}, '3ac2239a-e63f-4c19-b3b3-e6a2e5a240da', 'CANCELED', current_timestamp - interval '6 days', current_timestamp - interval '1 hour', '749b31e9-9e73-4699-9470-dbee67ebc7a7', true);
+    (${investigationNotificationSentId7a}, 'contractAgreementId', null                     , ${bpnOwn} , ${bpnSupplier2}, ${investigationSentId7}, current_timestamp + interval '1 week', 'CRITICAL', ${bpnOwnName}  , ${bpnSupplier2Name}, '3ac2239a-e63f-4c19-b3b3-e6a2e5a240da', 'CANCELED', current_timestamp - interval '6 days', current_timestamp - interval '1 hour', '749b31e9-9e73-4699-9470-dbee67ebc7a7', null);
 
 ---
 -- join investigation to asset
@@ -37,9 +37,9 @@ values
 ---
 -- CLOSED by sender notification message
 insert into investigation_notification
-    (id                                  , contract_agreement_id, edc_url                    , notification_reference_id, created_by, send_to        , investigation_id       , target_date                          , severity  , created_by_name, send_to_name       , edc_notification_id                   , status    , created                              , updated                              , message_id                            , is_initial)
+    (id                                  , contract_agreement_id, notification_reference_id, created_by, send_to        , investigation_id       , target_date                          , severity  , created_by_name, send_to_name       , edc_notification_id                   , status    , created                              , updated                              , message_id                            , error_message)
 values
-    (${investigationNotificationSentId7b}, 'contractAgreementId', 'http://localhost:5001/edc', null                     , ${bpnOwn} , ${bpnSupplier2}, ${investigationSentId7}, current_timestamp + interval '1 week', 'CRITICAL', ${bpnOwnName}  , ${bpnSupplier2Name}, '8925f21f-09eb-4789-81fb-ec221e9e1561', 'CANCELED', current_timestamp - interval '6 days', current_timestamp - interval '1 hour', '207ba6cf-217b-401d-a5da-69cac8b154a5', false);
+    (${investigationNotificationSentId7b}, 'contractAgreementId', null                     , ${bpnOwn} , ${bpnSupplier2}, ${investigationSentId7}, current_timestamp + interval '1 week', 'CRITICAL', ${bpnOwnName}  , ${bpnSupplier2Name}, '8925f21f-09eb-4789-81fb-ec221e9e1561', 'CANCELED', current_timestamp - interval '6 days', current_timestamp - interval '1 hour', '207ba6cf-217b-401d-a5da-69cac8b154a5', null);
 
 ---
 -- join CLOSED notification to asset

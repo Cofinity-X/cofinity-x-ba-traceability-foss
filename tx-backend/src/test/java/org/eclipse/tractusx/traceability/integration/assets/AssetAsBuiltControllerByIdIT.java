@@ -77,19 +77,19 @@ class AssetAsBuiltControllerByIdIT extends IntegrationTestSpecification {
 
     @Test
     void givenAlertsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
-      // Given
+        // Given
         assetsSupport.defaultAssetsStored();
         AssetAsBuiltEntity assetAsBuilt = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt), null);
-        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt), null);
-        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt), null);
-        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt), null);
-        alertsSupport.storeAlertWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt), null);
-        alertsSupport.storeAlertWithStatusAndAssets(DECLINED, List.of(assetAsBuilt), null);
-        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt), null);
-        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt), null);
+        alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt));
+        alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt));
+        alertsSupport.storeAlertWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt));
+        alertsSupport.storeAlertWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt));
+        alertsSupport.storeAlertWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt));
+        alertsSupport.storeAlertWithStatusAndAssets(DECLINED, List.of(assetAsBuilt));
+        alertsSupport.storeAlertWithStatusAndAssets(CANCELED, List.of(assetAsBuilt));
+        alertsSupport.storeAlertWithStatusAndAssets(CLOSED, List.of(assetAsBuilt));
 
-       // Then
+        // When
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -104,19 +104,19 @@ class AssetAsBuiltControllerByIdIT extends IntegrationTestSpecification {
 
     @Test
     void givenInvestigationsForAsset_whenCallAssetById_thenReturnProperCount() throws JoseException {
-      // Given
+        // Given
         assetsSupport.defaultAssetsStored();
         AssetAsBuiltEntity assetAsBuilt = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CREATED, List.of(assetAsBuilt), null);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt), null);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt), null);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt), null);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt), null);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt), null);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CANCELED, List.of(assetAsBuilt), null);
-        investigationsSupport.storeInvestigationWithStatusAndAssets(CLOSED, List.of(assetAsBuilt), null);
+        investigationsSupport.storeInvestigationWithStatusAndAssets(CREATED, List.of(assetAsBuilt));
+        investigationsSupport.storeInvestigationWithStatusAndAssets(SENT, List.of(assetAsBuilt));
+        investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt));
+        investigationsSupport.storeInvestigationWithStatusAndAssets(ACKNOWLEDGED, List.of(assetAsBuilt));
+        investigationsSupport.storeInvestigationWithStatusAndAssets(ACCEPTED, List.of(assetAsBuilt));
+        investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt));
+        investigationsSupport.storeInvestigationWithStatusAndAssets(CANCELED, List.of(assetAsBuilt));
+        investigationsSupport.storeInvestigationWithStatusAndAssets(CLOSED, List.of(assetAsBuilt));
 
-       // Then
+        // When
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -130,10 +130,10 @@ class AssetAsBuiltControllerByIdIT extends IntegrationTestSpecification {
 
     @Test
     void shouldReturnAssetsForAuthenticatedUserWithRole() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
 
-       // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -155,10 +155,10 @@ class AssetAsBuiltControllerByIdIT extends IntegrationTestSpecification {
 
     @Test
     void shouldGetChildrenAsset() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
 
-       // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -172,10 +172,10 @@ class AssetAsBuiltControllerByIdIT extends IntegrationTestSpecification {
 
     @Test
     void shouldReturn404WhenChildrenAssetIsNotFound() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
 
-       // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -214,11 +214,11 @@ class AssetAsBuiltControllerByIdIT extends IntegrationTestSpecification {
 
     @Test
     void shouldUpdateQualityTypeForExistingAsset() throws JoseException {
-       // Given
+        //GIVEN
         assetsSupport.defaultAssetsStored();
         String existingAssetId = "urn:uuid:1ae94880-e6b0-4bf3-ab74-8148b63c0640";
 
-       // Then
+        //THEN
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)

@@ -6,9 +6,9 @@
 
 ---
 insert into investigation
-    (id                     , bpn      , close_reason, created                              , description                                                     , status    , side    , accept_reason         , decline_reason, updated                              , error_message)
+    (id                     , bpn      , close_reason, created                              , description                                                     , status    , side    , accept_reason         , decline_reason, updated                              )
 values
-    (${investigationSentId4}, ${bpnOwn}, null        , current_timestamp - interval '4 days', 'Investigation on Electric Fuse small due to damaged packaging.', 'ACCEPTED', 'SENDER', 'Damn, it''s damaged!', null          , current_timestamp - interval '1 hour', null);
+    (${investigationSentId4}, ${bpnOwn}, null        , current_timestamp - interval '4 days', 'Investigation on Electric Fuse small due to damaged packaging.', 'ACCEPTED', 'SENDER', 'Damn, it''s damaged!', null          , current_timestamp - interval '1 hour');
 
 ---
 -- reset sequence to highest next-val
@@ -16,9 +16,9 @@ select setval('investigation_id_seq1', (select max(i.id) from investigation i), 
 
 ---
 insert into investigation_notification
-    (id                                  , contract_agreement_id, edc_url, notification_reference_id, created_by, send_to        , investigation_id       , target_date                           , severity, created_by_name, send_to_name       , edc_notification_id                   , status    , created                              , updated                              , message_id, is_initial)
+    (id                                  , contract_agreement_id, notification_reference_id, created_by, send_to        , investigation_id       , target_date                           , severity, created_by_name, send_to_name       , edc_notification_id                   , status    , created                              , updated                              , message_id, error_message)
 values
-    (${investigationNotificationSentId4a}, 'contractAgreementId', null   , null                     , ${bpnOwn} , ${bpnSupplier3}, ${investigationSentId4}, current_timestamp + interval '1 month', 'MINOR' , ${bpnOwnName}  , ${bpnSupplier3Name}, '10454df4-c04d-4e48-ab86-6aeb568fe64a', 'ACCEPTED', current_timestamp - interval '4 days', current_timestamp - interval '1 hour', null      , true);
+    (${investigationNotificationSentId4a}, 'contractAgreementId', null                     , ${bpnOwn} , ${bpnSupplier3}, ${investigationSentId4}, current_timestamp + interval '1 month', 'MINOR' , ${bpnOwnName}  , ${bpnSupplier3Name}, '10454df4-c04d-4e48-ab86-6aeb568fe64a', 'ACCEPTED', current_timestamp - interval '4 days', current_timestamp - interval '1 hour', null      , null);
 
 ---
 -- join investigation to asset
@@ -37,9 +37,9 @@ values
 ---
 -- ACCEPTED by receiver notification message
 insert into investigation_notification
-    (id                                  , contract_agreement_id, edc_url, notification_reference_id             , created_by     , send_to  , investigation_id       , target_date                          , severity, created_by_name    , send_to_name , edc_notification_id                   , status    , created                              , updated, message_id, is_initial)
+    (id                                  , contract_agreement_id, notification_reference_id             , created_by     , send_to  , investigation_id       , target_date                          , severity, created_by_name    , send_to_name , edc_notification_id                   , status    , created                              , updated, message_id, error_message)
 values
-    (${investigationNotificationSentId4b}, 'contractAgreementId', null   , '10454df4-c04d-4e48-ab86-6aeb568fe64a', ${bpnSupplier3}, ${bpnOwn}, ${investigationSentId4}, current_timestamp + interval '1 week', 'MINOR' , ${bpnSupplier3Name}, ${bpnOwnName}, '10454df4-c04d-4e48-ab86-6aeb568fe64a', 'ACCEPTED', current_timestamp - interval '2 days', null   , null      , false);
+    (${investigationNotificationSentId4b}, 'contractAgreementId', '10454df4-c04d-4e48-ab86-6aeb568fe64a', ${bpnSupplier3}, ${bpnOwn}, ${investigationSentId4}, current_timestamp + interval '1 week', 'MINOR' , ${bpnSupplier3Name}, ${bpnOwnName}, '10454df4-c04d-4e48-ab86-6aeb568fe64a', 'ACCEPTED', current_timestamp - interval '2 days', null   , null      , null);
 
 ---
 -- join ACCEPTED notification to asset

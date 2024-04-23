@@ -166,6 +166,7 @@
     "maxDate": "Please select a date that is before {{- maxDate}}.",
     "minDate": "Please select a date that is after {{- minDate}}.",
     "currentDate": "Please select a date that is after {{- currentDate}}.",
+    "deadlineExceeded": "The deadline exceeds the original deadline ({{- deadlineExceeded}}).",
     "generic": "Please enter valid data."
   },
   "unitTest": {

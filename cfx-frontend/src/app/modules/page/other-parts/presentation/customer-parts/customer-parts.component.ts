@@ -106,25 +106,6 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
   }
 
   updateCustomerParts(searchValue?: string): void {
-    // if (searchValue && searchValue !== '') {
-    //   this.globalSearchActive = true;
-    //   this.assetAsBuiltFilter = toGlobalSearchAssetFilter(searchValue, true, this.searchListAsBuilt, this.datePipe);
-    //   this.assetAsPlannedFilter = toGlobalSearchAssetFilter(searchValue, false, this.searchListAsPlanned, this.datePipe);
-    //   if (this.bomLifecycle === MainAspectType.AS_BUILT) {
-    //     this.otherPartsFacade.setCustomerPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE, [], this.assetAsBuiltFilter, this.globalSearchActive);
-    //   } else {
-    //     this.otherPartsFacade.setCustomerPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE, [], this.assetAsPlannedFilter, this.globalSearchActive);
-    //   }
-    // } else {
-    //   this.globalSearchActive = false;
-    //   this.assetAsBuiltFilter = {};
-    //   this.assetAsPlannedFilter = {};
-    //   if (this.bomLifecycle === MainAspectType.AS_BUILT) {
-    //     this.otherPartsFacade.setCustomerPartsAsBuilt(0, this.DEFAULT_PAGE_SIZE);
-    //   } else {
-    //     this.otherPartsFacade.setCustomerPartsAsPlanned(0, this.DEFAULT_PAGE_SIZE);
-    //   }
-    // }
     if (searchValue) {
       this.otherPartsFacade.setCustomerPartsAsBuilt(0, 50, [], toGlobalSearchAssetFilter(searchValue, true), true);
       this.otherPartsFacade.setCustomerPartsAsPlanned(0, 50, [], toGlobalSearchAssetFilter(searchValue, false), true);
@@ -185,7 +166,7 @@ export class CustomerPartsComponent implements OnInit, OnDestroy {
 
   public openDetailPage(part: Part): void {
     const { link } = getRoute(OTHER_PARTS_BASE_ROUTE);
-    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } })?.then(_ => window.location.reload());
+    this.router.navigate([`/${link}/${part.id}`], { queryParams: { type: part.mainAspectType } });
   }
 
   public onSelectItem($event: Record<string, unknown>): void {

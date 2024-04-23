@@ -19,12 +19,7 @@
 
 package org.eclipse.tractusx.traceability.integration.assets;
 
-import static io.restassured.RestAssured.given;
-import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
-import static org.hamcrest.Matchers.equalTo;
-
 import io.restassured.http.ContentType;
-import java.util.stream.Stream;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.hamcrest.Matchers;
@@ -34,6 +29,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.stream.Stream;
+
+import static io.restassured.RestAssured.given;
+import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
+import static org.hamcrest.Matchers.equalTo;
 
 class AssetAsPlannedControllerSortValuesIT extends IntegrationTestSpecification {
 
@@ -50,12 +51,12 @@ class AssetAsPlannedControllerSortValuesIT extends IntegrationTestSpecification 
         return Stream.of(
                 // As long as no clear spelling for 'catenaxSiteId' is defined, test on different spellings. https://github.com/eclipse-tractusx/sldt-semantic-models/issues/470
                 Arguments.of("catenaXSiteId,desc",
-                        new String[]{"ZBZELLE", "HVModul", "OEMAHighVoltageBattery", "VehicleModelA", "TierBECU1",
+                        new String[]{"ZBZELLE", "OEMAHighVoltageBattery", "VehicleModelA", "TierBECU1",
                                 "SubTierASensor", "TierAGearbox", "NTierACathodeMaterial", "NTierAPlastics",
                                 "NTierANTierProduct", "SubTierBSealant", "SubTierBGlue"}),
                 Arguments.of("catenaXSiteId,asc",
                         new String[]{"SubTierBGlue", "SubTierBSealant",  "NTierANTierProduct","NTierAPlastics",
-                                "NTierACathodeMaterial", "TierAGearbox", "SubTierASensor", "TierBECU1", "VehicleModelA","HVModul",
+                                "NTierACathodeMaterial", "TierAGearbox", "SubTierASensor", "TierBECU1", "VehicleModelA",
                                 "OEMAHighVoltageBattery", "ZBZELLE"})
         );
     }

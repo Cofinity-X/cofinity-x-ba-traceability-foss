@@ -44,7 +44,7 @@ class QualityNotificationMapperTest {
 
     @Test
     void testToReceiverInvestigation() {
-      // Given
+        // Given
         String sender = "BPNL000000000001";
         String receiver = "BPNL000000000002";
         String description = "Test investigation";
@@ -58,7 +58,6 @@ class QualityNotificationMapperTest {
                 .sendTo(receiver)
                 .sendToName("receiverManufacturerName")
                 .severity(QualityNotificationSeverity.MINOR)
-                .isInitial(false)
                 .messageId("1")
                 .build();
 
@@ -66,7 +65,7 @@ class QualityNotificationMapperTest {
         // When
         QualityNotification result = mapper.toQualityNotification(new BPN(receiver), description, notification);
 
-       // Then
+        // Then
         assertEquals(QualityNotificationStatus.RECEIVED, result.getNotificationStatus());
         assertEquals(QualityNotificationSide.RECEIVER, result.getNotificationSide());
         assertEquals(description, result.getDescription());

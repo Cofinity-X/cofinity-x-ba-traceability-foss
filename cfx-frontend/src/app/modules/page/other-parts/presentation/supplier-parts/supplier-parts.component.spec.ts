@@ -24,10 +24,9 @@ import { PartsState } from '@page/parts/core/parts.state';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { toGlobalSearchAssetFilter } from '@shared/helper/filter-helper';
 import { fireEvent, screen, waitFor } from '@testing-library/angular';
-import { getTableCheckbox, renderComponent } from '@tests/test-render.utils';
+import { renderComponent } from '@tests/test-render.utils';
 
 import { SupplierPartsComponent } from './supplier-parts.component';
-import { Role } from '@core/user/role.model';
 
 describe('SupplierPartsComponent', () => {
   let otherPartsState: OtherPartsState;

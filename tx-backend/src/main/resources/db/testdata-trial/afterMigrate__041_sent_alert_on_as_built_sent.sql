@@ -6,9 +6,9 @@
 
 ---
 insert into alert
-    (id             , bpn      , close_reason, created                             , description                       , status, side    , accept_reason, decline_reason, updated          , error_message)
+    (id             , bpn      , close_reason, created                             , description                       , status, side    , accept_reason, decline_reason, updated          )
 values
-    (${alertSentId2}, ${bpnOwn}, null        , current_timestamp - interval '1 day', 'First Alert about Left Headlight', 'SENT', 'SENDER', null         , null          , current_timestamp, null);
+    (${alertSentId2}, ${bpnOwn}, null        , current_timestamp - interval '1 day', 'First Alert about Left Headlight', 'SENT', 'SENDER', null         , null          , current_timestamp);
 
 ---
 -- reset sequence to highest next-val
@@ -17,9 +17,9 @@ select setval('alert_id_seq1', (select max(a.id) from alert a), true);
 ---
 -- initial message
 insert into alert_notification
-    (id                         , alert_id       , contract_agreement_id, edc_url                    , notification_reference_id, created_by, send_to        , target_date                          , severity, created_by_name, send_to_name       , edc_notification_id        , status   , created                             , updated          , message_id                            , is_initial)
+    (id                         , alert_id       , contract_agreement_id, notification_reference_id, created_by, send_to        , target_date                          , severity, created_by_name, send_to_name       , edc_notification_id        , status   , created                             , updated          , message_id                            , error_message)
 values
-    (${alertNotificationSentId2}, ${alertSentId2}, 'contractAgreementId', 'http://localhost:5001/edc', 'null'                   , ${bpnOwn} , ${bpnCustomer1}, current_timestamp + interval '1 week', 'MAJOR' , ${bpnOwnName}  , ${bpnCustomer1Name}, ${alertNotificationSentId2}, 'CREATED', current_timestamp - interval '1 day', current_timestamp, '2cf84b7c-5e42-46f2-8869-12b053b9a276', true);
+    (${alertNotificationSentId2}, ${alertSentId2}, 'contractAgreementId', 'null'                   , ${bpnOwn} , ${bpnCustomer1}, current_timestamp + interval '1 week', 'MAJOR' , ${bpnOwnName}  , ${bpnCustomer1Name}, ${alertNotificationSentId2}, 'CREATED', current_timestamp - interval '1 day', current_timestamp, '2cf84b7c-5e42-46f2-8869-12b053b9a276', null);
 
 ---
 -- join initial notification to asset

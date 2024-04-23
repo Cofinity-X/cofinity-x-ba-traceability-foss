@@ -48,19 +48,19 @@ class QualityNotificationSeverityRequestTest {
     void givenValidSeverity_whenDeserialize_thenCreateProperValue(
             final String input, final QualityNotificationSeverityRequest output
     ) throws IOException {
-        // When
+        // when
         final QualityNotificationSeverityRequest result = objectMapper.readValue(input, QualityNotificationSeverityRequest.class);
 
-       // Then
+        // then
         assertThat(result).isEqualTo(output);
     }
 
     @Test
     void givenInvalidSeverity_whenDeserialize_thenThrowException() throws IOException {
-       // Given
+        // given
         final String input = "\"NON_EXISTENT\"";
 
-        // Then
+        // when/then
         try {
             objectMapper.readValue(input, QualityNotificationSeverityRequest.class);
         } catch (ValueInstantiationException exception) {

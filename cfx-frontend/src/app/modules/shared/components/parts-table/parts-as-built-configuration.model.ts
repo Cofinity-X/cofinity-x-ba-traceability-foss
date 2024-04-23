@@ -35,10 +35,8 @@ export class PartsAsBuiltConfigurationModel extends TableFilterConfiguration {
       semanticDataModel: true,
       manufacturingDate: true,
       manufacturingCountry: true,
-
       receivedActiveAlerts: true,
       receivedActiveInvestigations: true,
-
       menu: false,
     };
 

@@ -6,9 +6,9 @@
 
 ---
 insert into alert
-    (id             , bpn      , close_reason, created                              , description                        , status    , side    , accept_reason, decline_reason, updated          , error_message)
+    (id             , bpn      , close_reason, created                              , description                        , status    , side    , accept_reason, decline_reason, updated          )
 values
-    (${alertSentId6}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Cancelled Alert about Break Light', 'CANCELED', 'SENDER', null         , null          , current_timestamp, null);
+    (${alertSentId6}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Cancelled Alert about Break Light', 'CANCELED', 'SENDER', null         , null          , current_timestamp);
 
 ---
 -- reset sequence to highest next-val
@@ -17,9 +17,9 @@ select setval('alert_id_seq1', (select max(a.id) from alert a), true);
 ---
 -- initial message
 insert into alert_notification
-    (id                         , alert_id       , contract_agreement_id, edc_url                    , notification_reference_id, created_by, send_to        , target_date                           , severity, created_by_name, send_to_name       , edc_notification_id        , status    , created                              , updated          , message_id                            , is_initial)
+    (id                         , alert_id       , contract_agreement_id, notification_reference_id, created_by, send_to        , target_date                           , severity, created_by_name, send_to_name       , edc_notification_id        , status    , created                              , updated          , message_id                            , error_message)
 values
-    (${alertNotificationSentId6}, ${alertSentId6}, 'contractAgreementId', 'http://localhost:5001/edc', 'null'                   , ${bpnOwn} , ${bpnCustomer1}, current_timestamp + interval '1 month', 'MINOR' , ${bpnOwnName}  , ${bpnCustomer1Name}, ${alertNotificationSentId6}, 'CANCELED', current_timestamp - interval '3 days', current_timestamp, 'bd6ca75b-9d1c-44bd-bc80-b3afca317daf', true);
+    (${alertNotificationSentId6}, ${alertSentId6}, 'contractAgreementId', 'null'                   , ${bpnOwn} , ${bpnCustomer1}, current_timestamp + interval '1 month', 'MINOR' , ${bpnOwnName}  , ${bpnCustomer1Name}, ${alertNotificationSentId6}, 'CANCELED', current_timestamp - interval '3 days', current_timestamp, 'bd6ca75b-9d1c-44bd-bc80-b3afca317daf', null);
 
 ---
 -- join initial notification to asset

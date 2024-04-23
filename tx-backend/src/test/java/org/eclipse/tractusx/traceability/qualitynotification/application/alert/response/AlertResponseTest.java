@@ -40,13 +40,13 @@ class AlertResponseTest {
 
     @Test
     void givenQualityNotification_whenFrom_thenConstructProperAlertResponse() {
-       // Given
+        // given
         final QualityNotification notification = InvestigationTestDataFactory.createInvestigationTestData(QualityNotificationStatus.ACCEPTED, QualityNotificationStatus.CREATED);
 
-        // When
+        // when
         final AlertResponse result = AlertResponseMapper.from(notification);
 
-       // Then
+        // then
         assertThat(result)
                 .hasFieldOrPropertyWithValue("id", notification.getNotificationId().value())
                 .hasFieldOrPropertyWithValue("status", QualityNotificationStatusResponse.ACCEPTED)
@@ -75,7 +75,7 @@ class AlertResponseTest {
 
     @Test
     void givenQualityNotificationPaged_whenFromAsPageResult_thenConstructProperAlertResponse() {
-       // Given
+        // given
         final QualityNotification notification = InvestigationTestDataFactory.createInvestigationTestData(QualityNotificationStatus.ACCEPTED, QualityNotificationStatus.CREATED);
         final Integer page1 = 1;
         final Integer pageCount1 = 1;
@@ -83,10 +83,10 @@ class AlertResponseTest {
         final Long totalItems1 = 1L;
         final PageResult<QualityNotification> pagedNotification = new PageResult<>(List.of(notification), page1, pageCount1, pageSize1, totalItems1);
 
-        // When
+        // when
         final PageResult<AlertResponse> result = AlertResponseMapper.fromAsPageResult(pagedNotification);
 
-       // Then
+        // then
         assertThat(result)
                 .hasFieldOrPropertyWithValue("page", 1)
                 .hasFieldOrPropertyWithValue("pageCount", 2)

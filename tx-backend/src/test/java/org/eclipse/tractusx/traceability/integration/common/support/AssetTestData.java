@@ -23,18 +23,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import lombok.SneakyThrows;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.AssetBase;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.JobDetailResponse;
-import org.jetbrains.annotations.NotNull;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.IRSResponse;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.factory.AssetMapperFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 
+@Component
 public class AssetTestData {
 
+    @Autowired
+    private AssetMapperFactory assetMapperFactory;
     private final ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
             .registerModule(new SimpleModule().addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))
@@ -48,7 +56,6 @@ public class AssetTestData {
     List<AssetBase> readAndConvertMultipleAssetsAsBuiltForTests() {
         // Asset 1
         final List<AssetBase> assetBaseList = readAndConvertAssetsForTests();
-
         // Asset 2
         assetBaseList.addAll(getAssetBases("/testdata/irs_assets_as_built_2_v4.json"));
         return assetBaseList;
@@ -68,10 +75,13 @@ public class AssetTestData {
     }
 
     @NotNull
-    @SneakyThrows(IOException.class)
     private List<AssetBase> getAssetBases(final String resourceName) {
-        final var file = AssetTestData.class.getResourceAsStream(resourceName);
-        final var response = mapper.readValue(file, JobDetailResponse.class);
-        return response.convertAssets(mapper);
+        try {
+            final InputStream file = AssetTestData.class.getResourceAsStream(resourceName);
+            final IRSResponse response = mapper.readValue(file, IRSResponse.class);
+            return assetMapperFactory.mapToAssetBaseList(response);
+        } catch (IOException e) {
+            return Collections.emptyList();
+        }
     }
 }

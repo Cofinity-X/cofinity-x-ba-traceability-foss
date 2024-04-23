@@ -6,9 +6,9 @@
 
 ---
 insert into alert
-    (id                 , bpn            , close_reason, created                              , description              , status        , side      , accept_reason, decline_reason, updated, error_message)
+    (id                 , bpn            , close_reason, created                              , description              , status        , side      , accept_reason, decline_reason, updated)
 values
-    (${alertReceivedId2}, ${bpnSupplier2}, null        , current_timestamp - interval '3 days', 'Alert about Right Gland', 'ACKNOWLEDGED', 'RECEIVER', null         , null          , null   , null);
+    (${alertReceivedId2}, ${bpnSupplier2}, null        , current_timestamp - interval '3 days', 'Alert about Right Gland', 'ACKNOWLEDGED', 'RECEIVER', null         , null          , null   );
 
 ---
 -- reset sequence to highest next-val
@@ -17,9 +17,9 @@ select setval('alert_id_seq1', (select max(a.id) from alert a), true);
 ---
 -- initial message
 insert into alert_notification
-    (id                              , alert_id           , contract_agreement_id, edc_url, notification_reference_id             , created_by     , send_to  , target_date                           , severity          , created_by_name    , send_to_name , edc_notification_id                   , status    , created                              , updated          , message_id, is_initial)
+    (id                              , alert_id           , contract_agreement_id, notification_reference_id             , created_by     , send_to  , target_date                           , severity          , created_by_name    , send_to_name , edc_notification_id                   , status    , created                              , updated          , message_id, error_message)
 values
-    (${alertNotificationReceivedId2a}, ${alertReceivedId2}, null                 , null   , '403818ab-28fc-428f-99b1-61077fede954', ${bpnSupplier2}, ${bpnOwn}, current_timestamp + interval '1 month', 'LIFE_THREATENING', ${bpnSupplier2Name}, ${bpnOwnName}, '403818ab-28fc-428f-99b1-61077fede954', 'RECEIVED', current_timestamp - interval '2 days', current_timestamp, null      , false);
+    (${alertNotificationReceivedId2a}, ${alertReceivedId2}, null                 , '403818ab-28fc-428f-99b1-61077fede954', ${bpnSupplier2}, ${bpnOwn}, current_timestamp + interval '1 month', 'LIFE_THREATENING', ${bpnSupplier2Name}, ${bpnOwnName}, '403818ab-28fc-428f-99b1-61077fede954', 'RECEIVED', current_timestamp - interval '2 days', current_timestamp, null      , null);
 
 ---
 -- join initial notification to asset
@@ -39,9 +39,9 @@ values
 ---
 -- ACK by receiver notification message
 insert into alert_notification
-    (id                              , alert_id           , contract_agreement_id, edc_url, notification_reference_id             , created_by, send_to        , target_date                           , severity          , created_by_name, send_to_name       , edc_notification_id                   , status        , created                                , updated                                , message_id, is_initial)
+    (id                              , alert_id           , contract_agreement_id, notification_reference_id             , created_by, send_to        , target_date                           , severity          , created_by_name, send_to_name       , edc_notification_id                   , status        , created                                , updated                                , message_id, error_message)
 values
-    (${alertNotificationReceivedId2b}, ${alertReceivedId2}, null                 , null   , '403818ab-28fc-428f-99b1-61077fede954', ${bpnOwn} , ${bpnSupplier2}, current_timestamp + interval '1 month', 'LIFE_THREATENING', ${bpnOwnName}  , ${bpnSupplier2Name}, '403818ab-28fc-428f-99b1-61077fede954', 'ACKNOWLEDGED', current_timestamp - interval '12 hours', current_timestamp - interval '12 hours', null      , false);
+    (${alertNotificationReceivedId2b}, ${alertReceivedId2}, null                 , '403818ab-28fc-428f-99b1-61077fede954', ${bpnOwn} , ${bpnSupplier2}, current_timestamp + interval '1 month', 'LIFE_THREATENING', ${bpnOwnName}  , ${bpnSupplier2Name}, '403818ab-28fc-428f-99b1-61077fede954', 'ACKNOWLEDGED', current_timestamp - interval '12 hours', current_timestamp - interval '12 hours', null      , null);
 
 ---
 -- join ACK notification to asset

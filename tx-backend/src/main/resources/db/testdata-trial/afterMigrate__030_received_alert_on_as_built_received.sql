@@ -6,9 +6,9 @@
 
 ---
 insert into alert
-    (id                 , bpn            , close_reason, created                              , description                , status    , side      , accept_reason, decline_reason, updated, error_message)
+    (id                 , bpn            , close_reason, created                              , description                , status    , side      , accept_reason, decline_reason, updated)
 values
-    (${alertReceivedId1}, ${bpnSupplier1}, null        , current_timestamp - interval '2 days', 'Alert about Left Headbulb', 'RECEIVED', 'RECEIVER', null         , null          , null   , null);
+    (${alertReceivedId1}, ${bpnSupplier1}, null        , current_timestamp - interval '2 days', 'Alert about Left Headbulb', 'RECEIVED', 'RECEIVER', null         , null          , null   );
 
 ---
 -- reset sequence to highest next-val
@@ -16,9 +16,9 @@ select setval('alert_id_seq1', (select max(a.id) from alert a), true);
 
 ---
 insert into alert_notification
-    (id                             , alert_id           , contract_agreement_id, edc_url, notification_reference_id             , created_by     , send_to  , target_date                           , severity  , created_by_name    , send_to_name , edc_notification_id                   , status    , created                             , updated, message_id                            , is_initial)
+    (id                             , alert_id           , contract_agreement_id, notification_reference_id             , created_by     , send_to  , target_date                           , severity  , created_by_name    , send_to_name , edc_notification_id                   , status    , created                             , updated, message_id                            , error_message)
 values
-    (${alertNotificationReceivedId1}, ${alertReceivedId1}, null                 , null   , 'ded38f08-1b9c-497d-b994-6feba92b7f41', ${bpnSupplier1}, ${bpnOwn}, current_timestamp + interval '1 month', 'CRITICAL', ${bpnSupplier1Name}, ${bpnOwnName}, 'ded38f08-1b9c-497d-b994-6feba92b7f41', 'RECEIVED', current_timestamp - interval '1 day', null   , '7d0891d2-4940-4802-b0bc-cc30f9e94e76', false);
+    (${alertNotificationReceivedId1}, ${alertReceivedId1}, null                 , 'ded38f08-1b9c-497d-b994-6feba92b7f41', ${bpnSupplier1}, ${bpnOwn}, current_timestamp + interval '1 month', 'CRITICAL', ${bpnSupplier1Name}, ${bpnOwnName}, 'ded38f08-1b9c-497d-b994-6feba92b7f41', 'RECEIVED', current_timestamp - interval '1 day', null   , '7d0891d2-4940-4802-b0bc-cc30f9e94e76', null);
 
 ---
 -- join notification to asset
