@@ -52,7 +52,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class InvestigationsReceiverServiceTest {
+class NotificationReceiverServiceTest {
 
     @Mock
     private NotificationRepository notificationRepository;
