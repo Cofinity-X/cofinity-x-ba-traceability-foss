@@ -97,5 +97,4 @@ class AlertResponseTest {
                 .usingRecursiveComparison()
                 .isEqualTo(NotificationResponseMapper.from(notification));
     }
-
 }

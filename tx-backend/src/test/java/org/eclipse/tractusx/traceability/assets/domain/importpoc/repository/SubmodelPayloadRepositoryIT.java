@@ -67,5 +67,4 @@ class SubmodelPayloadRepositoryIT extends IntegrationTestSpecification {
         // then
         assertThat(result).isNotNull();
     }
-
 }

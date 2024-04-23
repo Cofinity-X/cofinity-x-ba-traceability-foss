@@ -203,7 +203,5 @@ class AssetAsPlannedControllerByIdIT extends IntegrationTestSpecification {
                 .statusCode(200)
                 .body("businessPartner", equalTo(expectedBusinessPartner))
                 .body("manufacturerName", equalTo(expectedManufacturerName));
-
     }
-
 }

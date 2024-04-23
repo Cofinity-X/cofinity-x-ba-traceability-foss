@@ -139,5 +139,4 @@ public class EdcNotificationModelTest {
         //THEN
         assertEquals("Reason ", cleanUpdateNotificationRequest.getReason());
     }
-
 }

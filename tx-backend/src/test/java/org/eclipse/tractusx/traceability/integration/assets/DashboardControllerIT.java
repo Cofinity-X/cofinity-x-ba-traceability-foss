@@ -65,6 +65,15 @@ class DashboardControllerIT extends IntegrationTestSpecification {
 
     ObjectMapper objectMapper;
 
+    private static Stream<Arguments> roles() {
+        return Stream.of(
+                arguments(List.of(USER)),
+                arguments(List.of(ADMIN)),
+                arguments(List.of(SUPERVISOR)),
+                arguments(List.of(USER, ADMIN))
+        );
+    }
+
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
@@ -203,14 +212,5 @@ class DashboardControllerIT extends IntegrationTestSpecification {
                 .body("receivedActiveInvestigations", equalTo(1))
                 .body("sentActiveAlerts", equalTo(0))
                 .body("sentActiveInvestigations", equalTo(1));
-    }
-
-    private static Stream<Arguments> roles() {
-        return Stream.of(
-                arguments(List.of(USER)),
-                arguments(List.of(ADMIN)),
-                arguments(List.of(SUPERVISOR)),
-                arguments(List.of(USER, ADMIN))
-        );
     }
 }

@@ -40,8 +40,7 @@ class ImportRequestV2Test {
 
         // Read the JSON file into a String
         String jsonString = Files.readString(Path.of(filePath));
-
-
+        
         // Parse the JSON string into a JsonNode using Jackson ObjectMapper
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
@@ -50,6 +49,4 @@ class ImportRequestV2Test {
         // Your test logic goes here
         Assertions.assertNotNull(importRequest);
     }
-
-
 }

@@ -84,6 +84,5 @@ class InvestigationsRepositoryImplTest {
         investigationsRepository.updateErrorMessage(notification);
         // Then
         verify(jpaNotificationMessageRepository, times(1)).save(any());
-
     }
 }

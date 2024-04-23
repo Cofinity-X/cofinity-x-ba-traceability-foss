@@ -215,5 +215,4 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(400);
     }
-
 }

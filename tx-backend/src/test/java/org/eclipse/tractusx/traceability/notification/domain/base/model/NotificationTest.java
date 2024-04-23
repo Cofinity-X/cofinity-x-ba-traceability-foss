@@ -47,6 +47,5 @@ class NotificationTest {
         // Then
         assertNotNull(result);
         assertTrue(result.contains(message1));
-
     }
 }

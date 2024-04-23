@@ -84,6 +84,5 @@ class NotificationRepositoryImplTest {
         notificationRepository.updateErrorMessage(notification);
         // Then
         verify(jpaNotificationMessageRepository, times(1)).save(any());
-
     }
 }

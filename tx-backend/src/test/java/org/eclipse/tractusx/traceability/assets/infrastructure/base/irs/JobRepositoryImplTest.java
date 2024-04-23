@@ -60,18 +60,14 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class JobRepositoryImplTest {
-    @InjectMocks
-    private JobRepositoryImpl jobRepositoryImpl;
-
     @Mock
     TraceabilityProperties traceabilityProperties;
-
     @Mock
     AssetCallbackRepository assetAsBuiltCallbackRepository;
-
     @Mock
     AssetCallbackRepository assetAsPlannedCallbackRepository;
-
+    @InjectMocks
+    private JobRepositoryImpl jobRepositoryImpl;
     @Mock
     private BpnRepository bpnRepository;
 
@@ -80,6 +76,13 @@ class JobRepositoryImplTest {
 
     @Mock
     private AssetMapperFactory assetMapperFactory;
+
+    private static Stream<Arguments> provideDirections() {
+        return Stream.of(
+                Arguments.of(Direction.DOWNWARD),
+                Arguments.of(Direction.UPWARD)
+        );
+    }
 
     @ParameterizedTest
     @MethodSource("provideDirections")
@@ -93,14 +96,6 @@ class JobRepositoryImplTest {
         // Then
         verify(irsClient, times(1)).registerJob(any(RegisterJobRequest.class));
     }
-
-    private static Stream<Arguments> provideDirections() {
-        return Stream.of(
-                Arguments.of(Direction.DOWNWARD),
-                Arguments.of(Direction.UPWARD)
-        );
-    }
-
 
     @Test
     void test_getPolicyConstraints() {

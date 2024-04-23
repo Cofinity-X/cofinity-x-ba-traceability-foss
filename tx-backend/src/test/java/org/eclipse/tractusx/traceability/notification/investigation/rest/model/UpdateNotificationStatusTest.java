@@ -46,6 +46,4 @@ class UpdateNotificationStatusTest {
         NotificationStatus actualInvestigationStatus = NotificationStatus.fromStringValue(declined);
         assertThat(actualInvestigationStatus.name()).isEqualTo("DECLINED");
     }
-
-
 }

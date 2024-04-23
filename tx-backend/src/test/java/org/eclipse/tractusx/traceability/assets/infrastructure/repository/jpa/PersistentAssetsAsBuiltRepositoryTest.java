@@ -37,7 +37,6 @@ import static org.eclipse.tractusx.traceability.testdata.AssetTestDataFactory.cr
 @ExtendWith(MockitoExtension.class)
 class PersistentAssetsAsBuiltRepositoryTest {
 
-
     @Test
     void testToAsset() {
         // Given
@@ -98,5 +97,4 @@ class PersistentAssetsAsBuiltRepositoryTest {
         Assertions.assertEquals(asset.getQualityType(), expected.getQualityType());
         Assertions.assertEquals(asset.getVan(), expected.getVan());
     }
-
 }

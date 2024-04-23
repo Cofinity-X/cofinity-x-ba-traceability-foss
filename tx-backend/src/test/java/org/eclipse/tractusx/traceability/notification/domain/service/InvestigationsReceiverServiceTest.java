@@ -265,5 +265,4 @@ class InvestigationsReceiverServiceTest {
         // Then
         Mockito.verify(notificationRepository).updateNotification(investigationTestData);
     }
-
 }

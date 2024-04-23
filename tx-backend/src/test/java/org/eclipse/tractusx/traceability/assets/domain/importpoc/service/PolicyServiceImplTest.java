@@ -105,7 +105,5 @@ class PolicyServiceImplTest {
 
         // Then
         assertThat(policyResult).isEmpty();
-
     }
-
 }

@@ -55,5 +55,4 @@ public class DatabaseSupport {
             JdbcTestUtils.deleteFromTables(jdbcTemplate, table);
         });
     }
-
 }

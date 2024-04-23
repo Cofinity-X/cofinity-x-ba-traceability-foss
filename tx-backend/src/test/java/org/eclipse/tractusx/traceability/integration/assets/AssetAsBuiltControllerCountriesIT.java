@@ -70,5 +70,4 @@ class AssetAsBuiltControllerCountriesIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(401);
     }
-
 }

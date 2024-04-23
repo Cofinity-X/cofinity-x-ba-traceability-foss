@@ -75,7 +75,5 @@ class DashboardControllerTest {
         assertEquals(2000, testDashboard.getSentActiveAlerts());
         assertEquals(3000, testDashboard.getReceivedActiveAlerts());
         assertEquals(2500, testDashboard.getReceivedActiveInvestigations());
-
     }
-
 }

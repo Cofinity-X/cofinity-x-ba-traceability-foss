@@ -40,8 +40,6 @@ class DescriptionsResponseTest {
         final DescriptionsResponse result = AssetAsBuiltResponseMapper.from(response);
 
         // then
-        assertThat(result).usingRecursiveComparison()
-                .isEqualTo(response);
+        assertThat(result).usingRecursiveComparison().isEqualTo(response);
     }
-
 }

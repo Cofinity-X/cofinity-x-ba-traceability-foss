@@ -55,10 +55,8 @@ class PolicyRepositoryImplTest {
     @Mock
     TraceabilityProperties traceabilityProperties;
 
-
     @Mock
     private IrsClient irsClient;
-
 
     @Test
     void givenNoPolicyExist_whenCreateIrsPolicyIfMissing_thenCreateIt() {

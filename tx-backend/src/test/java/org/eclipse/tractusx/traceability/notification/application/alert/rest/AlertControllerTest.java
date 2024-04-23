@@ -183,5 +183,4 @@ class AlertControllerTest {
         // then
         verify(alertService, times(1)).update(param, NotificationStatus.ACCEPTED, "just because I say so");
     }
-
 }

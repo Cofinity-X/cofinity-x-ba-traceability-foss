@@ -428,5 +428,4 @@ class NotificationPublisherServiceTest {
         Mockito.verify(repository, never()).updateNotification(investigationTestData);
         Mockito.verify(notificationsService, never()).asyncNotificationMessageExecutor(any(NotificationMessage.class));
     }
-
 }

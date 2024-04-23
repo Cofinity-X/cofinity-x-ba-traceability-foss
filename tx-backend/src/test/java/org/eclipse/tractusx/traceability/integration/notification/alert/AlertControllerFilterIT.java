@@ -407,5 +407,4 @@ class AlertControllerFilterIT extends IntegrationTestSpecification {
                 .statusCode(400)
                 .body("message", equalTo("Filter string should not be longer than 1100 characters."));
     }
-
 }

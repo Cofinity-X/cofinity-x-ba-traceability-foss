@@ -74,7 +74,7 @@ class EDCNotificationValidatorTest {
         // When
         boolean result = validator.isValid(edcNotification, context);
 
-       // Then
+        // Then
         assertTrue(result);
     }
 
@@ -102,7 +102,6 @@ class EDCNotificationValidatorTest {
         // Then
         assertThrows(InvestigationReceiverBpnMismatchException.class, () -> validator.isValid(edcNotification, context));
     }
-
 }
 
 
