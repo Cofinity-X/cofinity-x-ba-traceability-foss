@@ -19,12 +19,7 @@
 
 package org.eclipse.tractusx.traceability.integration.assets;
 
-import static io.restassured.RestAssured.given;
-import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
-import static org.hamcrest.Matchers.equalTo;
-
 import io.restassured.http.ContentType;
-import java.util.stream.Stream;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.*;
 import org.hamcrest.Matchers;
@@ -34,6 +29,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.stream.Stream;
+
+import static io.restassured.RestAssured.given;
+import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
+import static org.hamcrest.Matchers.equalTo;
 
 class AssetAsPlannedControllerSortValuesIT extends IntegrationTestSpecification {
 

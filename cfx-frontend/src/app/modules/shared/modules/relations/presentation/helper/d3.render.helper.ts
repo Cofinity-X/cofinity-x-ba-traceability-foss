@@ -126,38 +126,40 @@ export class D3RenderHelper {
 
     let circleNode = el.select(`#${id}--Circle`);
 
-    if (circleNode.empty()) {
-      circleNode = el
-        .append('a')
-        .attr('id', `${id}--Circle`)
-        .on('click', () => callback(data));
-
-      const statusBorderColor = data.state === SemanticDataModel.BATCH ? 'Batch' : data.state.toString();
-
-      // This is to make the border of the circle
-      circleNode
-        .append('circle')
-        .attr('r', r + 2)
-        .attr('data-testid', 'tree--element__circle')
-        .attr('class', () => `tree--element__border-${statusBorderColor}`);
-      circleNode.append('title').text(() => data.title);
-
-      circleNode
-        .append('circle')
-        .attr('r', r)
-        .attr('data-testid', 'tree--element__circle')
-        .classed('tree--element__circle', true);
-      circleNode.append('title').text(() => data.title);
-
-      circleNode
-        .append('text')
-        .attr('dy', '0.25em')
-        .attr('textLength', `${textLength}px`)
-        .attr('lengthAdjust', 'spacing')
-        .attr('data-testid', 'tree--element__text')
-        .classed('tree--element__text', true)
-        .text(() => text);
+    if (!circleNode.empty()) {
+      circleNode.remove();
     }
+
+    circleNode = el
+      .append('a')
+      .attr('id', `${id}--Circle`)
+      .on('click', () => callback(data));
+
+    const statusBorderColor = data.state === SemanticDataModel.BATCH ? 'Batch' : data.state.toString();
+
+    // This is to make the border of the circle
+    circleNode
+      .append('circle')
+      .attr('r', r + 2)
+      .attr('data-testid', 'tree--element__circle')
+      .attr('class', () => `tree--element__border-${statusBorderColor}`);
+    circleNode.append('title').text(() => data.title);
+
+    circleNode
+      .append('circle')
+      .attr('r', r)
+      .attr('data-testid', 'tree--element__circle')
+      .classed('tree--element__circle', true);
+    circleNode.append('title').text(() => data.title);
+
+    circleNode
+      .append('text')
+      .attr('dy', '0.25em')
+      .attr('textLength', `${textLength}px`)
+      .attr('lengthAdjust', 'spacing')
+      .attr('data-testid', 'tree--element__text')
+      .classed('tree--element__text', true)
+      .text(() => text);
 
     circleNode.attr('transform', () => `translate(${D3RenderHelper.modifyByDirection(direction, x)},${D3RenderHelper.modifyByDirection(direction, y)})`);
   }

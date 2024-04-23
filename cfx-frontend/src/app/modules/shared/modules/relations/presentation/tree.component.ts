@@ -39,6 +39,7 @@ import {
   TreeStructure,
 } from '@shared/modules/relations/model/relations.model';
 import { RelationComponentState } from '@shared/modules/relations/core/component.state';
+import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 
 @Component({
   selector: 'app-tree',
@@ -55,12 +56,18 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
   @Input() set direction(_direction: 'UP' | 'DOWN') {
     this.treeDirection = TreeDirection[_direction];
 
-    this.relationsFacade.isParentRelationTree = _direction === 'UP';
-    const sub = this.relationsFacade.initRequestPartDetailQueue().subscribe();
-    this.subscriptions.add(sub);
+    if (this.mainAspectType !== null) {
+      this.relationsFacade.isParentRelationTree = _direction === 'UP';
+      const sub = this.relationsFacade.initRequestPartDetailQueue(this.mainAspectType).subscribe();
+      this.subscriptions.add(sub);
+    }
   }
 
   @Input() set rootPart(data: View<Part>) {
+    if (data) {
+      this.mainAspectType = data.data.mainAspectType;
+      this.direction = this.treeDirection;
+    }
     this.resetTree(data || {});
   }
 
@@ -68,7 +75,6 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
     this.resizeSub?.unsubscribe();
     this.resizeSub = resize$.subscribe(resize => this.tree?.changeSize?.(resize));
   }
-
 
   public readonly subscriptions = new Subscription();
   public readonly rootPart$: Observable<View<Part>>;
@@ -82,6 +88,7 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
   private minimap: Minimap;
   private activatedRoute = inject(ActivatedRoute);
   private context: string;
+  private mainAspectType: MainAspectType = null;
 
   constructor(
     private readonly partDetailsFacade: PartDetailsFacade,
@@ -163,14 +170,20 @@ export class TreeComponent implements OnDestroy, AfterViewInit {
 
   private openDetails({ id }: TreeElement): void {
     this.subscriptions.add(this.partDetailsFacade.setPartFromTree(id).subscribe());
-    this.router.navigate([`/${this.context}/${id}`], { queryParams: { type: this.partDetailsFacade.mainAspectType } }).then(_ => window.location.reload());
+    if (this.isStandalone) {
+      this.router.navigate([`/${this.context}/${id}`], { queryParams: { type: this.partDetailsFacade.mainAspectType } }).then(_ => window.location.reload());
+    } else {
+      this.router.navigate([`/${this.context}/${id}`], { queryParams: { type: this.partDetailsFacade.mainAspectType } });
+    }
   }
 
   private renderTreeWithOpenElements(openElements: OpenElements): void {
     if (!openElements) return;
 
     const treeData = this.relationsFacade.formatOpenElementsToTreeData(openElements);
-    if (!treeData?.id) return;
+    if (!treeData?.id || treeData.id !== this.partDetailsFacade.selectedPart.id) {
+      return;
+    }
 
     this.initTree();
     this.renderTree(treeData);

@@ -59,7 +59,7 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   public ngOnInit(): void {
     this.formGroup = new FormGroup({
       description: new FormControl(this.forwardedNotification ? 'FW: ' + this.forwardedNotification.description : '', [ Validators.required, Validators.maxLength(1000), Validators.minLength(15) ]),
-      targetDate: new FormControl(null, [DateValidators.atLeastNow(), Validators.required]),
+      targetDate: new FormControl(null, [DateValidators.atLeastNow(), DateValidators.maxDeadline(this.forwardedNotification?.targetDate?.valueOf()), Validators.required]),
       severity: new FormControl(this.forwardedNotification ? this.forwardedNotification.severity : Severity.MINOR)
     });
 

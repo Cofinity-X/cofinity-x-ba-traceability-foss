@@ -139,7 +139,8 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
       height: '80vh',
       data: {
         partId: part.id,
-        context: this.activatedRoute?.parent?.toString().split('\'')[1]
+        context: this.activatedRoute?.parent?.toString().split('\'')[1],
+        partName: part.nameAtManufacturer,
       }
     });
   }

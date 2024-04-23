@@ -49,5 +49,6 @@ class PolicyControllerIT extends IntegrationTestSpecification {
                 .statusCode(200)
                 .body("size()", is(1))
                 .log().all();
+
     }
 }

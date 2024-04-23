@@ -109,11 +109,16 @@ export function toGlobalSearchAssetFilter(formValues: string, isAsBuilt: boolean
   if (isAsBuilt) {
     filter = {
       id: formValues,
-      semanticModelId: formValues,
       idShort: formValues,
+      semanticModelId: formValues,
       customerPartId: formValues,
       manufacturerName: formValues,
+      nameAtManufacturer: formValues,
+      businessPartner: formValues,
+      classification: formValues,
       manufacturerPartId: formValues,
+      nameAtCustomer: formValues,
+      manufacturingCountry: formValues
     } as AssetAsBuiltFilter;
   } else {
     filter = {
@@ -121,7 +126,11 @@ export function toGlobalSearchAssetFilter(formValues: string, isAsBuilt: boolean
       idShort: formValues,
       semanticModelId: formValues,
       manufacturerPartId: formValues,
+      nameAtManufacturer: formValues,
       manufacturerName: formValues,
+      businessPartner: formValues,
+      classification: formValues,
+      catenaXSiteId: formValues,
     } as AssetAsPlannedFilter;
   }
 

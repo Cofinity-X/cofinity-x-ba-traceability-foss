@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "urlPath": "/irs/irs/policies"
+    "url": "/irs/irs/policies"
   },
   "response": {
     "status": 200,
