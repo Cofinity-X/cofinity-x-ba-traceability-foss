@@ -1,23 +1,23 @@
 -- Insert data from temp_alert to notification table
-INSERT INTO notification (id, bpn, close_reason, created, description, "status",  side, accept_reason, decline_reason, updated,"type")
-SELECT id, bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated,'ALERT' AS "type"
+INSERT INTO notification (bpn, close_reason, created, description, "status",  side, accept_reason, decline_reason, updated,"type")
+SELECT bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated,'ALERT' AS "type"
 FROM temp_alert;
 
 -- Insert data from temp_investigation to notification table
-INSERT INTO public.notification(id, title, bpn, close_reason, created, description, "status",  side, accept_reason, decline_reason,updated, "type")
-SELECT id, '' AS title, bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated,'INVESTIGATION' AS "type"
+INSERT INTO public.notification( bpn, close_reason, created, description, "status",  side, accept_reason, decline_reason,updated, "type")
+SELECT bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated,'INVESTIGATION' AS "type"
 FROM temp_investigation;
 
 -- Insert data from temp_alert_notification to notification_message table
 INSERT INTO public.notification_message
-(id, contract_agreement_id,notification_reference_id, send_to, created_by, notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id,"severity")
-select id, contract_agreement_id, notification_reference_id, send_to, created_by, alert_id as notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message,message_id, "severity"
+(contract_agreement_id,notification_reference_id, send_to, created_by, notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id,"severity")
+select  contract_agreement_id, notification_reference_id, send_to, created_by, alert_id as notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message,message_id, "severity"
 from temp_alert_notification;
 
 -- Insert data from temp_investigation_notification to notification_message table
 INSERT INTO public.notification_message
-(id, contract_agreement_id,notification_reference_id, send_to, created_by, notification_id, target_date,  created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id,"severity")
-select id, contract_agreement_id, notification_reference_id, send_to, created_by, investigation_id as notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated,error_message, message_id, "severity"
+(contract_agreement_id,notification_reference_id, send_to, created_by, notification_id, target_date,  created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id,"severity")
+select contract_agreement_id, notification_reference_id, send_to, created_by, investigation_id as notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated,error_message, message_id, "severity"
 from temp_investigation_notification;
 
 -- Insert data from temp_asset_as_built_alert_notifications to assets_as_built_notification_messages table
