@@ -26,6 +26,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@core/user/role.model';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
+import { Owner } from '@page/parts/model/owner.enum';
 import { Part, QualityType } from '@page/parts/model/parts.model';
 import { RelationComponent } from '@page/parts/presentation/relation/relation.component';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
@@ -70,6 +71,7 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
 
   protected readonly MainAspectType = MainAspectType;
   protected readonly Role = Role;
+  protected readonly Owner = Owner;
 
   constructor(private readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router,
     public dialog: MatDialog,
@@ -96,6 +98,7 @@ export class PartDetailComponent implements AfterViewInit, OnDestroy {
         PartsAssembler.mapPartForView(),
         tap(({ data }) => {
           if (data) {
+            console.log(this.partDetailsFacade.selectedPart);
             this.qualityTypeControl.patchValue(data.qualityType, { emitEvent: false, onlySelf: true });
           }
         }),

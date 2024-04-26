@@ -147,7 +147,6 @@ export class PartsService {
             .set('size', 200)
             .set('owner', owner);
 
-
         if (isAsBuilt) {
             return this.apiService
                 .getBy<any>(`${this.url}/assets/as-built/distinctFilterValues`, params);

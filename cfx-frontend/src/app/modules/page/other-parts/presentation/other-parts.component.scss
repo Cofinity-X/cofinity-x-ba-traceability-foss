@@ -20,17 +20,19 @@
  ********************************************************************************/
 
 .split-container {
-  height: 518px;
+  height: 91%;
   column-gap: 5px;
   padding-right: 10px;
 }
 
 .split-container-wrapper {
   overflow-y: hidden !important;
+  height: 100%;
 }
 
 .other-parts-mat-tab-group {
   width: 100%;
+  height: 100%;
   overflow-y: hidden !important;
 }
 

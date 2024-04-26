@@ -694,6 +694,34 @@
   position: relative;
 }
 
+app-notifications-tab {
+  height: 100%;
+  display: grid;
+}
+
+app-investigations,
+app-alerts,
+app-parts,
+app-other-parts {
+  height: 100%;
+
+  .mat-mdc-card {
+    height: 100%;
+
+    .mat-mdc-card-content {
+      height: 100%;
+
+      app-notification .mat-mdc-tab-group {
+        height: 100%;
+
+        .mat-mdc-tab-body-wrapper {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
 .table-root,
 app-parts-table,
 app-table {
