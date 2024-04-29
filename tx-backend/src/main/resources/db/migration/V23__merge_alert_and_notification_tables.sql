@@ -1,18 +1,3 @@
-DROP VIEW IF EXISTS assets_as_built_view;
-
-
-DROP TABLE public.asset_as_built_alert_notifications;
-DROP TABLE public.assets_as_built_notifications;
-DROP TABLE public.investigation_notification;
-DROP TABLE public.assets_as_built_investigations;
-DROP TABLE public.alert_notification;
-DROP TABLE public.assets_as_built_alerts;
-DROP TABLE public.alert;
-DROP TABLE public.investigation;
-DROP SEQUENCE public.alert_id_seq;
-DROP SEQUENCE public.investigation_id_seq;
-
-
 -- DROP TABLE notification;
 CREATE TABLE public.notification
 (
@@ -75,11 +60,65 @@ CREATE TABLE public.assets_as_built_notifications
     CONSTRAINT fk_assets_as_built_notifications FOREIGN KEY (notification_id) REFERENCES public.notification (id)
 );
 
-
-
 CREATE TABLE public.assets_as_built_notification_messages
 (
     notification_message_id varchar(255) NOT NULL,
     asset_id                varchar(255) NOT NULL,
     CONSTRAINT fk_notification FOREIGN KEY (notification_message_id) REFERENCES public.notification_message (id)
 );
+
+-- transfer data from old table to new tables
+
+-- Insert data from alert to notification table
+INSERT INTO notification (bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, "type")
+SELECT bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, 'ALERT' AS "type"
+FROM alert;
+
+-- Insert data from temp_investigation to notification table
+INSERT INTO notification(bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, "type")
+SELECT bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, 'INVESTIGATION' AS "type"
+FROM investigation;
+
+-- Insert data from temp_alert_notification to notification_message table
+INSERT INTO notification_message
+(id       , contract_agreement_id, notification_reference_id, send_to, created_by, notification_id            , target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id, "severity")
+select  id, contract_agreement_id, notification_reference_id, send_to, created_by, alert_id as notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id, "severity"
+from alert_notification;
+
+-- Insert data from temp_investigation_notification to notification_message table
+INSERT INTO notification_message
+(id      , contract_agreement_id, notification_reference_id, send_to, created_by, notification_id                    , target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id, "severity")
+select id, contract_agreement_id, notification_reference_id, send_to, created_by, investigation_id as notification_id, target_date, created_by_name, send_to_name, edc_notification_id, "status", created, updated, error_message, message_id, "severity"
+from investigation_notification;
+
+-- Insert data from temp_asset_as_built_alert_notifications to assets_as_built_notification_messages table
+INSERT INTO assets_as_built_notification_messages
+(notification_message_id                               , asset_id)
+select alert_notification_id as notification_message_id, asset_id
+from asset_as_built_alert_notifications;
+
+-- Insert data from temp_assets_as_built_notifications to assets_as_built_notifications table
+INSERT INTO assets_as_built_notifications
+(notification_id                                          , asset_id)
+select cast(notification_id AS INTEGER) as notification_id, asset_id
+from assets_as_built_notifications;
+
+-- Insert data from temp_assets_as_built_investigations to assets_as_built_notifications table
+INSERT INTO assets_as_built_notifications
+(notification_id                                           , asset_id)
+select cast(investigation_id AS INTEGER) as notification_id, asset_id
+from assets_as_built_investigations;
+
+-- Drop all tables
+
+DROP VIEW IF EXISTS assets_as_built_view;
+DROP TABLE public.asset_as_built_alert_notifications;
+DROP TABLE public.assets_as_built_notifications;
+DROP TABLE public.investigation_notification;
+DROP TABLE public.assets_as_built_investigations;
+DROP TABLE public.alert_notification;
+DROP TABLE public.assets_as_built_alerts;
+DROP TABLE public.alert;
+DROP TABLE public.investigation;
+DROP SEQUENCE public.alert_id_seq;
+DROP SEQUENCE public.investigation_id_seq;
