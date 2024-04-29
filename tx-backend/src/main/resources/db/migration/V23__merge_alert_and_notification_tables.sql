@@ -60,6 +60,7 @@ CREATE TABLE public.assets_as_planned_notifications
     notification_id int8         NOT NULL,
     asset_id        varchar(255) NOT NULL
 );
+
 CREATE TABLE public.assets_as_planned_notification_messages
 (
     notification_message_id varchar(255) NOT NULL,

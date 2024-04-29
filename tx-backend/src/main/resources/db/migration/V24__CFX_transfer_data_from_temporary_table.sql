@@ -1,16 +1,23 @@
 --update id from temporary table temp_investigation
-UPDATE temp_investigation
-SET id = id + (SELECT MAX(id) FROM temp_alert);
+--UPDATE temp_alert
+--SET id = id + (SELECT MAX(id) FROM notification);
+--
+--UPDATE temp_investigation
+--SET id = id + (SELECT MAX(id) FROM temp_alert);
 
 -- Insert data from temp_alert to notification table
-INSERT INTO notification (id, bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, "type")
-SELECT id                   , bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, 'ALERT' AS "type"
+INSERT INTO notification (bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, "type")
+SELECT bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, 'ALERT' AS "type"
 FROM temp_alert;
 
 -- Insert data from temp_investigation to notification table
-INSERT INTO public.notification(id, bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, "type")
-SELECT id                         , bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, 'INVESTIGATION' AS "type"
+INSERT INTO public.notification(bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, "type")
+SELECT bpn, close_reason, created, description, "status", side, accept_reason, decline_reason, updated, 'INVESTIGATION' AS "type"
 FROM temp_investigation;
+
+--update id from temporary table temp_alert_notification
+UPDATE temp_alert_notification
+SET id = CAST(CAST(id AS INT) + (SELECT MAX(CAST(id AS INT)) FROM temp_investigation_notification) AS VARCHAR);
 
 -- Insert data from temp_alert_notification to notification_message table
 INSERT INTO public.notification_message
@@ -43,10 +50,11 @@ select cast(investigation_id AS INTEGER) as notification_id, asset_id
 from temp_assets_as_built_investigations;
 
 -- Drop temporary tables
-DROP TABLE IF EXISTS temp_alert;
-DROP TABLE IF EXISTS temp_investigation;
-DROP TABLE IF EXISTS temp_alert_notification;
-DROP TABLE IF EXISTS temp_investigation_notification;
-DROP TABLE IF EXISTS temp_asset_as_built_alert_notifications;
-DROP TABLE IF EXISTS temp_assets_as_built_notifications;
-DROP TABLE IF EXISTS temp_assets_as_built_investigations;
+--DROP TABLE IF EXISTS temp_alert;
+--DROP TABLE IF EXISTS temp_investigation;
+--DROP TABLE IF EXISTS temp_alert_notification;
+--DROP TABLE IF EXISTS temp_investigation_notification;
+--DROP TABLE IF EXISTS temp_asset_as_built_alert_notifications;
+--DROP TABLE IF EXISTS temp_assets_as_built_alerts;
+--DROP TABLE IF EXISTS temp_assets_as_built_notifications;
+--DROP TABLE IF EXISTS temp_assets_as_built_investigations;
