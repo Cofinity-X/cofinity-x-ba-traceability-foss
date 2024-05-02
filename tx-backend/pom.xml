@@ -61,7 +61,7 @@ SPDX-License-Identifier: Apache-2.0
 
         <dependency>
             <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-62</artifactId>
+            <artifactId>hypersistence-utils-hibernate-63</artifactId>
         </dependency>
         <!-- IRS Client for decentral registry approach -->
         <dependency>
