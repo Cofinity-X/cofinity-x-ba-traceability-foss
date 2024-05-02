@@ -92,6 +92,15 @@ public class NotificationRepositoryImpl implements NotificationRepository {
     }
 
     @Override
+    public long countNotificationsBySideAndTypeAndStatuses(NotificationSide notificationSide, NotificationType notificationType, List<NotificationStatus> statuses) {
+        return jpaNotificationRepository.countAllBySideEqualsAndTypeEqualsAndStatusIn(
+                NotificationSideBaseEntity.valueOf(notificationSide.name()),
+                NotificationTypeEntity.valueOf(notificationType.name()),
+                statuses.stream().map(status -> NotificationStatusBaseEntity.valueOf(status.name())).toList()
+        );
+    }
+
+    @Override
     public NotificationId saveNotification(Notification notification) {
         List<AssetAsBuiltEntity> assetEntities = getAssetEntitiesByNotification(notification);
 
