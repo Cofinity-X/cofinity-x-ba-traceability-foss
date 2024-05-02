@@ -96,7 +96,6 @@ export class InvestigationStrategy extends AutocompleteStrategy {
       notificationChannel,
       filterColumns,
       searchElement,
-      true,
     );
   }
 }
@@ -118,7 +117,6 @@ export class AlertStrategy extends AutocompleteStrategy {
       notificationChannel,
       filterColumns,
       searchElement,
-      false,
     );
   }
 }

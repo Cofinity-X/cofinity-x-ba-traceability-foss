@@ -55,7 +55,7 @@ export class InvestigationsFacade {
   public setReceivedInvestigation(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], filter?: NotificationFilter, fullFilter?: any, filterMethod = FilterMethod.AND): void {
     this.investigationReceivedSubscription?.unsubscribe();
     this.investigationReceivedSubscription = this.notificationService
-      .getReceived(page, pageSize, sorting, filter, fullFilter, true, filterMethod)
+      .getNotificationByFilter(page, pageSize, sorting, filter, fullFilter, true, filterMethod, true)
       .subscribe({
         next: data => (this.investigationsState.investigationsReceived = { data: provideDataObject(data) }),
         error: (error: Error) => (this.investigationsState.investigationsReceived = { error }),
@@ -65,7 +65,7 @@ export class InvestigationsFacade {
   public setQueuedAndRequestedInvestigations(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], filter?: NotificationFilter, fullFilter?: any, filterMethod = FilterMethod.AND): void {
     this.investigationQueuedAndRequestedSubscription?.unsubscribe();
     this.investigationQueuedAndRequestedSubscription = this.notificationService
-      .getCreated(page, pageSize, sorting, filter, fullFilter, true, filterMethod)
+      .getNotificationByFilter(page, pageSize, sorting, filter, fullFilter, true, filterMethod, false)
       .subscribe({
         next: data => (this.investigationsState.investigationsQueuedAndRequested = { data: provideDataObject(data) }),
         error: (error: Error) => (this.investigationsState.investigationsQueuedAndRequested = { error }),
@@ -78,26 +78,26 @@ export class InvestigationsFacade {
   }
 
   public closeInvestigation(investigationId: string, reason: string): Observable<void> {
-    return this.notificationService.closeNotification(investigationId, reason, true);
+    return this.notificationService.closeNotification(investigationId, reason);
   }
 
   public approveInvestigation(investigationId: string): Observable<void> {
-    return this.notificationService.approveNotification(investigationId, true);
+    return this.notificationService.approveNotification(investigationId);
   }
 
   public cancelInvestigation(investigationId: string): Observable<void> {
-    return this.notificationService.cancelNotification(investigationId, true);
+    return this.notificationService.cancelNotification(investigationId);
   }
 
   public acknowledgeInvestigation(investigationId: string): Observable<void> {
-    return this.notificationService.updateNotification(investigationId, NotificationStatus.ACKNOWLEDGED, null, true);
+    return this.notificationService.updateNotification(investigationId, NotificationStatus.ACKNOWLEDGED, null);
   }
 
   public acceptInvestigation(investigationId: string, reason: string): Observable<void> {
-    return this.notificationService.updateNotification(investigationId, NotificationStatus.ACCEPTED, reason, true);
+    return this.notificationService.updateNotification(investigationId, NotificationStatus.ACCEPTED, reason);
   }
 
   public declineInvestigation(investigationId: string, reason: string): Observable<void> {
-    return this.notificationService.updateNotification(investigationId, NotificationStatus.DECLINED, reason, true);
+    return this.notificationService.updateNotification(investigationId, NotificationStatus.DECLINED, reason);
   }
 }
