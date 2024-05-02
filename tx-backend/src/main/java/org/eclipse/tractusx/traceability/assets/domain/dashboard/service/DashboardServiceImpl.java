@@ -27,9 +27,10 @@ import org.eclipse.tractusx.traceability.assets.domain.asbuilt.repository.AssetA
 import org.eclipse.tractusx.traceability.assets.domain.asplanned.repository.AssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.Owner;
 import org.eclipse.tractusx.traceability.assets.domain.dashboard.model.Dashboard;
-import org.eclipse.tractusx.traceability.notification.domain.notification.repository.NotificationRepository;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSide;
+import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationStatus;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationType;
+import org.eclipse.tractusx.traceability.notification.domain.notification.repository.NotificationRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -62,11 +63,11 @@ public class DashboardServiceImpl implements DashboardService {
         long customerPartsWithOpenReceivedAlerts = notificationRepository.countOpenNotificationsByOwnershipAndNotificationType(List.of(Owner.CUSTOMER), NotificationType.ALERT);
         long customerPartsWithOpenSentInvestigations = notificationRepository.countOpenNotificationsByOwnershipAndNotificationType(List.of(Owner.CUSTOMER), NotificationType.INVESTIGATION);
 
-        long receivedActiveInvestigations = notificationRepository.countNotificationsBySideAndType(NotificationSide.RECEIVER, NotificationType.INVESTIGATION);
-        long sentActiveInvestigations = notificationRepository.countNotificationsBySideAndType(NotificationSide.SENDER, NotificationType.INVESTIGATION);
+        long receivedActiveInvestigations = notificationRepository.countNotificationsBySideAndTypeAndStatuses(NotificationSide.RECEIVER, NotificationType.INVESTIGATION, NotificationStatus.ACTIVE_STATES);
+        long sentActiveInvestigations = notificationRepository.countNotificationsBySideAndTypeAndStatuses(NotificationSide.SENDER, NotificationType.INVESTIGATION, NotificationStatus.ACTIVE_STATES);
 
-        long receivedActiveAlerts = notificationRepository.countNotificationsBySideAndType(NotificationSide.RECEIVER, NotificationType.ALERT);
-        long sentActiveAlerts = notificationRepository.countNotificationsBySideAndType(NotificationSide.SENDER, NotificationType.ALERT);
+        long receivedActiveAlerts = notificationRepository.countNotificationsBySideAndTypeAndStatuses(NotificationSide.RECEIVER, NotificationType.ALERT, NotificationStatus.ACTIVE_STATES);
+        long sentActiveAlerts = notificationRepository.countNotificationsBySideAndTypeAndStatuses(NotificationSide.SENDER, NotificationType.ALERT, NotificationStatus.ACTIVE_STATES);
 
         return Dashboard.builder()
                 .asBuiltCustomerParts(asBuiltCustomerParts)

@@ -38,6 +38,8 @@ public interface NotificationRepository {
 
     long countNotificationsBySideAndType(NotificationSide investigationSide, NotificationType notificationType);
 
+    long countNotificationsBySideAndTypeAndStatuses(NotificationSide notificationSide, NotificationType notificationType, List<NotificationStatus> statuses);
+
     NotificationId saveNotification(Notification investigation);
 
     void updateNotification(Notification investigation);

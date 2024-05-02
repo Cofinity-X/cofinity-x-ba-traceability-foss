@@ -39,6 +39,8 @@ public interface JpaNotificationRepository extends JpaRepository<NotificationEnt
 
     long countAllBySideEqualsAndTypeEquals(NotificationSideBaseEntity notificationSide, NotificationTypeEntity notificationType);
 
+    long countAllBySideEqualsAndTypeEqualsAndStatusIn(NotificationSideBaseEntity notificationSide, NotificationTypeEntity notificationType, List<NotificationStatusBaseEntity> statuses);
+
     @Query("SELECT notification FROM NotificationEntity notification JOIN notification.messages notificationMessage WHERE notificationMessage.edcNotificationId = :edcNotificationId")
     Optional<NotificationEntity> findByNotificationMessageEdcNotificationId(@Param("edcNotificationId") String edcNotificationId);
 
