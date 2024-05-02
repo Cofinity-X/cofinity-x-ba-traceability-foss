@@ -51,9 +51,9 @@ describe('NotificationService', () => {
         spyOn(authService, 'getBearerToken').and.returnValue('testtoken');
 
 
-        service.closeNotification(notificationId, reason, isInvestigation).subscribe();
+        service.closeNotification(notificationId, reason).subscribe();
 
-        const req = httpTestingController.expectOne(`${service.determineRequestUrl(isInvestigation)}/${notificationId}/close`);
+        const req = httpTestingController.expectOne(`${service.getRequestUrl()}/${notificationId}/close`);
         expect(req.request.method).toBe('POST');
         expect(req.request.body).toEqual( '{"reason":"Test reason"}');
         req.flush({});
@@ -65,9 +65,9 @@ describe('NotificationService', () => {
         spyOn(authService, 'getBearerToken').and.returnValue('testtoken');
 
 
-        service.approveNotification(notificationId, isInvestigation).subscribe();
+        service.approveNotification(notificationId).subscribe();
 
-        const req = httpTestingController.expectOne(`${service.determineRequestUrl(isInvestigation)}/${notificationId}/approve`);
+        const req = httpTestingController.expectOne(`${service.getRequestUrl()}/${notificationId}/approve`);
         expect(req.request.method).toBe('POST');
         req.flush({});
     });
@@ -77,9 +77,9 @@ describe('NotificationService', () => {
         const isInvestigation = true;
         spyOn(authService, 'getBearerToken').and.returnValue('testtoken');
 
-        service.cancelNotification(notificationId, isInvestigation).subscribe();
+        service.cancelNotification(notificationId).subscribe();
 
-        const req = httpTestingController.expectOne(`${service.determineRequestUrl(isInvestigation)}/${notificationId}/cancel`);
+        const req = httpTestingController.expectOne(`${service.getRequestUrl()}/${notificationId}/cancel`);
         expect(req.request.method).toBe('POST');
         req.flush({});
     });
@@ -91,9 +91,9 @@ describe('NotificationService', () => {
         const isInvestigation = true;
         spyOn(authService, 'getBearerToken').and.returnValue('testtoken');
 
-        service.updateNotification(notificationId, status, reason, isInvestigation).subscribe();
+        service.updateNotification(notificationId, status, reason).subscribe();
 
-        const req = httpTestingController.expectOne(`${service.determineRequestUrl(isInvestigation)}/${notificationId}/update`);
+        const req = httpTestingController.expectOne(`${service.getRequestUrl()}/${notificationId}/update`);
         expect(req.request.method).toBe('POST');
         expect(req.request.body).toEqual('{"reason":"Test reason","status":"ACKNOWLEDGED"}');
         req.flush({});
@@ -106,10 +106,10 @@ describe('NotificationService', () => {
         const isInvestigation = true;
         spyOn(authService, 'getBearerToken').and.returnValue('testtoken');
 
-        service.getDistinctFilterValues(channel, fieldNames, startsWith, isInvestigation).subscribe();
+        service.getDistinctFilterValues(channel, fieldNames, startsWith).subscribe();
 
         const req = httpTestingController.expectOne(
-            `${service.determineRequestUrl(isInvestigation)}/distinctFilterValues?fieldName=SomeField&startWith=Test&size=200&channel=SENDER`
+            `${service.getRequestUrl()}/distinctFilterValues?fieldName=SomeField&startWith=Test&size=200&channel=SENDER`
         );
         expect(req.request.method).toBe('GET');
         req.flush({});

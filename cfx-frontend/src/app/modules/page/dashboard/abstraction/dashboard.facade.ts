@@ -103,7 +103,7 @@ export class DashboardFacade {
 
   private setInvestigations(): void {
     this.investigationSubscription?.unsubscribe();
-    this.investigationSubscription = this.notificationService.getReceived(0, 5, [], this.filtering, null, true, FilterMethod.OR).subscribe({
+    this.investigationSubscription = this.notificationService.getNotificationByFilter(0, 5, [], this.filtering, null, true, FilterMethod.OR, true).subscribe({
       next: data => this.dashboardState.setInvestigation({ data }),
       error: (error: Error) => this.dashboardState.setInvestigation({ error }),
     });
@@ -111,7 +111,7 @@ export class DashboardFacade {
 
   private setAlerts(): void {
     this.alertSubscription?.unsubscribe();
-    this.alertSubscription = this.notificationService.getReceived(0, 5, [], this.filtering, null, false, FilterMethod.OR).subscribe({
+    this.alertSubscription = this.notificationService.getNotificationByFilter(0, 5, [], this.filtering, null, false, FilterMethod.OR, true).subscribe({
       next: data => this.dashboardState.setAlerts({ data }),
       error: (error: Error) => this.dashboardState.setAlerts({ error }),
     });
