@@ -5,45 +5,45 @@
 -- This creates an investigation in state ACKNOWLEDGED in Severity Life-threatening for asBuilt asset Schott Glass bulb which is sent from BPNL00000000GNDU to BPNL00SUPPLIER21
 
 ---
-insert into investigation
-    (id                     , bpn      , close_reason, created                              , description                          , status        , side    , accept_reason, decline_reason, updated                              )
+insert into notification
+    (id                     , title, bpn      , close_reason, created                              , description                          , status        , side    , accept_reason, decline_reason, updated                              , type)
 values
-    (${investigationSentId2}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Investigation on Schott Glass bulb.', 'ACKNOWLEDGED', 'SENDER', null         , null          , current_timestamp - interval '1 hour');
+    (${investigationSentId2}, ''   , ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Investigation on Schott Glass bulb.', 'ACKNOWLEDGED', 'SENDER', null         , null          , current_timestamp - interval '1 hour', 'INVESTIGATION');
 
 ---
 -- reset sequence to highest next-val
-select setval('investigation_id_seq1', (select max(i.id) from investigation i), true);
+select setval('notification_id_seq', (select max(n.id) from notification n), true);
 
 ---
-insert into investigation_notification
-    (id                                  , contract_agreement_id, notification_reference_id, created_by, send_to         , investigation_id       , target_date                          , severity          , created_by_name, send_to_name        , edc_notification_id                   , status        , created                              , updated                              , message_id, error_message)
+insert into notification_message
+    (id                                  , notification_id        , contract_agreement_id, edc_url, notification_reference_id, created_by, send_to         , target_date                          , severity          , created_by_name, send_to_name        , edc_notification_id                   , status        , created                              , updated                              , message_id, is_initial, error_message)
 values
-    (${investigationNotificationSentId2a}, 'contractAgreementId', null                     , ${bpnOwn} , ${bpnSupplier21}, ${investigationSentId2}, current_timestamp + interval '4 days', 'LIFE_THREATENING', ${bpnOwnName}  , ${bpnSupplier21Name}, '92559ce9-d71e-46b3-989f-791c9970877c', 'ACKNOWLEDGED', current_timestamp - interval '3 days', current_timestamp - interval '1 hour', null      , null);
+    (${investigationNotificationSentId2a}, ${investigationSentId2}, 'contractAgreementId', null   , null                     , ${bpnOwn} , ${bpnSupplier21}, current_timestamp + interval '4 days', 'LIFE_THREATENING', ${bpnOwnName}  , ${bpnSupplier21Name}, '92559ce9-d71e-46b3-989f-791c9970877c', 'ACKNOWLEDGED', current_timestamp - interval '3 days', current_timestamp - interval '1 hour', null      , true      , null);
 
 ---
--- join investigation to asset
-insert into assets_as_built_notifications
-    (notification_id                     , asset_id)
+-- join notification to asset
+insert into assets_as_built_notification_messages
+    (notification_message_id             , asset_id)
 values
     (${investigationNotificationSentId2a}, ${assetAsBuiltId09});
 
 ---
--- join investigation to asset
-insert into assets_as_built_investigations
-    (investigation_id       , asset_id)
+-- join notification to asset
+insert into assets_as_built_notifications
+    (notification_id        , asset_id)
 values
     (${investigationSentId2}, ${assetAsBuiltId09});
 
 ---
 -- ACK by receiver notification message
-insert into investigation_notification
-    (id                                  , contract_agreement_id, notification_reference_id             , created_by      , send_to  , investigation_id       , target_date                          , severity          , created_by_name     , send_to_name , edc_notification_id                   , status        , created                              , updated, message_id, error_message)
+insert into notification_message
+    (id                                  , notification_id        , contract_agreement_id, edc_url, notification_reference_id             , created_by      , send_to  , target_date                          , severity          , created_by_name     , send_to_name , edc_notification_id                   , status        , created                              , updated, message_id, is_initial, error_message)
 values
-    (${investigationNotificationSentId2b}, 'contractAgreementId', '92559ce9-d71e-46b3-989f-791c9970877c', ${bpnSupplier21}, ${bpnOwn}, ${investigationSentId2}, current_timestamp + interval '4 days', 'LIFE_THREATENING', ${bpnSupplier21Name}, ${bpnOwnName}, '92559ce9-d71e-46b3-989f-791c9970877c', 'ACKNOWLEDGED', current_timestamp - interval '2 days', null   , null      , null);
+    (${investigationNotificationSentId2b}, ${investigationSentId2}, 'contractAgreementId', null   , '92559ce9-d71e-46b3-989f-791c9970877c', ${bpnSupplier21}, ${bpnOwn}, current_timestamp + interval '4 days', 'LIFE_THREATENING', ${bpnSupplier21Name}, ${bpnOwnName}, '92559ce9-d71e-46b3-989f-791c9970877c', 'ACKNOWLEDGED', current_timestamp - interval '2 days', null   , null      , false     , null);
 
 ---
 -- join ACK notification to asset
-insert into assets_as_built_notifications
-    (notification_id                     , asset_id)
+insert into assets_as_built_notification_messages
+    (notification_message_id             , asset_id)
 values
     (${investigationNotificationSentId2b}, ${assetAsBuiltId09});

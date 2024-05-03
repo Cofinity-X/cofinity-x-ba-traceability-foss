@@ -57,17 +57,17 @@ spring:
       alertSentId1: 1
       alertSentId2: 2
 
-      alertReceivedId1: 11
+      alertReceivedId1: 3
 
       alertNotificationSentId1: "'4939c189-b75d-4647-94cb-a75b83a92313'"
       alertNotificationSentId2: "'a15583ac-101e-44e0-9fba-33ceaa4d3540'"
 
       alertNotificationReceivedId1: "'e3de866d-044b-4db9-9349-841365189a9b'"
 
-      investigationSentId1: 1
-      investigationSentId2: 2
+      investigationSentId1: 4
+      investigationSentId2: 5
 
-      investigationReceivedId1: 11
+      investigationReceivedId1: 6
 
       investigationNotificationSentId1 : "'7486286d-a098-4617-81ea-3015bc866a7e'"
       investigationNotificationSentId2a: "'94032934-8ec8-4f97-a38d-6b16d448cbfb'"
