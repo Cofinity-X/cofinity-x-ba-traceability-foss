@@ -83,7 +83,7 @@ export class NotificationService {
   }
 
   public createAlert(partIds: string[], description: string, severity: Severity, bpn: string, isAsBuilt: boolean): Observable<string> {
-    const body = { partIds, description, severity, receiverBpn: bpn, isAsBuilt };
+    const body = { partIds, description, severity, receiverBpn: bpn, isAsBuilt, type: NotificationType.ALERT.toUpperCase() };
     return this.apiService.post<NotificationCreateResponse>(`${this.url}/alerts`, body).pipe(map(({ id }) => id));
   }
 
@@ -95,7 +95,7 @@ export class NotificationService {
   ): Observable<string> {
     // targetDate is an optional field
     const targetDate = null === dateString ? null : new Date(dateString).toISOString();
-    const body = { partIds, description, severity, targetDate };
+    const body = { partIds, description, severity, targetDate, type: NotificationType.INVESTIGATION.toUpperCase() };
 
     return this.apiService
       .post<NotificationCreateResponse>(this.url, body)
