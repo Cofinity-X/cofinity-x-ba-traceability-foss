@@ -84,7 +84,7 @@ export class NotificationService {
 
   public createAlert(partIds: string[], description: string, severity: Severity, bpn: string, isAsBuilt: boolean): Observable<string> {
     const body = { partIds, description, severity, receiverBpn: bpn, isAsBuilt, type: NotificationType.ALERT.toUpperCase() };
-    return this.apiService.post<NotificationCreateResponse>(`${this.url}/alerts`, body).pipe(map(({ id }) => id));
+    return this.apiService.post<NotificationCreateResponse>(this.url, body).pipe(map(({ id }) => id));
   }
 
   public createInvestigation(
