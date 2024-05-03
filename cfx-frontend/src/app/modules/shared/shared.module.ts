@@ -201,6 +201,7 @@ import { ForwardNotificationComponent } from '@shared/components/request-notific
     PartsTableComponent,
     MultiSelectAutocompleteComponent,
     CountryFlagGeneratorComponent,
+    ForwardNotificationComponent
   ],
   providers: [
     FormatDatePipe,

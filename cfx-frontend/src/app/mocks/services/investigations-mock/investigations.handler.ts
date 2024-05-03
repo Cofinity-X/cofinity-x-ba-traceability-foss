@@ -31,25 +31,25 @@ import {
 } from './investigations.test.model';
 
 const commonHandler = [
-  rest.post(`*${environment.apiUrl}/investigations/:investigationId/close`, (req, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications/:investigationId/close`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 
-  rest.post(`*${environment.apiUrl}/investigations/:investigationId/approve`, (req, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications/:investigationId/approve`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 
-  rest.post(`*${environment.apiUrl}/investigations/:investigationId/cancel`, (req, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications/:investigationId/cancel`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 
-  rest.post(`${environment.apiUrl}/investigations/:investigationId/update`, (req, res, ctx) => {
+  rest.post(`${environment.apiUrl}/notifications/:investigationId/update`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 ];
 
 export const investigationsHandlers = [
-  rest.get(`*${environment.apiUrl}/investigations/created`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/created`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [
@@ -66,7 +66,7 @@ export const investigationsHandlers = [
     );
   }),
 
-  rest.get(`*${environment.apiUrl}/investigations/received`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/received`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [
@@ -82,7 +82,7 @@ export const investigationsHandlers = [
     );
   }),
 
-  rest.get(`*${environment.apiUrl}/investigations/:investigationId`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/:investigationId`, (req, res, ctx) => {
     const { investigationId } = req.params;
 
     const indexFromId = parseInt((investigationId as string).replace('id-', ''), 10);
@@ -105,11 +105,11 @@ export const investigationsHandlers = [
 
     return res(ctx.status(200), ctx.json({ ...randomNotification, id: investigationId }));
   }),
-  rest.post(`*${environment.apiUrl}/investigations`, (_, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications`, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json({ id: InvestigationIdPrefix + 1 }));
   }),
 
-  rest.put(`*${environment.apiUrl}/investigations/:investigationId/status`, async (req, res, ctx) => {
+  rest.put(`*${environment.apiUrl}/notifications/:investigationId/status`, async (req, res, ctx) => {
     const { investigationId } = req.params;
     const { status } = await req.json();
 
@@ -120,7 +120,7 @@ export const investigationsHandlers = [
 ];
 
 export const investigationsTestHandlers = [
-  rest.get(`*${environment.apiUrl}/investigations/created`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/created`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [
@@ -137,7 +137,7 @@ export const investigationsTestHandlers = [
     );
   }),
 
-  rest.get(`*${environment.apiUrl}/investigations/received`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/received`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [NotificationStatus.SENT, NotificationStatus.ACKNOWLEDGED];
@@ -147,7 +147,7 @@ export const investigationsTestHandlers = [
     );
   }),
 
-  rest.get(`*${environment.apiUrl}/investigations/:investigationId`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/:investigationId`, (req, res, ctx) => {
     const { investigationId } = req.params;
 
     const indexFromId = parseInt((investigationId as string).replace('id-', ''), 10);
@@ -167,11 +167,11 @@ export const investigationsTestHandlers = [
 
     return res(ctx.status(200), ctx.json({ ...randomNotification, id: investigationId }));
   }),
-  rest.post(`*${environment.apiUrl}/investigations`, (_, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications`, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json({ id: testInvestigationIdPrefix + 1 }));
   }),
 
-  rest.put(`*${environment.apiUrl}/investigations/:investigationId/status`, async (req, res, ctx) => {
+  rest.put(`*${environment.apiUrl}/notifications/:investigationId/status`, async (req, res, ctx) => {
     const { investigationId } = req.params;
     const { status } = await req.json();
 

@@ -48,6 +48,7 @@ export const buildMockInvestigations = (
       status,
       severity,
       channel,
+      isFromSender: channel == 'RECEIVER',
       createdBy: 'BPN10000000OEM0A',
       createdByName: 'OEM xxxxxxxxxxxxxxx A',
       sendTo: 'BPN20000000OEM0B',
