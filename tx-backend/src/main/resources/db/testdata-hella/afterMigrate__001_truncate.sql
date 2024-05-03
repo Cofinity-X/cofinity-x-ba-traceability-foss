@@ -4,13 +4,9 @@
 
 -- truncate all tables, except for the "technical" ones (flyway_schema_history and shedlock)
 truncate table
-    alert,
-    alert_notification,
-    asset_as_built_alert_notifications,
     assets_as_built,
-    assets_as_built_alerts,
     assets_as_built_childs,
-    assets_as_built_investigations,
+    assets_as_built_notification_messages,
     assets_as_built_notifications,
     assets_as_built_parents,
     assets_as_planned,
@@ -19,9 +15,8 @@ truncate table
     import_job,
     import_job_assets_as_built,
     import_job_assets_as_planned,
-    investigation,
-    investigation_notification,
-    shedlock,
+    notification,
+    notification_message,
     submodel,
     submodel_payload,
     traction_battery_code_subcomponent
@@ -29,5 +24,4 @@ truncate table
 
 ---
 -- reset sequences
-select setval('alert_id_seq1'         , 1, true);
-select setval('investigation_id_seq1' , 1, true);
+select setval('notification_id_seq'        , 1, true);
