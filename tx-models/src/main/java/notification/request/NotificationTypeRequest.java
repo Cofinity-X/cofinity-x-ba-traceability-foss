@@ -48,8 +48,8 @@ public enum NotificationTypeRequest {
     }
 
     private static String supportedQualityNotificationTypeRequest() {
-        return Stream.of(NotificationSeverityRequest.values())
-                .map(NotificationSeverityRequest::getRealName)
+        return Stream.of(NotificationTypeRequest.values())
+                .map(NotificationTypeRequest::getRealName)
                 .collect(Collectors.joining(", "));
     }
 
