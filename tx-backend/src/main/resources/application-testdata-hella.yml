@@ -136,6 +136,7 @@ spring:
       alertNotificationReceivedId5a        : "'38c47db2-9f92-4e58-9d5b-3245c064d0fa'"
       alertNotificationReceivedId5b        : "'3eefa3d4-126a-424d-a030-aa53384573fd'"
 
+
       investigationSentId1                 : 13
       investigationSentId2                 : 14
       investigationSentId3                 : 15

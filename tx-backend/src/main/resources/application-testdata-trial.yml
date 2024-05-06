@@ -148,6 +148,7 @@ spring:
       investigationNotificationSentId7a    : "'6adc3d93-7efb-4c2b-bd9d-bbb1b61549f0'"
       investigationNotificationSentId7b    : "'8e866bf4-fa92-43fb-a012-a27556659579'"
 
+
       investigationNotificationReceivedId1 : "'0678b9c6-a9c4-4ff9-a5e2-c6cd19c5f8c6'"
       investigationNotificationReceivedId2a: "'3fbd0206-2507-445c-aa6b-ec726d0eeae2'"
       investigationNotificationReceivedId2b: "'989ae19d-d682-4c1b-baaf-4bb779d91d8d'"
