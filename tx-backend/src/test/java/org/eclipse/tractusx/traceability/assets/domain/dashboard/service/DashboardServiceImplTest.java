@@ -34,8 +34,7 @@ import org.eclipse.tractusx.traceability.common.model.SearchCriteria;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaFilter;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaOperator;
 import org.eclipse.tractusx.traceability.common.model.SearchCriteriaStrategy;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.AlertRepository;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.InvestigationRepository;
+import org.eclipse.tractusx.traceability.notification.domain.notification.repository.NotificationRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -52,9 +51,7 @@ class DashboardServiceImplTest {
     @Mock
     private AssetAsPlannedRepository assetAsPlannedRepository;
     @Mock
-    private InvestigationRepository investigationsRepository;
-    @Mock
-    private AlertRepository alertRepository;
+    private NotificationRepository notificationRepository;
 
     @InjectMocks
     private DashboardServiceImpl dashboardService;

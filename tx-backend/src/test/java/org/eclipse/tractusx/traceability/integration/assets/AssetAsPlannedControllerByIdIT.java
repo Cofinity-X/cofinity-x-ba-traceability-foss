@@ -19,11 +19,10 @@
 package org.eclipse.tractusx.traceability.integration.assets;
 
 import io.restassured.http.ContentType;
-import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.model.AssetAsPlannedEntity;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.repository.JpaAssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
 import org.eclipse.tractusx.traceability.integration.common.support.AlertsSupport;
-import org.eclipse.tractusx.traceability.integration.common.support.*;
+import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.InvestigationsSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
@@ -33,13 +32,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -65,6 +62,7 @@ class AssetAsPlannedControllerByIdIT extends IntegrationTestSpecification {
                 arguments(Map.of("qualityType", " "), "Failed to deserialize request body.")
         );
     }
+
 
     @Test
     void shouldReturnAssetsForAuthenticatedUserWithRole() throws JoseException {
@@ -205,7 +203,5 @@ class AssetAsPlannedControllerByIdIT extends IntegrationTestSpecification {
                 .statusCode(200)
                 .body("businessPartner", equalTo(expectedBusinessPartner))
                 .body("manufacturerName", equalTo(expectedManufacturerName));
-
     }
-
 }

@@ -21,12 +21,6 @@
       ]
     }
   ],
-  "tags" : [
-    {
-      "name" : "Investigations",
-      "description" : "Operations on Investigation Notification"
-    }
-  ],
   "paths" : {
     "/bpn-config" : {
       "get" : {
@@ -37,16 +31,6 @@
         "description" : "The endpoint returns a result of BPN EDC URL mappings.",
         "operationId" : "getBpnEdcs",
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Returns the paged result found",
             "content" : {
@@ -82,6 +66,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -92,8 +86,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -154,31 +148,6 @@
           "required" : true
         },
         "responses" : {
-          "200" : {
-            "description" : "Returns the paged result found for BpnEdcMapping",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "maxItems" : 2147483647,
-                  "minItems" : 0,
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/BpnEdcMappingResponse"
-                  }
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -199,6 +168,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -209,8 +188,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -225,6 +204,21 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Returns the paged result found for BpnEdcMapping",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "maxItems" : 2147483647,
+                  "minItems" : 0,
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/BpnEdcMappingResponse"
+                  }
                 }
               }
             }
@@ -271,31 +265,6 @@
           "required" : true
         },
         "responses" : {
-          "200" : {
-            "description" : "Returns the paged result found for BpnEdcMapping",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "maxItems" : 2147483647,
-                  "minItems" : 0,
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/BpnEdcMappingResponse"
-                  }
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -316,6 +285,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -326,8 +305,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -342,6 +321,21 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Returns the paged result found for BpnEdcMapping",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "maxItems" : 2147483647,
+                  "minItems" : 0,
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/BpnEdcMappingResponse"
+                  }
                 }
               }
             }
@@ -385,26 +379,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Returns submodel payload",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -425,6 +399,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -435,12 +419,22 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Returns submodel payload",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
                 }
               }
             }
@@ -502,16 +496,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Ok."
           },
@@ -535,6 +519,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -545,8 +539,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -588,35 +582,25 @@
         ]
       }
     },
-    "/investigations" : {
+    "/notifications" : {
       "post" : {
         "tags" : [
-          "Investigations"
+          "Notifications"
         ],
-        "summary" : "Start investigations by part ids",
-        "description" : "The endpoint starts investigations based on part ids provided.",
-        "operationId" : "investigateAssets",
+        "summary" : "Start notification by part ids",
+        "description" : "The endpoint starts notification based on part ids provided.",
+        "operationId" : "notifyAssets",
         "requestBody" : {
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/StartQualityNotificationRequest"
+                "$ref" : "#/components/schemas/StartNotificationRequest"
               }
             }
           },
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -637,6 +621,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -647,8 +641,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -662,7 +656,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/QualityNotificationIdResponse"
+                  "$ref" : "#/components/schemas/NotificationIdResponse"
                 }
               }
             }
@@ -697,17 +691,17 @@
         ]
       }
     },
-    "/investigations/{investigationId}/update" : {
+    "/notifications/{notificationId}/update" : {
       "post" : {
         "tags" : [
-          "Investigations"
+          "Notifications"
         ],
-        "summary" : "Update investigations by id",
-        "description" : "The endpoint updates investigations by their id.",
-        "operationId" : "updateInvestigation",
+        "summary" : "Update notification by id",
+        "description" : "The endpoint updates notification by their id.",
+        "operationId" : "updateNotification",
         "parameters" : [
           {
-            "name" : "investigationId",
+            "name" : "notificationId",
             "in" : "path",
             "required" : true,
             "schema" : {
@@ -720,7 +714,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/UpdateQualityNotificationRequest"
+                "$ref" : "#/components/schemas/UpdateNotificationRequest"
               }
             }
           },
@@ -729,19 +723,6 @@
         "responses" : {
           "204" : {
             "description" : "No content."
-          },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Ok."
           },
           "401" : {
             "description" : "Authorization failed.",
@@ -763,6 +744,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -773,8 +764,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -813,17 +804,17 @@
         ]
       }
     },
-    "/investigations/{investigationId}/close" : {
+    "/notifications/{notificationId}/close" : {
       "post" : {
         "tags" : [
-          "Investigations"
+          "Notifications"
         ],
-        "summary" : "Close investigations by id",
-        "description" : "The endpoint closes investigations by their id.",
-        "operationId" : "closeInvestigation",
+        "summary" : "Close notification by id",
+        "description" : "The endpoint closes alert by id.",
+        "operationId" : "closeNotification",
         "parameters" : [
           {
-            "name" : "investigationId",
+            "name" : "notificationId",
             "in" : "path",
             "required" : true,
             "schema" : {
@@ -836,7 +827,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/CloseQualityNotificationRequest"
+                "$ref" : "#/components/schemas/CloseNotificationRequest"
               }
             }
           },
@@ -846,16 +837,6 @@
           "204" : {
             "description" : "No content."
           },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Ok."
           },
@@ -879,6 +860,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -889,8 +880,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -929,17 +920,17 @@
         ]
       }
     },
-    "/investigations/{investigationId}/cancel" : {
+    "/notifications/{notificationId}/cancel" : {
       "post" : {
         "tags" : [
-          "Investigations"
+          "Notifications"
         ],
-        "summary" : "Cancles investigations by id",
-        "description" : "The endpoint cancles investigations by their id.",
-        "operationId" : "cancelInvestigation",
+        "summary" : "Cancels notification by id",
+        "description" : "The endpoint cancels notification by id.",
+        "operationId" : "cancelNotification",
         "parameters" : [
           {
-            "name" : "investigationId",
+            "name" : "notificationId",
             "in" : "path",
             "required" : true,
             "schema" : {
@@ -949,16 +940,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Ok."
           },
@@ -982,6 +963,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -992,8 +983,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1035,17 +1026,17 @@
         ]
       }
     },
-    "/investigations/{investigationId}/approve" : {
+    "/notifications/{notificationId}/approve" : {
       "post" : {
         "tags" : [
-          "Investigations"
+          "Notifications"
         ],
-        "summary" : "Approves investigations by id",
-        "description" : "The endpoint approves investigations by their id.",
-        "operationId" : "approveInvestigation",
+        "summary" : "Approves notification by id",
+        "description" : "The endpoint approves notification by id.",
+        "operationId" : "approveNotification",
         "parameters" : [
           {
-            "name" : "investigationId",
+            "name" : "notificationId",
             "in" : "path",
             "required" : true,
             "schema" : {
@@ -1055,16 +1046,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Ok."
           },
@@ -1088,6 +1069,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -1098,8 +1089,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1141,14 +1132,14 @@
         ]
       }
     },
-    "/investigations/filter" : {
+    "/notifications/filter" : {
       "post" : {
         "tags" : [
-          "Investigations"
+          "Notifications"
         ],
-        "summary" : "Filter investigations defined by the request body",
-        "description" : "The endpoint returns investigations as paged result.",
-        "operationId" : "filterInvestigations",
+        "summary" : "Filter notifications defined by the request body",
+        "description" : "The endpoint returns notifications as paged result.",
+        "operationId" : "filterNotifications",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1160,16 +1151,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -1190,16 +1171,6 @@
               }
             }
           },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "403" : {
             "description" : "Forbidden.",
             "content" : {
@@ -1210,142 +1181,22 @@
               }
             }
           },
-          "200" : {
-            "description" : "Returns the paged result found for Asset",
+          "400" : {
+            "description" : "Bad request.",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "maxItems" : 2147483647,
-                  "minItems" : 0,
-                  "type" : "array",
-                  "items" : {
-                    "maxItems" : 2147483647,
-                    "minItems" : -2147483648,
-                    "type" : "array",
-                    "description" : "Investigations",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "id" : {
-                          "maximum" : 255,
-                          "minimum" : 0,
-                          "maxLength" : 255,
-                          "type" : "integer",
-                          "format" : "int64",
-                          "example" : 66
-                        },
-                        "status" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "CREATED",
-                          "enum" : [
-                            "CREATED",
-                            "SENT",
-                            "RECEIVED",
-                            "ACKNOWLEDGED",
-                            "ACCEPTED",
-                            "DECLINED",
-                            "CANCELED",
-                            "CLOSED"
-                          ]
-                        },
-                        "description" : {
-                          "maxLength" : 1000,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "DescriptionText"
-                        },
-                        "createdBy" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "BPNL00000003AYRE"
-                        },
-                        "createdByName" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "Tier C"
-                        },
-                        "createdDate" : {
-                          "maxLength" : 50,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "2023-02-21T21:27:10.734950Z"
-                        },
-                        "assetIds" : {
-                          "maxItems" : 1000,
-                          "minItems" : 0,
-                          "type" : "array",
-                          "example" : [
-                            "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd",
-                            "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd",
-                            "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd"
-                          ],
-                          "items" : {
-                            "type" : "string",
-                            "example" : "[\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd\"]"
-                          }
-                        },
-                        "channel" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "SENDER",
-                          "enum" : [
-                            "SENDER",
-                            "RECEIVER"
-                          ]
-                        },
-                        "reason" : {
-                          "$ref" : "#/components/schemas/QualityNotificationReasonResponse"
-                        },
-                        "sendTo" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "BPNL00000003AYRE"
-                        },
-                        "sendToName" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "Tier C"
-                        },
-                        "severity" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "MINOR",
-                          "enum" : [
-                            "MINOR",
-                            "MAJOR",
-                            "CRITICAL",
-                            "LIFE-THREATENING"
-                          ]
-                        },
-                        "targetDate" : {
-                          "maxLength" : 50,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "2099-02-21T21:27:10.734950Z"
-                        },
-                        "errorMessage" : {
-                          "maxLength" : 255,
-                          "minLength" : 0,
-                          "type" : "string",
-                          "example" : "EDC not reachable"
-                        },
-                        "qualityNotificationMessages" : {
-                          "type" : "array",
-                          "items" : {
-                            "$ref" : "#/components/schemas/QualityNotificationMessageResponse"
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1356,6 +1207,150 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Returns the paged result found for Notifications",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "maxItems" : 2147483647,
+                  "type" : "array",
+                  "description" : "Notifications",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "maximum" : 255,
+                        "minimum" : 0,
+                        "maxLength" : 255,
+                        "type" : "integer",
+                        "format" : "int64",
+                        "example" : 66
+                      },
+                      "title" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "Title"
+                      },
+                      "status" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "CREATED",
+                        "enum" : [
+                          "CREATED",
+                          "SENT",
+                          "RECEIVED",
+                          "ACKNOWLEDGED",
+                          "ACCEPTED",
+                          "DECLINED",
+                          "CANCELED",
+                          "CLOSED"
+                        ]
+                      },
+                      "description" : {
+                        "maxLength" : 1000,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "DescriptionText"
+                      },
+                      "createdBy" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "BPNL00000003AYRE"
+                      },
+                      "createdByName" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "Tier C"
+                      },
+                      "createdDate" : {
+                        "maxLength" : 50,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "2023-02-21T21:27:10.734950Z"
+                      },
+                      "assetIds" : {
+                        "maxItems" : 1000,
+                        "minItems" : 0,
+                        "type" : "array",
+                        "example" : [
+                          "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd",
+                          "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd",
+                          "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd"
+                        ],
+                        "items" : {
+                          "type" : "string",
+                          "example" : "[\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd\"]"
+                        }
+                      },
+                      "channel" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "SENDER",
+                        "enum" : [
+                          "SENDER",
+                          "RECEIVER"
+                        ]
+                      },
+                      "reason" : {
+                        "$ref" : "#/components/schemas/NotificationReasonResponse"
+                      },
+                      "sendTo" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "BPNL00000003AYRE"
+                      },
+                      "sendToName" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "Tier C"
+                      },
+                      "severity" : {
+                        "maxLength" : 255,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "MINOR",
+                        "enum" : [
+                          "MINOR",
+                          "MAJOR",
+                          "CRITICAL",
+                          "LIFE-THREATENING"
+                        ]
+                      },
+                      "type" : {
+                        "maxLength" : 50,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "ALERT",
+                        "enum" : [
+                          "ALERT",
+                          "INVESTIGATION"
+                        ]
+                      },
+                      "targetDate" : {
+                        "maxLength" : 50,
+                        "minLength" : 0,
+                        "type" : "string",
+                        "example" : "2099-02-21T21:27:10.734950Z"
+                      },
+                      "messages" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/NotificationMessageResponse"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -1399,16 +1394,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -1429,6 +1414,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -1439,8 +1434,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1508,14 +1503,40 @@
           "required" : true
         },
         "responses" : {
-          "500" : {
-            "description" : "Internal server error.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "type" : "string",
                   "example" : {
-                    "message" : "Internal server error."
+                    "message" : "Too many requests."
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : {
+                    "message" : "Authorization failed."
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : {
+                    "message" : "Not found."
                   }
                 }
               }
@@ -1537,53 +1558,14 @@
               }
             }
           },
-          "404" : {
-            "description" : "Not found.",
+          "500" : {
+            "description" : "Internal server error.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "type" : "string",
                   "example" : {
-                    "message" : "Not found."
-                  }
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string",
-                  "example" : {
-                    "message" : "Authorization failed."
-                  }
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string",
-                  "example" : {
-                    "message" : "Unsupported media type."
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string",
-                  "example" : {
-                    "message" : "Bad request."
+                    "message" : "Internal server error."
                   }
                 }
               }
@@ -1602,14 +1584,27 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too many requests.",
+          "400" : {
+            "description" : "Bad request.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "type" : "string",
                   "example" : {
-                    "message" : "Too many requests."
+                    "message" : "Bad request."
+                  }
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : {
+                    "message" : "Unsupported media type."
                   }
                 }
               }
@@ -1656,15 +1651,8 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
+          "204" : {
+            "description" : "No Content."
           },
           "401" : {
             "description" : "Authorization failed.",
@@ -1686,6 +1674,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -1696,8 +1694,18 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1711,19 +1719,6 @@
             "content" : {
               "application/json" : {}
             }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "204" : {
-            "description" : "No Content."
           },
           "404" : {
             "description" : "Not found.",
@@ -1772,15 +1767,8 @@
           }
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
+          "204" : {
+            "description" : "No Content."
           },
           "401" : {
             "description" : "Authorization failed.",
@@ -1794,16 +1782,6 @@
           },
           "415" : {
             "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1832,6 +1810,26 @@
               }
             }
           },
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "500" : {
             "description" : "Internal server error.",
             "content" : {
@@ -1841,9 +1839,6 @@
                 }
               }
             }
-          },
-          "204" : {
-            "description" : "No Content."
           },
           "404" : {
             "description" : "Not found.",
@@ -1884,16 +1879,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -1914,6 +1899,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -1924,8 +1919,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1986,16 +1981,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -2016,16 +2001,6 @@
               }
             }
           },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "403" : {
             "description" : "Forbidden.",
             "content" : {
@@ -2036,8 +2011,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal server error.",
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2238,6 +2223,16 @@
               }
             }
           },
+          "500" : {
+            "description" : "Internal server error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404" : {
             "description" : "Not found.",
             "content" : {
@@ -2277,16 +2272,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -2307,6 +2292,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -2317,8 +2312,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2379,16 +2374,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -2409,6 +2394,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -2419,8 +2414,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2651,789 +2646,6 @@
         ]
       }
     },
-    "/alerts" : {
-      "post" : {
-        "tags" : [
-          "Alerts"
-        ],
-        "summary" : "Start alert by part ids",
-        "description" : "The endpoint starts alert based on part ids provided.",
-        "operationId" : "alertAssets",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/StartQualityNotificationRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "201" : {
-            "description" : "Created.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/QualityNotificationIdResponse"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
-    "/alerts/{alertId}/update" : {
-      "post" : {
-        "tags" : [
-          "Alerts"
-        ],
-        "summary" : "Update alert by id",
-        "description" : "The endpoint updates alert by their id.",
-        "operationId" : "updateAlert",
-        "parameters" : [
-          {
-            "name" : "alertId",
-            "in" : "path",
-            "required" : true,
-            "schema" : {
-              "type" : "integer",
-              "format" : "int64"
-            }
-          }
-        ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/UpdateQualityNotificationRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "204" : {
-            "description" : "No content."
-          },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
-    "/alerts/{alertId}/close" : {
-      "post" : {
-        "tags" : [
-          "Alerts"
-        ],
-        "summary" : "Close alert by id",
-        "description" : "The endpoint closes alert by id.",
-        "operationId" : "closeAlert",
-        "parameters" : [
-          {
-            "name" : "alertId",
-            "in" : "path",
-            "required" : true,
-            "schema" : {
-              "type" : "integer",
-              "format" : "int64"
-            }
-          }
-        ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CloseQualityNotificationRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "204" : {
-            "description" : "No content."
-          },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Ok."
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
-    "/alerts/{alertId}/cancel" : {
-      "post" : {
-        "tags" : [
-          "Alerts"
-        ],
-        "summary" : "Cancels alert by id",
-        "description" : "The endpoint cancels alert by id.",
-        "operationId" : "cancelAlert",
-        "parameters" : [
-          {
-            "name" : "alertId",
-            "in" : "path",
-            "required" : true,
-            "schema" : {
-              "type" : "integer",
-              "format" : "int64"
-            }
-          }
-        ],
-        "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Ok."
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "204" : {
-            "description" : "No content."
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
-    "/alerts/{alertId}/approve" : {
-      "post" : {
-        "tags" : [
-          "Alerts"
-        ],
-        "summary" : "Approves alert by id",
-        "description" : "The endpoint approves alert by id.",
-        "operationId" : "approveAlert",
-        "parameters" : [
-          {
-            "name" : "alertId",
-            "in" : "path",
-            "required" : true,
-            "schema" : {
-              "type" : "integer",
-              "format" : "int64"
-            }
-          }
-        ],
-        "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Ok."
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "204" : {
-            "description" : "No content."
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
-    "/alerts/filter" : {
-      "post" : {
-        "tags" : [
-          "Alerts"
-        ],
-        "summary" : "Filter alerts defined by the request body",
-        "description" : "The endpoint returns alerts as paged result.",
-        "operationId" : "filterAlerts",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/PageableFilterRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Returns the paged result found for Asset",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "maxItems" : 2147483647,
-                  "type" : "array",
-                  "description" : "Alerts",
-                  "items" : {
-                    "type" : "object",
-                    "properties" : {
-                      "id" : {
-                        "maximum" : 255,
-                        "minimum" : 0,
-                        "maxLength" : 255,
-                        "type" : "integer",
-                        "format" : "int64",
-                        "example" : 66
-                      },
-                      "status" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "CREATED",
-                        "enum" : [
-                          "CREATED",
-                          "SENT",
-                          "RECEIVED",
-                          "ACKNOWLEDGED",
-                          "ACCEPTED",
-                          "DECLINED",
-                          "CANCELED",
-                          "CLOSED"
-                        ]
-                      },
-                      "description" : {
-                        "maxLength" : 1000,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "DescriptionText"
-                      },
-                      "createdBy" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "BPNL00000003AYRE"
-                      },
-                      "createdByName" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "Tier C"
-                      },
-                      "createdDate" : {
-                        "maxLength" : 50,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "2023-02-21T21:27:10.734950Z"
-                      },
-                      "assetIds" : {
-                        "maxItems" : 1000,
-                        "minItems" : 0,
-                        "type" : "array",
-                        "example" : [
-                          "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd",
-                          "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd",
-                          "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd"
-                        ],
-                        "items" : {
-                          "type" : "string",
-                          "example" : "[\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd\"]"
-                        }
-                      },
-                      "channel" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "SENDER",
-                        "enum" : [
-                          "SENDER",
-                          "RECEIVER"
-                        ]
-                      },
-                      "reason" : {
-                        "$ref" : "#/components/schemas/QualityNotificationReasonResponse"
-                      },
-                      "sendTo" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "BPNL00000003AYRE"
-                      },
-                      "sendToName" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "Tier C"
-                      },
-                      "severity" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "MINOR",
-                        "enum" : [
-                          "MINOR",
-                          "MAJOR",
-                          "CRITICAL",
-                          "LIFE-THREATENING"
-                        ]
-                      },
-                      "targetDate" : {
-                        "maxLength" : 50,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "2099-02-21T21:27:10.734950Z"
-                      },
-                      "errorMessage" : {
-                        "maxLength" : 255,
-                        "minLength" : 0,
-                        "type" : "string",
-                        "example" : "EDC not reachable"
-                      },
-                      "qualityNotificationMessages" : {
-                        "type" : "array",
-                        "items" : {
-                          "$ref" : "#/components/schemas/QualityNotificationMessageResponse"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
     "/assets/as-planned/{assetId}" : {
       "get" : {
         "tags" : [
@@ -3453,6 +2665,56 @@
           }
         ],
         "responses" : {
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "200" : {
             "description" : "Returns the assets found",
             "content" : {
@@ -3640,56 +2902,6 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "500" : {
             "description" : "Internal server error.",
             "content" : {
@@ -3747,56 +2959,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Returns the updated asset",
             "content" : {
@@ -3984,6 +3146,56 @@
               }
             }
           },
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "500" : {
             "description" : "Internal server error.",
             "content" : {
@@ -4033,16 +3245,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Returns the assets found",
             "content" : {
@@ -4250,6 +3452,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -4260,8 +3472,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4327,66 +3539,6 @@
           "required" : true
         },
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Returns the updated asset",
             "content" : {
@@ -4574,6 +3726,66 @@
               }
             }
           },
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404" : {
             "description" : "Not found.",
             "content" : {
@@ -4603,16 +3815,6 @@
         "description" : "The endpoint Triggers reload of shell descriptors.",
         "operationId" : "reload",
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -4633,16 +3835,6 @@
               }
             }
           },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "403" : {
             "description" : "Forbidden.",
             "content" : {
@@ -4655,6 +3847,26 @@
           },
           "202" : {
             "description" : "Created registry reload job."
+          },
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "500" : {
             "description" : "Internal server error.",
@@ -4695,26 +3907,6 @@
         "description" : "The endpoint returns all policies .",
         "operationId" : "policy",
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Returns the policies",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/PolicyResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -4735,6 +3927,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -4745,12 +3947,22 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Returns the policies",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PolicyResponse"
                 }
               }
             }
@@ -4785,17 +3997,17 @@
         ]
       }
     },
-    "/investigations/{investigationId}" : {
+    "/notifications/{notificationId}" : {
       "get" : {
         "tags" : [
-          "Investigations"
+          "Notifications"
         ],
-        "summary" : "Gets investigations by id",
-        "description" : "The endpoint returns investigations as paged result by their id.",
-        "operationId" : "getInvestigation",
+        "summary" : "Gets notification by id",
+        "description" : "The endpoint returns notification by id.",
+        "operationId" : "getNotification",
         "parameters" : [
           {
-            "name" : "investigationId",
+            "name" : "notificationId",
             "in" : "path",
             "required" : true,
             "schema" : {
@@ -4805,27 +4017,16 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "OK.",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "maxItems" : 2147483647,
-                  "minItems" : -2147483648,
                   "type" : "array",
-                  "description" : "Investigations",
+                  "description" : "Notifications",
                   "items" : {
-                    "$ref" : "#/components/schemas/InvestigationResponse"
+                    "$ref" : "#/components/schemas/NotificationResponse"
                   }
                 }
               }
@@ -4851,6 +4052,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -4861,8 +4072,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4901,14 +4112,13 @@
         ]
       }
     },
-    "/investigations/distinctFilterValues" : {
+    "/notifications/distinctFilterValues" : {
       "get" : {
         "tags" : [
-          "Assets",
-          "Investigations"
+          "Notifications"
         ],
         "summary" : "getDistinctFilterValues",
-        "description" : "The endpoint returns a distinct filter values for given fieldName.",
+        "description" : "The endpoint returns a distinct filter values for given fieldName of notification.",
         "operationId" : "distinctFilterValues",
         "parameters" : [
           {
@@ -4950,8 +4160,18 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4975,18 +4195,8 @@
               }
             }
           },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
+          "403" : {
+            "description" : "Forbidden.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5005,8 +4215,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5064,16 +4274,6 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -5094,6 +4294,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -5104,8 +4314,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5164,16 +4374,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "OK.",
             "content" : {
@@ -5183,6 +4383,9 @@
                 }
               }
             }
+          },
+          "204" : {
+            "description" : "No Content."
           },
           "401" : {
             "description" : "Authorization failed.",
@@ -5204,6 +4407,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -5214,8 +4427,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5233,9 +4446,6 @@
                 }
               }
             }
-          },
-          "204" : {
-            "description" : "No Content."
           },
           "404" : {
             "description" : "Not found.",
@@ -5284,36 +4494,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Returns the paged result found for Asset",
             "content" : {
@@ -5506,8 +4686,18 @@
               }
             }
           },
-          "400" : {
-            "description" : "Bad request.",
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5518,6 +4708,26 @@
           },
           "403" : {
             "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5577,7 +4787,7 @@
           {
             "name" : "size",
             "in" : "query",
-            "required" : true,
+            "required" : false,
             "schema" : {
               "type" : "integer",
               "format" : "int32"
@@ -5586,7 +4796,7 @@
           {
             "name" : "startWith",
             "in" : "query",
-            "required" : true,
+            "required" : false,
             "schema" : {
               "type" : "string"
             }
@@ -5594,7 +4804,7 @@
           {
             "name" : "owner",
             "in" : "query",
-            "required" : true,
+            "required" : false,
             "schema" : {
               "type" : "string",
               "enum" : [
@@ -5607,8 +4817,18 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5632,18 +4852,8 @@
               }
             }
           },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
+          "403" : {
+            "description" : "Forbidden.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5662,8 +4872,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5721,16 +4931,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Returns the asset by childId",
             "content" : {
@@ -5938,6 +5138,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -5948,8 +5158,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -6015,16 +5225,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -6045,6 +5245,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -6055,8 +5265,18 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -6253,16 +5473,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -6338,8 +5548,18 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -6363,18 +5583,8 @@
               }
             }
           },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
+          "403" : {
+            "description" : "Forbidden.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -6393,8 +5603,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -6442,6 +5652,46 @@
         "description" : "The endpoint returns a map for assets consumed by the map.",
         "operationId" : "assetsCountryMap",
         "responses" : {
+          "401" : {
+            "description" : "Authorization failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415" : {
+            "description" : "Unsupported media type",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "429" : {
             "description" : "Too many requests.",
             "content" : {
@@ -6463,46 +5713,6 @@
                   "items" : {
                     "type" : "string"
                   }
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -6556,16 +5766,6 @@
           }
         ],
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -6586,6 +5786,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -6596,8 +5806,18 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -6793,275 +6013,6 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
-    "/alerts/{alertId}" : {
-      "get" : {
-        "tags" : [
-          "Alerts"
-        ],
-        "summary" : "Gets Alert by id",
-        "description" : "The endpoint returns alert by id.",
-        "operationId" : "getAlert",
-        "parameters" : [
-          {
-            "name" : "alertId",
-            "in" : "path",
-            "required" : true,
-            "schema" : {
-              "type" : "integer",
-              "format" : "int64"
-            }
-          }
-        ],
-        "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "OK.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "maxItems" : 2147483647,
-                  "type" : "array",
-                  "description" : "Alerts",
-                  "items" : {
-                    "$ref" : "#/components/schemas/AlertResponse"
-                  }
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [
-          {
-            "oAuth2" : [
-              "profile email"
-            ]
-          }
-        ]
-      }
-    },
-    "/alerts/distinctFilterValues" : {
-      "get" : {
-        "tags" : [
-          "Assets",
-          "Alerts"
-        ],
-        "summary" : "getDistinctFilterValues",
-        "description" : "The endpoint returns a distinct filter values for given fieldName.",
-        "operationId" : "distinctFilterValues_3",
-        "parameters" : [
-          {
-            "name" : "fieldName",
-            "in" : "query",
-            "required" : true,
-            "schema" : {
-              "type" : "string"
-            }
-          },
-          {
-            "name" : "size",
-            "in" : "query",
-            "required" : true,
-            "schema" : {
-              "type" : "integer",
-              "format" : "int32"
-            }
-          },
-          {
-            "name" : "startWith",
-            "in" : "query",
-            "required" : true,
-            "schema" : {
-              "type" : "string"
-            }
-          },
-          {
-            "name" : "channel",
-            "in" : "query",
-            "required" : true,
-            "schema" : {
-              "type" : "string",
-              "enum" : [
-                "SENDER",
-                "RECEIVER"
-              ]
-            }
-          }
-        ],
-        "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Returns a distinct filter values for given fieldName.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "maxItems" : 2147483647,
-                  "minItems" : 0,
-                  "type" : "array",
-                  "items" : {
-                    "type" : "string"
-                  }
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Authorization failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "415" : {
-            "description" : "Unsupported media type",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal server error.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "404" : {
             "description" : "Not found.",
             "content" : {
@@ -7091,16 +6042,6 @@
         "description" : "Deletes all submodels from the system.",
         "operationId" : "deleteSubmodels",
         "responses" : {
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Ok."
           },
@@ -7124,6 +6065,16 @@
               }
             }
           },
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request.",
             "content" : {
@@ -7134,8 +6085,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -7196,19 +6147,6 @@
           }
         ],
         "responses" : {
-          "200" : {
-            "description" : "Okay"
-          },
-          "429" : {
-            "description" : "Too many requests.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "401" : {
             "description" : "Authorization failed.",
             "content" : {
@@ -7229,8 +6167,15 @@
               }
             }
           },
-          "204" : {
-            "description" : "Deleted."
+          "403" : {
+            "description" : "Forbidden.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "400" : {
             "description" : "Bad request.",
@@ -7242,8 +6187,8 @@
               }
             }
           },
-          "403" : {
-            "description" : "Forbidden.",
+          "429" : {
+            "description" : "Too many requests.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -7251,6 +6196,9 @@
                 }
               }
             }
+          },
+          "204" : {
+            "description" : "Deleted."
           },
           "500" : {
             "description" : "Internal server error.",
@@ -7261,6 +6209,9 @@
                 }
               }
             }
+          },
+          "200" : {
+            "description" : "Okay"
           },
           "404" : {
             "description" : "Not found.",
@@ -7305,6 +6256,18 @@
           }
         }
       },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "maxLength" : 1000,
+            "minLength" : 0,
+            "pattern" : "^.*$",
+            "type" : "string",
+            "example" : "Access Denied"
+          }
+        }
+      },
       "BpnEdcMappingResponse" : {
         "type" : "object",
         "properties" : {
@@ -7318,24 +6281,19 @@
           }
         }
       },
-      "ErrorResponse" : {
-        "type" : "object",
-        "properties" : {
-          "message" : {
-            "maxLength" : 1000,
-            "minLength" : 0,
-            "pattern" : "^.*$",
-            "type" : "string",
-            "example" : "Access Denied"
-          }
-        }
-      },
-      "StartQualityNotificationRequest" : {
+      "StartNotificationRequest" : {
         "required" : [
-          "severity"
+          "severity",
+          "type"
         ],
         "type" : "object",
         "properties" : {
+          "title" : {
+            "maxLength" : 255,
+            "minLength" : 1,
+            "type" : "string",
+            "example" : "title"
+          },
           "partIds" : {
             "maxLength" : 100,
             "minLength" : 1,
@@ -7369,19 +6327,27 @@
               "MINOR",
               "MAJOR",
               "CRITICAL",
-              "LIFE_THREATENING"
+              "LIFE-THREATENING"
             ]
           },
           "receiverBpn" : {
             "type" : "string",
             "example" : "BPN00001123123AS"
           },
+          "type" : {
+            "type" : "string",
+            "example" : "ALERT",
+            "enum" : [
+              "ALERT",
+              "INVESTIGATION"
+            ]
+          },
           "asBuilt" : {
             "type" : "boolean"
           }
         }
       },
-      "QualityNotificationIdResponse" : {
+      "NotificationIdResponse" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -7391,7 +6357,7 @@
           }
         }
       },
-      "UpdateQualityNotificationRequest" : {
+      "UpdateNotificationRequest" : {
         "required" : [
           "status"
         ],
@@ -7412,7 +6378,7 @@
           }
         }
       },
-      "CloseQualityNotificationRequest" : {
+      "CloseNotificationRequest" : {
         "type" : "object",
         "properties" : {
           "reason" : {
@@ -7470,7 +6436,102 @@
           }
         }
       },
-      "InvestigationResponse" : {
+      "NotificationMessageResponse" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "createdBy" : {
+            "type" : "string"
+          },
+          "createdByName" : {
+            "type" : "string"
+          },
+          "sendTo" : {
+            "type" : "string"
+          },
+          "sendToName" : {
+            "type" : "string"
+          },
+          "contractAgreementId" : {
+            "type" : "string"
+          },
+          "notificationReferenceId" : {
+            "type" : "string"
+          },
+          "targetDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "severity" : {
+            "type" : "string",
+            "enum" : [
+              "MINOR",
+              "MAJOR",
+              "CRITICAL",
+              "LIFE-THREATENING"
+            ]
+          },
+          "edcNotificationId" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "updated" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "messageId" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [
+              "CREATED",
+              "SENT",
+              "RECEIVED",
+              "ACKNOWLEDGED",
+              "ACCEPTED",
+              "DECLINED",
+              "CANCELED",
+              "CLOSED"
+            ]
+          },
+          "errorMessage" : {
+            "maxLength" : 255,
+            "minLength" : 0,
+            "type" : "string",
+            "example" : "EDC not reachable"
+          }
+        }
+      },
+      "NotificationReasonResponse" : {
+        "type" : "object",
+        "properties" : {
+          "close" : {
+            "maxLength" : 1000,
+            "minLength" : 0,
+            "type" : "string",
+            "example" : "description of closing reason"
+          },
+          "accept" : {
+            "maxLength" : 1000,
+            "minLength" : 0,
+            "type" : "string",
+            "example" : "description of accepting reason"
+          },
+          "decline" : {
+            "maxLength" : 1000,
+            "minLength" : 0,
+            "type" : "string",
+            "example" : "description of declining reason"
+          }
+        }
+      },
+      "NotificationResponse" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -7480,6 +6541,12 @@
             "type" : "integer",
             "format" : "int64",
             "example" : 66
+          },
+          "title" : {
+            "maxLength" : 255,
+            "minLength" : 0,
+            "type" : "string",
+            "example" : "Title"
           },
           "status" : {
             "maxLength" : 255,
@@ -7546,7 +6613,7 @@
             ]
           },
           "reason" : {
-            "$ref" : "#/components/schemas/QualityNotificationReasonResponse"
+            "$ref" : "#/components/schemas/NotificationReasonResponse"
           },
           "sendTo" : {
             "maxLength" : 255,
@@ -7572,115 +6639,27 @@
               "LIFE-THREATENING"
             ]
           },
+          "type" : {
+            "maxLength" : 50,
+            "minLength" : 0,
+            "type" : "string",
+            "example" : "ALERT",
+            "enum" : [
+              "ALERT",
+              "INVESTIGATION"
+            ]
+          },
           "targetDate" : {
             "maxLength" : 50,
             "minLength" : 0,
             "type" : "string",
             "example" : "2099-02-21T21:27:10.734950Z"
           },
-          "errorMessage" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "EDC not reachable"
-          },
-          "qualityNotificationMessages" : {
+          "messages" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/QualityNotificationMessageResponse"
+              "$ref" : "#/components/schemas/NotificationMessageResponse"
             }
-          }
-        }
-      },
-      "QualityNotificationMessageResponse" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "string"
-          },
-          "createdBy" : {
-            "type" : "string"
-          },
-          "createdByName" : {
-            "type" : "string"
-          },
-          "sendTo" : {
-            "type" : "string"
-          },
-          "sendToName" : {
-            "type" : "string"
-          },
-          "contractAgreementId" : {
-            "type" : "string"
-          },
-          "notificationReferenceId" : {
-            "type" : "string"
-          },
-          "targetDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "severity" : {
-            "type" : "string",
-            "enum" : [
-              "MINOR",
-              "MAJOR",
-              "CRITICAL",
-              "LIFE-THREATENING"
-            ]
-          },
-          "edcNotificationId" : {
-            "type" : "string"
-          },
-          "created" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "updated" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "messageId" : {
-            "type" : "string"
-          },
-          "status" : {
-            "type" : "string",
-            "enum" : [
-              "CREATED",
-              "SENT",
-              "RECEIVED",
-              "ACKNOWLEDGED",
-              "ACCEPTED",
-              "DECLINED",
-              "CANCELED",
-              "CLOSED"
-            ]
-          },
-          "errorMessage" : {
-            "type" : "string"
-          }
-        }
-      },
-      "QualityNotificationReasonResponse" : {
-        "type" : "object",
-        "properties" : {
-          "close" : {
-            "maxLength" : 1000,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "description of closing reason"
-          },
-          "accept" : {
-            "maxLength" : 1000,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "description of accepting reason"
-          },
-          "decline" : {
-            "maxLength" : 1000,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "description of declining reason"
           }
         }
       },
@@ -8057,128 +7036,6 @@
           "catenaXSiteId" : {
             "type" : "string",
             "example" : "urn:uuid:0fed587c-7ab4-4597-9841-1718e9693003"
-          }
-        }
-      },
-      "AlertResponse" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "maximum" : 255,
-            "minimum" : 0,
-            "maxLength" : 255,
-            "type" : "integer",
-            "format" : "int64",
-            "example" : 66
-          },
-          "status" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "CREATED",
-            "enum" : [
-              "CREATED",
-              "SENT",
-              "RECEIVED",
-              "ACKNOWLEDGED",
-              "ACCEPTED",
-              "DECLINED",
-              "CANCELED",
-              "CLOSED"
-            ]
-          },
-          "description" : {
-            "maxLength" : 1000,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "DescriptionText"
-          },
-          "createdBy" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "BPNL00000003AYRE"
-          },
-          "createdByName" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "Tier C"
-          },
-          "createdDate" : {
-            "maxLength" : 50,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "2023-02-21T21:27:10.734950Z"
-          },
-          "assetIds" : {
-            "maxItems" : 1000,
-            "minItems" : 0,
-            "type" : "array",
-            "example" : [
-              "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd",
-              "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd",
-              "urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd"
-            ],
-            "items" : {
-              "type" : "string",
-              "example" : "[\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70528fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70529fcbd\",\"urn:uuid:ceb6b964-5779-49c1-b5e9-0ee70530fcbd\"]"
-            }
-          },
-          "channel" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "SENDER",
-            "enum" : [
-              "SENDER",
-              "RECEIVER"
-            ]
-          },
-          "reason" : {
-            "$ref" : "#/components/schemas/QualityNotificationReasonResponse"
-          },
-          "sendTo" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "BPNL00000003AYRE"
-          },
-          "sendToName" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "Tier C"
-          },
-          "severity" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "MINOR",
-            "enum" : [
-              "MINOR",
-              "MAJOR",
-              "CRITICAL",
-              "LIFE-THREATENING"
-            ]
-          },
-          "targetDate" : {
-            "maxLength" : 50,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "2099-02-21T21:27:10.734950Z"
-          },
-          "errorMessage" : {
-            "maxLength" : 255,
-            "minLength" : 0,
-            "type" : "string",
-            "example" : "EDC not reachable"
-          },
-          "qualityNotificationMessages" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/QualityNotificationMessageResponse"
-            }
           }
         }
       },

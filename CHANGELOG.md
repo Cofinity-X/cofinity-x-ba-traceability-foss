@@ -9,6 +9,47 @@ _**For better traceability add the corresponding GitHub issue number in each cha
 
 ## [UNRELEASED - DD.MM.YYYY]
 
+## [10.8.1 - 04.04.2024]
+
+### Added
+- #695 OAuth2.0 Client scope configuration
+- #606 Added error message into notifications on failure
+- #596 Added Policy management documentation
+- Added overview of the scheduler tasks in documentation
+- #736 Added Contract Detailed View
+- #706 Created notification classes to support both alert and investigations
+- #706 Notification controller having the same endpoints as alerts and investigations controllers
+- #736 add contractAgreementId as searchable field for /contracts
+- Added capitalization section in guidelines.md
+- #616 Allow edc notification update with empty asset list
+- #630 Added Parts extended detailed view
+
+### Changed
+- #709 Bumped spring-core from 6.0.17 to 6.1.5
+- #606 cucumber tests retry on error
+- #606 refactored response model to only be used by common model package tx-models
+- #709 Fixed CVE-2024-22257 overriding spring-security-core from 6.1.7 to 6.2.3
+- #596 Policy management has been moved to different module
+- #616 Merged quality investigations / alerts into a single view
+- #762 updated documentation for release 24.5
+- #706 StartNotificationRequest now requires additional parameter type ("ALERT", "INVESTIGATION") which
+- #706 Search criteria allows to filter by new type parameter
+- #706 Notification response have new title parameter
+- #718 update tj-actions/changed-files from v42 to v44
+- #718 update maven-project-info-reports-plugin from 3.4.5 to 3.5.0
+- #718 update jsonschema2pojo-core from 1.1.1 to 1.2.1
+- #718 migrate Spring Boot from 3.1.9 to 3.2.4
+- #630 Updated user manual with new part detailed view also for supplier and customer parts
+- #736 fixed bug in request logic of contracts detailed view
+- Improved the release documentation
+- #706 QualityNotification naming in code replaced with Notification
+
+### Removed
+- Shedlock, resilence4j, templateResolver as not used anymore
+- #706 Removed alert and investigation specific classes and services to replace them with merged notification classes
+
+## [10.8.0 - 03.04.2024] - BROKEN RELEASE - DO NOT USE
+
 ## [10.7.0 - 18.03.2024]
 
 ### Added

@@ -41,9 +41,9 @@ import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity.RECEIVER;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationSideBaseEntity.SENDER;
-import static org.eclipse.tractusx.traceability.qualitynotification.infrastructure.model.NotificationStatusBaseEntity.*;
+import static org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationSideBaseEntity.SENDER;
+import static org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationStatusBaseEntity.*;
+import static org.eclipse.tractusx.traceability.notification.infrastructure.notification.model.NotificationSideBaseEntity.RECEIVER;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends IntegrationTestSpecification {
@@ -67,7 +67,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
 
     @Test
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveDesc_thenReturnAssetsWithActiveAlertsCountInDesc() throws JoseException {
-       // Given
+        // Given
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), SENDER);
         alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), SENDER);
@@ -98,7 +98,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
                 .jsonPath()
                 .getList("content.sentQualityAlertIdsInStatusActive");
 
-       // Then
+        // Then
         List<Integer> numberOfItems = notificationIdLists.stream()
                 .mapToInt(List::size)
                 .boxed()
@@ -109,7 +109,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
 
     @Test
     void givenAlertsForAsset_whenCallWithSortByQualityAlertsInStatusActiveAsc_thenReturnAssetsWithActiveAlertsCountInAsc() throws JoseException {
-       // Given
+        // Given
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         alertsSupport.storeAlertWithStatusAndAssets(CREATED, List.of(assetAsBuilt1), SENDER);
         alertsSupport.storeAlertWithStatusAndAssets(SENT, List.of(assetAsBuilt1), SENDER);
@@ -141,7 +141,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
                 .getList("content.sentQualityAlertIdsInStatusActive");
 
 
-       // Then
+        // Then
         List<Integer> numberOfItems = notificationIdLists.stream()
                 .mapToInt(List::size)
                 .boxed()
@@ -152,7 +152,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
 
     @Test
     void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveDesc_thenReturnAssetsWithActiveInvestigationsCountInDesc() throws JoseException {
-       // Given
+        // Given
         assetsSupport.defaultMultipleAssetsAsBuiltStored();
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), RECEIVER);
@@ -182,7 +182,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
                 .jsonPath()
                 .getList("content.receivedQualityInvestigationIdsInStatusActive");
 
-       // Then
+        // Then
         List<Integer> numberOfItems = notificationIdLists.stream()
                 .mapToInt(List::size)
                 .boxed()
@@ -193,7 +193,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
 
     @Test
     void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveAsc_thenReturnAssetsWithActiveInvestigationsCountInAsc() throws JoseException {
-       // Given
+        // Given
         assetsSupport.defaultMultipleAssetsAsBuiltStored();
 
         final AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
@@ -224,7 +224,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
                 .jsonPath()
                 .getList("content.receivedQualityInvestigationIdsInStatusActive");
 
-       // Then
+        // Then
         List<Integer> numberOfItems = notificationIdLists.stream()
                 .mapToInt(List::size)
                 .boxed()
@@ -257,7 +257,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
         final long page = 0;
         final long size = 50;
 
-       // Given
+        // Given
         assetsSupport.defaultMultipleAssetsAsBuiltStored();
         final AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById(
                 "urn:uuid:f7cf62fe-9e25-472b-9148-66ebcc291f31").orElseThrow();
@@ -293,7 +293,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
         IntStream
                 .rangeClosed(1, 20)
                 .forEach(i -> investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt3),
-                         RECEIVER));
+                        RECEIVER));
 
         // When
         List<List<Integer>> notificationIdLists = given()
@@ -313,7 +313,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
                 .jsonPath()
                 .getList(contentField);
 
-       // Then
+        // Then
         List<Integer> numberOfItems = notificationIdLists.stream()
                 .mapToInt(List::size)
                 .boxed()

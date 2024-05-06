@@ -68,39 +68,51 @@ Because it uses SVGs, we knew it will perform great. And we are able to have pin
 
 ### Frontend Installation
 
-* see [Installation guide](https://github.com/eclipse-tractusx/traceability-foss/blob/main/frontend/INSTALL.md)
+* see [Installation guide](/frontend/INSTALL.md)
 
 ### Getting started
 
 Clone the source locally:
 
-```sh
-$ git clone git@github.com:eclipse-tractusx/traceability-foss.git
-$ cd traceability-foss/frontend
+```shell
+$ git clone git@github.com:Cofinity-X/cofinity-x-ba-traceability-foss.git
+$ cd cofinity-x-ba-traceability-foss/frontend
 ```
 
 Install prerequisites:
-1. install [node.js](https://nodejs.org/en/download/package-manager)
-```sh
+1. install [Node.js 18.x](https://nodejs.org)
+```shell
 $ npm install --global yarn
 $ npm install -g @angular/cli
 $ yarn install
 ```
 
-Start application with``yarn start`` and navigate to ``http://localhost:4200``.
+Start application with ``yarn start`` and navigate to http://localhost:4200.
+
+Note: If it is desired to run the application with a different port, start application with ``yarn start --port <myPort>`` and navigate to [http://localhost:myPort](http://localhost:myPort) .
 
 ### Application authentication
 
-Please find [here](https://github.com/eclipse-tractusx/traceability-foss/blob/main/frontend/AUTHENTICATION.md) some important information about the app authentication.
+Please find [here](/frontend/AUTHENTICATION.md) some important information about the app authentication.
 
 ### Application architecture & patterns
 
-This [architecture](https://github.com/eclipse-tractusx/traceability-foss/blob/main/frontend/ARCHITECTURE.md) gives you a roadmap and best practices to follow when building an application
+This [architecture](/frontend/ARCHITECTURE.md) gives you a roadmap and best practices to follow when building an application
 so that you end up with a well-structured app.
 
 ### User guide
 
-A detailed [explanation](https://github.com/eclipse-tractusx/traceability-foss/blob/main/docs/src/docs/user/user-manual.adoc) of how to use the application.
+A detailed [explanation](docs/src/docs/user/user-manual.adoc) of how to use the application.
+
+### Running tests
+
+#### Unit tests
+
+To run unit tests invoke following command:
+
+```shell
+yarn test:ci
+```
 
 ### Frontend Testing Strategy
 See [TESTING](frontend/TESTING.md).
@@ -109,37 +121,73 @@ See [TESTING](frontend/TESTING.md).
 
 ### Backend Prerequisites
 
-* JDK 17
+* [JDK 17](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
 * [Docker Engine](https://docs.docker.com/engine/)
 
 ### Backend Installation
 
-* see [Installation guide](https://github.com/eclipse-tractusx/traceability-foss/blob/main/tx-backend/INSTALL.md)
+* see [Installation guide](/tx-backend/INSTALL.md)
 
-### Backend Testing Strategy
-See [TESTING](tx-backend/TESTING.md).
+### Running tests
+
+#### Unit tests
+
+To run unit tests invoke following command:
+
+```shell
+mvn clean test
+```
+
+#### Integration tests
+
+Product Traceability FOSS Backend relies on [Testcontainers library](https://www.testcontainers.org/) in order to provide
+persistence layer, thus [Docker Engine](https://docs.docker.com/engine/) is required to be running.
+
+To run integration tests via command line, invoke following command:
+
+```shell
+mvn -pl tx-models,tx-backend,tx-coverage -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn verify
+```
+
+#### Running all tests
+
+To run all tests invoke following command:
+
+```shell
+mvn -DskipTests=false clean verify
+```
+
+*Please note that this task depends on `integrationTest` task, so it's required to have [Docker Engine](https://docs.docker.com/engine/) running.*
 
 ## API documentation
-The project follows [OpenAPI Specification](https://swagger.io/specification/) in order to document implemented REST Endpoints. The documentation can be found under [/openapi directory](https://github.com/eclipse-tractusx/traceability-foss/blob/main/tx-backend/openapi/traceability-foss-backend.json)
+The project follows [OpenAPI Specification](https://swagger.io/specification/) in order to document implemented REST Endpoints. The documentation can be found under [/openapi directory](/tx-backend/openapi/traceability-foss-backend.json)
 or can be viewed in the Swagger UI accessing the url: `{projectBasePath}/api/swagger-ui/index.html`
-
-## License
-
-[Apache License 2.0](https://github.com/eclipse-tractusx/traceability-foss/blob/main/LICENSE)
 
 ## Notice for Docker image
 
-Below you can find the information regarding Docker Notice for this application.
+This application provides container images for demonstration purposes.
 
-- [Traceability Backend Docker Notice](https://github.com/eclipse-tractusx/traceability-foss/blob/main/DOCKER_NOTICE.md)
-- [Traceability Frontend Docker Notice](https://github.com/eclipse-tractusx/traceability-foss/blob/main/frontend/DOCKER_NOTICE.md)
+Eclipse Tractus-X product(s) installed within the image:
 
-## Contact
+DockerHub Backend: https://hub.docker.com/r/tractusx/traceability-foss
+DockerHub Frontend: https://hub.docker.com/r/tractusx/traceability-foss-frontend
 
-Contact the Eclipse Tractus-X developers via the developer mailing list.
+- GitHub: https://github.com/eclipse-tractusx/traceability-foss
+- Project home: https://projects.eclipse.org/projects/automotive.tractusx
+- Dockerfile Backend: [Dockerfile](/Dockerfile)
+- Dockerfile Frontend: [Dockerfile](/frontend/Dockerfile)
+- Project license: [Apache License, Version 2.0](LICENSE)
 
-* https://accounts.eclipse.org/mailing-list/tractusx-dev
+**Used base image**
+- [eclipse-temurin:20-jre-alpine](https://github.com/adoptium/containers)
+- Official Eclipse Temurin DockerHub page: https://hub.docker.com/_/eclipse-temurin
+- Eclipse Temurin Project: https://projects.eclipse.org/projects/adoptium.temurin
+- Additional information about the Eclipse Temurin images: https://github.com/docker-library/repo-info/tree/master/repos/eclipse-temurin
 
-Contact the project developers via eclipse matrix chat.
+As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc. from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
 
-* Eclipse Matrix Chat https://chat.eclipse.org/#/room/#tractusx-trace-x:matrix.eclipse.org
+As for any pre-built image usage, it is the image user's responsibility to ensure that any use of this image complies with any relevant licenses for all software contained within.
+
+## License
+
+[Apache License 2.0](LICENSE)

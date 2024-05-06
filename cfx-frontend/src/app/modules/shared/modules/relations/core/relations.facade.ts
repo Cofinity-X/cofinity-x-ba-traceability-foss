@@ -128,7 +128,7 @@ export class RelationsFacade {
     this.getNodesOfLoadedElement(elementId).forEach(childId => this.deleteOpenElement(childId));
   }
 
-  public initRequestPartDetailQueue(mainAppectType: MainAspectType): Observable<TreeElement[]> {
+  public initRequestPartDetailQueue(mainAppectType?: MainAspectType): Observable<TreeElement[]> {
     const empty = { children: [], parents: [] };
     let nodes;
     return this.requestPartDetailsQueue.pipe(

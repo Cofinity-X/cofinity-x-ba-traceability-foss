@@ -72,6 +72,7 @@ class AssetAsPlannedControllerAuthorizationIT extends IntegrationTestSpecificati
         given()
                 .header(oAuth2Support.jwtAuthorizationWithOptionalRole(role))
                 .contentType(ContentType.JSON)
+                .param("fieldName","idShort")
                 .when()
                 .get(ROOT + "/distinctFilterValues")
                 .then()

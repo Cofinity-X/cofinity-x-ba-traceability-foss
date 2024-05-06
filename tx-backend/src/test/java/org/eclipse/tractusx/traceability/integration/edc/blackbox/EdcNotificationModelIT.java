@@ -23,12 +23,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.EDCNotification;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.EDCNotificationContent;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.EDCNotificationHeader;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.edc.model.NotificationType;
+import org.eclipse.tractusx.traceability.notification.infrastructure.edc.model.EDCNotification;
+import org.eclipse.tractusx.traceability.notification.infrastructure.edc.model.EDCNotificationContent;
+import org.eclipse.tractusx.traceability.notification.infrastructure.edc.model.EDCNotificationHeader;
+import org.eclipse.tractusx.traceability.notification.infrastructure.edc.model.NotificationType;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.qualitynotification.domain.base.model.QualityNotificationStatus;
+import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,13 +51,13 @@ class EdcNotificationModelIT extends IntegrationTestSpecification {
 
     @Test
     void shouldBeAbleToDeserializeEdcNotificationObjectWithUnknownFields() throws IOException {
-       // Given
+        // given
         String notificationJson = readFile("/testdata/edc_notification_with_unknown_fields.json");
 
-        // When
+        // when
         EDCNotification edcNotification = objectMapper.readValue(notificationJson, EDCNotification.class);
 
-       // Then
+        // then
         assertThat(edcNotification).isNotNull();
         assertThat(edcNotification.header().notificationId()).isEqualTo("cda2d956-fa91-4a75-bb4a-8e5ba39b268a");
         assertThat(edcNotification.header().senderBPN()).isEqualTo("BPNL00000003AXS3");
@@ -71,13 +71,14 @@ class EdcNotificationModelIT extends IntegrationTestSpecification {
         assertThat(edcNotification.content().information()).isEqualTo("Some long description");
         assertThat(edcNotification.content().listOfAffectedItems()).hasSize(1);
         assertThat(edcNotification.content().listOfAffectedItems().stream().findFirst().get()).contains("urn:uuid:171fed54-26aa-4848-a025-81aaca557f37");
-        assertThat(edcNotification.convertNotificationStatus()).isEqualTo(QualityNotificationStatus.SENT);
+
+        assertThat(edcNotification.convertNotificationStatus()).isEqualTo(NotificationStatus.SENT);
         assertThat(edcNotification.convertNotificationType()).isEqualTo(NotificationType.QMINVESTIGATION);
     }
 
     @Test
     void shouldBeAbleToSerializeEdcNotificationObject() throws JsonProcessingException {
-       // Given
+        // given
         EDCNotificationHeader header = new EDCNotificationHeader(
                 "cda2d956-fa91-4a75-bb4a-8e5ba39b268a",
                 "BPNL00000003AXS3",
@@ -97,7 +98,7 @@ class EdcNotificationModelIT extends IntegrationTestSpecification {
 
         EDCNotification edcNotification = new EDCNotification(header, content);
 
-        // When
+        // when
         String edcNotificationJson = objectMapper.writeValueAsString(edcNotification);
         assertThat(jsonPathRead(edcNotificationJson, "$..header.notificationId"))
                 .isEqualTo(header.notificationId());

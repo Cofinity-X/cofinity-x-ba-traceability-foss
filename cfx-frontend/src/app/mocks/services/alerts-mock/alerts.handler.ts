@@ -31,25 +31,25 @@ import {
 } from './alerts.test.model';
 
 const commonHandler = [
-  rest.post(`*${environment.apiUrl}/alerts/:alertId/close`, (req, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications/:alertId/close`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 
-  rest.post(`*${environment.apiUrl}/alerts/:alertId/approve`, (req, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications/:alertId/approve`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 
-  rest.post(`*${environment.apiUrl}/alerts/:alertId/cancel`, (req, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/alernotificationsts/:alertId/cancel`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 
-  rest.post(`${environment.apiUrl}/alerts/:alertId/update`, (req, res, ctx) => {
+  rest.post(`${environment.apiUrl}/notifications/:alertId/update`, (req, res, ctx) => {
     return res(ctx.status(204));
   }),
 ];
 
 export const alertsHandlers = [
-  rest.get(`*${environment.apiUrl}/alerts/created`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/created`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [
@@ -65,7 +65,7 @@ export const alertsHandlers = [
     return res(ctx.status(200), ctx.json(applyPagination(buildMockAlerts(currentStatus, 'SENDER'), pagination)));
   }),
 
-  rest.get(`*${environment.apiUrl}/alerts/received`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/received`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [
@@ -78,7 +78,7 @@ export const alertsHandlers = [
     return res(ctx.status(200), ctx.json(applyPagination(buildMockAlerts(currentStatus, 'RECEIVER'), pagination)));
   }),
 
-  rest.get(`*${environment.apiUrl}/alerts/:alertId`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/:alertId`, (req, res, ctx) => {
     const { alertId } = req.params;
 
     const indexFromId = parseInt((alertId as string).replace('id-', ''), 10);
@@ -100,11 +100,11 @@ export const alertsHandlers = [
 
     return res(ctx.status(200), ctx.json({ ...randomNotification, id: alertId }));
   }),
-  rest.post(`*${environment.apiUrl}/alerts`, (_, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications`, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json({ id: AlertIdPrefix + 1 }));
   }),
 
-  rest.put(`*${environment.apiUrl}/alerts/:alertId/status`, async (req, res, ctx) => {
+  rest.put(`*${environment.apiUrl}/notifications/:alertId/status`, async (req, res, ctx) => {
     const { alertId } = req.params;
     const { status } = await req.json();
 
@@ -115,7 +115,7 @@ export const alertsHandlers = [
 ];
 
 export const alertsTestHandlers = [
-  rest.get(`*${environment.apiUrl}/alerts/created`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/created`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [
@@ -129,14 +129,14 @@ export const alertsTestHandlers = [
     return res(ctx.status(200), ctx.json(applyPagination(testBuildMockAlerts(currentStatus, 'SENDER'), pagination)));
   }),
 
-  rest.get(`*${environment.apiUrl}/alerts/received`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/received`, (req, res, ctx) => {
     const pagination = extractPagination(req);
 
     const currentStatus = [NotificationStatus.RECEIVED, NotificationStatus.ACKNOWLEDGED];
     return res(ctx.status(200), ctx.json(applyPagination(testBuildMockAlerts(currentStatus, 'RECEIVER'), pagination)));
   }),
 
-  rest.get(`*${environment.apiUrl}/alerts/:alertId`, (req, res, ctx) => {
+  rest.get(`*${environment.apiUrl}/notifications/:alertId`, (req, res, ctx) => {
     const { alertId } = req.params;
 
     const indexFromId = parseInt((alertId as string).replace('id-', ''), 10);
@@ -156,11 +156,11 @@ export const alertsTestHandlers = [
 
     return res(ctx.status(200), ctx.json({ ...randomNotification, id: alertId }));
   }),
-  rest.post(`*${environment.apiUrl}/alerts`, (_, res, ctx) => {
+  rest.post(`*${environment.apiUrl}/notifications`, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json({ id: testAlertIdPrefix + 1 }));
   }),
 
-  rest.put(`*${environment.apiUrl}/alerts/:alertId/status`, async (req, res, ctx) => {
+  rest.put(`*${environment.apiUrl}/notifications/:alertId/status`, async (req, res, ctx) => {
     const { alertId } = req.params;
     const { status } = await req.json();
 

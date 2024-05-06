@@ -49,6 +49,5 @@ class DashboardControllerAuthorizationIT extends IntegrationTestSpecification {
                 .then()
         .assertThat()
                 .statusCode(new ForbiddenMatcher(isAllowed));
-
     }
  }

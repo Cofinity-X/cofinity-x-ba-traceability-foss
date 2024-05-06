@@ -20,7 +20,7 @@ package org.eclipse.tractusx.traceability.integration.common.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
-import org.eclipse.tractusx.traceability.qualitynotification.infrastructure.investigation.repository.JpaInvestigationRepository;
+import org.eclipse.tractusx.traceability.notification.infrastructure.notification.repository.JpaNotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +32,7 @@ public class AssetsSupport {
     AssetRepositoryProvider assetRepositoryProvider;
 
     @Autowired
-    JpaInvestigationRepository jpaInvestigationRepository;
+    JpaNotificationRepository jpaInvestigationRepository;
 
     public String emptyText() {
         return "";

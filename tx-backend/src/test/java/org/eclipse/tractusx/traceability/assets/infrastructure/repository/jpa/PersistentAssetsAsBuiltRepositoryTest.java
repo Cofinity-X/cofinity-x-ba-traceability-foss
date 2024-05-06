@@ -37,10 +37,9 @@ import static org.eclipse.tractusx.traceability.testdata.AssetTestDataFactory.cr
 @ExtendWith(MockitoExtension.class)
 class PersistentAssetsAsBuiltRepositoryTest {
 
-
     @Test
     void testToAsset() {
-      // Given
+        // Given
         AssetAsBuiltEntity entity = AssetAsBuiltEntity.builder()
                 .id("urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4eb01")
                 .idShort("a/devNTierAPlastics")
@@ -79,11 +78,11 @@ class PersistentAssetsAsBuiltRepositoryTest {
                 )
                 .build();
 
-        // When
+        // when
         AssetBase asset = entity.toDomain();
 
 
-       // Then
+        // then
         AssetBase expected = createAssetTestData();
 
         Assertions.assertEquals(asset.getId(), expected.getId());
@@ -98,5 +97,4 @@ class PersistentAssetsAsBuiltRepositoryTest {
         Assertions.assertEquals(asset.getQualityType(), expected.getQualityType());
         Assertions.assertEquals(asset.getVan(), expected.getVan());
     }
-
 }

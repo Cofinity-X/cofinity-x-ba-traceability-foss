@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.hasSize;
 
 class AssetAsPlannedControllerDetailInformationIT extends IntegrationTestSpecification {
 
+
     @Autowired
     BpnSupport bpnSupport;
 
@@ -43,11 +44,11 @@ class AssetAsPlannedControllerDetailInformationIT extends IntegrationTestSpecifi
 
     @Test
     void shouldNotReturnAassetsDetailInformationWhenUserIsNotAuthenticated() {
-       // Given
+        //GIVEN
         bpnSupport.cachedBpnsForAsPlannedAssets();
         assetsSupport.defaultAssetsAsPlannedStored();
 
-       // Then
+        //THEN
         given()
                 .contentType(ContentType.JSON)
                 .body(
@@ -62,11 +63,11 @@ class AssetAsPlannedControllerDetailInformationIT extends IntegrationTestSpecifi
 
     @Test
     void shouldReturnAssetsDetailInformation() throws JoseException {
-       // Given
+        //GIVEN
         bpnSupport.cachedBpnsForAsPlannedAssets();
         assetsSupport.defaultAssetsAsPlannedStored();
 
-        // Then
+        //THEN
         given()
                 .contentType(ContentType.JSON)
                 .body(

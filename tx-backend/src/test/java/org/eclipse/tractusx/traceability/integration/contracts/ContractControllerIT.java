@@ -160,5 +160,4 @@ class ContractControllerIT extends IntegrationTestSpecification {
                 .log().all()
                 .statusCode(404);
     }
-
 }

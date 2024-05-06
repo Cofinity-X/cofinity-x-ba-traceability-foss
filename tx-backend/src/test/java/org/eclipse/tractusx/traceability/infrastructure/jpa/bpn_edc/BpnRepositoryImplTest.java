@@ -67,5 +67,4 @@ class BpnRepositoryImplTest {
 
         assertThat(result).isFalse();
     }
-
 }

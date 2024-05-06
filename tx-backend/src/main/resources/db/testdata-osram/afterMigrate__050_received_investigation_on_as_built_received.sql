@@ -5,31 +5,31 @@
 -- This creates an investigation in state RECEIVED in Severity Critical for asBuilt asset Osram Front Right-AX400 which is sent from BPNL000000000001 to BPNL000SUPPLIER1
 
 ---
-insert into investigation
-    (id                         , bpn            , close_reason, created                              , description                                                            , status    , side      , accept_reason, decline_reason, updated)
+insert into notification
+    (id                         , title, bpn            , close_reason, created                              , description                                                            , status    , side      , accept_reason, decline_reason, updated, type)
 values
-    (${investigationReceivedId1}, ${bpnCustomer1}, null        , current_timestamp - interval '2 days', 'Investigation on Osram Front Right-AX400 due to excessive brightness.', 'RECEIVED', 'RECEIVER', null         , null          , null   );
+    (${investigationReceivedId1}, ''   , ${bpnCustomer1}, null        , current_timestamp - interval '2 days', 'Investigation on Osram Front Right-AX400 due to excessive brightness.', 'RECEIVED', 'RECEIVER', null         , null          , null   , 'INVESTIGATION' );
 
 ---
 -- reset sequence to highest next-val
-select setval('investigation_id_seq1', (select max(i.id) from investigation i), true);
+select setval('notification_id_seq', (select max(n.id) from notification n), true);
 
 ---
-insert into investigation_notification
-    (id                                     , contract_agreement_id, notification_reference_id             , created_by     , send_to  , investigation_id           , target_date                          , severity  , created_by_name    , send_to_name , edc_notification_id                   , status    , created                             , updated                               , message_id                            , error_message)
+insert into notification_message
+    (id                                     , notification_id            , contract_agreement_id, edc_url, notification_reference_id             , created_by     , send_to  , target_date                          , severity  , created_by_name    , send_to_name , edc_notification_id                   , status    , created                             , updated                               , message_id                            , is_initial, error_message)
 values
-    (${investigationNotificationReceivedId1}, null                 , '8925f21f-09eb-4789-81fb-ec221e9e1561', ${bpnCustomer1}, ${bpnOwn}, ${investigationReceivedId1}, current_timestamp + interval '1 week', 'CRITICAL', ${bpnCustomer1Name}, ${bpnOwnName}, '8925f21f-09eb-4789-81fb-ec221e9e1561', 'RECEIVED', current_timestamp - interval '1 day', current_timestamp - interval '2 hours', 'e04f75e8-d37b-42e4-8cf7-6127f35f3ed5', null);
+    (${investigationNotificationReceivedId1}, ${investigationReceivedId1}, null                 , null   , '8925f21f-09eb-4789-81fb-ec221e9e1561', ${bpnCustomer1}, ${bpnOwn}, current_timestamp + interval '1 week', 'CRITICAL', ${bpnCustomer1Name}, ${bpnOwnName}, '8925f21f-09eb-4789-81fb-ec221e9e1561', 'RECEIVED', current_timestamp - interval '1 day', current_timestamp - interval '2 hours', 'e04f75e8-d37b-42e4-8cf7-6127f35f3ed5', false     , null);
 
 ---
--- join investigation to asset
-insert into assets_as_built_notifications
-    (notification_id                        , asset_id)
+-- join notificaiton to asset
+insert into assets_as_built_notification_messages
+    (notification_message_id                , asset_id)
 values
     (${investigationNotificationReceivedId1}, ${assetAsBuiltId06});
 
 ---
--- join investigation to asset
-insert into assets_as_built_investigations
-    (investigation_id           , asset_id)
+-- join notification to asset
+insert into assets_as_built_notifications
+    (notification_id            , asset_id)
 values
     (${investigationReceivedId1}, ${assetAsBuiltId06});

@@ -238,6 +238,4 @@ public class EdcSupport {
                 startsWithUri("/management/v2/contractdefinitions")
         );
     }
-
-
 }

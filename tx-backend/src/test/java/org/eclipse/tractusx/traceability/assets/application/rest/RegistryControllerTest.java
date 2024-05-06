@@ -42,10 +42,10 @@ class RegistryControllerTest {
 
     @Test
     void givenController_whenReload_thenCallFacade() throws RegistryServiceException {
-        // When
+        // when
         registryController.reload();
 
-       // Then
+        // then
         verify(registryFacade, times(1)).synchronizeAssets();
     }
 }

@@ -393,7 +393,9 @@ class ImportControllerIT extends IntegrationTestSpecification {
                 .body("jobId", Matchers.notNullValue());
     }
 
-    // TODO [Pooja]: Need to fix test case and uncomment the test case
+    // TODO [Pooja]:
+    // 1. Fix the test case and uncomment it.
+    // 2. Consider adding a PreAuthorize condition for the EDC endpoint.
     //@Test
     void givenValidFile_whenPublishData_thenStatusShouldChangeToInPublishedToCX() throws JoseException, InterruptedException {
         // given
@@ -439,7 +441,10 @@ class ImportControllerIT extends IntegrationTestSpecification {
 
     }
 
-    // TODO [Pooja]: Need to fix test case and uncomment the test case
+
+    // TODO [Pooja]:
+    // 1. Fix the test case and uncomment it.
+    // 2. Consider adding a PreAuthorize condition for the EDC endpoint.
     //@Test
     void givenValidFile2_whenPublishData_thenStatusShouldChangeToPublishedToCx() throws JoseException, InterruptedException {
         // given
@@ -488,7 +493,9 @@ class ImportControllerIT extends IntegrationTestSpecification {
         });
     }
 
-    // TODO [Pooja]: Need to fix test case and uncomment the test case
+    // TODO [Pooja]:
+    // 1. Fix the test case and uncomment it.
+    // 2. Consider adding a PreAuthorize condition for the EDC endpoint.
     //@Test
     void givenValidFile_whenPublishDataFailsOnDtr_thenStatusShouldChangeError() throws JoseException, InterruptedException {
         // given

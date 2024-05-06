@@ -30,27 +30,49 @@ traceability:
   irsBase: ${IRS_URL}
   irsPoliciesPath: "/irs/policies"
   submodelBase: ${SUBMODEL_URL}
+  supportedAspectTypes:
+    asBuiltTypes:
+        mainAsBuiltAspectType:
+          serialParts:
+            - "urn:samm:io.catenax.serial_part:1.0.0#SerialPart"
+            - "urn:bamm:io.catenax.serial_part:1.0.0#SerialPart"
+            - "urn:bamm:io.catenax.serial_part:1.1.0#SerialPart"
+            - "urn:bamm:io.catenax.serial_part:1.0.1#SerialPart"
+          batches:
+            - "urn:bamm:com.catenax.batch:1.0.0#Batch"
+            - "urn:bamm:io.catenax.batch:1.0.0#Batch"
+            - "urn:bamm:io.catenax.batch:1.0.2#Batch"
+            - "urn:samm:io.catenax.batch:2.0.0#Batch"
+          justInSequences:
+            - "urn:bamm:io.catenax.just_in_sequence_part:1.0.0#JustInSequencePart"
+        detailAsBuiltAspectType:
+          tractionBatteryCodes:
+            - "urn:bamm:io.catenax.traction_battery_code:1.0.0#TractionBatteryCode"
+        relationAsBuiltAspectType:
+          upwardRelations:
+            - "urn:bamm:io.catenax.single_level_usage_as_built:2.0.0#SingleLevelUsageAsBuilt"
+          downwardRelations:
+            - "urn:bamm:io.catenax.single_level_bom_as_built:2.0.0#SingleLevelBomAsBuilt"
 
+    asPlannedTypes:
+        mainAsPlannedAspectType:
+          asPlanned:
+            - "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned"
+            - "urn:bamm:io.catenax.part_as_planned:1.0.0#PartAsPlanned"
+        detailAsBuiltAspectType:
+          partSiteInformationAsPlanned:
+            - "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned"
+        relationAsPlannedAspectType:
+          upwardRelations:
+            - "urn:bamm:io.catenax.single_level_usage_as_planned:1.1.0#SingleLevelUsageAsPlanned"
+          downwardRelations:
+            - "urn:bamm:io.catenax.single_level_bom_as_planned:2.0.0#SingleLevelBomAsPlanned"
 edc:
   ids:
     path: "/api/v1/dsp"
-  negotiation: "/management/v2/contractnegotiations"
-  contractdefinitions: "/management/v2/contractdefinitions"
-  transfer: "/management/v2/transferprocesses"
-  catalog:
-    path: "/management/v2/catalog/request"
-    cache:
-      enabled: false # Set to false to disable caching
-      ttl: P1D # Time after which a cached Item is no longer valid and the real catalog is called instead
-      maxCachedItems: 64000 # Maximum amount of cached catalog items
-  policydefinitions: "/management/v2/policydefinitions"
-  assets: "/management/v2/assets"
   api-auth-key: ${EDC_API_KEY}
-  bpn-provider-url-mappings: { }
   provider-edc-url: ${EDC_PROVIDER_URL}
   provider-dataplane-edc-url: ${EDC_PROVIDER_DATAPLANE_URL}
-
-  callback-urls: ${EDC_CALLBACK_URL}
 
 irs-edc-client:
   callback-url: ${EDC_CALLBACK_URL_EDC_CLIENT}
@@ -169,7 +191,7 @@ registry:
   allowedBpns: ${REGISTRY_ALLOWED_BPNS:BPNL00000003CML1,BPNL00000003CNKC}
 
 digitalTwinRegistryClient:
-  shellDescriptorTemplate: /registry/shell-descriptors/{aasIdentifier} # The path to retrieve AAS descriptors from the decentral DTR, must contain the placeholder {aasIdentifier}
+  shellDescriptorTemplate: /shell-descriptors/{aasIdentifier} # The path to retrieve AAS descriptors from the decentral DTR, must contain the placeholder {aasIdentifier}
   lookupShellsTemplate: /lookup/shells?assetIds={assetIds} # The path to lookup shells from the decentral DTR, must contain the placeholder {assetIds}
   oAuthClientId: keycloak
   type: "decentral"

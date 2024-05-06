@@ -138,10 +138,10 @@ export const MOCK_part_2 = {
   'idShort': '--',
   'semanticModelId': 'NO-341449848714937445621543',
   'businessPartner': 'BPNL00000003CML1',
-  'manufacturerName': 'BMW AG',
+  'manufacturerName': 'SupOne',
   nameAtManufacturer: 'MyAsBuiltPartName',
   manufacturerPartId: 'ManuPartID',
-  'owner': Owner.OWN,
+  'owner': Owner.SUPPLIER,
   'childRelations': [
     {
       id: 'MOCK_part_4',

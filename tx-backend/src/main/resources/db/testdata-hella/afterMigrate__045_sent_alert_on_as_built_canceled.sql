@@ -5,32 +5,32 @@
 -- This creates an alert in state CANCELED in Severity Minor for asBuilt asset Fog lights left which is sent from BPNL000000000001 to BPNL000CUSTOMER1
 
 ---
-insert into alert
-    (id             , bpn      , close_reason, created                              , description                            , status    , side    , accept_reason, decline_reason, updated          )
+insert into notification
+    (id                            , title                                 , bpn                  , close_reason, created                              , description                            , status         , side                                  , accept_reason, decline_reason , updated            , type)
 values
-    (${alertSentId6}, ${bpnOwn}, null        , current_timestamp - interval '3 days', 'Cancelled Alert about Fog lights left', 'CANCELED', 'SENDER', null         , null          , current_timestamp);
+    (${alertSentId6}               , ''                                    , ${bpnOwn}            , null        , current_timestamp - interval '3 days', 'Cancelled Alert about Fog lights left', 'CANCELED'     , 'SENDER'                              , null         , null           , current_timestamp  , 'ALERT');
 
 ---
 -- reset sequence to highest next-val
-select setval('alert_id_seq1', (select max(a.id) from alert a), true);
+select setval('notification_id_seq', (select max(n.id) from notification n), true);
 
 ---
 -- initial message
-insert into alert_notification
-    (id                         , alert_id       , contract_agreement_id, notification_reference_id, created_by, send_to        , target_date                           , severity, created_by_name, send_to_name       , edc_notification_id        , status    , created                              , updated          , message_id                            , error_message)
+insert into notification_message
+ (id                               , notification_id                       , contract_agreement_id, edc_url     , notification_reference_id            , created_by                             , send_to        , target_date                           , severity     , created_by_name, send_to_name       , edc_notification_id        , status    , created                              , updated          , message_id                            , is_initial, error_message)
 values
-    (${alertNotificationSentId6}, ${alertSentId6}, 'contractAgreementId', 'null'                   , ${bpnOwn} , ${bpnCustomer1}, current_timestamp + interval '1 month', 'MINOR' , ${bpnOwnName}  , ${bpnCustomer1Name}, ${alertNotificationSentId6}, 'CANCELED', current_timestamp - interval '3 days', current_timestamp, 'bd6ca75b-9d1c-44bd-bc80-b3afca317daf', null);
+    (${alertNotificationSentId6}   , ${alertSentId6}                       , 'contractAgreementId', 'null'      , null                                 , ${bpnOwn}                              , ${bpnCustomer1}, current_timestamp + interval '1 month', 'MINOR'      , ${bpnOwnName}  , ${bpnCustomer1Name}, ${alertNotificationSentId6}, 'CANCELED', current_timestamp - interval '3 days', current_timestamp, 'bd6ca75b-9d1c-44bd-bc80-b3afca317daf', true      , null);
 
 ---
 -- join initial notification to asset
-insert into asset_as_built_alert_notifications
-    (alert_notification_id      , asset_id)
+insert into assets_as_built_notification_messages
+    (notification_message_id       , asset_id)
 values
-    (${alertNotificationSentId6}, ${assetAsBuiltId15});
+    (${alertNotificationSentId6}   , ${assetAsBuiltId15});
 
 ---
 -- join alert to asset
-insert into assets_as_built_alerts
-    (alert_id       , asset_id)
+insert into assets_as_built_notifications
+    (notification_id               , asset_id)
 values
-    (${alertSentId6}, ${assetAsBuiltId15});
+    (${alertSentId6}               , ${assetAsBuiltId15});

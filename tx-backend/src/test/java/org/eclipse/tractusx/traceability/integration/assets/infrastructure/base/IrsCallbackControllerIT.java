@@ -275,5 +275,4 @@ class IrsCallbackControllerIT extends IntegrationTestSpecification {
 
         assertThat(tombstoneAsPlanned).isNotEmpty();
     }
-
 }

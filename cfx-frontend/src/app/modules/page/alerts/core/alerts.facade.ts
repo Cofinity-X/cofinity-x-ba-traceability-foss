@@ -53,7 +53,7 @@ export class AlertsFacade {
   public setReceivedAlerts(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], filter?: NotificationFilter, fullFilter?: any, filterMethod = FilterMethod.AND): void {
     this.alertReceivedSubscription?.unsubscribe();
     this.alertReceivedSubscription = this.notificationService
-      .getReceived(page, pageSize, sorting, filter, fullFilter, false, filterMethod)
+      .getNotificationByFilter(page, pageSize, sorting, filter, fullFilter, false, filterMethod, true)
       .subscribe({
         next: data => (this.alertsState.alertsReceived = { data: provideDataObject(data) }),
         error: (error: Error) => (this.alertsState.alertsReceived = { error }),
@@ -63,7 +63,7 @@ export class AlertsFacade {
   public setQueuedAndRequestedAlerts(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], filter?: NotificationFilter, fullFilter?: any, filterMethod = FilterMethod.AND): void {
     this.alertQueuedAndRequestedSubscription?.unsubscribe();
     this.alertQueuedAndRequestedSubscription = this.notificationService
-      .getCreated(page, pageSize, sorting, filter, fullFilter, false, filterMethod)
+      .getNotificationByFilter(page, pageSize, sorting, filter, fullFilter, false, filterMethod, false)
       .subscribe({
         next: data => (this.alertsState.alertsQueuedAndRequested = { data: provideDataObject(data) }),
         error: (error: Error) => (this.alertsState.alertsQueuedAndRequested = { error }),
@@ -76,26 +76,26 @@ export class AlertsFacade {
   }
 
   public closeAlert(alertId: string, reason: string): Observable<void> {
-    return this.notificationService.closeNotification(alertId, reason, false);
+    return this.notificationService.closeNotification(alertId, reason);
   }
 
   public approveAlert(alertId: string): Observable<void> {
-    return this.notificationService.approveNotification(alertId, false);
+    return this.notificationService.approveNotification(alertId);
   }
 
   public cancelAlert(alertId: string): Observable<void> {
-    return this.notificationService.cancelNotification(alertId, false);
+    return this.notificationService.cancelNotification(alertId);
   }
 
   public acknowledgeAlert(alertId: string): Observable<void> {
-    return this.notificationService.updateNotification(alertId, NotificationStatus.ACKNOWLEDGED, null, false);
+    return this.notificationService.updateNotification(alertId, NotificationStatus.ACKNOWLEDGED, null);
   }
 
   public acceptAlert(alertId: string, reason: string): Observable<void> {
-    return this.notificationService.updateNotification(alertId, NotificationStatus.ACCEPTED, reason, false);
+    return this.notificationService.updateNotification(alertId, NotificationStatus.ACCEPTED, reason);
   }
 
   public declineAlert(alertId: string, reason: string): Observable<void> {
-    return this.notificationService.updateNotification(alertId, NotificationStatus.DECLINED, reason, false);
+    return this.notificationService.updateNotification(alertId, NotificationStatus.DECLINED, reason);
   }
 }
