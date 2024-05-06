@@ -165,7 +165,7 @@ public class AlertNotificationsSupport {
                         .severity(NotificationSeverity.MINOR)
                         .targetDate(monthFromNow.minus(3L, DAYS))
                         .createdByName(OWN_BPN_COMPANY_NAME)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a1")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b1")
                         .build(),
                 NotificationMessageEntity
                         .builder()
@@ -177,7 +177,7 @@ public class AlertNotificationsSupport {
                         .id("2")
                         .targetDate(monthFromNow.minus(2L, DAYS))
                         .notification(alert2)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a2")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b2")
                         .build(),
                 NotificationMessageEntity
                         .builder()
@@ -189,7 +189,7 @@ public class AlertNotificationsSupport {
                         .targetDate(monthFromNow.minus(1L, DAYS))
                         .createdByName(OTHER_BPN_COMPANY_NAME)
                         .notification(alert3)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a3")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b3")
                         .build(),
                 NotificationMessageEntity
                         .builder()
@@ -200,7 +200,7 @@ public class AlertNotificationsSupport {
                         .createdBy(OTHER_BPN)
                         .createdByName(OTHER_BPN_COMPANY_NAME)
                         .notification(alert4)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a4")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b4")
                         .build(),
                 NotificationMessageEntity
                         .builder()
@@ -211,7 +211,7 @@ public class AlertNotificationsSupport {
                         .createdBy(OTHER_BPN)
                         .createdByName(OTHER_BPN_COMPANY_NAME)
                         .notification(alert5)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a5")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b5")
                         .build(),
                 NotificationMessageEntity
                         .builder()
@@ -222,7 +222,7 @@ public class AlertNotificationsSupport {
                         .createdBy(OTHER_BPN)
                         .createdByName(OTHER_BPN_COMPANY_NAME)
                         .notification(alert6)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a6")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b6")
                         .build(),
                 NotificationMessageEntity
                         .builder()
@@ -233,7 +233,7 @@ public class AlertNotificationsSupport {
                         .createdBy(OWN_BPN)
                         .createdByName(OWN_BPN_COMPANY_NAME)
                         .notification(alert7)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a7")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b7")
                         .build(),
                 NotificationMessageEntity
                         .builder()
@@ -244,7 +244,7 @@ public class AlertNotificationsSupport {
                         .createdBy(OWN_BPN)
                         .createdByName(OWN_BPN_COMPANY_NAME)
                         .notification(alert8)
-                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268a8")
+                        .edcNotificationId("cda2d956-fa91-4a75-bb4a-8e5ba39b268b8")
                         .build()
         );
     }
