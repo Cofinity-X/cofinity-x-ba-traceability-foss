@@ -96,15 +96,17 @@ select  id, contract_agreement_id, notification_reference_id, send_to, created_b
 from alert_notification;
 
 
--- Create a sequence starting from 1
+-- Create a sequence
 CREATE SEQUENCE investigation_uid_seq_temp;
 
 -- Set the starting value of the sequence to be the next value after the maximum UID found in the 'notification' table
 SELECT setval('investigation_uid_seq_temp', COALESCE((SELECT MAX(id) FROM notification), 0) + 1);
 
+
+-- CREATE TABLE investigation_id_history to map old id to new id;
 CREATE TABLE investigation_id_history (
-                                          old_investigation_id INT NOT NULL,
-                                          new_investigation_id INT NOT NULL
+ old_investigation_id INT NOT NULL,
+ new_investigation_id INT NOT NULL
 );
 
 INSERT INTO investigation_id_history (old_investigation_id,new_investigation_id)
@@ -115,6 +117,7 @@ FROM investigation;
 ALTER TABLE assets_as_built_investigations DROP CONSTRAINT fk_investigation;
 ALTER TABLE investigation_notification DROP CONSTRAINT fk_investigation;
 
+-- Update the investigation_id
 UPDATE investigation
 SET id = investigation_id_history.new_investigation_id
     FROM investigation_id_history
