@@ -166,6 +166,23 @@ INSERT INTO assets_as_built_notification_messages
 select notification_id as notification_message_id, asset_id
 from temp_assets_as_built_notifications;
 
+-- update the notification_id_seq sequence for notification table
+DO $$
+DECLARE
+max_id int4;
+BEGIN
+    -- Find the maximum ID value from the table
+SELECT MAX(id) INTO max_id FROM public.notification;
+
+-- Reset the sequence to start from a value greater than the maximum ID value
+-- If the maximum ID value is NULL (no rows in the table), set the sequence to start from 1
+IF max_id IS NOT NULL THEN
+        EXECUTE format('ALTER SEQUENCE notification_id_seq RESTART WITH %s', max_id + 1);
+ELSE
+        EXECUTE 'ALTER SEQUENCE notification_id_seq RESTART WITH 1';
+END IF;
+END $$;
+
 -- Drop all tables
 DROP TABLE public.asset_as_built_alert_notifications;
 DROP TABLE public.investigation_notification;
@@ -177,3 +194,5 @@ DROP TABLE public.investigation;
 DROP TABLE public.investigation_id_history;
 DROP SEQUENCE public.alert_id_seq;
 DROP SEQUENCE public.investigation_id_seq;
+DROP SEQUENCE public.investigation_uid_seq_temp;
+
