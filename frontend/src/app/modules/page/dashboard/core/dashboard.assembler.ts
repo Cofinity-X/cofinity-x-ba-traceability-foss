@@ -24,7 +24,7 @@ import { DashboardStats, DashboardStatsResponse } from '../model/dashboard.model
 export class DashboardAssembler {
   public static assembleDashboard(dashboard: DashboardStatsResponse): DashboardStats {
     return {
-      // notification counts (where open means notfication status not closed)
+      // notification counts (where open means notification status not closed)
       myPartsWithOpenAlerts: dashboard.myPartsWithOpenAlerts,
       myPartsWithOpenInvestigations: dashboard.myPartsWithOpenInvestigations,
 

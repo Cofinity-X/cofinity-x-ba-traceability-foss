@@ -113,6 +113,7 @@
       "manufacturingCountry": "Production country",
       "validityPeriodFrom": "Validity period from",
       "validityPeriodTo": "Validity period to",
+      "title": "Title",
       "description": "Description",
       "status": "Status",
       "targetDate": "Deadline",

@@ -61,6 +61,7 @@ export const buildMockAlerts = (
     return {
       id: `${AlertIdPrefix}${index + 1}`,
       description: `Alert No ${index + 1} ${getRandomText(getRandomIntFromInterval(15, 500))}`,
+      title: 'title',
       status,
       severity,
       channel,
@@ -79,6 +80,7 @@ export const buildMockAlerts = (
 const MockEmptyAlert: NotificationResponse = {
   id: `${AlertIdPrefix}000`,
   description: `Alert No 000`,
+  title: 'Title',
   status: NotificationStatus.CREATED,
   severity: Severity.MINOR,
   createdBy: 'BPN10000000OEM0A',

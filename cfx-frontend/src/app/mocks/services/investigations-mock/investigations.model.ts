@@ -61,6 +61,7 @@ export const buildMockInvestigations = (
     return {
       id: `${InvestigationIdPrefix}${index + 1}`,
       description: `Investigation No ${index + 1} ${getRandomText(getRandomIntFromInterval(15, 500))}`,
+      title: 'title',
       status,
       severity,
       channel,
@@ -80,6 +81,7 @@ export const buildMockInvestigations = (
 const MockEmptyInvestigation: NotificationResponse = {
   id: `${InvestigationIdPrefix}000`,
   description: `Investigation No 000`,
+  title: 'title',
   status: NotificationStatus.CREATED,
   severity: Severity.MINOR,
   createdBy: 'BPN10000000OEM0A',

@@ -69,6 +69,7 @@ describe('NotificationMenuActionsAssembler', () => {
     const notificationTemplate: Notification = {
       id: 'id-1',
       description: 'Investigation No 1',
+      title: 'Title',
       createdBy: '',
       createdByName: '',
       sendTo: '',

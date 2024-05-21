@@ -50,6 +50,7 @@ export const buildMockAlerts = (
       createdBy: 'BPN10000000OEM0A',
       createdByName: 'OEM xxxxxxxxxxxxxxx A',
       sendTo: 'BPN20000000OEM0B',
+      title: 'title',
       sendToName: 'OEM xxxxxxxxxxxxxxx B',
       reason: { close: '', accept: '', decline: '' },
       createdDate: `2022-${numberToString(month)}-${numberToString(day)}T12:34:12`,
@@ -71,6 +72,7 @@ export const MockEmptyAlert: NotificationResponse = {
   createdDate: `2022-05-01T12:34:12`,
   assetIds: [getRandomAsset().id],
   channel: 'SENDER',
+  title: 'Title',
 };
 
 export const getAlertById = (id: string) => {

@@ -43,6 +43,7 @@ export class NotificationAssembler {
       channel = null,
 
       reason = { accept: '', close: '', decline: '' },
+      title = '',
       description = '',
       bpn = '',
       status: _status,
@@ -71,6 +72,7 @@ export class NotificationAssembler {
     const assembled = {
       id,
       description,
+      title,
       createdBy,
       createdByName,
       sendTo,

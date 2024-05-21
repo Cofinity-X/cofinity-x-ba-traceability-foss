@@ -129,6 +129,7 @@ export class FilterConfigOptions {
       option: this.optionTextSearch,
       maxDate: new Date(),
     },
+    title: { filterKey: 'title', isTextSearch: true, option: this.optionTextSearch },
     description: { filterKey: 'description', isTextSearch: true, option: this.optionTextSearch },
     status: (typeTranslationPath: string, isReceivedTable: boolean) => ({
       filterKey: 'status',

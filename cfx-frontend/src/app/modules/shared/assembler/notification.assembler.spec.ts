@@ -42,6 +42,7 @@ describe('InvestigationsAssembler', () => {
       id: null,
       assetIds: null,
       description: '',
+      title: '',
       createdBy: '',
       createdByName: '',
       sendTo: '',
@@ -70,6 +71,7 @@ describe('InvestigationsAssembler', () => {
           {
             id: 'test-1',
             description: 'test descr',
+            title: 'Title',
             createdDate: '2022-07-26T15:09:39.419Z',
             targetDate: '2022-06-26T15:09:39.419Z',
             bpn: 'BPNL000000TESTRE',
@@ -87,6 +89,7 @@ describe('InvestigationsAssembler', () => {
           {
             id: 'test-2',
             description: 'test descr',
+            title: 'Title',
             createdDate: '2022-07-26T15:09:39.419Z',
             targetDate: '2022-06-26T15:09:39.419Z',
             bpn: 'BPNL000000TESTRE',
@@ -111,6 +114,7 @@ describe('InvestigationsAssembler', () => {
         {
           id: 'test-1',
           description: 'test descr',
+          title: 'title',
           status: NotificationStatus.SENT,
           severity: Severity.MINOR,
           createdDate: new CalendarDateModel('2022-07-26T15:09:39.419Z'),
@@ -128,6 +132,7 @@ describe('InvestigationsAssembler', () => {
         {
           id: 'test-2',
           description: 'test descr',
+          title: 'title',
           status: null,
           severity: Severity.MAJOR,
           createdDate: new CalendarDateModel('2022-07-26T15:09:39.419Z'),
