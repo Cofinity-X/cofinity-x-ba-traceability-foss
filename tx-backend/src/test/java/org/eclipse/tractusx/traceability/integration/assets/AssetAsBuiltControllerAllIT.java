@@ -38,6 +38,7 @@ import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -129,7 +130,7 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
                 .body("content[0]", hasEntry("idShort", "vehicle_hybrid.asm"))
                 .body("content[0]", hasEntry("semanticModelId", "OMA-TGFAYUHXFLHHUQQMPLTE"))
                 .body("content[0]", hasEntry("businessPartner", "BPNL00000003AYRE"))
-                .body("content[0]", hasEntry("manufacturerName", "Manufacturer Name 1"))
+                .body("content[0]", hasEntry("manufacturerName", "OEM A"))
                 .body("content[0]", hasEntry("qualityType", "Ok"))
                 .body("content[0]", hasEntry("van", "OMA-TGFAYUHXFLHHUQQMPLTE"))
                 .body("content[0].detailAspectModels[0].data", hasEntry("manufacturingCountry", "DEU"))
@@ -197,6 +198,48 @@ class AssetAsBuiltControllerAllIT extends IntegrationTestSpecification {
                 .body("page", Matchers.is(0))
                 .body("pageSize", Matchers.is(10))
                 .body("content[0].detailAspectModels[1]", hasEntry("type", "TRACTION_BATTERY_CODE"));
+    }
+
+    @Test
+    void shouldPersistTractionBatteryCodeAssetsOnlyOnce() throws JoseException {
+        //GIVEN
+        assetsSupport.tractionBatteryCodeAssetsStored();
+
+        //WHEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .param("page", "0")
+                .param("size", "10")
+                .when()
+                .log().all()
+                .get("/api/assets/as-built")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content[0].detailAspectModels", hasSize(2));
+
+        //This should not cause any duplicates in traction_battery_code_subcomponent table
+        assetsSupport.tractionBatteryCodeAssetsStored();
+
+        //THEN
+        given()
+                .header(oAuth2Support.jwtAuthorization(ADMIN))
+                .contentType(ContentType.JSON)
+                .param("page", "0")
+                .param("size", "10")
+                .when()
+                .log().all()
+                .get("/api/assets/as-built")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("page", Matchers.is(0))
+                .body("pageSize", Matchers.is(10))
+                .body("content[0].detailAspectModels", hasSize(2));
+
     }
 
     @Test

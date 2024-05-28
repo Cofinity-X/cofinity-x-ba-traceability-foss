@@ -143,7 +143,8 @@ public class DtrService {
     }
 
     List<IdentifierKeyValuePair> aasIdentifiersFromAsset(AssetBase assetBase) {
-        return List.of(
+
+        List<IdentifierKeyValuePair> identifierKeyValuePairs = List.of(
                 IdentifierKeyValuePair.builder()
                         .name("manufacturerId")
                         .value(assetBase.getManufacturerId())
@@ -163,6 +164,8 @@ public class DtrService {
                                         .build())
                         .build()
         );
+        log.info("IdentifierKeyValuePair {}", identifierKeyValuePairs);
+        return identifierKeyValuePairs;
     }
 
     private List<SemanticId> getExternalSubjectIds() {

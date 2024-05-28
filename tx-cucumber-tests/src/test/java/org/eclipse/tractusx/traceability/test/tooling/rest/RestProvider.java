@@ -31,17 +31,18 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import lombok.Getter;
+import notification.request.EditNotificationRequest;
+import notification.request.NotificationSeverityRequest;
+import notification.request.StartNotificationRequest;
+import notification.request.UpdateNotificationStatusRequest;
+import notification.request.UpdateNotificationStatusTransitionRequest;
+import notification.response.NotificationIdResponse;
+import notification.response.NotificationResponse;
 import org.apache.http.HttpStatus;
-import org.awaitility.Duration;
+import org.awaitility.Durations;
 import org.eclipse.tractusx.traceability.test.tooling.EnvVariablesResolver;
 import org.eclipse.tractusx.traceability.test.tooling.NotificationTypeEnum;
 import org.eclipse.tractusx.traceability.test.tooling.TraceXEnvironmentEnum;
-import notification.request.NotificationSeverityRequest;
-import notification.request.StartNotificationRequest;
-import notification.request.UpdateNotificationRequest;
-import notification.request.UpdateNotificationStatusRequest;
-import notification.response.NotificationIdResponse;
-import notification.response.NotificationResponse;
 
 import java.time.Instant;
 import java.util.List;
@@ -97,15 +98,16 @@ public class RestProvider {
             Instant targetDate,
             String severity,
             String receiverBpn,
+            String title,
             NotificationTypeEnum notificationType) {
         final StartNotificationRequest requestBody = StartNotificationRequest.builder()
-                .partIds(partIds)
-                .isAsBuilt(true)
+                .affectedPartIds(partIds)
                 .description(description)
                 .targetDate(targetDate)
                 .severity(NotificationSeverityRequest.fromValue(severity))
                 .type(notificationType.toRequest())
                 .receiverBpn(receiverBpn)
+                .title(title)
                 .build();
         return given().log().body()
                 .spec(getRequestSpecification())
@@ -120,9 +122,35 @@ public class RestProvider {
 
     }
 
+    public void editNotification(Long notificationId,
+                                 List<String> partIds,
+                                 String description,
+                                 Instant targetDate,
+                                 String severity,
+                                 String title,
+                                 String receiverBpn) {
+        final EditNotificationRequest requestBody = EditNotificationRequest.builder()
+                .affectedPartIds(partIds)
+                .description(description)
+                .targetDate(targetDate)
+                .severity(NotificationSeverityRequest.fromValue(severity))
+                .receiverBpn(receiverBpn)
+                .title(title)
+                .build();
+        given().log().body()
+                .spec(getRequestSpecification())
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .put("/api/notifications/" + notificationId + "/edit")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
+
+    }
+
     public void approveNotification(final Long notificationId) {
         await()
-                .atMost(Duration.FIVE_MINUTES)
+                .atMost(Durations.FIVE_MINUTES)
                 .pollInterval(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
                 .until(() -> {
@@ -160,7 +188,7 @@ public class RestProvider {
 
     public void closeNotification(final Long notificationId) {
         await()
-                .atMost(Duration.FIVE_MINUTES)
+                .atMost(Durations.FIVE_MINUTES)
                 .pollInterval(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
                 .until(() -> {
@@ -185,13 +213,13 @@ public class RestProvider {
 
     public void updateNotification(final Long notificationId,
                                    UpdateNotificationStatusRequest status, String reason) {
-        UpdateNotificationRequest requestBody = UpdateNotificationRequest.builder()
+        UpdateNotificationStatusTransitionRequest requestBody = UpdateNotificationStatusTransitionRequest.builder()
                 .status(status)
                 .reason(reason)
                 .build();
 
         await()
-                .atMost(Duration.FIVE_MINUTES)
+                .atMost(Durations.FIVE_MINUTES)
                 .pollInterval(10, TimeUnit.SECONDS)
                 .ignoreExceptions()
                 .until(() -> {

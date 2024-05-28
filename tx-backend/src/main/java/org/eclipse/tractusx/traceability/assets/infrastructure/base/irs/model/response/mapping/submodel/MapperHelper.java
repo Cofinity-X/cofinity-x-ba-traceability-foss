@@ -4,18 +4,30 @@ package org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.r
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.AssetBase;
+import org.eclipse.tractusx.traceability.assets.domain.base.model.Descriptions;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.Owner;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.aspect.DetailAspectModel;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Direction;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.IRSResponse;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.IrsSubmodel;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Shell;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.factory.AssetBaseMapperProvider;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.mapping.asbuilt.AsBuiltDetailMapper;
+import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.mapping.asplanned.AsPlannedDetailMapper;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @UtilityClass
 @Slf4j
@@ -71,16 +83,46 @@ public class MapperHelper {
                 .ifPresent(detailAspectModel -> assetBase.setDetailAspectModels(List.of(detailAspectModel)));
     }
 
-    public static void enrichManufacturingInformation(IRSResponse irsResponse, Map<String, String> bpnMap, AssetBase assetBase) {
-        if (assetBase.getManufacturerId() == null && assetBase.getId().equals(irsResponse.jobStatus().globalAssetId())) {
-            String bpn = irsResponse.jobStatus().parameter().bpn();
-            assetBase.setManufacturerId(bpn);
-            assetBase.setManufacturerName(bpnMap.get(bpn));
-        } else {
-            String bpnName = bpnMap.get(assetBase.getManufacturerId());
-            if (bpnName != null) {
-                assetBase.setManufacturerName(bpnName);
+    public static void enrichUpwardAndDownwardDescriptions(Map<String, List<Descriptions>> descriptionsMap, AssetBase assetBase) {
+        List<Descriptions> upwardDescriptions = new ArrayList<>();
+        List<Descriptions> downwardDescriptions = new ArrayList<>();
+
+        List<Descriptions> descriptions = descriptionsMap.get(assetBase.getId());
+        for (Descriptions description : emptyIfNull(descriptions)) {
+            if (description.direction() == org.eclipse.tractusx.irs.component.enums.Direction.UPWARD) {
+                upwardDescriptions.add(description);
+            } else if (description.direction() == org.eclipse.tractusx.irs.component.enums.Direction.DOWNWARD) {
+                downwardDescriptions.add(description);
             }
         }
+
+        assetBase.setChildRelations(downwardDescriptions);
+        assetBase.setParentRelations(upwardDescriptions);
     }
+
+
+    @NotNull
+    public List<DetailAspectModel> extractTractionBatteryCode(List<IrsSubmodel> irsSubmodels, String globalAssetId, AssetBaseMapperProvider assetBaseMapperProvider) {
+        return irsSubmodels
+                .stream()
+                .flatMap(irsSubmodel -> {
+                    Optional<AsBuiltDetailMapper> mapper = assetBaseMapperProvider.getAsBuiltDetailMapper(irsSubmodel);
+                    return mapper.map(asBuiltDetailMapper -> asBuiltDetailMapper.extractDetailAspectModel(irsSubmodel, globalAssetId).stream()).orElseGet(Stream::empty);
+                })
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+    @NotNull
+    public List<DetailAspectModel> extractPartSiteInformationAsPlanned(List<IrsSubmodel> irsSubmodels, AssetBaseMapperProvider assetBaseMapperProvider) {
+        return irsSubmodels
+                .stream()
+                .flatMap(irsSubmodel -> {
+                    Optional<AsPlannedDetailMapper> mapper = assetBaseMapperProvider.getAsPlannedDetailMapper(irsSubmodel);
+                    return mapper.map(asPlannedDetailMapper -> asPlannedDetailMapper.extractDetailAspectModel(irsSubmodel).stream()).orElseGet(Stream::empty);
+                })
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
 }

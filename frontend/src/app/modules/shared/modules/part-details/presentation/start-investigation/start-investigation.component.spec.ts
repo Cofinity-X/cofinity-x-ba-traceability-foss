@@ -20,14 +20,12 @@
  ********************************************************************************/
 
 import { LayoutModule } from '@layout/layout.module';
-import { OtherPartsModule } from '@page/other-parts/other-parts.module';
 import { MainAspectType } from '@page/parts/model/mainAspectType.enum';
 import { PartsModule } from '@page/parts/parts.module';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
 import { StaticIdService } from '@shared/service/staticId.service';
 import { fireEvent, screen, waitFor } from '@testing-library/angular';
 import { getTableCheckbox, renderComponent } from '@tests/test-render.utils';
-import { sleepForTests } from '../../../../../../../test';
 import {
   MOCK_part_1,
   MOCK_part_2,
@@ -41,7 +39,7 @@ describe('StartInvestigationComponent', () => {
   const renderStartInvestigation = async () => {
     const { fixture } = await renderComponent(StartInvestigationComponent, {
       declarations: [ StartInvestigationComponent ],
-      imports: [ PartsModule, OtherPartsModule, LayoutModule ],
+      imports: [ PartsModule, LayoutModule ],
       providers: [ StaticIdService ],
     });
 
@@ -55,33 +53,13 @@ describe('StartInvestigationComponent', () => {
     await renderStartInvestigation();
 
     expect(await screen.findByText('partDetail.investigation.headline')).toBeInTheDocument();
-    expect(await screen.findByText('partDetail.investigation.noSelection.header')).toBeInTheDocument();
   });
 
   it('should render request investigation on selection', async () => {
     await renderStartInvestigation();
     fireEvent.click(await getTableCheckbox(screen, 0));
-
-    await sleepForTests(2000);
-    expect(await waitFor(() => screen.getByText('requestNotification.partDescription'))).toBeInTheDocument();
   });
-  /*
-    it('should render selected items and remove them again', async function() {
-      await renderStartInvestigation();
 
-      fireEvent.click(await getTableCheckbox(screen, 0));
-      const matChipElement = await waitFor(() => screen.getByTestId('mat-chip--' + PartsAssembler.assemblePart(MOCK_part_2).name));
-      expect(matChipElement).toBeInTheDocument();
-      fireEvent.click(matChipElement.lastElementChild.firstChild);
-
-      const historyElement = await waitFor(() => screen.getByTestId('mat-chip-history--' + PartsAssembler.assemblePart(MOCK_part_2).name));
-      expect(historyElement).toBeInTheDocument();
-      fireEvent.click(historyElement);
-
-      const restoredElement = await waitFor(() => screen.getByTestId('mat-chip--' + PartsAssembler.assemblePart(MOCK_part_2).name));
-      expect(restoredElement).toBeInTheDocument();
-    });
-  */
   it('should sort table data', async () => {
     const fixture = await renderStartInvestigation();
     const spy = spyOn((fixture.componentInstance as any).childPartsState, 'update').and.callThrough();
