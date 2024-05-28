@@ -37,7 +37,7 @@ SPDX-License-Identifier: Apache-2.0
     </modules>
 
     <properties>
-        <springboot.version>3.2.4</springboot.version>
+        <springboot.version>3.2.5</springboot.version>
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -49,7 +49,8 @@ SPDX-License-Identifier: Apache-2.0
         <maven-jxr-plugin.version>3.3.2</maven-jxr-plugin.version>
         <ascii-doctor.maven.plugin.version>2.2.4</ascii-doctor.maven.plugin.version>
         <checkstyle-plugin.version>3.3.1</checkstyle-plugin.version>
-        <findsecbugs-plugin.version>1.12.0</findsecbugs-plugin.version>
+        <findsecbugs-plugin.version>1.13.0</findsecbugs-plugin.version>
+        <commons-compress.version>1.26.1</commons-compress.version>
         <install-plugin.version>3.1.1</install-plugin.version>
         <jacoco-plugin.version>0.8.11</jacoco-plugin.version>
         <jar-plugin.version>3.3.0</jar-plugin.version>
@@ -62,13 +63,14 @@ SPDX-License-Identifier: Apache-2.0
         <maven-site-plugin.version>4.0.0-M11</maven-site-plugin.version>
         <edc-library.version>0.2.1</edc-library.version>
         <!-- versions for 3rd party dependecies -->
+        <logback.version>1.5.6</logback.version>
         <eclipse-dash-ip.version>1.1.0</eclipse-dash-ip.version>
         <nimbus-jose-jwt.version>9.37.3</nimbus-jose-jwt.version>
-        <ascii-doctor-j-diagram.version>2.2.13</ascii-doctor-j-diagram.version>
+        <ascii-doctor-j-diagram.version>2.3.0</ascii-doctor-j-diagram.version>
         <ascii-dcotor-j.version>2.5.8</ascii-dcotor-j.version>
         <auth-0-java-jwt.version>4.4.0</auth-0-java-jwt.version>
         <jruby.version>9.4.3.0</jruby.version>
-        <spring-cloud.version>2023.0.0</spring-cloud.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
         <jetbrains-annotation.version>24.1.0</jetbrains-annotation.version>
         <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
         <swagger-annotation.version>1.6.12</swagger-annotation.version>
@@ -82,12 +84,13 @@ SPDX-License-Identifier: Apache-2.0
         <assertj.version>3.24.2</assertj.version>
         <commons-logging.version>1.3.0</commons-logging.version>
         <commons-collections.version>4.4</commons-collections.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.32</lombok.version>
         <json-unit-assertj.version>3.2.2</json-unit-assertj.version>
-        <cucumber.version>7.15.0</cucumber.version>
+        <cucumber.version>7.17.0</cucumber.version>
         <junit-bom.version>5.10.2</junit-bom.version>
-        <awaitility.version>3.0.0</awaitility.version>
-        <irs-client-lib.version>1.6.0</irs-client-lib.version>
+        <awaitility.version>4.2.1</awaitility.version>
+        <!-- TODO https://github.com/eclipse-tractusx/traceability-foss/issues/978 update to the cx release version of irs lib IMPORTANT NO SNAPSHOT-->
+        <irs-client-lib.version>2.0.5-SNAPSHOT</irs-client-lib.version>
         <json-schema-validator.version>5.4.0</json-schema-validator.version>
         <!-- Sonar related properties -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>

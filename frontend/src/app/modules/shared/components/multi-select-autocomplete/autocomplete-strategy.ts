@@ -18,13 +18,13 @@
  ********************************************************************************/
 import { Injectable } from '@angular/core';
 import { AdminService } from '@page/admin/core/admin.service';
-import { Owner } from '@page/parts/model/owner.enum';
 import { NotificationChannel, TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
 import { NotificationService } from '@shared/service/notification.service';
 import { PartsService } from '@shared/service/parts.service';
+import { of } from 'rxjs';
 
 export abstract class AutocompleteStrategy {
-  abstract retrieveSuggestionValues(tableType: TableType, filterColumns: string, searchElement: string): any;
+  abstract retrieveSuggestionValues(tableType: TableType, filterColumns: string, searchElement: string, inAssetIds?: string[]): any;
 }
 
 @Injectable({
@@ -38,14 +38,18 @@ export class PartsStrategy extends AutocompleteStrategy {
     this.partsService = partsService;
   }
 
-  retrieveSuggestionValues(tableType: TableType, filterColumns: string, searchElement: string): any {
-    const tableOwner = getOwnerOfTable(tableType);
+  retrieveSuggestionValues(tableType: TableType, filterColumns: string, searchElement: string, inAssetIds?: string[]): any {
     const asBuilt = isAsBuilt(tableType);
+
+    if(inAssetIds?.length < 1) {
+      return of([]);
+    }
+
     return this.partsService.getDistinctFilterValues(
       asBuilt,
-      tableOwner,
       filterColumns,
       searchElement,
+      inAssetIds,
     );
   }
 }
@@ -66,7 +70,7 @@ export class NotificationStrategy extends AutocompleteStrategy {
     return this.notificationService.getDistinctFilterValues(
       notificationChannel,
       filterColumns,
-      searchElement
+      searchElement,
     );
   }
 }
@@ -92,30 +96,15 @@ export class ContractsStrategy extends AutocompleteStrategy {
 
 export const AutocompleteStrategyMap = new Map<TableType, any>([
   [ TableType.AS_BUILT_OWN, PartsStrategy ],
-  [ TableType.AS_BUILT_SUPPLIER, PartsStrategy ],
-  [ TableType.AS_BUILT_CUSTOMER, PartsStrategy ],
   [ TableType.AS_PLANNED_OWN, PartsStrategy ],
-  [ TableType.AS_PLANNED_CUSTOMER, PartsStrategy ],
-  [ TableType.AS_PLANNED_SUPPLIER, PartsStrategy ],
   [ TableType.RECEIVED_NOTIFICATION, NotificationStrategy ],
   [ TableType.SENT_NOTIFICATION, NotificationStrategy ],
   [ TableType.CONTRACTS, ContractsStrategy ],
 ]);
 
-export function getOwnerOfTable(tableType: TableType): Owner {
-  if (tableType === TableType.AS_BUILT_OWN || tableType === TableType.AS_PLANNED_OWN) {
-    return Owner.OWN;
-  } else if (tableType === TableType.AS_BUILT_CUSTOMER || tableType === TableType.AS_PLANNED_CUSTOMER) {
-    return Owner.CUSTOMER;
-  } else if (tableType === TableType.AS_BUILT_SUPPLIER || tableType === TableType.AS_PLANNED_SUPPLIER) {
-    return Owner.SUPPLIER;
-  } else {
-    return Owner.UNKNOWN;
-  }
-}
 
 export function isAsBuilt(tableType: TableType): boolean {
-  const isAsBuiltElement = [ TableType.AS_BUILT_SUPPLIER, TableType.AS_BUILT_OWN, TableType.AS_BUILT_CUSTOMER ];
+  const isAsBuiltElement = [ TableType.AS_BUILT_OWN ];
   return isAsBuiltElement.includes(tableType);
 }
 

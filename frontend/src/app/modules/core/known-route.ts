@@ -23,7 +23,6 @@ import { NotificationStatusGroup } from '@shared/model/notification.model';
 import { PageRoute } from '@shared/model/page-route.model';
 
 export const PARTS_BASE_ROUTE = 'parts';
-export const OTHER_PARTS_BASE_ROUTE = 'otherParts';
 export const DASHBOARD_BASE_ROUTE = 'dashboard';
 export const ADMIN_BASE_ROUTE = 'admin';
 export const ABOUT_BASE_ROUTE = 'about';
@@ -32,7 +31,6 @@ export const NO_PERMISSION_BASE_ROUTE = 'no-permissions';
 
 export const NavigableUrls = [
   PARTS_BASE_ROUTE,
-  OTHER_PARTS_BASE_ROUTE,
   DASHBOARD_BASE_ROUTE,
   ADMIN_BASE_ROUTE,
   ABOUT_BASE_ROUTE,
@@ -56,7 +54,7 @@ const getNotificationInboxRoute = (
   link: urlType,
   queryParams: notificationStatusGroup
     ? {
-      tabIndex: '0',
+      tabIndex: notificationStatusGroup === NotificationStatusGroup.RECEIVED ? '1' : '0',
     }
     : undefined,
 });
