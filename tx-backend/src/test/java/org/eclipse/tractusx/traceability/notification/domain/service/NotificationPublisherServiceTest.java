@@ -21,7 +21,7 @@ package org.eclipse.tractusx.traceability.notification.domain.service;
 
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.repository.AssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.service.AssetAsBuiltServiceImpl;
-import org.eclipse.tractusx.traceability.bpn.domain.service.BpnRepository;
+import org.eclipse.tractusx.traceability.bpn.infrastructure.repository.BpnRepository;
 import org.eclipse.tractusx.traceability.common.model.BPN;
 import org.eclipse.tractusx.traceability.common.properties.TraceabilityProperties;
 import org.eclipse.tractusx.traceability.notification.domain.base.exception.SendNotificationException;
@@ -35,7 +35,6 @@ import org.eclipse.tractusx.traceability.notification.domain.base.model.Notifica
 import org.eclipse.tractusx.traceability.notification.domain.base.model.exception.NotificationIllegalUpdate;
 import org.eclipse.tractusx.traceability.notification.domain.base.service.EdcNotificationService;
 import org.eclipse.tractusx.traceability.notification.domain.base.service.NotificationPublisherService;
-import org.eclipse.tractusx.traceability.notification.domain.notification.exception.NotificationNotSupportedException;
 import org.eclipse.tractusx.traceability.notification.domain.notification.model.StartNotification;
 import org.eclipse.tractusx.traceability.notification.domain.notification.repository.NotificationRepository;
 import org.eclipse.tractusx.traceability.testdata.AssetTestDataFactory;
@@ -91,18 +90,17 @@ class NotificationPublisherServiceTest {
         String description = "Test investigation";
         List<String> assets = Arrays.asList("asset-1", "asset-2");
         Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
-        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
+        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetAsBuiltTestdata()));
         when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
         String receiverBpn = "someReceiverBpn";
         StartNotification startNotification = StartNotification.builder()
                 .title(title)
-                .partIds(assets)
+                .affectedPartIds(assets)
                 .description(description)
                 .targetDate(targetDate)
                 .severity(NotificationSeverity.MINOR)
                 .type(NotificationType.INVESTIGATION)
                 .receiverBpn(receiverBpn)
-                .isAsBuilt(true)
                 .build();
 
         // When
@@ -119,29 +117,6 @@ class NotificationPublisherServiceTest {
     }
 
     @Test
-    void testThrowNotificationNotSupportedException() {
-        // Given
-        String title = "Title";
-        String description = "Test investigation";
-        String receiverBpn = "someReceiverBpn";
-        Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
-        List<String> assets = Arrays.asList("asset-1", "asset-2");
-        StartNotification startNotification = StartNotification.builder()
-                .title(title)
-                .partIds(assets)
-                .description(description)
-                .targetDate(targetDate)
-                .severity(NotificationSeverity.MINOR)
-                .type(NotificationType.INVESTIGATION)
-                .receiverBpn(receiverBpn)
-                .isAsBuilt(false)
-                .build();
-
-        // Then
-        assertThrows(NotificationNotSupportedException.class, () -> notificationPublisherService.startNotification(startNotification));
-    }
-
-    @Test
     void testStartAlertSuccessful() {
         // Given
         String title = "Title";
@@ -150,16 +125,15 @@ class NotificationPublisherServiceTest {
         Instant targetDate = Instant.parse("2022-03-01T12:00:00Z");
         List<String> assets = Arrays.asList("asset-1", "asset-2");
         when(traceabilityProperties.getBpn()).thenReturn(BPN.of("bpn-123"));
-        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetTestData()));
+        when(assetRepository.getAssetsById(assets)).thenReturn(List.of(AssetTestDataFactory.createAssetAsBuiltTestdata()));
         StartNotification startNotification = StartNotification.builder()
                 .title(title)
-                .partIds(assets)
+                .affectedPartIds(assets)
                 .description(description)
                 .targetDate(targetDate)
                 .severity(NotificationSeverity.MINOR)
                 .type(NotificationType.INVESTIGATION)
                 .receiverBpn(receiverBpn)
-                .isAsBuilt(true)
                 .build();
         // When
         Notification result = notificationPublisherService.startNotification(startNotification);

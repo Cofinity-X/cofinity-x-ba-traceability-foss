@@ -12,6 +12,7 @@ const ENV_VARS_MAPPING = {
   CATENAX_PORTAL_BASE_URL: 'baseUrl',
   CATENAX_PORTAL_BACKEND_DOMAIN,
   CATENAX_PORTAL_URL: 'portalUrl',
+  BPN: 'bpn'
 };
 ```
 
@@ -37,6 +38,9 @@ An example value could be: `catena-x.net`
 
 `CATENAX_PORTAL_URL`
 This variable is optional and points to the CX Portal instance
+
+`BPN`
+This variable is the bpn of the application owner
 
 # Helm deployment
 

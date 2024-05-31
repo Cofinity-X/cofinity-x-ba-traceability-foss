@@ -47,14 +47,10 @@ export class TableSettingsComponent {
   selectAllSelected: boolean;
   selectedColumn: string = null;
 
-  isCustomerTable: boolean;
-
-
   constructor(public dialogRef: MatDialogRef<TableSettingsComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public readonly tableSettingsService: TableSettingsService) {
     // Layout
     this.title = data.title;
     this.panelClass = data.panelClass;
-    this.isCustomerTable = data.tableType === TableType.AS_BUILT_CUSTOMER || data.tableType === TableType.AS_PLANNED_CUSTOMER;
     // Passed Data
     this.tableType = data.tableType;
     this.defaultColumns = data.defaultColumns;
@@ -67,6 +63,7 @@ export class TableSettingsComponent {
     this.filterColumns = tableSettingsService.getStoredTableSettings()[this.tableType].filterColumnsForTable;
 
     this.selectAllSelected = this.dialogColumns.length === this.tableColumns.length;
+
 
   }
 
@@ -111,9 +108,9 @@ export class TableSettingsComponent {
   }
 
   handleListItemClick(event: MouseEvent, item: string) {
-    let element = event.target as HTMLElement;
-
-    if (element.tagName !== 'INPUT') {
+    ;
+    let element = event.currentTarget as HTMLElement;
+    if ((event.target as HTMLElement).tagName !== 'INPUT') {
       this.selectedColumn = item;
       element.classList.toggle('selected-item');
     }
@@ -125,11 +122,13 @@ export class TableSettingsComponent {
       return;
     }
 
-    let oldPosition = this.dialogColumns.indexOf(this.selectedColumn);
-    // in non customer table we have the select Column as first and why
-    let upperLimit = this.isCustomerTable ? 0 : 1;
+    const oldPosition = this.dialogColumns.indexOf(this.selectedColumn);
+    // for tables where we have a select column at first
+    const upperLimit = this.dialogColumns.includes('select') ? 1 : 0;
+    // for tables where we have a menu column at last
+    const bottomLimit = this.dialogColumns.includes('menu') ? this.dialogColumns.length - 2 : this.dialogColumns.length - 1;
     let step = direction === 'up' ? -1 : 1;
-    if ((oldPosition == upperLimit && direction === 'up') || (oldPosition === this.dialogColumns.length - 1 && direction === 'down')) {
+    if ((oldPosition == upperLimit && direction === 'up') || (oldPosition === bottomLimit && direction === 'down')) {
       return;
     }
     let temp = this.dialogColumns[oldPosition + step];

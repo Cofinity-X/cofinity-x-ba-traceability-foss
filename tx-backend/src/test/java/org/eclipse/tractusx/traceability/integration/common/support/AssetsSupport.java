@@ -20,7 +20,6 @@ package org.eclipse.tractusx.traceability.integration.common.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
-import org.eclipse.tractusx.traceability.notification.infrastructure.notification.repository.JpaNotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +31,12 @@ public class AssetsSupport {
     AssetRepositoryProvider assetRepositoryProvider;
 
     @Autowired
+    BpnSupport bpnSupport;
+
+    @Autowired
+    OAuth2ApiSupport oAuth2ApiSupport;
+
+    @Autowired
     JpaNotificationRepository jpaInvestigationRepository;
 
     public String emptyText() {
@@ -39,25 +44,22 @@ public class AssetsSupport {
     }
 
     public void defaultAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository()
-                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        bpnSupport.providesBpdmLookup();
+        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
     }
 
     public AssetAsBuiltEntity findById(String id) {
         return AssetAsBuiltEntity.from(assetRepositoryProvider.assetAsBuiltRepository.getAssetById(id));
     }
 
-    public void defaultMultipleAssetsAsBuiltStored() {
-        assetRepositoryProvider.assetAsBuiltRepository()
-                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertMultipleAssetsAsBuiltForTests());
-    }
-
     public void tractionBatteryCodeAssetsStored() {
-        assetRepositoryProvider.assetAsBuiltRepository()
-                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
+        bpnSupport.providesBpdmLookup();
+        assetRepositoryProvider.assetAsBuiltRepository().saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
     }
 
     public void defaultAssetsAsPlannedStored() {
+        bpnSupport.providesBpdmLookup();
         assetRepositoryProvider.assetAsPlannedRepository()
                 .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
     }

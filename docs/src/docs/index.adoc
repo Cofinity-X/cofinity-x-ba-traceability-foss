@@ -19,7 +19,7 @@ xref:administration/administration-guide.adoc[Administration Guide]
 
 == Users Manual
 
-xref:user/user-manual.adoc[Users Manual]
+xref:user/user-manual.adoc[User manual]
 
 == API-Documentation
 

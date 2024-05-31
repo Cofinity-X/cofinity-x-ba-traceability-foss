@@ -23,6 +23,7 @@ import { ApiService } from '@core/api/api.service';
 import { environment } from '@env';
 import { NotificationAssembler } from '@shared/assembler/notification.assembler';
 import { PartsAssembler } from '@shared/assembler/parts.assembler';
+import { DateTimeString } from '@shared/components/dateTime/dateTime.component';
 import { NotificationChannel } from '@shared/components/multi-select-autocomplete/table-type.model';
 import { TableHeaderSort } from '@shared/components/table/table.model';
 import { provideFilterListForNotifications } from '@shared/helper/filter-helper';
@@ -78,8 +79,11 @@ export class NotificationService {
       .pipe(map(notification => NotificationAssembler.assembleNotification(notification)));
   }
 
-  public createNotification(partIds: string[], description: string, severity: Severity, bpn: string, isAsBuilt: boolean, type: string, title: string): Observable<string> {
-    const body = { partIds, description, severity, receiverBpn: bpn, isAsBuilt, type, title };
+  public createNotification(affectedPartIds: string[], description: string, severity: Severity, bpn: string, type: string, title: string, dateString: DateTimeString,
+  ): Observable<string> {
+    const targetDate = null === dateString ? null : new Date(dateString).toISOString();
+    const upperCaseType = type ? type.toUpperCase() : null;
+    const body = { affectedPartIds, description, severity, receiverBpn: bpn, type: upperCaseType, title: title === "" ? null: title, targetDate };
 
     return this.apiService.post<NotificationCreateResponse>(`${ this.url }/notifications`, body).pipe(map(({ id }) => id));
   }
@@ -110,6 +114,16 @@ export class NotificationService {
     const body = { reason, status };
     return this.apiService.post<void>(`${ requestUrl }/${ id }/update`, body);
   }
+
+  public editNotification(notificationId: string, title: string, receiverBpn: string, severity: string, targetDate: string, description: string, affectedPartIds: string[]): Observable<void> {
+    const requestUrl = this.notificationUrl();
+    if(targetDate) {
+      targetDate = new Date(targetDate).toISOString();
+    }
+    const body = { title: title === "" ? null: title, receiverBpn: receiverBpn, severity, targetDate, description, affectedPartIds: affectedPartIds };
+    return this.apiService.put<void>(`${ requestUrl }/${ notificationId }/edit`, body);
+  }
+
 
   public getDistinctFilterValues(channel: NotificationChannel, fieldNames: string, startsWith: string) {
     const mappedFieldName = PartsAssembler.mapFieldNameToApi(fieldNames);

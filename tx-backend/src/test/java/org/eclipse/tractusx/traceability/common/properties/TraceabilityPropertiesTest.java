@@ -50,5 +50,10 @@ class TraceabilityPropertiesTest {
         assertThat(traceabilityProperties.getLeftOperand()).isNotEmpty();
         assertThat(traceabilityProperties.getOperatorType()).isNotEmpty();
         assertThat(traceabilityProperties.getRightOperand()).isNotEmpty();
+        assertThat(traceabilityProperties.getLeftOperandSecond()).isNotEmpty();
+        assertThat(traceabilityProperties.getOperatorTypeSecond()).isNotEmpty();
+        assertThat(traceabilityProperties.getRightOperandSecond()).isNotEmpty();
+
     }
+
 }
