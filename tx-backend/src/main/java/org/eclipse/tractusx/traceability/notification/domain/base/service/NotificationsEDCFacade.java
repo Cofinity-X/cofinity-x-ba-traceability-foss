@@ -141,7 +141,7 @@ public class NotificationsEDCFacade {
                             CatalogRequest.Builder.newInstance()
                                     .protocol(DEFAULT_PROTOCOL)
                                     .counterPartyAddress(receiverEdcUrl + edcProperties.getIdsPath())
-                                    .counterPartyId(notification.getSendTo())
+                               //     .counterPartyId(notification.getSendTo())
                                     .querySpec(QuerySpec.Builder.newInstance()
                                             // https://github.com/eclipse-tractusx/traceability-foss/issues/978
                                             // Probably:

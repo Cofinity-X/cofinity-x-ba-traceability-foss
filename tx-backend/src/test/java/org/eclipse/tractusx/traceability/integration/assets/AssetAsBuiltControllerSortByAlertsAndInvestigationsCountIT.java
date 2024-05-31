@@ -154,6 +154,7 @@ class AssetAsBuiltControllerSortByAlertsAndInvestigationsCountIT extends Integra
     void givenInvestigationsForAsset_whenCallWithSortByQualityInvestigationsInStatusActiveDesc_thenReturnAssetsWithActiveInvestigationsCountInDesc() throws JoseException {
         // Given
         assetsSupport.defaultMultipleAssetsAsBuiltStored();
+
         AssetAsBuiltEntity assetAsBuilt1 = jpaAssetAsBuiltRepository.findById("urn:uuid:d387fa8e-603c-42bd-98c3-4d87fef8d2bb").orElseThrow();
         investigationsSupport.storeInvestigationWithStatusAndAssets(RECEIVED, List.of(assetAsBuilt1), RECEIVER);
         investigationsSupport.storeInvestigationWithStatusAndAssets(DECLINED, List.of(assetAsBuilt1), RECEIVER);

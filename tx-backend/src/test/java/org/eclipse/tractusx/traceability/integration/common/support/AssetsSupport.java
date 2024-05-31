@@ -20,6 +20,7 @@ package org.eclipse.tractusx.traceability.integration.common.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.model.AssetAsBuiltEntity;
+import org.eclipse.tractusx.traceability.notification.infrastructure.notification.repository.JpaNotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -51,6 +52,13 @@ public class AssetsSupport {
 
     public AssetAsBuiltEntity findById(String id) {
         return AssetAsBuiltEntity.from(assetRepositoryProvider.assetAsBuiltRepository.getAssetById(id));
+    }
+
+    public void defaultMultipleAssetsAsBuiltStored() {
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        bpnSupport.providesBpdmLookup();
+        assetRepositoryProvider.assetAsBuiltRepository()
+                .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertMultipleAssetsAsBuiltForTests());
     }
 
     public void tractionBatteryCodeAssetsStored() {
