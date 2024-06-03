@@ -38,4 +38,5 @@ class BadRequestExceptionTest {
         // then
         assertThat(exception.getMessage()).isEqualTo(message);
     }
+
 }

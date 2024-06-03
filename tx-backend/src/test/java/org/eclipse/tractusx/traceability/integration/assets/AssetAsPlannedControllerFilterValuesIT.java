@@ -22,7 +22,7 @@ package org.eclipse.tractusx.traceability.integration.assets;
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.assets.infrastructure.asplanned.repository.JpaAssetAsPlannedRepository;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.*;
+import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;

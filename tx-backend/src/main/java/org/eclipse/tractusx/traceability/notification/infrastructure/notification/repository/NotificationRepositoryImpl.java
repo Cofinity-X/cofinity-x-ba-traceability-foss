@@ -209,8 +209,6 @@ public class NotificationRepositoryImpl implements NotificationRepository {
         return assetsAsBuiltRepository.findByIdIn(assetIds);
     }
 
-    private void handleMessageCreate(NotificationEntity notificationEntity, NotificationMessage messageDomain, List<AssetAsBuiltEntity> assetEntities) {
-        NotificationMessageEntity notificationMessageEntity = toNotificationMessageEntity(notificationEntity, messageDomain, assetEntities);
     @Transactional
     @Override
     public long countPartsByStatusAndOwnershipAndTypeAndNotificationType(List<NotificationStatus> statuses, Owner owner, NotificationType notificationType) {
@@ -223,8 +221,8 @@ public class NotificationRepositoryImpl implements NotificationRepository {
                 .toList().size();
     }
 
-    private void handleNotificationCreate(NotificationEntity notificationEntity, NotificationMessage notificationDomain, List<AssetAsBuiltEntity> assetEntities) {
-        NotificationMessageEntity notificationMessageEntity = toNotificationMessageEntity(notificationEntity, notificationDomain, assetEntities);
+    private void handleMessageCreate(NotificationEntity notificationEntity, NotificationMessage messageDomain, List<AssetAsBuiltEntity> assetEntities) {
+        NotificationMessageEntity notificationMessageEntity = toNotificationMessageEntity(notificationEntity, messageDomain, assetEntities);
 
         Optional<NotificationMessageEntity> optionalNotificationMessage = jpaNotificationMessageRepository.findById(notificationMessageEntity.getId());
 

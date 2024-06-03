@@ -79,4 +79,5 @@ public class IntegrationTestSpecification {
         Awaitility.pollInSameThread();
         await().pollDelay(2, TimeUnit.SECONDS).until(conditions, Matchers.equalTo(true));
     }
+
 }

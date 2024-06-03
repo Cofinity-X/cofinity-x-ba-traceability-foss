@@ -46,6 +46,7 @@ public class DatabaseSupport {
             "import_job"
     });
 
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -55,4 +56,5 @@ public class DatabaseSupport {
             JdbcTestUtils.deleteFromTables(jdbcTemplate, table);
         });
     }
+
 }

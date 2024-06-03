@@ -79,7 +79,7 @@ public class AssetTestData {
         try {
             final InputStream file = AssetTestData.class.getResourceAsStream(resourceName);
             final IRSResponse response = mapper.readValue(file, IRSResponse.class);
-            return assetMapperFactory.mapToAssetBaseList(response);
+            return assetMapperFactory.toAssetBaseList(response);
         } catch (IOException e) {
             return Collections.emptyList();
         }

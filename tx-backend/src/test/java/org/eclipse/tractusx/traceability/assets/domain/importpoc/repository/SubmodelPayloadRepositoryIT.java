@@ -6,7 +6,7 @@ import org.eclipse.tractusx.traceability.assets.domain.importpoc.model.ImportReq
 import org.eclipse.tractusx.traceability.assets.infrastructure.asbuilt.repository.JpaAssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.IrsSubmodel;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.*;
+import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +54,7 @@ class SubmodelPayloadRepositoryIT extends IntegrationTestSpecification {
                 .filter(asset -> Objects.equals(asset.assetMetaInfoRequest().catenaXId(), assetId)).findFirst()
                 .map(ImportRequest.AssetImportRequest::submodels).get();
 
+
         assetsSupport.defaultAssetsStored();
         jpaAssetAsBuiltRepository.findAll();
         submodelPayloadRepository.savePayloadForAssetAsBuilt(assetId, submodels);
@@ -66,4 +67,5 @@ class SubmodelPayloadRepositoryIT extends IntegrationTestSpecification {
         // then
         assertThat(result).isNotNull();
     }
+
 }

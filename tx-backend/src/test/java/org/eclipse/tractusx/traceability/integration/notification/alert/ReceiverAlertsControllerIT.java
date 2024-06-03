@@ -220,4 +220,5 @@ class ReceiverAlertsControllerIT extends IntegrationTestSpecification {
                         """.replace("$status", UpdateNotificationStatusRequest.DECLINED.name()))
         );
     }
+
 }

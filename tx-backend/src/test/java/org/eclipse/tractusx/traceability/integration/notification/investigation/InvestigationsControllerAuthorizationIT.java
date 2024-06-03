@@ -58,11 +58,11 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
 
         var request = StartNotificationRequest.builder()
                 .type(NotificationTypeRequest.INVESTIGATION)
-                .partIds(partIds)
+                .affectedPartIds(partIds)
                 .description(description)
                 .severity(severity)
                 .receiverBpn(receiverBpn)
-                .isAsBuilt(false)
+                //.isAsBuilt(false)
                 .build();
 
         given()
@@ -173,7 +173,7 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
     @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorAndUserRolesAllowed")
     void shouldAllowUpdateEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException, JsonProcessingException {
 
-        var request = new UpdateNotificationRequest();
+        var request = new UpdateNotificationStatusTransitionRequest();
         request.setStatus(UpdateNotificationStatusRequest.ACCEPTED);
         request.setReason("reason for acceptanace");
 

@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 class ActuatorIT extends IntegrationTestSpecification {
 
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -54,8 +55,8 @@ class ActuatorIT extends IntegrationTestSpecification {
     public void shouldRetrieveActuatorHealthDataWithoutAuthentication() {
         given(requestSpecification)
                 .when().get("/actuator/health")
-                .then().statusCode(503)
-                .body("status", equalTo("OUT_OF_SERVICE"))
+                .then().statusCode(200)
+                .body("status", equalTo("UP"))
                 .body("groups", containsInAnyOrder("liveness", "readiness"));
         Assert.assertNotNull(mockMvc);
     }
@@ -75,4 +76,6 @@ class ActuatorIT extends IntegrationTestSpecification {
                 .then().statusCode(200)
                 .body("status", equalTo("UP"));
     }
+
+
 }

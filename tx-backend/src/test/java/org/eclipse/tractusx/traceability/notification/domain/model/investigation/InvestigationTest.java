@@ -339,3 +339,4 @@ class InvestigationTest {
                 .build();
     }
 }
+

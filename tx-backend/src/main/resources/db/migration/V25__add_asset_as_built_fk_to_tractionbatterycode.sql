@@ -1,3 +1,5 @@
+DROP TABLE public.temp_assets_as_built_notifications;
+
 ALTER TABLE traction_battery_code_subcomponent
     ADD COLUMN "asset_as_built_id" varchar(255) NULL;
 ALTER TABLE traction_battery_code_subcomponent

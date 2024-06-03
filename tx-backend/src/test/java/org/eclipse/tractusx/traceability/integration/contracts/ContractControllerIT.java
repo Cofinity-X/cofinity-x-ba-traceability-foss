@@ -168,4 +168,5 @@ class ContractControllerIT extends IntegrationTestSpecification {
         //THEN
         assertThat(contractResponsePageResult.content()).isEmpty();
     }
+
 }

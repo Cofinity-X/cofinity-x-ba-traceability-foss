@@ -41,6 +41,7 @@ class AssetAsBuiltServiceImplTest {
     @Mock
     private JobRepository jobRepository;
 
+
     @Test
     void synchronizeAssets_shouldSaveCombinedAssets_whenNoException() {
         // given
@@ -53,5 +54,7 @@ class AssetAsBuiltServiceImplTest {
         verify(jobRepository).createJobToResolveAssets(globalAssetId, Direction.DOWNWARD, Aspect.downwardAspectsForAssetsAsBuilt(), BomLifecycle.AS_BUILT);
         verify(jobRepository).createJobToResolveAssets(globalAssetId, Direction.UPWARD, Aspect.upwardAspectsForAssetsAsBuilt(), BomLifecycle.AS_BUILT);
     }
+
+
 }
 

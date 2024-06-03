@@ -183,4 +183,5 @@ class NotificationControllerTest {
         // then
         verify(notificationService, times(1)).updateStatusTransition(param, NotificationStatus.ACCEPTED, "just because I say so");
     }
+
 }

@@ -21,7 +21,7 @@ package org.eclipse.tractusx.traceability.integration.assets;
 
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.*;
+import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.BpnSupport;
 import org.hamcrest.Matchers;
 import org.jose4j.lang.JoseException;

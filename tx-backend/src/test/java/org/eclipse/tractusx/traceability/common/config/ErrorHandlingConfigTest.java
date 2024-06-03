@@ -335,4 +335,5 @@ class ErrorHandlingConfigTest {
             throw new Exception("");
         }
     }
+
 }

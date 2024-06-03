@@ -91,4 +91,5 @@ public class OAuth2ApiSupport {
                 startsWithUri(RestitoConfig.OAUTH2_TOKEN_PATH)
         );
     }
+
 }
