@@ -32,6 +32,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 @Injectable()
 export class PartsFacade {
   private partsAsBuiltSubscription: Subscription;
+  private partsAsBuiltSubscriptionSecond: Subscription;
   private partsAsPlannedSubscription: Subscription;
   private readonly unsubscribeTrigger = new Subject<void>();
 
@@ -40,6 +41,10 @@ export class PartsFacade {
 
   public get partsAsBuilt$(): Observable<View<Pagination<Part>>> {
     return this.partsState.partsAsBuilt$;
+  }
+
+  public get partsAsBuiltSecond$(): Observable<View<Pagination<Part>>> {
+    return this.partsState.partsAsBuiltSecond$;
   }
 
   public get partsAsPlanned$(): Observable<View<Pagination<Part>>> {
@@ -54,6 +59,22 @@ export class PartsFacade {
     });
   }
 
+  public setPartsAsBuiltSecond(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsBuiltFilter?: AssetAsBuiltFilter, isOrSearch?: boolean): void {
+    this.partsAsBuiltSubscriptionSecond?.unsubscribe();
+    this.partsAsBuiltSubscriptionSecond = this.partsService.getPartsAsBuilt(page, pageSize, sorting, assetAsBuiltFilter, isOrSearch).subscribe({
+      next: data => (this.partsState.partsAsBuiltSecond = { data: provideDataObject(data) }),
+      error: error => (this.partsState.partsAsBuiltSecond = { error }),
+    });
+  }
+
+  public setPartsAsBuiltSecondEmpty(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsBuiltFilter?: AssetAsBuiltFilter, isOrSearch?: boolean): void {
+    this.partsAsBuiltSubscriptionSecond?.unsubscribe();
+    this.partsAsBuiltSubscriptionSecond = this.partsService.getPartsAsBuilt(page, pageSize, sorting, assetAsBuiltFilter, isOrSearch).subscribe({
+      next: data => (this.partsState.partsAsBuiltSecond = { data: provideDataObject(null) }),
+      error: error => (this.partsState.partsAsBuiltSecond = { error }),
+    });
+  }
+
   public setPartsAsPlanned(page = 0, pageSize = 50, sorting: TableHeaderSort[] = [], assetAsPlannedFilter?: AssetAsPlannedFilter, isOrSearch?: boolean): void {
     this.partsAsPlannedSubscription?.unsubscribe();
     this.partsAsPlannedSubscription = this.partsService.getPartsAsPlanned(page, pageSize, sorting, assetAsPlannedFilter, isOrSearch).subscribe({
@@ -64,6 +85,7 @@ export class PartsFacade {
 
   public unsubscribeParts(): void {
     this.partsAsBuiltSubscription?.unsubscribe();
+    this.partsAsBuiltSubscriptionSecond?.unsubscribe();
     this.partsAsPlannedSubscription?.unsubscribe();
     this.unsubscribeTrigger.next();
   }

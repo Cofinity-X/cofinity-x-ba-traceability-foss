@@ -32,6 +32,12 @@ public class AssetsSupport {
     AssetRepositoryProvider assetRepositoryProvider;
 
     @Autowired
+    BpnSupport bpnSupport;
+
+    @Autowired
+    OAuth2ApiSupport oAuth2ApiSupport;
+
+    @Autowired
     JpaNotificationRepository jpaInvestigationRepository;
 
     public String emptyText() {
@@ -39,6 +45,8 @@ public class AssetsSupport {
     }
 
     public void defaultAssetsStored() {
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        bpnSupport.providesBpdmLookup();
         assetRepositoryProvider.assetAsBuiltRepository()
                 .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsForTests());
     }
@@ -48,21 +56,27 @@ public class AssetsSupport {
     }
 
     public void defaultMultipleAssetsAsBuiltStored() {
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        bpnSupport.providesBpdmLookup();
         assetRepositoryProvider.assetAsBuiltRepository()
                 .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertMultipleAssetsAsBuiltForTests());
     }
 
     public void tractionBatteryCodeAssetsStored() {
+        bpnSupport.providesBpdmLookup();
         assetRepositoryProvider.assetAsBuiltRepository()
                 .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertTractionBatteryCodeAssetsForTests());
     }
 
     public void defaultAssetsAsPlannedStored() {
+        oAuth2ApiSupport.oauth2ApiReturnsTechnicalUserToken();
+        bpnSupport.providesBpdmLookup();
         assetRepositoryProvider.assetAsPlannedRepository()
                 .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests());
     }
 
     public void assetsAsPlannedStored(final String resourceName) {
+        bpnSupport.providesBpdmLookup();
         assetRepositoryProvider.assetAsPlannedRepository()
                 .saveAll(assetRepositoryProvider.testdataProvider().readAndConvertAssetsAsPlannedForTests(resourceName));
     }

@@ -28,8 +28,6 @@ import org.eclipse.tractusx.irs.edc.client.policy.Policy;
 import org.eclipse.tractusx.irs.edc.client.policy.PolicyType;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.IrsPolicyResponse;
 import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.Payload;
-import org.eclipse.tractusx.traceability.assets.infrastructure.base.irs.model.response.factory.AssetMapperFactory;
-import org.eclipse.tractusx.traceability.bpn.domain.service.BpnRepository;
 import org.eclipse.tractusx.traceability.common.properties.TraceabilityProperties;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -77,11 +75,14 @@ class PolicyRepositoryImplTest {
         // given
         OffsetDateTime validUntil = OffsetDateTime.parse("2023-07-03T16:01:05.309Z");
         OffsetDateTime createdOn = OffsetDateTime.now();
-        Policy policy = new Policy("1", createdOn, validUntil, List.of(new Permission(PolicyType.USE, new Constraints(List.of(), List.of(new Constraint("leftOperand1", new Operator(OperatorType.EQ), "test"))))));
+        Constraint constraint = new Constraint("leftOperand1", new Operator(OperatorType.EQ), "test");
+        Constraint constraintSecond = new Constraint("leftOperand2", new Operator(OperatorType.EQ), "test2");
+        Policy policy = new Policy("1", createdOn, validUntil, List.of(new Permission(PolicyType.USE, new Constraints(List.of(constraint, constraintSecond), List.of()))));
         Payload payload = new Payload(null, "1", policy);
         final IrsPolicyResponse existingPolicy = new IrsPolicyResponse(validUntil, payload);
         when(irsClient.getPolicies()).thenReturn(List.of(existingPolicy));
         when(traceabilityProperties.getRightOperand()).thenReturn("test");
+        when(traceabilityProperties.getRightOperandSecond()).thenReturn("test2");
         when(traceabilityProperties.getValidUntil()).thenReturn(OffsetDateTime.parse("2023-07-02T16:01:05.309Z"));
 
         // when
@@ -97,12 +98,16 @@ class PolicyRepositoryImplTest {
 
         OffsetDateTime validUntil = OffsetDateTime.parse("2023-07-03T16:01:05.309Z");
         OffsetDateTime createdOn = OffsetDateTime.now();
-        Policy policy = new Policy("test", createdOn, validUntil, List.of(new Permission(PolicyType.USE, new Constraints(List.of(), List.of(new Constraint("leftOperand1", new Operator(OperatorType.EQ), "test"))))));
+        Constraint constraint = new Constraint("leftOperand1", new Operator(OperatorType.EQ), "test");
+        Constraint constraintSecond = new Constraint("leftOperand2", new Operator(OperatorType.EQ), "test2");
+        Policy policy = new Policy("test", createdOn, validUntil, List.of(new Permission(PolicyType.USE, new Constraints(List.of(constraint, constraintSecond), List.of()))));
         Payload payload = new Payload(null, "test", policy);
 
         final IrsPolicyResponse existingPolicy = new IrsPolicyResponse(validUntil, payload);
         when(irsClient.getPolicies()).thenReturn(List.of(existingPolicy));
         when(traceabilityProperties.getRightOperand()).thenReturn("test");
+        when(traceabilityProperties.getRightOperandSecond()).thenReturn("test2");
+
         when(traceabilityProperties.getValidUntil()).thenReturn(OffsetDateTime.parse("2023-07-04T16:01:05.309Z"));
 
         // when

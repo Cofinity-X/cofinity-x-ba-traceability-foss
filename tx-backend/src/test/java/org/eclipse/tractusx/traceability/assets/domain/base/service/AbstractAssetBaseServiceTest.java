@@ -41,7 +41,7 @@ class AbstractAssetBaseServiceTest {
         // given params
 
         // when
-        List<String> result = service.getDistinctFilterValues(fieldName, startWith, 10, null);
+        List<String> result = service.getDistinctFilterValues(fieldName, startWith, 10, null, List.of());
 
         // then
         assertThat(result).containsAll(expectedValues);

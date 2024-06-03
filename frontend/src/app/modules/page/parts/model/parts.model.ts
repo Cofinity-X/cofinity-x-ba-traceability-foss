@@ -120,6 +120,8 @@ export enum SemanticDataModel {
   PARTASPLANNED = 'PARTASPLANNED',
   JUSTINSEQUENCE = 'JUSTINSEQUENCE',
   TRACTIONBATTERYCODE = 'TRACTIONBATTERYCODE',
+  TOMBSTONEASBUILT = 'TOMBSTONEASBUILT',
+  TOMBSTONEASPLANNED = 'TOMBSTONEASPLANNED',
   UNKNOWN = 'UNKNOWN'
 }
 
@@ -129,8 +131,11 @@ export enum SemanticDataModelInCamelCase {
   PARTASPLANNED = 'PartAsPlanned',
   JUSTINSEQUENCE = 'JustInSequence',
   TRACTIONBATTERYCODE = 'TractionBatteryCode',
+  TOMBSTONEASBUILT = 'TombstoneAsBuilt',
+  TOMBSTONEASPLANNED = 'TombstoneAsPlanned',
   UNKNOWN = 'Unknown'
 }
+
 
 export interface Relation {
   id: string;
@@ -139,9 +144,12 @@ export interface Relation {
 
 export interface AssetAsBuiltFilter {
   id?: string,
+  ids?: string[],
+  excludeIds?: string[],
   idShort?: string,
   name?: string,
   manufacturerName?: string,
+  businessPartner?: string,
   partId?: string,
   manufacturerPartId?: string,
   customerPartId?: string,
@@ -150,7 +158,8 @@ export interface AssetAsBuiltFilter {
   semanticModelId?: string,
   semanticDataModel?: string[],
   manufacturingDate?: string,
-  manufacturingCountry?: string
+  manufacturingCountry?: string,
+  owner?: Owner
 }
 
 export interface AssetAsPlannedFilter {
@@ -158,6 +167,7 @@ export interface AssetAsPlannedFilter {
   idShort?: string,
   name?: string,
   manufacturer?: string,
+  businessPartner?: string,
   manufacturerPartId?: string,
   classification?: string,
   semanticDataModel?: string[],
@@ -168,6 +178,7 @@ export interface AssetAsPlannedFilter {
   catenaXSiteId?: string,
   functionValidFrom?: string,
   functionValidUntil?: string,
+  owner?: Owner
 }
 
 export enum ImportState {
@@ -194,7 +205,8 @@ export enum FilterOperator {
   STARTS_WITH = 'STARTS_WITH',
   BEFORE_LOCAL_DATE = 'BEFORE_LOCAL_DATE',
   AFTER_LOCAL_DATE = 'AFTER_LOCAL_DATE',
-  NOTIFICATION_COUNT_EQUAL = 'NOTIFICATION_COUNT_EQUAL'
+  NOTIFICATION_COUNT_EQUAL = 'NOTIFICATION_COUNT_EQUAL',
+  EXCLUDE = 'EXCLUDE'
 }
 
 export function getFilterOperatorValue(operator: FilterOperator) {

@@ -30,7 +30,6 @@ import {
   AutocompleteStrategyMap,
 } from '@shared/components/multi-select-autocomplete/autocomplete-strategy';
 import { TableType } from '@shared/components/multi-select-autocomplete/table-type.model';
-import { NotificationType } from '@shared/model/notification.model';
 import { FormatPartSemanticDataModelToCamelCasePipe } from '@shared/pipes/format-part-semantic-data-model-to-camelcase.pipe';
 import { PartsService } from '@shared/service/parts.service';
 import { firstValueFrom } from 'rxjs';
@@ -88,6 +87,9 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
   @ViewChild('searchInput', { static: true }) searchInput: any;
 
   searchElement: string = '';
+
+  @Input()
+  inAssetIds: string[] = [];
 
   searchElementChange: EventEmitter<any> = new EventEmitter();
 
@@ -169,14 +171,8 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
       suffix = (' + ' + (this.selectedValue?.length - 1)) + ' ' + this.placeholderMultiple;
     }
 
-    // apply CamelCase to semanticDataModel labels
-    if (this.filterColumn === 'semanticDataModel') {
-      displayValue = [ this.formatPartSemanticDataModelToCamelCasePipe.transformModel(this.selectedValue[0]), suffix ];
-    } else if (this.filterColumn === 'type') {
-      displayValue = [ NotificationType[this.selectedValue[0]], suffix ];
-    } else {
-      displayValue = [ this.selectedValue[0], suffix ];
-    }
+    displayValue = [ this.selectedValue[0], suffix ];
+
 
     // if no value selected, return empty string
     if (!this.selectedValue.length) {
@@ -212,46 +208,14 @@ export class MultiSelectAutocompleteComponent implements OnChanges {
     const timeoutCallback = async (): Promise<void> => {
       this.isLoadingSuggestions = true;
       try {
-        firstValueFrom(this.strategy.retrieveSuggestionValues(this.tableType, this.filterColumn, this.searchElement)).then((res) => {
-          if (this.filterColumn === 'semanticDataModel') {
-            // @ts-ignore
-            this.searchedOptions = res.filter(option => !this.selectedValue.includes(option))
-              .map(option => ({
-                display: this.formatPartSemanticDataModelToCamelCasePipe.transformModel(option),
-                value: option,
-              }));
-            this.options = this.searchedOptions;
-            // @ts-ignore
-            this.allOptions = res.map(option => ({
-              display: this.formatPartSemanticDataModelToCamelCasePipe.transformModel(option),
-              value: option,
-            }));
-
-          } else if (this.filterColumn === 'type') {
-
-            // @ts-ignore
-            this.searchedOptions = res.filter(option => !this.selectedValue.includes(option))
-              .map(option => ({
-                display: NotificationType[option],
-                value: option,
-              }));
-            this.options = this.searchedOptions;
-            // @ts-ignore
-            this.allOptions = res.map(option => ({
-              display: NotificationType[option],
-              value: option,
-            }));
-          } else {
-            // add filter for not selected
-            // @ts-ignore
-            this.searchedOptions = res.filter(option => !this.selectedValue.includes(option))
-              .map(option => ({ display: option, value: option }));
-            this.options = this.searchedOptions;
-            // @ts-ignore
-            this.allOptions = res.map(option => ({ display: option, value: option }));
-            this.handleAllSelectedCheckbox();
-          }
-
+        firstValueFrom(this.strategy.retrieveSuggestionValues(this.tableType, this.filterColumn, this.searchElement, this.inAssetIds)).then((res) => {
+          // @ts-ignore
+          this.searchedOptions = res.filter(option => !this.selectedValue?.includes(option))
+            .map(option => ({ display: option, value: option }));
+          this.options = this.searchedOptions;
+          // @ts-ignore
+          this.allOptions = res.map(option => ({ display: option, value: option }));
+          this.handleAllSelectedCheckbox();
           this.suggestionError = !this.searchedOptions?.length;
         }).catch((error) => {
           console.error('Error fetching data: ', error);

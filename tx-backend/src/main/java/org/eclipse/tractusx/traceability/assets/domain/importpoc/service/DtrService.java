@@ -101,7 +101,7 @@ public class DtrService {
                                         .interfaceInformation("SUBMODEL-3.0")
                                         .protocolInformation(
                                                 ProtocolInformation.builder()
-                                                        .href(edcProperties.getProviderDataplaneEdcUrl() + "/api/public/data/" + submodelServerIdReference)
+                                                        .href(edcProperties.getProviderDataplaneEdcUrl() + "/api/public/" + submodelServerIdReference)
                                                         .endpointProtocol("HTTP")
                                                         .endpointProtocolVersion(List.of("1.1"))
                                                         .subprotocol("DSP")
@@ -143,7 +143,8 @@ public class DtrService {
     }
 
     List<IdentifierKeyValuePair> aasIdentifiersFromAsset(AssetBase assetBase) {
-        return List.of(
+
+        List<IdentifierKeyValuePair> identifierKeyValuePairs = List.of(
                 IdentifierKeyValuePair.builder()
                         .name("manufacturerId")
                         .value(assetBase.getManufacturerId())
@@ -163,6 +164,8 @@ public class DtrService {
                                         .build())
                         .build()
         );
+        log.info("IdentifierKeyValuePair {}", identifierKeyValuePairs);
+        return identifierKeyValuePairs;
     }
 
     private List<SemanticId> getExternalSubjectIds() {

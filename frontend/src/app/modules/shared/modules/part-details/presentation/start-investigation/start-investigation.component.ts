@@ -20,14 +20,16 @@
  ********************************************************************************/
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { SharedPartService } from '@page/notifications/detail/edit/shared-part.service';
 import { Part } from '@page/parts/model/parts.model';
 import { CreateHeaderFromColumns, TableConfig, TableEventConfig } from '@shared/components/table/table.model';
+import { NotificationType } from '@shared/model/notification.model';
 import { State } from '@shared/model/state';
 import { View } from '@shared/model/view.model';
 import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
 import { StaticIdService } from '@shared/service/staticId.service';
 import { Observable, Subject, Subscription } from 'rxjs';
-import {NotificationType} from "@shared/model/notification.model";
 
 @Component({
   selector: 'app-start-investigation',
@@ -73,6 +75,8 @@ export class StartInvestigationComponent {
   constructor(
     private readonly partDetailsFacade: PartDetailsFacade,
     private readonly staticIdService: StaticIdService,
+    private sharedPartService: SharedPartService,
+    private readonly router: Router,
   ) {
     this.childParts$ = this.childPartsState.observable;
     this.selectedChildParts$ = this.selectedChildPartsState.observable;
@@ -91,20 +95,6 @@ export class StartInvestigationComponent {
     };
   }
 
-  public removeChildPartFromSelection(part: Part): void {
-    this.selectedChildPartsState.update([ ...this.selectedChildPartsState.snapshot.filter(c => c.id !== part.id) ]);
-    this.deselectPartTrigger$.next([ part ]);
-  }
-
-  public addChildPartToSelection(part: Part): void {
-    this.selectedChildPartsState.update([ ...this.selectedChildPartsState.snapshot, part ]);
-    this.addPartTrigger$.next(part);
-  }
-
-  public clearSelectedChildParts(): void {
-    this.selectedChildPartsState.reset();
-  }
-
   public onMultiSelect(parts: unknown[]): void {
     this.selectedChildPartsState.update(parts as Part[]);
   }
@@ -114,6 +104,11 @@ export class StartInvestigationComponent {
 
     const data = this.partDetailsFacade.sortChildParts(this.childPartsState.snapshot, name, direction);
     this.childPartsState.update({ data });
+  }
+
+  navigateToNotificationCreationView() {
+    this.sharedPartService.affectedParts = this.childPartsState.snapshot.data;
+    this.router.navigate([ 'inbox/create' ], { queryParams: { initialType: NotificationType.INVESTIGATION } });
   }
 
     protected readonly NotificationType = NotificationType;
