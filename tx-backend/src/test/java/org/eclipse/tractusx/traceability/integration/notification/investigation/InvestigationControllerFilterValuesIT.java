@@ -77,7 +77,7 @@ class InvestigationControllerFilterValuesIT extends IntegrationTestSpecification
         final Integer size = 200;
         final String startWith = "1";
 
-        // Then
+        // when/then
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)

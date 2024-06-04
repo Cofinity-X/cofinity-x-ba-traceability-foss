@@ -141,8 +141,7 @@ public class NotificationsEDCFacade {
                             CatalogRequest.Builder.newInstance()
                                     .protocol(DEFAULT_PROTOCOL)
                                     .counterPartyAddress(receiverEdcUrl + edcProperties.getIdsPath())
-                                    // TODO : POOJA NEED TO CROSSCHECK
-                                    //.counterPartyId(notification.getSendTo())
+                                    .counterPartyId(notification.getSendTo())
                                     .querySpec(QuerySpec.Builder.newInstance()
                                             // https://github.com/eclipse-tractusx/traceability-foss/issues/978
                                             // Probably:

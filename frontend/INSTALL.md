@@ -1,5 +1,4 @@
 # Environment variables
-# Environment variables
 
 Support environment variables are:
 
