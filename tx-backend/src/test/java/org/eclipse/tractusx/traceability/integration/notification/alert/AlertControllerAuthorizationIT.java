@@ -43,7 +43,6 @@ import static io.restassured.RestAssured.given;
 class AlertControllerAuthorizationIT extends IntegrationTestSpecification {
 
     private static final String ROOT = "/api/notifications";
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @ParameterizedTest
@@ -54,7 +53,7 @@ class AlertControllerAuthorizationIT extends IntegrationTestSpecification {
         );
         String description = "at least 15 characters long investigation description";
         NotificationSeverityRequest severity = NotificationSeverityRequest.MINOR;
-        String receiverBpn = "BPN";
+        String receiverBpn = "BPNL00000003CML1";
 
         var request = StartNotificationRequest.builder()
                 .type(NotificationTypeRequest.ALERT)
@@ -62,7 +61,6 @@ class AlertControllerAuthorizationIT extends IntegrationTestSpecification {
                 .description(description)
                 .severity(severity)
                 .receiverBpn(receiverBpn)
-               // .isAsBuilt(false)
                 .build();
 
         given()

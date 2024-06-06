@@ -54,7 +54,7 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
         );
         String description = "at least 15 characters long investigation description";
         NotificationSeverityRequest severity = NotificationSeverityRequest.MINOR;
-        String receiverBpn = "BPN";
+        String receiverBpn = "BPNL00000003CML1";
 
         var request = StartNotificationRequest.builder()
                 .type(NotificationTypeRequest.INVESTIGATION)
@@ -62,7 +62,6 @@ class InvestigationsControllerAuthorizationIT extends IntegrationTestSpecificati
                 .description(description)
                 .severity(severity)
                 .receiverBpn(receiverBpn)
-                //.isAsBuilt(false)
                 .build();
 
         given()
