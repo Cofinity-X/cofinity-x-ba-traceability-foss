@@ -73,11 +73,11 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
     if (this.formGroup.invalid) {
       return;
     }
-    const partIds = this.selectedItems.map(part => part.id);
+    const affectedPartIds = this.selectedItems.map(part => part.id);
     const { description, targetDate, severity } = this.formGroup.value;
     const { link, queryParams } = getRoute(INVESTIGATION_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);
 
-    this.investigationsService.createInvestigation(partIds, description, severity, targetDate).subscribe({
+    this.investigationsService.createInvestigation(affectedPartIds, description, severity, targetDate).subscribe({
       next: () => this.onSuccessfulSubmit(link, queryParams),
       error: () => this.onUnsuccessfulSubmit(),
     });

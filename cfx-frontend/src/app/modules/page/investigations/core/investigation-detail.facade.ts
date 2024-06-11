@@ -91,7 +91,7 @@ export class InvestigationDetailFacade {
       .pipe(
         filter(view => !!view.data),
         map(({ data }) => this.getIdsFromPartList(data)),
-        switchMap(partIds => (!!partIds && !!partIds.length ? this.partsService.getPartDetailOfIds(partIds) : of([]))),
+        switchMap(affectedPartIds => (!!affectedPartIds && !!affectedPartIds.length ? this.partsService.getPartDetailOfIds(affectedPartIds) : of([]))),
       )
       .subscribe({
         next: data => {

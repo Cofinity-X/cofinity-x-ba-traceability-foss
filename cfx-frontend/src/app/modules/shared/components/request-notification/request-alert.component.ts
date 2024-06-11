@@ -73,14 +73,14 @@ export class RequestAlertComponent extends RequestNotificationBase {
       return;
     }
 
-    const partIds = this.forwardedNotification ? this.forwardedNotification.assetIds : this.selectedItems.map(part => part.id);
+    const affectedPartIds = this.forwardedNotification ? this.forwardedNotification.assetIds : this.selectedItems.map(part => part.id);
     // set asBuilt parameter if one of the selectedItems are a asPlanned Part
     const isAsBuilt = this.forwardedNotification ? true : this.selectedItems.map(part => part.semanticDataModel === SemanticDataModel.PARTASPLANNED).includes(true);
 
     const { description, bpn, severity } = this.formGroup.value;
     const { link, queryParams } = getRoute(ALERT_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);
 
-    this.alertsService.createAlert(partIds, description, severity, bpn, isAsBuilt).subscribe({
+    this.alertsService.createAlert(affectedPartIds, description, severity, bpn, isAsBuilt).subscribe({
       next: () => this.onSuccessfulSubmit(link, queryParams),
       error: () => this.onUnsuccessfulSubmit(),
     });
