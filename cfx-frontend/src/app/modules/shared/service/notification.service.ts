@@ -92,10 +92,11 @@ export class NotificationService {
     description: string,
     severity: Severity,
     dateString: DateTimeString,
+    bpn: string,
   ): Observable<string> {
     // targetDate is an optional field
     const targetDate = null === dateString ? null : new Date(dateString).toISOString();
-    const body = { affectedPartIds, description, severity, targetDate, type: NotificationType.INVESTIGATION.toUpperCase() };
+    const body = { affectedPartIds, description, severity, targetDate, receiverBpn: bpn, type: NotificationType.INVESTIGATION.toUpperCase() };
 
     return this.apiService
       .post<NotificationCreateResponse>(this.url, body)

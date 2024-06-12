@@ -55,6 +55,7 @@ export abstract class RequestNotificationBase {
       description: FormControl<string>;
       severity: FormControl<Severity>;
       targetDate: FormControl<DateTimeString>;
+      bpn: FormControl<string>;
     }>
     | FormGroup<{
       description: FormControl<string>;
