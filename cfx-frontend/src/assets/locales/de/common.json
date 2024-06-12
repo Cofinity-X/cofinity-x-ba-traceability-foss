@@ -194,6 +194,7 @@
     "bpnDescription": "Bitte geben Sie die Empfänger BPN an.",
     "restoreItem": "Zuletzt gelöschtes Produkt wiederherstellen?",
     "textAreaLabel": "Beschreibung",
+    "textAreaLabelTitle": "Titel",
     "targetDateLabel": "Rückmeldedatum",
     "back": "Zurück",
     "cancel": "Abbruch",

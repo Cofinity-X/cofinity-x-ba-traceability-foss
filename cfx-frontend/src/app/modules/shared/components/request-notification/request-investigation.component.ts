@@ -52,7 +52,7 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   @Input() selectedItems: Part[] = [];
 
   public readonly context: RequestContext = RequestContext.REQUEST_INVESTIGATION;
-  @Input() public formGroup: FormGroup<{ description: FormControl<string>; targetDate: FormControl<DateTimeString>; severity: FormControl<Severity>; bpn: FormControl<any>;}>;
+  @Input() public formGroup: FormGroup<{ description: FormControl<string>; targetDate: FormControl<DateTimeString>; severity: FormControl<Severity>; bpn: FormControl<any>; title: FormControl<string>; }>;
 
   constructor(toastService: ToastService, private readonly investigationsService: NotificationService, public dialog: MatDialog) {
     super(toastService, dialog);
@@ -63,7 +63,8 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
       description: new FormControl(this.forwardedNotification ? 'FW: ' + this.forwardedNotification.description : '', [ Validators.required, Validators.maxLength(1000), Validators.minLength(15) ]),
       targetDate: new FormControl(null, [DateValidators.atLeastNow(), DateValidators.maxDeadline(this.forwardedNotification?.targetDate?.valueOf()), Validators.required]),
       severity: new FormControl(this.forwardedNotification ? this.forwardedNotification.severity : Severity.MINOR),
-       bpn: new FormControl(null, [ Validators.required, BaseInputHelper.getCustomPatternValidator(bpnRegex, 'bpn') ])
+      bpn: new FormControl(null, [ Validators.required, BaseInputHelper.getCustomPatternValidator(bpnRegex, 'bpn') ]),
+      title: new FormControl('', [ Validators.maxLength(30), Validators.minLength(0) ]),
     });
 
   }
@@ -77,10 +78,10 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
       return;
     }
     const affectedPartIds = this.selectedItems.map(part => part.id);
-    const { description, targetDate, severity, bpn } = this.formGroup.value;
+    const { description, targetDate, severity, bpn, title } = this.formGroup.value;
     const { link, queryParams } = getRoute(INVESTIGATION_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);
 
-    this.investigationsService.createInvestigation(affectedPartIds, description, severity, targetDate, bpn).subscribe({
+    this.investigationsService.createInvestigation(affectedPartIds, description, severity, targetDate, bpn, title).subscribe({
       next: () => this.onSuccessfulSubmit(link, queryParams),
       error: () => this.onUnsuccessfulSubmit(),
     });

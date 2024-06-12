@@ -82,7 +82,7 @@ export class NotificationService {
       .pipe(map(notification => NotificationAssembler.assembleNotification(notification, notificationType)));
   }
 
-  public createAlert(affectedPartIds: string[], description: string, severity: Severity, bpn: string, isAsBuilt: boolean): Observable<string> {
+  public createAlert(affectedPartIds: string[], description: string, severity: Severity, bpn: string, title: string, isAsBuilt: boolean): Observable<string> {
     const body = { affectedPartIds, description, severity, receiverBpn: bpn, isAsBuilt, type: NotificationType.ALERT.toUpperCase() };
     return this.apiService.post<NotificationCreateResponse>(this.url, body).pipe(map(({ id }) => id));
   }
@@ -93,10 +93,11 @@ export class NotificationService {
     severity: Severity,
     dateString: DateTimeString,
     bpn: string,
+    title: string,
   ): Observable<string> {
     // targetDate is an optional field
     const targetDate = null === dateString ? null : new Date(dateString).toISOString();
-    const body = { affectedPartIds, description, severity, targetDate, receiverBpn: bpn, type: NotificationType.INVESTIGATION.toUpperCase() };
+    const body = { affectedPartIds, description, severity, targetDate, receiverBpn: bpn, title: title === "" ? null: title, type: NotificationType.INVESTIGATION.toUpperCase() };
 
     return this.apiService
       .post<NotificationCreateResponse>(this.url, body)
