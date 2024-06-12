@@ -97,6 +97,7 @@
       "importstate": "Import state",
       "sendToName": "Sent to Manufacturer",
       "createdByName": "Created by Manufacturer",
+      "title": "Title",
       "importnote ": "Import note",
       "partId": "Part number",
       "receivedActiveAlerts": "Active alerts",

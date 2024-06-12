@@ -73,6 +73,7 @@ export const buildMockAlerts = (
       targetDate: `2022-${numberToString(month)}-${numberToString(day + 1)}T12:34:12`,
       assetIds: [MOCK_part_1.id, getRandomAsset().id, getRandomAsset().id, getRandomAsset().id],
       errorMessage: errorAlert,
+      title: 'Title',
     };
   });
 
@@ -90,6 +91,7 @@ const MockEmptyAlert: NotificationResponse = {
   targetDate: `2022-02-01T12:34:12`,
   assetIds: [getRandomAsset().id],
   channel: 'SENDER',
+  title: 'Title',
 };
 
 export const getAlertById = (id: string) => {

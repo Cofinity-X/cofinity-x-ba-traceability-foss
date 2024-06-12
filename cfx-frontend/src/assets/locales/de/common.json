@@ -101,6 +101,7 @@
       "classification": "Klassifizierung",
       "nameAtCustomer": "Kunden Produktname",
       "manufacturerName": "Hersteller Name",
+      "title": "Titel",
       "importstate": "Status importieren",
       "importnote ": "Importhinweis",
       "receivedActiveAlerts": "Aktive Qualitätswarnungen",

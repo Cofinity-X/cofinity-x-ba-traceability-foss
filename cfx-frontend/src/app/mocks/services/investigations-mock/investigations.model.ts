@@ -74,6 +74,7 @@ export const buildMockInvestigations = (
       assetIds: [MOCK_part_1.id, getRandomAsset().id, getRandomAsset().id, getRandomAsset().id],
       errorMessage: errorInvestigation,
       notificationType: NotificationType.INVESTIGATION,
+      title: 'Title',
     };
   });
 
@@ -91,6 +92,7 @@ const MockEmptyInvestigation: NotificationResponse = {
   targetDate: `2022-02-01T12:34:12`,
   assetIds: [getRandomAsset().id],
   channel: 'SENDER',
+  title: 'Title',
 };
 
 export interface NotificationFilter {

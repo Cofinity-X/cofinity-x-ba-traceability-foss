@@ -56,7 +56,8 @@ export const buildMockInvestigations = (
       reason: { close: '', accept: '', decline: '' },
       createdDate: `2022-${numberToString(month)}-${numberToString(day)}T12:34:12`,
       assetIds: [MOCK_part_1.id, getRandomAsset().id, getRandomAsset().id, getRandomAsset().id],
-      errorMessage: errorInvestigation
+      errorMessage: errorInvestigation,
+      title: 'Title',
     };
   });
 
@@ -73,6 +74,7 @@ const MockEmptyInvestigation: NotificationResponse = {
   createdDate: `2022-05-01T12:34:12`,
   assetIds: [getRandomAsset().id],
   channel: 'SENDER',
+  title: 'Title',
 };
 
 export const getInvestigationById = (id: string) => {
