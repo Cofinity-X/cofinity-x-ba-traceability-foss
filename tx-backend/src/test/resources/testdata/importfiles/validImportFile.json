@@ -64,19 +64,19 @@
             "customers": [
               "BPNL00000003CML1"
             ],
-                "parentItems" : [
-                  {
-                    "quantity" : {
-                      "value" : 1,
-                      "unit" : "unit:piece"
-                    },
-                    "catenaXId" : "urn:uuid:6b2296cc-26c0-4f38-8a22-092338c36e22",
-                    "createdOn" : "2023-05-29T14:48:54.709Z",
-                    "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
-                    "businessPartner" : "BPNL00000003CML1",
-                    "isOnlyPotentialParent": false
-                  }
-                ]
+            "parentItems" : [
+              {
+                "quantity" : {
+                  "value" : 1,
+                  "unit" : "unit:piece"
+                },
+                "catenaXId" : "urn:uuid:6b2296cc-26c0-4f38-8a22-092338c36e22",
+                "createdOn" : "2023-05-29T14:48:54.709Z",
+                "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
+                "businessPartner" : "BPNL00000003CML1",
+                "isOnlyPotentialParent": false
+              }
+            ]
           }
         }
       ]
@@ -145,19 +145,19 @@
             "customers": [
               "BPNL00000003CML1"
             ],
-                "parentItems" : [
-                  {
-                    "quantity" : {
-                      "value" : 1,
-                      "unit" : "unit:piece"
-                    },
-                    "catenaXId" : "urn:uuid:d8030bbf-a874-49fb-b2e1-7610f0ccad12",
-                    "createdOn" : "2023-07-15T14:48:54.709Z",
-                    "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
-                    "businessPartner" : "BPNL00000003CML1",
-                    "isOnlyPotentialParent": false
-                  }
-                ]
+            "parentItems" : [
+              {
+                "quantity" : {
+                  "value" : 1,
+                  "unit" : "unit:piece"
+                },
+                "catenaXId" : "urn:uuid:d8030bbf-a874-49fb-b2e1-7610f0ccad12",
+                "createdOn" : "2023-07-15T14:48:54.709Z",
+                "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
+                "businessPartner" : "BPNL00000003CML1",
+                "isOnlyPotentialParent": false
+              }
+            ]
           }
         }
       ]
@@ -226,19 +226,19 @@
             "customers": [
               "BPNL00000003CML1"
             ],
-                "parentItems" : [
-                  {
-                    "quantity" : {
-                      "value" : 1,
-                      "unit" : "unit:piece"
-                    },
-                    "catenaXId" : "urn:uuid:7c7d5aec-b15d-491c-8fbd-c61c6c02c69a",
-                    "createdOn" : "2023-02-16T14:48:54.709Z",
-                    "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
-                    "businessPartner" : "BPNL00000003CML1",
-                    "isOnlyPotentialParent": false
-                  }
-                ]
+            "parentItems" : [
+              {
+                "quantity" : {
+                  "value" : 1,
+                  "unit" : "unit:piece"
+                },
+                "catenaXId" : "urn:uuid:7c7d5aec-b15d-491c-8fbd-c61c6c02c69a",
+                "createdOn" : "2023-02-16T14:48:54.709Z",
+                "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
+                "businessPartner" : "BPNL00000003CML1",
+                "isOnlyPotentialParent": false
+              }
+            ]
           }
         }
       ]
@@ -307,19 +307,19 @@
             "customers": [
               "BPNL00000003CSGV"
             ],
-                "parentItems" : [
-                  {
-                    "quantity" : {
-                      "value" : 1,
-                      "unit" : "unit:piece"
-                    },
-                    "catenaXId" : "urn:uuid:4d33bfa6-0f1f-43a5-ad63-c3fe07a2d076",
-                    "createdOn" : "2023-03-03T14:48:54.709Z",
-                    "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
-                    "businessPartner" : "BPNL00000003CSGV",
-                    "isOnlyPotentialParent": false
-                  }
-                ]
+            "parentItems" : [
+              {
+                "quantity" : {
+                  "value" : 1,
+                  "unit" : "unit:piece"
+                },
+                "catenaXId" : "urn:uuid:4d33bfa6-0f1f-43a5-ad63-c3fe07a2d076",
+                "createdOn" : "2023-03-03T14:48:54.709Z",
+                "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
+                "businessPartner" : "BPNL00000003CSGV",
+                "isOnlyPotentialParent": false
+              }
+            ]
           }
         }
       ]
@@ -361,19 +361,19 @@
             "customers": [
               "BPNL00000003CML1"
             ],
-                "parentItems" : [
-                  {
-                    "quantity" : {
-                      "value" : 1,
-                      "unit" : "unit:piece"
-                    },
-                    "catenaXId" : "urn:uuid:1be6ec59-40fb-4993-9836-acb0e284fa02",
-                    "createdOn" : "2023-08-08T14:48:54.709Z",
-                    "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
-                    "businessPartner" : "BPNL00000003CML1",
-                    "isOnlyPotentialParent": false
-                  }
-                ]
+            "parentItems" : [
+              {
+                "quantity" : {
+                  "value" : 1,
+                  "unit" : "unit:piece"
+                },
+                "catenaXId" : "urn:uuid:1be6ec59-40fb-4993-9836-acb0e284fa02",
+                "createdOn" : "2023-08-08T14:48:54.709Z",
+                "lastModifiedOn" : "2023-02-03T14:48:54.709Z",
+                "businessPartner" : "BPNL00000003CML1",
+                "isOnlyPotentialParent": false
+              }
+            ]
           }
         }
       ]
@@ -1091,17 +1091,17 @@
               "BPNL00000003CML1"
             ],
             "parentItems": [
-                  {
-                    "catenaXId": "urn:uuid:6b2296cc-26c0-4f38-8a22-092338c36e22",
-                    "quantity": {
-                      "value": 1,
-                      "unit": "unit:piece"
-                    },
-                    "createdOn": "2023-02-03T14:48:54.709Z",
-                    "lastModifiedOn": "2023-02-03T14:48:54.709Z",
-                    "businessPartner" : "BPNL00000003AXS3",
-                    "isOnlyPotentialParent": false
-                  }
+              {
+                "catenaXId": "urn:uuid:6b2296cc-26c0-4f38-8a22-092338c36e22",
+                "quantity": {
+                  "value": 1,
+                  "unit": "unit:piece"
+                },
+                "createdOn": "2023-02-03T14:48:54.709Z",
+                "lastModifiedOn": "2023-02-03T14:48:54.709Z",
+                "businessPartner" : "BPNL00000003AXS3",
+                "isOnlyPotentialParent": false
+              }
             ]
           }
         }
