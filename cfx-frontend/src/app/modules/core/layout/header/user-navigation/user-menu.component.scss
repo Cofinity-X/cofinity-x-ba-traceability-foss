@@ -101,6 +101,14 @@
   @apply flex cursor-pointer text-pendingDark;
 }
 
+.user-menu-items--disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.user-menu-items__label--disabled {
+  color: grey;
+}
 .user-menu-language {
   @apply flex items-center;
   gap: 20px;
