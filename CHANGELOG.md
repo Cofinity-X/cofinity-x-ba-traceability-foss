@@ -6,8 +6,113 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 _**For better traceability add the corresponding GitHub issue number in each changelog entry, please.**_
-
 ## [UNRELEASED - DD.MM.YYYY]
+
+## [11.0.2 - 29.05.2024]
+### Added
+- #1010 Made submodel path configurable
+### Changed
+- #1010 Updated IRS Helm Version from 5.1.6 to 5.1.7
+
+### Changed
+
+- XXX increase spotbugs-plugin version from 4.8.3.0 to 4.8.5.0
+- XXX increase install-plugin version from 3.1.1 to 3.1.2
+- XXX increase testcontainer-postgresql version from 1.19.7 to 1.19.8
+- XXX increase json-unit-assertj version from 3.2.2 to 3.2.7
+- XXX increase aquasecurity/trivy-action version from 0.19.0 to 0.20.0
+- XXX increase mikefarah/yq version from 4.43.1 to 4.44.1
+
+## [11.0.1 - 22.05.2024]
+
+### Added
+- #859 added autocomplete on subset of assets in notification creation/edit view
+- #997 added publish assets state check to parts table
+- #XXX added border to dashboard notifications table and view all count
+
+### Changed
+- #778 return empty PageResult when no contract agreement Ids are found instead of http 404 in /contacts API
+- #XXX Fixed some sonar issues in frontend application
+- #958 Fixed bug where available parts filter was reset when list of affected parts are zero in notification creation
+- XXX Removed EdcNotifiactionMockServiceImpl class and replaced with mocks
+- #XXX Switched eclipse-temurin:21-jre-alpine@sha256:fb4150a30569aadae9d693d949684a00653411528e62498b9900940c9b5b8a66 to 23467b3e42617ca197f43f58bc5fb03ca4cb059d68acd49c67128bfded132d67
+- #837 Moved data import and IrsResponseMappers under same interface and shared methods
+- #947 Updating irs-helm from 7.1.1 to 7.1.2 to use latest catena-x policy
+- #963 update irs-client-lib.version from 2.0.3 to 2.0.4-SNAPSHOT to fix /contracts api
+- #989 changed german word "Eigen" to "Eigene"
+- #992 improved uux in selection of columns in table settings
+- #994 moved search bar above new and existing configurations
+- #994 disable inputs of newly added bpn configurations
+- #995 disable creation and editof notifications for admin role
+- #991 make menu table headers unvisible to not block column and filters of tables
+- #915 Updated user manual documentation (chapters and screenshots)
+- #998 fixed bug where global search bar could search for BPN and adjusted placeholder label to reflect column names
+- #913 Changed severity icons
+- #978 Fixed edc policy creation with edc version 0.7.0
+
+## [11.0.0 - 08.05.2024]
+### Added
+- #844 Validation for BPN to Notification API (Create / Edit), Fixed pagination
+- #726 Added @Preauthorize annotation to dashboard controller
+- #849 Added concept: Notifications to multiple BPNs
+- #837 Added digital twin type to data provisioning workflow to be able to lookup shells created by trace-x
+- #783 Validation that receiver of a notification must not be same as sender.
+- #831 Added concept: Notification data model revision
+- #859 Enable autocomplete API to filter for given assets
+- #778 Added counterPartyId to getCatalogRequest
+
+### Changed
+- #837 migrate to irs-helm 7.1.1
+- #837 migrate to irs-decentral-client-library to 2.0.2-SNAPSHOT
+- #844 Prefilled bpn on investigation creation
+- #843 Refactored e2e tests, added edit notification e2e test case
+- #828 fix duplicates in traction_battery_code_subcomponent table
+- #617 redesigned inbox table
+- #603 Upgraded SingleLevelBomAsBuilt, SingleLevelBomAsPlanned & SingleLevelBomAsBuilt to 3.0.0
+- #603 Upgraded Batch, SerialPart and JustInSequencePart to 3.0.0
+- #603 Upgraded PartAsPlanned to 2.0.0
+- #918 Merged parts and other parts into one table
+- #918 Fixed translations and normal case for autocomplete values
+- #778 update EDC from 0.5.3 to 0.7.0
+- #XXX update of lombok from 1.18.30 to 1.18.32
+- #XXX update of findsecbugs plugin from 1.12.0 to 1.13.0
+- #XXX update of commons-compress from 1.26.0 to 1.26.1
+- #XXX update of logback from 1.5.5 to 1.5.6
+- #XXX update of cucumber-bom from 7.16.1 to 7.17.0
+- #XXX Updated spring boot from 3.2.4 to 3.2.5
+- #XXX Bumped logback-core & logback-classic from 1.5.4 to 1.5.5
+
+### Removed
+- #602 digitalTwinType instead of semanticId. DigitalTwinType causes problems in release 24.05
+
+## [10.8.4 - 17.04.2024]
+
+### Added
+- #780 store api documenation in docs/api to conform with TRG 1.08
+- #622 Notification Update API
+- #774 Added initial concept for handling multiple BPNs
+- #834 Added possiblity to exclude elements from the results of the asset api filter
+- #586 BPDM lookup feature
+
+## Changed
+- XXX Updated insomnia collection
+- #834 Behaviour of parts selection in edit / create notification view
+- #823 migrate to irs-helm 6.18.0
+- #636 migrate to digital-twin-registry version 0.4.9 from 0.3.22
+- #622 Added functionallity to edit existing notifications within CREATED state
+- #602 use digitalTwinType instead of semanticId to determine asBuilt or asPlanned assets
+- Spell check arc42 documentation and administration guide and make it consistent
+- bump ch.qos.logback:logback-core from 1.4.14 to 1.5.4
+- bump peaceiris/actions-gh-pages from 3.9.3 to 4.0.0
+- bump aquasecurity/trivy-action from 0.18.0 to 0.19.0
+- bump org.springframework.cloud:spring-cloud-dependencies from 2023.0.0 to 2023.0.1
+- bump org.awaitility:awaitility from 3.0.0 to 4.2.1
+- bump org.asciidoctor:asciidoctorj-diagram from 2.2.13 to 2.3.0
+- bump io.cucumber:cucumber-bom from 7.15.0 to 7.16.1
+
+## [10.8.2 - 05.04.2024]
+### Removed
+- #547 Removed classification check on alert / investigation update callback methods
 
 ## [10.8.1 - 04.04.2024]
 

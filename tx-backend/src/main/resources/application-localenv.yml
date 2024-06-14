@@ -37,6 +37,9 @@ traceability:
   leftOperand: "PURPOSE"
   operatorType: eq
   rightOperand: "ID 3.0 Trace"
+  leftOperandSecond: anything
+  operatorTypeSecond: eq
+  rightOperandSecond: anything
   validUntil: 2124-07-04T16:01:05.309Z
   adminApiKey: test
   regularApiKey: test

@@ -43,7 +43,6 @@ import static io.restassured.RestAssured.given;
 class AlertControllerAuthorizationIT extends IntegrationTestSpecification {
 
     private static final String ROOT = "/api/notifications";
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @ParameterizedTest
@@ -54,15 +53,14 @@ class AlertControllerAuthorizationIT extends IntegrationTestSpecification {
         );
         String description = "at least 15 characters long investigation description";
         NotificationSeverityRequest severity = NotificationSeverityRequest.MINOR;
-        String receiverBpn = "BPN";
+        String receiverBpn = "BPNL00000003CML1";
 
         var request = StartNotificationRequest.builder()
                 .type(NotificationTypeRequest.ALERT)
-                .partIds(partIds)
+                .affectedPartIds(partIds)
                 .description(description)
                 .severity(severity)
                 .receiverBpn(receiverBpn)
-                .isAsBuilt(false)
                 .build();
 
         given()
@@ -173,7 +171,7 @@ class AlertControllerAuthorizationIT extends IntegrationTestSpecification {
     @MethodSource("org.eclipse.tractusx.traceability.integration.common.support.RoleSupport#supervisorAndUserRolesAllowed")
     void shouldAllowUpdateEndpointOnlyForSpecificRoles(JwtRole role, boolean isAllowed) throws JoseException, JsonProcessingException {
 
-        var request = new UpdateNotificationRequest();
+        var request = new UpdateNotificationStatusTransitionRequest();
         request.setStatus(UpdateNotificationStatusRequest.ACCEPTED);
         request.setReason("reason for acceptanace");
 

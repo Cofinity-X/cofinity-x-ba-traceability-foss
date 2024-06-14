@@ -149,6 +149,7 @@ export const notificationTemplate: Notification = {
   isFromSender: false,
   assetIds: ['MOCK_part_1'],
   status: null,
+  title: 'Title',
   severity: Severity.MINOR,
   createdDate: new CalendarDateModel('2022-05-01T10:34:12.000Z'),
 };

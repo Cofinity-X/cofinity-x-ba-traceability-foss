@@ -68,25 +68,9 @@ SPDX-License-Identifier: Apache-2.0
             <groupId>org.eclipse.tractusx.irs</groupId>
             <artifactId>irs-registry-client</artifactId>
             <version>${irs-client-lib.version}</version>
-<!--            <exclusions>-->
-<!--                &lt;!&ndash; Remove once at least 11.0.17 is available.&ndash;&gt;-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.eclipse.jetty</groupId>-->
-<!--                    <artifactId>jetty-http</artifactId>-->
-<!--                </exclusion>-->
-<!--                &lt;!&ndash; Remove once at least 10.1.16 is available.&ndash;&gt;-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.tomcat.embed</groupId>-->
-<!--                    <artifactId>tomcat-embed-websocket</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; Remove once org.eclipse.tractusx.irs#irs-registry-client delivers the correct version.&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.eclipse.jetty</groupId>-->
-<!--            <artifactId>jetty-http</artifactId>-->
-<!--            <version>11.0.17</version>-->
         </dependency>
+
+
         <!-- tx-application modules -->
         <dependency>
             <groupId>org.eclipse.tractusx.traceability</groupId>
@@ -114,53 +98,6 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>commons-fileupload</artifactId>
             <version>1.5</version>
         </dependency>
-        <!-- EDC Client -->
-        <dependency>
-            <groupId>org.eclipse.edc</groupId>
-            <artifactId>connector-core</artifactId>
-            <version>${edc-library.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>runtime-metamodel</artifactId>
-                    <groupId>org.eclipse.edc</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.edc</groupId>
-            <artifactId>dsp</artifactId>
-            <version>${edc-library.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>runtime-metamodel</artifactId>
-                    <groupId>org.eclipse.edc</groupId>
-                </exclusion>
-                <!-- Fixes CVE-2023-36478  https://github.com/catenax-ng/tx-traceability-foss/security/code-scanning/6770
-                Can be removed once org.eclipse.edc delivers at least jetty-http 11.0.16
-                -->
-                <exclusion>
-                    <artifactId>websocket-jakarta-server</artifactId>
-                    <groupId>org.eclipse.jetty.websocket</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.edc</groupId>
-            <artifactId>json-ld</artifactId>
-            <version>${edc-library.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>runtime-metamodel</artifactId>
-                    <groupId>org.eclipse.edc</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <artifactId>runtime-metamodel</artifactId>
-            <groupId>org.eclipse.edc</groupId>
-            <version>${edc-library.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
@@ -199,6 +136,10 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
         <!-- Fixes CVE-2024-22262-->
         <dependency>
@@ -239,21 +180,6 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>nimbus-jose-jwt</artifactId>
             <version>${nimbus-jose-jwt.version}</version>
         </dependency>
-    <!--    <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-feign</artifactId>
-            <version>${resilience4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-retry</artifactId>
-            <version>${resilience4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-spring-boot3</artifactId>
-            <version>${resilience4j.version}</version>
-        </dependency>-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -264,26 +190,6 @@ SPDX-License-Identifier: Apache-2.0
             <artifactId>annotations</artifactId>
             <version>${jetbrains-annotation.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.github.openfeign</groupId>-->
-<!--            <artifactId>feign-core</artifactId>-->
-<!--            <version>${feign.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.github.openfeign.form</groupId>-->
-<!--            <artifactId>feign-form</artifactId>-->
-<!--            <version>${feign-form.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.github.openfeign</groupId>-->
-<!--            <artifactId>feign-jackson</artifactId>-->
-<!--            <version>${feign.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.scribejava</groupId>-->
-<!--            <artifactId>scribejava-core</artifactId>-->
-<!--            <version>${scribe-java.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
@@ -303,17 +209,12 @@ SPDX-License-Identifier: Apache-2.0
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.26.0</version>
+            <version>${commons-compress.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
         <!-- test dependencies spring boot managed -->
@@ -403,12 +304,6 @@ SPDX-License-Identifier: Apache-2.0
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility-proxy</artifactId>
-            <version>${awaitility.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit</artifactId>
             <version>1.1.0</version>
@@ -462,6 +357,7 @@ SPDX-License-Identifier: Apache-2.0
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <goals>

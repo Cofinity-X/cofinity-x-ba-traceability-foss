@@ -15,18 +15,10 @@
  * under the License.
  *
  * SPDX-License-Identifier: Apache-2.0
- ********************************************************************************/
+ *********************************************************************************/
 
 package org.eclipse.tractusx.traceability.bpn.domain.model;
 
-public record BpnEdcMapping(String bpn, String url) {
-
-    public String getBpn() {
-        return bpn;
-    }
-
-    public String getUrl() {
-        return url;
-    }
+public record BpnEdcMapping(String bpn, String url, String manufacturerName) {
 
 }

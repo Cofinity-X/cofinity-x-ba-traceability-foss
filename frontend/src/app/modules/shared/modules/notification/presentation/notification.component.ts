@@ -26,7 +26,7 @@ import { MenuActionConfig, TableEventConfig, TableHeaderSort } from '@shared/com
 import { Notification, Notifications } from '@shared/model/notification.model';
 import { View } from '@shared/model/view.model';
 import { StaticIdService } from '@shared/service/staticId.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -47,12 +47,14 @@ export class NotificationComponent {
   @Output() onReceivedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() onQueuedAndRequestedTableConfigChanged = new EventEmitter<TableEventConfig>();
   @Output() selected = new EventEmitter<Notification>();
+  @Output() editNotificationClicked = new EventEmitter<Notification>();
   @Output() notificationsFilterChanged = new EventEmitter<any>();
 
   public readonly tabIndex$ = this.route.queryParams.pipe(map(params => parseInt(params.tabIndex, 10) || 0));
 
   public readonly receivedTabLabelId = this.staticIdService.generateId('Notification.receivedTab');
   public readonly queuedAndRequestedTabLabelId = this.staticIdService.generateId('Notification.queuedAndRequestedTab');
+  public readonly currentSelectedItems$ = new BehaviorSubject<Notification[]>([]);
 
   constructor(
     private readonly router: Router,

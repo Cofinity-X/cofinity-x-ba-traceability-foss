@@ -88,7 +88,7 @@ describe('NotificationsInboxComponent', () => {
           [queuedAndRequestedNotifications$]='queuedAndRequestedNotifications$'
           [receivedNotifications$]='receivedNotifications$'
           [translationContext]="'commonAlert'"
-          [menuActionsConfig]="'menuActionsConfig'"
+          [menuActionsConfig]="[]"
            [receivedOptionalColumns]="['severity', 'createdBy', 'createdByName', 'targetDate']"
   [receivedSortableColumns]="{description: true, title: true, status: true, createdDate: true, severity: true, createdBy: true, createdByName: true, targetDate: true, menu: false}"
   [queuedAndRequestedOptionalColumns]="['severity', 'sendTo', 'sendToName', 'targetDate']"
@@ -121,7 +121,6 @@ describe('NotificationsInboxComponent', () => {
 
     const descriptionEl = await screen.findByText('Investigation No 1');
     const row = descriptionEl.closest('tr');
-    debugger;
     expect(within(row).getByText('commonAlert.status.CREATED')).toBeInTheDocument();
   });
 

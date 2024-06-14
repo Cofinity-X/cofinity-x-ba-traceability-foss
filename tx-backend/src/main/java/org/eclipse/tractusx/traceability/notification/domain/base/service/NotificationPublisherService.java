@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.traceability.assets.domain.asbuilt.repository.AssetAsBuiltRepository;
 import org.eclipse.tractusx.traceability.assets.domain.base.model.AssetBase;
-import org.eclipse.tractusx.traceability.bpn.domain.service.BpnRepository;
+import org.eclipse.tractusx.traceability.bpn.infrastructure.repository.BpnRepository;
 import org.eclipse.tractusx.traceability.common.model.BPN;
 import org.eclipse.tractusx.traceability.common.properties.TraceabilityProperties;
 import org.eclipse.tractusx.traceability.notification.domain.base.exception.SendNotificationException;
@@ -33,7 +33,6 @@ import org.eclipse.tractusx.traceability.notification.domain.base.model.Notifica
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSide;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationStatus;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.exception.NotificationIllegalUpdate;
-import org.eclipse.tractusx.traceability.notification.domain.notification.exception.NotificationNotSupportedException;
 import org.eclipse.tractusx.traceability.notification.domain.notification.model.StartNotification;
 import org.springframework.stereotype.Service;
 
@@ -60,30 +59,30 @@ public class NotificationPublisherService {
     public Notification startNotification(StartNotification startNotification) {
         BPN applicationBPN = traceabilityProperties.getBpn();
         Notification notification = Notification.startNotification(startNotification.getTitle(), clock.instant(), applicationBPN, startNotification.getDescription(), startNotification.getType());
-        if (startNotification.isAsBuilt()) {
-            Map<String, List<AssetBase>> assetsAsBuiltBPNMap = assetAsBuiltRepository.getAssetsById(startNotification.getPartIds()).stream().collect(groupingBy(AssetBase::getManufacturerId));
-            assetsAsBuiltBPNMap
-                    .entrySet()
-                    .stream()
-                    .map(it -> {
-                        String creator = getManufacturerNameByBpn(traceabilityProperties.getBpn().value());
-                        String sendToName = getManufacturerNameByBpn(startNotification.getReceiverBpn());
-                        return NotificationMessage.create(
-                                applicationBPN,
-                                startNotification.getReceiverBpn(),
-                                startNotification.getDescription(),
-                                startNotification.getTargetDate(),
-                                startNotification.getSeverity(),
-                                startNotification.getType(),
-                                it,
-                                creator,
-                                sendToName);
-                    })
-                    .forEach(notification::addNotificationMessage);
-            return notification;
-        } else {
-            throw new NotificationNotSupportedException();
-        }
+        createMessages(startNotification, applicationBPN, notification, assetAsBuiltRepository);
+        return notification;
+    }
+
+    private void createMessages(StartNotification startNotification, BPN applicationBPN, Notification notification, AssetAsBuiltRepository assetAsBuiltRepository) {
+        Map<String, List<AssetBase>> assetsAsBuiltBPNMap = assetAsBuiltRepository.getAssetsById(startNotification.getAffectedPartIds()).stream().collect(groupingBy(AssetBase::getManufacturerId));
+        assetsAsBuiltBPNMap
+                .entrySet()
+                .stream()
+                .map(it -> {
+                    String creator = getManufacturerNameByBpn(applicationBPN.value());
+                    String sendToName = getManufacturerNameByBpn(startNotification.getReceiverBpn());
+                    return NotificationMessage.create(
+                            applicationBPN,
+                            startNotification.getReceiverBpn(),
+                            startNotification.getDescription(),
+                            startNotification.getTargetDate(),
+                            startNotification.getSeverity(),
+                            startNotification.getType(),
+                            it,
+                            creator,
+                            sendToName);
+                })
+                .forEach(notification::addNotificationMessage);
     }
 
     private String getManufacturerNameByBpn(String bpn) {

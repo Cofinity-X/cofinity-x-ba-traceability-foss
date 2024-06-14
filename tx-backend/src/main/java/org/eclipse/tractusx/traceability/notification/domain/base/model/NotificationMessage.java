@@ -43,7 +43,7 @@ public class NotificationMessage {
     private final String createdByName;
     private final String sendToName;
     @Builder.Default
-    private final List<NotificationAffectedPart> affectedParts = new ArrayList<>();
+    private List<NotificationAffectedPart> affectedParts = new ArrayList<>();
     private String notificationReferenceId;
     private String createdBy;
     private String sendTo;
@@ -88,6 +88,8 @@ public class NotificationMessage {
                 .messageId(messageId)
                 .build();
     }
+
+
 
     // Important - receiver and sender will be saved in switched order
     public NotificationMessage copyAndSwitchSenderAndReceiver(BPN applicationBpn) {

@@ -33,24 +33,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
-import static org.eclipse.tractusx.traceability.common.security.JwtRole.*;
+import static org.eclipse.tractusx.traceability.common.security.JwtRole.ADMIN;
+import static org.eclipse.tractusx.traceability.common.security.JwtRole.SUPERVISOR;
+import static org.eclipse.tractusx.traceability.common.security.JwtRole.USER;
 import static org.hamcrest.Matchers.blankString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class EdcNotificationContractControllerIT extends IntegrationTestSpecification {
+public class EdcNotificationContractControllerIT extends IntegrationTestSpecification {
 
     @Autowired
     EdcSupport edcSupport;
 
 //    @Test
     void shouldCreateEdcContract() throws JoseException {
-       // Given
+        // given
         edcSupport.edcWillCreateNotificationAsset();
         edcSupport.edcWillCreatePolicyDefinition();
         edcSupport.edcWillCreateContractDefinition();
 
-       // Then
+        // then
         given()
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
@@ -81,10 +83,10 @@ class EdcNotificationContractControllerIT extends IntegrationTestSpecification {
 
 //    @Test
     void shouldNotCreateEdcContractWhenNotificationAssetCreationFailed() throws JoseException {
-       // Given
+        // given
         edcSupport.edcWillFailToCreateNotificationAsset();
 
-       // Then
+        // then
         given()
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
@@ -109,17 +111,18 @@ class EdcNotificationContractControllerIT extends IntegrationTestSpecification {
         edcSupport.verifyDeleteNotificationAssetEndpointCalledTimes(0);
         edcSupport.verifyDeletePolicyDefinitionEndpointCalledTimes(0);
         edcSupport.verifyDeleteContractDefinitionEndpointCalledTimes(0);
+
     }
 
 //    @Test
     void shouldNotCreateEdcContractAndDoRollbackWhenPolicyDefinitionCreationFailed() throws JoseException {
-       // Given
+        // given
         edcSupport.edcWillCreateNotificationAsset();
         edcSupport.edcWillFailToCreatePolicyDefinition();
 
         edcSupport.edcWillRemoveNotificationAsset();
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))
@@ -148,7 +151,7 @@ class EdcNotificationContractControllerIT extends IntegrationTestSpecification {
 
 //    @Test
     void shouldNotCreateEdcContractAndDoRollbackWhenContractDefinitionCreationFailed() throws JoseException {
-       // Given
+        // given
         edcSupport.edcWillCreateNotificationAsset();
         edcSupport.edcWillCreatePolicyDefinition();
         edcSupport.edcWillFailToCreateContractDefinition();
@@ -156,7 +159,7 @@ class EdcNotificationContractControllerIT extends IntegrationTestSpecification {
         edcSupport.edcWillRemovePolicyDefinition();
         edcSupport.edcWillRemoveNotificationAsset();
 
-       // Then
+        // then
         given()
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(SUPERVISOR))

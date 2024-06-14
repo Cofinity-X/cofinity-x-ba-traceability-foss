@@ -53,6 +53,7 @@ describe('InvestigationsAssembler', () => {
       createdDate: new CalendarDateModel(null),
       targetDate: new CalendarDateModel(null),
       bpn: '',
+      title: '',
       notificationType: NotificationType.INVESTIGATION,
     };
 
@@ -83,6 +84,7 @@ describe('InvestigationsAssembler', () => {
             reason: { close: '', accept: '', decline: '' },
             assetIds: [],
             errorMessage: '',
+            title: 'Title',
           },
           {
             id: 'test-2',
@@ -99,6 +101,7 @@ describe('InvestigationsAssembler', () => {
             reason: { close: '', accept: '', decline: '' },
             channel: 'SENDER',
             assetIds: [],
+            title: 'Title',
           },
         ],
       }, NotificationType.INVESTIGATION),
@@ -123,6 +126,7 @@ describe('InvestigationsAssembler', () => {
           reason: { close: '', accept: '', decline: '' },
           isFromSender: true,
           assetIds: [],
+          title: 'Title',
           notificationType: NotificationType.INVESTIGATION,
         },
         {
@@ -140,6 +144,7 @@ describe('InvestigationsAssembler', () => {
           reason: { close: '', accept: '', decline: '' },
           isFromSender: true,
           assetIds: [],
+          title: 'Title',
           notificationType: NotificationType.INVESTIGATION,
         },
       ],

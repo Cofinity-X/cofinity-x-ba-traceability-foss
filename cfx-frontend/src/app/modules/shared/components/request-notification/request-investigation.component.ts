@@ -30,6 +30,8 @@ import {
   RequestNotificationBase,
 } from '@shared/components/request-notification/request-notification.base';
 import { getRoute, INVESTIGATION_BASE_ROUTE } from '@core/known-route';
+import { bpnRegex } from '@page/admin/presentation/bpn-configuration/bpn-configuration.component';
+import { BaseInputHelper } from '@shared/abstraction/baseInput/baseInput.helper';
 import { NotificationStatusGroup } from '@shared/model/notification.model';
 import { Part } from '@page/parts/model/parts.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -50,7 +52,7 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
   @Input() selectedItems: Part[] = [];
 
   public readonly context: RequestContext = RequestContext.REQUEST_INVESTIGATION;
-  @Input() public formGroup: FormGroup<{ description: FormControl<string>; targetDate: FormControl<DateTimeString>; severity: FormControl<Severity>; }>;
+  @Input() public formGroup: FormGroup<{ description: FormControl<string>; targetDate: FormControl<DateTimeString>; severity: FormControl<Severity>; bpn: FormControl<any>; title: FormControl<string>; }>;
 
   constructor(toastService: ToastService, private readonly investigationsService: NotificationService, public dialog: MatDialog) {
     super(toastService, dialog);
@@ -60,7 +62,9 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
     this.formGroup = new FormGroup({
       description: new FormControl(this.forwardedNotification ? 'FW: ' + this.forwardedNotification.description : '', [ Validators.required, Validators.maxLength(1000), Validators.minLength(15) ]),
       targetDate: new FormControl(null, [DateValidators.atLeastNow(), DateValidators.maxDeadline(this.forwardedNotification?.targetDate?.valueOf()), Validators.required]),
-      severity: new FormControl(this.forwardedNotification ? this.forwardedNotification.severity : Severity.MINOR)
+      severity: new FormControl(this.forwardedNotification ? this.forwardedNotification.severity : Severity.MINOR),
+      bpn: new FormControl(null, [ Validators.required, BaseInputHelper.getCustomPatternValidator(bpnRegex, 'bpn') ]),
+      title: new FormControl('', [ Validators.maxLength(30), Validators.minLength(0) ]),
     });
 
   }
@@ -73,11 +77,11 @@ export class RequestInvestigationComponent extends RequestNotificationBase {
     if (this.formGroup.invalid) {
       return;
     }
-    const partIds = this.selectedItems.map(part => part.id);
-    const { description, targetDate, severity } = this.formGroup.value;
+    const affectedPartIds = this.selectedItems.map(part => part.id);
+    const { description, targetDate, severity, bpn, title } = this.formGroup.value;
     const { link, queryParams } = getRoute(INVESTIGATION_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);
 
-    this.investigationsService.createInvestigation(partIds, description, severity, targetDate).subscribe({
+    this.investigationsService.createInvestigation(affectedPartIds, description, severity, targetDate, bpn, title).subscribe({
       next: () => this.onSuccessfulSubmit(link, queryParams),
       error: () => this.onUnsuccessfulSubmit(),
     });

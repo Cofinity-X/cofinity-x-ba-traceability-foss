@@ -41,10 +41,10 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenBpnMappingRequest_whenCreateBpnMapping_thenCreateIt() throws JoseException {
-       // Given
+        // given
         BpnMappingRequest mappings = new BpnMappingRequest("BPNL00000003CSGV", "http://localhost:12345/abc");
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body(List.of(mappings))
@@ -54,7 +54,7 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(200);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -70,11 +70,11 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
     @Test
     void givenBpnMappingRequest_whenUpdate_thenUpdateIt() throws JoseException {
         {
-           // Given
+            // given
             BpnMappingRequest mappings = new BpnMappingRequest("BPNL00000003TEST", "https://newurl.com");
             bpnEdcMappingSupport.defaultBpnEdcMappingStored();
 
-            // When
+            // when
             given()
                     .contentType(ContentType.JSON)
                     .body(List.of(mappings))
@@ -84,7 +84,7 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
                     .then()
                     .statusCode(200);
 
-           // Then
+            // then
             given()
                     .header(oAuth2Support.jwtAuthorization(ADMIN))
                     .contentType(ContentType.JSON)
@@ -100,10 +100,10 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenBpnMappingsStored_whenDeleteOneBpn_thenDeleteOnlyOne() throws JoseException {
-       // Given
+        // given
         bpnEdcMappingSupport.defaultBpnEdcMappingStored();
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
@@ -112,7 +112,7 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
                 .then()
                 .statusCode(204);
 
-       // Then
+        // then
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -127,10 +127,10 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenBpnMappingWrongBPNFormat_whenSave_thenBadRequest() throws JoseException {
-       // Given
+        // given
         BpnMappingRequest mappings = new BpnMappingRequest("ABC", "http://localhost:12345/abc");
 
-        // When
+        // when
         given()
                 .contentType(ContentType.JSON)
                 .body(List.of(mappings))
@@ -143,7 +143,7 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenBadRequest_whenCreateBpnConfig_thenReturn400() throws JoseException {
-       // Given
+        // given
         var request = """
                     [
                         "url" : "https://test.de"
@@ -161,7 +161,7 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenMalformedRequest_whenCreateBpnMapping_thenReturn400() throws JoseException {
-       // Given
+        // given
         var request = """
                     [
                         "url" : "https://test.de",
@@ -180,10 +180,10 @@ class BpnMappingControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenUserRole_whenCreateBpnMapping_thenReturn403() throws JoseException {
-       // Given
+        // given
         BpnMappingRequest request = new BpnMappingRequest("BPNL00000003CSGF", "https://newurl.com");
 
-        // Then
+        // when/then
         given()
                 .contentType(ContentType.JSON)
                 .body(List.of(request))

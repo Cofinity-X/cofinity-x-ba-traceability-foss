@@ -52,7 +52,7 @@ export class RequestAlertComponent extends RequestNotificationBase {
 
 
   public readonly context: RequestContext = RequestContext.REQUEST_ALERT;
-  public formGroup: FormGroup<{ description: FormControl<string>; severity: FormControl<Severity>; bpn: FormControl<any>; }>;
+  public formGroup: FormGroup<{ description: FormControl<string>; severity: FormControl<Severity>; bpn: FormControl<any>; title: FormControl<string>;}>;
 
   constructor(toastService: ToastService, private readonly alertsService: NotificationService, public dialog: MatDialog) {
     super(toastService, dialog);
@@ -63,6 +63,7 @@ export class RequestAlertComponent extends RequestNotificationBase {
       description: new FormControl(this.forwardedNotification ? 'FW: ' + this.forwardedNotification.description : '', [ Validators.required, Validators.maxLength(1000), Validators.minLength(15) ]),
       severity: new FormControl(this.forwardedNotification ? this.forwardedNotification.severity : Severity.MINOR),
       bpn: new FormControl(null, [ Validators.required, BaseInputHelper.getCustomPatternValidator(bpnRegex, 'bpn') ]),
+      title: new FormControl('', [ Validators.maxLength(30), Validators.minLength(0) ]),
     });
 
   }
@@ -73,14 +74,14 @@ export class RequestAlertComponent extends RequestNotificationBase {
       return;
     }
 
-    const partIds = this.forwardedNotification ? this.forwardedNotification.assetIds : this.selectedItems.map(part => part.id);
+    const affectedPartIds = this.forwardedNotification ? this.forwardedNotification.assetIds : this.selectedItems.map(part => part.id);
     // set asBuilt parameter if one of the selectedItems are a asPlanned Part
     const isAsBuilt = this.forwardedNotification ? true : this.selectedItems.map(part => part.semanticDataModel === SemanticDataModel.PARTASPLANNED).includes(true);
 
-    const { description, bpn, severity } = this.formGroup.value;
+    const { description, bpn, severity, title} = this.formGroup.value;
     const { link, queryParams } = getRoute(ALERT_BASE_ROUTE, NotificationStatusGroup.QUEUED_AND_REQUESTED);
 
-    this.alertsService.createAlert(partIds, description, severity, bpn, isAsBuilt).subscribe({
+    this.alertsService.createAlert(affectedPartIds, description, severity, bpn, title, isAsBuilt).subscribe({
       next: () => this.onSuccessfulSubmit(link, queryParams),
       error: () => this.onUnsuccessfulSubmit(),
     });

@@ -44,6 +44,7 @@ frontend:
     CATENAX_PORTAL_BACKEND_DOMAIN: "CHANGEME"  # portal backend domain example: catena-x.net
     CATENAX_PORTAL_URL: "CHANGEME"  # portal url example: https://portal.net/
     CATENAX_PORTAL_CLIENT_ID: "CHANGEME"  # application id created on portal
+    BPN: "CHANGEME"
 
   ##
   ## Image pull secret to create to obtain the container image
@@ -81,6 +82,7 @@ frontend:
   podSecurityContext:
     fsGroup: 10100
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   securityContext:
     seccompProfile:
@@ -99,6 +101,7 @@ frontend:
     port: 8080
 
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-resource-requests-and-limits
   resources:
     limits:
@@ -112,6 +115,7 @@ frontend:
 
   tolerations: []
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity:
     podAntiAffinity:
@@ -131,6 +135,7 @@ frontend:
     hosts: []
     tls: []
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://github.com/helm/charts/blob/master/stable/nginx-ingress/values.yaml#L210
   livenessProbe:
     failureThreshold: 6
@@ -198,6 +203,7 @@ backend:
     seccompProfile:
       type: RuntimeDefault
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   securityContext:
     allowPrivilegeEscalation: false
@@ -216,6 +222,7 @@ backend:
   autoscaling:
     enabled: false
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-resource-requests-and-limits
   resources:
     limits:
@@ -229,6 +236,7 @@ backend:
 
   tolerations: []
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity:
     podAntiAffinity:
@@ -241,6 +249,7 @@ backend:
                   operator: DoesNotExist
             topologyKey: kubernetes.io/hostname
 
+  # Following Catena-X Helm Best Practices @url: https://catenax-ng.github.io/docs/kubernetes-basics/helm
   # @url: https://github.com/helm/charts/blob/master/stable/nginx-ingress/values.yaml#L210
   livenessProbe:
     failureThreshold: 6
@@ -272,6 +281,9 @@ backend:
     leftOperand: "PURPOSE"
     operatorType: "eq"
     rightOperand: "ID 3.0 Trace"
+    leftOperandSecond: "anything"
+    operatorTypeSecond: "eq"
+    rightOperandSecond: "anything"
     validUntil: "2024-09-30T23:59:59.99Z"
   datasource:
     url: jdbc:postgresql://tx-backend-postgresql:5432/trace
@@ -314,6 +326,9 @@ backend:
     enabled: false  # enable dependency check init containers
     irs: "CHANGEME"  # <irs-helm.nameOverride>
     edc: "CHANGEME"  # <tractusx-connector.nameOverride
+
+  bpdm:
+    url: "https://replace.me"
 
 #########################
 # PG Admin configuration     #
@@ -359,7 +374,7 @@ postgresql:
 #########################
 # IRS configuration     #
 #########################
-irs-helm:
+item-relationship-service:
   enabled: false  # <irs-helm.enabled>
   nameOverride: "tracex-irs"
   fullnameOverride: "tracex-irs"

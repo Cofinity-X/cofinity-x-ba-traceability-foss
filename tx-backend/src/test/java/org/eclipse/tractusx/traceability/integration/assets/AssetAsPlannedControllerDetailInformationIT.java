@@ -20,7 +20,7 @@ package org.eclipse.tractusx.traceability.integration.assets;
 
 import io.restassured.http.ContentType;
 import org.eclipse.tractusx.traceability.integration.IntegrationTestSpecification;
-import org.eclipse.tractusx.traceability.integration.common.support.*;
+import org.eclipse.tractusx.traceability.integration.common.support.AssetsSupport;
 import org.eclipse.tractusx.traceability.integration.common.support.BpnSupport;
 import org.jose4j.lang.JoseException;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,6 @@ class AssetAsPlannedControllerDetailInformationIT extends IntegrationTestSpecifi
     @Test
     void shouldNotReturnAassetsDetailInformationWhenUserIsNotAuthenticated() {
         //GIVEN
-        bpnSupport.cachedBpnsForAsPlannedAssets();
         assetsSupport.defaultAssetsAsPlannedStored();
 
         //THEN
@@ -64,7 +63,6 @@ class AssetAsPlannedControllerDetailInformationIT extends IntegrationTestSpecifi
     @Test
     void shouldReturnAssetsDetailInformation() throws JoseException {
         //GIVEN
-        bpnSupport.cachedBpnsForAsPlannedAssets();
         assetsSupport.defaultAssetsAsPlannedStored();
 
         //THEN

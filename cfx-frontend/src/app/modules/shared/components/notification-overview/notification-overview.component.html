@@ -98,6 +98,12 @@ SPDX-License-Identifier: Apache-2.0
     <span class="card-list--value"
       title="{{ notification?.id }}">{{ notification?.id }}</span>
   </div>
+  <div class="card-list--row">
+    <span class="card-list--key detail--text__bold">{{ 'table.column.title' | i18n }}</span>
+    <span class="card-list--value">
+      <span>{{notification.title}}</span>
+    </span>
+  </div>
   <div *ngIf="showNotification"
     class="card-list--row">
     <span class="card-list--key detail--text__bold">{{ 'table.column.description' | i18n }}</span>

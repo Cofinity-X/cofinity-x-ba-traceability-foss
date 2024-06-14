@@ -21,7 +21,7 @@
 package org.eclipse.tractusx.traceability.common.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.eclipse.tractusx.traceability.bpn.domain.service.BpnRepository;
+import org.eclipse.tractusx.traceability.bpn.infrastructure.repository.BpnRepository;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationMessage;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationSeverity;
 import org.eclipse.tractusx.traceability.notification.domain.base.model.NotificationType;
@@ -30,6 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @Component
 @RequiredArgsConstructor
@@ -56,7 +58,7 @@ public class NotificationMessageMapper {
                 .sendToName(getManufacturerName(edcNotification.getRecipientBPN()))
                 .description(edcNotification.getInformation())
                 .notificationStatus(edcNotification.convertNotificationStatus())
-                .affectedParts(edcNotification.getListOfAffectedItems())
+                .affectedParts(emptyIfNull(edcNotification.getListOfAffectedItems()))
                 .targetDate(edcNotification.getTargetDate())
                 .severity(NotificationSeverity.fromString(edcNotification.getSeverity()))
                 .edcNotificationId(edcNotification.getNotificationId())

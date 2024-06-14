@@ -44,6 +44,8 @@ public interface NotificationRepository {
 
     void updateNotification(Notification investigation);
 
+    void updateNotificationAndMessage(Notification notification, NotificationSeverity notificationSeverity);
+
     PageResult<Notification> getNotifications(Pageable pageable, SearchCriteria searchCriteria);
 
     long countOpenNotificationsByOwnershipAndNotificationType(List<Owner> owners, NotificationType notificationType);
@@ -52,5 +54,7 @@ public interface NotificationRepository {
 
     void updateErrorMessage(Notification investigation);
 
-    long countPartsByStatusAndOwnershipAndTypeAndNotificationType(List<NotificationStatus> received, Owner owner,NotificationType notificationType);
+    void deleteByIdIn(List<String> messageIds);
+
+    long countPartsByStatusAndOwnershipAndTypeAndNotificationType(List<NotificationStatus> received, Owner owner, NotificationType notificationType);
 }

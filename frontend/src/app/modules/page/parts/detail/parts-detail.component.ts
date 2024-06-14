@@ -1,22 +1,23 @@
-import {Location} from '@angular/common';
-import {Component, Input} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {RoleService} from '@core/user/role.service';
-import {TractionBatteryCode} from '@page/parts/model/aspectModels.model';
-import {Owner} from '@page/parts/model/owner.enum';
+import { Location } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RoleService } from '@core/user/role.service';
+import { SharedPartService } from '@page/notifications/detail/edit/shared-part.service';
+import { TractionBatteryCode } from '@page/parts/model/aspectModels.model';
+import { Owner } from '@page/parts/model/owner.enum';
 
-import {ImportState, Part, QualityType} from '@page/parts/model/parts.model';
-import {PartsAssembler} from '@shared/assembler/parts.assembler';
-import {SelectOption} from '@shared/components/select/select.component';
-import {NotificationType} from '@shared/model/notification.model';
-import {State} from '@shared/model/state';
-import {View} from '@shared/model/view.model';
-import {NotificationAction} from '@shared/modules/notification/notification-action.enum';
+import { ImportState, Part, QualityType } from '@page/parts/model/parts.model';
+import { PartsAssembler } from '@shared/assembler/parts.assembler';
+import { SelectOption } from '@shared/components/select/select.component';
+import { NotificationType } from '@shared/model/notification.model';
+import { State } from '@shared/model/state';
+import { View } from '@shared/model/view.model';
+import { NotificationAction } from '@shared/modules/notification/notification-action.enum';
 
-import {PartDetailsFacade} from '@shared/modules/part-details/core/partDetails.facade';
-import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
-import {filter, tap} from 'rxjs/operators';
+import { PartDetailsFacade } from '@shared/modules/part-details/core/partDetails.facade';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-parts-detail',
@@ -62,11 +63,17 @@ export class PartsDetailComponent {
 
   public currentPartId: string;
   public pageIndexHistory: {AS_BUILT_PAGE: string, AS_PLANNED_PAGE: string}
+  private isAsBuiltPart: boolean;
 
-  constructor(public readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router, private readonly route: ActivatedRoute, public roleService: RoleService, private location: Location) {
+  constructor(public readonly partDetailsFacade: PartDetailsFacade, private readonly router: Router, private readonly route: ActivatedRoute, public roleService: RoleService, private location: Location, private sharedPartService: SharedPartService) {
+
+    this.route.queryParams.subscribe((params: { AS_BUILT_PAGE: string, AS_PLANNED_PAGE: string }) => {
+      this.pageIndexHistory = params;
+      this.isAsBuiltPart = params['isAsBuilt'] === 'true';
+    });
 
     this.currentPartId = this.route.snapshot.params['partId'];
-    this.partDetailsFacade.setPartById(this.currentPartId);
+    this.partDetailsFacade.setPartById(this.currentPartId, this.isAsBuiltPart);
     this.selectedPartDetails$ = this.partDetailsFacade.selectedPart$;
     this.shortenPartDetails$ = this.partDetailsFacade.selectedPart$;
 
@@ -121,12 +128,6 @@ export class PartsDetailComponent {
     });
 
     this.displayedColumns = [ 'position', 'productType', 'tractionBatteryCode' ];
-  }
-
-  public ngOnInit(): void {
-    this.route.queryParams.subscribe((params: {AS_BUILT_PAGE: string, AS_PLANNED_PAGE: string}) => {
-      this.pageIndexHistory = params;
-    })
   }
 
   public ngOnDestroy(): void {
@@ -206,16 +207,20 @@ export class PartsDetailComponent {
 
   }
 
-
-  protected readonly NotificationAction = NotificationAction;
-  protected readonly Owner = Owner;
-
   navigateToParentPath() {
     const parentPath = this.router.routerState.snapshot.url.split('/')[1]; //otherParts
     const navigationExtras = this.pageIndexHistory ? {queryParams: this.pageIndexHistory} : null
     this.router.navigate([parentPath], navigationExtras);
   }
 
+  navigateToNotificationCreationView() {
+    this.router.navigate([ 'inbox/create' ], { queryParams: { initialType: this.partOwner === Owner.OWN ? 'Alert' : 'Investigation' } });
+    this.sharedPartService.affectedParts = [this.partDetailsFacade.selectedPart];
 
+}
+
+
+  protected readonly NotificationAction = NotificationAction;
+  protected readonly Owner = Owner;
   protected readonly NotificationType = NotificationType;
 }

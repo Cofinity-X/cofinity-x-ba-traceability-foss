@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 class ActuatorIT extends IntegrationTestSpecification {
 
+
     @Autowired
     private MockMvc mockMvc;
 

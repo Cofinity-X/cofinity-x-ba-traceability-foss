@@ -43,7 +43,7 @@ describe('BpnConfigurationComponent', () => {
 
   it('should validate bpn', async () => {
     await renderBpnConfigurationComponent();
-    const inputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-1'))) as HTMLInputElement;
+    const inputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-0'))) as HTMLInputElement;
     const buttonElement = (await waitFor(() => screen.getByText('actions.add'))) as HTMLButtonElement;
     fireEvent.click(buttonElement);
 
@@ -62,7 +62,7 @@ describe('BpnConfigurationComponent', () => {
 
   it('should validate url', async () => {
     await renderBpnConfigurationComponent();
-    const inputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-2'))) as HTMLInputElement;
+    const inputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-1'))) as HTMLInputElement;
     const buttonElement = (await waitFor(() => screen.getByText('actions.add'))) as HTMLButtonElement;
     fireEvent.click(buttonElement);
 
@@ -87,8 +87,8 @@ describe('BpnConfigurationComponent', () => {
 
   it('should add valid data', async () => {
     await renderBpnConfigurationComponent();
-    const bpnInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-1'))) as HTMLInputElement;
-    const urlInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-2'))) as HTMLInputElement;
+    const bpnInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-0'))) as HTMLInputElement;
+    const urlInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-1'))) as HTMLInputElement;
     const buttonElement = (await waitFor(() => screen.getByText('actions.add'))) as HTMLButtonElement;
 
     expect(await waitFor(() => screen.queryByTestId('BaseInputElement-27'))).not.toBeInTheDocument();
@@ -212,7 +212,7 @@ describe('BpnConfigurationComponent', () => {
 
   it('should search', async () => {
     await renderBpnConfigurationComponent();
-    const searchInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-0'))) as HTMLInputElement;
+    const searchInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-2'))) as HTMLInputElement;
     const urlInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-3'))) as HTMLInputElement;
     const firstBpnInputElement = (await waitFor(() => screen.getByTestId('BaseInputElement-3'))) as HTMLInputElement;
     const originalBpnValue = firstBpnInputElement.value;

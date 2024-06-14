@@ -47,4 +47,5 @@ class NotificationSeverityResponseTest {
         // then
         assertThat(result).isEqualTo("\"LIFE-THREATENING\"");
     }
+
 }

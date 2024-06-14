@@ -1570,7 +1570,7 @@
   "submodels": [
     {
       "identification": "urn:uuid:8de438c5-c71b-4614-a9a7-916c58d0f5aa",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "catenaXId": "urn:uuid:0733946c-59c6-41ae-9570-cb43a6e4c79e",
@@ -1586,7 +1586,7 @@
     },
     {
       "identification": "urn:uuid:02ddce69-84d0-4bfe-9aa8-e3d4bcb8b75d",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "validityPeriod": {
@@ -1603,7 +1603,7 @@
     },
     {
       "identification": "urn:uuid:1e78765c-3197-4985-99dc-0fea22f1ddfa",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "catenaXId": "urn:uuid:07cb071f-8716-45fe-89f1-f2f77a1ce93b",
@@ -1619,7 +1619,7 @@
     },
     {
       "identification": "urn:uuid:06678314-22a7-4a81-a88a-befcb06e84b6",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "validityPeriod": {
@@ -1636,7 +1636,7 @@
     },
     {
       "identification": "urn:uuid:77d962a0-526b-42fe-bc09-89b3667379ea",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "catenaXId": "urn:uuid:aad27ddb-43aa-4e42-98c2-01e529ef127c",
@@ -1652,7 +1652,7 @@
     },
     {
       "identification": "urn:uuid:c4180465-8a5e-41b9-8471-c56130311172",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "validityPeriod": {
@@ -1669,7 +1669,7 @@
     },
     {
       "identification": "urn:uuid:30eb6ba2-8196-41f4-b5af-fc0e06854e8d",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "validityPeriod": {
@@ -1686,7 +1686,7 @@
     },
     {
       "identification": "urn:uuid:23e2d659-4716-445b-bba5-9d3a010c2968",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
       "payload": {
         "catenaXId": "urn:uuid:2c57b0e9-a653-411d-bdcd-64787e9fd3a7",
@@ -1702,7 +1702,7 @@
     },
     {
       "identification": "urn:uuid:cad7fa4f-c394-41ec-b4da-3004392ce0c5",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
       "payload": {
         "validityPeriod": {
@@ -1719,7 +1719,7 @@
     },
     {
       "identification": "urn:uuid:5114f7df-eb71-4ebe-a58d-39f4a7590eea",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "catenaXId": "urn:uuid:3cdd2826-5df0-4c7b-b540-9eeccecb2301",
@@ -1735,7 +1735,7 @@
     },
     {
       "identification": "urn:uuid:d4d0152b-9bbc-4dfd-bd74-b731e759d290",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "validityPeriod": {
@@ -1752,7 +1752,7 @@
     },
     {
       "identification": "urn:uuid:70f3af5f-85d6-4461-ac6e-fffe731412db",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "catenaXId": "urn:uuid:bee5614f-9e46-4c98-9209-61a6f2b2a7fc",
@@ -1768,7 +1768,7 @@
     },
     {
       "identification": "urn:uuid:ffdd1a9e-7636-43ca-b313-f62619bf0855",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "catenaXId": "urn:uuid:e5c96ab5-896a-482c-8761-efd74777ca97",
@@ -1784,7 +1784,7 @@
     },
     {
       "identification": "urn:uuid:d4d0152b-9bbc-4dfd-bd74-b731e759d290",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "validityPeriod": {
@@ -1801,7 +1801,7 @@
     },
     {
       "identification": "urn:uuid:70f3af5f-85d6-4461-ac6e-fffe731412db",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "catenaXId": "urn:uuid:bee5614f-9e46-4c98-9209-61a6f2b2a7fc",
@@ -1817,7 +1817,7 @@
     },
     {
       "identification": "urn:uuid:ececc705-4321-47a0-839e-89a39d440b7b",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "validityPeriod": {
@@ -1834,7 +1834,7 @@
     },
     {
       "identification": "urn:uuid:59001876-3e82-487d-9c1c-7537dee7a29e",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
       "payload": {
         "catenaXId": "urn:uuid:4518c080-14fb-4252-b8de-4362d615868d",
@@ -1850,7 +1850,7 @@
     },
     {
       "identification": "urn:uuid:e0a0b1e2-078b-4d0a-b726-3a2ccc8cfe53",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "catenaXId": "urn:uuid:86f69643-3b90-4e34-90bf-789edcf40e7e",
@@ -1866,7 +1866,7 @@
     },
     {
       "identification": "urn:uuid:3f5f0ef7-e14a-4673-90a2-d602ed0c07cc",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
       "payload": {
         "validityPeriod": {
@@ -1883,7 +1883,7 @@
     },
     {
       "identification": "urn:uuid:3f5f0ef7-e14a-4673-90a2-d602ed0c07cc",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
       "payload": {
         "validityPeriod": {
@@ -1900,7 +1900,7 @@
     },
     {
       "identification": "urn:uuid:e0a0b1e2-078b-4d0a-b726-3a2ccc8cfe53",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "catenaXId": "urn:uuid:86f69643-3b90-4e34-90bf-789edcf40e7e",
@@ -1916,7 +1916,7 @@
     },
     {
       "identification": "urn:uuid:d1515093-507c-426a-8860-417dbc2f1cca",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
       "payload": {
         "catenaXId": "urn:uuid:c7a2b803-f8fe-4b79-b6fc-967ce847c9a9",
@@ -1932,7 +1932,7 @@
     },
     {
       "identification": "urn:uuid:fbd65492-a92d-46f2-988e-b60b4d18743f",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "validityPeriod": {
@@ -1949,7 +1949,7 @@
     },
     {
       "identification": "urn:uuid:aa6f8a98-a29f-4431-aa49-df7e0d58b548",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "OWNjMmI1MGMtYTViNi00MDFkLWI1MjItOTAzYjM0NzZkOGY3:dXJuOnV1aWQ6MzhlNmExNTEtYTc0OC00ZDI2LWJiYjYtOTk2YTNmNjYxZGVh:OTUzZGRiYjgtMjYyMC00YTVkLWE3NTktNzk2ZTJkN2E2NjRj",
       "payload": {
         "validityPeriod": {
@@ -1966,7 +1966,7 @@
     },
     {
       "identification": "urn:uuid:2875cd4a-84f8-461e-b4b2-7b0dee5ee269",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "catenaXId": "urn:uuid:15d2fcc8-6439-4d1e-904b-e62b4d3bf323",
@@ -1982,7 +1982,7 @@
     },
     {
       "identification": "urn:uuid:23786ac5-90de-428e-a1dd-45b301d0f0db",
-      "aspectType": "urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned",
       "contractAgreementId": "ZTgyMzBhYjQtODMzMy00NTMyLWE2MzktYzM0MTdkZmY5ZjEx:dXJuOnV1aWQ6MTNjYzlkYzUtYjkwOS00YTM3LTgzNTUtNGNlYmViNTc5NzQ2:ZWNjZTE4NWItZjlhOS00ZDc4LThmMWItODM4ZWY4OWEwNTkx",
       "payload": {
         "catenaXId": "urn:uuid:4f7b1cf2-a598-4027-bc78-63f6d8e55699",
@@ -1998,7 +1998,7 @@
     },
     {
       "identification": "urn:uuid:041212d0-5673-498d-ac84-48ab7c8604f5",
-      "aspectType": "urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned",
+      "aspectType": "urn:samm:io.catenax.part_as_planned:2.0.0#PartAsPlanned",
       "contractAgreementId": "YjMwYjUxYmItOTVlZS00ODc2LWFlN2YtYzQ3ZTYxN2VjM2U5:dXJuOnV1aWQ6NjZiYjkxYmMtNTI3Mi00YzFjLTlkM2UtNGMzNjkwZjkyMWEx:M2I1MDBlNzEtNmMxNi00Yjg5LTliNWItNDg0YzE1MGI5ZThk",
       "payload": {
         "validityPeriod": {

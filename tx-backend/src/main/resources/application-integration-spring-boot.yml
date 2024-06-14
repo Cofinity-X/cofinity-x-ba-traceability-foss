@@ -25,12 +25,15 @@ traceability:
   leftOperand: "PURPOSE"
   operatorType: "eq"
   rightOperand: "ID Trace 3.1"
+  leftOperandSecond: "PURPOSE2"
+  operatorTypeSecond: "eq"
+  rightOperandSecond: "ID Trace 3.2"
   validUntil: "2023-07-04T16:01:05.309Z"
   adminApiKey: testAdminKey
   regularApiKey: testRegularKey
   irsBase: "http://127.0.0.1"
   irsPoliciesPath: "/irs/policies"
-  submodelBase: http://localhost:${server.port}
+  submodelBase: "http://localhost:${server.port}/api/submodel/data"
 registry:
   urlWithPath: "http://127.0.0.1"
 
@@ -42,6 +45,11 @@ edc:
   provider-dataplane-edc-url: "http://127.0.0.1"
 
 spring:
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
   security:
     oauth2:
       client:
@@ -68,9 +76,12 @@ management:
 
 logging:
   level:
+    org.hibernate.sql: DEBUG
     org.springframework.web.client.RestTemplate: INFO
     org.springframework.security: INFO
     org.springframework: INFO
+
+
 
 digitalTwinRegistryClient:
   oAuthClientId: keycloak
@@ -103,3 +114,5 @@ irs-edc-client:
   controlplane:
     api-key:
       secret: "integration-tests"
+bpdm:
+  oAuthClientId: OKTA

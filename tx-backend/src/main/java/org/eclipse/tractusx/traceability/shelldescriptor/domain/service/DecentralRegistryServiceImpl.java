@@ -52,6 +52,7 @@ public class DecentralRegistryServiceImpl implements DecentralRegistryService {
     private final TraceabilityProperties traceabilityProperties;
     private final DecentralRegistryRepository decentralRegistryRepository;
 
+
     private static final List<String> AS_BUILT_ASPECT_TYPES = List.of(SERIALPART.getValue(), BATCH.getValue(), JUSTINSEQUENCE.getValue());
     private static final List<String> AS_PLANNED_ASPECT_TYPES = List.of(PARTASPLANNED.getValue());
 
@@ -68,7 +69,9 @@ public class DecentralRegistryServiceImpl implements DecentralRegistryService {
         List<String> asBuiltAssetsToSync = asBuiltAssetIds.stream().filter(assetId -> !existingAsBuiltInSyncAndTransientStates.contains(assetId)).toList();
         List<String> asPlannedAssetsToSync = asPlannedAssetIds.stream().filter(assetId -> !existingAsPlannedInSyncAndTransientStates.contains(assetId)).toList();
 
+        log.info("Try to sync {} assets asBuilt", asBuiltAssetsToSync.size());
         asBuiltAssetsToSync.forEach(assetAsBuiltService::synchronizeAssetsAsync);
+        log.info("Try to sync {} assets asPlanned", asPlannedAssetsToSync.size());
         asPlannedAssetsToSync.forEach(assetAsPlannedService::synchronizeAssetsAsync);
     }
 

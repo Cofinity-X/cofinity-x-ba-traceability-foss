@@ -56,8 +56,14 @@ public class EdcAssetCreationService {
         PolicyResponse policy = policyService.getPolicyById(policyId);
         String createdPolicyId;
         try {
-            createdPolicyId = edcPolicyDefinitionService.createAccessPolicy(mapToEdcPolicyRequest(policy));
-            log.info("DTR Policy Id created :{}", createdPolicyId);
+            boolean exists = edcPolicyDefinitionService.policyDefinitionExists(policyId);
+            if (exists) {
+                log.info("Policy with id " + policyId + " already exists and contains necessary application constraints. Reusing for edc asset contract definition.");
+                createdPolicyId =policyId;
+            } else{
+                createdPolicyId = edcPolicyDefinitionService.createAccessPolicy(mapToEdcPolicyRequest(policy));
+                log.info("DTR Policy Id created :{}", createdPolicyId);
+            }
         } catch (EdcPolicyDefinitionAlreadyExists e) {
             createdPolicyId = policyId;
         } catch (Exception exception) {
@@ -84,7 +90,7 @@ public class EdcAssetCreationService {
         String submodelAssetId;
         String submodelAssetIdToCreate = "urn:uuid:" + UUID.randomUUID();
         try {
-            submodelAssetId = edcAssetService.createSubmodelAsset(traceabilityProperties.getSubmodelBase() + "/api/submodel", submodelAssetIdToCreate);
+            submodelAssetId = edcAssetService.createSubmodelAsset(traceabilityProperties.getSubmodelBase(), submodelAssetIdToCreate);
             log.info("Submodel Asset Id created :{}", submodelAssetId);
         } catch (EdcAssetAlreadyExistsException e) {
             submodelAssetId = submodelAssetIdToCreate;

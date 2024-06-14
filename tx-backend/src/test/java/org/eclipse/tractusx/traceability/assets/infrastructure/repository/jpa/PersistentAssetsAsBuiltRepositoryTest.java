@@ -32,10 +32,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Instant;
 import java.util.List;
 
-import static org.eclipse.tractusx.traceability.testdata.AssetTestDataFactory.createAssetTestData;
+import static org.eclipse.tractusx.traceability.testdata.AssetTestDataFactory.createAssetAsBuiltTestdata;
 
 @ExtendWith(MockitoExtension.class)
 class PersistentAssetsAsBuiltRepositoryTest {
+
 
     @Test
     void testToAsset() {
@@ -83,7 +84,7 @@ class PersistentAssetsAsBuiltRepositoryTest {
 
 
         // then
-        AssetBase expected = createAssetTestData();
+        AssetBase expected = createAssetAsBuiltTestdata();
 
         Assertions.assertEquals(asset.getId(), expected.getId());
         Assertions.assertEquals(asset.getIdShort(), expected.getIdShort());
@@ -97,4 +98,5 @@ class PersistentAssetsAsBuiltRepositoryTest {
         Assertions.assertEquals(asset.getQualityType(), expected.getQualityType());
         Assertions.assertEquals(asset.getVan(), expected.getVan());
     }
+
 }

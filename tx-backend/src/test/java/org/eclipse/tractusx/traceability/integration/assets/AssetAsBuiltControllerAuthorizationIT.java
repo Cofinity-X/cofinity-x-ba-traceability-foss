@@ -72,6 +72,7 @@ class AssetAsBuiltControllerAuthorizationIT extends IntegrationTestSpecification
         given()
                 .header(oAuth2Support.jwtAuthorizationWithOptionalRole(role))
                 .contentType(ContentType.JSON)
+                .queryParam("fieldName", "owner") // Provide a valid fieldName
                 .when()
                 .get(ROOT + "/distinctFilterValues")
                 .then()

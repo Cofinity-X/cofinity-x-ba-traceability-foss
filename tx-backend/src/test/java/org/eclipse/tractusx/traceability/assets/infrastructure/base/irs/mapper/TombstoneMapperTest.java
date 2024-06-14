@@ -39,6 +39,7 @@ class TombstoneMapperTest {
         return Stream.of(
                 Arguments.of("id", "asBuilt", "upward"),
                 Arguments.of("otherPartCatenaxId", "asBuilt", "upward")
+
         );
     }
 

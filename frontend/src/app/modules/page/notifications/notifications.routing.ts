@@ -19,6 +19,8 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleGuard } from '@core/user/role.guard';
+import { NotificationEditComponent } from '@page/notifications/detail/edit/notification-edit.component';
 import { NotificationDetailComponent } from '@page/notifications/detail/notification-detail.component';
 import { NotificationsComponent } from '@page/notifications/presentation/notifications.component';
 import { I18NEXT_NAMESPACE_RESOLVER } from 'angular-i18next';
@@ -33,10 +35,26 @@ const NOTIFICATIONS_ROUTING: Routes = [
     resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
   },
   {
+    path: 'create',
+    pathMatch: 'full',
+    component: NotificationEditComponent,
+    data: { i18nextNamespaces: [ 'page.alert' ], roles: [ 'user' ] },
+    canActivate: [ RoleGuard ],
+    resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
+  },
+  {
     path: ':notificationId',
     pathMatch: 'full',
     component: NotificationDetailComponent,
     data: { i18nextNamespaces: [ 'page.alert' ] },
+    resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
+  },
+  {
+    path: ':notificationId/edit',
+    canActivate: [ RoleGuard ],
+    pathMatch: 'full',
+    component: NotificationEditComponent,
+    data: { i18nextNamespaces: [ 'page.alert' ], roles: [ 'user' ] },
     resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
   },
 ];

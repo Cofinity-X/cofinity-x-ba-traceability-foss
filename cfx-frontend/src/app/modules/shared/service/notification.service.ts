@@ -82,20 +82,22 @@ export class NotificationService {
       .pipe(map(notification => NotificationAssembler.assembleNotification(notification, notificationType)));
   }
 
-  public createAlert(partIds: string[], description: string, severity: Severity, bpn: string, isAsBuilt: boolean): Observable<string> {
-    const body = { partIds, description, severity, receiverBpn: bpn, isAsBuilt, type: NotificationType.ALERT.toUpperCase() };
+  public createAlert(affectedPartIds: string[], description: string, severity: Severity, bpn: string, title: string, isAsBuilt: boolean): Observable<string> {
+    const body = { affectedPartIds, description, severity, receiverBpn: bpn, isAsBuilt, type: NotificationType.ALERT.toUpperCase() };
     return this.apiService.post<NotificationCreateResponse>(this.url, body).pipe(map(({ id }) => id));
   }
 
   public createInvestigation(
-    partIds: string[],
+    affectedPartIds: string[],
     description: string,
     severity: Severity,
     dateString: DateTimeString,
+    bpn: string,
+    title: string,
   ): Observable<string> {
     // targetDate is an optional field
     const targetDate = null === dateString ? null : new Date(dateString).toISOString();
-    const body = { partIds, description, severity, targetDate, type: NotificationType.INVESTIGATION.toUpperCase() };
+    const body = { affectedPartIds, description, severity, targetDate, receiverBpn: bpn, title: title === "" ? null: title, type: NotificationType.INVESTIGATION.toUpperCase() };
 
     return this.apiService
       .post<NotificationCreateResponse>(this.url, body)

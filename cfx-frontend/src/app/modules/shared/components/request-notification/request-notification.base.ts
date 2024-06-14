@@ -52,11 +52,14 @@ export abstract class RequestNotificationBase {
   public abstract readonly context: RequestContext;
   public abstract readonly formGroup:
     | FormGroup<{
+      title: FormControl<string>;
       description: FormControl<string>;
       severity: FormControl<Severity>;
       targetDate: FormControl<DateTimeString>;
+      bpn: FormControl<string>;
     }>
     | FormGroup<{
+      title: FormControl<string>;
       description: FormControl<string>;
       severity: FormControl<Severity>;
       bpn: FormControl<string>;

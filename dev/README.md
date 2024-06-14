@@ -32,49 +32,49 @@ Keep in mind to always update DEV and TEST since they are dependend on each othe
 Sample invocation (DEV)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability.dev.demo.catena-x.net/api/submodel -edc https://trace-x-edc.dev.demo.catena-x.net -a https://trace-x-registry.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability.dev.demo.catena-x.net/api/submodel -edc https://trace-x-edc.dev.demo.catena-x.net -a https://trace-x-registry.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
 ```
 
 Sample invocation (TEST)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-test.dev.demo.catena-x.net/api/submodel -edc https://trace-x-test-edc.dev.demo.catena-x.net -a https://trace-x-registry-test.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-test-edc-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-test.dev.demo.catena-x.net/api/submodel -edc https://trace-x-test-edc.dev.demo.catena-x.net -a https://trace-x-registry-test.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-test-edc-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
 ```
 
 Sample invocation (E2E A)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-e2e-a.dev.demo.catena-x.net/api/submodel -edc https://trace-x-edc-e2e-a.dev.demo.catena-x.net -a https://trace-x-registry-e2e-a.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-e2e-a-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-e2e-a.dev.demo.catena-x.net/api/submodel -edc https://trace-x-edc-e2e-a.dev.demo.catena-x.net -a https://trace-x-registry-e2e-a.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-e2e-a-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
 ```
 
 Sample invocation (E2E B)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-e2e-b.dev.demo.catena-x.net/api/submodel -edc https://trace-x-edc-e2e-b.dev.demo.catena-x.net -a https://trace-x-registry-e2e-b.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-e2e-b-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-e2e-b.dev.demo.catena-x.net/api/submodel -edc https://trace-x-edc-e2e-b.dev.demo.catena-x.net -a https://trace-x-registry-e2e-b.dev.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-e2e-b-dataplane.dev.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC
 ```
 
 Sample invocation (INT A)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-int-a.int.demo.catena-x.net/api/submodel -edc https://trace-x-edc-int-a.int.demo.catena-x.net -a https://trace-x-registry-int-a.int.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-int-a-dataplane.int.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-int-a.int.demo.catena-x.net/api/submodel -edc https://trace-x-edc-int-a.int.demo.catena-x.net -a https://trace-x-registry-int-a.int.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-int-a-dataplane.int.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
 ```
 
 Sample invocation (INT B)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-int-b.int.demo.catena-x.net/api/submodel -edc https://trace-x-edc-int-b.int.demo.catena-x.net -a https://trace-x-registry-int-b.int.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-int-b-dataplane.int.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-int-b.int.demo.catena-x.net/api/submodel -edc https://trace-x-edc-int-b.int.demo.catena-x.net -a https://trace-x-registry-int-b.int.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-int-b-dataplane.int.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV  --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
 ```
 
 Sample invocation (STABLE A)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-stable-a.stable.demo.catena-x.net/api/submodel -edc https://trace-x-edc-stable-a.stable.demo.catena-x.net -a https://trace-x-registry-stable-a.stable.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-stable-a-dataplane.stable.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-stable-a.stable.demo.catena-x.net/api/submodel -edc https://trace-x-edc-stable-a.stable.demo.catena-x.net -a https://trace-x-registry-stable-a.stable.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-stable-a-dataplane.stable.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV  --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
 ```
 
 Sample invocation (STABLE B)
 
 ```
-python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-stable-b.stable.demo.catena-x.net/api/submodel -edc https://trace-x-edc-stable-b.stable.demo.catena-x.net -a https://trace-x-registry-stable-b.stable.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-stable-b-dataplane.stable.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
+python transform-and-upload.py -f CX_Testdata_MessagingTest_v0.0.12.json -s https://traceability-stable-b.stable.demo.catena-x.net/api/submodel -edc https://trace-x-edc-stable-b.stable.demo.catena-x.net -a https://trace-x-registry-stable-b.stable.demo.catena-x.net/semantics/registry/api/v3.0 -d https://trace-x-edc-stable-b-dataplane.stable.demo.catena-x.net -p id-3.0-trace -k <apiKey> --aas3 --edcBPN BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV  --allowedBPNs BPNL00000003CML1 BPNL00000003CNKC BPNL00000003AZQP BPNL00000003CSGV
 ```
 
 where:
@@ -213,7 +213,7 @@ Is achieved by defining the order of the BPNLs of the desired manufacturers. See
 and adding an SingleLevelBomAsBuilt Aspect with the corresponding childCatenaXId:
 ```json
 {
-"urn:bamm:io.catenax.single_level_bom_as_built:1.0.0#SingleLevelBomAsBuilt" : [ {
+"urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt" : [ {
 "catenaXId" : "urn:uuid:7eeeac86-7b69-444d-81e6-655d0f1513bd",
 "childParts" : [ {
 "quantity" : {
@@ -237,34 +237,5 @@ and adding an SingleLevelBomAsBuilt Aspect with the corresponding childCatenaXId
 
 Is achieved through adding the SingleLevelusageBuilt - Codeblock and the corresponding parent catenaXId above, see example below (Only SingleLevelUsageBuilt expanded):
 
-```json
-[{
-  "catenaXId" : "urn:uuid:f11ddc62-3bd5-468f-b7b0-110fe13ed0cd",
-  "bpnl" : "BPNL00000003CNKC",
-  "urn:bamm:io.catenax.single_level_bom_as_built:1.0.0#SingleLevelBomAsBuilt": "[...]",
-  "urn:bamm:io.catenax.serial_part:1.0.0#SerialPart" : "[...]"
-  }, {
-  "catenaXId" : "urn:uuid:4e390dab-707f-446e-bfbe-653f6f5b1f37",
-  "bpnl" : "BPNL00000003AZQP",
-  "urn:bamm:io.catenax.serial_part:1.0.0#SerialPart" : "",
-  "urn:bamm:io.catenax.single_level_usage_as_built:1.0.1#SingleLevelUsageAsBuilt": [
-    {
-      "parentParts": [
-        {
-          "parentCatenaXId": "urn:uuid:5205f736-8fc2-4585-b869-6bf36842369a",
-          "quantity": {
-            "quantityNumber": 1,
-            "measurementUnit": "unit:piece"
-          },
-          "createdOn": "2023-02-03T14:48:54.709Z",
-          "lastModifiedOn": "2023-02-03T14:48:54.709Z"
-        }
-      ],
-      "catenaXId": "urn:uuid:4e390dab-707f-446e-bfbe-653f6f5b1f37"
-    }
-  ]
-}
-]
-```
 ...AZQP -> CNKC -> ...
 

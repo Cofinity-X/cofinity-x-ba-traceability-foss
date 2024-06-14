@@ -4,14 +4,14 @@
     "home": "Home",
     "dashboard": "Dashboard",
     "parts": "Parts",
-    "otherParts": "Other parts",
     "about": "About",
     "relations": "Relations",
     "admin": "Administration",
-    "inbox": "Inbox",
+    "inbox": "Quality notifications",
     "adminRegistry": "Registry lookups",
     "adminBpn": "BPN - EDC configuration",
     "adminImport": "Data provisioning",
+    "partMismatch": "Selected parts must have same owner to create quality topic (Own, Supplier)",
     "unauthorized": "Functionality is disabled because of missing role. Ask your administrator to provide the required role for the functionality.",
     "notAllowedForAsPlanned": "This function is not available for Parts in the Lifecycle \"AsPlanned\".",
     "noChildPartsForInvestigation": "This function is not available for Parts without components.",
@@ -27,12 +27,13 @@
   },
   "pageTitle": {
     "dashboard": "Dashboard",
-    "parts": "My Parts",
-    "otherParts": "Other Parts",
+    "parts": "My parts",
     "about": "About Catena-X Open-Source Traceability",
-    "relations": "Part Relations",
+    "relations": "Part relations",
     "admin": "Administration Catena-X",
-    "alerts": "Quality Topics"
+    "alerts" : "Quality topics",
+    "receivedQualityTopics" : "Received quality topics",
+    "sentQualityTopics" : "Sent quality topics"
   },
   "layout": {
     "nav": {
@@ -52,6 +53,7 @@
     "close": "Close",
     "decline": "Decline",
     "viewDetails": "View details",
+    "edit": "Edit",
     "help": "Help",
     "add": "Add",
     "saveChanges": "Save changes",
@@ -60,7 +62,9 @@
     "delete": "Delete",
     "goToQueue": "Go to Queue",
     "goBack": "Back",
-    "publishAssets": "Publish assets"
+    "publishAssets": "Publish assets",
+    "maximizeTable": "Full width",
+    "userSettings": "Table settings"
   },
   "publisher": {
     "selectedAssets": "Assets selected",
@@ -79,6 +83,20 @@
     "clearAll": "Clear all selections",
     "multiSortingTooltip": "First click: sort in ascending order ↑ Second click: sort in descending order ↓ Third click: reset sorting",
     "filterTitle": "Filter",
+    "owner": {
+      "own": "Own",
+      "supplier": "Supplier",
+      "customer": "Customer"
+    },
+    "semanticDataModel": {
+      "BATCH": "Batch",
+      "SERIALPART": "SerialPart",
+      "PARTASPLANNED": "PartAsPlanned",
+      "JUSTINSEQUENCE": "JustInSequence",
+      "TOMBSTONEASBUILT": "TombstoneAsBuilt",
+      "TOMBSTONEASPLANNED": "TombstoneAsPlanned",
+      "TRACTIONBATTERYCODE": "TractionBatteryCode"
+    },
     "tableSettings": {
       "invalid": "Due to an error table settings have been reset",
       "title": "Table column settings",
@@ -88,9 +106,21 @@
       "saveAction": "Save",
       "alert": "Quality Alert"
     },
+    "createNotification" : "Create quality topic",
+    "sendNotification" : "Send quality topics",
+    "cancelNotification" : "Cancel quality topics",
+    "addParts" : "Add parts to quality topics",
+    "viewDetails" : "View details",
+    "more" : "More actions",
+    "editNotification" : "Edit quality topics",
+    "selectAtLeastOne" : "Actions require atleast one selection in the table",
+    "unauthorized" : "Functionality is disabled because of missing role. Ask your administrator to provide the required role for the functionality.",
+    "noFunctionality" : "Functionality is not implemented yet",
+    "onlyNotificationInStatusCreatedAllowed" : "Action only allowed with a selection of notifications in status \"Queued\".",
     "column": {
       "id": "ID",
       "idShort": "ID Short",
+      "owner": "Owner",
       "name": "Name",
       "manufacturerName": "Manufacturer",
       "partId": "Part number",
@@ -176,7 +206,8 @@
     "maxDate": "Please select a date that is before {{- maxDate}}.",
     "minDate": "Please select a date that is after {{- minDate}}.",
     "currentDate": "Please select a date that is after {{- currentDate}}.",
-    "generic": "Please enter valid data."
+    "generic": "Please enter valid data.",
+    "invalidBpn": "Must not be own BPN."
   },
   "unitTest": {
     "test01": "This is for unit tests purposes.",
@@ -199,11 +230,20 @@
 
   },
   "requestNotification": {
+    "investigation": "Quality investigation",
+    "alert": "Quality alert",
+    "header": "Create notification",
+    "editNotificationHeader": "Edit notification",
+    "createNotificationHeader": "Create notification",
+    "affectedParts": "Affected parts",
+    "unAffectedParts": "Available parts",
     "partDescription": "You selected the following parts:",
     "targetDateDescription": "Please specify the deadline by which you expect a response.",
     "titleLabel": "Title",
-    "titleDescription": "Title",
+    "titleDescription": "Specify a short title.",
     "targetDateLabel": "Deadline",
+    "typeDescription": "Type of quality topic.",
+    "typeLabel": "Type",
     "bpnLabel": "BPN",
     "bpnDescription": "Please specify the receiver BPN.",
     "restoreItem": "Do you want to restore your last item?",
@@ -211,8 +251,25 @@
     "cancel": "CANCEL",
     "submit": "ADD TO QUEUE",
     "severity": "Severity",
-    "severityDescription": "Select the severity for the problem at hand",
-    "serverError": "Server error:"
+    "severityDescription": "Select the severity for the problem at hand.",
+    "serverError": "Server error:",
+    "remove": "Remove selection",
+    "add": "Add selection",
+    "modifyNotAllowed": "Requires at least one selection in the parts table.",
+    "modifyAffectedNotAllowed" : "Requires at least one selection in the affected parts table.",
+    "modifyAvailableNotAllowed" : "Requires at least one selection in the available parts table.",
+    "textAreaDescription": "Describe the quality issue.",
+    "saveNotAllowed": "Requires valid form input.",
+    "noPartsSelected" : "Requires at least one affected part",
+    "saveSuccess": "Quality topic was created successfully.",
+    "saveError": "An error occurred while creating the quality topic.",
+    "saveEditSuccess": "Quality topic was updated successfully.",
+    "saveEditError": "An error occurred while updating the quality topic.",
+    "save": "Save quality topic"
+  },
+  "editNotification": {
+    "saveButton": "Save",
+    "cancelButton": "Cancel"
   },
   "requestPublishAssets": {
     "success": "Request to publish assets was successful",
@@ -272,8 +329,8 @@
   "commonAlert": {
     "viewAll": "View all",
     "tabs": {
-      "received": "received",
-      "queuedAndRequested": "sent"
+      "received" : "Received",
+      "queuedAndRequested" : "Sent"
     },
     "status": {
       "SENT": "Requested",
@@ -315,6 +372,11 @@
     "asBuilt": "As Built",
     "asPlanned": "As Planned"
   },
+  "quickFilter": {
+    "own": "OWN",
+    "supplier": "SUPPLIER",
+    "customer": "CUSTOMER"
+  },
   "multiSelect": {
     "filterLabel": "Filter",
     "placeholder": "All",
@@ -338,7 +400,8 @@
       "BATCH": "Batch",
       "SERIALPART": "SerialPart",
       "PARTASPLANNED": "PartAsPlanned",
-      "UNKNOWN": "Unknown",
+      "TOMBSTONEASBUILT": "TombstoneAsBuilt",
+      "TOMBSTONEASPLANNED": "TombstoneAsPlanned",
       "JUSTINSEQUENCE": "JustInSequence",
       "TRACTIONBATTERYCODE": "TractionBatteryCode",
       "TRANSIENT": "Transient",
@@ -346,15 +409,18 @@
       "IN_SYNCHRONIZATION": "In Synchronization",
       "ERROR": "Error",
       "UNSET": "Unset",
-      "PUBLISHED_TO_CORE_SERVICES": "Veröffentlicht"
-
+      "PUBLISHED_TO_CORE_SERVICES": "Veröffentlicht",
+      "OWN": "Own",
+      "SUPPLIER": "Supplier",
+      "CUSTOMER": "Customer",
+      "UNKNOWN": "Unknown"
     }
   },
   "parts": {
     "input": {
       "global-search": {
-        "placeholder": "Search by entering C-X ID, partInstanceId or partNumber / BPN",
-        "toastInfo": "By using global search on view level, the local filters on table level was removed."
+        "placeholder" : "Search by entering ID, part ID or Business partner number (BPN)",
+        "toastInfo": "Any local filters on table level were removed."
       }
     }
   },

@@ -41,7 +41,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenNoSubmodels_whenDeleteAll_thenDeleteSubmodelsFromDatabase() throws JoseException {
-       // Given
+       // given
         String submodelId = "UUID:Xa123123";
         jpaSubmodelRepository.save(SubmodelEntity.builder()
                 .id(submodelId)
@@ -50,7 +50,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
         List<SubmodelEntity> savedSubmodels = jpaSubmodelRepository.findAll();
         assertThat(savedSubmodels).isNotEmpty();
 
-        // When
+        // when
         given()
                 .header(oAuth2Support.jwtAuthorization(ADMIN))
                 .contentType(ContentType.JSON)
@@ -95,7 +95,7 @@ class SubmodelControllerIT extends IntegrationTestSpecification {
 
     @Test
     void givenNoSubmodels_whenGetById_thenNotFound() throws JoseException {
-       // Given
+       // given
         String submodelId = "UUID:Xa123123";
 
         // when/then

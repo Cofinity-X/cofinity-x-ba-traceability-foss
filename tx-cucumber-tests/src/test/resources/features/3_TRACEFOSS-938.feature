@@ -35,18 +35,19 @@ Feature: ⭐[TEST] Update Quality Investigation (over EDC)
 	#* correct CANCELLATION on receiver side
 	#* correct reception of status update on sender side
 	#* correct reason on receiver and sender side
-	@TRACEFOSS-1862 @TRACEFOSS-3128 @TRACEFOSS-2910 @TEST-1217 @TRACEFOSS-2715 @TEST-904 @TRACEFOSS-1920 @TRACEFOSS-1673 @TRACEFOSS-1101 @INTEGRATION_TEST @[QualityInvestigation]
-	Scenario: [BE] Check correct processing of CANCELLATION of quality investigation 
+  @TRACEFOSS-1862 @TRACEFOSS-3373 @TRACEFOSS-3128 @TRACEFOSS-2910 @TEST-1217 @TRACEFOSS-2715 @TEST-904 @TRACEFOSS-1920 @TRACEFOSS-1673 @TRACEFOSS-1101 @INTEGRATION_TEST @[QualityInvestigation]
+  Scenario: [BE] Check correct processing of CANCELLATION of quality notification
 		When I am logged into TRACE_X_A application
 		When I use assets with ids 'urn:uuid:7eeeac86-7b69-444d-81e6-655d0f1513bd'
-		And I create quality investigation
+		And I create quality notification
 		  | "severity"    | "MAJOR"                             |
 		  | "description" | "Testing ACCEPTANCE TRACEFOSS-1862" |
-		Then I check, if quality investigation has proper values
+      | "type"        | "INVESTIGATION"                     |
+		Then I check, if quality notification has proper values
 		  | "description" | "Testing ACCEPTANCE TRACEFOSS-1862" |
 		  | "status"      | "CREATED"                           |
-		When I cancel quality investigation
-		Then I check, if quality investigation has proper values
+		When I cancel quality notification
+		Then I check, if quality notification has proper values
 		  | "status" | "CANCELED" |
 		When I am logged into TRACE_X_B application
-		Then I check, if quality investigation has not been received
+		Then I check, if quality notification has not been received

@@ -3,6 +3,9 @@ import { FormControl } from '@angular/forms';
 export class PartsTableConfigUtils {
 
   public static createFormGroup(displayedColumns: any): Record<string, FormControl> {
+    if (!displayedColumns) {
+      return;
+    }
     const formGroup: Record<string, FormControl> = {};
 
     for (const column of displayedColumns) {
@@ -15,6 +18,9 @@ export class PartsTableConfigUtils {
   }
 
   public static createFilterColumns(displayedColumns: string[], hasFilterCol: boolean = true, hasMenuCol: boolean = true): string[] {
+    if (!displayedColumns) {
+      return;
+    }
     const array = displayedColumns.filter((column: string) => 'select' !== column && 'menu' !== column).map((column: string) => 'filter' + column);
     let filter = null;
     let menu = null;
@@ -60,4 +66,13 @@ export class PartsTableConfigUtils {
     return [ first, ...filterColumnsMapping, last ].filter(value => value !== null);
 
   }
+
+  public static getDefaultColumnVisibilityMap(displayedColumns: string[]): Map<string, boolean> {
+    const initialColumnMap = new Map<string, boolean>();
+    for (const column of displayedColumns) {
+      initialColumnMap.set(column, true);
+    }
+    return initialColumnMap;
+  }
+
 }
