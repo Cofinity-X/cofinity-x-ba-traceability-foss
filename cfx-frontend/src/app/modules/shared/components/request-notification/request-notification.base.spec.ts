@@ -236,15 +236,15 @@ describe('requestInvestigationComponent', () => {
   const shouldSubmitParts = async (context: RequestContext, fixture, shouldFillTargetDate = true) => {
 
     const titleText = '';
-    const titleTextArea = (await waitFor(() => screen.getByTestId('BaseInputElement-15'))) as HTMLTextAreaElement;
+    const titleTextArea = (await waitFor(() => screen.getByTestId('BaseInputElement-1'))) as HTMLTextAreaElement;
     fireEvent.input(titleTextArea, { target: { value: titleText } });
 
     const testText = 'This is for a testing purpose.';
-    const textArea = (await waitFor(() => screen.getByTestId('BaseInputElement-16'))) as HTMLTextAreaElement;
+    const textArea = (await waitFor(() => screen.getByTestId('BaseInputElement-2'))) as HTMLTextAreaElement;
     fireEvent.input(textArea, { target: { value: testText } });
 
     const bpn = 'BPNA0123TEST0123';
-    const bpnInput = (await waitFor(() => screen.getByTestId('BaseInputElement-19'))) as HTMLTextAreaElement;
+    const bpnInput = (await waitFor(() => screen.getByTestId('BaseInputElement-5'))) as HTMLTextAreaElement;
     fireEvent.input(bpnInput, { target: { value: bpn } });
 
     const severitySelect = fixture.debugElement.query(By.css('mat-select')).nativeElement;
