@@ -32,14 +32,7 @@ const ADMIN_ROUTING: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: KnownAdminRouts.REGISTRY,
-  },
-  {
-    path: KnownAdminRouts.REGISTRY,
-    pathMatch: 'full',
-    component: ScheduledRegistryProcessesComponent,
-    data: { i18nextNamespaces: ['page.admin'] },
-    resolve: { i18next: I18NEXT_NAMESPACE_RESOLVER },
+    redirectTo: KnownAdminRouts.BPN,
   },
   {
     path: KnownAdminRouts.BPN,

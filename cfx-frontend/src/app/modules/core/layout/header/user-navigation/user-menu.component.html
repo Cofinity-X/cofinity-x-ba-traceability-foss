@@ -53,6 +53,10 @@ SPDX-License-Identifier: Apache-2.0
       <!--<p class="label-large user-menu-item" role="menuitem" (click)="this.navigateToFaqs()">
         {{ 'layout.nav.faqs' | i18n }}
       </p>-->
+      <ng-container
+        *ngTemplateOutlet="menuItem; context: { name: 'admin', icon: 'apps', role: 'admin', route: 'admin' }"
+      >
+      </ng-container>
 
       <p class="label-large user-menu-item"
         role="menuitem"
@@ -72,3 +76,24 @@ SPDX-License-Identifier: Apache-2.0
     </div>
   </div>
 </div>
+
+<ng-template #menuItem let-name="name" let-icon="icon" let-role="role" let-route="route">
+  <div
+    class="user-menu-items"
+    matTooltip="{{'routing.unauthorized' | i18n}}"
+    matTooltipClass="table--header--tooltip"
+    matTooltipPosition="above"
+    [class.mdc-tooltip--multiline]="true"
+    [matTooltipShowDelay]="1000"
+    [matTooltipDisabled]="isAuthorized"
+    [class.user-menu-items--disabled] = "!isAuthorized"
+    [routerLink]="isAuthorized ? ['/' + route] : null"
+    [class.user-menu-items--selected]="route === activeItem"
+    data-testid="user-menu-administration-button"
+  >
+    <p class="label-large user-menu-items__label" [class.user-menu-items__label--disabled]="!isAuthorized" role="menuitem">
+      {{ 'routing.' + name | i18n }}
+    </p>
+
+  </div>
+</ng-template>

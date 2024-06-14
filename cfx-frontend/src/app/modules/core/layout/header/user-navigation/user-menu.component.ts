@@ -37,10 +37,12 @@ export class UserMenuComponent {
   public userDetails = { name: '', email: '', role: '' };
   public activeItem = '';
   public portalUrl = environment.portalUrl;
+  public isAuthorized: boolean;
 
   constructor(private readonly layoutFacade: LayoutFacade, private readonly router: Router) {
     this.userInitials = this.layoutFacade.realName;
     this.userDetails = this.layoutFacade.userInformation;
+    this.isAuthorized = this.userDetails.role === 'Admin';
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -62,15 +64,11 @@ export class UserMenuComponent {
   }
 
   public navigateToHome(): void {
-    this.router.navigate(['']).then();
-  }
-
-  public navigateToFaqs(): void {
-    this.router.navigate(['faqs']).then();
+    this.router.navigate([ '' ]).then();
   }
 
   @HostListener('window:click', [])
-  public onClick(): void {
+  private onClick(): void {
     this.isExpanded = false;
   }
 
