@@ -30,6 +30,7 @@ traceability:
   irsBase: ${IRS_URL}
   irsPoliciesPath: "/irs/policies"
   submodelBase: ${SUBMODEL_URL}
+  assetRefreshJobCronExpression: ${ASSET_REFRESH_JOB_CRON_EXPRESSION:0 0 */2 * * ?}
 
 edc:
   ids:
