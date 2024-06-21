@@ -39,7 +39,7 @@ public class AssetsRefreshJob {
 
     private final DecentralRegistryService decentralRegistryService;
 
-    @Scheduled(cron = "0 0 */2 * * ?", zone = "Europe/Berlin")
+    @Scheduled(cron = "${traceability.assetRefreshJobCronExpression}", zone = "Europe/Berlin")
     @SchedulerLock(
             name = "data-sync-lock",
             lockAtLeastFor = "PT5M",
